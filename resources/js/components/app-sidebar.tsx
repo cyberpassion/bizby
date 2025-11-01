@@ -22,6 +22,11 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Consultation',
+        href: '/consultation/react',
+        icon: LayoutGrid,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

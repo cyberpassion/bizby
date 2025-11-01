@@ -53,4 +53,20 @@ class ConsultationController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {}
+
+	/**
+     * Display a home of the resource.
+     */
+    public function home()
+    {
+        return view('consultation::home');
+    }
+
+	/**
+     * Display a home of the resource.
+     */
+    public function react()
+    {
+        return view('consultation::react');
+    }
 }
