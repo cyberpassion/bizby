@@ -19,12 +19,12 @@ import AppLogo from './app-logo';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard(),
+        href: '/dashboard',
         icon: LayoutGrid,
     },
     {
         title: 'Consultation',
-        href: '/consultation/react',
+        href: '/consultation/home',
         icon: LayoutGrid,
     },
 ];
@@ -32,7 +32,7 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
+        href: 'https://learn.udyogx.in',
         icon: BookOpen,
     },
 ];

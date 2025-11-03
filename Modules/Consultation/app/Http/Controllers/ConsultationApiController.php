@@ -9,7 +9,7 @@ use Inertia\Inertia;
 use Modules\Consultation\Services\ConsultationService;
 use Modules\Consultation\Models\Consultation;
 
-class ConsultationController extends Controller
+class ConsultationApiController extends Controller
 {
     protected $service;
 
@@ -24,11 +24,7 @@ class ConsultationController extends Controller
     public function index()
     {
 		$consultations = $this->service->list();
-		//dd($consultations->toArray());
-        return Inertia::render('consultation/index', [
-            'consultations' => $consultations
-        ]);
-        return view('consultation::index');
+		return response()->json(['data' => $consultations]);
     }
 
     /**
