@@ -2,17 +2,16 @@
 
 namespace Modules\Consultation\Services;
 
-class ConsultationOptionService
+class ConsultationResourceService
 {
     public static function get($key)
     {
+		$module = 'consultation';
         $data = [
-            'gender-json' => [
-                ['label' => 'Male', 'value' => 'male'],
-                ['label' => 'Female', 'value' => 'female'],
-                ['label' => 'Other', 'value' => 'other'],
+            "{$module}_menu-json" => [
+                ['label' => 'Add New', 'value' => 'add-new', 'href'=> '/consultation/create']
             ],
-            'status-json' => [
+			"{$module}_status-json" => [
                 ['label' => 'Active', 'value' => 'active'],
                 ['label' => 'Inactive', 'value' => 'inactive'],
             ],

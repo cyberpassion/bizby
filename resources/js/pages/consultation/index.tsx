@@ -17,7 +17,7 @@ export default function ConsultationIndex() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Consultation List" />
             <div className="min-h-screen bg-gray-50 p-6">
-                <Card className="mx-auto w-full max-w-4xl shadow-lg">
+                <Card className="w-full shadow-lg">
                     <CardContent>
                         {consultations && consultations.length > 0 ? (
                             <table className="w-full rounded-lg border border-gray-200 text-left">

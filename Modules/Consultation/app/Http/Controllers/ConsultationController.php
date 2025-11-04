@@ -128,4 +128,22 @@ class ConsultationController extends Controller
         return view('consultation::home');
     }
 
+	/**
+     * Display a home of the resource.
+     */
+    public function report()
+    {
+		return Inertia::render('consultation/report');
+        return view('consultation::report');
+    }
+
+	/**
+     * Display a home of the resource.
+     */
+    public function settings()
+    {
+		return Inertia::render('consultation/settings');
+        return view('consultation::settings');
+    }
+
 }

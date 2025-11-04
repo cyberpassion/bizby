@@ -26,6 +26,12 @@ const mainNavItems: NavItem[] = [
         title: 'Consultation',
         href: '/consultation/home',
         icon: LayoutGrid,
+        children: [
+            { title: 'Add New', href: '/consultation/create' },
+            { title: 'View List', href: '/consultation' },
+            { title: 'Report', href: '/consultation/report' },
+            { title: 'Settings', href: '/consultation/settings' },
+        ],
     },
 ];
 

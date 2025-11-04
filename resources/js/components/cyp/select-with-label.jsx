@@ -1,3 +1,4 @@
+import { Label } from '@/components/ui/label';
 import {
     Select,
     SelectContent,
@@ -7,7 +8,15 @@ import {
 } from '@/components/ui/select';
 import { useEffect, useState } from 'react';
 
-function CustomSelect({ id, placeholder, module, dataKey }) {
+function SelectWithLabel({
+    label,
+    id,
+    placeholder,
+    module,
+    dataKey,
+    col,
+    ...props
+}) {
     const [options, setOptions] = useState([]);
     const [selectedValue, setSelectedValue] = useState('');
 
@@ -26,19 +35,22 @@ function CustomSelect({ id, placeholder, module, dataKey }) {
     }, []);
 
     return (
-        <Select onValueChange={setSelectedValue}>
-            <SelectTrigger id={id}>
-                <SelectValue placeholder={placeholder || 'Select option'} />
-            </SelectTrigger>
-            <SelectContent>
-                {options.map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                    </SelectItem>
-                ))}
-            </SelectContent>
-        </Select>
+        <div className={`col-span-${col}`}>
+            <Label htmlFor={id}>{label}</Label>
+            <Select onValueChange={setSelectedValue} {...props}>
+                <SelectTrigger id={id}>
+                    <SelectValue placeholder={placeholder || 'Select option'} />
+                </SelectTrigger>
+                <SelectContent>
+                    {options.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                            {item.label}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+        </div>
     );
 }
 
-export { CustomSelect };
+export { SelectWithLabel };

@@ -8,12 +8,12 @@ import EntryForm from './components/forms/EntryForm';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Consultation Create',
+        title: 'Consultation Settings',
         href: '#',
     },
 ];
 
-export default function ConsultationCreate() {
+export default function ConsultationSettings() {
     const { register, handleSubmit, reset } = useForm();
     const [loading, setLoading] = useState(false);
 
@@ -44,7 +44,7 @@ export default function ConsultationCreate() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Consultation Create" />
+            <Head title="Consultation Settings" />
             <EntryForm
                 register={register}
                 handleSubmit={handleSubmit}

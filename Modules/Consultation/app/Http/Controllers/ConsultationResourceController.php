@@ -4,13 +4,13 @@ namespace Modules\Consultation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use Modules\Consultation\Services\ConsultationOptionService;
+use Modules\Consultation\Services\ConsultationResourceService;
 
-class ConsultationOptionController extends Controller
+class ConsultationResourceController extends Controller
 {
     public function get($key)
     {
-        $options = ConsultationOptionService::get($key);
+        $options = ConsultationResourceService::get($key);
 
         if (!$options) {
             return response()->json(['error' => 'Invalid key'], 404);
