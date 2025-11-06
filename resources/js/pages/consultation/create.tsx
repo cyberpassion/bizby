@@ -1,46 +1,33 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-
+import { useFormSubmit } from '@/hooks/cyp/use-form-submit';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import EntryForm from './components/forms/EntryForm';
+import { useForm } from 'react-hook-form';
+import { EntryForm } from './components/module-forms';
+
+import { module } from './about';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Consultation Create',
+        title: module.label + ' Create',
         href: '#',
     },
 ];
 
 export default function ConsultationCreate() {
     const { register, handleSubmit, reset } = useForm();
-    const [loading, setLoading] = useState(false);
 
-    const onSubmit = async (data: any) => {
-        setLoading(true);
-        try {
-            // Send to backend (Inertia or API)
-            await fetch('/consultations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document
-                        .querySelector('meta[name="csrf-token"]')
-                        .getAttribute('content'),
-                },
-                body: JSON.stringify(data),
-            });
-
-            alert('Consultation saved successfully!');
+    const { handleFormSubmit, loading } = useFormSubmit({
+        url: '/consultations',
+        onSuccess: (response: any, data: any) => {
+            alert('Saved successfully!');
             reset();
-        } catch (error) {
+        },
+        onError: (error) => {
             console.error(error);
-            alert('Error saving consultation.');
-        } finally {
-            setLoading(false);
-        }
-    };
+            alert('Error saving form.');
+        },
+    });
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -48,7 +35,7 @@ export default function ConsultationCreate() {
             <EntryForm
                 register={register}
                 handleSubmit={handleSubmit}
-                onSubmit={onSubmit}
+                onSubmit={handleFormSubmit}
                 loading={loading}
             />
         </AppLayout>

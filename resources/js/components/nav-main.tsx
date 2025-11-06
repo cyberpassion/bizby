@@ -21,40 +21,41 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
     const page = usePage();
     return (
         <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupLabel>Modules</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
-                    <SidebarMenuItem key={item.title}>
+                    <SidebarMenuItem key={item.label}>
                         <SidebarMenuButton
                             asChild
                             isActive={page.url.startsWith(
                                 resolveUrl(item.href),
                             )}
-                            tooltip={{ children: item.title }}
+                            tooltip={{ children: item.label }}
                         >
                             <Link href={item.href} prefetch>
                                 {item.icon && <item.icon />}
-                                <span>{item.title}</span>
+                                <span>{item.label}</span>
                             </Link>
                         </SidebarMenuButton>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <SidebarMenuAction>
-                                    <ChevronDown className="h-4 w-4" />
-                                </SidebarMenuAction>
-                            </DropdownMenuTrigger>
-                            {item.children && item.children.length > 0 && (
+                        {item.children && item.children.length > 0 && (
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <SidebarMenuAction>
+                                        <ChevronDown className="h-4 w-4" />
+                                    </SidebarMenuAction>
+                                </DropdownMenuTrigger>
+
                                 <DropdownMenuContent side="right" align="start">
                                     {item.children.map((child) => (
-                                        <DropdownMenuItem key={child.title}>
+                                        <DropdownMenuItem key={child.label}>
                                             <Link href={child.href} prefetch>
-                                                {child.title}
+                                                {child.label}
                                             </Link>
                                         </DropdownMenuItem>
                                     ))}
                                 </DropdownMenuContent>
-                            )}
-                        </DropdownMenu>
+                            </DropdownMenu>
+                        )}
                     </SidebarMenuItem>
                 ))}
             </SidebarMenu>

@@ -124,4 +124,13 @@ class ConsultationApiController extends Controller
         return view('consultation::home');
     }
 
+	/**
+     * Display a home of the resource.
+     */
+    public function view($id)
+    {
+		return Inertia::render('consultation/view');
+        return view('consultation::view');
+    }
+
 }

@@ -10,40 +10,48 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { apiGet } from '@/lib/cyp/apiHelpers';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, LayoutGrid } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import AppLogo from './app-logo';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Consultation',
-        href: '/consultation/home',
-        icon: LayoutGrid,
-        children: [
-            { title: 'Add New', href: '/consultation/create' },
-            { title: 'View List', href: '/consultation' },
-            { title: 'Report', href: '/consultation/report' },
-            { title: 'Settings', href: '/consultation/settings' },
-        ],
-    },
-];
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Documentation',
+        label: 'Documentation',
         href: 'https://learn.udyogx.in',
         icon: BookOpen,
     },
 ];
 
 export function AppSidebar() {
+    const [mainNavItems, setMainNavItems] = useState<NavItem[]>([]);
+    useEffect(() => {
+        async function fetchModules() {
+            try {
+                const response = await apiGet(
+                    'shared/resource/module_menu-json',
+                );
+                const items = response.data.map((module: any) => ({
+                    label: module.label,
+                    href: module.href,
+                    icon: module.icon,
+                    children: module.children,
+                }));
+                setMainNavItems(items);
+                console.log(
+                    'Fetched nav items:',
+                    JSON.stringify(response.data),
+                );
+            } catch (err) {
+                console.error('Error fetching nav items:', err);
+            }
+        }
+
+        fetchModules();
+    }, []);
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

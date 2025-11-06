@@ -11,6 +11,7 @@ use Modules\Consultation\Http\Controllers\ConsultationResourceController; // Opt
 // Temporarily disable auth middleware
 Route::prefix('v1')->group(function () {
     Route::apiResource('consultation', ConsultationApiController::class)->names('consultation');
-	Route::get('/resource/{key}', [ConsultationResourceController::class, 'get']); // Global Resource Options
+	Route::get('/consultation/{id}/view', [ConsultationApiController::class, 'get']); // Consultation Resource Route
+	Route::get('/consultation/{id}/edit', [ConsultationApiController::class, 'get']); // Consultation Resource Route
 	Route::get('/consultation/resource/{key}', [ConsultationResourceController::class, 'get']); // Consultation Resource Route
 });

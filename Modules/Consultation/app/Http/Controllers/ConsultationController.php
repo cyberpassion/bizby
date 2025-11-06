@@ -21,14 +21,14 @@ class ConsultationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function list()
     {
 		$consultations = $this->service->list();
 		//dd($consultations->toArray());
-        return Inertia::render('consultation/index', [
+        return Inertia::render('consultation/list', [
             'consultations' => $consultations
         ]);
-        return view('consultation::index');
+        return view('consultation::list');
     }
 
     /**
@@ -79,7 +79,7 @@ class ConsultationController extends Controller
     public function edit($id)
     {
 		$consultation = Consultation::findOrFail($id);
-        return Inertia::render('consultation/edit', [
+        return Inertia::render('consultation/create', [
             'consultation' => $consultation
         ]);
         return view('consultation::edit');
@@ -144,6 +144,18 @@ class ConsultationController extends Controller
     {
 		return Inertia::render('consultation/settings');
         return view('consultation::settings');
+    }
+
+	/**
+     * Display a home of the resource.
+     */
+    public function view($id)
+    {
+		$consultation = $this->service->find($id);
+   	 	return Inertia::render('consultation/view', [
+        	'consultation' => $consultation
+    	]);
+        return view('consultation::view');
     }
 
 }

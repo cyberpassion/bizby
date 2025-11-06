@@ -1,5 +1,6 @@
 {
     "Student": true,
     "Blog": true,
-    "Consultation": true
+    "Consultation": true,
+    "Shared": true
 }

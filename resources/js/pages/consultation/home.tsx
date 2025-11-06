@@ -27,7 +27,7 @@ export default function Home() {
         },
         {
             title: 'View All Consultations',
-            href: '/consultation',
+            href: '/consultations',
             icon: FileText,
         },
         {
@@ -37,7 +37,7 @@ export default function Home() {
         },
         {
             title: 'Consultation Reports',
-            href: '/consultation/reports',
+            href: '/consultation/report',
             icon: BarChart2,
         },
         {

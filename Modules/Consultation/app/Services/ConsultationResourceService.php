@@ -6,12 +6,23 @@ class ConsultationResourceService
 {
     public static function get($key)
     {
-		$module = 'consultation';
+		$moduleLabel = 'Consultation';
+		$moduleName = 'consultation';
         $data = [
-            "{$module}_menu-json" => [
-                ['label' => 'Add New', 'value' => 'add-new', 'href'=> '/consultation/create']
-            ],
-			"{$module}_status-json" => [
+            "{$moduleName}_menu-json" => [
+				[
+					'label'	=> $moduleLabel,
+					'value'	=> $moduleName,
+					'href'	=> "/{$moduleName}/home",
+					'children'	=> [
+		                ['label' => 'Add New', 'value' => 'add-new', 'href'=> "/{$moduleName}/create"],
+						['label' => 'View List', 'value' => 'view-list', 'href'=> "/{$moduleName}s"],
+						['label' => 'Settings', 'value' => 'settings', 'href'=> "/{$moduleName}/settings"],
+						['label' => 'Reports', 'value' => 'reports', 'href'=> "/{$moduleName}/report"],
+            		]
+				]
+			],
+			"{$moduleName}_status-json" => [
                 ['label' => 'Active', 'value' => 'active'],
                 ['label' => 'Inactive', 'value' => 'inactive'],
             ],

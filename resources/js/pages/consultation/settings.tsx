@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import EntryForm from './components/forms/EntryForm';
+import { SettingsForm } from './components/module-forms';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -45,7 +45,7 @@ export default function ConsultationSettings() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Consultation Settings" />
-            <EntryForm
+            <SettingsForm
                 register={register}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
