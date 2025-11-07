@@ -57,25 +57,6 @@ export function EntryForm(props: any) {
 export function ReportForm(props: any) {
     return (
         <FormWrapper {...props}>
-            <InputWithLabel
-                label="Patient Name"
-                id="patient_name"
-                placeholder="Enter patient name"
-                col={6}
-                {...props.register('patient_name')}
-                required
-            />
-
-            <InputWithLabel
-                label="Age"
-                id="age"
-                placeholder="Enter age"
-                col={6}
-                {...props.register('age')}
-                required
-                type="number"
-            />
-
             <SelectWithLabel
                 label="Doctor"
                 id="doctor"
@@ -85,22 +66,13 @@ export function ReportForm(props: any) {
                 col={6}
             />
 
-            <InputWithLabel
-                label="Fee"
-                id="fee"
-                placeholder="Enter fee"
+            <SelectWithLabel
+                label="Mode"
+                id="mode"
+                placeholder="Select mode"
+                module="mode"
+                dataKey="mode-json"
                 col={6}
-                {...props.register('fee')}
-                required
-                type="number"
-            />
-
-            <InputWithLabel
-                label="Location"
-                id="location"
-                placeholder="Enter Location"
-                col={6}
-                {...props.register('location')}
             />
         </FormWrapper>
     );
