@@ -1,0 +1,11 @@
+{
+    "name": "Visitplanner",
+    "alias": "visitplanner",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Visitplanner\\Providers\\VisitplannerServiceProvider"
+    ],
+    "files": []
+}
