@@ -7,36 +7,19 @@ class ConsultationResourceService
     public static function get($key)
     {
         $moduleLabel = 'Consultation';
-        $moduleName = 'consultation';
+        $moduleName = $pg = 'consultation';
         $res = null;
 
         switch ($key) {
-            case "{$moduleName}_menu-json":
-                $res = [
-                    [
-                        'label' => $moduleLabel,
-                        'value' => $moduleName,
-                        'href' => "/{$moduleName}/home",
-                        'children' => [
-                            ['label' => 'Add New', 'value' => 'add-new', 'href' => "/{$moduleName}/create"],
-                            ['label' => 'View List', 'value' => 'view-list', 'href' => "/{$moduleName}s"],
-                            ['label' => 'Reports', 'value' => 'reports', 'href' => "/{$moduleName}/report"],
-                            ['label' => 'Settings', 'value' => 'settings', 'href' => "/{$moduleName}/settings"],
-                        ]
-                    ]
-                ];
-                break;
 
-            case "{$moduleName}_status-json":
-                $res = [
-                    ['label' => 'Active', 'value' => 'active'],
-                    ['label' => 'Inactive', 'value' => 'inactive'],
-                ];
-                break;
+			case 'consultation/create':
+			case 'consultation/update':
+				$res = [
+        	    	'patient_name'      => 'required|string|max:255',
+					'consultation_with'	=> 'required|string|max:255',
+				];
+				break;
 
-            default:
-                $res = null;
-                break;
         }
 
         return $res;

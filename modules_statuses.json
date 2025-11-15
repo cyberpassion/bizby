@@ -2,5 +2,6 @@
     "Student": true,
     "Blog": true,
     "Consultation": true,
-    "Shared": true
+    "Shared": true,
+    "Employee": true
 }

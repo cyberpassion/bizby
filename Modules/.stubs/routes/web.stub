@@ -1,0 +1,17 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\$CONTROLLER_NAMESPACE$\$STUDLY_NAME$Controller;
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('$PLURAL_LOWER_NAME$', $STUDLY_NAME$Controller::class)->names('$LOWER_NAME$');
+	// Custom Routes
+    Route::prefix('$LOWER_NAME$')->name('$LOWER_NAME$.')->group(function () {
+        Route::get('home', [$STUDLY_NAME$Controller::class, 'home'])->name('home');
+        Route::get('list', [$STUDLY_NAME$Controller::class, 'list'])->name('list');
+        Route::get('report', [$STUDLY_NAME$Controller::class, 'report'])->name('report');
+        Route::get('settings', [$STUDLY_NAME$Controller::class, 'settings'])->name('settings');
+        Route::get('{id}/view', [$STUDLY_NAME$Controller::class, 'view'])->name('view');
+        Route::get('{id}/edit', [$STUDLY_NAME$Controller::class, 'edit'])->name('edit');
+    });
+});

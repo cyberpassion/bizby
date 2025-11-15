@@ -24,9 +24,11 @@ return [
     |
     */
     'stubs' => [
-        'enabled' => false,
-        'path' => base_path('vendor/nwidart/laravel-modules/src/Commands/stubs'),
+        'enabled' => true,
+        //'path' => base_path('vendor/nwidart/laravel-modules/src/Commands/stubs'),
+		'path' => base_path('Modules/.stubs'),
         'files' => [
+//			'controller' => 'Http/Controllers/$STUDLY_NAME$Controller.php',
             'routes/web' => 'routes/web.php',
             'routes/api' => 'routes/api.php',
             'views/index' => 'resources/views/index.blade.php',

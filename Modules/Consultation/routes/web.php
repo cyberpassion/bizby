@@ -3,15 +3,30 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Consultation\Http\Controllers\ConsultationController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-	// Custom Routes
-	Route::get('consultation/home', [ConsultationController::class, 'home'])->name('consultation.home');
-	Route::get('consultations', [ConsultationController::class, 'list'])->name('consultation.list');
-	Route::get('consultation/report', [ConsultationController::class, 'report'])->name('consultation.report');
-	Route::get('consultation/settings', [ConsultationController::class, 'settings'])->name('consultation.settings');
-	// Single Routes
-	Route::get('/consultation/{id}/view', [ConsultationController::class, 'view'])->name('consultation.view'); // Consultation Resource Route
-	Route::get('/consultation/{id}/edit', [ConsultationController::class, 'edit'])->name('consultation.edit'); // Consultation Resource Route
-	// Default Resource Routes
-    Route::resource('consultation', ConsultationController::class)->names('consultation');
+Route::middleware(['auth', 'verified'])->prefix('consultation')->name('consultation.')->group(function () {
+
+    Route::get('/list', [ConsultationController::class, 'list'])->name('list'); // List page, we use this rather than usual page which has 's' as suffix
+    Route::get('/report', [ConsultationController::class, 'report'])->name('report'); // Report page
+    Route::get('/settings', [ConsultationController::class, 'settings'])->name('settings'); // Settings page
+
+    // Custom actions
+    Route::post('{id}/restore', [ConsultationController::class, 'restore'])->name('restore'); // Restore Page
+    Route::get('{id}/document', [ConsultationController::class, 'document'])->name('document'); // List of documents like slips
+
+	// Upload
+	Route::get('{id}/upload', [ConsultationController::class, 'upload'])->name('upload'); // Upload Page
+	Route::post('{id}/storeupload', [ConsultationController::class, 'storeUpload'])->name('storeUpload'); // Saving Uploads
+
+    // Resourceful routes (index, create, store, show, edit, update, destroy)
+    Route::resource('/', ConsultationController::class)
+        ->parameters(['' => 'consultation'])
+        ->names([
+            'index' => 'index', // dashboard page
+            'create' => 'create', // create entry
+            'store' => 'store', // store created entry
+            'show' => 'show', // 
+            'edit' => 'edit', // edit entry
+            'update' => 'update', // update edit
+            'destroy' => 'destroy', // remove entry
+        ]);
 });
