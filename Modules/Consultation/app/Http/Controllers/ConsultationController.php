@@ -23,7 +23,7 @@ class ConsultationController extends Controller
     }
 
 	/**
-     * Display a listing of the resource.
+     * Display a dashboard
      */
     public function index()
     {
@@ -130,16 +130,7 @@ class ConsultationController extends Controller
 	}
 
 	/**
-     * Display a home of the resource.
-     */
-    public function home()
-    {
-		return Inertia::render("{$this->moduleName}/home");
-        return view("{$this->moduleName}::home");
-    }
-
-	/**
-     * Display a home of the resource.
+     * Display a report of the resource.
      */
     public function report()
     {
@@ -148,50 +139,12 @@ class ConsultationController extends Controller
     }
 
 	/**
-     * Display a home of the resource.
+     * Display a settings of the resource.
      */
     public function settings()
     {
 		return Inertia::render("{$this->moduleName}/settings");
         return view("{$this->moduleName}::settings");
-    }
-
-	public function upload($id)
-	{
-    	$consultation = Consultation::findOrFail($id);
-    	return view("{$this->moduleName}::upload", compact($this->moduleName));
-	}
-
-	/**
-     * Upload a document for a consultation
-     */
-    public function storeupload(Request $request, $id)
-    {
-        // Find the consultation
-        $consultation = Consultation::findOrFail($id);
-
-        // Validate the incoming file
-        $request->validate([
-            'file' => 'required|file|max:10240|mimes:pdf,jpg,jpeg,png,doc,docx', // 10 MB limit
-        ]);
-
-        // Store the file
-        $path = $request->file('file')->store("consultations/{$id}", 'public');
-
-        // Optionally, save the file path to the consultation
-        $consultation->document_path = $path;
-        $consultation->save();
-
-        // Return response
-        if ($request->expectsJson()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'File uploaded successfully',
-                'path' => $path
-            ], 201);
-        }
-
-        return redirect()->back()->with('success', 'File uploaded successfully.');
     }
 
 }
