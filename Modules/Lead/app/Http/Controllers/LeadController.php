@@ -1,17 +1,46 @@
 <?php
-namespace Modules\Lead\$CONTROLLER_NAMESPACE$;
 
+namespace Modules\Lead\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Inertia\Inertia;
+
+use Modules\Lead\Services\LeadService;
+use Modules\Lead\Models\Lead;
+use Modules\Lead\Formatters\LeadFormatter;
+use Illuminate\Support\Facades\Storage;
+use Modules\Lead\Services\LeadResourceService;
 
 class LeadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    protected $service;
+	protected $moduleName = 'lead';
+
+    public function __construct(LeadService $service)
+    {
+        $this->service = $service;
+    }
+
+	/**
+     * Display a dashboard
      */
     public function index()
     {
-        return view('lead::index');
+        return view("{$this->moduleName}::index");
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function list()
+    {
+		$leads = $this->service->list();
+		//dd($leads->toArray());
+        return Inertia::render("{$this->moduleName}/list", [
+            'leads' => $leads
+        ]);
+        return view("{$this->moduleName}::list");
     }
 
     /**
@@ -19,23 +48,44 @@ class LeadController extends Controller
      */
     public function create()
     {
-        return view('lead::create');
+		//return Inertia::render("{$this->moduleName}/create");
+        return view("{$this->moduleName}::create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // store logic here
-    }
+	{
+    	try {
+	        $validated = $request->validate( LeadResourceService::get("{$this->moduleName}/create") );
+
+	        // Debug: show what is coming from form
+    	    // dd('VALIDATED DATA:', $validated);
+
+	        $lead = Lead::create($validated);
+
+	        dd('INSERTED:', $lead);
+
+	    } catch (\Exception $e) {
+
+    	    dd('ERROR:', $e->getMessage());
+    	}
+	}
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      */
     public function show($id)
     {
-        return view('lead::show', compact('id'));
+		$lead = Lead::findOrFail($id);
+		$formatted = LeadFormatter::format($lead);
+		//print_r($lead->toArray());
+		dd($formatted);die();
+        return Inertia::render("{$this->moduleName}/show", [
+            $this->moduleName => $lead
+        ]);
+        return view("{$this->moduleName}::show");
     }
 
     /**
@@ -43,51 +93,58 @@ class LeadController extends Controller
      */
     public function edit($id)
     {
-        return view('lead::edit', compact('id'));
+		$lead = Lead::findOrFail($id);
+        return Inertia::render("{$this->moduleName}/create", [
+            $this->moduleName => $lead
+        ]);
+        return view("{$this->moduleName}::edit");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        // update logic here
-    }
+    public function update(Request $request, $id) {
+		// Validate incoming data
+        $validated = $request->validate( LeadResourceService::get("{$this->moduleName}/update") );
+
+        // Find and update lead
+        $lead = Lead::findOrFail($id);
+        $lead->update($validated);
+
+        // Redirect with success message
+        return redirect()
+            ->route("{$this->moduleName}.index")
+            ->with('success', 'Lead updated successfully.');
+	}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        // delete logic here
-    }
+    public function destroy($id) {
+		$lead = Lead::findOrFail($id);
+        $lead->delete();
 
-    // ----------------------------------------
-    // 🔹 Custom Methods for SaaS Modules
-    // ----------------------------------------
+        return redirect()
+            ->route('lead.index')
+            ->with('success', 'Lead deleted successfully.');
+	}
 
-    public function home()
-    {
-        return view('lead::home');
-    }
-
-    public function list()
-    {
-        return view('lead::list');
-    }
-
+	/**
+     * Display a report of the resource.
+     */
     public function report()
     {
-        return view('lead::report');
+		return Inertia::render("{$this->moduleName}/report");
+        return view("{$this->moduleName}::report");
     }
 
+	/**
+     * Display a settings of the resource.
+     */
     public function settings()
     {
-        return view('lead::settings');
+		return Inertia::render("{$this->moduleName}/settings");
+        return view("{$this->moduleName}::settings");
     }
 
-    public function view($id)
-    {
-        return view('lead::view', compact('id'));
-    }
 }

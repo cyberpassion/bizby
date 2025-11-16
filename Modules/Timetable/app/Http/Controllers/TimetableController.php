@@ -1,17 +1,46 @@
 <?php
-namespace Modules\Timetable\$CONTROLLER_NAMESPACE$;
 
+namespace Modules\Timetable\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Inertia\Inertia;
+
+use Modules\Timetable\Services\TimetableService;
+use Modules\Timetable\Models\Timetable;
+use Modules\Timetable\Formatters\TimetableFormatter;
+use Illuminate\Support\Facades\Storage;
+use Modules\Timetable\Services\TimetableResourceService;
 
 class TimetableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    protected $service;
+	protected $moduleName = 'timetable';
+
+    public function __construct(TimetableService $service)
+    {
+        $this->service = $service;
+    }
+
+	/**
+     * Display a dashboard
      */
     public function index()
     {
-        return view('timetable::index');
+        return view("{$this->moduleName}::index");
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function list()
+    {
+		$timetables = $this->service->list();
+		//dd($timetables->toArray());
+        return Inertia::render("{$this->moduleName}/list", [
+            'timetables' => $timetables
+        ]);
+        return view("{$this->moduleName}::list");
     }
 
     /**
@@ -19,23 +48,44 @@ class TimetableController extends Controller
      */
     public function create()
     {
-        return view('timetable::create');
+		//return Inertia::render("{$this->moduleName}/create");
+        return view("{$this->moduleName}::create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // store logic here
-    }
+	{
+    	try {
+	        $validated = $request->validate( TimetableResourceService::get("{$this->moduleName}/create") );
+
+	        // Debug: show what is coming from form
+    	    // dd('VALIDATED DATA:', $validated);
+
+	        $timetable = Timetable::create($validated);
+
+	        dd('INSERTED:', $timetable);
+
+	    } catch (\Exception $e) {
+
+    	    dd('ERROR:', $e->getMessage());
+    	}
+	}
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      */
     public function show($id)
     {
-        return view('timetable::show', compact('id'));
+		$timetable = Timetable::findOrFail($id);
+		$formatted = TimetableFormatter::format($timetable);
+		//print_r($timetable->toArray());
+		dd($formatted);die();
+        return Inertia::render("{$this->moduleName}/show", [
+            $this->moduleName => $timetable
+        ]);
+        return view("{$this->moduleName}::show");
     }
 
     /**
@@ -43,51 +93,59 @@ class TimetableController extends Controller
      */
     public function edit($id)
     {
-        return view('timetable::edit', compact('id'));
+		$timetable = Timetable::findOrFail($id);
+        return Inertia::render("{$this->moduleName}/create", [
+            $this->moduleName => $timetable
+        ]);
+        return view("{$this->moduleName}::edit");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        // update logic here
-    }
+    public function update(Request $request, $id) {
+		// Validate incoming data
+        $validated = $request->validate( TimetableResourceService::get("{$this->moduleName}/update") );
+
+        // Find and update timetable
+        $timetable = Timetable::findOrFail($id);
+        $timetable->update($validated);
+
+        // Redirect with success message
+        return redirect()
+            ->route("{$this->moduleName}.index")
+            ->with('success', 'Timetable updated successfully.');
+	}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        // delete logic here
-    }
+    public function destroy($id) {
+		$timetable = Timetable::findOrFail($id);
+        $timetable->delete();
 
-    // ----------------------------------------
-    // 🔹 Custom Methods for SaaS Modules
-    // ----------------------------------------
+        return redirect()
+            ->route('timetable.index')
+            ->with('success', 'Timetable deleted successfully.');
+	}
 
-    public function home()
-    {
-        return view('timetable::home');
-    }
-
-    public function list()
-    {
-        return view('timetable::list');
-    }
-
+	/**
+     * Display a report of the resource.
+     */
     public function report()
     {
-        return view('timetable::report');
+		return Inertia::render("{$this->moduleName}/report");
+        return view("{$this->moduleName}::report");
     }
 
+	/**
+     * Display a settings of the resource.
+     */
     public function settings()
     {
-        return view('timetable::settings');
+		return Inertia::render("{$this->moduleName}/settings");
+        return view("{$this->moduleName}::settings");
     }
 
-    public function view($id)
-    {
-        return view('timetable::view', compact('id'));
-    }
 }
+

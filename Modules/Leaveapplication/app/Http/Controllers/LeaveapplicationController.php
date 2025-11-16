@@ -1,17 +1,46 @@
 <?php
-namespace Modules\Leaveapplication\$CONTROLLER_NAMESPACE$;
 
+namespace Modules\Leaveapplication\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Inertia\Inertia;
+
+use Modules\Leaveapplication\Services\LeaveapplicationService;
+use Modules\Leaveapplication\Models\Leaveapplication;
+use Modules\Leaveapplication\Formatters\LeaveapplicationFormatter;
+use Illuminate\Support\Facades\Storage;
+use Modules\Leaveapplication\Services\LeaveapplicationResourceService;
 
 class LeaveapplicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    protected $service;
+	protected $moduleName = 'leaveapplication';
+
+    public function __construct(LeaveapplicationService $service)
+    {
+        $this->service = $service;
+    }
+
+	/**
+     * Display a dashboard
      */
     public function index()
     {
-        return view('leaveapplication::index');
+        return view("{$this->moduleName}::index");
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function list()
+    {
+		$leaveapplications = $this->service->list();
+		//dd($leaveapplications->toArray());
+        return Inertia::render("{$this->moduleName}/list", [
+            'leaveapplications' => $leaveapplications
+        ]);
+        return view("{$this->moduleName}::list");
     }
 
     /**
@@ -19,23 +48,44 @@ class LeaveapplicationController extends Controller
      */
     public function create()
     {
-        return view('leaveapplication::create');
+		//return Inertia::render("{$this->moduleName}/create");
+        return view("{$this->moduleName}::create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // store logic here
-    }
+	{
+    	try {
+	        $validated = $request->validate( LeaveapplicationResourceService::get("{$this->moduleName}/create") );
+
+	        // Debug: show what is coming from form
+    	    // dd('VALIDATED DATA:', $validated);
+
+	        $leaveapplication = Leaveapplication::create($validated);
+
+	        dd('INSERTED:', $leaveapplication);
+
+	    } catch (\Exception $e) {
+
+    	    dd('ERROR:', $e->getMessage());
+    	}
+	}
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      */
     public function show($id)
     {
-        return view('leaveapplication::show', compact('id'));
+		$leaveapplication = Leaveapplication::findOrFail($id);
+		$formatted = LeaveapplicationFormatter::format($leaveapplication);
+		//print_r($leaveapplication->toArray());
+		dd($formatted);die();
+        return Inertia::render("{$this->moduleName}/show", [
+            $this->moduleName => $leaveapplication
+        ]);
+        return view("{$this->moduleName}::show");
     }
 
     /**
@@ -43,51 +93,58 @@ class LeaveapplicationController extends Controller
      */
     public function edit($id)
     {
-        return view('leaveapplication::edit', compact('id'));
+		$leaveapplication = Leaveapplication::findOrFail($id);
+        return Inertia::render("{$this->moduleName}/create", [
+            $this->moduleName => $leaveapplication
+        ]);
+        return view("{$this->moduleName}::edit");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        // update logic here
-    }
+    public function update(Request $request, $id) {
+		// Validate incoming data
+        $validated = $request->validate( LeaveapplicationResourceService::get("{$this->moduleName}/update") );
+
+        // Find and update leaveapplication
+        $leaveapplication = Leaveapplication::findOrFail($id);
+        $leaveapplication->update($validated);
+
+        // Redirect with success message
+        return redirect()
+            ->route("{$this->moduleName}.index")
+            ->with('success', 'Leaveapplication updated successfully.');
+	}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        // delete logic here
-    }
+    public function destroy($id) {
+		$leaveapplication = Leaveapplication::findOrFail($id);
+        $leaveapplication->delete();
 
-    // ----------------------------------------
-    // 🔹 Custom Methods for SaaS Modules
-    // ----------------------------------------
+        return redirect()
+            ->route('leaveapplication.index')
+            ->with('success', 'Leaveapplication deleted successfully.');
+	}
 
-    public function home()
-    {
-        return view('leaveapplication::home');
-    }
-
-    public function list()
-    {
-        return view('leaveapplication::list');
-    }
-
+	/**
+     * Display a report of the resource.
+     */
     public function report()
     {
-        return view('leaveapplication::report');
+		return Inertia::render("{$this->moduleName}/report");
+        return view("{$this->moduleName}::report");
     }
 
+	/**
+     * Display a settings of the resource.
+     */
     public function settings()
     {
-        return view('leaveapplication::settings');
+		return Inertia::render("{$this->moduleName}/settings");
+        return view("{$this->moduleName}::settings");
     }
 
-    public function view($id)
-    {
-        return view('leaveapplication::view', compact('id'));
-    }
 }

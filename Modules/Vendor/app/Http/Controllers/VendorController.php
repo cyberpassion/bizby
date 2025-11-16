@@ -1,17 +1,46 @@
 <?php
-namespace Modules\Vendor\$CONTROLLER_NAMESPACE$;
 
+namespace Modules\Vendor\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Inertia\Inertia;
+
+use Modules\Vendor\Services\VendorService;
+use Modules\Vendor\Models\Vendor;
+use Modules\Vendor\Formatters\VendorFormatter;
+use Illuminate\Support\Facades\Storage;
+use Modules\Vendor\Services\VendorResourceService;
 
 class VendorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    protected $service;
+	protected $moduleName = 'vendor';
+
+    public function __construct(VendorService $service)
+    {
+        $this->service = $service;
+    }
+
+	/**
+     * Display a dashboard
      */
     public function index()
     {
-        return view('vendor::index');
+        return view("{$this->moduleName}::index");
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function list()
+    {
+		$vendors = $this->service->list();
+		//dd($vendors->toArray());
+        return Inertia::render("{$this->moduleName}/list", [
+            'vendors' => $vendors
+        ]);
+        return view("{$this->moduleName}::list");
     }
 
     /**
@@ -19,23 +48,44 @@ class VendorController extends Controller
      */
     public function create()
     {
-        return view('vendor::create');
+		//return Inertia::render("{$this->moduleName}/create");
+        return view("{$this->moduleName}::create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // store logic here
-    }
+	{
+    	try {
+	        $validated = $request->validate( VendorResourceService::get("{$this->moduleName}/create") );
+
+	        // Debug: show what is coming from form
+    	    // dd('VALIDATED DATA:', $validated);
+
+	        $vendor = Vendor::create($validated);
+
+	        dd('INSERTED:', $vendor);
+
+	    } catch (\Exception $e) {
+
+    	    dd('ERROR:', $e->getMessage());
+    	}
+	}
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      */
     public function show($id)
     {
-        return view('vendor::show', compact('id'));
+		$vendor = Vendor::findOrFail($id);
+		$formatted = VendorFormatter::format($vendor);
+		//print_r($vendor->toArray());
+		dd($formatted);die();
+        return Inertia::render("{$this->moduleName}/show", [
+            $this->moduleName => $vendor
+        ]);
+        return view("{$this->moduleName}::show");
     }
 
     /**
@@ -43,51 +93,58 @@ class VendorController extends Controller
      */
     public function edit($id)
     {
-        return view('vendor::edit', compact('id'));
+		$vendor = Vendor::findOrFail($id);
+        return Inertia::render("{$this->moduleName}/create", [
+            $this->moduleName => $vendor
+        ]);
+        return view("{$this->moduleName}::edit");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        // update logic here
-    }
+    public function update(Request $request, $id) {
+		// Validate incoming data
+        $validated = $request->validate( VendorResourceService::get("{$this->moduleName}/update") );
+
+        // Find and update vendor
+        $vendor = Vendor::findOrFail($id);
+        $vendor->update($validated);
+
+        // Redirect with success message
+        return redirect()
+            ->route("{$this->moduleName}.index")
+            ->with('success', 'Vendor updated successfully.');
+	}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        // delete logic here
-    }
+    public function destroy($id) {
+		$vendor = Vendor::findOrFail($id);
+        $vendor->delete();
 
-    // ----------------------------------------
-    // 🔹 Custom Methods for SaaS Modules
-    // ----------------------------------------
+        return redirect()
+            ->route('vendor.index')
+            ->with('success', 'Vendor deleted successfully.');
+	}
 
-    public function home()
-    {
-        return view('vendor::home');
-    }
-
-    public function list()
-    {
-        return view('vendor::list');
-    }
-
+	/**
+     * Display a report of the resource.
+     */
     public function report()
     {
-        return view('vendor::report');
+		return Inertia::render("{$this->moduleName}/report");
+        return view("{$this->moduleName}::report");
     }
 
+	/**
+     * Display a settings of the resource.
+     */
     public function settings()
     {
-        return view('vendor::settings');
+		return Inertia::render("{$this->moduleName}/settings");
+        return view("{$this->moduleName}::settings");
     }
 
-    public function view($id)
-    {
-        return view('vendor::view', compact('id'));
-    }
 }

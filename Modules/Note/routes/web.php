@@ -4,14 +4,15 @@ use Illuminate\Support\Facades\Route;
 use Modules\Note\Http\Controllers\NoteController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('notes', NoteController::class)->names('note');
+    Route::resource('note', NoteController::class)->names('note');
 	// Custom Routes
     Route::prefix('note')->name('note.')->group(function () {
-        Route::get('home', [NoteController::class, 'home'])->name('home');
-        Route::get('list', [NoteController::class, 'list'])->name('list');
-        Route::get('report', [NoteController::class, 'report'])->name('report');
-        Route::get('settings', [NoteController::class, 'settings'])->name('settings');
-        Route::get('{id}/view', [NoteController::class, 'view'])->name('view');
-        Route::get('{id}/edit', [NoteController::class, 'edit'])->name('edit');
+        Route::get('/list', [NoteController::class, 'list'])->name('list'); // List page, we use this rather than usual page which has 's' as suffix
+	    Route::get('/report', [NoteController::class, 'report'])->name('report'); // Report page
+    	Route::get('/settings', [NoteController::class, 'settings'])->name('settings'); // Settings page
+	    Route::post('{id}/profile', [NoteController::class, 'profile'])->name('profile'); // Profile Page
+		Route::post('{id}/restore', [NoteController::class, 'restore'])->name('restore'); // Restore Page (opposite of destroy)
+    	Route::get('{id}/documents', [NoteController::class, 'document'])->name('document'); // List of documents like slips
+		Route::get('{id}/document/{$name}', [NoteController::class, 'document'])->name('document'); // List of documents like slips
     });
 });

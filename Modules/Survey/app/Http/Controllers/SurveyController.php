@@ -1,17 +1,46 @@
 <?php
-namespace Modules\Survey\$CONTROLLER_NAMESPACE$;
 
+namespace Modules\Survey\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Inertia\Inertia;
+
+use Modules\Survey\Services\SurveyService;
+use Modules\Survey\Models\Survey;
+use Modules\Survey\Formatters\SurveyFormatter;
+use Illuminate\Support\Facades\Storage;
+use Modules\Survey\Services\SurveyResourceService;
 
 class SurveyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    protected $service;
+	protected $moduleName = 'survey';
+
+    public function __construct(SurveyService $service)
+    {
+        $this->service = $service;
+    }
+
+	/**
+     * Display a dashboard
      */
     public function index()
     {
-        return view('survey::index');
+        return view("{$this->moduleName}::index");
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function list()
+    {
+		$surveys = $this->service->list();
+		//dd($surveys->toArray());
+        return Inertia::render("{$this->moduleName}/list", [
+            'surveys' => $surveys
+        ]);
+        return view("{$this->moduleName}::list");
     }
 
     /**
@@ -19,23 +48,44 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        return view('survey::create');
+		//return Inertia::render("{$this->moduleName}/create");
+        return view("{$this->moduleName}::create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // store logic here
-    }
+	{
+    	try {
+	        $validated = $request->validate( SurveyResourceService::get("{$this->moduleName}/create") );
+
+	        // Debug: show what is coming from form
+    	    // dd('VALIDATED DATA:', $validated);
+
+	        $survey = Survey::create($validated);
+
+	        dd('INSERTED:', $survey);
+
+	    } catch (\Exception $e) {
+
+    	    dd('ERROR:', $e->getMessage());
+    	}
+	}
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      */
     public function show($id)
     {
-        return view('survey::show', compact('id'));
+		$survey = Survey::findOrFail($id);
+		$formatted = SurveyFormatter::format($survey);
+		//print_r($survey->toArray());
+		dd($formatted);die();
+        return Inertia::render("{$this->moduleName}/show", [
+            $this->moduleName => $survey
+        ]);
+        return view("{$this->moduleName}::show");
     }
 
     /**
@@ -43,51 +93,58 @@ class SurveyController extends Controller
      */
     public function edit($id)
     {
-        return view('survey::edit', compact('id'));
+		$survey = Survey::findOrFail($id);
+        return Inertia::render("{$this->moduleName}/create", [
+            $this->moduleName => $survey
+        ]);
+        return view("{$this->moduleName}::edit");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        // update logic here
-    }
+    public function update(Request $request, $id) {
+		// Validate incoming data
+        $validated = $request->validate( SurveyResourceService::get("{$this->moduleName}/update") );
+
+        // Find and update survey
+        $survey = Survey::findOrFail($id);
+        $survey->update($validated);
+
+        // Redirect with success message
+        return redirect()
+            ->route("{$this->moduleName}.index")
+            ->with('success', 'Survey updated successfully.');
+	}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        // delete logic here
-    }
+    public function destroy($id) {
+		$survey = Survey::findOrFail($id);
+        $survey->delete();
 
-    // ----------------------------------------
-    // 🔹 Custom Methods for SaaS Modules
-    // ----------------------------------------
+        return redirect()
+            ->route('survey.index')
+            ->with('success', 'Survey deleted successfully.');
+	}
 
-    public function home()
-    {
-        return view('survey::home');
-    }
-
-    public function list()
-    {
-        return view('survey::list');
-    }
-
+	/**
+     * Display a report of the resource.
+     */
     public function report()
     {
-        return view('survey::report');
+		return Inertia::render("{$this->moduleName}/report");
+        return view("{$this->moduleName}::report");
     }
 
+	/**
+     * Display a settings of the resource.
+     */
     public function settings()
     {
-        return view('survey::settings');
+		return Inertia::render("{$this->moduleName}/settings");
+        return view("{$this->moduleName}::settings");
     }
 
-    public function view($id)
-    {
-        return view('survey::view', compact('id'));
-    }
 }

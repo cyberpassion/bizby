@@ -1,17 +1,46 @@
 <?php
-namespace Modules\Listing\$CONTROLLER_NAMESPACE$;
 
+namespace Modules\Listing\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Inertia\Inertia;
+
+use Modules\Listing\Services\ListingService;
+use Modules\Listing\Models\Listing;
+use Modules\Listing\Formatters\ListingFormatter;
+use Illuminate\Support\Facades\Storage;
+use Modules\Listing\Services\ListingResourceService;
 
 class ListingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    protected $service;
+	protected $moduleName = 'listing';
+
+    public function __construct(ListingService $service)
+    {
+        $this->service = $service;
+    }
+
+	/**
+     * Display a dashboard
      */
     public function index()
     {
-        return view('listing::index');
+        return view("{$this->moduleName}::index");
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function list()
+    {
+		$listings = $this->service->list();
+		//dd($listings->toArray());
+        return Inertia::render("{$this->moduleName}/list", [
+            'listings' => $listings
+        ]);
+        return view("{$this->moduleName}::list");
     }
 
     /**
@@ -19,23 +48,44 @@ class ListingController extends Controller
      */
     public function create()
     {
-        return view('listing::create');
+		//return Inertia::render("{$this->moduleName}/create");
+        return view("{$this->moduleName}::create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // store logic here
-    }
+	{
+    	try {
+	        $validated = $request->validate( ListingResourceService::get("{$this->moduleName}/create") );
+
+	        // Debug: show what is coming from form
+    	    // dd('VALIDATED DATA:', $validated);
+
+	        $listing = Listing::create($validated);
+
+	        dd('INSERTED:', $listing);
+
+	    } catch (\Exception $e) {
+
+    	    dd('ERROR:', $e->getMessage());
+    	}
+	}
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      */
     public function show($id)
     {
-        return view('listing::show', compact('id'));
+		$listing = Listing::findOrFail($id);
+		$formatted = ListingFormatter::format($listing);
+		//print_r($listing->toArray());
+		dd($formatted);die();
+        return Inertia::render("{$this->moduleName}/show", [
+            $this->moduleName => $listing
+        ]);
+        return view("{$this->moduleName}::show");
     }
 
     /**
@@ -43,51 +93,58 @@ class ListingController extends Controller
      */
     public function edit($id)
     {
-        return view('listing::edit', compact('id'));
+		$listing = Listing::findOrFail($id);
+        return Inertia::render("{$this->moduleName}/create", [
+            $this->moduleName => $listing
+        ]);
+        return view("{$this->moduleName}::edit");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        // update logic here
-    }
+    public function update(Request $request, $id) {
+		// Validate incoming data
+        $validated = $request->validate( ListingResourceService::get("{$this->moduleName}/update") );
+
+        // Find and update listing
+        $listing = Listing::findOrFail($id);
+        $listing->update($validated);
+
+        // Redirect with success message
+        return redirect()
+            ->route("{$this->moduleName}.index")
+            ->with('success', 'Listing updated successfully.');
+	}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        // delete logic here
-    }
+    public function destroy($id) {
+		$listing = Listing::findOrFail($id);
+        $listing->delete();
 
-    // ----------------------------------------
-    // 🔹 Custom Methods for SaaS Modules
-    // ----------------------------------------
+        return redirect()
+            ->route('listing.index')
+            ->with('success', 'Listing deleted successfully.');
+	}
 
-    public function home()
-    {
-        return view('listing::home');
-    }
-
-    public function list()
-    {
-        return view('listing::list');
-    }
-
+	/**
+     * Display a report of the resource.
+     */
     public function report()
     {
-        return view('listing::report');
+		return Inertia::render("{$this->moduleName}/report");
+        return view("{$this->moduleName}::report");
     }
 
+	/**
+     * Display a settings of the resource.
+     */
     public function settings()
     {
-        return view('listing::settings');
+		return Inertia::render("{$this->moduleName}/settings");
+        return view("{$this->moduleName}::settings");
     }
 
-    public function view($id)
-    {
-        return view('listing::view', compact('id'));
-    }
 }
