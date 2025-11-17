@@ -1,0 +1,11 @@
+{
+    "name": "Meetingmanager",
+    "alias": "meetingmanager",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Meetingmanager\\Providers\\MeetingmanagerServiceProvider"
+    ],
+    "files": []
+}

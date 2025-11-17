@@ -1,0 +1,11 @@
+{
+    "name": "Visitactivity",
+    "alias": "visitactivity",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Visitactivity\\Providers\\VisitactivityServiceProvider"
+    ],
+    "files": []
+}
