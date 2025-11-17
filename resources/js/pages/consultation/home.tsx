@@ -27,7 +27,7 @@ export default function Home() {
         },
         {
             title: 'View All Consultations',
-            href: '/consultations',
+            href: '/consultation/list',
             icon: FileText,
         },
         {

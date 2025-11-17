@@ -46,7 +46,7 @@ export default function ConsultationIndex() {
             id: 'doctor',
             placeholder: 'Select Doctor',
             module: 'consultation',
-            dataKey: 'doctor-json',
+            dataKey: 'doctors',
             col: 3,
         },
         {
@@ -54,7 +54,7 @@ export default function ConsultationIndex() {
             id: 'date',
             placeholder: 'Select Date',
             module: 'consultation',
-            dataKey: 'date-json',
+            dataKey: 'dates',
             col: 3,
         },
         {
@@ -62,7 +62,7 @@ export default function ConsultationIndex() {
             id: 'mode',
             placeholder: 'Select Mode',
             module: 'consultation',
-            dataKey: 'mode-json',
+            dataKey: 'consultation_modes',
             col: 3,
         },
         {
@@ -70,7 +70,7 @@ export default function ConsultationIndex() {
             id: 'status',
             placeholder: 'Select Status',
             module: 'consultation',
-            dataKey: 'consultation_status-json',
+            dataKey: 'consultation_statuses',
             col: 3,
         },
     ];

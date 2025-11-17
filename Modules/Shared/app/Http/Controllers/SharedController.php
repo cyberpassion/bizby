@@ -4,9 +4,21 @@ namespace Modules\Shared\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+use Modules\Shared\Services\SharedService;
+use Modules\Shared\Models\Shared;
+use Modules\Shared\Formatters\SharedFormatter;
+use Modules\Shared\Services\SharedResourceService;
+
+use Illuminate\Support\Facades\Storage;
 
 class SharedController extends Controller
 {
+
+	protected $service;
+	protected $moduleName = 'shared';
+
     /**
      * Display a listing of the resource.
      */
@@ -53,4 +65,5 @@ class SharedController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {}
+
 }

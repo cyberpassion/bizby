@@ -1,0 +1,68 @@
+{
+    "title": "Consultation Form",
+    "layout": {
+        "columns": 12,
+        "gap": 16
+    },
+    "sections": [
+        {
+            "title": "Patient Details",
+            "fields": [
+                {
+                    "type": "text",
+                    "name": "patient_name",
+                    "label": "Patient Name",
+                    "placeholder": "Enter patient name",
+                    "col": 6,
+                    "required": true
+                },
+                {
+                    "type": "number",
+                    "name": "age",
+                    "label": "Age",
+                    "col": 3
+                },
+                {
+                    "type": "select",
+                    "name": "gender",
+                    "label": "Gender",
+                    "col": 3,
+                    "dataKey": "gender_list",
+                    "required": true
+                }
+            ]
+        },
+
+        {
+            "title": "Consultation Details",
+            "fields": [
+                {
+                    "type": "select",
+                    "name": "doctor",
+                    "label": "Doctor",
+                    "placeholder": "Select doctor",
+                    "col": 6,
+                    "dataKey": "doctors"
+                },
+                {
+                    "type": "date",
+                    "name": "consultation_date",
+                    "label": "Consultation Date",
+                    "col": 3
+                },
+                {
+                    "type": "textarea",
+                    "name": "notes",
+                    "label": "Notes",
+                    "col": 12
+                }
+            ]
+        }
+    ],
+
+    "submit": {
+        "label": "Save Consultation",
+        "url": "/consultation/store",
+        "method": "POST"
+    }
+}

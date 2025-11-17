@@ -9,7 +9,6 @@ use Inertia\Inertia;
 use Modules\Consultation\Services\ConsultationService;
 use Modules\Consultation\Models\Consultation;
 use Modules\Consultation\Formatters\ConsultationFormatter;
-use Illuminate\Support\Facades\Storage;
 use Modules\Consultation\Services\ConsultationResourceService;
 
 class ConsultationController extends Controller
@@ -27,7 +26,7 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        return view("{$this->moduleName}::index");
+        return Inertia::render("{$this->moduleName}/home");
     }
 
     /**
@@ -36,11 +35,9 @@ class ConsultationController extends Controller
     public function list()
     {
 		$consultations = $this->service->list();
-		//dd($consultations->toArray());
         return Inertia::render("{$this->moduleName}/list", [
             'consultations' => $consultations
         ]);
-        return view("{$this->moduleName}::list");
     }
 
     /**
@@ -48,8 +45,8 @@ class ConsultationController extends Controller
      */
     public function create()
     {
-		//return Inertia::render("{$this->moduleName}/create");
-        return view("{$this->moduleName}::create");
+		//return view("{$this->moduleName}::create");
+		return Inertia::render("{$this->moduleName}/create",['form'=>"{$this->moduleName}/create",'storeUrl' => route('consultation.store')]);
     }
 
     /**
@@ -65,11 +62,21 @@ class ConsultationController extends Controller
 
 	        $consultation = Consultation::create($validated);
 
-	        dd('INSERTED:', $consultation);
+			return response()->json([
+	            'success' => true,
+    	        'message' => 'Saved successfully!',
+        	    'data' => $consultation
+        	]);
+
+	        //dd('INSERTED:', $consultation);
 
 	    } catch (\Exception $e) {
 
-    	    dd('ERROR:', $e->getMessage());
+    	    //dd('ERROR:', $e->getMessage());
+			return response()->json([
+	            'success' => false,
+    	        'message' => $e->getMessage()
+        	], 422);
     	}
 	}
 
@@ -80,12 +87,9 @@ class ConsultationController extends Controller
     {
 		$consultation = Consultation::findOrFail($id);
 		$formatted = ConsultationFormatter::format($consultation);
-		//print_r($consultation->toArray());
-		dd($formatted);die();
         return Inertia::render("{$this->moduleName}/show", [
             $this->moduleName => $consultation
         ]);
-        return view("{$this->moduleName}::show");
     }
 
     /**
@@ -97,7 +101,6 @@ class ConsultationController extends Controller
         return Inertia::render("{$this->moduleName}/create", [
             $this->moduleName => $consultation
         ]);
-        return view("{$this->moduleName}::edit");
     }
 
     /**
@@ -135,7 +138,6 @@ class ConsultationController extends Controller
     public function report()
     {
 		return Inertia::render("{$this->moduleName}/report");
-        return view("{$this->moduleName}::report");
     }
 
 	/**
@@ -144,7 +146,6 @@ class ConsultationController extends Controller
     public function settings()
     {
 		return Inertia::render("{$this->moduleName}/settings");
-        return view("{$this->moduleName}::settings");
     }
 
 }

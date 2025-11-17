@@ -1,43 +1,37 @@
-import { useFormSubmit } from '@/hooks/cyp/use-form-submit';
+import { DynamicForm } from '@/components/cyp/dynamic-form';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
-import { useForm } from 'react-hook-form';
-import { EntryForm } from './components/module-forms';
-
-import { module } from './about';
+import { Head, usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: module.label + ' Create',
+        title: 'Create',
         href: '#',
     },
 ];
 
-export default function ConsultationCreate() {
-    const { register, handleSubmit, reset } = useForm();
+export default function ConsultationForm() {
+    const { props } = usePage();
+    const form = props.form;
+    const [schema, setSchema] = useState<any>(null);
 
-    const { handleFormSubmit, loading } = useFormSubmit({
-        url: '/consultations',
-        onSuccess: (response: any, data: any) => {
-            alert('Saved successfully!');
-            reset();
-        },
-        onError: (error) => {
-            console.error(error);
-            alert('Error saving form.');
-        },
-    });
+    useEffect(() => {
+        fetch(`/api/v1/form/${form}`)
+            .then((r) => r.json())
+            .then((res) => {
+                console.log('🔥 FORM SCHEMA RESPONSE:', res);
+                setSchema(res.schema);
+            })
+            .catch((err) => console.error('❌ Error loading schema:', err));
+    }, []);
+
+    if (!schema) return <p>Loading...</p>;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Consultation Create" />
-            <EntryForm
-                register={register}
-                handleSubmit={handleSubmit}
-                onSubmit={handleFormSubmit}
-                loading={loading}
-            />
+            <Head title="Create" />
+            <DynamicForm schema={schema} />
         </AppLayout>
     );
 }

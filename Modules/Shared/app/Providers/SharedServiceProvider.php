@@ -8,6 +8,8 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
+use Modules\Shared\Services\LookupRegistry;
+
 class SharedServiceProvider extends ServiceProvider
 {
     use PathNamespace;
@@ -27,7 +29,54 @@ class SharedServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+		$this->loadPhpLookupsFromModules(); // Registers all lookup keys returning static values
+		$this->loadDynamicLookupsFromProviders(); // Register all lookup keys wherein we fetch dynamic values
     }
+
+	// Registers all lookup keys returning static values
+	protected function loadPhpLookupsFromModules()
+	{
+    	$modulePath = base_path('Modules');
+
+	    foreach (scandir($modulePath) as $module) {
+    	    if ($module === '.' || $module === '..') continue;
+
+        	$lookupFile = $modulePath . "/{$module}/lookups.php";
+
+	        if (file_exists($lookupFile)) {
+    	        $lookups = require $lookupFile;
+
+	            foreach ($lookups as $key => $value) {
+    	            LookupRegistry::register($key, $value);
+        	    }
+        	}
+    	}
+	}
+
+	// Register all lookup keys wherein we fetch dynamic values
+	protected function loadDynamicLookupsFromProviders()
+	{
+    	$modulePath = base_path('Modules');
+
+	    foreach (scandir($modulePath) as $module) {
+
+	        if ($module === '.' || $module === '..') continue;
+
+	        $providerClass = "Modules\\{$module}\\Providers\\{$module}LookupProvider";
+
+	        if (class_exists($providerClass)) {
+     	       $provider = new $providerClass;
+
+        	    if (method_exists($provider, 'getLookups')) {
+            	    $lookups = $provider->getLookups();
+
+	                foreach ($lookups as $key => $value) {
+    	                LookupRegistry::register($key, $value);
+        	        }
+            	}
+        	}
+    	}
+	}
 
     /**
      * Register the service provider.

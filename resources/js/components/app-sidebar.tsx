@@ -31,9 +31,7 @@ export function AppSidebar() {
     useEffect(() => {
         async function fetchModules() {
             try {
-                const response = await apiGet(
-                    'shared/resource/module_menu-json',
-                );
+                const response = await apiGet('lookups/sidebar-menu');
                 const items = response.data.map((module: any) => ({
                     label: module.label,
                     href: module.href,

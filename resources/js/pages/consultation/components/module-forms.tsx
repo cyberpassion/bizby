@@ -13,42 +13,14 @@ export function EntryForm(props: any) {
                 {...props.register('patient_name')}
                 required
             />
-
-            <InputWithLabel
-                label="Age"
-                id="age"
-                placeholder="Enter age"
-                col={6}
-                {...props.register('age')}
-                required
-                type="number"
-            />
-
             <SelectWithLabel
                 label="Doctor"
                 id="doctor"
                 placeholder="Select doctor"
                 module="consultation"
-                dataKey="doctor-json"
+                dataKey="doctors"
                 col={6}
-            />
-
-            <InputWithLabel
-                label="Fee"
-                id="fee"
-                placeholder="Enter fee"
-                col={6}
-                {...props.register('fee')}
-                required
-                type="number"
-            />
-
-            <InputWithLabel
-                label="Location"
-                id="location"
-                placeholder="Enter Location"
-                col={6}
-                {...props.register('location')}
+                {...props.register('doctor')}
             />
         </FormWrapper>
     );
@@ -62,7 +34,7 @@ export function ReportForm(props: any) {
                 id="doctor"
                 placeholder="Select doctor"
                 module="consultation"
-                dataKey="doctor-json"
+                dataKey="doctors"
                 col={6}
             />
 
@@ -71,8 +43,26 @@ export function ReportForm(props: any) {
                 id="mode"
                 placeholder="Select mode"
                 module="mode"
-                dataKey="mode-json"
+                dataKey="consultation_modes"
                 col={6}
+            />
+
+            <InputWithLabel
+                label="Start Date"
+                id="start_date"
+                placeholder="Start Date"
+                col={6}
+                {...props.register('start_date')}
+                type="date"
+            />
+
+            <InputWithLabel
+                label="End Date"
+                id="end_date"
+                placeholder="End Date"
+                col={6}
+                {...props.register('end_date')}
+                type="date"
             />
         </FormWrapper>
     );
@@ -105,7 +95,7 @@ export function SettingsForm(props: any) {
                 id="doctor"
                 placeholder="Select doctor"
                 module="consultation"
-                dataKey="doctor-json"
+                dataKey="doctors"
                 col={6}
             />
 

@@ -18,26 +18,41 @@ function SelectWithLabel({
     ...props
 }) {
     const [options, setOptions] = useState([]);
-    const [selectedValue, setSelectedValue] = useState('');
 
     useEffect(() => {
-        fetch(`http://bizby.test/api/v1/${module}/options/${dataKey}`)
-            .then((response) => response.json())
+        fetch(`/api/v1/lookups/${dataKey}`)
+            .then((response) => response.json()) // RETURN the parsed JSON
             .then((res) => {
-                // ✅ The API returns: { success: true, data: [ {label, value}, ... ] }
-                if (res.success && Array.isArray(res.data)) {
-                    setOptions(res.data);
+                console.log('API response:', res.data); // Now you will see actual JSON
+                if (res.status && res.data) {
+                    // If data is an object, convert it to array of {label, value}
+                    const options = Array.isArray(res.data)
+                        ? res.data
+                        : Object.entries(res.data).map(([value, label]) => ({
+                              value,
+                              label,
+                          }));
+
+                    setOptions(options);
                 }
             })
             .catch((error) => {
                 console.error('Error fetching select options:', error);
             });
-    }, []);
+    }, [dataKey]);
 
     return (
         <div className={`col-span-${col}`}>
             <Label htmlFor={id}>{label}</Label>
-            <Select onValueChange={setSelectedValue} {...props}>
+            <Select
+                value={props.value || ''}
+                onValueChange={(val) => {
+                    props.onChange?.({
+                        target: { name: props.name, value: val },
+                    });
+                }}
+                onBlur={props.onBlur}
+            >
                 <SelectTrigger id={id}>
                     <SelectValue placeholder={placeholder || 'Select option'} />
                 </SelectTrigger>

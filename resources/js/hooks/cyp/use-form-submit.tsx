@@ -17,27 +17,39 @@ export function useFormSubmit({
 
     const handleFormSubmit = async (data: any) => {
         setLoading(true);
+
         try {
             console.log('Submitting to URL:', url);
-            console.log('Data:', JSON.stringify(data));
+            console.log('Submitting data:', data);
+
+            // Get CSRF token from <meta> tag
+            const csrfToken =
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute('content') ?? '';
+
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN':
-                        document
-                            .querySelector('meta[name="csrf-token"]')
-                            ?.getAttribute('content') ?? '',
+                    'X-CSRF-TOKEN': csrfToken, // ✔ required
+                    'X-Requested-With': 'XMLHttpRequest', // ✔ required for Laravel AJAX
                 },
+                credentials: 'same-origin', // ✔ send cookies for CSRF session validation
                 body: JSON.stringify(data),
             });
 
-            if (!response.ok) throw new Error('Failed to submit form');
+            if (!response.ok) {
+                const errorPayload = await response.json().catch(() => null);
+                throw errorPayload ?? new Error('Failed to submit form');
+            }
 
-            onSuccess?.(response, data);
+            const json = await response.json().catch(() => ({}));
+
+            onSuccess?.(json, data);
             reset?.();
         } catch (error) {
-            console.error(error);
+            console.error('Submit error:', error);
             onError?.(error);
         } finally {
             setLoading(false);

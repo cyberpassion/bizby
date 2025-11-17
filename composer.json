@@ -15,7 +15,10 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.9",
-        "nwidart/laravel-modules": "*"
+        "maatwebsite/excel": "^3.1",
+        "mpdf/mpdf": "^8.2",
+        "nwidart/laravel-modules": "*",
+        "sentry/sentry-laravel": "^4.19"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

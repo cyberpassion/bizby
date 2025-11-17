@@ -53,7 +53,7 @@ class Consultation extends Model
 	// Example for doctor_name
     public function getDoctorNameeAttribute()
     {
-        return $this->employee?->name ?? '-123';
+        return $this->employee?->name ?? '';
     }
     // Factory (if you use factories)
     // protected static function newFactory(): ConsultationFactory
