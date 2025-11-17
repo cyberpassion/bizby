@@ -1,10 +1,10 @@
+import { apiGet } from '@/apis/axiosClient'; // centralized Axios
 import { DynamicForm } from '@/components/cyp/dynamic-form';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
-const breadcrumbs: BreadcrumbItem[] = [
+const breadcrumbs = [
     {
         title: 'Create',
         href: '#',
@@ -14,24 +14,37 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function ConsultationForm() {
     const { props } = usePage();
     const form = props.form;
-    const [schema, setSchema] = useState<any>(null);
+    const [schema, setSchema] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`/api/v1/form/${form}`)
-            .then((r) => r.json())
-            .then((res) => {
+        const fetchSchema = async () => {
+            try {
+                const res = await apiGet(`/form/${form}`);
                 console.log('🔥 FORM SCHEMA RESPONSE:', res);
-                setSchema(res.schema);
-            })
-            .catch((err) => console.error('❌ Error loading schema:', err));
-    }, []);
 
-    if (!schema) return <p>Loading...</p>;
+                // Laravel response assumed: { status, data, message, errors }
+                if (res.status) {
+                    setSchema(res.schema); // adjust based on your API response
+                } else {
+                    console.error('❌ API returned error:', res.message);
+                }
+            } catch (err) {
+                console.error('❌ Error loading schema:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSchema();
+    }, [form]);
+
+    if (loading) return <p>Loading...</p>;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create" />
-            <DynamicForm schema={schema} />
+            {schema ? <DynamicForm schema={schema} /> : <p>No schema found</p>}
         </AppLayout>
     );
 }
