@@ -1,5 +1,6 @@
 import { InputWithLabel } from '@/components/cyp/input-with-label';
 import { SelectWithLabel } from '@/components/cyp/select-with-label';
+import { Button } from '@/components/ui/button';
 
 export function DynamicForm({ schema }) {
     if (!schema?.sections || !Array.isArray(schema.sections)) {
@@ -7,11 +8,31 @@ export function DynamicForm({ schema }) {
         return <p>Invalid schema</p>;
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // stop default HTML submission
+
+        // collect all field values
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            //const res = await apiPost('/consultation/store', data);
+            console.log('Form submitted:', JSON.stringify(data));
+        } catch (err) {
+            console.error('Error submitting form:', err);
+        }
+    };
+
     return (
-        <form className="grid grid-cols-12 gap-4 px-12">
+        <form className="grid grid-cols-12 gap-4 px-12" onSubmit={handleSubmit}>
             {schema.sections.map((section, sIdx) => (
                 <Section key={sIdx} section={section} />
             ))}
+            {schema.submit?.label && (
+                <div className="col-span-12 mt-4">
+                    <Button type="submit">{schema.submit.label}</Button>
+                </div>
+            )}
         </form>
     );
 }
@@ -42,6 +63,7 @@ function renderField(field, index) {
                     <InputWithLabel
                         label={field.label}
                         id={field.name}
+                        name={field.name}
                         placeholder={field.placeholder || ''}
                         col={colSpan}
                         type={field.type}
@@ -56,6 +78,7 @@ function renderField(field, index) {
                     <SelectWithLabel
                         label={field.label}
                         id={field.name}
+                        name={field.name}
                         placeholder={field.placeholder || ''}
                         module={field.module}
                         dataKey={field.dataKey}
