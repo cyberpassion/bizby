@@ -12,9 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_contact', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+            $table->bigIncrements('contact_id');
+            $table->bigInteger('client_id');
+            $table->date('date');
+            $table->dateTime('datetime');
+            $table->string('phone_number', 255);
+            $table->string('group', 255);
+            $table->text('group_type');
+            $table->bigInteger('group_id')->nullable();
+            $table->text('contact_name')->nullable();
+            $table->string('email_id', 255)->nullable();
+            $table->string('designation', 255);
+            $table->text('permanent_address')->nullable();
+            $table->text('additional_information');
+            $table->tinyInteger('status');
         });
     }
 

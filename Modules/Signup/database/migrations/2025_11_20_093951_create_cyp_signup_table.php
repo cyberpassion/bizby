@@ -12,9 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_signup', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+            $table->bigInteger('client_id');
+            $table->increments('signup_id');
+            $table->date('date');
+            $table->dateTime('datetime');
+            $table->bigInteger('form_id');
+            $table->string('form_label', 255);
+            $table->string('signup_label', 255);
+            $table->string('submitted_by_type', 255);
+            $table->bigInteger('submitted_by_id');
+            $table->text('name');
+            $table->string('email', 255);
+            $table->string('phone_number', 255);
+            $table->text('signup_info');
+            $table->string('signup_fee', 255);
+            $table->string('entry_source', 255);
+            $table->integer('status');
         });
     }
 
@@ -26,3 +39,4 @@ return new class extends Migration
         Schema::dropIfExists('cyp_signup');
     }
 };
+
