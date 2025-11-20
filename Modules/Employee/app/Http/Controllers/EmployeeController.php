@@ -1,46 +1,17 @@
 <?php
+namespace Modules\Employee\$CONTROLLER_NAMESPACE$;
 
-namespace Modules\Employee\Http\Controllers;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-
-use Modules\Employee\Services\EmployeeService;
-use Modules\Employee\Models\Employee;
-use Modules\Employee\Formatters\EmployeeFormatter;
-use Illuminate\Support\Facades\Storage;
-use Modules\Employee\Services\EmployeeResourceService;
+use Illuminate\Routing\Controller;
 
 class EmployeeController extends Controller
 {
-    protected $service;
-	protected $moduleName = 'employee';
-
-    public function __construct(EmployeeService $service)
-    {
-        $this->service = $service;
-    }
-
-	/**
-     * Display a dashboard
-     */
-    public function index()
-    {
-        return view("{$this->moduleName}::index");
-    }
-
     /**
      * Display a listing of the resource.
      */
-    public function list()
+    public function index()
     {
-		$employees = $this->service->list();
-		//dd($employees->toArray());
-        return Inertia::render("{$this->moduleName}/list", [
-            'employees' => $employees
-        ]);
-        return view("{$this->moduleName}::list");
+        return view('employee::index');
     }
 
     /**
@@ -48,44 +19,23 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-		//return Inertia::render("{$this->moduleName}/create");
-        return view("{$this->moduleName}::create");
+        return view('employee::create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-	{
-    	try {
-	        $validated = $request->validate( EmployeeResourceService::get("{$this->moduleName}/create") );
-
-	        // Debug: show what is coming from form
-    	    // dd('VALIDATED DATA:', $validated);
-
-	        $employee = Employee::create($validated);
-
-	        dd('INSERTED:', $employee);
-
-	    } catch (\Exception $e) {
-
-    	    dd('ERROR:', $e->getMessage());
-    	}
-	}
+    {
+        // store logic here
+    }
 
     /**
-     * Show the specified resource.
+     * Display the specified resource.
      */
     public function show($id)
     {
-		$employee = Employee::findOrFail($id);
-		$formatted = EmployeeFormatter::format($employee);
-		//print_r($employee->toArray());
-		dd($formatted);die();
-        return Inertia::render("{$this->moduleName}/show", [
-            $this->moduleName => $employee
-        ]);
-        return view("{$this->moduleName}::show");
+        return view('employee::show', compact('id'));
     }
 
     /**
@@ -93,59 +43,51 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-		$employee = Employee::findOrFail($id);
-        return Inertia::render("{$this->moduleName}/create", [
-            $this->moduleName => $employee
-        ]);
-        return view("{$this->moduleName}::edit");
+        return view('employee::edit', compact('id'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {
-		// Validate incoming data
-        $validated = $request->validate( EmployeeResourceService::get("{$this->moduleName}/update") );
-
-        // Find and update employee
-        $employee = Employee::findOrFail($id);
-        $employee->update($validated);
-
-        // Redirect with success message
-        return redirect()
-            ->route("{$this->moduleName}.index")
-            ->with('success', 'Employee updated successfully.');
-	}
+    public function update(Request $request, $id)
+    {
+        // update logic here
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id) {
-		$employee = Employee::findOrFail($id);
-        $employee->delete();
+    public function destroy($id)
+    {
+        // delete logic here
+    }
 
-        return redirect()
-            ->route('employee.index')
-            ->with('success', 'Employee deleted successfully.');
-	}
+    // ----------------------------------------
+    // 🔹 Custom Methods for SaaS Modules
+    // ----------------------------------------
 
-	/**
-     * Display a report of the resource.
-     */
+    public function home()
+    {
+        return view('employee::home');
+    }
+
+    public function list()
+    {
+        return view('employee::list');
+    }
+
     public function report()
     {
-		return Inertia::render("{$this->moduleName}/report");
-        return view("{$this->moduleName}::report");
+        return view('employee::report');
     }
 
-	/**
-     * Display a settings of the resource.
-     */
     public function settings()
     {
-		return Inertia::render("{$this->moduleName}/settings");
-        return view("{$this->moduleName}::settings");
+        return view('employee::settings');
     }
 
+    public function view($id)
+    {
+        return view('employee::view', compact('id'));
+    }
 }
-
