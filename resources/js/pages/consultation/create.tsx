@@ -44,7 +44,11 @@ export default function ConsultationForm() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create" />
-            {schema ? <DynamicForm schema={schema} /> : <p>No schema found</p>}
+            {schema ? (
+                <DynamicForm schema={schema} submitTo="/consultation/store" />
+            ) : (
+                <p>No schema found</p>
+            )}
         </AppLayout>
     );
 }

@@ -1,8 +1,9 @@
+import { apiPost } from '@/apis/axiosClient';
 import { InputWithLabel } from '@/components/cyp/input-with-label';
 import { SelectWithLabel } from '@/components/cyp/select-with-label';
 import { Button } from '@/components/ui/button';
 
-export function DynamicForm({ schema }) {
+export function DynamicForm({ schema, submitTo }) {
     if (!schema?.sections || !Array.isArray(schema.sections)) {
         console.error('❌ Invalid form schema:', schema);
         return <p>Invalid schema</p>;
@@ -16,8 +17,11 @@ export function DynamicForm({ schema }) {
         const data = Object.fromEntries(formData.entries());
 
         try {
-            //const res = await apiPost('/consultation/store', data);
-            console.log('Form submitted:', JSON.stringify(data));
+            const res = await apiPost(submitTo, data);
+            console.log(
+                'Form submitted:',
+                JSON.stringify(data) + ' to ' + submitTo,
+            );
         } catch (err) {
             console.error('Error submitting form:', err);
         }

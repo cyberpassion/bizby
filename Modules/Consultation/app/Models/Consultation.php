@@ -10,66 +10,120 @@ class Consultation extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql'; // Always use mysql connection
-
-	// Specify the custom table name
-    protected $table = 'cyp_consultation';
-
-	// Specify custom primary key
-	protected $primaryKey = 'consultation_id';
+    /**
+     * Use the MySQL connection explicitly.
+     * Useful when your app has multiple DB connections.
+     */
+    protected $connection = 'mysql';
 
     /**
-     * If the primary key is not auto-incrementing, set this to false.
+     * Custom table name for this model.
+     */
+    protected $table = 'cyp_consultation';
+
+    /**
+     * Custom primary key for the table.
+     */
+    protected $primaryKey = 'consultation_id';
+
+    /**
+     * If primary key is auto-incrementing.
+     * Change to false if you ever use UUID.
      */
     public $incrementing = true;
 
     /**
-     * The attributes that are mass assignable.
+     * NOTE:
+     * We keep fillable empty because we override getFillable().
+     * Laravel will NOT use this array.
      */
     protected $fillable = [];
 
     /**
-     * Attribute casting.
+     * Fields that should NEVER be mass assignable.
+     * These are automatically removed from dynamicFillable().
      */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'consultation_date' => 'date', // Laravel will cast it to Carbon
+    protected $guarded = [
+        'consultation_id',  // primary key (never mass assigned)
+        'created_at',       // timestamp
+        'updated_at',       // timestamp
+        'deleted_at',       // soft delete timestamp
     ];
 
     /**
-     * Default attribute values
+     * Attribute casting (auto converts to Carbon).
+     */
+    protected $casts = [
+        'datetime'          => 'datetime',
+        'consultation_date' => 'date',
+    ];
+
+    /**
+     * Default values for columns.
      */
     protected $attributes = [
         'status' => 1,
     ];
 
     /**
-     * Appended attributes (computed, not in DB)
+     * Additional attributes that do NOT exist in DB.
+     * These appear automatically in JSON output.
      */
     protected $appends = [
-        'doctor_namee'
+        'doctor_name',
     ];
 
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+	/**
+     * Dynamically determine fillable columns by:
+     * 1. Fetching all columns from the database table
+     * 2. Excluding all guarded columns
+     *
+     * This allows you to modify the DB structure freely
+     * without updating the model each time.
+     */
+    protected function dynamicFillable()
     {
-        return $this->employee?->name ?? '';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): ConsultationFactory
-    // {
-    //     return ConsultationFactory::new();
-    // }
+        // Get all columns from the table
+        $columns = Schema::getColumnListing($this->getTable());
 
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        // Exclude guarded columns from the fillable list
+        return array_diff($columns, $this->guarded);
     }
 
+    /**
+     * Override getFillable() so Laravel uses our dynamic fillable logic.
+     * Laravel internally calls this method for mass assignment checks.
+     */
     public function getFillable()
     {
         return $this->dynamicFillable();
     }
+
+    /**
+     * Accessor for doctor_name attribute.
+     * Uses the related employee model.
+     */
+    public function getDoctorNameAttribute()
+    {
+        return $this->employee?->name ?? '';
+    }
+
+	/**
+	 * Relationship: Consultation belongs to an Employee (doctor).
+	 *
+	 * This links:
+	 *   consultation.employee_id → employee.employee_id
+	 *
+	 * Allows usage like:
+	 *   $consultation->employee->name
+	 */
+	public function employee()
+	{
+    	return $this->belongsTo(
+        	\Modules\Employee\Models\Employee::class,
+	        'employee_id',   // Foreign key in cyp_consultation table
+    	    'employee_id'    // Primary key in employee table
+    	);
+	}
 
 }

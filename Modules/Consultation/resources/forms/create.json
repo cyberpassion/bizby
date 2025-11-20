@@ -27,7 +27,7 @@
                     "name": "gender",
                     "label": "Gender",
                     "col": 6,
-                    "dataKey": "gender_list",
+                    "dataKey": "gender",
                     "required": true
                 },
                 {
@@ -35,7 +35,6 @@
                     "name": "permanent_address",
                     "label": "Permanent Address",
                     "col": 6,
-                    "dataKey": "permanent_address",
                     "required": true
                 }
             ]
@@ -50,7 +49,7 @@
                     "label": "Doctor",
                     "placeholder": "Select doctor",
                     "col": 6,
-                    "dataKey": "doctors"
+                    "dataKey": "doctor"
                 },
                 {
                     "type": "date",

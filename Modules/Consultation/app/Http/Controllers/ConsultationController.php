@@ -46,7 +46,10 @@ class ConsultationController extends Controller
     public function create()
     {
 		//return view("{$this->moduleName}::create");
-		return Inertia::render("{$this->moduleName}/create",['form'=>"{$this->moduleName}/create",'storeUrl' => route('consultation.store')]);
+		return Inertia::render("{$this->moduleName}/create",[
+			'form'		=>	"{$this->moduleName}/create",
+			'storeUrl'	=>	route('consultation.store')
+		]);
     }
 
     /**

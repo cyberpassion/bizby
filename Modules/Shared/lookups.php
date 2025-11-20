@@ -8,7 +8,20 @@ return [
         ],
     ],
 
-    'gender' => ['M', 'F', 'O'],
+    'gender' => [
+		'M' => 'Male',
+		'F' => 'Female',
+		'O' => 'Other'
+	],
 
-    'blood_group' => ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
+    'blood_group' => [
+        'A+' => 'A+',
+        'A-' => 'A-',
+        'B+' => 'B+',
+        'B-' => 'B-',
+        'O+' => 'O+',
+        'O-' => 'O-',
+        'AB+' => 'AB+',
+        'AB-' => 'AB-',
+    ],
 ];
