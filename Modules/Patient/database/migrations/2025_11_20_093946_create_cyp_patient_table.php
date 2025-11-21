@@ -21,15 +21,15 @@ return new class extends Migration
             $table->date('dob');
             $table->string('gender', 255);
             $table->string('phone_number', 255);
-            $table->string('email_id', 255);
-            $table->string('aadhar_number', 255);
+            $table->string('email');
+            $table->string('aadhar_number', 64)->nullable();
             $table->string('nationality', 255);
             $table->string('religion', 255);
             $table->string('caste', 255);
             $table->string('category', 255);
             $table->string('guardian_name', 255);
             $table->string('relation_with_guardian', 255);
-            $table->text('permanent_address');
+            $table->text('address');
             $table->string('marital_status', 255);
             $table->string('spouse_name', 255);
             $table->float('height');

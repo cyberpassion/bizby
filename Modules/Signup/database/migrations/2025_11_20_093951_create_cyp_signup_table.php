@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('submitted_by_type', 255);
             $table->bigInteger('submitted_by_id');
             $table->text('name');
-            $table->string('email', 255);
+            $table->string('email');
             $table->string('phone_number', 255);
             $table->text('signup_info');
             $table->string('signup_fee', 255);

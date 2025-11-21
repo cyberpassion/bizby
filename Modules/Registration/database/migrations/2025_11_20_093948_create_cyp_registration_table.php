@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('session', 64);
             $table->text('name');
             $table->text('phone_number');
-            $table->text('email_id');
-            $table->text('permanent_address');
+            $table->string('email');
+            $table->text('address');
             $table->text('remark');
             $table->text('metainfo');
             $table->tinyInteger('status');

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('requested_by_name', 255);
             $table->string('father_name', 255);
             $table->string('phone_number', 255);
-            $table->string('email_id', 255);
-            $table->string('permanent_address', 255);
+            $table->string('email');
+            $table->text('address');
             $table->string('meeting_with_type', 255);
             $table->tinyInteger('meeting_with_id');
             $table->text('meeting_with');

@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('qualification_level', 255);
             $table->text('qualifications')->nullable();
             $table->string('pan_number', 255);
-            $table->string('aadhar_number', 255);
+            $table->string('aadhar_number', 64)->nullable();
             $table->string('driving_license_number', 255);
             $table->string('voter_id_card_number', 255);
             $table->string('passport_number', 255);
@@ -42,10 +42,10 @@ return new class extends Migration
             $table->string('professional_qualification', 255);
             $table->text('teaching_subjects');
             $table->text('teaching_classes')->nullable();
-            $table->text('permanent_address');
+            $table->text('address');
             $table->string('current_address', 255);
             $table->string('phone_number', 64);
-            $table->string('email_id', 255);
+            $table->string('email');
             $table->text('announcement_permission');
             $table->text('attendance_permission');
             $table->text('lead_permission');

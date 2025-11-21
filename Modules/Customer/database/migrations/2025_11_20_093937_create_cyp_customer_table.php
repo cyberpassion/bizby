@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('customer_type', 128);
             $table->string('customer_name', 255)->nullable();
             $table->text('phone_number')->nullable();
-            $table->text('email_id')->nullable();
-            $table->text('permanent_address')->nullable();
+            $table->string('email')->nullable();
+            $table->text('address')->nullable();
             $table->string('state', 64);
             $table->string('gstin', 128);
             $table->string('district', 128);
