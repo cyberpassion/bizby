@@ -9,8 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_announcement', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('client_id');
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Specific fields for announcements
             $table->bigInteger('announcement_id');
             $table->date('date')->nullable();
             $table->string('session', 255);
@@ -23,7 +25,6 @@ return new class extends Migration
             $table->string('added_by_type', 255)->nullable();
             $table->unsignedBigInteger('added_by_id')->nullable();
             $table->string('added_by', 255);
-            $table->tinyInteger('status')->nullable();
         });
     }
 

@@ -10,21 +10,18 @@ return new class extends Migration
     {
         Schema::create('cyp_student', function (Blueprint $table) {
 
-            $table->id(); // primary key
-
-            $table->unsignedBigInteger('client_id');
+            // Common SaaS fields
+            $table->commonSaasFields();
 
             // Dates
             $table->date('date')->nullable();
             $table->dateTime('datetime')->nullable();
-
             $table->dateTime('admission_datetime');
             $table->date('admission_date');
 
             // Admission + Registration
             $table->string('admission_id', 64);
             $table->string('registration_id', 64);
-
             $table->string('is_prospectus_taken')->nullable();
             $table->string('booklet_number')->nullable();
             $table->text('registration_remark')->nullable();
@@ -133,10 +130,6 @@ return new class extends Migration
             $table->string('entry_source', 64)->nullable();
             $table->string('entry_source_type', 64)->nullable();
             $table->unsignedBigInteger('entry_source_id')->nullable();
-
-            $table->tinyInteger('status')->default(1);
-
-            $table->timestamps();
         });
     }
 
