@@ -12,20 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_contact', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('client_id');
-            $table->date('date');
-            $table->dateTime('datetime');
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Contact-specific fields
             $table->string('phone_number', 255);
             $table->string('group', 255);
-            $table->text('group_type');
-            $table->bigInteger('group_id')->nullable();
+            $table->text('group_type')->nullable();
+            $table->unsignedBigInteger('group_id')->nullable();
             $table->text('contact_name')->nullable();
             $table->string('email')->nullable();
-            $table->string('designation', 255);
+            $table->string('designation', 255)->nullable();
             $table->text('address')->nullable();
-            $table->text('additional_information');
-            $table->tinyInteger('status');
+            $table->text('additional_information')->nullable();
         });
     }
 
@@ -37,3 +36,4 @@ return new class extends Migration
         Schema::dropIfExists('cyp_contact');
     }
 };
+

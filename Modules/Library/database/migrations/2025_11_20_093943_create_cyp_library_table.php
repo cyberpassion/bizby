@@ -9,9 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_library', function (Blueprint $table) {
-            $table->unsignedBigInteger('item_id', true); // Primary Key, auto-increment
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Library-specific fields
             $table->string('isbn', 255);
             $table->string('item_name', 255);
             $table->longText('description')->nullable();
@@ -23,17 +24,13 @@ return new class extends Migration
             $table->string('publishing_year', 255);
             $table->date('publishing_date')->nullable();
             $table->float('average_rating')->nullable();
-            $table->text('category');
+            $table->text('category')->nullable();
             $table->unsignedBigInteger('total_quantity')->nullable();
             $table->longText('remark')->nullable();
             $table->longText('additional_info')->nullable();
             $table->string('is_currently_in_use', 8);
             $table->string('entity_type', 255)->nullable();
             $table->string('accession_number', 255)->nullable();
-            $table->tinyInteger('status');
-            $table->bigInteger('client_id')->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -42,3 +39,4 @@ return new class extends Migration
         Schema::dropIfExists('cyp_library');
     }
 };
+

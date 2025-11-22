@@ -9,11 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_meetingmanager', function (Blueprint $table) {
-			$table->id();
-            $table->bigInteger('client_id');
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Meeting-specific fields
             $table->unsignedBigInteger('meeting_group_id');
-            $table->date('date');
-            $table->dateTime('datetime');
             $table->string('meeting_type', 255);
             $table->date('meeting_date');
             $table->time('meeting_time');
@@ -23,16 +23,15 @@ return new class extends Migration
             $table->string('email');
             $table->text('address');
             $table->string('meeting_with_type', 255);
-            $table->tinyInteger('meeting_with_id');
+            $table->unsignedBigInteger('meeting_with_id');
             $table->text('meeting_with');
-            $table->date('meeting_exit_date');
-            $table->time('meeting_exit_time');
-            $table->text('meeting_exit_remark');
-            $table->tinyInteger('priority');
-            $table->text('reason');
-            $table->text('reference');
-            $table->text('remark');
-            $table->unsignedTinyInteger('status');
+            $table->date('meeting_exit_date')->nullable();
+            $table->time('meeting_exit_time')->nullable();
+            $table->text('meeting_exit_remark')->nullable();
+            $table->tinyInteger('priority')->default(0);
+            $table->text('reason')->nullable();
+            $table->text('reference')->nullable();
+            $table->text('remark')->nullable();
         });
     }
 
@@ -41,3 +40,4 @@ return new class extends Migration
         Schema::dropIfExists('cyp_meetingmanager');
     }
 };
+

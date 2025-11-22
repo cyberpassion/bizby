@@ -9,25 +9,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_leaveapplication', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('client_id');
-            $table->unsignedBigInteger('leaveapplication_id');
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
-            $table->string('applicant', 255);
-            $table->string('applicant_type', 255)->nullable();
-            $table->bigInteger('applicant_id');
-            $table->string('session', 255);
-            $table->string('month', 255);
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Leave application-specific fields
+            $table->unsignedBigInteger('leaveapplication_id')->nullable();
+            $table->string('session', 64)->nullable();
+            $table->string('month', 64)->nullable();
             $table->date('leave_date')->nullable();
-            $table->string('leave_date_part', 255);
+            $table->string('leave_date_part', 64)->nullable();
             $table->float('leave_duration')->nullable();
-            $table->string('leave_duration_part', 255);
-            $table->string('leave_type', 255)->nullable();
+            $table->string('leave_duration_part', 64)->nullable();
+            $table->string('leave_type', 128)->nullable();
             $table->longText('leave_reason')->nullable();
             $table->tinyInteger('is_considered_by_hr')->default(0);
             $table->string('hr_response_remark', 255)->nullable();
-            $table->tinyInteger('status');
+
+            // Polymorphic applicant reference
+            $table->string('applicant_type', 64)->nullable();
+            $table->unsignedBigInteger('applicant_id')->nullable();
         });
     }
 
@@ -36,4 +36,5 @@ return new class extends Migration
         Schema::dropIfExists('cyp_leaveapplication');
     }
 };
+
 

@@ -9,29 +9,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_customer', function (Blueprint $table) {
-            $table->unsignedBigInteger('client_id');
-            $table->id('customer_id');
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Customer-specific fields
             $table->string('business_type', 128);
             $table->string('customer_type', 128);
             $table->string('customer_name', 255)->nullable();
             $table->text('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
-            $table->string('state', 64);
-            $table->string('gstin', 128);
-            $table->string('district', 128);
-            $table->tinyInteger('age');
-            $table->string('gender', 64);
+            $table->string('state', 64)->nullable();
+            $table->string('gstin', 128)->nullable();
+            $table->string('district', 128)->nullable();
+            $table->tinyInteger('age')->nullable();
+            $table->string('gender', 64)->nullable();
             $table->text('reference')->nullable();
             $table->text('remark')->nullable();
-            $table->text('additional_information');
-            $table->text('additional_contacts');
-            $table->date('next_date');
-            $table->string('entry_source', 128);
-            $table->tinyInteger('status');
-            $table->timestamps();
+            $table->text('additional_information')->nullable();
+            $table->text('additional_contacts')->nullable();
+            $table->date('next_date')->nullable();
+            $table->string('entry_source', 128)->nullable();
         });
     }
 
