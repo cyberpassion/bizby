@@ -9,13 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_treatment', function (Blueprint $table) {
+            $table->bigIncrements('treatment_id'); // Primary Key, auto-increment
             $table->bigInteger('client_id');
-            $table->bigIncrements('treatment_id'); // Primary key, auto-increment
             $table->string('patient_type', 255);
             $table->bigInteger('patient_id');
             $table->bigInteger('treatment_sno');
-            $table->date('date');
-            $table->dateTime('datetime');
             $table->date('treatment_date');
             $table->time('treatment_time');
             $table->text('observedby');
@@ -26,10 +24,12 @@ return new class extends Migration
             $table->bigInteger('treatment_fee');
             $table->bigInteger('cash_id');
             $table->bigInteger('user_id');
-            $table->tinyInteger('status');
             $table->string('treatment_recipient', 255)->nullable();
             $table->string('treatment_recipient_type', 64)->nullable();
             $table->bigInteger('treatment_recipient_type_id')->nullable();
+
+            // Optional timestamps for created_at / updated_at
+            $table->timestamps();
         });
     }
 

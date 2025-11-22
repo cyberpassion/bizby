@@ -9,20 +9,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_visitplanner', function (Blueprint $table) {
-            $table->bigInteger('client_id');
-            $table->bigIncrements('id_primary'); // ID Primary
-            $table->bigInteger('visitplanner_id');
-            $table->date('date');
-            $table->dateTime('datetime');
+
+            // Primary & Foreign Keys
+            $table->bigInteger('client_id')->index();
+            $table->bigIncrements('id_primary'); 
+
+            $table->bigInteger('visitplanner_id')->index();
+
             $table->string('visit_by_type', 64);
-            $table->bigInteger('visit_by_id');
-            $table->bigInteger('created_by_id');
+            $table->bigInteger('visit_by_id')->index();
+            $table->bigInteger('created_by_id')->index();
+
+            // Session Info
             $table->string('session', 64);
             $table->string('month', 64);
             $table->string('week', 64);
-            $table->text('visitplanner_data');
-            $table->tinyInteger('status');
-            $table->text('visit_team_member_json')->nullable();
+
+            // JSON Fields
+            $table->longText('visitplanner_data');
+            $table->longText('visit_team_member_json')->nullable();
+
+            // Visit Details
             $table->date('visit_date')->nullable();
             $table->time('visit_time')->nullable();
             $table->string('state', 64)->nullable();
@@ -38,15 +45,19 @@ return new class extends Migration
             $table->text('visit_reason')->nullable();
             $table->text('visit_expectation')->nullable();
             $table->text('visit_expectedexpense')->nullable();
+
+            // Entry Source
             $table->string('entry_source', 64)->nullable();
-            $table->bigInteger('entry_source_id')->nullable();
+            $table->bigInteger('entry_source_id')->nullable()->index();
+            $table->string('entry_source_type', 255)->nullable();
+
+            // Audit Fields
             $table->string('visit_by', 255)->nullable();
             $table->string('created_by_type', 255)->nullable();
             $table->string('created_by', 255)->nullable();
-            $table->string('entry_source_type', 255)->nullable();
-            
-            // Add timestamps if required
-            $table->timestamps(); 
+
+            // Timestamps
+            $table->timestamps();
         });
     }
 
@@ -55,3 +66,4 @@ return new class extends Migration
         Schema::dropIfExists('cyp_visitplanner');
     }
 };
+

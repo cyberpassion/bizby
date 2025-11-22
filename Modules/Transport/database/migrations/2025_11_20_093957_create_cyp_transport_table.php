@@ -23,12 +23,11 @@ return new class extends Migration
             $table->time('fro_start')->nullable();
             $table->time('fro_end')->nullable();
             $table->longText('remark')->nullable();
-            $table->tinyInteger('status')->nullable();
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
+
+            // Common SaaS field
             $table->bigInteger('client_id')->nullable();
-            
-            // Optional timestamps
+
+            // Optional timestamps for created_at / updated_at
             $table->timestamps();
         });
     }
@@ -38,4 +37,3 @@ return new class extends Migration
         Schema::dropIfExists('cyp_transport');
     }
 };
-
