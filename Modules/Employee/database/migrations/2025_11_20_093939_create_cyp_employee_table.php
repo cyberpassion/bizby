@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_employee', function (Blueprint $table) {
+			$table->id();
             $table->bigInteger('client_id');
-            $table->bigIncrements('employee_id');
             $table->date('date')->nullable();
             $table->dateTime('datetime');
             $table->string('employee_type', 255);

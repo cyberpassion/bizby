@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_contact', function (Blueprint $table) {
-            $table->bigIncrements('contact_id');
+            $table->id();
             $table->bigInteger('client_id');
             $table->date('date');
             $table->dateTime('datetime');

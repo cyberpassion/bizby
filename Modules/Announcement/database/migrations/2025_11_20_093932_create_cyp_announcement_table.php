@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_announcement', function (Blueprint $table) {
-            $table->bigIncrements('ID'); // Primary key with auto-increment
+            $table->id();
             $table->bigInteger('client_id');
             $table->bigInteger('announcement_id');
             $table->date('date')->nullable();

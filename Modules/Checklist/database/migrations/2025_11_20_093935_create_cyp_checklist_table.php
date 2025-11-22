@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_checklist', function (Blueprint $table) {
-            $table->bigIncrements('checklist_id');
+            $table->id();
             $table->unsignedBigInteger('client_id');
             $table->date('date');
             $table->dateTime('datetime');

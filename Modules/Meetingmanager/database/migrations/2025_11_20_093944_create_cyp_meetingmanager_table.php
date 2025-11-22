@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_meetingmanager', function (Blueprint $table) {
+			$table->id();
             $table->bigInteger('client_id');
-            $table->bigIncrements('meeting_id');
             $table->unsignedBigInteger('meeting_group_id');
             $table->date('date');
             $table->dateTime('datetime');

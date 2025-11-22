@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_examresult', function (Blueprint $table) {
-            $table->bigIncrements('exam_id');
+            $table->id();
             $table->date('date')->nullable();
             $table->dateTime('datetime')->nullable();
             $table->string('exam_session', 255);

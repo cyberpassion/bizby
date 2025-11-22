@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_note', function (Blueprint $table) {
-            $table->bigIncrements('note_id'); // Primary key
+            $table->id();
             $table->bigInteger('client_id');
             $table->date('date')->nullable();
             $table->dateTime('datetime')->nullable();

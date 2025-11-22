@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_leaveapplication', function (Blueprint $table) {
-            $table->bigIncrements('ID');
+            $table->id();
             $table->bigInteger('client_id');
             $table->unsignedBigInteger('leaveapplication_id');
             $table->date('date')->nullable();

@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('cyp_booking', function (Blueprint $table) {
-            $table->bigIncrements('booking_id');
+            $table->id();
             $table->unsignedBigInteger('booking_group_id')->nullable();
             $table->bigInteger('booking_id_sno');
             $table->dateTime('datetime');
