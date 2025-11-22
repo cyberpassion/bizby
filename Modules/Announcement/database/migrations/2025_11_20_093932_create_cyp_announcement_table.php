@@ -14,11 +14,9 @@ return new class extends Migration
 
             // Specific fields for announcements
             $table->bigInteger('announcement_id');
-            $table->date('date')->nullable();
             $table->string('session', 255);
             $table->string('month', 255);
             $table->date('end_date')->nullable();
-            $table->dateTime('datetime')->nullable();
             $table->string('category', 255)->nullable();
             $table->string('recipient', 255);
             $table->longText('announcement')->nullable();

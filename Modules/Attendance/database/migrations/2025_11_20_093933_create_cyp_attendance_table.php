@@ -8,11 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_attendances', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('client_id');
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
+        Schema::create('cyp_attendance', function (Blueprint $table) {
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Attendance-specific fields
             $table->string('session', 255);
             $table->string('month', 255);
             $table->date('absent_date')->nullable();
@@ -24,12 +24,11 @@ return new class extends Migration
             $table->string('absent_reason', 255)->nullable();
             $table->boolean('is_paid');
             $table->mediumText('remark')->nullable();
-            $table->tinyInteger('status');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_attendances');
+        Schema::dropIfExists('cyp_attendance');
     }
 };

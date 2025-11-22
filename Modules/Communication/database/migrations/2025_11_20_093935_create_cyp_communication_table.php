@@ -9,22 +9,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_communication', function (Blueprint $table) {
-            $table->unsignedBigInteger('message_id', true); // Primary Key, auto-increment
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Communication-specific fields
             $table->unsignedBigInteger('batch_id')->nullable();
             $table->string('request_id', 255);
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
             $table->longText('message')->nullable();
+
+            // Polymorphic recipient
             $table->string('recipient_type', 255)->nullable();
-            $table->unsignedBigInteger('recipient_id');
-            $table->text('sent_to');
+            $table->unsignedBigInteger('recipient_id')->nullable();
+            
+            $table->text('sent_to')->nullable();
             $table->string('mode', 255)->nullable();
             $table->string('service_name', 255);
-            $table->tinyInteger('status');
-            $table->bigInteger('client_id')->nullable();
             $table->string('session', 64)->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -33,4 +33,3 @@ return new class extends Migration
         Schema::dropIfExists('cyp_communication');
     }
 };
-

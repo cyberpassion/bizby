@@ -20,15 +20,15 @@ return new class extends Migration
             $table->unsignedBigInteger('day_token_id')->nullable();
             $table->string('consultation_through')->nullable();
             $table->unsignedBigInteger('consultation_with')->nullable();
-            $table->text('consultation_for')->nullable();
+            $table->text('consultation_for')->nullable(); 
             $table->text('consultation_for_detail')->nullable();
 
             // Patient/person info using macro
             $table->commonPersonFields();
 
-            // Other consultation fields
-            $table->string('consultation_type')->nullable();
-            $table->decimal('consultation_fee', 10, 2)->nullable();
+            // Other consultation fields 
+            $table->string('consultation_  type')->nullable();
+            $table->decimal('consultation_f ee', 10, 2)->nullable();
             $table->decimal('consultation_extra_fee', 10, 2)->nullable();
             $table->string('referred_by')->nullable();
             $table->string('referred_to')->nullable();

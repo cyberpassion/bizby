@@ -9,44 +9,49 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_cashflow', function (Blueprint $table) {
-            $table->bigIncrements('id_primary'); // ID Primary
-            $table->dateTime('datetime');
-            $table->date('date');
+            // Common SaaS fields
+            $table->commonSaasFields();
+
+            // Cashflow-specific fields
             $table->bigInteger('cash_id');
-            $table->bigInteger('parent_id');
+            $table->bigInteger('parent_id')->nullable();
             $table->string('cash_flow', 64);
             $table->string('cash_context', 255);
             $table->unsignedBigInteger('cash_context_id');
             $table->string('pattern_name', 255);
             $table->string('cash_type', 64);
             $table->string('session', 64);
-            $table->string('payee_type', 255);
-            $table->string('payee_id', 64);
+
+            // Polymorphic for payee
+            $table->string('payee_type', 255)->nullable();
+            $table->unsignedBigInteger('payee_id')->nullable();
+
             $table->string('payable', 64);
             $table->string('paid', 64);
             $table->string('balance', 64);
             $table->string('concession', 64);
             $table->string('cash_code', 255);
-            $table->string('remark', 255);
-            $table->text('cash_type_remark');
-            $table->string('fee_remark', 255);
-            $table->string('payment_order_id', 255);
-            $table->string('payment_transaction_id', 255);
-            $table->string('payment_confirmation', 255);
-            $table->text('additional_info');
-            $table->string('payment_mode', 255);
-            $table->tinyInteger('status');
-            $table->bigInteger('user_id')->nullable();
-            $table->bigInteger('client_id')->nullable();
-            $table->string('entry_by', 255)->nullable();
+            $table->string('remark', 255)->nullable();
+            $table->text('cash_type_remark')->nullable();
+            $table->string('fee_remark', 255)->nullable();
+            $table->string('payment_order_id', 255)->nullable();
+            $table->string('payment_transaction_id', 255)->nullable();
+            $table->string('payment_confirmation', 255)->nullable();
+            $table->text('additional_info')->nullable();
+            $table->string('payment_mode', 255)->nullable();
+
+            // Polymorphic for entry_by
             $table->string('entry_by_type', 255)->nullable();
-            $table->bigInteger('entry_by_id')->nullable();
+            $table->unsignedBigInteger('entry_by_id')->nullable();
+
             $table->tinyInteger('is_captured')->nullable();
             $table->tinyInteger('is_refunded')->nullable();
-            $table->string('verified_by', 64)->nullable();
+
+            // Polymorphic for verified_by
+            $table->string('verified_by_type', 64)->nullable();
+            $table->unsignedBigInteger('verified_by_id')->nullable();
+
             $table->bigInteger('thread_parent')->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
         });
     }
 
@@ -55,4 +60,5 @@ return new class extends Migration
         Schema::dropIfExists('cyp_cashflow');
     }
 };
+
 
