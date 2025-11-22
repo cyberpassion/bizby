@@ -14,8 +14,6 @@ return new class extends Migration
             $table->commonSaasFields();
 
             // Dates
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
             $table->dateTime('admission_datetime');
             $table->date('admission_date');
 

@@ -9,16 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_saleservice', function (Blueprint $table) {
-			$table->id();
-            $table->bigInteger('client_id');
+            // Common SaaS fields: id, client_id, status, timestamps, soft deletes, audit
+            $table->commonSaasFields();
+
+            // Sales Service-specific fields
             $table->unsignedBigInteger('saleservice_id')->nullable();
             $table->bigInteger('saleservice_group_id');
-            $table->dateTime('datetime')->nullable();
-            $table->date('date')->nullable();
             $table->string('category', 255);
             $table->date('saleservice_date');
-            $table->string('session', 255);
-            $table->string('month', 255);
+            $table->string('session', 255)->nullable();
+            $table->string('month', 255)->nullable();
             $table->bigInteger('buyer_id');
             $table->string('buyer_type', 255);
             $table->bigInteger('offering_id');
@@ -26,9 +26,9 @@ return new class extends Migration
             $table->float('offering_quantity');
             $table->string('offering_unit', 255);
             $table->float('offering_price')->unsigned();
-            $table->float('gst_percentage');
-            $table->text('remark');
-            $table->string('system_remark', 255);
+            $table->float('gst_percentage')->nullable();
+            $table->text('remark')->nullable();
+            $table->string('system_remark', 255)->nullable();
             $table->bigInteger('saleservice_by')->nullable();
             $table->date('next_date')->nullable();
             $table->string('offering_hsn_code', 255)->nullable();
@@ -44,8 +44,7 @@ return new class extends Migration
             $table->string('invoice_prefix', 255)->nullable();
             $table->bigInteger('invoice_number')->nullable();
             $table->text('terms')->nullable();
-            $table->bigInteger('thread_parent');
-            $table->tinyInteger('status');
+            $table->bigInteger('thread_parent')->nullable();
         });
     }
 
@@ -54,3 +53,4 @@ return new class extends Migration
         Schema::dropIfExists('cyp_saleservice');
     }
 };
+

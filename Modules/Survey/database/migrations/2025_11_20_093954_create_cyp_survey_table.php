@@ -9,15 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cyp_survey', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_primary', true); // ID Primary, auto-increment
-            $table->bigInteger('survey_id');
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
-            $table->string('session', 64);
-            $table->string('month', 64);
+            // Common SaaS fields for consistency
+            $table->commonSaasFields();
+
+            // Survey-specific fields
+            $table->bigInteger('survey_id')->unsigned();
+            $table->string('session', 64)->nullable();
+            $table->string('month', 64)->nullable();
             $table->string('category', 255)->nullable();
-            $table->string('recipient', 64);
-            $table->date('end_date');
+            $table->string('recipient', 64)->nullable();
+            $table->date('end_date')->nullable();
             $table->longText('question')->nullable();
             $table->longText('option_1')->nullable();
             $table->longText('option_2')->nullable();
@@ -29,13 +30,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('option_3_responses')->nullable();
             $table->unsignedSmallInteger('option_4_responses')->nullable();
             $table->longText('responders')->nullable();
-            $table->string('added_by_type', 64);
-            $table->unsignedBigInteger('added_by');
-            $table->string('status', 8);
-            $table->bigInteger('client_id')->nullable();
-            $table->unsignedBigInteger('added_by_id')->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+            $table->string('added_by_type', 64)->nullable();
+            $table->unsignedBigInteger('added_by')->nullable();
         });
     }
 
@@ -44,4 +40,5 @@ return new class extends Migration
         Schema::dropIfExists('cyp_survey');
     }
 };
+
 
