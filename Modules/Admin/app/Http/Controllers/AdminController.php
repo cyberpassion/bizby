@@ -34,12 +34,12 @@ class AdminController extends Controller
      */
     public function list()
     {
-		$admins = $this->service->list();
+		$admins = $this->service->list(); // data fetch kar rahe hai
 		//dd($admins->toArray());
         return Inertia::render("{$this->moduleName}/list", [
             'admins' => $admins
         ]);
-        return view("{$this->moduleName}::list");
+        //return view("{$this->moduleName}::list");
     }
 
     /**
