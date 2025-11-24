@@ -1,8 +1,0 @@
-<?php
-
-use Illuminate\Support\Facades\Route;
-use Modules\Cashflow\Http\Controllers\CashflowController;
-
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('cashflows', CashflowController::class)->names('cashflow');
-});
