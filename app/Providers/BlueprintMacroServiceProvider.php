@@ -29,7 +29,7 @@ class BlueprintMacroServiceProvider extends ServiceProvider
 
             $this->string('first_name', 100);
             $this->string('middle_name', 100)->nullable();
-            $this->string('last_name', 100);
+            $this->string('last_name', 100)->nullable();
 
             // Optional: auto CONCATED full_name column
             // $this->string('full_name')->virtualAs("CONCAT(first_name, ' ', last_name)");

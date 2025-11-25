@@ -24,7 +24,7 @@ class Consultation extends Model
     /**
      * Custom primary key for the table.
      */
-    protected $primaryKey = 'consultation_id';
+    //protected $primaryKey = 'consultation_id';
 
     /**
      * If primary key is auto-incrementing.
@@ -69,9 +69,7 @@ class Consultation extends Model
      * Additional attributes that do NOT exist in DB.
      * These appear automatically in JSON output.
      */
-    protected $appends = [
-        'doctor_name',
-    ];
+    protected $appends = [];
 
 	/**
      * Dynamically determine fillable columns by:
