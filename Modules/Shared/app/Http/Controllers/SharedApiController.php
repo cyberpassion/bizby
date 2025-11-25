@@ -4,124 +4,124 @@ namespace Modules\Shared\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
-use Modules\Shared\Services\SharedService;
-use Modules\Shared\Models\Shared;
-
-class SharedApiController extends Controller
+abstract class SharedApiController extends Controller
 {
-    protected $service;
-
-    public function __construct(SharedService $service)
-    {
-        $this->service = $service;
-    }
+    /**
+     * Return the model class for this controller
+     */
+    abstract protected function model();
 
     /**
-     * Display a listing of the resource.
+     * Return validation rules for store/update
+     */
+    abstract protected function validationRules($id = null);
+
+    /**
+     * List resources
      */
     public function index()
     {
-		$shareds = $this->service->list();
-		return response()->json(['data' => $shareds]);
+        $model = $this->model();
+        $data = $model::paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-		return Inertia::render('shared/create');
-        return view('shared::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {
-		// Validate incoming data
-        $validated = $request->validate([
-            'shared_with' => 'required|string|max:255',
-            'shared_date' => 'required|date',
-            'patient_name' => 'required|string|max:255',
-            'notes'	=> 'nullable|string',
-        ]);
-
-        // Create new shared
-        $shared = Shared::create($validated);
-
-        // Redirect with success message
-        return redirect()
-            ->route('shared.index')
-            ->with('success', 'Shared created successfully.');
-	}
-
-    /**
-     * Show the specified resource.
+     * Show single resource
      */
     public function show($id)
     {
-		$shared = Shared::findOrFail($id);
-        return Inertia::render('shared/show', [
-            'shared' => $shared
-        ]);
-        return view('shared::show');
+        $model = $this->model()::find($id);
+
+        if (!$model) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Resource not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $model
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Store resource
      */
-    public function edit($id)
+    public function store(Request $request)
     {
-		$shared = Shared::findOrFail($id);
-        return Inertia::render('shared/edit', [
-            'shared' => $shared
-        ]);
-        return view('shared::edit');
+        $model = $this->model();
+        $validated = $request->validate($this->validationRules());
+        $resource = $model::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => $resource
+        ], Response::HTTP_CREATED);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update resource
      */
-    public function update(Request $request, $id) {
-		// Validate incoming data
-        $validated = $request->validate([
-            'shared_with' => 'required|string|max:255',
-            'shared_date' => 'required|date',
-            'patient_name' => 'required|string|max:255',
-            'notes' => 'nullable|string',
-        ]);
-
-        // Find and update shared
-        $shared = Shared::findOrFail($id);
-        $shared->update($validated);
-
-        // Redirect with success message
-        return redirect()
-            ->route('shared.index')
-            ->with('success', 'Shared updated successfully.');
-	}
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {
-		$shared = Shared::findOrFail($id);
-        $shared->delete();
-
-        return redirect()
-            ->route('shared.index')
-            ->with('success', 'Shared deleted successfully.');
-	}
-
-	/**
-     * Display a home of the resource.
-     */
-    public function home()
+    public function update(Request $request, $id)
     {
-		return Inertia::render('shared/home');
-        return view('shared::home');
+        $model = $this->model()::find($id);
+
+        if (!$model) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Resource not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        // Dynamic fillable
+        $data = $request->only($model->getFillable());
+
+        // Validate critical fields
+        $validator = Validator::make($data, $this->validationRules($id));
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $model->update($data);
+
+        return response()->json([
+            'success' => true,
+            'data' => $model
+        ], Response::HTTP_OK);
     }
 
+    /**
+     * Delete resource
+     */
+    public function destroy($id)
+    {
+        $model = $this->model()::find($id);
+
+        if (!$model) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Resource not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $model->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Resource deleted successfully'
+        ], Response::HTTP_OK);
+    }
 }
