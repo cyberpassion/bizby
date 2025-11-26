@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Meetingmanager\Http\Controllers\MeetingmanagerController;
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('meetingmanagers', MeetingmanagerController::class)->names('meetingmanager');
+});*/
+
+// Temporarily disable auth middleware
+Route::prefix('v1')->group(function () {
+    Route::apiResource('meetingmanagers', MeetingmanagerApiController::class)->names('meetingmanagers');
 });
