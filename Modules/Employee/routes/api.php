@@ -1,15 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Consultation\Http\Controllers\ConsultationApiController;
+use Modules\Employee\Http\Controllers\EmployeeApiController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('consultations', ConsultationController::class)->names('consultation');
+    Route::apiResource('employees', EmployeeController::class)->names('employee');
 });*/
 
 // Temporarily disable auth middleware
 Route::prefix('v1')->group(function () {
-    Route::apiResource('consultations', ConsultationApiController::class)->names('consultations');
+    Route::apiResource('employees', EmployeeApiController::class)->names('employees');
 });
 
 
