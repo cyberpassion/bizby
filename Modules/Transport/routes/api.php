@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Transport\Http\Controllers\TransportController;
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('transports', TransportController::class)->names('transport');
+});*/
+
+// Temporarily disable auth middleware
+Route::prefix('v1')->group(function () {
+    Route::apiResource('transports', TransportApiController::class)->names('transports');
 });
