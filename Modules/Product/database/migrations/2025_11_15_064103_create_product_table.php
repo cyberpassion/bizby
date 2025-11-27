@@ -6,23 +6,44 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('cyp_product', function (Blueprint $table) {
+
+            // Primary Key
             $table->id();
-            
-            $table->timestamps();
+
+            // SaaS Common Fields
+            $table->commonSaasFields();
+
+            // Product Info
+            $table->string('product_type', 255);
+            $table->string('brand_name', 255);
+            $table->string('product_name', 255);
+
+            $table->float('retail_price')->unsigned();
+            $table->float('sale_price');
+
+            $table->text('product_description')->nullable();
+            $table->text('tags')->nullable();
+            $table->text('additional_features')->nullable();
+            $table->string('remark', 255)->nullable();
+
+            // Stock
+            $table->unsignedBigInteger('total_quantity')->nullable();
+            $table->unsignedBigInteger('available_stock')->nullable();
+            $table->unsignedBigInteger('sold_quantity')->nullable();
+
+            // Other Info
+            $table->string('unit', 255)->nullable();
+            $table->string('availability', 255)->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('product');
+        Schema::dropIfExists('cyp_product');
     }
 };
+
+
