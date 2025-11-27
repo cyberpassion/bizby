@@ -38,7 +38,7 @@ abstract class SharedApiController extends Controller
      */
     public function show($id)
     {
-        $model = $this->model()::find($id);
+        $model = $this->model()::with(['consultant'])->find($id);
 
         if (!$model) {
             return response()->json([

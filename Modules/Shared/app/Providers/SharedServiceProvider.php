@@ -10,6 +10,8 @@ use RecursiveIteratorIterator;
 
 use Modules\Shared\Services\LookupRegistry;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 class SharedServiceProvider extends ServiceProvider
 {
     use PathNamespace;
@@ -31,6 +33,9 @@ class SharedServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
 		$this->loadPhpLookupsFromModules(); // Registers all lookup keys returning static values
 		$this->loadDynamicLookupsFromProviders(); // Register all lookup keys wherein we fetch dynamic values
+		Relation::morphMap([
+            'employee' => \Modules\Employee\Models\Employee::class
+        ]);
     }
 
 	// Registers all lookup keys returning static values

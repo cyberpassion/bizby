@@ -16,7 +16,7 @@ class Employee extends Model
     protected $table = 'cyp_employee';
 
 	// Specify custom primary key
-	protected $primaryKey = 'employee_id';
+	protected $primaryKey = 'id';
 
     /**
      * If the primary key is not auto-incrementing, set this to false.
