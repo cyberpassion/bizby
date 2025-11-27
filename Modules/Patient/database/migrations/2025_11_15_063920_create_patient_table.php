@@ -6,23 +6,101 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('patient', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_patient', function (Blueprint $table) {
+
+            //  Common SaaS fields (adds: id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps)
+            $table->commonSaasFields();
+
+            // Primary Key (your custom PK)
+            $table->bigIncrements('patient_id');
+
+            // Patient Basic Details
+            $table->string('patient_type');
+            $table->string('patient_name');
+            $table->string('father_name')->nullable();
+            $table->string('mother_name')->nullable();
+
+            $table->unsignedTinyInteger('age')->nullable();
+            $table->date('dob')->nullable();
+
+            $table->string('gender', 16)->nullable();
+            $table->string('phone_number', 20)->nullable();
+            $table->string('email', 255)->nullable()->index();
+            $table->string('aadhar_number', 20)->nullable()->index();
+
+            $table->string('nationality', 100)->nullable();
+            $table->string('religion', 100)->nullable();
+            $table->string('caste', 100)->nullable();
+            $table->string('category', 100)->nullable();
+
+            $table->string('guardian_name')->nullable();
+            $table->string('relation_with_guardian')->nullable();
+
+            $table->text('permanent_address')->nullable();
+
+            // Marital Info
+            $table->string('marital_status', 50)->nullable();
+            $table->string('spouse_name')->nullable();
+
+            // Vitals
+            $table->float('height')->nullable();
+            $table->float('weight')->nullable();
+
+            $table->string('pulse_rate', 50)->nullable();
+            $table->string('blood_pressure', 50)->nullable();
+            $table->string('spo2', 50)->nullable();
+
+            // Diagnosis
+            $table->text('provisional_diagnosis')->nullable();
+
+            // Health Card
+            $table->string('health_card')->nullable();
+            $table->string('health_card_number', 64)->nullable();
+
+            // Admission
+            $table->date('admission_date')->nullable();
+            $table->time('admission_time')->nullable();
+
+            $table->string('admitted_by_type')->nullable();
+            $table->string('admitted_by_name')->nullable();
+            $table->string('admitted_by_phone_number')->nullable();
+
+            $table->text('admission_remark')->nullable();
+
+            // Emergency Case
+            $table->string('is_emergency_case', 10)->nullable();
+            $table->string('case_name')->nullable();
+            $table->string('fir_number')->nullable();
+
+            // Room / Bed
+            $table->string('room_number', 50)->nullable();
+            $table->string('bed_number', 50)->nullable();
+
+            // Referrals
+            $table->string('referred_by')->nullable();
+            $table->string('referred_to')->nullable();
+
+            // Treatment Info
+            $table->string('treatment_under')->nullable();
+            $table->text('treatment_details')->nullable();
+
+            // Discharge
+            $table->date('discharge_date')->nullable();
+            $table->time('discharge_time')->nullable();
+            $table->unsignedBigInteger('discharged_by')->nullable();
+            $table->text('discharge_remark')->nullable();
+
+            // Extra
+            $table->string('email_id')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('patient');
+        Schema::dropIfExists('cyp_patient');
     }
 };
+
+
