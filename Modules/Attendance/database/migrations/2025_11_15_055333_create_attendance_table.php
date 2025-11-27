@@ -6,23 +6,38 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('attendance', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_attendance', function (Blueprint $table) {
+
+            // Add all SaaS common fields
+            $table->commonSaasFields();
+
+            // Your module specific fields
+            $table->date('absent_date')->nullable();
+
+            $table->string('session', 255);
+            $table->string('month', 255);
+            $table->string('absent_date_part', 255);
+
+            $table->float('absent_duration');
+
+            $table->string('absentee_type', 255)->nullable();
+            $table->string('absentee_id', 255);
+
+            $table->string('absent_code', 255)->nullable();
+            $table->string('absent_reason', 255)->nullable();
+
+            $table->tinyInteger('is_paid')->nullable();
+
+            $table->mediumText('remark')->nullable();
+
+            $table->unsignedBigInteger('attendance_id')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('attendance');
+        Schema::dropIfExists('cyp_attendance');
     }
 };

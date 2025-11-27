@@ -6,23 +6,47 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('communication', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        // Creating cyp_communication table
+        Schema::create('cyp_communication', function (Blueprint $table) {
+
+            $table->bigIncrements('message_id'); // PRIMARY KEY + AUTO_INCREMENT
+
+            // Communication Reference
+            $table->unsignedBigInteger('batch_id')->nullable();
+            $table->string('request_id', 255);
+
+            // Message Content
+            $table->longText('message')->nullable();
+
+            // Recipient Details
+            $table->string('recipient_type', 255)->nullable();
+            $table->unsignedBigInteger('recipient_id');
+            $table->text('sent_to');
+
+            // Communication Mode
+            $table->string('mode', 255)->nullable();
+            $table->string('service_name', 255);
+
+            // Status
+            $table->tinyInteger('status');
+
+            // Client / Session Info
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->string('session', 64)->nullable();
+
+            // Timestamps
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('communication');
+        Schema::dropIfExists('cyp_communication');
     }
 };
+
+
+
