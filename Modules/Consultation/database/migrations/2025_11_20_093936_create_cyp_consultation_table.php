@@ -18,22 +18,23 @@ return new class extends Migration
             $table->date('consultation_date')->nullable();
             $table->time('consultation_time')->nullable();
             $table->unsignedBigInteger('day_token_id')->nullable();
-            $table->string('consultation_through')->nullable();
-            $table->unsignedBigInteger('consultation_with')->nullable();
-            $table->text('consultation_for')->nullable(); 
-            $table->text('consultation_for_detail')->nullable();
+            $table->string('channel')->nullable();
+
+			// Polymorphic relation to consultant (could be User, Doctor, etc.)
+            $table->nullableMorphs('consultant');
+
+            $table->text('reason')->nullable();
 
             // Patient/person info using macro
             $table->commonPersonFields();
 
             // Other consultation fields 
-            $table->string('consultation_  type')->nullable();
-            $table->decimal('consultation_f ee', 10, 2)->nullable();
-            $table->decimal('consultation_extra_fee', 10, 2)->nullable();
+            $table->string('consultation_type')->nullable();
+            $table->decimal('consultation_fee', 10, 2)->nullable();
             $table->string('referred_by')->nullable();
             $table->string('referred_to')->nullable();
             $table->text('remark')->nullable();
-            $table->string('expected_next_consultation_after')->nullable();
+            $table->string('followup_interval_days')->nullable();
             $table->date('next_date')->nullable();
             $table->unsignedBigInteger('thread_parent')->nullable();
         });

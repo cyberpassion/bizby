@@ -124,4 +124,9 @@ class Consultation extends Model
     	);
 	}
 
+	public function consultant()
+	{
+    	return $this->morphTo();
+	}
+
 }
