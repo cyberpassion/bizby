@@ -6,23 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('registration', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_registration', function (Blueprint $table) {
+
+            // Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
+
+            //  Module Specific Fields
+            $table->bigIncrements('registration_id');
+
+            $table->string('registration_type', 255);
+
+            $table->text('name');
+            $table->text('phone_number');
+            $table->text('email_id');
+            $table->text('permanent_address');
+            $table->text('metainfo');
+
+            $table->text('remark')->nullable();
+
+            $table->string('session', 64)->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('registration');
+        Schema::dropIfExists('cyp_registration');
     }
 };
+
+
