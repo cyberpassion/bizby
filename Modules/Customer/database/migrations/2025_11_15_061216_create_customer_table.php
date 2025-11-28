@@ -14,10 +14,6 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
-            // Module Specific Fields
-            $table->bigIncrements('customer_id'); // Primary Key, UNSIGNED
-
-
             $table->string('business_type', 255);
             $table->string('customer_type', 255);
 
