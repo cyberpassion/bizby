@@ -6,23 +6,56 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('note', function (Blueprint $table) {
+        Schema::create('cyp_note', function (Blueprint $table) {
+
+            // Primary Key (note_id → id)
             $table->id();
-            
-            $table->timestamps();
+
+            // SaaS Common Fields (client_id, status, created_by, updated_by, deleted_by, timestamps, softDeletes)
+            $table->commonSaasFields();
+
+            // Session
+            $table->string('session', 64)->nullable();
+
+            // Added For
+            $table->unsignedBigInteger('added_for_id')->nullable();
+            $table->string('added_for_type', 64)->nullable();
+            $table->string('added_for', 255)->nullable();
+
+            // Added By
+            $table->unsignedBigInteger('added_by_id')->nullable();
+            $table->string('added_by_type', 64)->nullable();
+            $table->string('added_by', 255)->nullable();
+
+            // Note Details
+            $table->string('note_type')->nullable();
+            $table->string('subject', 64)->nullable();
+            $table->longText('information')->nullable();
+            $table->string('context', 64)->nullable();
+
+            // Context (required earlier → now safer typed)
+            $table->string('context_type', 64);
+            $table->unsignedBigInteger('context_id');
+            $table->unsignedBigInteger('context_type_id')->nullable();
+
+            // Threading
+            $table->unsignedBigInteger('thread_parent')->default(0)->nullable();
+
+            // Dates
+            $table->date('note_end_date')->nullable();
+            $table->time('note_end_time')->nullable();
+
+            // Extra Info
+            $table->text('additional_info')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('note');
+        Schema::dropIfExists('cyp_note');
     }
 };
+
+

@@ -6,23 +6,38 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('subscription', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_signup', function (Blueprint $table) {
+
+            // Primary Key
+            $table->id('signup_id');
+
+            // SaaS Common Fields
+            $table->commonSaasFields();
+
+            // Form Info
+            $table->unsignedBigInteger('form_id');
+            $table->string('signup_label', 255)->nullable();
+            $table->string('form_label', 255)->nullable();
+
+            // Signup Details
+            $table->text('name')->nullable();
+            $table->string('email', 255)->nullable();
+            $table->string('phone_number', 255)->nullable();
+            $table->text('signup_info')->nullable();
+            $table->string('signup_fee', 255)->nullable();
+            $table->string('entry_source', 255)->nullable();
+
+            // Submitted By
+            $table->string('submitted_by_type', 255)->nullable();
+            $table->unsignedBigInteger('submitted_by_id')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('subscription');
+        Schema::dropIfExists('cyp_signup');
     }
 };
+

@@ -6,23 +6,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('eventmanager', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_eventmanager', function (Blueprint $table) {
+
+            // Common SaaS fields (id, client_id, status, audit, soft deletes, timestamps)
+            $table->commonSaasFields();
+
+            // Event-specific fields
+            $table->date('event_start_date');
+            $table->date('event_end_date')->nullable();
+
+            $table->string('event_type', 255);
+            $table->string('event_name', 255);
+            $table->text('event_description');
+            $table->text('participant');
+            $table->text('event_participants');
+            $table->text('event_remark');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('eventmanager');
+        Schema::dropIfExists('cyp_eventmanager');
     }
 };
+
+

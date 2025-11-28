@@ -6,23 +6,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('examresult', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_examresult', function (Blueprint $table) {
+
+            // Apply common SaaS fields (id, client_id, status, created_by, updated_by, deleted_by, timestamps, soft deletes)
+            $table->commonSaasFields();
+
+            // Exam Result Specific Fields
+            $table->string('exam_session', 255);
+
+            $table->string('exam_name', 255)->nullable();
+            $table->string('exam_class', 255)->nullable();
+            $table->string('exam_section', 255)->nullable();
+            $table->string('exam_type', 255)->nullable();
+
+            $table->string('examinee_id_type', 255)->nullable();
+
+            $table->dateTime('announcement_datetime');
+
+            $table->longText('exam_options')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('examresult');
+        Schema::dropIfExists('cyp_examresult');
     }
 };
+

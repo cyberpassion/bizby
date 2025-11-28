@@ -6,23 +6,54 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('library', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_library', function (Blueprint $table) {
+
+            // Primary Key
+            $table->id(); // item_id -> id (Laravel standard)
+
+            // SaaS Standard Fields (client_id, status, created_by, updated_by, deleted_by, softDeletes, timestamps)
+            $table->commonSaasFields();
+
+            // Library Item Fields
+            $table->string('isbn')->nullable();
+            $table->string('item_name');
+
+            $table->longText('description')->nullable();
+
+            $table->unsignedInteger('page_count')->nullable();
+
+            $table->string('price')->nullable();
+
+            $table->string('language')->nullable();
+            $table->string('author_name')->nullable();
+            $table->string('publication_name')->nullable();
+
+            $table->string('publishing_year', 4)->nullable();
+            $table->date('publishing_date')->nullable();
+
+            $table->float('average_rating')->nullable();
+
+            $table->string('category')->nullable();
+
+            $table->unsignedBigInteger('total_quantity')->nullable();
+
+            $table->longText('remark')->nullable();
+            $table->longText('additional_info')->nullable();
+
+            $table->string('is_currently_in_use', 8)->nullable();
+
+            // Entity / Accession
+            $table->string('entity_type')->nullable();
+            $table->string('accession_number')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('library');
+        Schema::dropIfExists('cyp_library');
     }
 };
+
+

@@ -6,23 +6,47 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('service', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_service', function (Blueprint $table) {
+
+            // Primary Key
+            $table->id('request_id');
+
+            // SaaS Common Fields
+            $table->commonSaasFields();
+
+            // Group Info
+            $table->unsignedBigInteger('request_group_id');
+
+            // Request Details
+            $table->float('request_size');
+            $table->string('request_size_unit', 255);
+            $table->text('request_description')->nullable();
+
+            // Requester Info
+            $table->string('requested_by_type', 255)->nullable();
+            $table->string('requested_by', 255)->nullable();
+            $table->text('requested_by_remark')->nullable();
+
+            // Service Details
+            $table->string('request_price', 255)->nullable();
+            $table->string('service_id', 255)->nullable();
+            $table->float('service_price')->nullable();
+            $table->text('service_done_by')->nullable();
+            $table->string('service_remark', 255)->nullable();
+
+            // Tax & Cash Info
+            $table->float('gst')->nullable();
+            $table->string('hsn_code', 255)->nullable();
+            $table->unsignedBigInteger('cash_id')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('service');
+        Schema::dropIfExists('cyp_service');
     }
 };
+
+
