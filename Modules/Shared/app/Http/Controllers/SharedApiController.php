@@ -28,7 +28,8 @@ abstract class SharedApiController extends Controller
         $data = $model::paginate(10);
 
         return response()->json([
-            'success' => true,
+            'status' => 'success',
+            'message' => 'Records fetched successfully.',
             'data' => $data
         ], Response::HTTP_OK);
     }
@@ -38,17 +39,19 @@ abstract class SharedApiController extends Controller
      */
     public function show($id)
     {
-        $model = $this->model()::with(['consultant'])->find($id);
+        $model = $this->model()::find($id);
 
         if (!$model) {
             return response()->json([
-                'success' => false,
-                'message' => 'Resource not found'
+                'status' => 'error',
+                'message' => 'Resource not found.',
+                'data' => null
             ], Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
-            'success' => true,
+            'status' => 'success',
+            'message' => 'Record fetched successfully.',
             'data' => $model
         ], Response::HTTP_OK);
     }
@@ -58,12 +61,13 @@ abstract class SharedApiController extends Controller
      */
     public function store(Request $request)
     {
-        $model = $this->model();
         $validated = $request->validate($this->validationRules());
+        $model = $this->model();
         $resource = $model::create($validated);
 
         return response()->json([
-            'success' => true,
+            'status' => 'success',
+            'message' => 'Record created successfully.',
             'data' => $resource
         ], Response::HTTP_CREATED);
     }
@@ -73,33 +77,37 @@ abstract class SharedApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = $this->model()::find($id);
+        $modelInstance = $this->model()::find($id);
 
-        if (!$model) {
+        if (!$modelInstance) {
             return response()->json([
-                'success' => false,
-                'message' => 'Resource not found'
+                'status' => 'error',
+                'message' => 'Resource not found.',
+                'data' => null
             ], Response::HTTP_NOT_FOUND);
         }
 
-        // Dynamic fillable
-        $data = $request->only($model->getFillable());
+        // Only update fillable fields
+        $data = $request->only($modelInstance->getFillable());
 
-        // Validate critical fields
+        // Validate update rules
         $validator = Validator::make($data, $this->validationRules($id));
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
+                'status' => 'error',
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors(),
+                'data' => null
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $model->update($data);
+        $modelInstance->update($data);
 
         return response()->json([
-            'success' => true,
-            'data' => $model
+            'status' => 'success',
+            'message' => 'Record updated successfully.',
+            'data' => $modelInstance
         ], Response::HTTP_OK);
     }
 
@@ -112,16 +120,18 @@ abstract class SharedApiController extends Controller
 
         if (!$model) {
             return response()->json([
-                'success' => false,
-                'message' => 'Resource not found'
+                'status' => 'error',
+                'message' => 'Resource not found.',
+                'data' => null
             ], Response::HTTP_NOT_FOUND);
         }
 
         $model->delete();
 
         return response()->json([
-            'success' => true,
-            'message' => 'Resource deleted successfully'
+            'status' => 'success',
+            'message' => 'Resource deleted successfully.',
+            'data' => null
         ], Response::HTTP_OK);
     }
 }

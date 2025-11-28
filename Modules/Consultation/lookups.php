@@ -3,7 +3,6 @@ $pg = 'consultation';
 $commonSettingsRoute = '/settings';
 
 return [
-
 	'menuItem-consultation' => [
 		'admin'	=>	[
 			'parent'		=>	[
@@ -19,18 +18,22 @@ return [
 			],
 		],
 	],
-
     'sidebar-menu' => [
         [
-            'label' => ucfirst($pg),
+            'title' => ucfirst($pg),
             'href' => "/{$pg}",
-            'children' => [
-                ['label' => 'Add New', 'href' => "/{$pg}/create"],
-                ['label' => 'View List', 'href' => "/{$pg}/list"],
-                ['label' => 'Report', 'href' => "/{$pg}/report"],
-                ['label' => 'Settings', 'href' => "/{$pg}/settings"],
+            'items' => [
+                ['title' => 'Add New', 'href' => "/module/{$pg}/new"],
+                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
+                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
+    ],
+	'consultation_mode-json'	=>	['call'=>'Call'],
+    'consultation_status-json' => [
+        1 => 'Active',
+        2 => 'Deleted',
     ],
 
 	'communicationTemplate-consultation' => [
