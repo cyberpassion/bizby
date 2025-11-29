@@ -4,26 +4,15 @@ namespace Modules\Shared\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Shared\Database\Factories\SharedFactory;
+use Illuminate\Support\Facades\Schema;
 
 class Shared extends Model
 {
     use HasFactory;
 
-	protected $connection = 'mysql'; // Always use mysql connection
+    protected $connection = 'mysql'; // Always use mysql connection
 
-    /**
-     * If the primary key is not auto-incrementing, set this to false.
-     */
-    public $incrementing = true;
+	// Specify the custom table name
+    protected $table = 'cyp_shared';
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
-
-    // protected static function newFactory(): SharedFactory
-    // {
-    //     // return SharedFactory::new();
-    // }
 }

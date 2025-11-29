@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Employee\$CONTROLLER_NAMESPACE$;
+namespace Modules\Employee\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
