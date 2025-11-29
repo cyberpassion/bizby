@@ -27,9 +27,7 @@ class BlueprintMacroServiceProvider extends ServiceProvider
         // Common fields for person modules
         Blueprint::macro('commonPersonFields', function () {
 
-            $this->string('first_name', 100);
-            $this->string('middle_name', 100)->nullable();
-            $this->string('last_name', 100)->nullable();
+            $this->string('name', 100)->nullable();
 
             // Optional: auto CONCATED full_name column
             // $this->string('full_name')->virtualAs("CONCAT(first_name, ' ', last_name)");

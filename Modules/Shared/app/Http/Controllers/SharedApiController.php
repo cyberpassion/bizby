@@ -134,4 +134,5 @@ abstract class SharedApiController extends Controller
             'data' => null
         ], Response::HTTP_OK);
     }
+
 }

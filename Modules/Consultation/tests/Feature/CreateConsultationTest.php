@@ -23,9 +23,7 @@ it('can create a consultation entry', function () {
         'consultation_with' => 2,
         'consultation_for' => 'General Checkup',
         'consultation_for_detail' => 'Routine checkup for blood pressure and sugar levels',
-        'first_name' => 'John',
-        'middle_name' => 'A',
-        'last_name' => 'Doe',
+        'name' => 'John Doe',
         'dob' => '1990-01-01',
         'phone_number' => '9876543210',
         'email' => 'john.doe@example.com',
@@ -45,7 +43,7 @@ it('can create a consultation entry', function () {
 
     $consultation = Consultation::create($data);
 
-    expect(Consultation::where('first_name', 'John')->exists())->toBeTrue();
+    expect(Consultation::where('name', 'John Doe')->exists())->toBeTrue();
     expect($consultation)->toBeInstanceOf(Consultation::class)
                          ->and($consultation->phone_number)->toBe('9876543210');
 });
