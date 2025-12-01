@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('cyp_cashflows', function (Blueprint $table) {
+            $table->id();
+            $table->string('source'); // e.g., fee, donation, online payment
+            $table->string('type');   // income, expense
+            $table->decimal('amount', 12, 2);
+            $table->text('description')->nullable();
+            $table->date('transaction_date')->default(now());
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('cyp_cashflows');
+    }
+};

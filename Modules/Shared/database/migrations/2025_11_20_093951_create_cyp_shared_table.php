@@ -11,10 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cyp_shared', function (Blueprint $table) {
-            $table->id();
-            
-            $table->timestamps();
+        Schema::create('cyp_upload', function (Blueprint $table) {
+            // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
+            $table->commonSaasFields();
+
+			// The entity this upload belongs to (e.g., student, employee, customer)
+            $table->unsignedBigInteger('reference_id');
+
+            // The type/key of the document (e.g., profile_photo, resume, certificate)
+            $table->string('file_key');
+
+            // Add document_path column (nullable because file may not be uploaded initially)
+            $table->string('document_path')->nullable();
+
         });
     }
 
@@ -23,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cyp_shared');
+        Schema::dropIfExists('cyp_upload');  // FIXED: correct table name
     }
 };

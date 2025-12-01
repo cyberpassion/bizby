@@ -4,72 +4,21 @@ namespace Modules\Shared\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class Upload extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql'; // Always use mysql connection
+    protected $connection = 'mysql';
 
-	// Specify the custom table name
     protected $table = 'cyp_upload';
-
-	// Specify custom primary key
-	protected $primaryKey = 'upload_id';
-
-    /**
-     * If the primary key is not auto-incrementing, set this to false.
-     */
+    protected $primaryKey = 'id';
     public $incrementing = true;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
-
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'booking_date' => 'date', // Laravel will cast it to Carbon
+    // ✅ Mass-assignable fields
+    protected $fillable = [
+        'reference_id',
+        'file_key',
+        'document_path',
     ];
-
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [
-        'status' => 1,
-    ];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
-    {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): BookingFactory
-    // {
-    //     return BookingFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
-
 }

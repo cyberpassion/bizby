@@ -5,7 +5,7 @@ namespace Modules\Shared\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\Shared\Services\LookupRegistry;
 
-class SharedLookupsController extends Controller
+class LookupsController extends Controller
 {
     public function get($key)
     {
