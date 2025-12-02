@@ -14,9 +14,6 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
-            //  Module Specific Fields
-            $table->bigIncrements('registration_id');
-
             $table->string('registration_type', 255);
 
 			$table->string('session', 64)->nullable();

@@ -24,15 +24,9 @@ return new class extends Migration
 
             $table->date('next_date');
 
-            $table->text('remark')->nullable();
-
             $table->string('state', 64)->nullable();
             $table->string('gstin', 255)->nullable();
             $table->string('district', 255)->nullable();
-
-            $table->text('additional_information')->nullable();
-
-            $table->string('entry_source', 128)->nullable();
         });
     }
 

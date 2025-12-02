@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('cyp_employees', function (Blueprint $table) {
+        Schema::create('cyp_employee', function (Blueprint $table) {
 
             // Common SaaS Fields
             $table->commonSaasFields();
@@ -20,7 +20,6 @@ return new class extends Migration
 			// Patient/person info using macro
             $table->commonPersonFields();
 
-            $table->string('marital_status', 255);
             $table->string('spouse_name', 255);
             $table->text('qualifications')->nullable();
             $table->string('pan_number', 255);
@@ -42,8 +41,6 @@ return new class extends Migration
             $table->date('date_of_relieving')->nullable();
 
             $table->text('past_work_experience');
-            $table->text('portal_access');
-            $table->tinyInteger('status');
 
             $table->unsignedBigInteger('punch_id')->nullable();
 

@@ -33,7 +33,6 @@ return new class extends Migration
             $table->decimal('consultation_fee', 10, 2)->nullable();
             $table->string('referred_by')->nullable();
             $table->string('referred_to')->nullable();
-            $table->text('remark')->nullable();
             $table->string('followup_interval_days')->nullable();
             $table->date('next_date')->nullable();
             $table->unsignedBigInteger('thread_parent')->nullable();

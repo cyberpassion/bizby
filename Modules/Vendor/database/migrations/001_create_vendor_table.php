@@ -14,8 +14,6 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
-            //  Module Specific Fields
-            $table->bigIncrements('vendor_id'); // Primary Key, UNSIGNED
             $table->unsignedBigInteger('vendor_parent_id');
 
 			// Patient/person info using macro

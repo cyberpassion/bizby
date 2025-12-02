@@ -47,10 +47,11 @@ class BlueprintMacroServiceProvider extends ServiceProvider
             // Optional: auto CONCATED full_name column
             // $this->string('full_name')->virtualAs("CONCAT(first_name, ' ', last_name)");
 
+			$this->string('gender', 20)->nullable();
             $this->date('dob')->nullable();
 			$this->unsignedTinyInteger('age')->nullable();
 
-            $this->string('phone_number', 20)->nullable()->index();
+            $this->string('phone', 20)->nullable()->index();
             $this->string('email', 255)->nullable();
 
 			$this->string('verification_id_name', 64)->nullable();

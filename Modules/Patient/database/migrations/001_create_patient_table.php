@@ -13,9 +13,6 @@ return new class extends Migration
             //  Common SaaS fields (adds: id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps)
             $table->commonSaasFields();
 
-            // Primary Key (your custom PK)
-            $table->bigIncrements('patient_id');
-
 			// Patient/person info using macro
             $table->commonPersonFields();
 
@@ -26,12 +23,6 @@ return new class extends Migration
 
             $table->string('guardian_name')->nullable();
             $table->string('relation_with_guardian')->nullable();
-
-            $table->text('permanent_address')->nullable();
-
-            // Marital Info
-            $table->string('marital_status', 50)->nullable();
-            $table->string('spouse_name')->nullable();
 
             // Vitals
             $table->float('height')->nullable();
@@ -81,8 +72,6 @@ return new class extends Migration
             $table->unsignedBigInteger('discharged_by')->nullable();
             $table->text('discharge_remark')->nullable();
 
-            // Extra
-            $table->string('email_id')->nullable();
         });
     }
 

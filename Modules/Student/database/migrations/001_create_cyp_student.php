@@ -44,9 +44,6 @@ return new class extends Migration
             // Patient/person info using macro
             $table->commonPersonFields();
 
-            $table->string('religion');
-            $table->string('category');
-            $table->string('caste', 64);
             $table->string('house_name', 64);
 
             $table->string('father_name', 128);
@@ -114,9 +111,6 @@ return new class extends Migration
 
             $table->text('extra_fee_info')->nullable();
 
-            $table->string('entry_source', 64)->nullable();
-            $table->string('entry_source_type', 64)->nullable();
-            $table->bigInteger('entry_source_id')->nullable();
         });
     }
 
