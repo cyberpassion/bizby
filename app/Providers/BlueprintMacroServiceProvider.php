@@ -48,6 +48,7 @@ class BlueprintMacroServiceProvider extends ServiceProvider
             // $this->string('full_name')->virtualAs("CONCAT(first_name, ' ', last_name)");
 
             $this->date('dob')->nullable();
+			$this->unsignedTinyInteger('age')->nullable();
 
             $this->string('phone_number', 20)->nullable()->index();
             $this->string('email', 255)->nullable();
@@ -64,6 +65,9 @@ class BlueprintMacroServiceProvider extends ServiceProvider
             $this->string('caste', 100)->nullable();
             $this->string('category', 100)->nullable();
 			$this->string('nationality', 100)->nullable();
+
+			$this->unsignedTinyInteger('marital_status')->nullable()
+		      ->comment('0=Single,1=Married,2=Widowed,3=Divorced');
 
         });
     }
