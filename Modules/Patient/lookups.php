@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
 
     "communicationTemplate-patient" => [
                         "patient_entry_new_sms"		    =>	"New Patient Entry SMS",
@@ -89,18 +89,6 @@ return [
                         "portal" => [
                             'patient_status_filter' => "Status/status/patient_status-json"
                         ]
-    ],
-    "listFilters-patient_detail_update" => [
-                        'admin'	=>	array(
-                            $pg			=>	[
-                                'Edit'			=>	"{$pg}/entry/update",
-                                'Print Invoice'	=>	"{$pg}/document",
-                                'Upload'		=>	"{$pg}/upload",
-                                'View Details'	=>	"{$pg}/detail",
-                                'View History'	=>	"{$pg}/history",
-                                'Download Docs'	=>	\Route::get_endpoint_zip_download( $pg ),
-                            ]
-                        )
     ],
     "permissionAdmin-patient" => [
                         'restricted'=>	[

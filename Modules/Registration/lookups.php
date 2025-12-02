@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
 	"communicationTemplate-registration" => [
                         "registration_entry_new_sms"		=>	"New Registration Entry SMS",
                         "registration_entry_new_whatsapp"	=>	"New Registration Entry Whatsapp",
@@ -73,7 +73,7 @@ return [
 
 	"cronList-registration" => ['registration-notification' => 'Registration Notification'],
 
-	"mandatoryFields-registration_entry_update" => ['name','phone_number']
+	"mandatoryFields-registration_entry_update" => ['name','phone_number'],
 
 	"dateFields-registration_public-entry_update" => ['date','dob'],
 

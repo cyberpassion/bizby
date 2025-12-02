@@ -31,7 +31,7 @@ return [
             ],
         ],
 	
-    ]
+    ],
 	"communicationTemplate-customer" => [
                         "customer_entry_new_sms"				=>	"New Customer Entry SMS",
                         "customer_entry_new_whatsapp"			=>	"New Customer Entry Whatsapp",

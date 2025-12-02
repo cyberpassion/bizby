@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
 	"communicationTemplate-employee" => [
                         "employee_entry_new_sms"		=>	"New Employee Entry SMS",
                         "employee_entry_new_whatsapp"	=>	"New Employee Entry Whatsapp",

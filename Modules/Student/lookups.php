@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
 	"communicationTemplate-student" => [
                         "student_entry_new_sms"		    =>	"New Student Entry SMS",
                         "student_entry_new_whatsapp"	=>	"New Student Entry Whatsapp",
@@ -73,40 +73,6 @@ return [
                         'transport_vehicle_id'				=>	'Vehicle',
                         'registration_datetime'				=>	'Reg Datetime'
 	],
-	"pgStructure-student" => [
-                        $pg			=>	[
-                            'forms/form'		=>	[
-                                'entry',
-                                'fee-entry',
-                                'fee-customization-entry',
-                                'report',
-                                'day-cash-report',
-                                'dues-cash-report',
-                                'advanced-info-entry',
-                                'bulk-operation',
-                                'upload',
-                                'permission',
-                                'employee-entry',
-                                'settings',
-                                'other-settings',
-                                'fee-settings',
-                                'class-settings',
-                                'fee-structure-settings',
-                                'extra-fee-structure-settings'
-                            ],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,[
-                                'home',
-                                'document',
-                                'profile',
-                                'fee-history',
-                                'fee-payment',
-                                'detail',
-                                'history',
-                                'fee-slip'
-                            ])
-                        ]
-    ],
     "moduleTable-student" => [
                         "cyp_term",
                         "cyp_activity",
@@ -172,29 +138,6 @@ return [
                             'report_type_filter'	=> "Report Type/report_type/student_cash_report_type-list",
                             'report_subtype_filter' => "Report Subtype/report_subtype/student_cash_report_subtype-list"
                         ]
-    ],
-    "listFilters-student_detail_update" => [
-                        'admin'	=>	array(
-                            $pg	=>	array(
-                                'View Profile'	=>	"{$pg}/profile",
-                                'Edit'			=>	"{$pg}/entry/update",
-                                'Print'			=>	"{$pg}/document",
-                                'Upload'		=>	"{$pg}/upload",
-                                'View Details'	=>	"{$pg}/detail",
-                                'View History'	=>	"{$pg}/history",
-                                'Promote'		=>	\Route::get_endpoint( $pg, ["key" => "template:student/entry/promote", "heading" =>	"Promote"] ),
-                                'Demote'		=>	\Route::get_endpoint( $pg, ["key" => "template:student/entry/demote", "heading" =>	"Demote"] ),
-                                'Generate PDF'	=>	\Route::get_path_generate_pdf( $pg, 'admission-form' ),
-                                'Download Docs'	=>	\Route::get_endpoint_zip_download( $pg ),
-                            ),
-                            "Fee"				=>	[
-                                'Add'			=>	"{$pg}/fee-entry",
-                                'History'		=>	"{$pg}/fee-history",
-                                'Add Discount'	=>	"{$pg}/fee-customization-entry",
-                                'Fee Structure'	=>	"{$pg}/fee-structure-settings",
-                                'Extra Fee Structure'	=>	"{$pg}/extra-fee-structure-settings"
-                            ]
-                        )
     ],
     "permissionAdmin-student" => [
                         'restricted'=>	[
@@ -475,10 +418,7 @@ return [
                         "compulsory"	=>	"Compulsory",
                         "optional"		=>	"Optional"
     ],
-    "cyperp-json" =>
-    "primarymodule-json" => \v3\M\Option\Core::get_available_primary_module_names(),
-
-     "login_type-json" => array_keys(\v3\C\Module::get_all_allowed_logins()),
+    "cyperp-json" => "",
 
      "business_type-json" => [
         "individual"               => "Individual",
@@ -542,16 +482,6 @@ return [
         "non_profit_organization"  => "Non-Profit Organization",
         "government_agency"        => "Government Agency"
     ],
-    "option_name-json" => (function () {
-        $allOptions = \v3\C\Settings::reformat_values_for_prefill(\v3\M\Option\Module::get());
-        $res = ['Select'];
-        foreach (array_keys($allOptions) as $optionName) {
-            if (stripos($optionName, 'is_') !== 0) {
-                $res[$optionName] = $optionName;
-            }
-        }
-        return $res;
-    })(),
     "theme-json" => [
         "#3f51b5"       => "DEFAULT BLUE",
         "orangered"     => "ORANGE RED",
@@ -722,35 +652,7 @@ return [
         'sample_export' => ['sno', 'username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status'],
         'selected_columns' => ['username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status']
     ],
-    "permissionAdmin-user" => (function () {
-        $pg = \v3\C\User::$pg;
-        return [
-            'restricted' => [
-                '2' => [
-                    ['pg' => $pg, 'sub_pg' => 'entry'],
-                    ['pg' => $pg, 'sub_pg' => 'list'],
-                ],
-                '3' => [
-                    ['pg' => $pg, 'sub_pg' => 'entry'],
-                    ['pg' => $pg, 'sub_pg' => 'list']
-                ]
-            ]
-        ];
-    })(),
-    "permissionAdmin-permission" => (function () {
-        $pg = \v3\C\Permission::$pg;
-        return [
-            'restricted' => [
-                '2' => [
-                    ['pg' => $pg, 'sub_pg' => 'entry']
-                ],
-                '3' => [
-                    ['pg' => $pg, 'sub_pg' => 'entry']
-                ]
-            ]
-        ];
-    })(),
-    "columnNameMapping-module" =>
+    "columnNameMapping-module" => "",
     "columnNameMapping-term" => [
         'ptr'       => 'SNo',
         'term_id'   => 'ID',
