@@ -17,9 +17,9 @@ class ConsultationApiController extends SharedApiController
     {
         return [
             'name' 			=> 'sometimes|required|string|max:255',
+			'gender'		=>	'sometimes|required|string|max:255',
             'email'      	=> 'sometimes|required|email|unique:consultations,email,' . $id,
-            'phone_number'	=> 'nullable|string|max:20',
-            'remarks'    	=> 'nullable|string'
+            'phone'			=> 'nullable|string|max:20',
         ];
     }
 
