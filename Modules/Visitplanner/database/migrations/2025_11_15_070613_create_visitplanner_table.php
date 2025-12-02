@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_visitplanner', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('ID');
-
             // Common SaaS fields: client_id, status, audit fields, softDeletes, timestamps
             $table->commonSaasFields();
 
@@ -50,12 +47,8 @@ return new class extends Migration
             $table->text('visit_expectedexpense')->nullable();
 
             // Entry & Audit
-            $table->string('entry_source', 64)->nullable();
-            $table->unsignedBigInteger('entry_source_id')->nullable();
             $table->string('visit_by', 255)->nullable();
-            $table->string('created_by_type', 255)->nullable();
-            $table->string('created_by', 255)->nullable();
-            $table->string('entry_source_type', 255)->nullable();
+
         });
     }
 

@@ -10,10 +10,7 @@ return new class extends Migration
     {
         Schema::create('cyp_survey', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('ID');
-
-            // SaaS Common Fields
+			// SaaS Common Fields
             $table->commonSaasFields();
 
             // Survey Details
@@ -37,7 +34,6 @@ return new class extends Migration
             $table->unsignedSmallInteger('option_4_responses')->nullable();
 
             $table->longText('responders')->nullable();
-            $table->longText('remark')->nullable();
 
             // Added by info
             $table->string('added_by_type', 64)->nullable();

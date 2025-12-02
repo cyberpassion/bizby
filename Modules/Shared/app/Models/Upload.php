@@ -17,6 +17,7 @@ class Upload extends Model
 
     // ✅ Mass-assignable fields
     protected $fillable = [
+		'reference_type',
         'reference_id',
         'file_key',
         'document_path',

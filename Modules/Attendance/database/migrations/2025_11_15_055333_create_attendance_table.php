@@ -30,9 +30,6 @@ return new class extends Migration
 
             $table->tinyInteger('is_paid')->nullable();
 
-            $table->mediumText('remark')->nullable();
-
-            $table->unsignedBigInteger('attendance_id')->nullable();
         });
     }
 

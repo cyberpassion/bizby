@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_saleservice', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id();
-
             // SaaS Common Fields
             $table->commonSaasFields();
 
@@ -36,9 +33,6 @@ return new class extends Migration
             $table->string('offering_unit', 255);
             $table->float('offering_price')->unsigned();
             $table->float('gst_percentage');
-
-            // Remarks & System Info
-            $table->string('system_remark', 255)->nullable();
 
             $table->unsignedBigInteger('saleservice_by')->nullable();
             $table->date('next_date')->nullable();

@@ -16,7 +16,7 @@ return new class extends Migration
 
             // Relation to main tenant
             $table->unsignedBigInteger('tenant_id');
-            $table->foreign('tenant_id')->references('id')->on('cyp_tenants')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('cyp_tenant')->onDelete('cascade');
 
             // User info
             $table->string('name');

@@ -8,10 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_signup', function (Blueprint $table) {
-
-            // Primary Key
-            $table->id('signup_id');
+        Schema::create('cyp_subscription', function (Blueprint $table) {
 
             // SaaS Common Fields
             $table->commonSaasFields();
@@ -27,7 +24,6 @@ return new class extends Migration
             $table->string('phone_number', 255)->nullable();
             $table->text('signup_info')->nullable();
             $table->string('signup_fee', 255)->nullable();
-            $table->string('entry_source', 255)->nullable();
 
             // Submitted By
             $table->string('submitted_by_type', 255)->nullable();

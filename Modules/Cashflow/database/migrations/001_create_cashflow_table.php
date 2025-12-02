@@ -34,7 +34,6 @@ return new class extends Migration
             $table->string('concession', 64);
 
             $table->string('cash_code', 255);
-            $table->string('remark', 255);
 
             $table->text('cash_type_remark');
             $table->string('fee_remark', 255);

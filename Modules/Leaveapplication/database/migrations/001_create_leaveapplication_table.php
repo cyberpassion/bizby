@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_leaveapplication', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id(); // standard primary key
-
             // SaaS Common Fields
             $table->commonSaasFields();
 

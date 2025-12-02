@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_transport', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('transport_vehicle_id');
-
             // Common SaaS fields (client_id, status, audit, softDeletes, timestamps)
             $table->commonSaasFields();
 
@@ -29,7 +26,6 @@ return new class extends Migration
             $table->time('to_end')->nullable();
             $table->time('fro_start')->nullable();
             $table->time('fro_end')->nullable();
-            $table->longText('remark')->nullable();
 
             // Optional: thread_parent / hierarchical tracking
             $table->unsignedBigInteger('thread_parent')->nullable();

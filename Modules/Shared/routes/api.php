@@ -20,5 +20,6 @@ Route::prefix('v1')->group(function () {
 	// Uploads
 	Route::get('/uploads', [UploadController::class, 'index']);
 	Route::post('/uploads', [UploadController::class, 'store']);
+	Route::delete('/uploads/{id}', [UploadController::class, 'destroy']);
 
 });

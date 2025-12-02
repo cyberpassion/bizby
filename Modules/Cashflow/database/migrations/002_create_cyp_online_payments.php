@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_online_payments', function (Blueprint $table) {
+        Schema::create('cyp_online_payment', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->decimal('amount', 12, 2);
@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_online_payments');
+        Schema::dropIfExists('cyp_online_payment');
     }
 };

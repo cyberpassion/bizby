@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_note', function (Blueprint $table) {
 
-            // Primary Key (note_id → id)
-            $table->id();
-
             // SaaS Common Fields (client_id, status, created_by, updated_by, deleted_by, timestamps, softDeletes)
             $table->commonSaasFields();
 
@@ -47,8 +44,6 @@ return new class extends Migration
             $table->date('note_end_date')->nullable();
             $table->time('note_end_time')->nullable();
 
-            // Extra Info
-            $table->text('additional_info')->nullable();
         });
     }
 

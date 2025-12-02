@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_library', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id(); // item_id -> id (Laravel standard)
-
             // SaaS Standard Fields (client_id, status, created_by, updated_by, deleted_by, softDeletes, timestamps)
             $table->commonSaasFields();
 
@@ -38,9 +35,6 @@ return new class extends Migration
             $table->string('category')->nullable();
 
             $table->unsignedBigInteger('total_quantity')->nullable();
-
-            $table->longText('remark')->nullable();
-            $table->longText('additional_info')->nullable();
 
             $table->string('is_currently_in_use', 8)->nullable();
 

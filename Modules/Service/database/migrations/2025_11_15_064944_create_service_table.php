@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_service', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('request_id');
-
             // SaaS Common Fields
             $table->commonSaasFields();
 

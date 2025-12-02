@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_treatment', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('treatment_id');
-
             // Common SaaS fields: client_id, status, audit, softDeletes, timestamps
             $table->commonSaasFields();
 

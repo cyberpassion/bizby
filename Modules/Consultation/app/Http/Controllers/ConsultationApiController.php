@@ -27,22 +27,21 @@ class ConsultationApiController extends SharedApiController
 	{
 
 		// Overview
-		$totalConsultations = Consultation::count();
-		$onlineConsultations = Consultation::where('channel', 'online')->count();
-		$inPersonConsultations = Consultation::where('channel', 'in-person')->count();
+		$total = Consultation::count();
+		$males = Consultation::where('gender', 'M')->count();
+		$females = Consultation::where('gender', 'F')->count();
 
 		$overview = [
-			'total_consultations' => $totalConsultations,
-			'online_consultations' => $onlineConsultations,
-			'in_person_consultations' => $inPersonConsultations,
+			'total_consultations' => $total,
+			'male_consultations' => $males,
+			'female_consultations' => $females,
+			'revenue_total' => 500000
 		];
 
 		// Chart data - Consultations by mode
 		// Generate multiple charts easily
 		$charts = [
-    		'channel' => $this->getChartCounts('channel'),
-    		'consultation_type' => $this->getChartCounts('consultant_type'),
-		    'status' => $this->getChartCounts('status'),   // example
+    		'channel' => $this->getChartCounts('channel')
 		];
 
 		$data = array_merge(["overview" => $overview], ["charts" => $charts]);

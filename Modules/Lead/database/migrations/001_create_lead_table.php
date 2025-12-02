@@ -56,16 +56,11 @@ return new class extends Migration
             $table->string('potential_client_website', 255)->nullable();
             $table->string('progress', 255)->nullable();
 
-            $table->string('entry_source', 255);
-            $table->string('entry_source_id', 255);
-
             $table->date('visit_date')->nullable();
 
             $table->string('category', 255)->nullable();
             $table->string('potential_client_place', 255)->nullable();
             $table->string('potential_client_state', 255)->nullable();
-
-            $table->text('additional_contacts')->nullable();
 
             $table->bigInteger('generated_by_id')->nullable();
             $table->bigInteger('contact_by_id')->nullable();
@@ -74,7 +69,6 @@ return new class extends Migration
 
             $table->string('entry_source_type', 255)->nullable();
 
-            $table->text('additional_information')->nullable();
         });
     }
 

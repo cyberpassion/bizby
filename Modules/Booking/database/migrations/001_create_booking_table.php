@@ -52,8 +52,6 @@ return new class extends Migration
 
             $table->bigInteger('cash_verified_by');
             $table->text('cash_verification_remark')->nullable();
-
-            $table->longText('remark')->nullable();
         });
     }
 

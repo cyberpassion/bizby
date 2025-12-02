@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_test', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('test_id');
-
             // SaaS common fields
             $table->commonSaasFields();
 
@@ -39,7 +36,6 @@ return new class extends Migration
             $table->text('instructions_translated')->nullable();
 
             // Created By / For
-            $table->unsignedBigInteger('created_by')->nullable();
             $table->longText('created_for')->nullable();
 
             // Test Responses

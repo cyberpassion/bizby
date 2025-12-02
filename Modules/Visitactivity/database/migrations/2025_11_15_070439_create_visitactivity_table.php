@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_visitactivity', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('visitactivity_id');
-
             // Common SaaS fields: client_id, status, audit fields, softDeletes, timestamps
             $table->commonSaasFields();
 
@@ -73,8 +70,7 @@ return new class extends Migration
 
             // Optional: human-readable fields
             $table->string('visit_by', 255)->nullable();
-            $table->string('created_by_type', 255)->nullable();
-            $table->string('created_by', 255)->nullable();
+
         });
     }
 

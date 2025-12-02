@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_product', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id();
-
             // SaaS Common Fields
             $table->commonSaasFields();
 
@@ -27,7 +24,6 @@ return new class extends Migration
             $table->text('product_description')->nullable();
             $table->text('tags')->nullable();
             $table->text('additional_features')->nullable();
-            $table->string('remark', 255)->nullable();
 
             // Stock
             $table->unsignedBigInteger('total_quantity')->nullable();

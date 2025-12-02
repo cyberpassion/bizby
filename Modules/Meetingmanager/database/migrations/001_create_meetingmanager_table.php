@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::create('cyp_meetingmanager', function (Blueprint $table) {
 
-            // Primary Key (meeting_id → id)
-            $table->id();
-
             // SaaS Defaults (client_id, status, created_by, updated_by, deleted_by, timestamps, softDeletes)
             $table->commonSaasFields();
 
@@ -41,7 +38,6 @@ return new class extends Migration
             $table->unsignedTinyInteger('priority')->default(1);
             $table->text('reason')->nullable();
             $table->text('reference')->nullable();
-            $table->text('remark')->nullable();
 
             // Exit Details (First Exit)
             $table->date('exit_date')->nullable();

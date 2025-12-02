@@ -10,16 +10,10 @@ return new class extends Migration
     {
         Schema::create('cyp_timetable', function (Blueprint $table) {
 
-            // Primary Key
-            $table->id('ID');
-
             // SaaS common fields
             $table->commonSaasFields();
 
             // Timetable Details
-            $table->date('date')->nullable();
-            $table->dateTime('datetime')->nullable();
-            $table->unsignedBigInteger('timetable_id');
             $table->string('slot', 255)->nullable();
             $table->string('session', 128)->nullable();
             $table->string('month', 128)->nullable();

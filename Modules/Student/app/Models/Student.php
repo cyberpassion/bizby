@@ -13,7 +13,7 @@ class Student extends Model
     protected $connection = 'mysql'; // Always use mysql connection
 
 	// Specify the custom table name
-    protected $table = 'cyp_students';
+    protected $table = 'cyp_student';
 
 	// Specify custom primary key
 	protected $primaryKey = 'id';

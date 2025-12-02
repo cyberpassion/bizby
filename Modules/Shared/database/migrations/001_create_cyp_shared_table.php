@@ -16,6 +16,9 @@ return new class extends Migration
             $table->commonSaasFields();
 
 			// The entity this upload belongs to (e.g., student, employee, customer)
+			$table->string('reference_type', 255)->nullable();
+
+			// The entity this upload belongs to (e.g., student, employee, customer)
             $table->unsignedBigInteger('reference_id');
 
             // The type/key of the document (e.g., profile_photo, resume, certificate)
