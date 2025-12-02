@@ -38,7 +38,6 @@ return new class extends Migration
             $table->float('gst_percentage');
 
             // Remarks & System Info
-            $table->text('remark')->nullable();
             $table->string('system_remark', 255)->nullable();
 
             $table->unsignedBigInteger('saleservice_by')->nullable();

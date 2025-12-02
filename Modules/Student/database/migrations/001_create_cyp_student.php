@@ -41,10 +41,8 @@ return new class extends Migration
             $table->string('current_section', 64);
             $table->string('current_session', 64);
 
-            $table->string('student_name', 128);
-            $table->string('gender', 64);
-
-            $table->date('dob');
+            // Patient/person info using macro
+            $table->commonPersonFields();
 
             $table->string('religion');
             $table->string('category');
@@ -52,9 +50,6 @@ return new class extends Migration
             $table->string('house_name', 64);
 
             $table->string('father_name', 128);
-            $table->string('phone_number', 64);
-            $table->string('email_id', 128);
-            $table->string('permanent_address');
 
             $table->string('father_occupation', 64);
             $table->string('father_annual_income', 64);
@@ -70,9 +65,6 @@ return new class extends Migration
             $table->string('local_guardian_details');
 
             $table->text('previous_results');
-
-            $table->string('aadhar_number', 64);
-            $table->string('pan_number');
 
             $table->text('documents_submitted');
             $table->text('subjects');
@@ -91,8 +83,6 @@ return new class extends Migration
             $table->bigInteger('punch_id')->nullable();
 
             $table->string('old_new');
-
-            $table->text('test_packages');
 
             $table->string('transport_pickup_location');
             $table->string('transport_vehicle_id');

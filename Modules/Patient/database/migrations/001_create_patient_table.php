@@ -16,24 +16,13 @@ return new class extends Migration
             // Primary Key (your custom PK)
             $table->bigIncrements('patient_id');
 
+			// Patient/person info using macro
+            $table->commonPersonFields();
+
             // Patient Basic Details
             $table->string('patient_type');
-            $table->string('patient_name');
             $table->string('father_name')->nullable();
             $table->string('mother_name')->nullable();
-
-            $table->unsignedTinyInteger('age')->nullable();
-            $table->date('dob')->nullable();
-
-            $table->string('gender', 16)->nullable();
-            $table->string('phone_number', 20)->nullable();
-            $table->string('email', 255)->nullable()->index();
-            $table->string('aadhar_number', 20)->nullable()->index();
-
-            $table->string('nationality', 100)->nullable();
-            $table->string('religion', 100)->nullable();
-            $table->string('caste', 100)->nullable();
-            $table->string('category', 100)->nullable();
 
             $table->string('guardian_name')->nullable();
             $table->string('relation_with_guardian')->nullable();

@@ -18,10 +18,9 @@ return new class extends Migration
             $table->bigIncrements('vendor_id'); // Primary Key, UNSIGNED
             $table->unsignedBigInteger('vendor_parent_id');
 
-            $table->text('vendor_official_name');
-            $table->string('vendor_official_phone', 255);
-            $table->string('vendor_official_email', 255);
-            $table->text('vendor_official_address');
+			// Patient/person info using macro
+            $table->commonPersonFields();
+
             $table->string('vendor_gstin', 255);
             $table->string('vendor_pan', 255);
 

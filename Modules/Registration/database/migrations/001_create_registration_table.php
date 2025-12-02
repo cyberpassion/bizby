@@ -19,15 +19,11 @@ return new class extends Migration
 
             $table->string('registration_type', 255);
 
-            $table->text('name');
-            $table->text('phone_number');
-            $table->text('email_id');
-            $table->text('permanent_address');
-            $table->text('metainfo');
+			$table->string('session', 64)->nullable();
 
-            $table->text('remark')->nullable();
+            // Patient/person info using macro
+            $table->commonPersonFields();
 
-            $table->string('session', 64)->nullable();
         });
     }
 
@@ -36,5 +32,3 @@ return new class extends Migration
         Schema::dropIfExists('cyp_registration');
     }
 };
-
-

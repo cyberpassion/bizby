@@ -17,28 +17,20 @@ return new class extends Migration
             $table->string('business_type', 255);
             $table->string('customer_type', 255);
 
-            $table->string('customer_name', 255)->nullable();
-
-            $table->text('phone_number')->nullable();
-            $table->text('email')->nullable();
-            $table->text('permanent_address')->nullable();
-
-            $table->tinyInteger('age');
-            $table->string('gender', 64);
+            // Patient/person info using macro
+            $table->commonPersonFields();
 
             $table->text('reference')->nullable();
 
             $table->date('next_date');
 
             $table->text('remark')->nullable();
-            $table->text('additional_contacts');
 
             $table->string('state', 64)->nullable();
             $table->string('gstin', 255)->nullable();
             $table->string('district', 255)->nullable();
 
             $table->text('additional_information')->nullable();
-            $table->text('email_id')->nullable();
 
             $table->string('entry_source', 128)->nullable();
         });
