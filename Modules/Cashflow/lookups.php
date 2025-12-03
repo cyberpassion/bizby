@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "communicationTemplate-cashflow" => [
                         "cashflow_entry_new_sms"		=>	"New Cashflow Entry SMS",
                         "cashflow_entry_new_whatsapp"	=>	"New Cashflow Entry Whatsapp",
@@ -53,46 +53,6 @@ return [
                         'payment_transaction_id'	=>	'Transaction ID',
                         'payment_confirmation' => 'Rcvd',
                         'verified_by'		=>	'Verified'
-    ],
-    "menuItem-cashflow" => [
-                        "admin"		=>	array(
-                            'parent'	=>	array(
-                                'Cashflow'	=>	array(\Route::to_home( $pg ), \v4\C\UI::sidebarmenu_list( $pg ))
-                            ),
-                            'child'	=>	array(
-                                'cashflow'	=>	array(
-                                    'Expense'					=>	\Route::to_entry($pg, ['cash_type'	=>	'expense']),
-                                    'Income'					=>	\Route::to_entry($pg, ['cash_type'	=>	'income']),
-                                    'Online Payments'			=>	get_link($pg . '/payment-list'),
-                                    'Settings'					=>	\Route::to_settings($pg)
-                                )
-                            ),
-                            'child-2'=>	array(
-                                'cashflow-expense'	=>	array(
-                                    'Add New Expense'					=>	\Route::to_entry($pg, ['cash_type'	=>	'expense']),
-                                    'View Expense List'					=>	\Route::to_list($pg, ['cash_type'	=>	'expense']),
-                                    'View Report'						=>	\Route::to_report($pg, ['cash_type'	=>	'expense']),
-                                ),
-                                'cashflow-income'	=>	array(
-                                    'Add New Income'					=>	\Route::to_entry($pg, ['cash_type'	=>	'income']),
-                                    'View Income List'					=>	\Route::to_list($pg, ['cash_type'	=>	'income']),
-                                    'View Report'						=>	\Route::to_report($pg, ['cash_type'	=>	'income']),
-                                ),
-                                'cashflow-online-payments'	=>	array(
-                                    'View Online Payments'				=>	get_link($pg . '/online-payment-list'),
-                                    'View Report'						=>	\Route::to_report($pg . '/online-payment-report'),
-                                    'Settings'							=>	\Route::to_settings($pg . '/online-payment-settings')
-                                )
-                            )
-                        ),
-                        "portal"	=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)], 'portal'),
-    ],
-    "pgStructure-cashflow" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry', 'payment-entry', 'settings', 'report', 'upload', 'online-payment-report', 'online-payment-settings'],
-                            'lists/list'		=>	['list', 'online-payment-list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'payment-voucher', 'history'])
-                        ]
     ],
     "mandatoryOptionsBeforeUsing-cashflow" => [
                         'missing_option'	=>	[

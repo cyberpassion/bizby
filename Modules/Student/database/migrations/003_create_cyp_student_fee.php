@@ -8,8 +8,12 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('cyp_student_fee', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+
+			// Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
+
+            $table->foreignId('student_id')->constrained('cyp_student')->onDelete('cascade');
             $table->foreignId('fee_head_id')->constrained('cyp_student_fee_head')->onDelete('cascade');
             $table->foreignId('class_id')->nullable()->onDelete('set null');
 
@@ -23,7 +27,6 @@ return new class extends Migration {
             $table->string('cancel_reason')->nullable();
             $table->timestamp('cancelled_at')->nullable();
 
-            $table->timestamps();
         });
     }
 

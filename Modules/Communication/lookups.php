@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "columnNameMapping-communication" => [
                         'ptr'			=>	'SNo',
                         'date'			=>	'Date',
@@ -41,44 +41,6 @@ return [
                         'messages_count' =>	'Count',
                         'recipient_type' =>	'R/Type',
                         'recipients'	=>	'Recipients'
-    ],
-    "menuItem-communication" => [
-                        "admin"		=>	array(
-                            'parent'=>	array(
-                                'Communication'	=>	array(
-                                    \Route::to_home($pg),
-                                    \v4\C\UI::sidebarmenu_list($pg)
-                                )
-                            ),
-                            'child'	=>	array(
-                                'communication'	=>	array(
-                                    'Send'				=>	get_link($pg . '/send/new'),
-                                    'View List'			=>	get_link($pg . '/list'),
-                                    'Report'			=>	get_link($pg . '/report'),
-                                    'Settings'			=>	get_link($pg . '/bulk-operation'),
-                                    'Template'			=>	\Route::to_entry($pg . '/entry/new'),
-                                )
-                            ),
-                            'child-2'=>	array(
-                                "{$pg}-send"			=>	array(
-                                    'Send SMS'			=>	get_link($pg . '/send-sms/new', ['mode' => 'sms']),
-                                    'Send Email'		=>	get_link($pg . '/send-email/new', ['mode' => 'email']),
-                                    'Send Whatsapp'		=>	get_link($pg . '/send-whatsapp/new', ['mode' => 'whatsapp']),
-                                ),
-                                "{$pg}-template"		=>	array(
-                                    'Add New'			=>	get_link($pg . '/entry'),
-                                    'View List'			=>	get_link($pg . '/list', ['type'=>'template'])
-                                )
-                            )
-                        ),
-                        "portal"	=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)], 'portal'),
-    ],
-    "pgStructure-communication" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry',  'send', 'report', 'phonenumbers-report', 'settings'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'history'])
-                        ]
     ],
     "moduleTable-communication" => [
                         "cyp_term",

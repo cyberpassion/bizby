@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "communicationTemplate-eventmanager" => [
                         "eventmanager_entry_new_sms"		=>	"New Eventmanager Entry SMS",
                         "eventmanager_entry_new_whatsapp"	=>	"New Eventmanager Entry Whatsapp",
@@ -44,17 +44,6 @@ return [
                         'event_participants' =>	'Participants',
                         'event_name'		=>	'Name',
                         'event_description'	=>	'Description'
-    ],
-    "menuItem-eventmanager" => [
-                        "admin"		=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)]),
-                        "portal"	=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)], 'portal'),
-    ],
-    "pgStructure-eventmanager" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry', 'upload', 'settings', 'report'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'history'])
-                        ]
     ],
     "mandatoryOptionsBeforeUsing-eventmanager" => [
                         'missing_option'	=>	[
@@ -141,8 +130,8 @@ return [
                         "list"		=>	[["participant"	=>	'{$login_type}-{$byline}']],
                         "report"	=>	[["participant"	=>	'{$login_type}-{$byline}']]
     ],
-    "formPrefills-eventmanager_entry_new" => "formPrefills-eventmanager_entry_new":
-                    $res = [
+    "formPrefills-eventmanager_entry_new" => 
+                    [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',

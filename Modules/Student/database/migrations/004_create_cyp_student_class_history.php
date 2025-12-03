@@ -8,15 +8,18 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('cyp_student_class_history', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->foreignId('class_id')->constrained()->onDelete('cascade');
+
+			// Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
+
+            $table->foreignId('student_id')->constrained('cyp_student')->onDelete('cascade');
+            $table->foreignId('class_id')->constrained('cyp_student')->onDelete('cascade');
             $table->string('academic_year');
             $table->date('from_date')->nullable();
             $table->date('to_date')->nullable();
-            $table->enum('status', ['active', 'completed', 'demoted', 'promoted'])->default('active');
             $table->string('reason')->nullable();
-            $table->timestamps();
+
         });
     }
 

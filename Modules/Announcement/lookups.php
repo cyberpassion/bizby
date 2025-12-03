@@ -30,22 +30,11 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "communicationTemplate-announcement" => [
                         "announcement_entry_new_sms"		=>	"New Announcement Entry SMS",
                         "announcement_entry_new_whatsapp"	=>	"New Announcement Entry Whatsapp",
                         "announcement_entry_new_email"		=>	"New Announcement Entry Email",
-    ],
-    "menuItem-announcement" => [
-                        "admin"		=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)]),
-                        "portal"	=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)], 'portal'),
-    ],
-    "pgStructure-announcement" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry', 'salary-entry', 'salary-settings', 'settings', 'advanced-info-entry', 'report', 'salary-report', 'bulk-operation', 'upload', 'permission'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail'])
-                        ]
     ],
     "columnNameMapping-announcement" => [
                         'announcement_id' 	=>	'ID',

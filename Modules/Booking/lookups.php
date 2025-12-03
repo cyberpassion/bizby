@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "communicationTemplate-booking" => [
                         "booking_entry_new_sms"			=>	"New Booking Entry SMS",
                         "booking_entry_new_whatsapp"	=>	"New Booking Entry Whatsapp",
@@ -66,69 +66,27 @@ return [
     "moduleCashType-booking" => [
                          'booking-fee'	=>	'Booking Fee'
     ],
-    "menuItem-booking" => [
-                        "admin"		=>	array(
-                            'parent'	=>	array(
-                                'Booking'	=>	array(\Route::to_home( $pg ), \v4\C\UI::sidebarmenu_list( $pg )),
-                            ),
-                            'child'	=>	array(
-                                'booking'					=>	array(
-                                    'Allotment'				=>	\Route::to_entry($pg . '/allotment-entry'),
-                                    'Building'				=>	\Route::to_entry($pg . '/building-entry'),
-                                    'View Report'			=>	\Route::to_report($pg),
-                                    'Settings'				=>	\Route::to_settings($pg)
-                                )
-                            ),
-                            'child-2'	=>	array(
-                                "{$pg}-allotment"				=>	array(
-                                    'Perform Allotment (Form)'	=>	\Route::to_entry($pg . '/allotment-entry'),
-                                    'Perform Allotment (Table)'	=>	\Route::to_entry($pg . '/block-allotment-entry'),
-                                    'View Booking List'		=>	\Route::to_list($pg)
-                                ),
-                                "{$pg}-building"				=>	array(
-                                    'Add Building'			=>	\Route::to_entry($pg . '/building-entry'),
-                                    'View Building List'	=>	\Route::to_list($pg . '/building-list'),
-                                )
-                            )
-                        ),
-                        "portal"	=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)], 'portal'),
-    ],
-    "pgStructure-booking" => [
-                        $pg	=>	[
-                            'forms/form'		=>	array(
-                                'building-entry',
-                                'slot-entry',
-                                'allotment-entry',
-                                'transfer-entry',
-                                'upload',
-                                'report',
-                                'settings'
-                            ),
-                            'lists/list'		=>	['list','building-list','allotment-list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail'])
-                        ]
-    ],
     "mandatoryOptionsBeforeUsing-booking" => [
                         'booking-allotment-entry'	=>	[
                             'empty'			=>	[
                                 [
-                                    'table'	=>	$controller::db_table('building'),
+                                    'table'	=>	'#',
                                     'params'=>	[],
                                     'label'	=>	'Please add building to get started',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'=>	[
-                                        'php'=>	get_link("$pg/building-entry"),
+                                        'php'=>	'#',
                                         'pwa'=>	"/{$pg}/building-entry/entry",
                                         'app'=>	"/{$pg}/building-entry"
                                     ]
                                 ],
                                 [
-                                    'table'	=>	$controller::db_table('listing'),
+                                    'table'	=>	'#',
                                     'params'=>	[],
                                     'label'	=>	'Building Slots not Added',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'=>	[
-                                        'php'=>	get_link("$pg/slot-entry"),
+                                        'php'=>	'#',
                                         'pwa'=>	"/{$pg}/slot-entry/entry",
                                         'app'=>	"/{$pg}/slot-entry"
                                     ]
@@ -138,12 +96,12 @@ return [
                         'booking-slot-entry'		=>	array(
                             'empty'			=>	[
                                 [
-                                    'table'	=>	$controller::db_table('building'),
+                                    'table'	=>	'#',
                                     'params'=>	[],
                                     'label'	=>	'Please add building to get started',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'=>	[
-                                        'php'=>	get_link("$pg/building-entry"),
+                                        'php'=>	'#',
                                         'pwa'=>	"/{$pg}/building-entry",
                                         'app'=>	"/{$pg}/building-entry"
                                     ]
@@ -157,7 +115,7 @@ return [
                                     'option_name'	=>	'booking_standard_checkin_time',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'		=>	[
-                                        'php'=>	get_link("$pg/settings"),
+                                        'php'=>	'#',
                                         'pwa'=>	"/{$pg}/settings",
                                         'app'=>	"/{$pg}/settings"
                                     ]
@@ -167,7 +125,7 @@ return [
                                     'option_name'	=>	'booking_standard_checkout_time',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'		=>	[
-                                        'php'=>	get_link("$pg/settings"),
+                                        'php'=>	'#',
                                         'pwa'=>	"/{$pg}/settings",
                                         'app'=>	"/{$pg}/settings"
                                     ]
@@ -279,21 +237,6 @@ return [
                                 'View Details'	=>	"{$pg}/detail",
                                 'Allot/Deallot'	=>	"{$pg}/allotment-entry",
                                 "Upload"		=>	"{$pg}/upload"
-                            ]
-                        )
-    ],
-    "listFilters-booking_detail_update" => [
-                        'admin'	=>	array(
-                            $pg			=>	[
-                                'View Details'		=>	"{$pg}/detail",
-                                'Exit'				=>	array(
-                                    "endpoint"		=>	"module",
-                                    "params"		=>	["key" => "form:booking/deallotment-entry/new"]
-                                ),
-                                'Upload Docs'		=>	"{$pg}/upload",
-                                'Print Invoice'		=>	"{$pg}/document",
-                                'Generate PDF'		=>	\Route::get_path_generate_pdf( $pg, 'booking-invoice' ),
-                                'Download Docs'		=>	\Route::get_endpoint_zip_download( $pg ),
                             ]
                         )
     ],

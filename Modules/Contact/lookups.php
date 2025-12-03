@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "communicationTemplate-contact" => [
                         "contact_entry_new_sms"				=>	"New Contact Entry SMS",
                         "contact_entry_new_whatsapp"			=>	"New Contact Entry Whatsapp",
@@ -47,17 +47,6 @@ return [
                         'contact_name'		=>	'Name',
                         'contact_type'		=>	'Type',
                         'additional_information'=>	'Information'
-    ],
-    "menuItem-contact" => [
-                        "admin"		=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)]),
-                        "portal"	=>	[]//\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)], 'portal'),
-    ],
-    "pgStructure-contact" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry', 'report', 'upload', 'settings'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'history'])
-                        ]
     ],
     "cronList-contact" => [
                         'contact-due_date' 	=> 'Contact Due Date',
@@ -118,7 +107,7 @@ return [
                                 'Upload'		=>	"{$pg}/upload",
                                 'View Details'	=>	"{$pg}/detail",
                                 'View History'	=>	"{$pg}/history",
-                                'Download Docs'	=>	\Route::get_endpoint_zip_download( $pg ),
+                                'Download Docs'	=>	'#',
                             ]
                         )
     ],

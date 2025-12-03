@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
 	"communicationTemplate-attendance" => [
                         "attendance_entry_new_sms"		=>	"New Attendance Entry SMS",
                         "attendance_entry_new_whatsapp"	=>	"New Attendance Entry Whatsapp",
@@ -43,13 +43,6 @@ return [
                         'absent_type'		=>	'Type',
                         'absent_duration'	=>	'Days',
                         'absent_reason'		=>	'Reason',
-	],
-	"pgStructure-attendance" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry', 'settings', 'report', 'upload'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'history'])
-                        ]
 	],
 	"mandatoryOptionsBeforeUsing-attendance" => [
                         'missing_options'	=>	[]
@@ -88,7 +81,8 @@ return [
                             'month_filter' => "Month/month/month-json",
                         ]
 	],
-	"listFilters-attendance_sheet-filters_new" => "admin"	=>	[
+	"listFilters-attendance_sheet-filters_new" => [
+		"admin"	=>	[
                             'month_filter' => "Month/month/month-json",
                             'date_filter' => "Date/date/date-list",
                             'session_filter' => "Session/current_session/session-json",
@@ -97,6 +91,7 @@ return [
                             'month_filter' => "Month/month/month-json",
                             'date_filter' => "Date/date/date-list",
                             'session_filter' => "Session/current_session/session-json",
+		]
 	],
 	"listFilters-attendance_employee_sheet-filters_new" => [
                         "admin"	=>	[

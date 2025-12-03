@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
 	"communicationTemplate-note" => [
                         "note_entry_new_sms"		=>	"New Note Entry SMS",
                         "note_entry_new_whatsapp"	=>	"New Note Entry Whatsapp",
@@ -51,40 +51,6 @@ return [
                         'note_type'			=>	'Type',
                         'added_for'			=>	'For',
                         'response_status'	=>	'R/Status'
-	],
-	"menuItem-note" => [
-                        "admin"		=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)]),
-                        "portal"		=>	array(
-                            'parent'	=>	array(
-                                do_ucf($pg)	=>	array(
-                                    \Route::to_home($pg),
-                                    \v4\C\UI::sidebarmenu_list($pg)
-                                ),
-                            ),
-                            'child'	=>	array(
-                                $pg	=>	array(
-                                    'Add Note'				=> \Route::to_entry($pg.'/e2e-entry'),
-                                    'List'					=> \Route::to_list($pg),
-                                    'Report'				=> get_link($pg . '/report')
-                                )
-                            )
-                        ),
-                        /*"portal"	=> [
-                            'Note/p'			=>	$pg . '-entry',
-                            '+ Note to Admin'							=>	$pg . '-entry',
-                            'Ask Question'								=>	$pg . '-qa-entry',
-                            '+ Note'									=>	$pg . '-e2e-entry',
-                            'Resolve Queries'							=>	$pg . '-list&type=context-being-me',
-                            'Notes for Me'								=>	$pg . '-list&type=added-for-me',
-                            'Notes By Me'								=>	$pg . '-list&type=added-by-me'
-                        ]*/
-    ],
-	"pgStructure-note" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry','e2e-entry','qa-entry','comment-entry','report','settings','upload','parent'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'history'])
-                        ]
 	],
 	"mandatoryOptionsBeforeUsing-note" => [
                         'missing_option'	=>	[
@@ -110,14 +76,14 @@ return [
                         'report'			=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
                         'sample_export'		=>	['sno', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status'],
                         'selected_columns'	=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status']
-	]
+	],
 	"cronList-note" => ['note-timeboundnotification' => 'Note Reminders'],
 
 	"mandatoryFields-note_entry_update" => ['information'],
 
 	"dateFields-note_entry_update" => ['date','note_end_date'],
 
-	"mandatoryFields-note-comment_entry_update" => ['thread_parent']
+	"mandatoryFields-note-comment_entry_update" => ['thread_parent'],
 
 	"duplicacyCheckFields-note_entry_new" => ['added_by_type','added_by','added_for_type','added_for_id','information'],
 

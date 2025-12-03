@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "communicationTemplate-checklist" => [
                         "checklist_entry_new_sms"		=>	"New Checklist Entry SMS",
                         "checklist_entry_new_whatsapp"	=>	"New Checklist Entry Whatsapp",
@@ -47,53 +47,6 @@ return [
                         'checklist_id'						=>	'ID',
                         'checklist_name'					=>	'Name',
                         'checklist_info'					=>	'Information'
-    ],
-     "menuItem-checklist" => [
-                        "admin"		=>	array(
-                            'parent'=>	array(
-                                do_ucf($pg)	=>	array(
-                                    \Route::to_home($pg),
-                                    \v4\C\UI::sidebarmenu_list($pg)
-                                )
-                            ),
-                            'child'	=>	array(
-                                $pg	=>	array(
-                                    'Add New'			=>	\Route::to_entry($pg . '/entry/new'),
-                                    'View List'			=>	\Route::to_list($pg),
-                                    'Settings'			=>	get_link($pg . '/settings'),
-                                    'Report'			=>	get_link($pg . '/report'),
-                                    'Plans'				=>	\Route::to_entry($pg . '/listing-entry/new'),
-                                )
-                            ),
-                            'child-2'	=>	array(
-                                'checklist-plans'		=>	array(
-                                    'Create New'		=>	\Route::to_entry($pg . '/listing-entry/new'),
-                                    'View Plan List'	=>	\Route::to_entry($pg . '/listing-list'),
-                                )
-                            )
-                        ),
-                        "portal"		=>	array(
-                            'parent'	=>	array(
-                                do_ucf($pg)	=>	array(
-                                    \Route::to_home($pg),
-                                    \v4\C\UI::sidebarmenu_list($pg)
-                                ),
-                            ),
-                            'child'	=>	array(
-                                $pg	=>	array(
-                                    'Add Checklist'			=>	\Route::to_entry($pg),
-                                    'My Checklists'			=>	get_link($pg . '/list'),
-                                    'My Checklist Points'	=>	get_link($pg . '/listing-point-list'),
-                                )
-                            )
-                        )
-    ],
-    "pgStructure-checklist" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry', 'complete-entry', 'listing-entry', 'listing-point-entry', 'listing-point-sequence-entry', 'settings', 'report', 'upload'],
-                            'lists/list'		=>	['list','listing-list','listing-point-list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'listing-detail', 'listing-point-detail', 'detail', 'history'])
-                        ]
     ],
     "moduleTable-checklist" => [
                         "cyp_term",
@@ -112,23 +65,23 @@ return [
                         'checklist-entry'	=>	[
                             'empty'			=>	[
                                 [
-                                    'table'	=>	$controller::db_table('listing-entry'),
+                                    'table'	=>	'#',
                                     'params'=>	[],
                                     'label'	=>	'No Checklist Plan Added',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'=>	[
-                                        'php'=>	get_link("$pg/listing-entry"),
+                                        'php'=>	'#',
                                         'pwa'=>	"/{$pg}/listing-entry",
                                         'app'=>	"/{$pg}/listing-entry"
                                     ]
                                 ],
                                 [
-                                    'table'	=>	$controller::db_table('listing-point-entry'),
+                                    'table'	=>	'#',
                                     'params'=>	[],
                                     'label'	=>	'No Service Points Added',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'=>	[
-                                        'php'=>	get_link("$pg/listing-list"),
+                                        'php'=>	'#',
                                         'pwa'=>	"/{$pg}/listing-list",
                                         'app'=>	"/{$pg}/listing-list"
                                     ]

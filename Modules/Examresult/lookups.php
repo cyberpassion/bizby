@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
     "communicationTemplate-examresult" => [
                         "examresult_entry_new_sms"		=>	"New Examresult Entry SMS",
                         "examresult_entry_new_whatsapp"	=>	"New Examresult Entry Whatsapp",
@@ -48,17 +48,6 @@ return [
                         'exam_section'			=>	'Section',
                         'status'				=>	'Status',
                         'options'				=>	'Options'
-    ],
-    "menuItem-examresult" => [
-                        "admin"		=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)]),
-                        "portal"	=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)], 'portal'),
-    ],
-    "pgStructure-examresult" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry','marks-entry','report','settings','upload'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'history', 'report-card'])
-                        ]
     ],
     "moduleTable-examresult" => [
                         "cyp_term",
@@ -83,7 +72,7 @@ return [
     ],
     "mandatoryFields-examresult_entry_update" => ['module', 'examresult_official_name', 'examresult_official_address', 'examresult_official_email', 'examresult_official_phone', 'send_notification_message'],
 
-    "listFilters-examresult_list": => [
+    "listFilters-examresult_list" => [
                         "admin"	=>	[
                             'session' => "Session/exam_session/session-json",
                             'class' => "Class/exam_class/class-json",

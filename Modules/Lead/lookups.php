@@ -30,7 +30,7 @@ return [
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
-    ]
+    ],
 	"lead-message_text" => [
                         "next_visit_date_scheduled|true"	=>	"Visit Scheduled Successfully",
                         "next_visit_date_scheduled|false"	=>	"Visit Scheduling Failed",
@@ -75,31 +75,6 @@ return [
                         'uploaded_docs'						=>	'Docs',
                         'status'							=>	'Status',
                         'options'							=>	'Options'
-	],
-	"menuItem-lead" => [
-                        "admin"		=>	\v3\C\Module::default_features_menu_list(['name' => $pg, 'label' => do_ucf($pg)]),
-                        "portal"		=>	array(
-                            'parent'	=>	array(
-                                do_ucf($pg)	=>	array(
-                                    \Route::to_home($pg),
-                                    \v4\C\UI::sidebarmenu_list($pg)
-                                ),
-                            ),
-                            'child'	=>	array(
-                                $pg	=>	array(
-                                    'Add Lead'				=>	\Route::to_entry($pg),
-                                    'My Leads'				=>	get_link($pg . '/list'),
-                                    'Leads Report'			=>	get_link($pg . '/report')
-                                )
-                            )
-                        )
-	],
-	"pgStructure-lead" => [
-                        $pg			=>	[
-                            'forms/form'		=>	['entry', 'followup-entry', 'settings', 'report', 'upload', 'advancedinfo'],
-                            'lists/list'		=>	['list'],
-                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'detail', 'history'])
-                        ]
 	],
 	"mandatoryOptionsBeforeUsing-lead" => [
                         'missing_option'	=>	[
@@ -161,32 +136,6 @@ return [
                             'nextdate' 	=> "Next Date/range-next_date/filter_date_range-json",
                             "lead_response"		=>	"Response/contact_response/lead_contact_response-json",
                         ]
-	],
-	"listFilters-lead_detail_update" => [
-                        'admin'	=>	array(
-                            $pg			=>	[
-                                'Edit'			=>	"{$pg}/entry/update",
-                                'Upload'		=>	"{$pg}/upload",
-                                'Print'			=>	"{$pg}/document",
-                                'View Details'	=>	"{$pg}/detail",
-                                'View History'	=>	"{$pg}/history",
-                                'Add Followup'	=>	["endpoint" => $pg, "params" =>	["key" => "form:lead/followup-entry"]],
-                                'Assign'		=>	\Route::get_endpoint_assignment( $pg ),
-                                'Download Docs'	=>	\Route::get_endpoint_zip_download( $pg ),
-                            ]
-                        ),
-                        'portal'	=>	array(
-                            $pg			=>	[
-                                'Edit'			=>	"{$pg}/entry/update",
-                                'Upload'		=>	"{$pg}/upload",
-                                'Print'			=>	"{$pg}/document",
-                                'View Details'	=>	"{$pg}/detail",
-                                'View History'	=>	"{$pg}/history",
-                                'Add Followup'	=>	["endpoint" => $pg, "params" =>	["key" => "form:lead/followup-entry"]],
-                                'Assign'		=>	\Route::get_endpoint_assignment( $pg ),
-                                'Download Docs'	=>	\Route::get_endpoint_zip_download( $pg ),
-                            ]
-                        )
 	],
 	"listFilters-lead_followup-entry_update" => [
                         'admin' =>	array(
