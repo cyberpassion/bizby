@@ -14,7 +14,7 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
-            $table->string('registration_type', 255);
+            $table->string('registration_type', 255)->nullable();
 
 			$table->string('session', 64)->nullable();
 

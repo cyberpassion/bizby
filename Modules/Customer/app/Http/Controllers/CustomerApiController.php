@@ -16,4 +16,10 @@ class CustomerApiController extends SharedApiController
     {
         return [];
     }
+
+	public function extraStats()
+	{
+    	return [];
+	}
+
 }

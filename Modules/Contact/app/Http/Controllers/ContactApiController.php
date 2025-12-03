@@ -16,4 +16,10 @@ class ContactApiController extends SharedApiController
     {
         return [];
     }
+
+	public function extraStats()
+	{
+    	return [];
+	}
+
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->commonPersonFields();
 
             // Patient Basic Details
-            $table->string('patient_type');
+            $table->string('patient_type')->nullable();
             $table->string('father_name')->nullable();
             $table->string('mother_name')->nullable();
 

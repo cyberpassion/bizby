@@ -14,8 +14,8 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
-            $table->string('business_type', 255);
-            $table->string('customer_type', 255);
+            $table->string('business_type', 255)->nullable();
+            $table->string('customer_type', 255)->nullable();
 
             // Patient/person info using macro
             $table->commonPersonFields();
@@ -35,5 +35,3 @@ return new class extends Migration
         Schema::dropIfExists('cyp_customer');
     }
 };
-
-

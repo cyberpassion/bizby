@@ -14,11 +14,10 @@ return new class extends Migration
             $table->commonSaasFields();
 
             // Patient & Treatment Details
-            $table->string('patient_type', 255);
             $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('treatment_sno');
-            $table->date('treatment_date');
-            $table->time('treatment_time');
+            $table->unsignedBigInteger('treatment_sno')->nullable();
+            $table->date('treatment_date')->nullable();
+            $table->time('treatment_time')->nullable();
             $table->text('observedby')->nullable();
             $table->text('observation')->nullable();
             $table->text('treatment_given')->nullable();

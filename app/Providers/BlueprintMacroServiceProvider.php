@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -8,68 +9,187 @@ class BlueprintMacroServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        // Common fields for SaaS modules
+        /**
+         * -------------------------------------------------------------
+         *  Macro: commonSaasFields()
+         *  Adds standard fields required across SaaS-based module tables
+         *  - Primary key
+         *  - Client multitenancy fields
+         *  - Status flags
+         *  - Audit fields (created_by, updated_by, deleted_by)
+         *  - Soft deletes + timestamps
+         *  - Entry source tracking (web / mobile / api / system)
+         *  - Remarks (user + system)
+         *  - JSON metadata (IP, device, logs etc.)
+         * -------------------------------------------------------------
+         */
         Blueprint::macro('commonSaasFields', function () {
 
+            // Primary key
             $this->id();
-            $this->unsignedBigInteger('client_id')->nullable()->index();
-            $this->unsignedTinyInteger('status')->default(1)->index();
 
-            // Audit fields
-            $this->unsignedBigInteger('created_by')->nullable()->index();
-            $this->unsignedBigInteger('updated_by')->nullable()->index();
-            $this->unsignedBigInteger('deleted_by')->nullable()->index();
+            // Multitenancy: Which client/tenant this record belongs to
+            $this->unsignedBigInteger('client_id')
+                ->nullable()
+                ->index()
+                ->comment('Tenant/Client owner ID');
 
-            $this->softDeletes();    // deleted_at
-            $this->timestamps();     // created_at, updated_at
+            // Record status: 1=Active, 0=Inactive, etc.
+            $this->unsignedTinyInteger('status')
+                ->default(1)
+                ->index()
+                ->comment('Record status: 1=Active,0=Inactive');
 
-			$this->string('entry_source', 50)->nullable()
-              ->comment('Source of entry: web, mobile, employee, api, system');
+            /**
+             * -----------------------------------------------------
+             * Audit Fields (Optional but widely useful)
+             * Manually updated inside controllers/service layers
+             * -----------------------------------------------------
+             */
+            $this->unsignedBigInteger('created_by')
+                ->nullable()
+                ->index()
+                ->comment('User ID who created entry');
 
-	        $this->unsignedBigInteger('entry_source_ref_id')->nullable()
-              ->comment('Reference ID if entry source is tied to a specific record, e.g. employee_id');
+            $this->unsignedBigInteger('updated_by')
+                ->nullable()
+                ->index()
+                ->comment('User ID who last updated entry');
 
-    	    $this->text('remark')->nullable()
-              ->comment('Human-readable remark or note');
+            $this->unsignedBigInteger('deleted_by')
+                ->nullable()
+                ->index()
+                ->comment('User ID who soft-deleted entry');
 
-			$this->text('system_remark')->nullable()
-              ->comment('System-generated remark / auto-processing note');
+            // Soft Delete + Timestamp fields
+            $this->softDeletes();   // deleted_at
+            $this->timestamps();    // created_at, updated_at
 
-        	$this->json('meta_info')->nullable()
-              ->comment('Dynamic metadata (IP, device, payload, log info)');
+            /**
+             * -----------------------------------------------------
+             * Entry Source Tracking
+             * Helps identify how data entered system
+             * Examples: web, mobile, employee, api, auto/system
+             * -----------------------------------------------------
+             */
+            $this->string('entry_source', 50)
+                ->nullable()
+                ->comment('Source of entry: web, mobile, employee, api, system');
+
+            $this->unsignedBigInteger('entry_source_ref_id')
+                ->nullable()
+                ->comment('Reference ID e.g., employee_id if entry_source=employee');
+
+            /**
+             * -----------------------------------------------------
+             * Remarks
+             * → remark: Human written note
+             * → system_remark: Automated logs or explanations
+             * -----------------------------------------------------
+             */
+            $this->text('remark')
+                ->nullable()
+                ->comment('Human-readable remark or note');
+
+            $this->text('system_remark')
+                ->nullable()
+                ->comment('System-generated remark or auto-processing log');
+
+            /**
+             * -----------------------------------------------------
+             * meta_info (JSON)
+             * Flexible metadata structure:
+             * - IP address
+             * - User agent / device info
+             * - Version history
+             * - API payload details
+             * - Internal logs
+             * -----------------------------------------------------
+             */
+            $this->json('meta_info')
+                ->nullable()
+                ->comment('Dynamic metadata: IP, device, versioning, logs');
         });
 
-        // Common fields for person modules
+        /**
+         * -------------------------------------------------------------
+         *  Macro: commonPersonFields()
+         *  Adds standard fields used in person-related modules
+         *  (students, employees, patients, visitors, parents, etc.)
+         *  
+         *  Includes:
+         *  - Basic identity info
+         *  - Contact details
+         *  - Government ID details
+         *  - Demographic info
+         *  - Family/religious/social identity fields
+         * -------------------------------------------------------------
+         */
         Blueprint::macro('commonPersonFields', function () {
 
-            $this->string('name', 100)->nullable();
+            // Name fields
+            $this->string('name', 100)
+                ->nullable()
+                ->comment('Full name of the person');
 
-            // Optional: auto CONCATED full_name column
-            // $this->string('full_name')->virtualAs("CONCAT(first_name, ' ', last_name)");
+            // Gender and demographic profile
+            $this->string('gender', 20)
+                ->nullable()
+                ->comment('Gender of the person');
 
-			$this->string('gender', 20)->nullable();
-            $this->date('dob')->nullable();
-			$this->unsignedTinyInteger('age')->nullable();
+            $this->date('dob')
+                ->nullable()
+                ->comment('Date of birth');
 
-            $this->string('phone', 20)->nullable()->index();
-            $this->string('email', 255)->nullable();
+            $this->unsignedTinyInteger('age')
+                ->nullable()
+                ->comment('Age (calculated or manually entered)');
 
-			$this->string('verification_id_name', 64)->nullable();
-			$this->string('verification_id_number', 64)->nullable();
+            // Contact details
+            $this->string('phone', 20)
+                ->nullable()
+                ->index()
+                ->comment('Primary phone number');
 
-            // Optional: stored lowercase email for search
-            // $this->string('email_lower')->nullable()->storedAs('LOWER(email)');
+            $this->string('email', 255)
+                ->nullable()
+                ->comment('Email address');
 
-            $this->text('address')->nullable();
+            // Government / verification IDs
+            $this->string('verification_id_name', 64)
+                ->nullable()
+                ->comment('Verification ID type (Aadhar, PAN, etc.)');
 
-            $this->string('religion', 100)->nullable();
-            $this->string('caste', 100)->nullable();
-            $this->string('category', 100)->nullable();
-			$this->string('nationality', 100)->nullable();
+            $this->string('verification_id_number', 64)
+                ->nullable()
+                ->comment('Verification ID number');
 
-			$this->unsignedTinyInteger('marital_status')->nullable()
-		      ->comment('0=Single,1=Married,2=Widowed,3=Divorced');
+            // Address
+            $this->text('address')
+                ->nullable()
+                ->comment('Complete postal address');
 
+            // Cultural / social identifiers
+            $this->string('religion', 100)
+                ->nullable()
+                ->comment('Religion');
+
+            $this->string('caste', 100)
+                ->nullable()
+                ->comment('Caste');
+
+            $this->string('category', 100)
+                ->nullable()
+                ->comment('Category such as General/OBC/SC/ST');
+
+            $this->string('nationality', 100)
+                ->nullable()
+                ->comment('Nationality');
+
+            // Marital status: 0=Single,1=Married,2=Widowed,3=Divorced
+            $this->unsignedTinyInteger('marital_status')
+                ->nullable()
+                ->comment('0=Single,1=Married,2=Widowed,3=Divorced');
         });
     }
 }

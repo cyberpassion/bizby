@@ -14,33 +14,32 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
-            $table->string('employee_type', 255);
-            $table->string('session', 64);
+            $table->string('employee_type', 255)->nullable();
 
 			// Patient/person info using macro
             $table->commonPersonFields();
 
-            $table->string('spouse_name', 255);
-            $table->text('qualifications')->nullable();
-            $table->string('pan_number', 255);
-            $table->string('aadhar_number', 255);
-            $table->string('driving_license_number', 255);
-            $table->string('voter_id_card_number', 255);
-            $table->string('passport_number', 255);
-            $table->string('pf_account_number', 255);
+            $table->string('spouse_name', 255)->nullable();
+            $table->text('qualifications')->nullable()->nullable();
+            $table->string('pan_number', 255)->nullable();
+            $table->string('aadhar_number', 255)->nullable();
+            $table->string('driving_license_number', 255)->nullable();
+            $table->string('voter_id_card_number', 255)->nullable();
+            $table->string('passport_number', 255)->nullable();
+            $table->string('pf_account_number', 255)->nullable();
 
-            $table->string('bank_name', 255);
-            $table->string('bank_branch_name', 255);
-            $table->string('bank_ifsc_code', 255);
-            $table->string('bank_account_number', 255);
+            $table->string('bank_name', 255)->nullable();
+            $table->string('bank_branch_name', 255)->nullable();
+            $table->string('bank_ifsc_code', 255)->nullable();
+            $table->string('bank_account_number', 255)->nullable();
 
-            $table->string('current_address', 255);
-            $table->string('designation', 255);
+            $table->string('current_address', 255)->nullable();
+            $table->string('designation', 255)->nullable();
 
-            $table->date('date_of_joining');
+            $table->date('date_of_joining')->nullable();
             $table->date('date_of_relieving')->nullable();
 
-            $table->text('past_work_experience');
+            $table->text('past_work_experience')->nullable();
 
             $table->unsignedBigInteger('punch_id')->nullable();
 
@@ -56,7 +55,7 @@ return new class extends Migration
             $table->text('job_responsibility')->nullable();
 
             $table->string('first_salary', 8000)->nullable();
-			$table->string('current_salary', 8);
+			$table->string('current_salary', 8)->nullable();
         });
     }
 

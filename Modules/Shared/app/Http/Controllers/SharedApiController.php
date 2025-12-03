@@ -137,4 +137,77 @@ abstract class SharedApiController extends Controller
         ], Response::HTTP_OK);
     }
 
+	/**
+	 * Universal stats function for all modules
+	 *
+	 * Usage:
+	 * - /api/consultation/stats
+	 * - /api/students/stats
+	 * - /api/fees/stats
+	 *
+	 * Controller can override:
+	 * - fields for charts
+	 * - fields for sum
+	 * - custom overview
+	 */
+	public function stats(Request $request)
+	{
+    	$model = $this->model();
+
+	    // Step 1: Basic Count
+    	$total = $model::count();
+
+	    // Step 2: Optional chart fields (you can pass via query or controller override)
+    	// Example: /api/consultation/stats?charts=gender,channel
+    	$chartFields = explode(',', $request->get('charts', ''));
+
+	    $charts = [];
+    	foreach ($chartFields as $field) {
+        	if (!$field) continue;
+        	$charts[$field] = $this->getChartCounts($model, $field);
+    	}
+
+	    // Step 3: Optional SUM fields
+    	// Example: /api/consultation/stats?sum=amount,fee
+    	$sumFields = explode(',', $request->get('sum', ''));
+
+	    $sums = [];
+    	foreach ($sumFields as $field) {
+        	if (!$field) continue;
+        	$sums[$field] = $model::sum($field);
+    	}
+
+	    // Step 4: Base overview
+    	$overview = [
+        	'total_records' => $total,
+    	];
+
+	    // Step 5: Allow child controller to inject extra overview
+    	if (method_exists($this, 'extraStats')) {
+        	$overview = array_merge($overview, $this->extraStats());
+    	}
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'message' => 'Stats generated successfully.',
+	        'data' => [
+    	        'overview' => $overview,
+        	    'charts' => $charts,
+            	'sums' => $sums
+       		]
+	    ], Response::HTTP_OK);
+	}
+
+	/**
+	 * Universal chart helper for all modules
+	 */
+	protected function getChartCounts($model, $field)
+	{
+    	return $model::select($field)
+        	->selectRaw('COUNT(*) as total')
+        	->groupBy($field)
+        	->pluck('total', $field)
+        	->toArray();
+	}
+
 }
