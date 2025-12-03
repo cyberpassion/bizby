@@ -27,6 +27,8 @@ return [
 				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
                 ['title' => 'View List', 'href' => "/module/{$pg}/list"],
                 ['title' => 'Report', 'href' => "/module/{$pg}/report"],
+				['title' => 'Report', 'href' => "/module/{$pg}/day-collection-report"],
+				['title' => 'Report', 'href' => "/module/{$pg}/dues-report"],
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
         ],
