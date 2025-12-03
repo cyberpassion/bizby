@@ -1,9 +1,9 @@
 <?php
-$pg = 'product';
+$pg = 'note';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-patient' => [
+	'menuItem-note' => [
 		'admin'	=>	[
 			'parent'		=>	[
 				$pg	=>	'#',

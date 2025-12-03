@@ -61,7 +61,8 @@ abstract class SharedApiController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate($this->validationRules());
+        //$validated = $request->validate($this->validationRules());
+		$validated = $request->all();
         $model = $this->model();
         $resource = $model::create($validated);
 
@@ -88,7 +89,8 @@ abstract class SharedApiController extends Controller
         }
 
         // Only update fillable fields
-        $data = $request->only($modelInstance->getFillable());
+        //$data = $request->only($modelInstance->getFillable());
+		$data = $request->all();
 
         // Validate update rules
         $validator = Validator::make($data, $this->validationRules($id));

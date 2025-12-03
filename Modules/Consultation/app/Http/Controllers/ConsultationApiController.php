@@ -15,12 +15,7 @@ class ConsultationApiController extends SharedApiController
 
     protected function validationRules($id = null)
     {
-        return [
-            'name' 			=> 'sometimes|required|string|max:255',
-			'gender'		=>	'sometimes|required|string|max:255',
-            'email'      	=> 'sometimes|required|email|unique:consultations,email,' . $id,
-            'phone'			=> 'nullable|string|max:20',
-        ];
+        return [];
     }
 
 	public function stats()
