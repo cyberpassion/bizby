@@ -1,0 +1,297 @@
+<?php
+$pg = 'checklist';
+$commonSettingsRoute = '/settings';
+
+return [
+	'menuItem-checklist' => [
+		'admin'	=>	[
+			'parent'		=>	[
+				$pg	=>	'#',
+			],
+			'child'		=>	[
+				$pg	=>	[
+					['Add New'		=> "/{$pg}/create"],
+	                ['View List'	=> "/{$pg}/list"],
+    	            ['Report'		=> "/{$pg}/report"],
+        	        ['Settings'		=> "/{$pg}/settings"],
+				],
+			],
+		],
+	],
+    'sidebar-menu' => [
+        [
+            'title' => ucfirst($pg),
+            'href' => "/{$pg}",
+            'items' => [
+                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
+				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
+                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
+                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+            ],
+        ],
+    ]
+    "communicationTemplate-checklist" => [
+                        "checklist_entry_new_sms"		=>	"New Checklist Entry SMS",
+                        "checklist_entry_new_whatsapp"	=>	"New Checklist Entry Whatsapp",
+                        "checklist_entry_new_email"		=>	"New Checklist Entry Email",
+    ],
+    "columnNameMapping-checklist" => [
+                        'ptr'								=>	'SNo',
+                        'listing_id'						=>	'ID',
+                        'listing_name'						=>	'L/Name',
+                        'listing_type'						=>	'Type',
+                        'listing_description'				=>	'Description',
+                        'listing_points'					=>	'Points',
+                        'listing_points_count'				=>	'Points',
+                        'checklist_id'						=>	'ID',
+                        'checklist_name'					=>	'Name',
+                        'checklist_info'					=>	'Information'
+    ],
+     "menuItem-checklist" => [
+                        "admin"		=>	array(
+                            'parent'=>	array(
+                                do_ucf($pg)	=>	array(
+                                    \Route::to_home($pg),
+                                    \v4\C\UI::sidebarmenu_list($pg)
+                                )
+                            ),
+                            'child'	=>	array(
+                                $pg	=>	array(
+                                    'Add New'			=>	\Route::to_entry($pg . '/entry/new'),
+                                    'View List'			=>	\Route::to_list($pg),
+                                    'Settings'			=>	get_link($pg . '/settings'),
+                                    'Report'			=>	get_link($pg . '/report'),
+                                    'Plans'				=>	\Route::to_entry($pg . '/listing-entry/new'),
+                                )
+                            ),
+                            'child-2'	=>	array(
+                                'checklist-plans'		=>	array(
+                                    'Create New'		=>	\Route::to_entry($pg . '/listing-entry/new'),
+                                    'View Plan List'	=>	\Route::to_entry($pg . '/listing-list'),
+                                )
+                            )
+                        ),
+                        "portal"		=>	array(
+                            'parent'	=>	array(
+                                do_ucf($pg)	=>	array(
+                                    \Route::to_home($pg),
+                                    \v4\C\UI::sidebarmenu_list($pg)
+                                ),
+                            ),
+                            'child'	=>	array(
+                                $pg	=>	array(
+                                    'Add Checklist'			=>	\Route::to_entry($pg),
+                                    'My Checklists'			=>	get_link($pg . '/list'),
+                                    'My Checklist Points'	=>	get_link($pg . '/listing-point-list'),
+                                )
+                            )
+                        )
+    ],
+    "pgStructure-checklist" => [
+                        $pg			=>	[
+                            'forms/form'		=>	['entry', 'complete-entry', 'listing-entry', 'listing-point-entry', 'listing-point-sequence-entry', 'settings', 'report', 'upload'],
+                            'lists/list'		=>	['list','listing-list','listing-point-list'],
+                            'views/view'		=>	array_merge($documents,['home', 'document', 'profile', 'listing-detail', 'listing-point-detail', 'detail', 'history'])
+                        ]
+    ],
+    "moduleTable-checklist" => [
+                        "cyp_term",
+                        "cyp_activity",
+                        "cyp_advancedinfo",
+                        "cyp_allotment",
+                        "cyp_cash",
+                        "cyp_option",
+                        "cyp_upload",
+                        "cyp_notification",
+                        "cyp_message",
+                        "cyp_checklist",
+                        "cyp_checklist_item"
+    ],
+    "mandatoryOptionsBeforeUsing-checklist" => [
+                        'checklist-entry'	=>	[
+                            'empty'			=>	[
+                                [
+                                    'table'	=>	$controller::db_table('listing-entry'),
+                                    'params'=>	[],
+                                    'label'	=>	'No Checklist Plan Added',
+                                    'routeLabel'	=>	'Set Now',
+                                    'routes'=>	[
+                                        'php'=>	get_link("$pg/listing-entry"),
+                                        'pwa'=>	"/{$pg}/listing-entry",
+                                        'app'=>	"/{$pg}/listing-entry"
+                                    ]
+                                ],
+                                [
+                                    'table'	=>	$controller::db_table('listing-point-entry'),
+                                    'params'=>	[],
+                                    'label'	=>	'No Service Points Added',
+                                    'routeLabel'	=>	'Set Now',
+                                    'routes'=>	[
+                                        'php'=>	get_link("$pg/listing-list"),
+                                        'pwa'=>	"/{$pg}/listing-list",
+                                        'app'=>	"/{$pg}/listing-list"
+                                    ]
+                                ]
+                            ]
+                        ],
+                        'missing_option'	=>	[]
+    ],
+    "defaultColumns-checklist" => [
+                        'entry'				=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'list'				=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'detail'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'report'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'sample_export'		=>	['sno', 'checklist_name', 'checklist_info', 'remark', 'status'],
+                        'selected_columns'	=>	['checklist_name', 'checklist_info', 'remark'],
+                        'listing-list'		=>	['listing_id', 'listing_type', 'listing_name', 'listing_name', 'tags', 'status'],
+                        'listing-point-list'=>	['point_name', 'point_assigned_to', 'point_time_limit', 'point_description', 'status']
+    ],
+    "mandatoryFields-checklist_complete-entry_update" => ["checklist_description"],
+
+    "dateFields-checklist_listing-point-entry_update" => ['point_start_date','point_end_date'],
+
+    "listFilters-checklist_list" => [
+                            "admin"	=>	[
+                                "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",
+                                "status-filter"		=>	"Status/status/checklist_status-json"
+                            ],
+                            "portal" => [
+                                "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",
+                                "status-filter"		=>	"Status/status/checklist_status-json"
+                            ]
+    ],
+    "listFilters-checklist_listing-list" => [
+                            "admin"	=>	[
+                                "checklist_listing"	=>	"Listing Type/listing_type/checklist_listing_type-json",
+                                "status-filter"		=>	"Status/status/checklist_listing_status-json"
+                            ],
+                            "portal" => [
+                                "checklist_listing"	=>	"Listing/listing_type/checklist_listing_type-json",
+                                "status-filter"		=>	"Status/status/checklist_listing_status-json"
+                            ]
+    ],
+    "listFilters-checklist_detail_update" => [
+                        'admin'	=>	array(
+                            $pg			=>	[
+                                'Edit'			=>	"{$pg}/entry/update",
+                                'Update Points'	=>	"{$pg}/complete-entry/new",
+                                'Upload'		=>	"{$pg}/upload",
+                                'View History'	=>	"{$pg}/history",
+                                'Report'		=>	"{$pg}/document",
+                                'Assign'		=>	["endpoint" => $pg, "params" =>	["key" => "form:advancedinfo/assignment-entry", "info_type" => "checklist", "info_subtype" => "entry"]]
+                            ]
+                        )
+    ],
+    "listFilters-checklist_listing-list_update" => [
+                        'admin'	=>	array(
+                            $pg			=>	[
+                                'Add Points'	=>	"{$pg}/listing-point-entry/new",
+                                'Arrange Points'=>	"{$pg}/listing-point-sequence-entry/new",
+                                'Edit'			=>	"{$pg}/listing-entry/update",
+                                'Upload'		=>	"{$pg}/upload",
+                                'View Details'	=>	"{$pg}/listing-detail",
+                                'View History'	=>	"{$pg}/history",
+                                'Assign'		=>	["endpoint" => $pg, "params" =>	["key" => "form:advancedinfo/assignment-entry", "info_type" => "checklist", "info_subtype" => "listing-entry"]]
+                            ]
+                        )
+    ],
+    "listFilters-checklist_listing-point-list_update" => [
+                        'admin'	=>	array(
+                            $pg			=>	[
+                                'Edit'			=>	"{$pg}/listing-point-entry/update"
+                            ]
+                        ),
+                        'admin'	=>	array(
+                            $pg			=>	[
+                                'Add Response'	=>	"{$pg}/listing-point-entry/update"
+                            ]
+                        )
+    ],
+    "listFilters-checklist_final-complete-list_update" => [
+                        'admin'	=>	array(
+                            $pg			=>	[
+                                'Document'		=>	"{$pg}/document"
+                            ]
+                        )
+    ],
+    "permissionAdmin-checklist" => [
+                        'restricted'=>	[
+                            '2'	=>	[['pg' => $pg, 'sub_pg'	=>	'settings']],
+                            '3'	=>	[['pg' => $pg, 'sub_pg'	=>	'settings']]
+                        ],
+                        'allowed'	=>	[]
+    ],
+    "permissionRestrictedAdmin-checklist" => [
+                        ['pg' => $pg, 'sub_pg'	=>	'settings']
+    ],
+    "permissionPortal-checklist" => [
+                        'restricted'	=>	[],
+                        'allowed'		=>	[
+                            ['pg' => $pg, 'sub_pg'	=>	'home'],
+                            ['pg' => $pg, 'sub_pg'	=>	'entry'],
+                            ['pg' => $pg, 'sub_pg'	=>	'list'],
+                            ['pg' => $pg, 'sub_pg'	=>	'listing-point-list'],
+                            ['pg' => $pg, 'sub_pg'	=>	'history'],
+                            ['pg' => $pg, 'sub_pg'	=>	'report'],
+                            ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
+                        ]
+    ],
+    "permissionAllowedPortal-checklist" => [
+                        ['pg' => $pg, 'sub_pg'	=>	'home'],
+                        ['pg' => $pg, 'sub_pg'	=>	'entry'],
+                        ['pg' => $pg, 'sub_pg'	=>	'list'],
+                        ['pg' => $pg, 'sub_pg'	=>	'listing-point-list'],
+                        ['pg' => $pg, 'sub_pg'	=>	'history'],
+                        ['pg' => $pg, 'sub_pg'	=>	'report'],
+                        ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
+    ],
+    "permissionAllowedFiltersPortal-checklist" => [
+                        "entry"					=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
+                        "list"					=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
+                        "listing-point-list"	=>	[["point_assigned_to"	=>	'{$login_type}-{$login_id}']],
+                        "report"				=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
+    ],
+    "search_column-json" => ["checklist_name"],
+
+    "checklist_point_duration_type-list" => [
+                        "minutes"	=>	"Minutes",
+                        "hours"		=>	"Hours",
+                        "days"		=>	"Days",
+                        "months"	=>	"Months"
+    ],
+    "checklist_status-json" => [
+                        '1'		=>	'Under Process',
+                        '15'	=>	'Completed',
+                        '2'		=>	'Deleted',
+                        '21'	=>	'Rejected'
+    ],
+    "checklist_listing_status-json" => [
+                        '1'		=>	'Active',
+                        '2'		=>	'Deleted'
+    ],
+    "checklist_point_status-json" => [
+                        '1'		=>	'Active',
+                        '11'	=>	'Draft',
+                        '12'	=>	'Under Review',
+                        '15'	=>	'Completed',
+                        '2'		=>	'Deleted',
+                        '21'	=>	'Rejected'
+    ],
+    "checklist_listing_document-json" => ['listing-points'	=> 'View Checklist'],
+
+    "checklist_document-json" => ['end-report'		=> 'Report'],
+
+    "checklist_listing_time_type-json" => [
+                        '-'					=> 'None',
+                        'start-end-time'	=>	'Start and End Time',
+                        'start-end-date'	=>	'Start & End Date',
+                        'duration'			=>	'Duration'
+    ],
+    "checklist_bulk_operation-json" => [
+                        "view:detail"			=>	"View Checklist Details",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ]
+
+];
