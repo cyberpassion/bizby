@@ -4,6 +4,8 @@ namespace Modules\Registration\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Registration\Database\Seeders\RegistrationSeeder;
+
 class RegistrationDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class RegistrationDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            RegistrationSeeder::class
+        ]);
     }
 }

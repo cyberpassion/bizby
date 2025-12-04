@@ -4,6 +4,8 @@ namespace Modules\Attendance\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Attendance\Database\Seeders\AttendanceSeeder;
+
 class AttendanceDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class AttendanceDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+         $this->call([
+            AttendanceSeeder::class
+         ]);
     }
 }

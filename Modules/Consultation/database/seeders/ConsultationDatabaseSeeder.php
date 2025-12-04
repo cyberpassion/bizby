@@ -4,6 +4,8 @@ namespace Modules\Consultation\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Consultation\Database\Seeders\ConsultationSeeder;
+
 class ConsultationDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class ConsultationDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            ConsultationSeeder::class
+        ]);
     }
 }

@@ -4,6 +4,8 @@ namespace Modules\Customer\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Customer\Database\Seeders\CustomerSeeder;
+
 class CustomerDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class CustomerDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            CustomerSeeder::class
+        ]);
     }
 }

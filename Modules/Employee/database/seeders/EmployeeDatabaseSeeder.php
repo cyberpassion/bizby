@@ -4,6 +4,8 @@ namespace Modules\Employee\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Employee\Database\Seeders\EmployeeSeeder;
+
 class EmployeeDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class EmployeeDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            EmployeeSeeder::class
+        ]);
     }
 }

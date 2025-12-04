@@ -4,6 +4,8 @@ namespace Modules\Vendor\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Vendor\Database\Seeders\VendorSeeder;
+
 class VendorDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class VendorDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            VendorSeeder::class
+        ]);
     }
 }

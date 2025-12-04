@@ -4,6 +4,8 @@ namespace Modules\Note\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+Use Modules\Note\Database\Seeders\NoteSeeder;
+
 class NoteDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class NoteDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            NoteSeeder::class
+        ]);
     }
 }
