@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         // Creating cyp_communication table
-        Schema::create('cyp_communication', function (Blueprint $table) {
+        Schema::create('communications', function (Blueprint $table) {
 
             $table->bigIncrements('message_id'); // PRIMARY KEY + AUTO_INCREMENT
 
@@ -44,7 +44,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_communication');
+        Schema::dropIfExists('communications');
     }
 };
 

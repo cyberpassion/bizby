@@ -61,16 +61,16 @@ return [
                         ]
 	],
 	"moduleTable-employee" => [
-		                "cyp_term",
+		                "terms",
                         "cyp_activity",
                         "cyp_advancedinfo",
                         "cyp_allotment",
                         "cyp_cash",
                         "cyp_option",
-                        "cyp_upload",
+                        "uploads",
                         "cyp_notification",
                         "cyp_message",
-                        "cyp_employee"
+                        "employees"
 	],
 	"defaultColumns-employee" => [
 		                'entry'				=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],

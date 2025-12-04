@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_eventmanager', function (Blueprint $table) {
+        Schema::create('eventmanagers', function (Blueprint $table) {
 
             // Common SaaS fields (id, client_id, status, audit, soft deletes, timestamps)
             $table->commonSaasFields();
@@ -28,7 +28,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_eventmanager');
+        Schema::dropIfExists('eventmanagers');
     }
 };
 

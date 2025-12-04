@@ -9,12 +9,6 @@ class Upload extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql';
-
-    protected $table = 'cyp_upload';
-    protected $primaryKey = 'id';
-    public $incrementing = true;
-
     // ✅ Mass-assignable fields
     protected $fillable = [
 		'reference_type',

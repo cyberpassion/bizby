@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FeeTransactionItem extends Model
 {
-    protected $table = 'cyp_fee_transaction_item';
 
     protected $fillable = [
         'transaction_id',

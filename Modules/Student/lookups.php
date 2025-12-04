@@ -77,16 +77,16 @@ return [
                         'registration_datetime'				=>	'Reg Datetime'
 	],
     "moduleTable-student" => [
-                        "cyp_term",
+                        "terms",
                         "cyp_activity",
                         "cyp_advancedinfo",
                         "cyp_allotment",
                         "cyp_cash",
                         "cyp_option",
-                        "cyp_upload",
+                        "uploads",
                         "cyp_notification",
                         "cyp_message",
-                        "cyp_student"
+                        "students"
     ],
     "defaultColumns-student" => [
                         'entry'				=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'tags', 'status'],
@@ -656,12 +656,12 @@ return [
         'selected_columns' => ['username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status']
     ],
     "columnNameMapping-module" => "",
-    "columnNameMapping-term" => [
+    "columnNameMapping-terms" => [
         'ptr'       => 'SNo',
         'term_id'   => 'ID',
         'term_name' => 'Name',
     ],
-    "defaultColumns-term" => [
+    "defaultColumns-terms" => [
         'entry'         => ['term_id', 'term_name', 'type', 'tags'],
         'list'          => ['term_id', 'term_name', 'type', 'tags'],
         'detail'        => ['term_id', 'term_name', 'type', 'tags'],

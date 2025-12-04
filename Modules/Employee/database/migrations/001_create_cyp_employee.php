@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('cyp_employee', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
 
             // Common SaaS Fields
             $table->commonSaasFields();

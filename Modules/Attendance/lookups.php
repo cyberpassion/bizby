@@ -48,13 +48,13 @@ return [
                         'missing_options'	=>	[]
 	],
 	"moduleTable-attendance" => [
-                        "cyp_term",
+                        "terms",
                         "cyp_activity",
                         "cyp_advancedinfo",
                         "cyp_allotment",
                         "cyp_cash",
                         "cyp_option",
-                        "cyp_upload",
+                        "uploads",
                         "cyp_notification",
                         "cyp_message",
                         "cyp_announcement"

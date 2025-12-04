@@ -11,7 +11,7 @@ return new class extends Migration
         /** -----------------------------------------
          *  TABLE: cyp_checklist
          * ----------------------------------------- */
-        Schema::create('cyp_checklist', function (Blueprint $table) {
+        Schema::create('checklists', function (Blueprint $table) {
 
             $table->commonSaasFields(); // id, client_id, status, timestamps, soft delete, created_by etc.
 
@@ -32,7 +32,7 @@ return new class extends Migration
         /** -----------------------------------------
          *  TABLE: cyp_checklist_listing
          * ----------------------------------------- */
-        Schema::create('cyp_checklist_listing', function (Blueprint $table) {
+        Schema::create('checklist_listings', function (Blueprint $table) {
 
             $table->commonSaasFields();
 
@@ -44,7 +44,7 @@ return new class extends Migration
         /** -----------------------------------------
          *  TABLE: cyp_checklist_listing_point
          * ----------------------------------------- */
-        Schema::create('cyp_checklist_listing_point', function (Blueprint $table) {
+        Schema::create('checklist_listing_points', function (Blueprint $table) {
 
             $table->commonSaasFields();
 
@@ -72,7 +72,7 @@ return new class extends Migration
         /** -----------------------------------------
          *  TABLE: cyp_checklist_point
          * ----------------------------------------- */
-        Schema::create('cyp_checklist_point', function (Blueprint $table) {
+        Schema::create('checklist_points', function (Blueprint $table) {
 
             $table->commonSaasFields();
 
@@ -92,9 +92,9 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_checklist_point');
-        Schema::dropIfExists('cyp_checklist_listing_point');
-        Schema::dropIfExists('cyp_checklist_listing');
-        Schema::dropIfExists('cyp_checklist');
+        Schema::dropIfExists('checklist_points');
+        Schema::dropIfExists('checklist_listing_points');
+        Schema::dropIfExists('checklist_listings');
+        Schema::dropIfExists('checklists');
     }
 };

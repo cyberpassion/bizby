@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cyp_tenant_user', function (Blueprint $table) {
+        Schema::create('tenant_users', function (Blueprint $table) {
             $table->id();
 
             // Relation to main tenant
             $table->unsignedBigInteger('tenant_id');
-            $table->foreign('tenant_id')->references('id')->on('cyp_tenant')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
 
             // User info
             $table->string('name');
@@ -47,6 +47,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cyp_tenant_user');
+        Schema::dropIfExists('tenant_users');
     }
 };

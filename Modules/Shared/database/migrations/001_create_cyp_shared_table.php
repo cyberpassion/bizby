@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cyp_upload', function (Blueprint $table) {
+        Schema::create('uploads', function (Blueprint $table) {
             // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
             $table->commonSaasFields();
 
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cyp_upload');  // FIXED: correct table name
+        Schema::dropIfExists('uploads');  // FIXED: correct table name
     }
 };

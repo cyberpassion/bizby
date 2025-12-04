@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('cyp_fee_transaction_item', function (Blueprint $table) {
+        Schema::create('student_fee_transaction_items', function (Blueprint $table) {
 		    $table->id();
 
 		    $table->foreignId('transaction_id')
-        		->constrained('cyp_fee_transaction')
+        		->constrained('student_fee_transactions')
         		->onDelete('cascade');
 
 		    $table->foreignId('student_fee_id')
-		        ->constrained('cyp_student_fee')
+		        ->constrained('student_fees')
         		->onDelete('cascade');
 
 		    $table->decimal('amount_paid', 10, 2);
@@ -27,6 +27,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('fee_transaction_items');
+        Schema::dropIfExists('student_fee_transaction_items');
     }
 };

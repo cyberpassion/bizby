@@ -7,7 +7,6 @@ use Modules\Student\Models\Student;
 
 class StudentClassHistory extends Model
 {
-    protected $table = 'cyp_student_class_history';
 
     protected $fillable = [
         'student_id',

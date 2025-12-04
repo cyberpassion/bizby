@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cyp_tenant', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table) {
             $table->id();
             $table->string('name');                 // Tenant / Client Name
             $table->string('code')->unique();       // Short code like XYZUNI
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cyp_tenant');
+        Schema::dropIfExists('tenants');
     }
 };

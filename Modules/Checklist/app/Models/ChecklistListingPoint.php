@@ -10,19 +10,6 @@ class ChecklistListingPoint extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql'; // Always use mysql connection
-
-	// Specify the custom table name
-    protected $table = 'cyp_checklist_listing_point';
-
-	// Specify custom primary key
-	//protected $primaryKey = 'listing_id';
-
-    /**
-     * If the primary key is not auto-incrementing, set this to false.
-     */
-    public $incrementing = true;
-
     /**
      * The attributes that are mass assignable.
      */
@@ -39,9 +26,7 @@ class ChecklistListingPoint extends Model
     /**
      * Default attribute values
      */
-    protected $attributes = [
-        'status' => 1,
-    ];
+    protected $attributes = [];
 
     /**
      * Appended attributes (computed, not in DB)

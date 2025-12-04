@@ -7,7 +7,6 @@ use Modules\Student\Models\Student;
 
 class StudentFee extends Model
 {
-    protected $table = 'cyp_student_fee';
 
     protected $fillable = [
         'student_id',

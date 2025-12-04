@@ -11,28 +11,6 @@ class Employee extends Model
     use HasFactory;
 
     /**
-     * Use the MySQL connection explicitly.
-     * Useful when your app has multiple DB connections.
-     */
-    protected $connection = 'mysql';
-
-    /**
-     * Custom table name for this model.
-     */
-    protected $table = 'cyp_employee';
-
-    /**
-     * Custom primary key for the table.
-     */
-    //protected $primaryKey = 'employee_id';
-
-    /**
-     * If primary key is auto-incrementing.
-     * Change to false if you ever use UUID.
-     */
-    public $incrementing = true;
-
-    /**
      * NOTE:
      * We keep fillable empty because we override getFillable().
      * Laravel will NOT use this array.
@@ -61,9 +39,7 @@ class Employee extends Model
     /**
      * Default values for columns.
      */
-    protected $attributes = [
-        'status' => 1,
-    ];
+    protected $attributes = [];
 
     /**
      * Additional attributes that do NOT exist in DB.

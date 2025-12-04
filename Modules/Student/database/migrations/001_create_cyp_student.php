@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('cyp_student', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
 
 			// Common SaaS Fields
             $table->commonSaasFields();
@@ -24,6 +24,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_student');
+        Schema::dropIfExists('students');
     }
 };

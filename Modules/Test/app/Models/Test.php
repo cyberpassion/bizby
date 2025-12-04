@@ -10,14 +10,6 @@ class Test extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql'; // Always use mysql connection
-
-	// Specify the custom table name
-    protected $table = 'cyp_test';
-
-	// Specify custom primary key
-	protected $primaryKey = 'test_id';
-
     /**
      * If the primary key is not auto-incrementing, set this to false.
      */
@@ -39,9 +31,7 @@ class Test extends Model
     /**
      * Default attribute values
      */
-    protected $attributes = [
-        'status' => 1,
-    ];
+    protected $attributes = [];
 
     /**
      * Appended attributes (computed, not in DB)

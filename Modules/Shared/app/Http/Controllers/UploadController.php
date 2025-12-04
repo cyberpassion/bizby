@@ -38,7 +38,7 @@ class UploadController extends Controller
 	    $options['sortBy']  = $request->query('sortBy', 'created_at');
     	$options['sortDir'] = $request->query('sortDir', 'desc');
 
-	    $result = $listService->get('cyp_upload', $options);
+	    $result = $listService->get('uploads', $options);
 
 	    return response()->json([
     	    'status' => 'success',

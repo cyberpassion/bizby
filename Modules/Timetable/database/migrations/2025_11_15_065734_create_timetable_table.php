@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_timetable', function (Blueprint $table) {
+        Schema::create('timetables', function (Blueprint $table) {
 
             // SaaS common fields
             $table->commonSaasFields();
@@ -35,8 +35,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_timetable');
+        Schema::dropIfExists('timetables');
     }
 };
-
-

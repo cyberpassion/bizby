@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('cyp_fee_transaction', function (Blueprint $table) {
+        Schema::create('student_fee_transactions', function (Blueprint $table) {
 		    $table->id();
 
-		    $table->foreignId('student_id')->constrained('cyp_student')->onDelete('cascade');
+		    $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
 
 		    $table->decimal('amount', 10, 2);
 		    $table->string('payment_mode')->nullable(); // cash, cheque, online
@@ -24,6 +24,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_student_fee_transaction');
+        Schema::dropIfExists('student_student_fee_transactions');
     }
 };

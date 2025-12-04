@@ -10,19 +10,6 @@ class SignupConfig extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql'; // Always use mysql connection
-
-	// Specify the custom table name
-    protected $table = 'cyp_signup_config';
-
-	// Specify custom primary key
-	protected $primaryKey = 'form_id';
-
-    /**
-     * If the primary key is not auto-incrementing, set this to false.
-     */
-    public $incrementing = true;
-
     /**
      * The attributes that are mass assignable.
      */
@@ -39,9 +26,7 @@ class SignupConfig extends Model
     /**
      * Default attribute values
      */
-    protected $attributes = [
-        'status' => 1,
-    ];
+    protected $attributes = [];
 
     /**
      * Appended attributes (computed, not in DB)

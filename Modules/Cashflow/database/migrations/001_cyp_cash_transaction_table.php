@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_cash_transaction', function (Blueprint $table) {
+        Schema::create('cash_transactions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('reference_id')->unsigned();   // e.g., student or user id
             $table->string('reference_type')->default('general'); // optional type
@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_cash_transaction');
+        Schema::dropIfExists('cash_transactions');
     }
 };

@@ -410,7 +410,7 @@ return [
     // Column Name Mapping - Term & Generic Module
     // ===================================================================
     "columnNameMapping-module" =>
-    "columnNameMapping-term" => [
+    "columnNameMapping-terms" => [
         'ptr'       => 'SNo',
         'term_id'   => 'ID',
         'term_name' => 'Name',
@@ -419,7 +419,7 @@ return [
     // ===================================================================
     // Default Columns - Term Module
     // ===================================================================
-    "defaultColumns-term" => [
+    "defaultColumns-terms" => [
         'entry'         => ['term_id', 'term_name', 'type', 'tags'],
         'list'          => ['term_id', 'term_name', 'type', 'tags'],
         'detail'        => ['term_id', 'term_name', 'type', 'tags'],

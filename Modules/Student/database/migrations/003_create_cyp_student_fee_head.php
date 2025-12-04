@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('cyp_fee_head', function (Blueprint $table) {
+        Schema::create('student_fee_heads', function (Blueprint $table) {
             $table->id();
 
             $table->string('name'); // Tuition, Bus Fee, Admission, Exam Fee
@@ -23,6 +23,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_fee_head');
+        Schema::dropIfExists('student_fee_heads');
     }
 };

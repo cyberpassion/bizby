@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_attendance', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
 
             // Add all SaaS common fields
             $table->commonSaasFields();
@@ -35,6 +35,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_attendance');
+        Schema::dropIfExists('attendances');
     }
 };

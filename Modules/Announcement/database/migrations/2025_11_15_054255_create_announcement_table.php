@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_announcement', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
 
             //  Auto applies:
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
@@ -35,7 +35,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_announcement');
+        Schema::dropIfExists('announcements');
     }
 };
 

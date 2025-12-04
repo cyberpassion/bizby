@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('cyp_student_fee', function (Blueprint $table) {
+        Schema::create('student_fees', function (Blueprint $table) {
 		    $table->id();
 
-		    $table->foreignId('student_id')->constrained('cyp_student')->onDelete('cascade');
-		    $table->foreignId('fee_head_id')->constrained('cyp_fee_head')->onDelete('cascade');
-    		$table->foreignId('class_id')->nullable()->constrained()->onDelete('set null');
+		    $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+		    $table->foreignId('fee_head_id')->constrained('student_fee_heads')->onDelete('cascade');
+    		//$table->foreignId('class_id')->nullable()->constrained()->onDelete('set null');
 
 		    $table->string('academic_year');  // 2025–26
 
@@ -34,6 +34,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_student_fee');
+        Schema::dropIfExists('student_fees');
     }
 };

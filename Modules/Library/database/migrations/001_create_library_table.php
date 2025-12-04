@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyp_library', function (Blueprint $table) {
+        Schema::create('libraries', function (Blueprint $table) {
 
             // SaaS Standard Fields (client_id, status, created_by, updated_by, deleted_by, softDeletes, timestamps)
             $table->commonSaasFields();
@@ -46,7 +46,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('cyp_library');
+        Schema::dropIfExists('libraries');
     }
 };
 
