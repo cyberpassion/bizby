@@ -4,57 +4,69 @@ namespace Modules\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
+
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lead extends Model
 {
-    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+	use HasFactory;
 
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'lead_date' => 'date', // Laravel will cast it to Carbon
+	protected static function newFactory()
+    {
+        return \Modules\Lead\Database\Factories\LeadFactory::new();
+    }
+
+    protected $fillable = [
+        'lead_code',
+        'name',
+        'contact_person',
+        'mobile',
+        'email',
+        'district',
+        'state',
+        'pincode',
+        'website',
+        'category_id',
+        'source_id',
+        'stage_id',
+        'is_existing_client',
+        'place',
+        'next_followup_date',
+        'thread_parent_id',
     ];
 
     /**
-     * Default attribute values
+     * Polymorphic creator
      */
-    protected $attributes = [];
+    public function generatedBy(): MorphTo
+    {
+        return $this->morphTo('generated_by');
+    }
 
     /**
-     * Appended attributes (computed, not in DB)
+     * Polymorphic assignee
      */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function assignedTo(): MorphTo
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): ConsultationFactory
-    // {
-    //     return ConsultationFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->morphTo('assigned_to');
     }
 
-    public function getFillable()
+    /**
+     * Lead Followups
+     */
+    public function followups(): HasMany
     {
-        return $this->dynamicFillable();
+        return $this->hasMany(LeadFollowup::class, 'lead_id');
     }
 
+    /**
+     * Notes (optional)
+     */
+    public function notes(): MorphMany
+    {
+        return $this->morphMany('App\\Models\\Note', 'noteable');
+    }
 }

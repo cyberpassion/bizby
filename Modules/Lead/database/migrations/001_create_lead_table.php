@@ -10,66 +10,56 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
 
-            // Common SaaS fields (id, client_id, status, created_by, updated_by, deleted_by, timestamps, soft deletes)
-            $table->commonSaasFields();
+		    // Common SaaS fields
+    		$table->commonSaasFields();
 
-            // Lead-specific fields
-            $table->bigInteger('lead_id');
+		    // Lead basic properties
+		    $table->string('lead_code')->unique();
+    		$table->string('name');
+		    $table->string('contact_person')->nullable();
+    		$table->string('mobile', 20)->nullable();
+    		$table->string('email')->nullable();
 
-            $table->string('generated_by_type', 255);
-            $table->string('generated_by', 255);
+		    // Address
+    		$table->string('district')->nullable();
+	    	$table->string('state')->nullable();
+	    	$table->string('pincode', 20)->nullable();
+    		$table->string('website')->nullable();
 
-            $table->text('product');
-            $table->text('product_info');
+		    // USING MORPHS — generated_by (who added the lead)
+	    	$table->nullableMorphs('generated_by'); 
+	    	/*
+    	    	Creates:
+        		generated_by_id BIGINT NULL
+        		generated_by_type VARCHAR NULL
+		    */
 
-            $table->text('potential_client_name');
-            $table->string('potential_client_contact_person', 255);
+		    // USING MORPHS — assigned_to (who is handling the lead)
+    		$table->nullableMorphs('assigned_to');
+		    /*
+    		    Creates:
+        		assigned_to_id BIGINT NULL
+        		assigned_to_type VARCHAR NULL
+	    	*/
 
-            $table->string('district', 255);
-            $table->string('state', 255);
+		    // Lead metadata (terms)
+    		$table->unsignedBigInteger('category_id')->nullable();
+    		$table->unsignedBigInteger('source_id')->nullable();
+	    	$table->unsignedBigInteger('stage_id')->nullable();
 
-            $table->text('potential_client_address');
-            $table->string('potential_client_pincode', 255);
-            $table->string('potential_client_mobile_number', 255);
-            $table->string('potential_client_email', 255);
+		    $table->boolean('is_existing_client')->default(false);
+    		$table->string('place')->nullable();
 
-            $table->string('contact_by_type', 255);
-            $table->string('contact_by', 255);
+		    // Next follow-up
+    		$table->date('next_followup_date')->nullable();
 
-            $table->date('contact_date');
-            $table->string('contact_mode', 255);
-            $table->string('contact_reference_number', 255);
+		    // Optional thread (self-referencing)
+    		$table->unsignedBigInteger('thread_parent_id')->nullable()->index();
 
-            $table->text('contact_response');
-            $table->text('contact_remark');
+		    // Useful indexes
+    		$table->index(['mobile', 'email']);
+		});
 
-            $table->string('contact_after', 255);
-            $table->string('reference', 255);
-            $table->string('is_existing_client', 255);
-            $table->string('expectation', 255);
-
-            $table->date('next_date');
-
-            $table->bigInteger('thread_parent');
-            $table->bigInteger('visitplanner_id');
-
-            $table->string('potential_client_website', 255)->nullable();
-            $table->string('progress', 255)->nullable();
-
-            $table->date('visit_date')->nullable();
-
-            $table->string('category', 255)->nullable();
-            $table->string('potential_client_place', 255)->nullable();
-            $table->string('potential_client_state', 255)->nullable();
-
-            $table->bigInteger('generated_by_id')->nullable();
-            $table->bigInteger('contact_by_id')->nullable();
-
-            $table->string('place', 255)->nullable();
-
-            $table->string('entry_source_type', 255)->nullable();
-
-        });
     }
 
     public function down(): void
