@@ -2,56 +2,26 @@
 
 namespace Modules\Admin\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
 use Modules\Admin\Models\TenantUser;
-use Illuminate\Support\Facades\Hash;
+use Modules\Shared\Http\Controllers\SharedApiController;
 
-class TenantUserController extends Controller
+class TenantUserController extends SharedApiController
 {
-    public function index()
+    protected function model()
     {
-        return TenantUser::all();
+        return TenantUser::class;
     }
 
-    public function show($id)
+    protected function validationRules($id = null)
     {
-        return TenantUser::findOrFail($id);
+        return [];
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'tenant_id' => 'required|integer',
-            'name' => 'required|string',
-            'email' => 'required|email|unique:tenant_user,email',
-            'phone' => 'nullable|string',
-            'password' => 'required|string',
-            'role' => 'required|string',
-            'is_active' => 'boolean',
-            'meta' => 'nullable|json',
-        ]);
+	public function extraStats()
+	{
+    	return [
+       		'premium_plan' => TenantUser::where('plan', 'premium')->count()
+    	];
+	}
 
-        $data['password'] = Hash::make($data['password']);
-        $user = TenantUser::create($data);
-        return response()->json($user, 201);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $user = TenantUser::findOrFail($id);
-        if ($request->has('password')) {
-            $request->merge(['password' => Hash::make($request->password)]);
-        }
-        $user->update($request->all());
-        return response()->json($user);
-    }
-
-    public function destroy($id)
-    {
-        $user = TenantUser::findOrFail($id);
-        $user->delete();
-        return response()->json(['message' => 'User deleted']);
-    }
 }
