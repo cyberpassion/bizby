@@ -4,7 +4,6 @@ namespace Modules\Consultation\Http\Controllers;
 
 use Modules\Consultation\Models\Consultation;
 use Modules\Shared\Http\Controllers\SharedApiController;
-use Illuminate\Http\Response;
 
 class ConsultationApiController extends SharedApiController
 {

@@ -6,9 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
+use Modules\Shared\Services\ListService;
 
 abstract class SharedApiController extends Controller
 {
+	protected $listService;
+
+    public function __construct(ListService $listService)
+    {
+        $this->listService = $listService;
+    }
+
     /**
      * Return the model class for this controller
      */
@@ -22,7 +30,7 @@ abstract class SharedApiController extends Controller
     /**
      * List resources
      */
-    public function index()
+    /*public function index()
     {
         $model = $this->model();
         $data = $model::paginate(10);
@@ -32,7 +40,40 @@ abstract class SharedApiController extends Controller
             'message' => 'Records fetched successfully.',
             'data' => $data
         ], Response::HTTP_OK);
-    }
+    }*/
+
+	public function index(Request $request)
+	{
+    	$model = $this->model();
+    	$table = (new $model)->getTable();
+
+	    // Convert GET params automatically into exact match filters
+    	$whereFilters = $request->only(
+        	(new $model)->getFillable()   // apply only valid DB columns
+    	);
+
+	    // Search param if exists
+    	$search = $request->get('search', null);
+
+		$searchable = property_exists($this, 'searchable') ? $this->searchable : [];
+
+	    // Pass to ListService
+    	$result = $this->listService->get($table, [
+        	'where'          => $whereFilters,
+        	'search'         => $search,
+	        'searchColumns'  => $searchable,
+    	    'sortBy'         => $request->get('sortBy', 'id'),
+        	'sortDir'        => $request->get('sortDir', 'desc'),
+	        'start'          => $request->get('start', 0),
+    	    'limit'          => $request->get('limit', 20),
+	    ]);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Records fetched successfully.',
+	        'data'    => $result
+    	], Response::HTTP_OK);
+	}
 
     /**
      * Show single resource

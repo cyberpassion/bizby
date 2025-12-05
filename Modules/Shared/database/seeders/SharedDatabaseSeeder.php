@@ -4,6 +4,8 @@ namespace Modules\Shared\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Shared\Database\Seeders\TermSeeder;
+
 class SharedDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class SharedDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            TermSeeder::class
+        ]);
     }
 }
