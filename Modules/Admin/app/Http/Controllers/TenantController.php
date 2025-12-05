@@ -2,52 +2,26 @@
 
 namespace Modules\Admin\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
 use Modules\Admin\Models\Tenant;
+use Modules\Shared\Http\Controllers\SharedApiController;
 
-class TenantController extends Controller
+class TenantController extends SharedApiController
 {
-    public function index()
+    protected function model()
     {
-        return Tenant::all();
+        return Tenant::class;
     }
 
-    public function show($id)
+    protected function validationRules($id = null)
     {
-        return Tenant::findOrFail($id);
+        return [];
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'code' => 'required|string|unique:tenant,code',
-            'domain' => 'nullable|string',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|string',
-            'plan' => 'nullable|string',
-            'valid_till' => 'nullable|date',
-            'is_active' => 'boolean',
-            'settings' => 'nullable|json',
-        ]);
+	public function extraStats()
+	{
+    	return [
+       		'premium_plan' => Tenant::where('plan', 'premium')->count()
+    	];
+	}
 
-        $tenant = Tenant::create($data);
-        return response()->json($tenant, 201);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $tenant = Tenant::findOrFail($id);
-        $tenant->update($request->all());
-        return response()->json($tenant);
-    }
-
-    public function destroy($id)
-    {
-        $tenant = Tenant::findOrFail($id);
-        $tenant->delete();
-        return response()->json(['message' => 'Tenant deleted']);
-    }
 }
