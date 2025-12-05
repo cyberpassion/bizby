@@ -7,7 +7,7 @@ use Modules\Student\Database\Seeders\StudentClassHistorySeeder;
 use Modules\Student\Database\Seeders\StudentFeeHeadSeeder;
 use Modules\Student\Database\Seeders\StudentFeeSeeder;
 use Modules\Student\Database\Seeders\StudentFeeTransactionSeeder;
-use Modules\Student\Database\Seeders\StudentFeeTransactionItemsSeeder;
+use Modules\Student\Database\Seeders\StudentFeeTransactionItemSeeder;
 
 use Illuminate\Database\Seeder;
 
@@ -25,7 +25,6 @@ class StudentDatabaseSeeder extends Seeder
             StudentFeeSeeder::class,
             StudentFeeTransactionSeeder::class,
             StudentFeeTransactionItemSeeder::class
-
         ]);
     }
 }
