@@ -1,5 +1,5 @@
 <?php
-$pg = 'product';
+$pg = 'eventmanager';
 $commonSettingsRoute = '/settings';
 
 return [

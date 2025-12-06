@@ -13,20 +13,20 @@ class TermSeeder extends Seeder
         $terms = [
 
             // -------- GENDER ----------
-            [ 'name' => 'Male',   'group_name' => 'gender', 'linked_module' => 'student', 'sort_order' => 1 ],
-            [ 'name' => 'Female', 'group_name' => 'gender', 'linked_module' => 'student', 'sort_order' => 2 ],
-            [ 'name' => 'Other',  'group_name' => 'gender', 'linked_module' => 'student', 'sort_order' => 3 ],
+            [ 'name' => 'Male',   'group' => 'gender', 'module' => 'student', 'sort_order' => 1 ],
+            [ 'name' => 'Female', 'group' => 'gender', 'module' => 'student', 'sort_order' => 2 ],
+            [ 'name' => 'Other',  'group' => 'gender', 'module' => 'student', 'sort_order' => 3 ],
 
             // -------- CLASS ----------
-            [ 'name' => 'LKG', 'group_name' => 'class', 'linked_module' => 'student', 'sort_order' => 1 ],
-            [ 'name' => 'UKG', 'group_name' => 'class', 'linked_module' => 'student', 'sort_order' => 2 ],
-            [ 'name' => 'Class 1', 'group_name' => 'class', 'linked_module' => 'student', 'sort_order' => 3 ],
+            [ 'name' => 'LKG', 'group' => 'class', 'module' => 'student', 'sort_order' => 1 ],
+            [ 'name' => 'UKG', 'group' => 'class', 'module' => 'student', 'sort_order' => 2 ],
+            [ 'name' => 'Class 1', 'group' => 'class', 'module' => 'student', 'sort_order' => 3 ],
 
             // -------- CATEGORY ----------
-            [ 'name' => 'General', 'group_name' => 'category', 'linked_module' => 'student', 'sort_order' => 1 ],
-            [ 'name' => 'OBC',     'group_name' => 'category', 'linked_module' => 'student', 'sort_order' => 2 ],
-            [ 'name' => 'SC',      'group_name' => 'category', 'linked_module' => 'student', 'sort_order' => 3 ],
-            [ 'name' => 'ST',      'group_name' => 'category', 'linked_module' => 'student', 'sort_order' => 4 ],
+            [ 'name' => 'General', 'group' => 'category', 'module' => 'student', 'sort_order' => 1 ],
+            [ 'name' => 'OBC',     'group' => 'category', 'module' => 'student', 'sort_order' => 2 ],
+            [ 'name' => 'SC',      'group' => 'category', 'module' => 'student', 'sort_order' => 3 ],
+            [ 'name' => 'ST',      'group' => 'category', 'module' => 'student', 'sort_order' => 4 ],
 
         ];
 
@@ -34,8 +34,8 @@ class TermSeeder extends Seeder
             DB::table('terms')->insert([
                 'name'          => $term['name'],
                 'slug'          => Str::slug($term['name']),
-                'group_name'    => $term['group_name'],
-                'linked_module' => $term['linked_module'],
+                'group'    => $term['group'],
+                'module' 		=> $term['module'],
                 'sort_order'    => $term['sort_order'],
                 'status'        => 1,
                 'created_at'    => now(),

@@ -13,8 +13,8 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('group_name');
-            $table->string('linked_module')->nullable();
+            $table->string('group');
+            $table->string('module')->nullable();
 
             $table->integer('sort_order')->default(0);
             $table->boolean('status')->default(1);

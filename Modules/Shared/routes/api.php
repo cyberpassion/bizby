@@ -21,7 +21,9 @@ Route::prefix('v1')->group(function () {
 
 	// Terms for dynamic values like student classes etc
 	Route::get('/terms', [TermApiController::class, 'index']);
-	Route::post('/terms', [TermApiController::class, 'post']);
+	Route::post('/terms', [TermApiController::class, 'store']);
+	Route::put('/terms/{id}', [TermApiController::class, 'update']);
+	Route::delete('/terms/{id}', [TermApiController::class, 'destroy']);
 
 	// Uploads
 	Route::get('/uploads', [UploadController::class, 'index']);
