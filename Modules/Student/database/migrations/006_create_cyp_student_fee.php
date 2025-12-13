@@ -12,7 +12,7 @@ return new class extends Migration {
 
 		    $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
 		    $table->foreignId('fee_head_id')->constrained('student_fee_heads')->onDelete('cascade');
-    		//$table->foreignId('class_id')->nullable()->constrained()->onDelete('set null');
+    		//$table->foreignId('academic_level_id')->nullable()->constrained()->onDelete('set null');
 
 		    $table->string('academic_year');  // 2025–26
 
@@ -28,6 +28,10 @@ return new class extends Migration {
     		$table->string('cancel_reason')->nullable();
 
 		    $table->timestamps();
+
+			$table->unique(['student_id', 'fee_head_id', 'period_code']);
+			$table->index(['student_id']);
+		    $table->index(['period_code']);
 		});
 
     }

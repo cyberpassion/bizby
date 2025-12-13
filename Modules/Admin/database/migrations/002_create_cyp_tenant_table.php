@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
             $table->string('name');                 // Tenant / Client Name
-            $table->string('code')->unique();       // Short code like XYZUNI
+            //$table->string('code')->unique();       // Short code like XYZUNI
             $table->string('domain')->nullable();   // website or subdomain
             $table->string('email')->nullable();
             $table->string('phone')->nullable();

@@ -23,7 +23,7 @@ return new class extends Migration
 
 	    	// Contact details
 	    	$table->dateTime('contact_date');
-    		$table->string('mode', 50); // call / visit / whatsapp / email / sms
+    		$table->string('mode', 50)->nullable(); // call / visit / whatsapp / email / sms
 		    $table->string('reference_no')->nullable();
 
 	    	$table->text('response')->nullable();

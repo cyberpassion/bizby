@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('student_class_history', function (Blueprint $table) {
+        Schema::create('student_class_histories', function (Blueprint $table) {
 		    $table->id();
 
 		    $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
-    		//$table->foreignId('class_id')->constrained()->onDelete('cascade');
+    		$table->foreignId('academic_level_id')->constrained('academic_levels')->onDelete('cascade');
 
 		    $table->string('academic_year');
 
@@ -30,6 +30,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('student_class_history');
+        Schema::dropIfExists('student_class_histories');
     }
 };

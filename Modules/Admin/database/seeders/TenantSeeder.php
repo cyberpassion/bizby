@@ -14,7 +14,7 @@ class TenantSeeder extends Seeder
         $tenants = [
             [
                 'name' => 'Alpha University',
-                'code' => 'ALPHAUNI',
+                //'code' => 'ALPHAUNI',
                 'domain' => 'alphauni.edu',
                 'email' => 'info@alphauni.edu',
                 'phone' => '9876543210',
@@ -27,7 +27,7 @@ class TenantSeeder extends Seeder
             ],
             [
                 'name' => 'Beta College',
-                'code' => 'BETACOL',
+                //'code' => 'BETACOL',
                 'domain' => 'betacollege.edu',
                 'email' => 'admin@betacollege.edu',
                 'phone' => '9123456780',

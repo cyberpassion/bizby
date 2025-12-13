@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Lead\Http\Controllers\LeadApiController;
+use Modules\Lead\Http\Controllers\LeadFollowupApiController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('leads', LeadController::class)->names('lead');
@@ -10,4 +11,8 @@ use Modules\Lead\Http\Controllers\LeadApiController;
 // Temporarily disable auth middleware
 Route::prefix('v1')->group(function () {
     Route::apiResource('leads', LeadApiController::class)->names('leads');
+	// Lead Users
+    Route::prefix('lead/{id}')->group(function () {
+		Route::apiResource('followups', LeadFollowupApiController::class)->names('lead.followups');
+	});
 });

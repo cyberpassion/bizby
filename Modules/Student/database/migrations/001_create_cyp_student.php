@@ -16,7 +16,7 @@ return new class extends Migration {
             // Patient/person info using macro
             $table->commonPersonFields();
 
-            $table->foreignId('class_id')->nullable(); // current class
+            $table->foreignId('academic_level_id')->nullable(); // current class
             $table->string('academic_year'); // e.g. 2025-26
 
         });

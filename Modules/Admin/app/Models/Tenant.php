@@ -16,35 +16,9 @@ class Tenant extends Model
     protected $fillable = [];
 
     /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'tenant_date' => 'date', // Laravel will cast it to Carbon
-    ];
-
-    /**
      * Default attribute values
      */
     protected $attributes = [];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
-    {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): AdminFactory
-    // {
-    //     return AdminFactory::new();
-    // }
 
 	protected function dynamicFillable()
     {
@@ -56,5 +30,10 @@ class Tenant extends Model
     {
         return $this->dynamicFillable();
     }
+
+	public function tenantusers()
+	{
+    	return $this->hasMany(TenantUser::class);
+	}
 
 }

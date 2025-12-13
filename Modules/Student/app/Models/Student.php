@@ -8,53 +8,47 @@ use Illuminate\Support\Facades\Schema;
 
 class Student extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'father_name',
+        'mother_name',
+        'mobile',
+        'dob',
+        'gender',
 
-    /**
-     * Attribute casting.
-     */
+        'academic_level_id',
+        'academic_level_id',
+        'academic_year',
+    ];
+
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'student_date' => 'date', // Laravel will cast it to Carbon
+        'dob' => 'date',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
+	protected static function newFactory()
+	{
+    	return \Modules\Student\Database\Factories\StudentFactory::new();
+	}
 
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function class()
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): StudentFactory
-    // {
-    //     return StudentFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->belongsTo(AcademicClass::class, 'academic_level_id');
     }
 
-    public function getFillable()
+    public function academicLevel()
     {
-        return $this->dynamicFillable();
+        return $this->belongsTo(AcademicLevel::class, 'academic_level_id');
     }
 
+    public function feeTransactions()
+    {
+        return $this->hasMany(StudentFeeTransaction::class, 'student_id');
+    }
+
+    public function optionalFees()
+    {
+        return $this->hasMany(StudentOptionalFee::class, 'student_id');
+    }
 }

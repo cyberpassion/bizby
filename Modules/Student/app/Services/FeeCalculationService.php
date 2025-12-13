@@ -1,43 +1,69 @@
 <?php
 
-namespace App\Services;
+namespace Modules\Student\Services;
 
-use App\Models\StudentFee;
-use App\Models\FeeTransactionItem;
-use App\Models\FeeTransaction;
+use Modules\Student\Models\StudentFee;
+use Modules\Student\Models\StudentFeeTransaction;
+use Modules\Student\Models\StudentFeeTransactionItem;
 
 class FeeCalculationService
 {
-    public function allocatePayment(FeeTransaction $transaction)
+    /**
+     * Allocate a payment transaction to outstanding dues
+     */
+    public function allocatePayment(StudentFeeTransaction $transaction)
     {
-        $remaining = $transaction->amount;
+        $studentId = $transaction->student_id;
+        $amount = $transaction->amount;
 
-        // Get dues (oldest first)
-        $dues = StudentFee::where('student_id', $transaction->student_id)
+        // Get active unpaid fees for student
+        $fees = StudentFee::where('student_id', $studentId)
+            ->where('is_active', true)
+            ->whereRaw('payable - concession > (SELECT COALESCE(SUM(amount_paid),0) FROM student_fee_transaction_items WHERE student_fee_id = student_fees.id)')
             ->orderBy('period_code')
             ->get();
 
-        foreach ($dues as $fee) {
+        foreach ($fees as $fee) {
+            $paidAlready = $fee->transactions()->sum('amount_paid');
+            $due = ($fee->payable - $fee->concession) - $paidAlready;
 
-            $balance = $fee->balance; // auto-calculated accessor
+            if ($due <= 0) continue;
 
-            if ($balance <= 0) {
-                continue; // already fully paid
-            }
+            $allocate = min($amount, $due);
 
-            if ($remaining <= 0) break;
-
-            $pay = min($remaining, $balance);
-
-            FeeTransactionItem::create([
+            StudentFeeTransactionItem::create([
                 'transaction_id' => $transaction->id,
                 'student_fee_id' => $fee->id,
-                'amount_paid' => $pay,
+                'amount_paid' => $allocate,
             ]);
 
-            $remaining -= $pay;
+            $amount -= $allocate;
+            if ($amount <= 0) break;
         }
+    }
 
-        return true;
+    /**
+     * Calculate student dues
+     */
+    public function calculateDues($studentId)
+    {
+        $fees = StudentFee::where('student_id', $studentId)
+            ->where('is_active', true)
+            ->withSum('transactions as paid_amount', 'amount_paid')
+            ->get();
+
+        $dues = [];
+        foreach ($fees as $fee) {
+            $dues[] = [
+                'fee_id' => $fee->id,
+                'fee_head_id' => $fee->fee_head_id,
+                'period' => $fee->period_label,
+                'payable' => $fee->payable,
+                'concession' => $fee->concession,
+                'paid' => $fee->paid_amount ?? 0,
+                'balance' => max($fee->payable - $fee->concession - ($fee->paid_amount ?? 0), 0)
+            ];
+        }
+        return $dues;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Shared\Models;
+namespace Modules\Consultation\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,43 +10,9 @@ class Option extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
     protected $fillable = [];
 
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'booking_date' => 'date', // Laravel will cast it to Carbon
-    ];
-
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
-    {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): BookingFactory
-    // {
-    //     return BookingFactory::new();
-    // }
-
-	protected function dynamicFillable()
+    protected function dynamicFillable()
     {
         // Example dynamic load from DB table
         return Schema::getColumnListing($this->getTable());

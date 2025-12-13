@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\AdminApiController;
 use Modules\Admin\Http\Controllers\TenantController;
+use Modules\Admin\Http\Controllers\TenantAuthController;
 use Modules\Admin\Http\Controllers\TenantUserController;
 use Modules\Admin\Http\Controllers\TenantModuleController;
 use Modules\Admin\Http\Controllers\InstallationController;
@@ -17,12 +18,16 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('tenants', TenantController::class)->names('tenants');
 
     // Tenant Users
-    Route::apiResource('tenant-users', TenantUserController::class)->names('tenantUser');
+    Route::prefix('tenants/{tenantId}')->group(function () {
+		Route::apiResource('users', TenantUserController::class)->names('tenant.users');
+	});
+	Route::post('/tenants/login', [TenantAuthController::class, 'login']);
 
     // Tenant Modules
     Route::prefix('tenants/{tenantId}/modules')->group(function () {
-        Route::get('/', [TenantModuleController::class, 'index'])->name('tenantModule.index');
-        Route::post('/activate', [TenantModuleController::class, 'activate'])->name('tenantModule.activate');
+        Route::get('/', [TenantModuleController::class, 'index1'])->name('tenantModule.index1');
+        Route::post('/activate', [TenantModuleController::class, 'activateSingle'])->name('tenantModule.activateSingle');
+		Route::post('/activate-bulk', [TenantModuleController::class, 'activateMultiple'])->name('tenantModule.activateMultiple');
         Route::post('/{moduleId}/deactivate', [TenantModuleController::class, 'deactivate'])->name('tenantModule.deactivate');
     });
 

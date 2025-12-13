@@ -2,59 +2,33 @@
 
 namespace Modules\Admin\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
-class TenantUser extends Model
+class TenantUser extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, Notifiable; // <-- Add HasApiTokens here
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $table = 'tenant_users';
 
-    /**
-     * Attribute casting.
-     */
+    protected $fillable = [
+        'name', 'email', 'password', 'tenant_id',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'tenant_date' => 'date', // Laravel will cast it to Carbon
+        'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
-    {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): AdminFactory
-    // {
-    //     return AdminFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
+	public function setPasswordAttribute($value)
+	{
+    	if (!empty($value)) {
+        	$this->attributes['password'] = \Illuminate\Support\Facades\Hash::make($value);
+    	}
+	}
 
 }

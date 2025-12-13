@@ -18,12 +18,13 @@ return new class extends Migration {
 
 		    $table->date('date')->default(now());
     		$table->timestamps();
+			$table->index(['student_id']);
 		});
 
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('student_student_fee_transactions');
+        Schema::dropIfExists('student_fee_transactions');
     }
 };

@@ -3,25 +3,23 @@
 namespace Modules\Admin\Http\Controllers;
 
 use Modules\Admin\Models\TenantUser;
-use Modules\Shared\Http\Controllers\SharedApiController;
+use Modules\Shared\Http\Controllers\SharedChildApiController;
 
-class TenantUserController extends SharedApiController
+class TenantUserController extends SharedChildApiController
 {
-    protected function model()
+    protected function parentModel()
     {
-        return TenantUser::class;
+        return \Modules\Admin\Models\Tenant::class;
+    }
+
+    protected function childModel()
+    {
+        return \Modules\Admin\Models\TenantUser::class;
     }
 
     protected function validationRules($id = null)
     {
         return [];
     }
-
-	public function extraStats()
-	{
-    	return [
-       		'premium_plan' => TenantUser::where('plan', 'premium')->count()
-    	];
-	}
 
 }

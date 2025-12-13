@@ -1,25 +1,44 @@
 <?php
 
-namespace App\Models;
+namespace Modules\Student\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Student\Models\Student;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Schema;
 
 class StudentClassHistory extends Model
 {
+	use HasFactory;
 
     protected $fillable = [
         'student_id',
-        'class_id',
+        'academic_level_id',
+        'academic_level_id',
         'academic_year',
-        'from_date',
-        'to_date',
-        'status',
-        'reason'
+        'promoted_on',
     ];
+
+    protected $casts = [
+        'promoted_on' => 'date',
+    ];
+
+	protected static function newFactory()
+	{
+    	return \Modules\Student\Database\Factories\StudentClassHistoryFactory::new();
+	}
 
     public function student()
     {
-        return $this->belongsTo(Student::class, 'student_id');
+        return $this->belongsTo(Student::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(AcademicClass::class);
+    }
+
+    public function academicLevel()
+    {
+        return $this->belongsTo(AcademicLevel::class);
     }
 }

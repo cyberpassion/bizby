@@ -5,6 +5,7 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 use Modules\Shared\Http\Controllers\LookupsController; // Options Controller
 use Modules\Shared\Http\Controllers\UploadController; // Upload Controller
 use Modules\Shared\Http\Controllers\TermApiController;
+use Modules\Shared\Http\Controllers\OnlinePaymentApiController;
 use Modules\Shared\Http\Controllers\FormController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
@@ -20,14 +21,11 @@ Route::prefix('v1')->group(function () {
 	Route::get('/form/{module}/{name}', [FormController::class, 'show']);
 
 	// Terms for dynamic values like student classes etc
-	Route::get('/terms', [TermApiController::class, 'index']);
-	Route::post('/terms', [TermApiController::class, 'store']);
-	Route::put('/terms/{id}', [TermApiController::class, 'update']);
-	Route::delete('/terms/{id}', [TermApiController::class, 'destroy']);
+	Route::apiResource('terms', TermApiController::class)->names('term');
 
 	// Uploads
-	Route::get('/uploads', [UploadController::class, 'index']);
-	Route::post('/uploads', [UploadController::class, 'store']);
-	Route::delete('/uploads/{id}', [UploadController::class, 'destroy']);
+	Route::apiResource('uploads', UploadController::class)->names('upload');
 
+	// Online payment
+	Route::apiResource('online-payments', OnlinePaymentApiController::class)->names('onlinePayment');
 });

@@ -29,7 +29,9 @@ return [
                 ['title' => 'Student Report', 'href' => "/module/{$pg}/report"],
 				['title' => 'Fee Report', 'href' => "/module/{$pg}/feereport"],
 				['title' => 'Dues Report', 'href' => "/module/{$pg}/duesreport"],
+				['title' => 'Academic Levels', 'href' => "/module/{$pg}/academiclevels"],
 				['title' => 'Fee Heads', 'href' => "/module/{$pg}/feehead"],
+				['title' => 'Fee Assignment', 'href' => "/module/{$pg}/feeassignment"],
 				['title' => 'Fee Structure', 'href' => "/module/{$pg}/feestructure"],
 				['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
@@ -673,7 +675,13 @@ return [
     "term_bulk_operation-list" => [
         "op:remove"  => "Delete",
         "op:restore" => "Restore"
-    ]
+	],
 
-
+	"student-academic-level-types-json" => [
+		"class"		=>	"Class",
+		"course"	=>	"Course",
+		"year"		=>	"Year",
+		"semester"	=>	"Semester",
+		"section"	=> "Section"
+	]
 ];

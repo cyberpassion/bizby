@@ -69,4 +69,10 @@ class Lead extends Model
     {
         return $this->morphMany('App\\Models\\Note', 'noteable');
     }
+
+	public function leadfollowups()
+	{
+    	return $this->hasMany(LeadFollowup::class);
+	}
+
 }
