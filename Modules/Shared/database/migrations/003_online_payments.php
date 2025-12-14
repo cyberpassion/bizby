@@ -9,19 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('online_payments', function (Blueprint $table) {
-		    $table->id();
-		    $table->unsignedBigInteger('tenant_id');
+		    // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
+            $table->commonSaasFields();
     		$table->unsignedBigInteger('user_id')->nullable();
     		$table->morphs('payable'); // payable_type + payable_id for polymorphism
     		$table->decimal('amount', 12, 2);
-    		$table->string('currency', 3)->default('USD');
+    		$table->string('currency', 3)->default('INR');
     		$table->string('payment_method'); // e.g., UPI, card, netbanking
     		$table->string('transaction_id')->unique();
-    		$table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
     		$table->text('notes')->nullable();
-    		$table->timestamps();
-
-		    $table->index(['user_id', 'tenant_id', 'status']);
+		    $table->index(['user_id']);
 		});
 
     }

@@ -4,57 +4,29 @@ namespace Modules\Shared\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class Permission extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $table = 'permission_permissions';
 
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'booking_date' => 'date', // Laravel will cast it to Carbon
+    protected $fillable = [
+        'module',
+        'operation',
+        'slug',
     ];
 
     /**
-     * Default attribute values
+     * Roles that have this permission
      */
-    protected $attributes = [];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function roles()
     {
-        return $this->employee?->name ?? '-123';
+        return $this->belongsToMany(
+            PermissionRole::class,
+            'permission_role_permissions',
+            'permission_id',
+            'role_id'
+        );
     }
-    // Factory (if you use factories)
-    // protected static function newFactory(): BookingFactory
-    // {
-    //     return BookingFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
-
 }

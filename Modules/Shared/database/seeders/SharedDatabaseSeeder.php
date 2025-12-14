@@ -5,6 +5,9 @@ namespace Modules\Shared\Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use Modules\Shared\Database\Seeders\TermSeeder;
+use Modules\Shared\Database\Seeders\PermissionSeeder;
+use Modules\Shared\Database\Seeders\PermissionRoleSeeder;
+use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
 
 class SharedDatabaseSeeder extends Seeder
 {
@@ -14,7 +17,10 @@ class SharedDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            TermSeeder::class
+            TermSeeder::class,
+			PermissionSeeder::class,
+			PermissionRoleSeeder::class,
+			PermissionRolePermissionsSeeder::class
         ]);
     }
 }

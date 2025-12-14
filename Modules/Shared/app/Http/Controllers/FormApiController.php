@@ -3,7 +3,7 @@
 namespace Modules\Shared\Http\Controllers;
 use App\Http\Controllers\Controller;
 
-class FormController extends Controller
+class FormApiController extends Controller
 {
 	public function show($module, $name)
 	{

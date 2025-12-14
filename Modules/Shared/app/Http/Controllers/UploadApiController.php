@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 use Modules\Shared\Services\ListService;
 
-class UploadController extends Controller
+class UploadApiController extends Controller
 {
     protected $moduleName = 'shared';
 

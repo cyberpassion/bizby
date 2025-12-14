@@ -9,7 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('terms', function (Blueprint $table) {
-            $table->id();
+            // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
+            $table->commonSaasFields();
 
             $table->string('name');
             $table->string('slug')->unique();
@@ -17,9 +18,7 @@ return new class extends Migration
             $table->string('module')->nullable();
 
             $table->integer('sort_order')->default(0);
-            $table->boolean('status')->default(1);
 
-            $table->timestamps();
         });
     }
 
