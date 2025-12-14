@@ -5,9 +5,12 @@ namespace Modules\Shared\Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use Modules\Shared\Database\Seeders\TermSeeder;
-use Modules\Shared\Database\Seeders\PermissionSeeder;
+use Modules\Shared\Database\Seeders\PermissionPermissionsSeeder;
 use Modules\Shared\Database\Seeders\PermissionRoleSeeder;
 use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
+use Modules\Shared\Database\Seeders\OnlinePaymentsSeeder;
+use Modules\Shared\Database\Seeders\OptionsSeeder;
+use Modules\Shared\Database\Seeders\activityLogsSeeder;
 
 class SharedDatabaseSeeder extends Seeder
 {
@@ -18,9 +21,12 @@ class SharedDatabaseSeeder extends Seeder
     {
         $this->call([
             TermSeeder::class,
-			PermissionSeeder::class,
+			PermissionPermissionsSeeder::class,
 			PermissionRoleSeeder::class,
-			PermissionRolePermissionsSeeder::class
+			PermissionRolePermissionsSeeder::class,
+            OnlinePaymentsSeeder::class,
+            OptionsSeeder::class,
+            activityLogsSeeder::class
         ]);
     }
 }

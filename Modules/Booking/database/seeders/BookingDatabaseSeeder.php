@@ -4,6 +4,8 @@ namespace Modules\Booking\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Booking\Database\Seeders\BookingSeeder;
+
 class BookingDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class BookingDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            BookingSeeder::class
+        ]);
     }
 }
