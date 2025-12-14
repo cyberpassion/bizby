@@ -29,7 +29,7 @@ return [
                 ['title' => 'Student Report', 'href' => "/module/{$pg}/report"],
 				['title' => 'Fee Report', 'href' => "/module/{$pg}/feereport"],
 				['title' => 'Dues Report', 'href' => "/module/{$pg}/duesreport"],
-				['title' => 'Academic Levels', 'href' => "/module/{$pg}/academiclevels"],
+				['title' => 'Academic Sessions', 'href' => "/module/{$pg}/academicsessions"],
 				['title' => 'Fee Heads', 'href' => "/module/{$pg}/feehead"],
 				['title' => 'Fee Assignment', 'href' => "/module/{$pg}/feeassignment"],
 				['title' => 'Fee Structure', 'href' => "/module/{$pg}/feestructure"],
@@ -683,5 +683,19 @@ return [
 		"year"		=>	"Year",
 		"semester"	=>	"Semester",
 		"section"	=> "Section"
+	],
+
+	// Temp
+	"class"	=>	[
+		4	=>	"LKG",
+		5	=>	"UKG"
+	],
+	"section"	=>	[
+		7	=>	"A",
+		8	=>	"B"
+	],
+	"session"	=>	[
+		1 => "2024-25"
 	]
+
 ];

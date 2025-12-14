@@ -8,47 +8,18 @@ use Illuminate\Support\Facades\Schema;
 
 class Student extends Model
 {
-	use HasFactory;
+    use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'father_name',
-        'mother_name',
-        'mobile',
-        'dob',
-        'gender',
+    // dynamically allow all columns except id, timestamps, deleted_at
+    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
-        'academic_level_id',
-        'academic_level_id',
-        'academic_year',
-    ];
-
-    protected $casts = [
-        'dob' => 'date',
-    ];
-
-	protected static function newFactory()
-	{
-    	return \Modules\Student\Database\Factories\StudentFactory::new();
-	}
-
-    public function class()
+    public function academicHistories()
     {
-        return $this->belongsTo(AcademicClass::class, 'academic_level_id');
+        return $this->hasMany(StudentAcademicHistory::class, 'student_id');
     }
 
-    public function academicLevel()
+    public function currentAcademicHistory()
     {
-        return $this->belongsTo(AcademicLevel::class, 'academic_level_id');
-    }
-
-    public function feeTransactions()
-    {
-        return $this->hasMany(StudentFeeTransaction::class, 'student_id');
-    }
-
-    public function optionalFees()
-    {
-        return $this->hasMany(StudentOptionalFee::class, 'student_id');
+        return $this->hasOne(StudentAcademicHistory::class, 'student_id')->where('is_current', true);
     }
 }
