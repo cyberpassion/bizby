@@ -10,7 +10,12 @@ use Modules\Shared\Database\Seeders\PermissionRoleSeeder;
 use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
 use Modules\Shared\Database\Seeders\OnlinePaymentsSeeder;
 use Modules\Shared\Database\Seeders\OptionsSeeder;
-use Modules\Shared\Database\Seeders\activityLogsSeeder;
+use Modules\Shared\Database\Seeders\ActivityLogsSeeder;
+use Modules\Shared\Database\Seeders\StateSeeder;
+use Modules\Shared\Database\Seeders\UniversitiesSeeder;
+use Modules\Shared\Database\Seeders\SchoolBoardSeeder;
+use Modules\Shared\Database\Seeders\ReligionSeeder;
+use Modules\Shared\Database\Seeders\CategorySeeder;
 
 class SharedDatabaseSeeder extends Seeder
 {
@@ -26,7 +31,12 @@ class SharedDatabaseSeeder extends Seeder
 			PermissionRolePermissionsSeeder::class,
             OnlinePaymentsSeeder::class,
             OptionsSeeder::class,
-            activityLogsSeeder::class
+            ActivityLogsSeeder::class,
+            StateSeeder::class,
+            UniversitiesSeeder::class,
+            SchoolBoardSeeder::class,
+            ReligionSeeder::class,
+            CategorySeeder::class
         ]);
     }
 }
