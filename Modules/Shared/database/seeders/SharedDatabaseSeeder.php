@@ -11,7 +11,7 @@ use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
 use Modules\Shared\Database\Seeders\OptionsSeeder;
 use Modules\Shared\Database\Seeders\ActivityLogsSeeder;
 use Modules\Shared\Database\Seeders\TermStateSeeder;
-use Modules\Shared\Database\Seeders\TermPaymentMode;
+use Modules\Shared\Database\Seeders\TermPaymentModeSeeder;
 use Modules\Shared\Database\Seeders\TermUniversitySeeder;
 use Modules\Shared\Database\Seeders\TermSchoolBoardSeeder;
 use Modules\Shared\Database\Seeders\TermReligionSeeder;
@@ -39,7 +39,7 @@ class SharedDatabaseSeeder extends Seeder
 			PermissionPermissionsSeeder::class,
 			PermissionRoleSeeder::class,
 			PermissionRolePermissionsSeeder::class,
-            TermPaymentMode::class,
+            TermPaymentModeSeeder::class,
             OptionsSeeder::class,
             ActivityLogsSeeder::class,
             TermStateSeeder::class,
