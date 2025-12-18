@@ -16,6 +16,13 @@ return new class extends Migration {
             // Patient/person info using macro
             $table->commonPersonFields();
 
+			$table->string('admission_number')->nullable()->comment('Institute-specific admission or roll number');
+            $table->date('admission_date')->nullable();
+
+			// Parent/guardian info
+            $table->string('father_name')->nullable()->comment('Name of the father');
+            $table->string('mother_name')->nullable()->comment('Name of the mother');
+
         });
     }
 

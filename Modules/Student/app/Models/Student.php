@@ -13,13 +13,18 @@ class Student extends Model
     // dynamically allow all columns except id, timestamps, deleted_at
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
-    public function academicHistories()
-    {
-        return $this->hasMany(StudentAcademicHistory::class, 'student_id');
-    }
+	protected $casts = [
+        'admission_date' => 'date',
+    ];
 
-    public function currentAcademicHistory()
-    {
-        return $this->hasOne(StudentAcademicHistory::class, 'student_id')->where('is_current', true);
-    }
+    public function academicHistories()
+	{
+    	return $this->hasMany(StudentAcademicHistory::class);
+	}
+
+	public function currentAcademicHistory()
+	{
+    	return $this->hasOne(StudentAcademicHistory::class)->where('is_current', true);
+	}
+
 }

@@ -7,6 +7,11 @@ class LookupRegistry
     protected static array $items = [];
 
     /**
+     * Fallback resolver (used when key is not explicitly registered)
+     */
+    protected static $fallbackResolver = null;
+
+    /**
      * Register a lookup key with static array or callback.
      * If same key already exists → merge intelligently.
      */
@@ -19,8 +24,16 @@ class LookupRegistry
         }
 
         // Merge with existing
-        $existing = self::$items[$key];
-        self::$items[$key] = self::mergeValues($existing, $value);
+        self::$items[$key] = self::mergeValues(self::$items[$key], $value);
+    }
+
+    /**
+     * Register a fallback resolver.
+     * This will be called if lookup key is not explicitly registered.
+     */
+    public static function registerFallback(callable $resolver): void
+    {
+        self::$fallbackResolver = $resolver;
     }
 
     /**
@@ -63,12 +76,12 @@ class LookupRegistry
             };
         }
 
-        // Fallback (should not be needed)
+        // Fallback (should not normally happen)
         return $b;
     }
 
     /**
-     * Check if lookup exists
+     * Check if lookup exists (explicitly registered)
      */
     public static function has(string $key): bool
     {
@@ -76,23 +89,34 @@ class LookupRegistry
     }
 
     /**
-     * Get lookup: if callback, execute
+     * Get lookup value
+     * Priority:
+     * 1️⃣ Explicitly registered lookup
+     * 2️⃣ Fallback resolver (eg: shared.* → terms table)
+     * 3️⃣ null
      */
     public static function get(string $key)
     {
-        if (!self::has($key)) {
-            return null;
+        // 1️⃣ Explicit lookup
+        if (self::has($key)) {
+            $value = self::$items[$key];
+
+            return is_callable($value)
+                ? ($value() ?? [])
+                : $value;
         }
 
-        $value = self::$items[$key];
+        // 2️⃣ Fallback lookup
+        if (self::$fallbackResolver) {
+            return call_user_func(self::$fallbackResolver, $key);
+        }
 
-        return is_callable($value)
-            ? ($value() ?? [])
-            : $value;
+        // 3️⃣ Not found
+        return null;
     }
 
     /**
-     * Get all lookup keys
+     * Get all explicitly registered lookup keys
      */
     public static function all(): array
     {

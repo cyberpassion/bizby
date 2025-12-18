@@ -12,11 +12,6 @@ class TermSeeder extends Seeder
     {
         $terms = [
 
-            // -------- GENDER ----------
-            [ 'name' => 'Male',   'group' => 'gender', 'module' => 'student', 'sort_order' => 1 ],
-            [ 'name' => 'Female', 'group' => 'gender', 'module' => 'student', 'sort_order' => 2 ],
-            [ 'name' => 'Other',  'group' => 'gender', 'module' => 'student', 'sort_order' => 3 ],
-
             // -------- CLASS ----------
             [ 'name' => 'LKG', 'group' => 'class', 'module' => 'student', 'sort_order' => 1 ],
             [ 'name' => 'UKG', 'group' => 'class', 'module' => 'student', 'sort_order' => 2 ],
@@ -27,19 +22,13 @@ class TermSeeder extends Seeder
             [ 'name' => 'B', 'group' => 'section', 'module' => 'student', 'sort_order' => 2 ],
 
 			// -------- FEE HEADS ----------
-            [ 'name' => 'ADMISSION FEE', 'group' => 'feehead', 'module' => 'student', 'sort_order' => 1 ],
+            [ 'name' => 'ADMISSION FEE', 'group' => 'fee-head', 'module' => 'student', 'sort_order' => 1 ],
             [ 'name' => 'TUTION FEE', 'group' => 'fee-head', 'module' => 'student', 'sort_order' => 2 ],
 
 			// -------- SESSION ----------
             [ 'name' => '2024-25', 'group' => 'session', 'module' => 'student', 'sort_order' => 1 ],
 			[ 'name' => '2025-26', 'group' => 'session', 'module' => 'student', 'sort_order' => 2 ],
             [ 'name' => '2026-27', 'group' => 'session', 'module' => 'student', 'sort_order' => 3 ],
-
-            // -------- CATEGORY ----------
-            [ 'name' => 'General', 'group' => 'category', 'module' => 'student', 'sort_order' => 1 ],
-            [ 'name' => 'OBC',     'group' => 'category', 'module' => 'student', 'sort_order' => 2 ],
-            [ 'name' => 'SC',      'group' => 'category', 'module' => 'student', 'sort_order' => 3 ],
-            [ 'name' => 'ST',      'group' => 'category', 'module' => 'student', 'sort_order' => 4 ],
 
         ];
 

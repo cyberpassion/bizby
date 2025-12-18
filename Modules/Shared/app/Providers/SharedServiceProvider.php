@@ -64,21 +64,27 @@ class SharedServiceProvider extends ServiceProvider
     	$modulePath = base_path('Modules');
 
 	    foreach (scandir($modulePath) as $module) {
-
-	        if ($module === '.' || $module === '..') continue;
+    	    if ($module === '.' || $module === '..') continue;
 
 	        $providerClass = "Modules\\{$module}\\Providers\\{$module}LookupProvider";
 
-	        if (class_exists($providerClass)) {
-     	       $provider = new $providerClass;
+	        if (!class_exists($providerClass)) {
+    	        continue;
+        	}
 
-        	    if (method_exists($provider, 'getLookups')) {
-            	    $lookups = $provider->getLookups();
+	        // ✅ ALWAYS use container
+    	    $provider = app($providerClass);
 
-	                foreach ($lookups as $key => $value) {
-    	                LookupRegistry::register($key, $value);
-        	        }
+	        // 1️⃣ Normal lookup registration
+    	    if (method_exists($provider, 'getLookups')) {
+        	    foreach ($provider->getLookups() as $key => $value) {
+            	    LookupRegistry::register($key, $value);
             	}
+        	}
+
+	        // 2️⃣ 🔥 FALLBACK registration (THIS WAS MISSING)
+    	    if (method_exists($provider, 'register')) {
+        	    $provider->register();
         	}
     	}
 	}

@@ -17,11 +17,12 @@ return new class extends Migration {
 		    $table->foreignId('class_term_id')->constrained('terms');   // group = class
     		$table->foreignId('section_term_id')->constrained('terms'); // group = section
 
-		    $table->boolean('is_current')->default(true);
+		    $table->boolean('is_current')->default(false);
 
 		    $table->timestamps();
 
-		    $table->unique(['student_id', 'year_id']);
+		    $table->unique(['student_id', 'year_id', 'is_current'],'uniq_student_current_history');
+
 		});
     }
 

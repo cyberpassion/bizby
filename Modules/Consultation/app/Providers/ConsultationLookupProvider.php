@@ -6,7 +6,7 @@ class ConsultationLookupProvider
     public function getLookups()
     {
         return [
-            'doctor' => fn() => $this->doctors()
+            'doctorx' => fn() => $this->doctors()
         ];
     }
 

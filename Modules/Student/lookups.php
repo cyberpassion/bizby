@@ -26,14 +26,26 @@ return [
                 ['title' => 'Home', 'href' => "/module/{$pg}/home"],
 				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
                 ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Student Report', 'href' => "/module/{$pg}/report"],
-				['title' => 'Fee Report', 'href' => "/module/{$pg}/feereport"],
-				['title' => 'Dues Report', 'href' => "/module/{$pg}/duesreport"],
-				['title' => 'Academic Sessions', 'href' => "/module/{$pg}/academicsessions"],
-				['title' => 'Fee Heads', 'href' => "/module/{$pg}/feehead"],
-				['title' => 'Fee Assignment', 'href' => "/module/{$pg}/feeassignment"],
-				['title' => 'Fee Structure', 'href' => "/module/{$pg}/feestructure"],
-				['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+				[
+				  'title' => 'Report',
+				  'href'  => "/module/{$pg}/report",
+				  'items' => [
+						['title' => 'Student', 'href'  => "/module/{$pg}/report"],
+						['title' => 'Fee Collection', 'href'  => "/module/{$pg}/feereport"],
+						['title' => 'Dues', 'href' => "/module/{$pg}/duesreport"],
+					]
+				],
+				[
+				  'title' => 'Settings',
+				  'href'  => "/module/{$pg}/settings",
+				  'items' => [
+						['title' => 'Basic', 'href'  => "/module/{$pg}/settings"],
+						['title' => 'Academic', 'href' => "/module/{$pg}/academicyears"],
+						['title' => 'Fee Head', 'href' => "/module/shared/terms/student/fee-head"],
+						['title' => 'Fee Structure', 'href' => "/module/{$pg}/fee-structure"],
+						['title' => 'Other', 'href' => "/module/{$pg}/other-section"]
+					]
+				],
             ],
         ],
     ],
@@ -686,15 +698,7 @@ return [
 	],
 
 	// Temp
-	"class"	=>	[
-		4	=>	"LKG",
-		5	=>	"UKG"
-	],
-	"section"	=>	[
-		7	=>	"A",
-		8	=>	"B"
-	],
-	"session"	=>	[
+	"student.session"	=>	[
 		1 => "2024-25"
 	]
 
