@@ -86,9 +86,6 @@ class TermNationalitySeeder extends Seeder
                 'slug'       => $slug, // eg: in-indian
                 'group'      => 'nationality',
                 'module'     => 'shared',
-                'meta'       => json_encode([
-                    'country_code' => $code,
-                ]),
                 'sort_order' => $index + 1,
                 'created_at' => now(),
                 'updated_at' => now(),

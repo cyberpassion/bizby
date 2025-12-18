@@ -35,9 +35,6 @@ class TermTimeZoneSeeder extends Seeder
                 'slug'       => strtolower(str_replace('/', '-', $tz)),
                 'group'      => 'timezone',
                 'module'     => 'shared',
-                'meta'       => json_encode([
-                    'timezone' => $tz
-                ]),
                 'sort_order' => $index + 1,
                 'created_at' => now(),
                 'updated_at' => now(),
