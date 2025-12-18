@@ -8,14 +8,15 @@ use Modules\Shared\Database\Seeders\TermSeeder;
 use Modules\Shared\Database\Seeders\PermissionPermissionsSeeder;
 use Modules\Shared\Database\Seeders\PermissionRoleSeeder;
 use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
-use Modules\Shared\Database\Seeders\OnlinePaymentsSeeder;
 use Modules\Shared\Database\Seeders\OptionsSeeder;
 use Modules\Shared\Database\Seeders\ActivityLogsSeeder;
-use Modules\Shared\Database\Seeders\StateSeeder;
-use Modules\Shared\Database\Seeders\UniversitiesSeeder;
-use Modules\Shared\Database\Seeders\SchoolBoardSeeder;
-use Modules\Shared\Database\Seeders\ReligionSeeder;
-use Modules\Shared\Database\Seeders\CategorySeeder;
+use Modules\Shared\Database\Seeders\TermStateSeeder;
+use Modules\Shared\Database\Seeders\TermOnlinePaymentsSeeder;
+use Modules\Shared\Database\Seeders\TermUniversitySeeder;
+use Modules\Shared\Database\Seeders\TermSchoolBoardSeeder;
+use Modules\Shared\Database\Seeders\TermReligionSeeder;
+use Modules\Shared\Database\Seeders\TermCategorySeeder;
+use Modules\Shared\Database\Seeders\TermDistrictSeeder;
 
 class SharedDatabaseSeeder extends Seeder
 {
@@ -29,14 +30,15 @@ class SharedDatabaseSeeder extends Seeder
 			PermissionPermissionsSeeder::class,
 			PermissionRoleSeeder::class,
 			PermissionRolePermissionsSeeder::class,
-            OnlinePaymentsSeeder::class,
+            TermOnlinePaymentsSeeder::class,
             OptionsSeeder::class,
             ActivityLogsSeeder::class,
-            StateSeeder::class,
-            UniversitiesSeeder::class,
-            SchoolBoardSeeder::class,
-            ReligionSeeder::class,
-            CategorySeeder::class
+            TermStateSeeder::class,
+            TermUniversitySeeder::class,
+            TermSchoolBoardSeeder::class,
+            TermReligionSeeder::class,
+            TermCategorySeeder::class,
+			TermDistrictSeeder::class,
         ]);
     }
 }
