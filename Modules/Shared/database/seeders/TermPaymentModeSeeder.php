@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class TermOnlinePaymentsSeeder extends Seeder
+class TermPaymentModeSeeder extends Seeder
 {
     public function run(): void
     {
