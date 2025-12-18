@@ -8,17 +8,14 @@ use Modules\Shared\Database\Seeders\TermSeeder;
 use Modules\Shared\Database\Seeders\PermissionPermissionsSeeder;
 use Modules\Shared\Database\Seeders\PermissionRoleSeeder;
 use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
+use Modules\Shared\Database\Seeders\OnlinePaymentsSeeder;
 use Modules\Shared\Database\Seeders\OptionsSeeder;
-
-use Modules\Shared\Database\Seeders\TermOnlinePaymentsSeeder;
-use Modules\Shared\Database\Seeders\TermGenderSeeder;
-use Modules\Shared\Database\Seeders\TermStateSeeder;
-use Modules\Shared\Database\Seeders\TermUniversitySeeder;
-use Modules\Shared\Database\Seeders\TermSchoolBoardSeeder;
-use Modules\Shared\Database\Seeders\TermReligionSeeder;
-use Modules\Shared\Database\Seeders\TermCategorySeeder;
-use Modules\Shared\Database\Seeders\TermAcademicQualificationSeeder;
-use Modules\Shared\Database\Seeders\TermDistrictSeeder;
+use Modules\Shared\Database\Seeders\ActivityLogsSeeder;
+use Modules\Shared\Database\Seeders\StateSeeder;
+use Modules\Shared\Database\Seeders\UniversitiesSeeder;
+use Modules\Shared\Database\Seeders\SchoolBoardSeeder;
+use Modules\Shared\Database\Seeders\ReligionSeeder;
+use Modules\Shared\Database\Seeders\CategorySeeder;
 
 class SharedDatabaseSeeder extends Seeder
 {
@@ -29,18 +26,17 @@ class SharedDatabaseSeeder extends Seeder
     {
         $this->call([
             TermSeeder::class,
+			PermissionPermissionsSeeder::class,
 			PermissionRoleSeeder::class,
 			PermissionRolePermissionsSeeder::class,
+            OnlinePaymentsSeeder::class,
             OptionsSeeder::class,
-			TermGenderSeeder::class,
-			TermOnlinePaymentsSeeder::class,
-            TermStateSeeder::class,
-            TermUniversitySeeder::class,
-            TermSchoolBoardSeeder::class,
-            TermReligionSeeder::class,
-            TermCategorySeeder::class,
-			TermAcademicQualificationSeeder::class,
-			TermDistrictSeeder::class,
+            ActivityLogsSeeder::class,
+            StateSeeder::class,
+            UniversitiesSeeder::class,
+            SchoolBoardSeeder::class,
+            ReligionSeeder::class,
+            CategorySeeder::class
         ]);
     }
 }

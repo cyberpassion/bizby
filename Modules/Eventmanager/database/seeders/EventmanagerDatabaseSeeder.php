@@ -4,6 +4,8 @@ namespace Modules\Eventmanager\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Eventmanager\Database\Seeders\EventmanagerSeeder;
+
 class EventmanagerDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class EventmanagerDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            EventmanagerSeeder::class,
+        ]);
     }
 }

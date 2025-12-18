@@ -4,6 +4,8 @@ namespace Modules\Contact\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Contact\Database\Seeders\ContactSeeder;
+
 class ContactDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class ContactDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            ContactSeeder::class,
+        ]);
     }
 }

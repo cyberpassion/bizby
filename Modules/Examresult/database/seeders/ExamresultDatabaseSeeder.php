@@ -4,6 +4,8 @@ namespace Modules\Examresult\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Modules\Examresult\Database\Seeders\ExamresultSeeder;
+
 class ExamresultDatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class ExamresultDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            ExamresultSeeder::class,
+        ]);
     }
 }

@@ -3,37 +3,70 @@
 namespace Modules\Shared\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Shared\Models\PermissionRole;
-use Modules\Shared\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class PermissionRolePermissionsSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        $admin = PermissionRole::where('name', 'Admin')->where('client_id', 1)->first();
-        $accountant = PermissionRole::where('name', 'Accountant')->where('client_id', 1)->first();
-        $teacher = PermissionRole::where('name', 'Teacher')->where('client_id', 1)->first();
+        /**
+         * Assumption:
+         * - permission_roles table already seeded
+         * - permission_permissions table already seeded
+         */
 
-        // Admin → all permissions
-        $admin->permissions()->sync(Permission::pluck('id'));
+        // Role wise permission mapping (by slug)
+        $rolePermissions = [
+            'Super Admin' => ['*'], // all permissions
+            'Admin' => [
+                'user.view', 'user.create', 'user.update',
+                'role.view', 'role.create', 'role.update',
+            ],
+            'Accountant' => [
+                'fee.view', 'fee.collect', 'payment.view',
+            ],
+            'Teacher' => [
+                'student.view', 'attendance.manage',
+            ],
+            'Student' => [
+                'profile.view',
+            ],
+        ];
 
-        // Accountant permissions
-        $accountant->permissions()->sync(
-            Permission::whereIn('slug', [
-                'fees.collect',
-                'fees.refund',
-                'reports.view',
-                'student.view',
-            ])->pluck('id')
-        );
+        foreach ($rolePermissions as $roleName => $permissionSlugs) {
 
-        // Teacher permissions
-        $teacher->permissions()->sync(
-            Permission::whereIn('slug', [
-                'student.view',
-                'student.update',
-                'reports.view',
-            ])->pluck('id')
-        );
+            $role = DB::table('permission_roles')
+                ->where('name', $roleName)
+                ->first();
+
+            if (!$role) {
+                continue; // role not found → skip
+            }
+
+            // Super Admin → all permissions
+            if (in_array('*', $permissionSlugs)) {
+                $permissions = DB::table('permission_permissions')->get();
+            } else {
+                $permissions = DB::table('permission_permissions')
+                    ->whereIn('slug', $permissionSlugs)
+                    ->get();
+            }
+
+            foreach ($permissions as $permission) {
+                DB::table('permission_role_permissions')->updateOrInsert(
+                    [
+                        'role_id' => $role->id,
+                        'permission_id' => $permission->id,
+                    ],
+                    [
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]
+                );
+            }
+        }
     }
 }

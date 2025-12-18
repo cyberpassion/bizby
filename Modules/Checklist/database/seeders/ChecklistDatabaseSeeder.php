@@ -3,6 +3,7 @@
 namespace Modules\Checklist\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Checklist\Database\Seeders\ChecklistSeeder;
 
 class ChecklistDatabaseSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class ChecklistDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            ChecklistSeeder::class,
+        ]);
     }
 }
