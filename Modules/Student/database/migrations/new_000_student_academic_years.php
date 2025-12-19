@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->date('end_date');
 
             // Controls
-            $table->boolean('is_active')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->boolean('is_locked')->default(false);
 
             // Optional description / note
