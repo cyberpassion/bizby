@@ -21,4 +21,15 @@ class StudentAcademicHistory extends Model
     {
         return $this->belongsTo(StudentAcademicYear::class, 'year_id');
     }
+
+	public function classTerm()
+    {
+        return $this->belongsTo(\Modules\Shared\Models\Term::class, 'class_term_id');
+    }
+
+    public function sectionTerm()
+    {
+        return $this->belongsTo(\Modules\Shared\Models\Term::class, 'section_term_id');
+    }
+
 }

@@ -9,6 +9,7 @@ use Modules\Shared\Http\Controllers\OnlinePaymentApiController;
 use Modules\Shared\Http\Controllers\OptionApiController;
 use Modules\Shared\Http\Controllers\ActivityLogApiController;
 use Modules\Shared\Http\Controllers\FormApiController;
+use Modules\Shared\Http\Controllers\BarricadeApiController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('shareds', SharedController::class)->names('shared');
@@ -36,4 +37,6 @@ Route::prefix('v1')->group(function () {
 
 	// Online payment
 	Route::apiResource('online-payments', OnlinePaymentApiController::class)->names('onlinePayment');
+
+	Route::get('/barricade/{key}', [BarricadeApiController::class, 'get']);
 });
