@@ -9,8 +9,11 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 use Modules\Shared\Services\LookupRegistry;
+use Modules\Shared\Services\BarricadeRegistry;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+
+use Modules\Shared\Barricade\SharedBarricadeResources;
 
 class SharedServiceProvider extends ServiceProvider
 {
@@ -31,8 +34,16 @@ class SharedServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+
+		// Lookups
 		$this->loadPhpLookupsFromModules(); // Registers all lookup keys returning static values
 		$this->loadDynamicLookupsFromProviders(); // Register all lookup keys wherein we fetch dynamic values
+
+		// Barricades
+	    SharedBarricadeResources::register(); // Shared module barricade resources
+		$this->loadBarricadeRulesFromModules(); // Register barricade rules from all modules
+
+		// Morph map registrations
 		Relation::morphMap([
             'employee' => \Modules\Employee\Models\Employee::class
         ]);
@@ -85,6 +96,36 @@ class SharedServiceProvider extends ServiceProvider
 	        // 2️⃣ 🔥 FALLBACK registration (THIS WAS MISSING)
     	    if (method_exists($provider, 'register')) {
         	    $provider->register();
+        	}
+    	}
+	}
+
+	/**
+	 * Register barricade rules from all modules
+	 */
+	protected function loadBarricadeRulesFromModules(): void
+	{
+	    $modulePath = base_path('Modules');
+
+	    foreach (scandir($modulePath) as $module) {
+    	    if ($module === '.' || $module === '..') {
+        	    continue;
+        	}
+
+	        $barricadeFile = $modulePath . "/{$module}/barricade.php";
+
+	        if (!file_exists($barricadeFile)) {
+    	        continue;
+        	}
+
+            $rules = require $barricadeFile;
+
+	        if (!is_array($rules)) {
+    	        continue;
+        	}
+
+	        foreach ($rules as $route => $definitions) {
+    	        BarricadeRegistry::register($route, $definitions);
         	}
     	}
 	}

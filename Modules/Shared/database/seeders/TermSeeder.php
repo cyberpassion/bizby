@@ -10,30 +10,7 @@ class TermSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('terms')->insert([
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Active',
-                'slug'       => Str::slug('Active'),
-                'group'      => 'status',
-                'module'     => 'shared',
-                'sort_order' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 2,
-                'status'     => 1,
-                'name'       => 'Inactive',
-                'slug'       => Str::slug('Inactive'),
-                'group'      => 'status',
-                'module'     => 'shared',
-                'sort_order' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
+        DB::table('terms')->insert([]);
     }
 }
 

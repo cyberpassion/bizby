@@ -27,7 +27,7 @@ class TermMaritalStatusSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $status,
                 'slug'       => Str::slug($status), // single, married, widowed...
-                'group'      => 'marital_status',
+                'group'      => 'marital-statuses',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

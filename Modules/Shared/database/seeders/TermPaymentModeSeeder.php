@@ -33,7 +33,7 @@ class TermPaymentModeSeeder extends Seeder
                 'status'      => 1,
                 'name'        => $paymentMode,
                 'slug'        => Str::slug($paymentMode),
-                'group'       => 'online_payment',
+                'group'       => 'payment-modes',
                 'module'      => 'shared',
                 'sort_order'  => $order++,
                 'created_at'  => now(),

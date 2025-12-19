@@ -256,7 +256,7 @@ class TermDistrictSeeder extends Seeder
                     'status'     => 1,
                     'name'       => "$district, $state",
                     'slug'       => Str::slug($district),
-                    'group'      => 'district',
+                    'group'      => 'indian-districts',
                     'module'     => 'shared',
                     'sort_order' => $order++,
                     'created_at' => now(),

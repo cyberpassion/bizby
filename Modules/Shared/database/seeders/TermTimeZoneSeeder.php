@@ -33,7 +33,7 @@ class TermTimeZoneSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $label,
                 'slug'       => strtolower(str_replace('/', '-', $tz)),
-                'group'      => 'timezone',
+                'group'      => 'timezones',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

@@ -109,7 +109,7 @@ class TermCurrencySeeder extends Seeder
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => strtolower($code), // usd, inr, eur
-                'group'      => 'currency',
+                'group'      => 'currencies',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

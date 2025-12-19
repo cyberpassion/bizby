@@ -78,7 +78,7 @@ class TermUniversitySeeder extends Seeder
                 'status'     => 1,
                 'name'       => $university,
                 'slug'       => Str::slug($university),
-                'group'      => 'university',
+                'group'      => 'universities',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

@@ -120,7 +120,7 @@ class TermBankSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => Str::slug($name),
-                'group'      => 'bank',
+                'group'      => 'banks',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

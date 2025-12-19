@@ -76,7 +76,7 @@ class TermRelationTypeSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $relation,
                 'slug'       => Str::slug($relation),
-                'group'      => 'relation_type',
+                'group'      => 'relation-types',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

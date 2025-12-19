@@ -4,7 +4,6 @@ namespace Modules\Shared\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class TermLanguageSeeder extends Seeder
 {
@@ -13,46 +12,47 @@ class TermLanguageSeeder extends Seeder
         $languages = [
 
             // Indian Languages
-            'Hindi',
-            'English',
-            'Bengali',
-            'Telugu',
-            'Marathi',
-            'Tamil',
-            'Urdu',
-            'Gujarati',
-            'Kannada',
-            'Malayalam',
-            'Odia',
-            'Punjabi',
-            'Assamese',
-            'Maithili',
-            'Sanskrit',
+            ['Hindi', 'hi'],
+            ['English', 'en'],
+            ['Bengali', 'bn'],
+            ['Telugu', 'te'],
+            ['Marathi', 'mr'],
+            ['Tamil', 'ta'],
+            ['Urdu', 'ur'],
+            ['Gujarati', 'gu'],
+            ['Kannada', 'kn'],
+            ['Malayalam', 'ml'],
+            ['Odia', 'or'],
+            ['Punjabi', 'pa'],
+            ['Assamese', 'as'],
+            ['Maithili', 'mai'],
+            ['Sanskrit', 'sa'],
 
             // Global Languages
-            'Spanish',
-            'French',
-            'German',
-            'Italian',
-            'Portuguese',
-            'Russian',
-            'Chinese',
-            'Japanese',
-            'Korean',
-            'Arabic',
+            ['Spanish', 'es'],
+            ['French', 'fr'],
+            ['German', 'de'],
+            ['Italian', 'it'],
+            ['Portuguese', 'pt'],
+            ['Russian', 'ru'],
+            ['Chinese', 'zh'],
+            ['Japanese', 'ja'],
+            ['Korean', 'ko'],
+            ['Arabic', 'ar'],
         ];
 
         $data = [];
+        $order = 1;
 
-        foreach ($languages as $index => $language) {
+        foreach ($languages as [$name, $code]) {
             $data[] = [
                 'client_id'  => 1,
                 'status'     => 1,
-                'name'       => $language,
-                'slug'       => Str::slug($language),
-                'group'      => 'language',
+                'name'       => $name,
+                'slug'       => $code, // short code slug
+                'group'      => 'languages',
                 'module'     => 'shared',
-                'sort_order' => $index + 1,
+                'sort_order' => $order++,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

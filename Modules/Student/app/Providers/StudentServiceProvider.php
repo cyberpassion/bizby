@@ -8,6 +8,8 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
+use Modules\Student\Barricade\StudentBarricadeResources;
+
 class StudentServiceProvider extends ServiceProvider
 {
     use PathNamespace;
@@ -27,6 +29,10 @@ class StudentServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+
+		// 🚧 Barricade resources
+	    StudentBarricadeResources::register();
+
     }
 
     /**

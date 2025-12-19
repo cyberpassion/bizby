@@ -62,7 +62,7 @@ class TermSchoolBoardSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $board,
                 'slug'       => Str::slug($board),
-                'group'      => 'school_board',
+                'group'      => 'school-boards',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

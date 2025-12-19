@@ -1,27 +1,233 @@
 <?php
 
 return [
-    'sidebar-menu' => [
-        [
-            'label' => 'Dashboard',
-            'href' => '/dashboard',
-        ],
-    ],
 
-    'gender' => [
-		'M' => 'Male',
-		'F' => 'Female',
-		'O' => 'Other'
+	/* ---------------- Shared Lookups ---------------- */
+
+	'shared.yes_nos' => [
+		'Y' => 'Yes',
+		'N' => 'No',
 	],
 
-    'blood_group' => [
-        'A+' => 'A+',
-        'A-' => 'A-',
-        'B+' => 'B+',
-        'B-' => 'B-',
-        'O+' => 'O+',
-        'O-' => 'O-',
-        'AB+' => 'AB+',
-        'AB-' => 'AB-',
-    ]
+	'shared.genders' => [
+		'M' => 'Male',
+		'F' => 'Female',
+		'O' => 'Other',
+	],
+
+	'shared.blood-groups' => [
+		'A+'  => 'A+',
+		'A-'  => 'A-',
+		'B+'  => 'B+',
+		'B-'  => 'B-',
+		'O+'  => 'O+',
+		'O-'  => 'O-',
+		'AB+' => 'AB+',
+		'AB-' => 'AB-',
+	],
+
+	'shared.report-display-uis' => [
+		'tabled' => 'Tabled',
+		'chart'  => 'Chart',
+	],
+
+	'shared.sort-orders' => [
+		'asc'  => 'Ascending',
+		'desc' => 'Descending',
+	],
+
+	/* ---------------- Date / Time ---------------- */
+
+	'shared.weekdays' => [
+		'sun'   => 'Sunday',
+		'mon'   => 'Monday',
+		'tue'	=> 'Tuesday',
+		'wed'	=> 'Wednesday',
+		'thu'  	=> 'Thursday',
+		'fri'   => 'Friday',
+		'sat'  	=> 'Saturday',
+	],
+
+	'shared.month-days' => [
+		'1'  => '1 d',  '2'  => '2 d',  '3'  => '3 d',  '4'  => '4 d',  '5'  => '5 d',
+		'6'  => '6 d',  '7'  => '7 d',  '8'  => '8 d',  '9'  => '9 d',  '10' => '10 d',
+		'11' => '11 d', '12' => '12 d', '13' => '13 d', '14' => '14 d', '15' => '15 d',
+		'16' => '16 d', '17' => '17 d', '18' => '18 d', '19' => '19 d', '20' => '20 d',
+		'21' => '21 d', '22' => '22 d', '23' => '23 d', '24' => '24 d', '25' => '25 d',
+		'26' => '26 d', '27' => '27 d', '28' => '28 d', '29' => '29 d', '30' => '30 d',
+		'31' => '31 d',
+	],
+
+	'shared.hours' => [
+		'00' => '00 hr', '01' => '01 hr', '02' => '02 hr', '03' => '03 hr',
+		'04' => '04 hr', '05' => '05 hr', '06' => '06 hr', '07' => '07 hr',
+		'08' => '08 hr', '09' => '09 hr', '10' => '10 hr', '11' => '11 hr',
+		'12' => '12 hr', '13' => '13 hr', '14' => '14 hr', '15' => '15 hr',
+		'16' => '16 hr', '17' => '17 hr', '18' => '18 hr', '19' => '19 hr',
+		'20' => '20 hr', '21' => '21 hr', '22' => '22 hr', '23' => '23 hr',
+		'24' => '24 hr',
+	],
+
+	'shared.minutes' => [
+		'01' => '01 min', '02' => '02 min', '03' => '03 min', '04' => '04 min',
+		'05' => '05 min', '06' => '06 min', '07' => '07 min', '08' => '08 min',
+		'09' => '09 min', '10' => '10 min', '11' => '11 min', '12' => '12 min',
+		'13' => '13 min', '14' => '14 min', '15' => '15 min', '16' => '16 min',
+		'17' => '17 min', '18' => '18 min', '19' => '19 min', '20' => '20 min',
+		'21' => '21 min', '22' => '22 min', '23' => '23 min', '24' => '24 min',
+		'25' => '25 min', '26' => '26 min', '27' => '27 min', '28' => '28 min',
+		'29' => '29 min', '30' => '30 min', '31' => '31 min', '32' => '32 min',
+		'33' => '33 min', '34' => '34 min', '35' => '35 min', '36' => '36 min',
+		'37' => '37 min', '38' => '38 min', '39' => '39 min', '40' => '40 min',
+		'41' => '41 min', '42' => '42 min', '43' => '43 min', '44' => '44 min',
+		'45' => '45 min', '46' => '46 min', '47' => '47 min', '48' => '48 min',
+		'49' => '49 min', '50' => '50 min', '51' => '51 min', '52' => '52 min',
+		'53' => '53 min', '54' => '54 min', '55' => '55 min', '56' => '56 min',
+		'57' => '57 min', '58' => '58 min', '59' => '59 min',
+	],
+
+	/* ---------------- Filters / Status ---------------- */
+
+	'shared.day-filters' => [
+		'today'    => 'TODAY',
+		'tomorrow' => 'TOMORROW',
+		'-30 days'  => 'Past 30 DAYS',
+		'-15 days'  => 'Past 15 DAYS',
+		'-7 days'  => 'Past 7 DAYS',
+		'+7 days'  => 'Next 7 DAYS',
+		'+15 days'  => 'Next 15 DAYS',
+		'+30 days'  => 'Next 30 DAYS',
+	],
+
+	'shared.statuses' => [
+		'1' => 'ACTIVE',
+		'2' => 'DELETED',
+	],
+
+	'shared.country-mobile-codes' => [
+
+		'91'   => 'India (+91)',
+		'44'   => 'UK (+44)',
+		'1'    => 'USA (+1)',
+		'213'  => 'Algeria (+213)',
+		'376'  => 'Andorra (+376)',
+		'244'  => 'Angola (+244)',
+		'1264' => 'Anguilla (+1264)',
+		'1268' => 'Antigua & Barbuda (+1268)',
+		'54'   => 'Argentina (+54)',
+		'374'  => 'Armenia (+374)',
+		'297'  => 'Aruba (+297)',
+		'61'   => 'Australia (+61)',
+		'43'   => 'Austria (+43)',
+		'994'  => 'Azerbaijan (+994)',
+
+		'1242' => 'Bahamas (+1242)',
+		'973'  => 'Bahrain (+973)',
+		'880'  => 'Bangladesh (+880)',
+		'1246' => 'Barbados (+1246)',
+		'375'  => 'Belarus (+375)',
+		'32'   => 'Belgium (+32)',
+		'501'  => 'Belize (+501)',
+		'229'  => 'Benin (+229)',
+		'1441' => 'Bermuda (+1441)',
+		'975'  => 'Bhutan (+975)',
+		'591'  => 'Bolivia (+591)',
+		'387'  => 'Bosnia Herzegovina (+387)',
+		'267'  => 'Botswana (+267)',
+		'55'   => 'Brazil (+55)',
+		'673'  => 'Brunei (+673)',
+		'359'  => 'Bulgaria (+359)',
+		'226'  => 'Burkina Faso (+226)',
+		'257'  => 'Burundi (+257)',
+
+		'855'  => 'Cambodia (+855)',
+		'237'  => 'Cameroon (+237)',
+		'238'  => 'Cape Verde Islands (+238)',
+		'1345' => 'Cayman Islands (+1345)',
+		'236'  => 'Central African Republic (+236)',
+		'56'   => 'Chile (+56)',
+		'86'   => 'China (+86)',
+		'57'   => 'Colombia (+57)',
+		'269'  => 'Comoros (+269)',
+		'242'  => 'Congo (+242)',
+		'682'  => 'Cook Islands (+682)',
+		'506'  => 'Costa Rica (+506)',
+		'385'  => 'Croatia (+385)',
+		'53'   => 'Cuba (+53)',
+		'90392'=> 'Cyprus North (+90392)',
+		'357'  => 'Cyprus South (+357)',
+		'42'   => 'Czech Republic (+42)',
+
+		'45'   => 'Denmark (+45)',
+		'253'  => 'Djibouti (+253)',
+		'1809' => 'Dominican Republic (+1809)',
+		'593'  => 'Ecuador (+593)',
+		'20'   => 'Egypt (+20)',
+		'503'  => 'El Salvador (+503)',
+		'240'  => 'Equatorial Guinea (+240)',
+		'291'  => 'Eritrea (+291)',
+		'372'  => 'Estonia (+372)',
+		'251'  => 'Ethiopia (+251)',
+
+		'679'  => 'Fiji (+679)',
+		'358'  => 'Finland (+358)',
+		'33'   => 'France (+33)',
+		'241'  => 'Gabon (+241)',
+		'220'  => 'Gambia (+220)',
+		'49'   => 'Germany (+49)',
+		'233'  => 'Ghana (+233)',
+		'30'   => 'Greece (+30)',
+
+		'62'   => 'Indonesia (+62)',
+		'98'   => 'Iran (+98)',
+		'964'  => 'Iraq (+964)',
+		'353'  => 'Ireland (+353)',
+		'972'  => 'Israel (+972)',
+		'39'   => 'Italy (+39)',
+		'81'   => 'Japan (+81)',
+		'962'  => 'Jordan (+962)',
+
+		'254'  => 'Kenya (+254)',
+		'965'  => 'Kuwait (+965)',
+		'961'  => 'Lebanon (+961)',
+		'60'   => 'Malaysia (+60)',
+		'960'  => 'Maldives (+960)',
+		'52'   => 'Mexico (+52)',
+		'212'  => 'Morocco (+212)',
+		'95'   => 'Myanmar (+95)',
+		'977'  => 'Nepal (+977)',
+		'31'   => 'Netherlands (+31)',
+		'64'   => 'New Zealand (+64)',
+		'234'  => 'Nigeria (+234)',
+		'47'   => 'Norway (+47)',
+
+		'968'  => 'Oman (+968)',
+		'92'   => 'Pakistan (+92)',
+		'63'   => 'Philippines (+63)',
+		'48'   => 'Poland (+48)',
+		'351'  => 'Portugal (+351)',
+		'974'  => 'Qatar (+974)',
+		'40'   => 'Romania (+40)',
+		'7'    => 'Russia (+7)',
+
+		'966'  => 'Saudi Arabia (+966)',
+		'65'   => 'Singapore (+65)',
+		'27'   => 'South Africa (+27)',
+		'34'   => 'Spain (+34)',
+		'94'   => 'Sri Lanka (+94)',
+		'46'   => 'Sweden (+46)',
+		'41'   => 'Switzerland (+41)',
+
+		'66'   => 'Thailand (+66)',
+		'90'   => 'Turkey (+90)',
+		'256'  => 'Uganda (+256)',
+		'971'  => 'United Arab Emirates (+971)',
+		'598'  => 'Uruguay (+598)',
+		'58'   => 'Venezuela (+58)',
+		'84'   => 'Vietnam (+84)',
+		'260'  => 'Zambia (+260)',
+		'263'  => 'Zimbabwe (+263)',
+	]
+
+
 ];

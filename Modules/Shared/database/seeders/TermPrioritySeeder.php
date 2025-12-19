@@ -6,30 +6,25 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class TermBloodGroupSeeder extends Seeder
+class TermPrioritySeeder extends Seeder
 {
     public function run(): void
     {
-        $bloodGroups = [
-            'A+',
-            'A-',
-            'B+',
-            'B-',
-            'AB+',
-            'AB-',
-            'O+',
-            'O-',
+        $priorities = [
+            'Low',
+            'Average',
+            'High',
         ];
 
         $data = [];
 
-        foreach ($bloodGroups as $index => $group) {
+        foreach ($priorities as $index => $priority) {
             $data[] = [
                 'client_id'  => 1,
                 'status'     => 1,
-                'name'       => $group,
-                'slug'       => Str::slug($group), // a-plus, o-minus etc
-                'group'      => 'blood-groups',
+                'name'       => $priority,
+                'slug'       => Str::slug($priority), // low, average, high
+                'group'      => 'priorities',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

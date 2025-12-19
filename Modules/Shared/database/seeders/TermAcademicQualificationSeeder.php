@@ -83,7 +83,7 @@ class TermAcademicQualificationSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => Str::slug($name),
-                'group'      => 'academic_qualification',
+                'group'      => 'academic-qualifications',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

@@ -40,8 +40,10 @@ return [
 				  'href'  => "/module/{$pg}/settings",
 				  'items' => [
 						['title' => 'Basic', 'href'  => "/module/{$pg}/settings"],
-						['title' => 'Academic', 'href' => "/module/{$pg}/academicyears"],
-						['title' => 'Fee Head', 'href' => "/module/shared/terms/student/fee-head"],
+						['title' => 'Academic Years', 'href' => "/module/{$pg}/academicyears"],
+						['title' => 'Classes', 'href' => "/module/shared/terms/student/classes"],
+						['title' => 'Sections', 'href' => "/module/shared/terms/student/sections"],
+						['title' => 'Fee Head', 'href' => "/module/shared/terms/student/fee-heads"],
 						['title' => 'Fee Structure', 'href' => "/module/{$pg}/fee-structure"],
 						['title' => 'Other', 'href' => "/module/{$pg}/other-section"]
 					]
@@ -696,10 +698,5 @@ return [
 		"semester"	=>	"Semester",
 		"section"	=> "Section"
 	],
-
-	// Temp
-	"student.session"	=>	[
-		1 => "2024-25"
-	]
 
 ];

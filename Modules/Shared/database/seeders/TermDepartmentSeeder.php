@@ -113,7 +113,7 @@ class TermDepartmentSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $department,
                 'slug'       => Str::slug($department),
-                'group'      => 'department',
+                'group'      => 'departments',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

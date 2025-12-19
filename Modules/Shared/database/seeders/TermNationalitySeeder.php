@@ -84,7 +84,7 @@ class TermNationalitySeeder extends Seeder
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => $slug, // eg: in-indian
-                'group'      => 'nationality',
+                'group'      => 'nationalities',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

@@ -45,7 +45,7 @@ class TermUnitSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => strtolower($symbol),
-                'group'      => 'unit',
+                'group'      => 'units',
                 'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),
