@@ -19,6 +19,7 @@
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.2",
         "nwidart/laravel-modules": "*",
+        "razorpay/razorpay": "^2.9",
         "sentry/sentry-laravel": "^4.19"
     },
     "require-dev": {

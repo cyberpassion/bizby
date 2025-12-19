@@ -13,7 +13,10 @@ use Modules\Shared\Services\BarricadeRegistry;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+use Modules\Shared\Services\OnlinePayments\RazorpayService;
+
 use Modules\Shared\Barricade\SharedBarricadeResources;
+use Modules\Shared\Services\OnlinePayments\PayableResolver;
 
 class SharedServiceProvider extends ServiceProvider
 {
@@ -42,6 +45,12 @@ class SharedServiceProvider extends ServiceProvider
 		// Barricades
 	    SharedBarricadeResources::register(); // Shared module barricade resources
 		$this->loadBarricadeRulesFromModules(); // Register barricade rules from all modules
+
+		// Online Payment Services
+		$this->app->singleton(RazorpayService::class, function () {
+            return new RazorpayService();
+        });
+		$this->app->singleton(PayableResolver::class);
 
 		// Morph map registrations
 		Relation::morphMap([

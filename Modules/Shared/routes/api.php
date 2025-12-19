@@ -11,6 +11,8 @@ use Modules\Shared\Http\Controllers\ActivityLogApiController;
 use Modules\Shared\Http\Controllers\FormApiController;
 use Modules\Shared\Http\Controllers\BarricadeApiController;
 
+use Modules\Shared\Http\Controllers\RazorpayWebhookController;
+
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('shareds', SharedController::class)->names('shared');
 });*/
@@ -36,7 +38,12 @@ Route::prefix('v1')->group(function () {
 	Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
 
 	// Online payment
+	Route::post('/online-payments/initiate', [OnlinePaymentApiController::class, 'initiate']);
+	Route::put('/online-payments/{id}/complete', [OnlinePaymentApiController::class, 'complete']);
 	Route::apiResource('online-payments', OnlinePaymentApiController::class)->names('onlinePayment');
+
+	// Payment Webhooks
+	Route::post('webhooks/razorpay', [RazorpayWebhookController::class, 'handle']);
 
 	Route::get('/barricade/{key}', [BarricadeApiController::class, 'get']);
 });
