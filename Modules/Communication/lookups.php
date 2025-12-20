@@ -3,34 +3,83 @@ $pg = 'communication';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-communication' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/create"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
-    'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+
+    'menuItem-communication' => [
+        'admin' => [
+            'parent' => [
+                $pg => '#',
+            ],
+            'child' => [
+                $pg => [
+
+                    [
+                        'Send' => [
+                            ['Send SMS'      => "/{$pg}/create"],
+                            ['Send Email'    => "/{$pg}/create"],
+                            ['Send Whatsapp' => "/{$pg}/create"],
+                        ]
+                    ],
+
+                    ['View List' => "/{$pg}/list"],
+                    ['Report'    => "/{$pg}/report"],
+                    ['Settings'  => "/{$pg}/settings"],
+
+                    [
+                        'Template' => [
+                            ['Add New'   => "/{$pg}/create"],
+                            ['View List' => "/{$pg}/list"],
+                        ]
+                    ],
+
+                    [
+                        'Plugin' => [
+                            ['View Calendar' => "/{$pg}/calendar"],
+                        ]
+                    ],
+                ],
             ],
         ],
     ],
+
+    'sidebar-menu' => [
+        [
+            'title' => ucfirst($pg),
+            'href'  => "/{$pg}",
+            'items' => [
+
+                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
+
+                [
+                    'title' => 'Send',
+                    'items' => [
+                        ['title' => 'Send SMS',      'href' => "/module/{$pg}/new"],
+                        ['title' => 'Send Email',    'href' => "/module/{$pg}/new"],
+                        ['title' => 'Send Whatsapp', 'href' => "/module/{$pg}/new"],
+                    ]
+                ],
+
+                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+                ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+                ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+
+                [
+                    'title' => 'Template',
+                    'items' => [
+                        ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
+                        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+                    ]
+                ],
+
+                [
+                    'title' => 'Plugin',
+                    'items' => [
+                        ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                    ]
+                ],
+            ],
+        ],
+    ],
+
     "columnNameMapping-communication" => [
                         'ptr'			=>	'SNo',
                         'date'			=>	'Date',

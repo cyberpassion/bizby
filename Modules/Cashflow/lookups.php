@@ -3,34 +3,96 @@ $pg = 'cashflow';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-cashflow' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/create"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
-    'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+
+    'menuItem-cashflow' => [
+        'admin' => [
+            'parent' => [
+                $pg => '#',
+            ],
+            'child' => [
+                $pg => [
+
+                    [
+                        'Expense' => [
+                            ['Add New Expense'   => "/{$pg}/create"],
+                            ['View Expense List' => "/{$pg}/list"],
+                            ['View Report'       => "/{$pg}/report"],
+                        ]
+                    ],
+
+                    [
+                        'Income' => [
+                            ['Add New Income'   => "/{$pg}/create"],
+                            ['View Income List' => "/{$pg}/list"],
+                            ['View Report'      => "/{$pg}/report"],
+                        ]
+                    ],
+
+                    [
+                        'Online Payments' => [
+                            ['View Online Payments' => "/{$pg}/list"],
+                            ['View Report'          => "/{$pg}/report"],
+                            ['Settings'             => "/{$pg}/settings"],
+                        ]
+                    ],
+
+                    ['Settings' => "/{$pg}/settings"],
+
+                    [
+                        'Plugin' => [
+                            ['View Calendar' => "/{$pg}/calendar"],
+                        ]
+                    ],
+                ],
             ],
         ],
     ],
+
+    'sidebar-menu' => [
+        [
+            'title' => ucfirst($pg),
+            'href'  => "/{$pg}",
+            'items' => [
+
+                [
+                    'title' => 'Expense',
+                    'items' => [
+                        ['title' => 'Add New Expense',   'href' => "/module/{$pg}/new"],
+                        ['title' => 'View Expense List', 'href' => "/module/{$pg}/list"],
+                        ['title' => 'View Report',       'href' => "/module/{$pg}/report"],
+                    ]
+                ],
+
+                [
+                    'title' => 'Income',
+                    'items' => [
+                        ['title' => 'Add New Income',   'href' => "/module/{$pg}/new"],
+                        ['title' => 'View Income List', 'href' => "/module/{$pg}/list"],
+                        ['title' => 'View Report',      'href' => "/module/{$pg}/report"],
+                    ]
+                ],
+
+                [
+                    'title' => 'Online Payments',
+                    'items' => [
+                        ['title' => 'View Online Payments', 'href' => "/module/{$pg}/list"],
+                        ['title' => 'View Report',          'href' => "/module/{$pg}/report"],
+                        ['title' => 'Settings',             'href' => "/module/{$pg}/settings"],
+                    ]
+                ],
+
+                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+
+                [
+                    'title' => 'Plugin',
+                    'items' => [
+                        ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                    ]
+                ],
+            ],
+        ],
+    ],
+
     "communicationTemplate-cashflow" => [
                         "cashflow_entry_new_sms"		=>	"New Cashflow Entry SMS",
                         "cashflow_entry_new_whatsapp"	=>	"New Cashflow Entry Whatsapp",

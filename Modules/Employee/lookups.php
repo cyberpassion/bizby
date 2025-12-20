@@ -4,33 +4,69 @@ $commonSettingsRoute = '/settings';
 
 return [
 	'menuItem-employee' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/create"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
-    'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+    'admin' => [
+        'parent' => [
+            $pg => '#',
+        ],
+        'child' => [
+            $pg => [
+                ['Add New'   => "/{$pg}/create"],
+                ['View List' => "/{$pg}/list"],
+                ['Settings'  => "/{$pg}/settings"],
+                ['Report'    => "/{$pg}/report"],
+                [
+                    'Settings' => [
+                        ['Salary Settings' => "/{$pg}/settings/salary"],
+                    ]
+                ],
+                [
+                    'Report' => [
+                        ['Salary Report' => "/{$pg}/report/salary"],
+                    ]
+                ],
+                ['Bulk Operation' => "/{$pg}/bulk"],
+                [
+                    'Plugin' => [
+                        ['View Calendar' => "/{$pg}/plugin/calendar"],
+                    ]
+                ],
             ],
         ],
     ],
+],
+
+'sidebar-menu' => [
+    [
+        'title' => ucfirst($pg),
+        'href'  => "/{$pg}",
+        'items' => [
+            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
+            ['title' => 'Add New',   'href' => "/{$pg}/create"],
+            ['title' => 'View List', 'href' => "/{$pg}/list"],
+            ['title' => 'Report',    'href' => "/{$pg}/report"],
+            ['title' => 'Settings',  'href' => "/{$pg}/settings"],
+            [
+                'title' => 'Settings',
+                'items' => [
+                    ['title' => 'Salary Settings', 'href' => "/{$pg}/settings/salary"],
+                ]
+            ],
+            [
+                'title' => 'Report',
+                'items' => [
+                    ['title' => 'Salary Report', 'href' => "/{$pg}/report/salary"],
+                ]
+            ],
+            ['title' => 'Bulk Operation', 'href' => "/{$pg}/bulk"],
+            [
+                'title' => 'Plugin',
+                'items' => [
+                    ['title' => 'View Calendar', 'href' => "/{$pg}/plugin/calendar"],
+                ]
+            ],
+        ],
+    ],
+],
 	"communicationTemplate-employee" => [
                         "employee_entry_new_sms"		=>	"New Employee Entry SMS",
                         "employee_entry_new_whatsapp"	=>	"New Employee Entry Whatsapp",
