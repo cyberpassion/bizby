@@ -4,33 +4,46 @@ $commonSettingsRoute = '/settings';
 
 return [
 	'menuItem-lead' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/create"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
-    'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+    'admin' => [
+        'parent' => [
+            $pg => '#',
+        ],
+        'child' => [
+            $pg => [
+                ['Add New'   => "/{$pg}/create"],
+                ['View List' => "/{$pg}/list"],
+                ['Report'    => "/{$pg}/report"],
+                ['Settings'  => "/{$pg}/settings"],
+                [
+                    'Plugin' => [
+                        ['View Calendar' => "/{$pg}/plugin/calendar"],
+                    ]
+                ],
             ],
         ],
     ],
+],
+
+'sidebar-menu' => [
+    [
+        'title' => ucfirst($pg),
+        'href'  => "/{$pg}",
+        'items' => [
+            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
+            ['title' => 'Add New',   'href' => "/{$pg}/create"],
+            ['title' => 'View List', 'href' => "/{$pg}/list"],
+            ['title' => 'Report',    'href' => "/{$pg}/report"],
+            ['title' => 'Settings',  'href' => "/{$pg}/settings"],
+            [
+                'title' => 'Plugin',
+                'items' => [
+                    ['title' => 'View Calendar', 'href' => "/{$pg}/plugin/calendar"],
+                ]
+            ],
+        ],
+    ],
+],
+
 	"lead-message_text" => [
                         "next_visit_date_scheduled|true"	=>	"Visit Scheduled Successfully",
                         "next_visit_date_scheduled|false"	=>	"Visit Scheduling Failed",

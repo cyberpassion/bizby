@@ -14,6 +14,11 @@ return [
 	                ['View List'	=> "/{$pg}/list"],
     	            ['Report'		=> "/{$pg}/report"],
         	        ['Settings'		=> "/{$pg}/settings"],
+                    [
+                        'Plugin' => [
+                            ['View Calendar' => "/{$pg}/calendar"],
+                        ]
+                    ],
 				],
 			],
 		],
@@ -28,6 +33,12 @@ return [
                 ['title' => 'View List', 'href' => "/module/{$pg}/list"],
                 ['title' => 'Report', 'href' => "/module/{$pg}/report"],
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+                [
+                    'title' => 'Plugin',
+                    'items' => [
+                        ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                    ]
+                ],
             ],
         ],
     ],

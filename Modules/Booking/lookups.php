@@ -3,63 +3,132 @@ $pg = 'booking';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-booking' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/create"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
-    'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+
+/*
+|--------------------------------------------------------------------------
+| TOP MENU (Booking)
+|--------------------------------------------------------------------------
+*/
+'menuItem-booking' => [
+    'admin' => [
+        'parent' => [
+            $pg => '#',
+        ],
+        'child' => [
+            $pg => [
+
+                // Allotment
+                [
+                    'Allotment' => [
+                        ['Perform Allotment (Form)'  => "/{$pg}/allotment-entry"],
+                        ['Perform Allotment (Table)' => "/{$pg}/allotment-entry/list"],
+                        ['View Booking List'         => "/{$pg}/list"],
+                    ]
+                ],
+
+                // Building
+                [
+                    'Building' => [
+                        ['Add Building'       => "/{$pg}/building-entry"],
+                        ['View Building List' => "/{$pg}/building-entry/list"],
+                    ]
+                ],
+
+                ['View Report' => "/{$pg}/report"],
+                ['Settings'    => "/{$pg}/settings"],
+
+                // Plugin
+                [
+                    'Plugin' => [
+                        ['View Calendar' => "/{$pg}/calendar"],
+                    ]
+                ],
             ],
         ],
     ],
-    "communicationTemplate-booking" => [
-                        "booking_entry_new_sms"			=>	"New Booking Entry SMS",
-                        "booking_entry_new_whatsapp"	=>	"New Booking Entry Whatsapp",
-                        "booking_entry_new_email"		=>	"New Booking Entry Email",
+],
+
+/*
+|--------------------------------------------------------------------------
+| SIDEBAR MENU
+|--------------------------------------------------------------------------
+*/
+'sidebar-menu' => [
+    [
+        'title' => ucfirst($pg),
+        'href'  => "/{$pg}",
+        'items' => [
+
+            [
+                'title' => 'Allotment',
+                'items' => [
+                    ['title' => 'Perform Allotment (Form)',  'href' => "/{$pg}/allotment-entry"],
+                    ['title' => 'Perform Allotment (Table)', 'href' => "/{$pg}/allotment-entry/list"],
+                    ['title' => 'View Booking List',         'href' => "/{$pg}/list"],
+                ]
+            ],
+
+            [
+                'title' => 'Building',
+                'items' => [
+                    ['title' => 'Add Building',       'href' => "/{$pg}/building-entry"],
+                    ['title' => 'View Building List', 'href' => "/{$pg}/building-entry/list"],
+                ]
+            ],
+
+            ['title' => 'View Report', 'href' => "/{$pg}/report"],
+            ['title' => 'Settings',    'href' => "/{$pg}/settings"],
+
+            [
+                'title' => 'Plugin',
+                'items' => [
+                    ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                ]
+            ],
+        ],
     ],
-    "columnNameMapping-booking" => [
-                        'ptr'						=>	'SNo',
-                        'building_id'				=>	'BID',
-                        'building_name'				=>	'B/Name',
-                        'building_incharge'			=>	'Incharge',
-                        'building_incharge_phone'	=>	'Incharge Phone',
-                        'building_description'		=>	'Description',
-                        'building_employees'		=>	'Employees',
-                        'booking_id'				=>	"B/ID",
-                        'booking_type'				=>	'B/Type',
-                        'slot_id'					=>	'Slot',
-                        'slot_name'					=>	'S/Name',
-                        'slot_type'					=>	'Type',
-                        'space_id'					=>	'Space',
-                        'expected_checkin_datetime'	=>	'Exp/Checkin',
-                        'expected_checkout_datetime'=>	'Exp/Checkout',
-                        'checkin_datetime'			=>	'Checkin',
-                        'checkout_datetime'			=>	'Checkout',
-                        'occupant_name'				=>	'Name',
-                        'is_available'				=>	'Status',
-                        'options'					=>	'Options',
-                        'chain_options'				=>	'Options'
-    ],
-    "columnNames-booking" => [
+],
+
+/*
+|--------------------------------------------------------------------------
+| COMMUNICATION TEMPLATES
+|--------------------------------------------------------------------------
+*/
+"communicationTemplate-booking" => [
+    "booking_entry_new_sms"       => "New Booking Entry SMS",
+    "booking_entry_new_whatsapp" => "New Booking Entry Whatsapp",
+    "booking_entry_new_email"    => "New Booking Entry Email",
+],
+
+/*
+|--------------------------------------------------------------------------
+| COLUMN MAPPING (UNCHANGED)
+|--------------------------------------------------------------------------
+*/
+"columnNameMapping-booking" => [
+    'ptr' => 'SNo',
+    'building_id' => 'BID',
+    'building_name' => 'B/Name',
+    'building_incharge' => 'Incharge',
+    'building_incharge_phone' => 'Incharge Phone',
+    'building_description' => 'Description',
+    'building_employees' => 'Employees',
+    'booking_id' => "B/ID",
+    'booking_type' => 'B/Type',
+    'slot_id' => 'Slot',
+    'slot_name' => 'S/Name',
+    'slot_type' => 'Type',
+    'space_id' => 'Space',
+    'expected_checkin_datetime' => 'Exp/Checkin',
+    'expected_checkout_datetime'=> 'Exp/Checkout',
+    'checkin_datetime' => 'Checkin',
+    'checkout_datetime' => 'Checkout',
+    'occupant_name' => 'Name',
+    'is_available' => 'Status',
+    'options' => 'Options',
+    'chain_options' => 'Options'
+],
+"columnNames-booking" => [
                         'type_name'				=>	'occupant_type',
                         'type_id'				=>	'occupant_id'
     ],

@@ -3,34 +3,67 @@ $pg = 'checklist';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-checklist' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/create"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
-    'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+
+    'menuItem-checklist' => [
+        'admin' => [
+            'parent' => [
+                $pg => '#',
+            ],
+            'child' => [
+                $pg => [
+
+                    ['Add New'   => "/{$pg}/create"],
+                    ['View List' => "/{$pg}/list"],
+                    ['Settings'  => "/{$pg}/settings"],
+                    ['Report'    => "/{$pg}/report"],
+
+                    [
+                        'Plans' => [
+                            ['Create New'     => "/{$pg}/create"],
+                            ['View Plan List' => "/{$pg}/list"],
+                        ]
+                    ],
+
+                    [
+                        'Plugin' => [
+                            ['View Calendar' => "/{$pg}/calendar"],
+                        ]
+                    ],
+                ],
             ],
         ],
     ],
+
+    'sidebar-menu' => [
+        [
+            'title' => ucfirst($pg),
+            'href'  => "/{$pg}",
+            'items' => [
+
+                ['title' => 'Home',     'href' => "/module/{$pg}/home"],
+                ['title' => 'Add New',  'href' => "/module/{$pg}/new"],
+                ['title' => 'View List','href' => "/module/{$pg}/list"],
+                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+                ['title' => 'Report',   'href' => "/module/{$pg}/report"],
+
+                [
+                    'title' => 'Plans',
+                    'items' => [
+                        ['title' => 'Create New',     'href' => "/module/{$pg}/new"],
+                        ['title' => 'View Plan List', 'href' => "/module/{$pg}/list"],
+                    ]
+                ],
+
+                [
+                    'title' => 'Plugin',
+                    'items' => [
+                        ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                    ]
+                ],
+            ],
+        ],
+    ],
+
     "communicationTemplate-checklist" => [
                         "checklist_entry_new_sms"		=>	"New Checklist Entry SMS",
                         "checklist_entry_new_whatsapp"	=>	"New Checklist Entry Whatsapp",
