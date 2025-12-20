@@ -226,17 +226,6 @@ return [
                         'Fee Structure'				=>	'fee-structure-settings',
                         'Class Settings'			=>	'class-settings'
     ],
-    "student_status-json" => [
-                        '1'		=>	'Active',
-                        '11'	=>	'Draft',
-                        '19'	=>	'Promoted',
-                        '2'		=>	'Deleted',
-                        '21'	=>	'TC Generated',
-                        '22'	=>	'Departed w/o TC',
-                        '23'	=>	'Rusticated',
-                        '2x'	=>	'Deleted (Other Reasons)',
-                        '127'	=>	'Cancelled', // Legacy
-    ],
     "student_document-json" => [
                         'activity-undertaking'	=> 'Activity Undertaking',
                         'admission-form'		=> 'Admission Form',
@@ -698,5 +687,18 @@ return [
 		"semester"	=>	"Semester",
 		"section"	=> "Section"
 	],
+
+	// New Lookups
+	"student.statuses" => [
+                        '1'		=>	'Active',
+                        '11'	=>	'Draft',
+                        '19'	=>	'Promoted',
+                        '2'		=>	'Deleted',
+                        '21'	=>	'TC Generated',
+                        '22'	=>	'Departed w/o TC',
+                        '23'	=>	'Rusticated',
+                        '2x'	=>	'Deleted (Other Reasons)',
+                        '127'	=>	'Cancelled', // Legacy
+    ],
 
 ];

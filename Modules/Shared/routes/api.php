@@ -10,6 +10,7 @@ use Modules\Shared\Http\Controllers\OptionApiController;
 use Modules\Shared\Http\Controllers\ActivityLogApiController;
 use Modules\Shared\Http\Controllers\FormApiController;
 use Modules\Shared\Http\Controllers\BarricadeApiController;
+use Modules\Shared\Http\Controllers\SearchApiController;
 
 use Modules\Shared\Http\Controllers\RazorpayWebhookController;
 
@@ -33,6 +34,7 @@ Route::prefix('v1')->group(function () {
 
 	// Options
 	Route::apiResource('options', OptionApiController::class)->names('option');
+	Route::get('/options/group/{key}', [OptionApiController::class, 'group']);
 
 	// Activity Logs
 	Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
@@ -46,4 +48,6 @@ Route::prefix('v1')->group(function () {
 	Route::post('webhooks/razorpay', [RazorpayWebhookController::class, 'handle']);
 
 	Route::get('/barricade/{key}', [BarricadeApiController::class, 'get']);
+
+	Route::get('/search/{module}', [SearchApiController::class, 'search']);
 });

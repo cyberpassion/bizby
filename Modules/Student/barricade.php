@@ -47,4 +47,15 @@ return [
             'action'   => '/module/student/academicyears',
         ],
     ],
+
+	'path.student.fee-structure' => [
+        [
+            'type'     => 'exists',
+            'resource' => 'terms',
+            'filter'   => ['module' => 'student', 'group' => 'fee-heads'],
+            'message'  => 'Please create at least one Fee Head before adding fee structure.',
+            'action'   => '/module/shared/terms/student/fee-heads',
+        ]
+    ]
+
 ];

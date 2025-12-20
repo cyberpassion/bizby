@@ -12,8 +12,8 @@ return new class extends Migration
             // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
             $table->commonSaasFields();
 
-            $table->longText('option_name')->nullable();
-            $table->longText('option_value')->nullable();
+            $table->longText('name')->nullable();
+            $table->longText('value')->nullable();
 
             $table->string('autoload');
 
