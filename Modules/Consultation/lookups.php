@@ -25,7 +25,7 @@ return [
             'items' => [
                 ['title' => 'Home', 'href' => "/module/{$pg}/home"],
 				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+                ['title' => 'View List1', 'href' => "/module/{$pg}/list"],
                 ['title' => 'Report', 'href' => "/module/{$pg}/report"],
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
             ],
