@@ -85,13 +85,13 @@ return [
     ],
     'cronList-survey' => ['survey-notification' => 'Survey Notification'],
 
-    'mandatoryFields-survey_entry_update' => ['question','option_1','option_2','option_3','option_4','end_date','recipients'],
+    'mandatoryFields-survey-entry-update' => ['question','option_1','option_2','option_3','option_4','end_date','recipients'],
 
-    'dateFields-survey_entry_update' => ['date','end_date'],
+    'dateFields-survey-entry-update' => ['date','end_date'],
 
-    'additionalFields-survey_entry_update' => [],
+    'additionalFields-survey-entry-update' => [],
 
-    'listFilters-survey_list' => [
+    'listFilters-survey-list' => [
                         "admin"	=>	[
                             'date_filter'					=> "Date/date/survey_date-json",
                             'survey_category_filter one'	=> "Category/survey_type/survey_category-json",
@@ -108,7 +108,7 @@ return [
                         "list"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
                         "report"	=>	[["recipient"	=>	'{$login_type}-{$byline}']]
     ],
-    'formPrefills-survey_entry_new' => [
+    'formPrefills-survey-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -118,7 +118,7 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'survey_bulk_operation-list' => [
+    'survey-bulk-operation-list' => [
                         "view:detail"		=>	"View Detail",
                         "view:responses"	=>	"View Responses",
                         "op:remove"			=>	"Delete",

@@ -79,15 +79,15 @@ return [
 	],
 	"cronList-note" => ['note-timeboundnotification' => 'Note Reminders'],
 
-	"mandatoryFields-note_entry_update" => ['information'],
+	"mandatoryFields-note-entry-update" => ['information'],
 
-	"dateFields-note_entry_update" => ['date','note_end_date'],
+	"dateFields-note-entry-update" => ['date','note_end_date'],
 
-	"mandatoryFields-note-comment_entry_update" => ['thread_parent'],
+	"mandatoryFields-note-comment-entry-update" => ['thread_parent'],
 
-	"duplicacyCheckFields-note_entry_new" => ['added_by_type','added_by','added_for_type','added_for_id','information'],
+	"duplicacyCheckFields-note-entry-new" => ['added_by_type','added_by','added_for_type','added_for_id','information'],
 
-	"listFilters-note_list" => [
+	"listFilters-note-list" => [
                         "admin"	=>	[
                             'date_filter' => "date/date/note_date-json",
                             'session_filter' => "Session/session/session-json",
@@ -103,7 +103,7 @@ return [
                             'status' => "status/status/status-json"
                         ]
 	],
-	"listFilters-note_detail_update" => [
+	"listFilters-note-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/entry/update",
@@ -148,7 +148,7 @@ return [
                         "sent_by_me-list"	=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
                         "report"			=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]]
 	],
-	"formPrefills-note_entry_new" => [
+	"formPrefills-note-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -158,9 +158,9 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
 	],
-	"note_status-json" => ["1"=>"All","11"=>"Pending Only","12"=>"Resolved Only","2"=>"Deleted"],
+	"note-status" => ["1"=>"All","11"=>"Pending Only","12"=>"Resolved Only","2"=>"Deleted"],
 
-	"note_bulk_operation-list" => [
+	"note-bulk-operation-list" => [
                         "view:detail"		=>	"View Detail",
                         "op:remove"			=>	"Delete",
                         "op:restore"			=>	"Restore"

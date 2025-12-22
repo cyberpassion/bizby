@@ -90,13 +90,13 @@ return [
                         'sample_export'		=>	['sno', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status'],
                         'selected_columns'	=>	['visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status']
     ],
-    'mandatoryFields-visitactivity_entry_update' => ['movement_from','company_official_mobile_number','company_address'],
+    'mandatoryFields-visitactivity-entry-update' => ['movement_from','company_official_mobile_number','company_address'],
 
-    'dateFields-visitactivity_entry_update' => ['visit_date','next_visit_date'],
+    'dateFields-visitactivity-entry-update' => ['visit_date','next_visit_date'],
 
-    'additionalFields-visitactivity_entry_update' => [],
+    'additionalFields-visitactivity-entry-update' => [],
 
-    'jsonFields-visitactivity_entry_update' => [
+    'jsonFields-visitactivity-entry-update' => [
                         'visit_team_member_json',
                         'detailed_report',
                         'next_action_plan',
@@ -105,7 +105,7 @@ return [
                         'email_to',
                         'competitors'
     ],
-    'listFilters-visitactivity_list' => [
+    'listFilters-visitactivity-list' => [
                         "admin"	=>	[
                             'visitactivity_visitby_filter' 	=> "Visit By/visit_by_id/employee_id-json",
                             'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
@@ -117,7 +117,7 @@ return [
                             'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
                         ]
     ],
-    'formPrefills-visitactivity_entry_new' => [
+    'formPrefills-visitactivity-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -127,29 +127,29 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'visitactivity_visit_status-json' => [
+    'visitactivity-visit-status' => [
                         '0'		=>	'Select',
                         '1'		=>	'Visit Done',
                         '2'		=>	'Cancelled',
                         '11'	=>	'Postponed by Client',
                         '12'	=>	'Postponed by Office'
     ],
-    'visitactivity_customer_type-json' => [
+    'visitactivity-customer-type' => [
                         "new-customer"			=>	"New Customer",
                         "old-customer"			=>	"Old Customer",
                         "dissatisfied-customer"	=>	"Dissatisfied Customer",
                         "biased-customer"		=>	"Biased Customer"
     ],
-    'sort_visitactivity_results_by-list' => [
+    'sort-visitactivity-results-by-list' => [
                         'datetime'		=>	"Date & Time",
                         'total_expense'	=>	"Total Expense"
     ],
-    'visitactivity_status-json' => [
+    'visitactivity-status' => [
                         1	=>	'Submitted',
                         11	=>	'Autosaved',
                         2	=>	'Deleted'
     ],
-    'visitactivity_bulk_operation-list' => [
+    'visitactivity-bulk-operation-list' => [
                         "view:detail"			=>	"View Visit Activity Details",
                         "send:email"			=>	"Send Notification Email",
                         "op:remove"				=>	"Delete",

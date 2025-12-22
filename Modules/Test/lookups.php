@@ -131,15 +131,15 @@ return [
     ],
     'cronList-test' => ['test-remindertoexaminees' => 'Test Reminder Notification'],
 
-    'mandatoryFields-test_package-entry_update' => ['package_name','package_information'],
+    'mandatoryFields-test-package-entry-update' => ['package_name','package_information'],
 
-    'mandatoryFields-test_entry_update' => ['test_name','question_count','total_time'],
+    'mandatoryFields-test-entry-update' => ['test_name','question_count','total_time'],
 
-    'dateFields-test_entry_update' => [],
+    'dateFields-test-entry-update' => [],
 
-    'additionalFields-test_entry_update' => [],
+    'additionalFields-test-entry-update' => [],
 
-    'listFilters-test_package-list' => [
+    'listFilters-test-package-list' => [
                         "admin"	=>	[
                             'recipient' => 'Recipient/recipient/recipient_grouped_simplified-json',
                             'status' => 'Status/status/test_package_status-json',
@@ -149,7 +149,7 @@ return [
                             'status' => 'Status/status/test_package_status-json',
                         ]
     ],
-    'listFilters-test_list' => [
+    'listFilters-test-list' => [
                         "admin"	=>	[
                             'session' => 'Session/session/session-json',
                             'recipient' => 'Recipient/recipient/recipient_grouped_simplified-json',
@@ -164,7 +164,7 @@ return [
                             'test_date_filter' => 'Date/date/test_date-json',
                         ]
     ],
-    'listFilters-test_default' => [
+    'listFilters-test-default' => [
                         "admin"	=>	[
                             'language' => 'Language/language/test_pool_language-json',
                             'category' => 'Category/category/test_pool_category-json',
@@ -180,40 +180,40 @@ return [
                             'limit' => 'Limit/limit/test_pool_limit-json',
                         ]
     ],
-    'test_document-json' => ['question-paper'	=> 'Question Paper'],
+    'test-document' => ['question-paper'	=> 'Question Paper'],
 
-    'test_bulk_operation-list' => [
+    'test-bulk-operation-list' => [
                         "view:detail"			=>	"View Detail",
                         "document:results"		=>	"View Results",
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
     ],
-    'test_report_by_attempt_type-json' => ['attempted'=>'ATTEMPTED','not-attempted'=>'NOT-ATTEMPED'],
+    'test-report-by-attempt-type' => ['attempted'=>'ATTEMPTED','not-attempted'=>'NOT-ATTEMPED'],
 
-    'test_sortby-json' => ["student_name"=>"Name","percentage"=>"Rank"],
+    'test-sortby' => ["student_name"=>"Name","percentage"=>"Rank"],
 
-    'sort_test_results_by-json' => [
+    'sort-test-results-by' => [
                         'rank'			=>	'RANK',
                         'student_name'	=>	'STUDENT NAME',
                         'correct'		=>	'CORRECT QUESTIONS',
                         'wrong'			=>	'WRONG QUESTIONS',
                         'skipped'		=>	'SKIPPED QUESTION'
     ],
-    'sort_test_package_by-json' => [
+    'sort-test-package-by' => [
                         'items'					=>	'Test Items',
                         'most_subscribed'		=>	'Most Subscribed'
     ],
-    'test_format-json' => ["multiple-choice"=>"Multiple-Choice","multiple-choice-from-pool"=>"Multiple-Choice From Pool"],
+    'test-format' => ["multiple-choice"=>"Multiple-Choice","multiple-choice-from-pool"=>"Multiple-Choice From Pool"],
 
-    'test_interface-json' => ["portal"=>"Student Portal"],
+    'test-interface' => ["portal"=>"Student Portal"],
 
-    'test_question_source-json' => [
+    'test-question-source' => [
                         "create-set"						=> "No Source, Create Set",
                         "autogenerate-set-from-pool"		=> "Generate From Questions Pool"
     ],
-    'test_pool_limit-json' => ['25','50','75','100'],
+    'test-pool-limit' => ['25','50','75','100'],
 
-    'test_offline_sheet_format-json' => ['offline-sheet-inline'=>'Inline Questions','offline-sheet-2cols'=>'2cols Questions'],
+    'test-offline-sheet-format' => ['offline-sheet-inline'=>'Inline Questions','offline-sheet-2cols'=>'2cols Questions'],
 
     'subscriptionEntity-test' => ['test/package-entry']
 

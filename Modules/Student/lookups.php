@@ -119,13 +119,13 @@ return [
 
     "cronList-student" => ['student-birthday' => 'Student Birthday Message'],
 
-    "mandatoryFields-student_entry_update" => ['student_name', 'phone_number'],
+    "mandatoryFields-student-entry-update" => ['student_name', 'phone_number'],
 
-    "dateFields-student_entry_update" => ['admission_date', 'caste_date', 'income_date', 'dob'],
+    "dateFields-student-entry-update" => ['admission_date', 'caste_date', 'income_date', 'dob'],
 
-    "jsonFields-student_entry_update" => ['subjects', 'documents_submitted'],
+    "jsonFields-student-entry-update" => ['subjects', 'documents_submitted'],
 
-    "listFilters-student_list" => [
+    "listFilters-student-list" => [
                         "admin"	=>	[
                             'current_session_filter' => "Session/current_session/session-json",
                             'current_class_filter' => "Class/current_class/class-json",
@@ -141,7 +141,7 @@ return [
                             'status_filter' => "Status/status/student_status-json"
                         ]
     ],
-    "listFilters-student_student-day-cash-report_new" => [
+    "listFilters-student-student-day-cash-report-new" => [
                         "admin"	=>	[
                             'cash_report_type_filter' => "Report Type/cash_report_type/cash_report_type-list"
                         ],
@@ -149,7 +149,7 @@ return [
                             'cash_report_type_filter' => "Report Type/cash_report_type/cash_report_type-list"
                         ]
     ],
-    "listFilters-student_student-dues-cash-report_new" => [
+    "listFilters-student-student-dues-cash-report_new" => [
                         "admin"	=>	[
                             'report_type_filter'	=> "Report Type/report_type/student_cash_report_type-list",
                             'report_subtype_filter' => "Report Subtype/report_subtype/student_cash_report_subtype-list"
@@ -206,7 +206,7 @@ return [
                         "fee-history"	=>	[[ "admission_id"	=>	'{$login_id}' ]],
                         //"fee-slip"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
     ],
-    "formPrefills-student_entry_new" => [
+    "formPrefills-student-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -216,17 +216,17 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    "search_column-json" => ["student_name", "father_name", "phone_number"],
+    "search-column" => ["student_name", "father_name", "phone_number"],
 
-    "fee_search_column-json" => ["remark","fee_remark","cash_type_remark"],
+    "fee-search-column" => ["remark","fee_remark","cash_type_remark"],
 
-    "student_setting-json" => [
+    "student-setting" => [
                         'Client Settings'			=>	'client-settings',
                         'Fee Settings'				=>	'fee-settings',
                         'Fee Structure'				=>	'fee-structure-settings',
                         'Class Settings'			=>	'class-settings'
     ],
-    "student_document-json" => [
+    "student-document" => [
                         'activity-undertaking'	=> 'Activity Undertaking',
                         'admission-form'		=> 'Admission Form',
                         'admit-card'			=> 'Admit Card',
@@ -239,7 +239,7 @@ return [
                         'transfer-certificate'	=> 'Transfer Certificate',
                         'fee-structure'			=> 'Fee Structure'
     ],
-    "student_portal_feature_visibility_permission-json" => [
+    "student-portal-feature-visibility-permission" => [
                          '1'		=>	'Active',
                         '3'		=>	'Blocked',
                         '31'	=>	'Profile',
@@ -251,7 +251,7 @@ return [
                         '37'	=>	'Survey',
                         '38'	=>	'Note'
     ],
-    "sort_student_results_by-list" => [
+    "sort-student-results-by-list" => [
                         "student_name"				=>	"STUDENT NAME",
                         "father_name"				=>	"FATHER NAME",
                         "sr_no"						=>	"SR NO.",
@@ -262,7 +262,7 @@ return [
                         "punch_id"					=>	"ATTENDANCE PUNCH ID",
                         "transport_pickup_location"	=>	"TRANSPORT STOP"
     ],
-    "sort_student_cash_results_by-list" => [
+    "sort-student-cash-results-by-list" => [
                         "student_name"				=>	"STUDENT NAME",
                         "father_name"				=>	"FATHER NAME",
                         "sr_no"						=>	"SR NO.",
@@ -274,43 +274,43 @@ return [
                         "balance"					=>	"BALANCE AMOUNT",
                         "concession"				=>	"CONCESSION AMOUNT"
     ],
-    "sort_student_fee_history_results_by-list" => [
+    "sort-student-fee-history-results-by-list" => [
                         "date"						=>	"Fee Date",
                         "cash_code"					=>	"Cash Code"
     ],
-    "removal_reason-json" => ["Moved to Another School", "Name Striked"],
+    "removal-reason" => ["Moved to Another School", "Name Striked"],
 
-    "fee_slip_template-list" => [
+    "fee-slip-template-list" => [
                         "default"		=>	"Default Format (With Dues)",
                         "default-1"		=>	"Format 1 (With Dues)",
                         "default-2"		=>	"Format 2 (Without Dues)"
     ],
-    "fee_slip_copy-list" => [
+    "fee-slip-copy-list" => [
                         "all"			=>	"All",
                         "parent"		=>	"Parent Copy Only",
                         "office"		=>	"Office Copy Only"
     ],
-    "fee_intake_pattern-list" => [
+    "fee-intake-pattern-list" => [
                         "monthly"		=>	"Monthly",
                         "bimonthly"		=>	"Bi-Monthly",
                         "quarterly"		=>	"Quarterly",
                         "semesterwise"	=>	"Semester-Wise",
                         "yearly"		=>	"Yearly"
     ],
-    "fee_intake_student_type-list" => ["all" => "All Students", "new" => "New Students Only", "old" => "Old Students Only"],
+    "fee-intake-student-type-list" => ["all" => "All Students", "new" => "New Students Only", "old" => "Old Students Only"],
 
-    "old_new-json" => ["OLD", "NEW"],
+    "old-new" => ["OLD", "NEW"],
 
-    "student_report_format-list" => ["tabled" => "Tabled Report", "graphical" => "Graphical Report"],
+    "student-report-format-list" => ["tabled" => "Tabled Report", "graphical" => "Graphical Report"],
 
-    "student_report_type-list" => [
+    "student-report-type-list" => [
                         "all-studying"		=>	"All Studying Students",
                         "new-admission"		=>	"New Admission in Session",
                         "old-admission"		=>	"Old Admission in Session",
                         "promoted-only"		=>	"Previous Session Students",
                         "registration-only"	=>	"Registration Only Students",
     ],
-    "cash_report_type-list" => [
+    "cash-report-type-list" => [
                         "fee_collection_minified"					=>	"Fee Collection (Minified)",
                         "fee_collection_detailed"					=>	"Fee Collection (Detailed)",
                         "inward_outward_flow_minified"				=>	"Inward-Outward Cash Flow (Minified)",
@@ -319,7 +319,7 @@ return [
     ],
     "religion-list" => ["HINDU", "MUSLIM", "CHRISTIAN", "SIKH", "BUDDHIST", "JAIN", "OTHER", "ATHIEST"],
 
-    "student_bulk_operation-list" => [
+    "student-bulk-operation-list" => [
                         "document:admission-form"			=>	"Print Admission Form",
                         "document:id-card"					=>	"Print ID Card",
                         "document:activity-undertaking"	=>	"Print Activities Undertaking",
@@ -343,7 +343,7 @@ return [
                         "op:remove"						=>	"Delete",
                         "op:restore"					=>	"Restore"
     ],
-    "exam_type-list" => [
+    "exam-type-list" => [
                         "annual"		=>	"Annual",
                         "half-yearly"	=>	"Half Yearly",
                         "quarterly"		=>	"Quarterly",
@@ -351,7 +351,7 @@ return [
                         "weekly"		=>	"Weekly",
                         "other"			=>	"Other"
     ],
-    "affiliation_board-json" => [
+    "affiliation-board-json" => [
                         "other"				=>	"OTHER",
                         "cbse"				=>	"CBSE",
                         "icse"				=>	"ICSE",
@@ -359,26 +359,26 @@ return [
                         "rajasthan_baord"	=>	"RAJASTHAN BOARD",
                         "dbrau"				=>	"DBRAU"
     ],
-    "student_cash_report_type-list" => [
+    "student-cash-report-type-list" => [
                         "minified"				=>	"Total Paid Amount (Minified)",
                         "detailed-all-fee"		=>	"Total Paid Amount (Detailed Fee)",
                         "detailed-regular-fee"	=>	"Total Paid Amount (Detailed Regular Fee)"
     ],
-    "student_cash_report_subtype-list" => [
+    "student-cash-report-subtype-list" => [
                         "all"				=>	"Complete Report",
                         'dues-only'			=>	"Student with Dues",
                         "fully-paid"		=>	"Students with Full Payment Done",
                         'none-paid'			=>	"Students with No Payment Done",
                         'concession-given'	=>	"Concession Given"
     ],
-    'sort_cash_results_by-list' => [
+    'sort-cash-results-by-list' => [
                         "date"					=>	"Date",
                         "cash_context_id"		=>	"Single Receipt No",
                         "cash_id"				=>	"Receipt No",
                         "payment_mode"			=>	"Payment Mode",
                         "fee_remark"			=>	"Remark"
     ],
-    "group_results_by-list" => [
+    "group-results-by-list" => [
                         "current_section"					=>	"SECTION",
                         "gender"							=>	"GENDER",
                         "category"							=>	"CATEGORY",
@@ -398,13 +398,13 @@ return [
                         "gender>age"						=>	"GENDER > AGE",
                         "age|current_class>gender"			=>	"AGE | CLASS > GENDER"
     ],
-    "student_institute_type-json" => ["school","college","coaching","university"],
+    "student-institute-type" => ["school","college","coaching","university"],
 
-    "student_resident_type-json" => [
+    "student-resident-type" => [
                         "day-scholar"		=>	"Day Scholar",
                         "hosteler"			=>	"Hosteler"
     ],
-    "sms_type-json" => [
+    "sms-type" => [
                         "registration_sms"	=>	"Registration SMS",
                         "sms_student_entry_new"		=>	"Admission SMS",
                         "birthday_sms"		=>	"Birthday SMS",
@@ -414,7 +414,7 @@ return [
                         "exammarks_sms"		=>	"Exam Marks SMS",
                         "custom_sms"		=>	"Custom SMS"
     ],
-    "student_module_document_upload_type-json" => [
+    "student-module-document-upload-type" => [
                         /*"logo"						=> "Logo",
                         "watermark"					=> "Watermark",
                         "cover-image"				=> "Cover Image",
@@ -423,13 +423,13 @@ return [
                         "cashier-signature"			=> "Cashier Signature",
                         "fee-structure"				=> "Fee Structure Excel"
     ],
-    "subject_type-json" => [
+    "subject-type" => [
                         "compulsory"	=>	"Compulsory",
                         "optional"		=>	"Optional"
     ],
-    "cyperp-json" => "",
+    "cyperp" => "",
 
-     "business_type-json" => [
+     "business-type" => [
         "individual"               => "Individual",
         "school"                   => "School",
         "college"                  => "College",
@@ -491,7 +491,7 @@ return [
         "non_profit_organization"  => "Non-Profit Organization",
         "government_agency"        => "Government Agency"
     ],
-    "theme-json" => [
+    "theme" => [
         "#3f51b5"       => "DEFAULT BLUE",
         "orangered"     => "ORANGE RED",
         "deepskyblue"   => "SKY BLUE",
@@ -516,7 +516,7 @@ return [
         "firebrick"     => "FIREBRICK",
         "darkslategrey" => "DARK GREY"
     ],
-    "indian_state-json" => array_map('strtoupper', [
+    "indian-state" => array_map('strtoupper', [
         "AP" => "Andhra Pradesh",
         "AR" => "Arunachal Pradesh",
         "AS" => "Assam",
@@ -554,7 +554,7 @@ return [
         "DL" => "National Capital Territory of Delhi",
         "PY" => "Puducherry"
     ]),
-    "indian_state_district-json" => [
+    "indian-state-district" => [
         'AN'=>['name'=>'ANDAMAN AND NICOBAR ISLAND (UT)','districts'=>['NICOBAR','NORTH AND MIDDLE ANDAMAN','SOUTH ANDAMAN']],
         'AP'=>['name'=>'ANDHRA PRADESH','districts'=>['ANANTAPUR','CHITTOOR','EAST GODAVARI','GUNTUR','KRISHNA','KURNOOL','PRAKASAM','SRIKAKULAM','SRI POTTI SRIRAMULU NELLORE','VISAKHAPATNAM','VIZIANAGARAM','WEST GODAVARI','YSR DISTRICT,KADAPA (CUDDAPAH)']],
         'AR'=>['name'=>'ARUNACHAL PRADESH','districts'=>['ANJAW','CHANGLANG','DIBANG VALLEY','EAST KAMENG','EAST SIANG','KRA DAADI','KURUNG KUMEY','LOHIT','LONGDING','LOWER DIBANG VALLEY','LOWER SIANG','LOWER SUBANSIRI','NAMSAI','PAPUM PARE','SIANG','TAWANG','TIRAP','UPPER SIANG','UPPER SUBANSIRI','WEST KAMENG','WEST SIANG']],
@@ -592,7 +592,7 @@ return [
         'UP'=>['name'=>'UTTAR PRADESH','districts'=>['AGRA','ALIGARH','ALLAHABAD','AMBEDKAR NAGAR','AMETHI (CHATRAPATI SAHUJI MAHRAJ NAGAR)','AMROHA (J.P. NAGAR)','AURAIYA','AZAMGARH','BAGHPAT','BAHRAICH','BALLIA','BALRAMPUR','BANDA','BARABANKI','BAREILLY','BASTI','BHADOHI','BIJNOR','BUDAUN','BULANDSHAHR','CHANDAULI','CHITRAKOOT','DEORIA','ETAH','ETAWAH','FAIZABAD','FARRUKHABAD','FATEHPUR','FIROZABAD','GAUTAM BUDDHA NAGAR','GHAZIABAD','GHAZIPUR','GONDA','GORAKHPUR','HAMIRPUR','HAPUR (PANCHSHEEL NAGAR)','HARDOI','HATHRAS','JALAUN','JAUNPUR','JHANSI','KANNAUJ','KANPUR DEHAT','KANPUR NAGAR','KANSHIRAM NAGAR (KASGANJ)','KAUSHAMBI','KUSHINAGAR (PADRAUNA)','LAKHIMPUR - KHERI','LALITPUR','LUCKNOW','MAHARAJGANJ','MAHOBA','MAINPURI','MATHURA','MAU','MEERUT','MIRZAPUR','MORADABAD','MUZAFFARNAGAR','PILIBHIT','PRATAPGARH','RAEBARELI','RAMPUR','SAHARANPUR','SAMBHAL (BHIM NAGAR)','SANT KABIR NAGAR','SHAHJAHANPUR','SHAMALI (PRABUDDH NAGAR)','SHRAVASTI','SIDDHARTH NAGAR','SITAPUR','SONBHADRA','SULTANPUR','UNNAO','VARANASI']],
         'WB'=>['name'=>'WEST BENGAL','districts'=>['ALIPURDUAR','BANKURA','BIRBHUM','COOCH BEHAR','DAKSHIN DINAJPUR (SOUTH DINAJPUR)','DARJEELING','HOOGHLY','HOWRAH','JALPAIGURI','JHARGRAM','KALIMPONG','KOLKATA','MALDA','MURSHIDABAD','NADIA','NORTH 24 PARGANAS','PASCHIM MEDINIPUR (WEST MEDINIPUR)','PASCHIM (WEST) BURDWAN (BARDHAMAN)','PURBA BURDWAN (BARDHAMAN)','PURBA MEDINIPUR (EAST MEDINIPUR)','PURULIA','SOUTH 24 PARGANAS','UTTAR DINAJPUR (NORTH DINAJPUR)']]
     ],
-    "country_mobile_code-json" => [
+    "country-mobile-code" => [
         '44' => 'UK (+44)', '1' => 'USA (+1)', '213' => 'Algeria (+213)', '376' => 'Andorra (+376)', '244' => 'Angola (+244)',
         '1264' => 'Anguilla (+1264)', '1268' => 'Antigua & Barbuda (+1268)', '54' => 'Argentina (+54)', '374' => 'Armenia (+374)',
         '297' => 'Aruba (+297)', '61' => 'Australia (+61)', '43' => 'Austria (+43)', '994' => 'Azerbaijan (+994)',
@@ -675,7 +675,7 @@ return [
         'sample_export' => ['term_name', 'type', 'status'],
         'selected_columns' => ['date', 'term_name', 'type']
     ],
-    "term_bulk_operation-list" => [
+    "term-bulk-operation-list" => [
         "op:remove"  => "Delete",
         "op:restore" => "Restore"
 	],

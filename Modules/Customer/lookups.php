@@ -93,18 +93,18 @@ return [
                         "list"		=>	[[ "customer_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "customer_id"	=>	'{$login_id}' ]]
     ],
-	'customer_group_results_by-json' => [
+	'customer-group-results-by' => [
 		                'customer_type'						=>	'CUSTOMER TYPE',
                         'status'							=>	'STATUS'
 	],
-	'customer_sort_results_by-json' => [
+	'customer-sort-results-by' => [
 		                'customer_name'						=>	'CUSTOMER NAME',
                         'customer_id'						=>	'id'
 	],
-	'customer_group_results_display_type-json' => [
+	'customer-group-results-display-type' => [
 		                'complete_list'						=>	'COMPLETE LIST'
 	],
-	"customer_bulk_operation-list" => [
+	"customer-bulk-operation-list" => [
                         "view:detail"	=>	"View Customer Details",
                         "op:remove"		=>	"Delete",
                         "op:restore"	=>	"Restore"

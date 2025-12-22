@@ -89,13 +89,13 @@ return [
     ],
     "interactiveEntity-patient" => ['patient'],
 
-    "mandatoryFields-patient_entry_update" => ['patient_name','phone_number','age'],
+    "mandatoryFields-patient-entry-update" => ['patient_name','phone_number','age'],
 
-    "dateFields-patient_entry_update" => ['dob','admission_date','discharge_date'],
+    "dateFields-patient-entry-update" => ['dob','admission_date','discharge_date'],
 
-    "duplicacyCheckFields-patient_entry_new" => ['date','patient_name','phone_number'],
+    "duplicacyCheckFields-patient-entry-new" => ['date','patient_name','phone_number'],
 
-    "listFilters-patient_list" => [
+    "listFilters-patient-list" => [
                         "admin"	=>	[
                             'patient_status_filter' => "Status/status/patient_status-json"
                         ],
@@ -143,7 +143,7 @@ return [
                         "list"		=>	[[ "patient_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "patient_id"	=>	'{$login_id}' ]]
     ],
-    "formPrefills-patient_entry_new" => [
+    "formPrefills-patient-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -153,12 +153,12 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    "patient_document-json" => [
+    "patient-document" => [
                         'id-card' => 'ID Card',
                         'discharge-card' => 'Discharge Card',
                         'patient-invoice' => 'Patient Invoice',
     ],
-    "patient_status-json" => [
+    "patient-status" => [
                         "1"		=>	"ACTIVE",
                         "11"	=>	"Referred to Affiliate Hospital",
                         "12"	=>	"Payment Issue",
@@ -166,9 +166,9 @@ return [
                         "21"	=>	"Referred to Other Hospital",
                         "22"	=>	"Deceased"
     ],
-    "patient_sort_results_by-json" => ["patient_name"=>"Patient Name","age"=>"Age","father_name"=>"Father Name"],
+    "patient-sort-results-by" => ["patient_name"=>"Patient Name","age"=>"Age","father_name"=>"Father Name"],
 
-    "patient_bulk_operation-list" => [
+    "patient-bulk-operation-list" => [
                         "document:registration-form"	=>	"Print Registration Form",
                         "document:id-card"				=>	'ID Card',
                         "document:discharge-card"		=>	'Discharge Card',
@@ -180,7 +180,7 @@ return [
                         "op:remove"						=>	"Delete Patient",
                         "op:restore"					=>	"Restore Patient"
     ],
-    "patient_slip_copy-list" => [
+    "patient-slip-copy-list" => [
                         "all"			=>	"All",
                         "patient"		=>	"Patient Copy Only",
                         "office"		=>	"Office Copy Only"

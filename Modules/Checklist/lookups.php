@@ -133,11 +133,11 @@ return [
                         'listing-list'		=>	['listing_id', 'listing_type', 'listing_name', 'listing_name', 'tags', 'status'],
                         'listing-point-list'=>	['point_name', 'point_assigned_to', 'point_time_limit', 'point_description', 'status']
     ],
-    "mandatoryFields-checklist_complete-entry_update" => ["checklist_description"],
+    "mandatoryFields-checklist-complete-entry-update" => ["checklist_description"],
 
-    "dateFields-checklist_listing-point-entry_update" => ['point_start_date','point_end_date'],
+    "dateFields-checklist-listing-point-entry-update" => ['point_start_date','point_end_date'],
 
-    "listFilters-checklist_list" => [
+    "listFilters-checklist-list" => [
                             "admin"	=>	[
                                 "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",
                                 "status-filter"		=>	"Status/status/checklist_status-json"
@@ -147,7 +147,7 @@ return [
                                 "status-filter"		=>	"Status/status/checklist_status-json"
                             ]
     ],
-    "listFilters-checklist_listing-list" => [
+    "listFilters-checklist-listing-list" => [
                             "admin"	=>	[
                                 "checklist_listing"	=>	"Listing Type/listing_type/checklist_listing_type-json",
                                 "status-filter"		=>	"Status/status/checklist_listing_status-json"
@@ -157,7 +157,7 @@ return [
                                 "status-filter"		=>	"Status/status/checklist_listing_status-json"
                             ]
     ],
-    "listFilters-checklist_detail_update" => [
+    "listFilters-checklist-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/entry/update",
@@ -169,7 +169,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-checklist_listing-list_update" => [
+    "listFilters-checklist-listing-list-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Add Points'	=>	"{$pg}/listing-point-entry/new",
@@ -182,7 +182,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-checklist_listing-point-list_update" => [
+    "listFilters-checklist-listing-point-list-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/listing-point-entry/update"
@@ -194,7 +194,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-checklist_final-complete-list_update" => [
+    "listFilters-checklist-final-complete-list-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Document'		=>	"{$pg}/document"
@@ -238,25 +238,25 @@ return [
                         "listing-point-list"	=>	[["point_assigned_to"	=>	'{$login_type}-{$login_id}']],
                         "report"				=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
     ],
-    "search_column-json" => ["checklist_name"],
+    "search-column" => ["checklist_name"],
 
-    "checklist_point_duration_type-list" => [
+    "checklist-point-duration-type-list" => [
                         "minutes"	=>	"Minutes",
                         "hours"		=>	"Hours",
                         "days"		=>	"Days",
                         "months"	=>	"Months"
     ],
-    "checklist_status-json" => [
+    "checklist-tatus" => [
                         '1'		=>	'Under Process',
                         '15'	=>	'Completed',
                         '2'		=>	'Deleted',
                         '21'	=>	'Rejected'
     ],
-    "checklist_listing_status-json" => [
+    "checklist-listing-status-json" => [
                         '1'		=>	'Active',
                         '2'		=>	'Deleted'
     ],
-    "checklist_point_status-json" => [
+    "checklist-point-status-json" => [
                         '1'		=>	'Active',
                         '11'	=>	'Draft',
                         '12'	=>	'Under Review',
@@ -264,17 +264,17 @@ return [
                         '2'		=>	'Deleted',
                         '21'	=>	'Rejected'
     ],
-    "checklist_listing_document-json" => ['listing-points'	=> 'View Checklist'],
+    "checklist-listing-document" => ['listing-points'	=> 'View Checklist'],
 
-    "checklist_document-json" => ['end-report'		=> 'Report'],
+    "checklist-document" => ['end-report'		=> 'Report'],
 
-    "checklist_listing_time_type-json" => [
+    "checklist-listing-time-type" => [
                         '-'					=> 'None',
                         'start-end-time'	=>	'Start and End Time',
                         'start-end-date'	=>	'Start & End Date',
                         'duration'			=>	'Duration'
     ],
-    "checklist_bulk_operation-json" => [
+    "checklist-bulk-operation" => [
                         "view:detail"			=>	"View Checklist Details",
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"

@@ -103,16 +103,16 @@ return [
     'cronList-leaveapplication' => [
         'leaveapplication-notificationtohr'=>'Leave Application Notification to HR'
     ],
-    'mandatoryFields-leaveapplication_entry_update' => [
+    'mandatoryFields-leaveapplication-entry-update' => [
 
     ],
-    'dateFields-leaveapplication_entry_update' => [
+    'dateFields-leaveapplication-entry-update' => [
         
     ],
-    'additionalFields-leaveapplication_entry_update' => [
+    'additionalFields-leaveapplication_-ntry-update' => [
 
     ],
-    'listFilters-leaveapplication_list' => [
+    'listFilters-leaveapplication-list' => [
                         "admin"	=>	[
                             'session_filter' => 'Session/current_session/session-json',
                             'month_filter' => 'Month/month/month-json',
@@ -129,7 +129,7 @@ return [
                             'status_filter' => 'Status/status/leaveapplication_status-json',
                         ]
     ],
-    'listFilters-leaveapplication_sheet_filters-entry_new' => [
+    'listFilters-leaveapplication-sheet-filters-entry-new' => [
                         "admin"	=>	[
                             'session_filter'	=> "Session/current_session/session-json",
                             'month_filter'		=> "Month/month/month-json",
@@ -139,7 +139,7 @@ return [
                             'month_filter'		=> "Month/month/month-json",
                         ]
     ],
-    'leaveapplication_status-json' => [
+    'leaveapplication-status' => [
                         '1'		=>	'In-Review',
                         '10'	=>	'Accepted',
                         '11'	=>	'Rejected',
@@ -148,9 +148,9 @@ return [
                         //'15'	=>	'Out of Office Work',
                         '2'		=>	'Canceled by Applicant'
     ],
-    'leave_day-json' => ["single"=>"One Day","half-day"=>"Half Day","multiple"=>"Multiple Days"],
-    'leave_shift-json' => ["morning"=>"Morning","afternoon"=>"Afternoon"],
-    'leaveapplication_type-json' => [
+    'leave-day' => ["single"=>"One Day","half-day"=>"Half Day","multiple"=>"Multiple Days"],
+    'leave-shift' => ["morning"=>"Morning","afternoon"=>"Afternoon"],
+    'leaveapplication-type' => [
                         'casual-leave'		=>	'Casual Leave',
                         'sick-leave'		=>	'Sick Leave',
                         'medical-leave'		=>	'Medical Leave',
@@ -161,8 +161,8 @@ return [
                         "singleday"				=>	"SingleDay Report",
                         "multiday"				=>	"Multiday Report"
     ],
-    'leave_days-list' => ['1 day','2 days','3 days','4 days','5 days','6 days','> 7 days'],
-    'leaveapplication_bulk_operation-list' => [
+    'leave-days-list' => ['1 day','2 days','3 days','4 days','5 days','6 days','> 7 days'],
+    'leaveapplication-bulk-operation-list' => [
                         "view:detail"		=>	"View Detail",
                         "op:remove"			=>	"Delete",
                         "op:restore"			=>	"Restore"

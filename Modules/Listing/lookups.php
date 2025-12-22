@@ -77,7 +77,7 @@ return [
 					'sample_export'		=>	[],
 					'selected_columns'	=>	[]
     ],
-    'listFilters-listing_list' => [
+    'listFilters-listing-list' => [
 					"admin"	=>	[
 					    'listing_category_filter' => "Catgory/category/listing_category-json",
 						'listing_status_filter' => "Status/status/status-json"
@@ -87,7 +87,7 @@ return [
 						'listing_status_filter' => "Status/status/status-json"
 					]
     ],
-    'listing_bulk_operation-list' => [
+    'listing-bulk-operation-list' => [
 					"view:detail"		=>	"View Detail",
 					"op:remove"			=>	"Delete",
 					"op:restore"			=>	"Restore"

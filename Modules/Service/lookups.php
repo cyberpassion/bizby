@@ -80,7 +80,7 @@ return [
                         'sample_export'		=>	['sno', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
                         'selected_columns'	=>	['date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description']
     ],
-    'listFilters-service_list' => [
+    'listFilters-service-list' => [
                         "admin"	=>	[
                                'service_price_filter one' => "Price/service_price/service_price-json",
                             'service_type_filter one' => "Type/service_type/service_type-json"
@@ -90,7 +90,7 @@ return [
                             'service_type_filter one' => "Type/service_type/service_type-json"
                         ]
     ],
-    'listFilters-service_listing-entry_new' => [
+    'listFilters-service-listing-entry-new' => [
                         "admin"	=>	[
                             'service_price_filter one' => "Price/service_price/service_price-json",
                             'service_type_filter one' => "Type/service_type/service_type-json"
@@ -100,7 +100,7 @@ return [
                             'service_type_filter one' => "Type/service_type/service_type-json"
                         ]
     ],
-    'formPrefills-service_entry_new' => [
+    'formPrefills-service-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -110,48 +110,48 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'mandatoryFields-service_entry_update' => ['service_name', 'provided_by', 'service_name', 'service_size', 'price'],
+    'mandatoryFields-service-entry-update' => ['service_name', 'provided_by', 'service_name', 'service_size', 'price'],
 
-    'dateFields-service_entry_update' => ['date'],
+    'dateFields-service-entry-update' => ['date'],
 
-    'additionalFields-service_entry_update' => [],
+    'additionalFields-service-entry-update' => [],
 
-    'mandatoryFields-service_request-entry_update' => ['date', 'service_id'],
+    'mandatoryFields-service-request-entry-update' => ['date', 'service_id'],
 
-    'dateFields-service_request-entry_update' => ['date'],
+    'dateFields-service-request-entry-update' => ['date'],
 
-    'additionalFields-service_request-entry_update' => [],
+    'additionalFields-service-request-entry-update' => [],
 
-    'duplicacyCheckFields-service_listing-entry_update' => ['provided_by', 'service_name'],
+    'duplicacyCheckFields-service-listing-entry-update' => ['provided_by', 'service_name'],
 
-    'duplicacyCheckFields-service_request_new' => ['date', 'requested_by_type', 'requested_by', 'service_id'],
+    'duplicacyCheckFields-service-request-new' => ['date', 'requested_by_type', 'requested_by', 'service_id'],
 
-    'service_status-json' => [
+    'service-status' => [
                         1	=>	'Active',
                         2	=>	'Deleted'
     ],
-    'service_document-json' => [
+    'service-document' => [
                         'request-slip'		=>	'Request Slip',
                         'request-report'	=>	'Final Report',
                         'request-invoice'	=>	'Invoice',
                         'service-brochure'	=>	'Service Brochure'
     ],
-    'service_availability_status-json' => [
+    'service-availability-status' => [
                         'in-stock'			=>	'AVAILABLE',
                         'out-of-stock'		=>	'NOT AVAILABLE'
     ],
-    'service_status-json' => [
+    'service-status' => [
                         "1"			=>	"Requested",
                         "2"			=>	"Completed"
     ],
-    'service_unit-json' => [
+    'service-unit' => [
                         'unit',
                         'kg',
                         'session',
                         'day',
                         'visit'
     ],
-    'service_listing_bulk_operation-list' => [
+    'service-listing-bulk-operation-list' => [
                         "view:detail"				=>	"View Details",
                         "document:request-slip"		=>	"Print Request Slip",
                         "document:request-report"	=>	"Print Request Report",

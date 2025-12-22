@@ -122,15 +122,15 @@ return [
 	"cronList-employee" => [
 		                'employee-birthday' => 'Employee Birthday Message'
 	],
-	"mandatoryFields-employee_entry_update" => ['employee_name', 'phone_number'],
+	"mandatoryFields-employee-entry-update" => ['employee_name', 'phone_number'],
 
-	"dateFields-employee_entry_update" => ['dob', 'date', 'date_of_joining', 'date_of_relieving'],
+	"dateFields-employee-entry-update" => ['dob', 'date', 'date_of_joining', 'date_of_relieving'],
 
-	"additionalFields-employee_entry_update" => ['employee_additional_field'],
+	"additionalFields-employee-entry-update" => ['employee_additional_field'],
 
-	"jsonFields-employee_entry_update" => ['qualifications', 'job_responsibility', 'teaching_subjects', 'teaching_classes', 'announcement_permission', 'attendance_permission'],
+	"jsonFields-employee-entry-update" => ['qualifications', 'job_responsibility', 'teaching_subjects', 'teaching_classes', 'announcement_permission', 'attendance_permission'],
 
-	"listFilters-employee_list" => [
+	"listFilters-employee-list" => [
                         "admin"	=>	[
                              'employee_type_filter one'	=> "Employee Type/employee_type/employee_type-json",
                             'sort status' 				=> "Status/status/status-json"
@@ -140,7 +140,7 @@ return [
                               'sort status' 				=> "Status/status/status-json"
                         ]
 	],
-	"listFilters-employee_employee-report_new" => [
+	"listFilters-employee-employee-report-new" => [
                         "admin"	=>	[
                             'report_type_filter'	=> "Report Type/report_type/employee_type-json"
                         ],
@@ -193,7 +193,7 @@ return [
                         "list"		=>	[[ "employee_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "employee_id"	=>	'{$login_id}' ]]
 	],
-	"formPrefills- employee_entry_new" => [
+	"formPrefills- employee-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -203,15 +203,15 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
 	],
-	"search_column-json" => ["employee_name", "phone_number"],
+	"search-column" => ["employee_name", "phone_number"],
 
-	"employee_status-json" => [
+	"employee-status" => [
 		                '1'		=>	'Active',
                         '11'	=>	'Draft',
                         '2'		=>	'Deleted',
                         '21'	=>	'Departed'
 	],
-	"employee_document-json" => [
+	"employee-document" => [
 		                 'offer-letter'					=> 'Offer Letter',
                         'employer-bond'					=> 'Employer Bond',
                         'appointment-letter'			=> 'Appointment Letter',
@@ -222,7 +222,7 @@ return [
                         'internship-certificate'		=> 'Internship Certificate',
                         'employee-id-card'				=> 'ID Card'
 	],
-	"employee_bulk_operation-list" => [
+	"employee-bulk-operation-list" => [
                         "document:offer-letter"				=>	"Print Offer Letter",
                         "document:employer-bond"			=>	"Print Employer Bond",
                         "document:appointment-letter"		=>	"Print Appointment Letter",
@@ -236,21 +236,21 @@ return [
                         "op:remove"						=>	"Delete",
                         "op:restore"					=>	"Restore"
     ],
-	"sort_employee_results_by-list" => [
+	"sort-employee-results-by-list" => [
                         "employee_name"		=>	"EMPLOYEE NAME",
                         "father_name"		=>	"FATHER NAME",
                         "employee_id"		=>	"EMPLOYEE ID",
                         "dob"				=>	"DATE OF BIRTH"
 	],
-	"employee_note_type-json" => [
+	"employee-note-type" => [
                         "performance"			=>	"Performance",
                         "other"					=>	"Other"
 	],
 
-	"employee_leave_type-list" => ["paid" => "Paid", "not-paid" => "Not-Paid"],
+	"employee-leave-type-list" => ["paid" => "Paid", "not-paid" => "Not-Paid"],
 
-	"employee_leave_duration" => ["0.5" => "Full Day", "1" => "Half Day"],
+	"employee-leave_duration" => ["0.5" => "Full Day", "1" => "Half Day"],
 
-	"advancedInfo_connectors-json" => ["canbe_assignee"	=>	true]
+	"advancedInfo-connectors" => ["canbe_assignee"	=>	true]
 
 ];

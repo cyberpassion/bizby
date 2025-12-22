@@ -83,9 +83,9 @@ return [
                         'sample_export'		=>	['sno', 'exam_name', 'exam_class', 'exam_section', 'exam_session'],
                         'selected_columns'	=>	['exam_name', 'exam_class', 'exam_section', 'exam_session']
     ],
-    "mandatoryFields-examresult_entry_update" => ['module', 'examresult_official_name', 'examresult_official_address', 'examresult_official_email', 'examresult_official_phone', 'send_notification_message'],
+    "mandatoryFields-examresult-entry-update" => ['module', 'examresult_official_name', 'examresult_official_address', 'examresult_official_email', 'examresult_official_phone', 'send_notification_message'],
 
-    "listFilters-examresult_list" => [
+    "listFilters-examresult-list" => [
                         "admin"	=>	[
                             'session' => "Session/exam_session/session-json",
                             'class' => "Class/exam_class/class-json",
@@ -98,7 +98,7 @@ return [
                             'status' => "Status/status/status-json"
                         ]
     ],
-    "listFilters-examresult_tabled-options_new" => [
+    "listFilters-examresult-tabled-options-new" => [
                         "admin"	=>	[
                             'sortby' => "Sort By/sortby/examresult_sortby-json",
                             'entry_type' => "Display/display_type/examresult_display_type-json",
@@ -108,7 +108,7 @@ return [
                             'entry_type' => "Display/display_type/examresult_display_type-json",
                         ]
     ],
-    "listFilters-examresult_single-report-card_new" => [
+    "listFilters-examresult-single-report-card-new" => [
                         "admin"	=>	[
                             'display_graph' => "Display Graph/display_graph/is_graph_to_display-json",
                             'debug' 		=> "Debugging Active/debug/is_debugging_active-json",
@@ -118,7 +118,7 @@ return [
                             'debug' 		=> "Debugging Active/debug/is_debugging_active-json",
                         ]
     ],
-    "listFilters-examresult_detail_update" => [
+    "listFilters-examresult-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'View Results'		=>	"report/examresult-marks-report/view",
@@ -131,7 +131,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-examresult_examresult-report_new" => [
+    "listFilters-examresult-examresult-report-new" => [
                         "admin"	=>	[
                             'examresult_report_type_filter' => "Report Type/report_type/examresult_report_type-list"
                         ],
@@ -170,26 +170,26 @@ return [
                         "list"   => [[ "exam_class" => '{$current_class}' ]],
                             "report" => [[ "exam_class" => '{$current_class}' ]]
     ],
-    "examresult_sortby-json" => ["admission_id"=>"Admission ID","student_name"=>"Name","rank"=>"Rank"],
+    "examresult-sortby" => ["admission_id"=>"Admission ID","student_name"=>"Name","rank"=>"Rank"],
 
-    "examresult_display_type-json" => ["all-students"=>"All Students","student-with-marks"=>"Student With Marks","student-without-marks"=>"Student Without Marks"],
+    "examresult-display-type" => ["all-students"=>"All Students","student-with-marks"=>"Student With Marks","student-without-marks"=>"Student Without Marks"],
 
-    "performance_exam_result-json" => ["PASSED, FIRST DIVISION","PASSED, SECOND DIVISION","PASSED, THIRD DIVISION","PASSED, FOURTH DIVISION","FAILED"],
+    "performance-exam-result" => ["PASSED, FIRST DIVISION","PASSED, SECOND DIVISION","PASSED, THIRD DIVISION","PASSED, FOURTH DIVISION","FAILED"],
 
-    "student_examresult_report_type-list" => ["tabled"=>"Tabled","graphical"=>"Graphical"],
+    "student-examresult-report-type-list" => ["tabled"=>"Tabled","graphical"=>"Graphical"],
 
-    "examresult_report_type-list" => [
+    "examresult-report-type-list" => [
                         "divisionwise-list"		=>	"Division-Wise List",
                         "percentagewise-list"	=>	"Percentage-Wise List",
                         "namewise-list"			=>	"Namewise List"
     ],
-    "examresult_eoy_report_card_format-list" => [
+    "examresult-eoy-report-card-format-list" => [
                         "cbse"			=>	"CBSE",
                         "writtenoral"	=>	"Written & Oral",
                         "sapa"			=>	"Subject Assessment & Periodic Assessment",
                         "hy"			=>	"Half-Yearly & Annual"
     ],
-    "examresult_bulk_operation-list" => [
+    "examresult-bulk-operation-list" => [
                         'examresult:single-report-card'		=>	'Print Report Card',
                         'examresult:eoy-report-card'		=>	'Print EOY Report Card',
                         //'examresult:send-marks-sms'			=>	'Send Marks SMS',

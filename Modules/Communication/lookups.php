@@ -110,9 +110,9 @@ return [
                         'sample_export'		=>	['sno', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
                         'selected_columns'	=>	['message', 'mode', 'recipient_type', 'recipients', 'messages_count']
     ],
-    "mandatoryFields-communication_entry_update" => ['template_key'],
+    "mandatoryFields-communication-entry-update" => ['template_key'],
 
-    "listFilters-communication_list" => [
+    "listFilters-communication-list" => [
                         "admin"	=>	[
                             'date_filter' => "Date/date/communication_date-json",
                             'recipient_filter' => "Recipient/recipient_type/communication_recipient_type-json",
@@ -124,7 +124,7 @@ return [
                             'communication_mode_filter one' => "Mode/mode/communication_mode-json"
                         ]
     ],
-    "listFilters-communication_detail_update" => [
+    "listFilters-communication-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/entry/update",
@@ -179,7 +179,7 @@ return [
                             ],
                         ]
     ],
-    "formPrefills-communication_entry_new" => [
+    "formPrefills-communication-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -189,11 +189,11 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    "communication_report_type-list" => [
+    "communication-report-type-list" => [
                         "singleday-messages"			=>	"Single Day Messages",
                         "multiday-messages-with-count"	=>	"Multiday Messages with Count"
     ],
-    "communication_language-json" => [
+    "communication-language" => [
                         "en"	=>	"English",
                         "hi"	=>	"Hindi",
                         "bn"	=>	"Bengali",
@@ -207,9 +207,9 @@ return [
                         "ta"	=>	"Tamil",
                         "ur"	=>	"Urdu"
     ],
-    "communication_bulk_operation-list" => [
+    "communication-bulk-operation-list" => [
                         "view:detail"	=>	"View Detail"
     ],
-    "communication_document_upload_type-json" => ["pdf"]
+    "communication-document-upload-type" => ["pdf"]
 
 ];

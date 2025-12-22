@@ -87,13 +87,13 @@ return [
 					'sample_export'		=>	['sno', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status'],
 					'selected_columns'	=>	['name', 'phone_number', 'signup_label', 'signup_info', 'payment_status']
     ],
-    'mandatoryFields-signup_entry_update' => ['module','signup_official_name','signup_official_address','signup_official_email','signup_official_phone','send_notification_message'],
+    'mandatoryFields-signup-entry-update' => ['module','signup_official_name','signup_official_address','signup_official_email','signup_official_phone','send_notification_message'],
 
-    'dateFields-signup_entry_update' => [],
+    'dateFields-signup-entry-update' => [],
 
-    'additionalFields-signup_entry_update' => [],
+    'additionalFields-signup-entry-update' => [],
 
-    'signup_bulk_operation-list' => [
+    'signup-bulk-operation-list' => [
 					"view:detail"		=>	"View Detail",
 					"op:remove"			=>	"Delete",
 					"op:restore"			=>	"Restore"

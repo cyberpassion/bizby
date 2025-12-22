@@ -110,7 +110,7 @@ return [
                         'sample_export'		=>	['sno','buyer','amount','balance','payment_info'],
                         'selected_columns'	=>	['buyer','amount','balance','payment_info']
     ],
-    'listFilters-saleservice_list' => [
+    'listFilters-saleservice-list' => [
                         "admin"	=>	[
                             'sort one' => "Product/offering_id/offerring_id-json",
     //    					'sort customer' => "Customer/buyer_id/buyer_id-json s2",
@@ -128,7 +128,7 @@ return [
                             'sort status' => "Status/status/saleservice_status-json"
                         ]
     ],
-    'listFilters-saleservice_saleservice-report_new' => [
+    'listFilters-saleservice-saleservice-report-new' => [
                         "admin"	=>	[
                             'report_type_filter'	=> "Report Type/report_type/saleservice_cash_report_type-json",
                             'status_filter'			=> "Status/status/saleservice_status-json"
@@ -138,7 +138,7 @@ return [
                             'status_filter'			=> "Status/status/saleservice_status-json"
                         ]
     ],
-    'formPrefills-saleservice_entry_new' => [
+    'formPrefills-saleservice-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -148,72 +148,72 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'mandatoryFields-saleservice_entry_update' => ['buyer','saleservice_date','due_date'],
+    'mandatoryFields-saleservice-entry-update' => ['buyer','saleservice_date','due_date'],
 
-    'dateFields-saleservice_entry_update' => ['saleservice_date','due_date','next_date'],
+    'dateFields-saleservice-entry-update' => ['saleservice_date','due_date','next_date'],
 
-    'additionalFields-saleservice_entry_update' => [],
+    'additionalFields-saleservice-entry-update' => [],
 
-    'mandatoryFields-saleservice-exchange_entry_update' => ['saleservice_by'],
+    'mandatoryFields-saleservice-exchange-entry-update' => ['saleservice_by'],
 
-    'dateFields-saleservice-exchange_entry_update' => ['date'],
+    'dateFields-saleservice-exchange-entry-update' => ['date'],
 
-    'additionalFields-saleservice-exchange_entry_update' => [],
+    'additionalFields-saleservice-exchange-entry-update' => [],
 
-    'sales_setting-json' => [
+    'sales-setting' => [
                         'Module'			=>	'module-settings',
                         'Sale'				=>	'saleservice-settings'
     ],
-    'product_availability_status-json' => [
+    'product-availability-status' => [
                         'in-stock'			=>	'IN STOCK',
                         'out-of-stock'		=>	'OUT OF STOCK'
     ],
-    'default_invoice_type-json' => ['gst-invoice'=>'GST','non-gst-invoice'=>'Simple'],
+    'default-invoice-type' => ['gst-invoice'=>'GST','non-gst-invoice'=>'Simple'],
 
-    'saleservice_status-json' => [
+    'saleservice-status' => [
                         '1'									=>	'ACTIVE',
                         '11'								=>	'EXCHANGED',
                         '2'									=>	'RETURNED/DELETED'
     ],
-    'saleservice_document-json' => ['saleservice-invoice'	=> 'Print Invoice'],
+    'saleservice-document' => ['saleservice-invoice'	=> 'Print Invoice'],
 
-    'customer_group_results_by-json' => [
+    'customer-group-results-by' => [
                         'buyer_type'						=>	'Buyer Type',
                         'status'							=>	'Status'
     ],
-    'customer_sort_results_by-json' => [
+    'customer-sort-results-by' => [
                         'buyer_name'						=>	'Customer Name',
                         'buyer_id'							=>	'id'
     ],
-    'customer_group_results_display_type-json' => ['complete_list'						=>	'COMPLETE LIST'],
+    'customer-group-results-display-type' => ['complete_list'						=>	'COMPLETE LIST'],
 
-    'sort_results_type-json' => [
+    'sort-results-type' => [
                         'asc'						=>	'IN ASCENDING ORDER',
                         'desc'						=>	'IN DESCENDING ORDER'
     ],
-    'saleservice_cash_report_type-json' => [
+    'saleservice-cash-report-type' => [
                         'quantity-sold'					=>	'Quantity Sold',
                         'gstr-3b'						=>	'GSTR 3B',
                         'product-sale'					=>	'Product Sale',
                         'cash-report'					=>	'Cash Report'
     ],
-    'stock_price_type-json' => [
+    'stock-price-type' => [
                         'total'										=>	'Total',
                         'per-unit'									=>	'Per Unit'
     ],
-    'stock_bulk_operation-list' => [
+    'stock-bulk-operation-list' => [
                         "view:detail"			=>	"Print Stock Details",
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
     ],
-    'saleservice_bulk_operation-list' => [
+    'saleservice-bulk-operation-list' => [
                         "view:detail"		=>	"View Sales/Service Details",
                         "send:email"		=>	"Send Email",
                         "send:sms"			=>	"Send SMS",
                         "op:remove"			=>	"Delete",
                         "op:restore"		=>	"Restore"
     ],
-    'cash_report_type-list' => [
+    'cash-report-type-list' => [
                         "cash_collection_minified"					=>	"Cash Collection (Minified)",
                         "cash_collection_detailed"					=>	"Cash Collection (Detailed)",
                         "inward_outward_flow_minified"				=>	"Inward-Outward Cash Flow (Minified)",

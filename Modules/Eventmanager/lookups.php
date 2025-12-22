@@ -83,11 +83,11 @@ return [
     ],
     "cronList-eventmanager" => ['eventmanager-notification' => 'Event Notification'],
 
-    "mandatoryFields-eventmanager_entry_update" => ['event_name','event_participants'],
+    "mandatoryFields-eventmanager-entry-update" => ['event_name','event_participants'],
 
-    "dateFields-eventmanager_entry_update" => ['date'],
+    "dateFields-eventmanager-entry-update" => ['date'],
 
-    "listFilters-eventmanager_list" => [
+    "listFilters-eventmanager-list" => [
                         "admin"	=>	[
                             'date_filter' 				=> "Date/event_date/event_date-json",
                             'eventmanager_head_filter'	=> "Type/event_type/event_type-json",
@@ -99,7 +99,7 @@ return [
                             'status_filter'				=> "Status/status/eventmanager_status-json"
                         ]
     ],
-    "listFilters-eventmanager_detail_update" => [
+    "listFilters-eventmanager-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/entry/update",
@@ -141,7 +141,7 @@ return [
                         "list"		=>	[["participant"	=>	'{$login_type}-{$byline}']],
                         "report"	=>	[["participant"	=>	'{$login_type}-{$byline}']]
     ],
-    "formPrefills-eventmanager_entry_new" => 
+    "formPrefills-eventmanager-entry-new" => 
                     [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -152,7 +152,7 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    "eventmanager_bulk_operation-list" => [
+    "eventmanager-bulk-operation-list" => [
                         "view:detail"		=>	"View Event Details",
                         "send:sms"			=>	"Send SMS to Participants",
                         "send:email"		=>	"Send Email to Participants",
