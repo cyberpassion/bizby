@@ -10,7 +10,7 @@ return [
             ],
             'child' => [
                 $pg => [
-                    ['Add New'   => "/{$pg}/create"],
+                    ['Add New'   => "/{$pg}/new"],
                     ['View List' => "/{$pg}/list"],
                     ['Report'    => "/{$pg}/report"],
                     ['Settings'  => "/{$pg}/settings"],

@@ -10,7 +10,7 @@ return [
         ],
         'child' => [
             $pg => [
-                ['New Vehicle Entry' => "/{$pg}/create"],
+                ['New Vehicle Entry' => "/{$pg}/new"],
                 ['View List'         => "/{$pg}/list"],
                 ['Stops'             => "/{$pg}/stops"],
                 ['Settings'          => "/{$pg}/settings"],

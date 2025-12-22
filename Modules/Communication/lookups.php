@@ -14,9 +14,9 @@ return [
 
                     [
                         'Send' => [
-                            ['Send SMS'      => "/{$pg}/create"],
-                            ['Send Email'    => "/{$pg}/create"],
-                            ['Send Whatsapp' => "/{$pg}/create"],
+                            ['Send SMS'      => "/{$pg}/new"],
+                            ['Send Email'    => "/{$pg}/new"],
+                            ['Send Whatsapp' => "/{$pg}/new"],
                         ]
                     ],
 
@@ -26,7 +26,7 @@ return [
 
                     [
                         'Template' => [
-                            ['Add New'   => "/{$pg}/create"],
+                            ['Add New'   => "/{$pg}/new"],
                             ['View List' => "/{$pg}/list"],
                         ]
                     ],

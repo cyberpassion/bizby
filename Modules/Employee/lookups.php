@@ -10,7 +10,7 @@ return [
         ],
         'child' => [
             $pg => [
-                ['Add New'   => "/{$pg}/create"],
+                ['Add New'   => "/{$pg}/new"],
                 ['View List' => "/{$pg}/list"],
                 ['Settings'  => "/{$pg}/settings"],
                 ['Report'    => "/{$pg}/report"],
@@ -41,7 +41,7 @@ return [
         'href'  => "/{$pg}",
         'items' => [
             ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/create"],
+            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
             ['title' => 'View List', 'href' => "/module/{$pg}/list"],
             ['title' => 'Report',    'href' => "/module/{$pg}/report"],
             ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],

@@ -12,14 +12,14 @@ return [
             'child' => [
                 $pg => [
 
-                    ['Add New'   => "/{$pg}/create"],
+                    ['Add New'   => "/{$pg}/new"],
                     ['View List' => "/{$pg}/list"],
                     ['Settings'  => "/{$pg}/settings"],
                     ['Report'    => "/{$pg}/report"],
 
                     [
                         'Plans' => [
-                            ['Create New'     => "/{$pg}/create"],
+                            ['Create New'     => "/{$pg}/new"],
                             ['View Plan List' => "/{$pg}/list"],
                         ]
                     ],

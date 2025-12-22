@@ -10,7 +10,7 @@ return [
         ],
         'child' => [
             $pg => [
-                ['Add New'   => "/{$pg}/create"],
+                ['Add New'   => "/{$pg}/new"],
                 ['View List' => "/{$pg}/list"],
                 ['View Report' => "/{$pg}/report"],
                 ['Settings'  => "/{$pg}/settings"],
@@ -29,7 +29,7 @@ return [
         'title' => ucfirst($pg),
         'href'  => "/{$pg}",
         'items' => [
-            ['title' => 'Add New',     'href' => "/module/{$pg}/create"],
+            ['title' => 'Add New',     'href' => "/module/{$pg}/new"],
             ['title' => 'View List',   'href' => "/module/{$pg}/list"],
             ['title' => 'View Report', 'href' => "/module/{$pg}/report"],
             ['title' => 'Settings',    'href' => "/module/{$pg}/settings"],

@@ -14,7 +14,7 @@ return [
 
                     [
                         'Expense' => [
-                            ['Add New Expense'   => "/{$pg}/create"],
+                            ['Add New Expense'   => "/{$pg}/new"],
                             ['View Expense List' => "/{$pg}/list"],
                             ['View Report'       => "/{$pg}/report"],
                         ]
@@ -22,7 +22,7 @@ return [
 
                     [
                         'Income' => [
-                            ['Add New Income'   => "/{$pg}/create"],
+                            ['Add New Income'   => "/{$pg}/new"],
                             ['View Income List' => "/{$pg}/list"],
                             ['View Report'      => "/{$pg}/report"],
                         ]
