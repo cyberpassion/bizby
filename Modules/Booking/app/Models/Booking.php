@@ -2,18 +2,15 @@
 namespace Modules\Booking\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Schema;
 
 class Booking extends Model
 {
-    protected $fillable = [
-        'venue_id',
-        'bookable_unit_id',
-        'booking_type',
-        'start_at',
-        'end_at',
-        'status',
-        'meta',
-    ];
+
+	use HasFactory;
+
+    protected $fillable = [];
 
     protected $casts = [
         'meta' => 'array',
@@ -23,7 +20,7 @@ class Booking extends Model
 
     public function venue()
     {
-        return $this->belongsTo(Venue::class);
+        return $this->belongsTo(BookingVenue::class);
     }
 
     public function unit()
@@ -35,4 +32,16 @@ class Booking extends Model
     {
         return $this->morphTo();
     }
+
+	protected function dynamicFillable()
+    {
+        // Example dynamic load from DB table
+        return Schema::getColumnListing($this->getTable());
+    }
+
+    public function getFillable()
+    {
+        return $this->dynamicFillable();
+    }
+
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Booking\Http\Controllers\BookingVenueApiController;
-use Modules\Booking\Http\Controllers\BookingUnitApiController;
+use Modules\Booking\Http\Controllers\BookableUnitApiController;
 use Modules\Booking\Http\Controllers\BookingApiController;
 
 Route::prefix('v1')->group(function () {
@@ -10,49 +10,54 @@ Route::prefix('v1')->group(function () {
     Route::prefix('booking')->group(function () {
 
         /* -----------------------------
-         | Venues
-         |-----------------------------*/
-        Route::apiResource('venues', BookingVenueApiController::class);
-
-        /* -----------------------------
          | Bookable Units
          |-----------------------------*/
         Route::get(
-            'venues/{venue}/units',
-            [BookingUnitApiController::class, 'index']
+            '/venues/{venue}/units',
+            [BookableUnitApiController::class, 'index']
         );
 
         Route::post(
-            'venues/{venue}/units',
-            [BookingUnitApiController::class, 'store']
+            '/venues/{venue}/units',
+            [BookableUnitApiController::class, 'store']
         );
 
+		Route::get(
+			'/venues/{venue}/units/{unit}',
+			[BookableUnitApiController::class, 'show']);
+
         Route::put(
-            'venues/{venue}/units/{unit}',
-            [BookingUnitApiController::class, 'update']
+            '/venues/{venue}/units/{unit}',
+            [BookableUnitApiController::class, 'update']
         );
 
         Route::delete(
-            'venues/{venue}/units/{unit}',
-            [BookingUnitApiController::class, 'destroy']
+            '/venues/{venue}/units/{unit}',
+            [BookableUnitApiController::class, 'destroy']
         );
 
         /* -----------------------------
          | Bookings
          |-----------------------------*/
         Route::get(
-            'venues/{venue}/bookings',
+            '/venues/{venue}/bookings',
             [BookingApiController::class, 'index']
         );
 
         Route::post(
-            'bookings',
+            '/bookings',
             [BookingApiController::class, 'store']
         );
 
         Route::post(
-            'bookings/{booking}/cancel',
+            '/bookings/{booking}/cancel',
             [BookingApiController::class, 'cancel']
         );
+
+		/* -----------------------------
+         | Venues
+         |-----------------------------*/
+        Route::apiResource('venues', BookingVenueApiController::class);
+
     });
 });

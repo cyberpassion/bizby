@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
 		    $table->id();
 
-		    $table->foreignId('venue_id')
+		    $table->foreignId('bookin_venue_id')
 		        ->constrained()
         		->cascadeOnDelete();
 
@@ -36,7 +36,7 @@ return new class extends Migration
 
 		    $table->timestamps();
 
-		    $table->index(['venue_id', 'bookable_unit_id']);
+		    $table->index(['booking_venue_id', 'bookable_unit_id']);
     		$table->index(['start_at', 'end_at']);
 		});
 

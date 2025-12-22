@@ -10,13 +10,13 @@ class BookingApiController extends Controller
 {
     public function index($venueId)
     {
-        return Booking::where('venue_id', $venueId)->latest()->get();
+        return Booking::where('booking_venue_id', $venueId)->latest()->get();
     }
 
     public function store(Request $request, BookingService $service)
     {
         $data = $request->validate([
-            'venue_id' => 'required|exists:venues,id',
+            'booking_venue_id' => 'required|exists:venues,id',
             'bookable_unit_id' => 'required|exists:bookable_units,id',
             'start_at' => 'required|date',
             'end_at' => 'nullable|date|after:start_at',

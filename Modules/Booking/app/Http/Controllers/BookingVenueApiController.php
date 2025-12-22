@@ -1,25 +1,19 @@
 <?php
+
 namespace Modules\Booking\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Modules\Booking\Models\Venue;
-use Illuminate\Http\Request;
+use Modules\Booking\Models\BookingVenue;
+use Modules\Shared\Http\Controllers\SharedApiController;
 
-class BookingVenueApiController extends Controller
+class BookingVenueApiController extends SharedApiController
 {
-    public function index()
+    protected function model()
     {
-        return Venue::where('is_active', true)->get();
+        return BookingVenue::class;
     }
 
-    public function store(Request $request)
+    protected function validationRules($id = null)
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'type' => 'required|string',
-            'meta' => 'array',
-        ]);
-
-        return Venue::create($data);
+        return [];
     }
 }

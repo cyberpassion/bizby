@@ -2,20 +2,15 @@
 namespace Modules\Booking\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Schema;
 
-class Venue extends Model
+class BookingVenue extends Model
 {
-    protected $fillable = [
-        'organization_id',
-        'name',
-        'type',
-        'address',
-        'city',
-        'state',
-        'country',
-        'meta',
-        'is_active',
-    ];
+
+	use HasFactory;
+
+    protected $fillable = [];
 
     protected $casts = [
         'meta' => 'array',
@@ -31,4 +26,16 @@ class Venue extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+	protected function dynamicFillable()
+    {
+        // Example dynamic load from DB table
+        return Schema::getColumnListing($this->getTable());
+    }
+
+    public function getFillable()
+    {
+        return $this->dynamicFillable();
+    }
+
 }

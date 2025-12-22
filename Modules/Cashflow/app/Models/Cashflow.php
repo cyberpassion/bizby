@@ -28,18 +28,6 @@ class Cashflow extends Model
      */
     protected $attributes = [];
 
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
-    {
-        return $this->employee?->name ?? '-123';
-    }
     // Factory (if you use factories)
     // protected static function newFactory(): CashflowFactory
     // {
