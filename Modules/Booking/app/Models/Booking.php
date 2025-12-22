@@ -1,60 +1,38 @@
 <?php
-
 namespace Modules\Booking\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class Booking extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'venue_id',
+        'bookable_unit_id',
+        'booking_type',
+        'start_at',
+        'end_at',
+        'status',
+        'meta',
+    ];
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
-
-    /**
-     * Attribute casting.
-     */
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'booking_date' => 'date', // Laravel will cast it to Carbon
+        'meta' => 'array',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function venue()
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): BookingFactory
-    // {
-    //     return BookingFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->belongsTo(Venue::class);
     }
 
-    public function getFillable()
+    public function unit()
     {
-        return $this->dynamicFillable();
+        return $this->belongsTo(BookableUnit::class, 'bookable_unit_id');
     }
 
+    public function bookedBy()
+    {
+        return $this->morphTo();
+    }
 }

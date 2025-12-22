@@ -1,19 +1,35 @@
 <?php
-
 namespace Modules\Booking\Http\Controllers;
 
+use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Modules\Booking\Models\Booking;
-use Modules\Shared\Http\Controllers\SharedApiController;
+use Modules\Booking\Services\BookingService;
 
-class BookingApiController extends SharedApiController
+class BookingApiController extends Controller
 {
-    protected function model()
+    public function index($venueId)
     {
-        return Booking::class;
+        return Booking::where('venue_id', $venueId)->latest()->get();
     }
 
-    protected function validationRules($id = null)
+    public function store(Request $request, BookingService $service)
     {
-        return [];
+        $data = $request->validate([
+            'venue_id' => 'required|exists:venues,id',
+            'bookable_unit_id' => 'required|exists:bookable_units,id',
+            'start_at' => 'required|date',
+            'end_at' => 'nullable|date|after:start_at',
+            'booking_type' => 'nullable|string',
+            'meta' => 'array',
+        ]);
+
+        return $service->createBooking($data);
+    }
+
+    public function cancel(Booking $booking)
+    {
+        $booking->update(['status' => 'cancelled']);
+        return response()->json(['status' => 'cancelled']);
     }
 }
