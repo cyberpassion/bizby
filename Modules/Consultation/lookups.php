@@ -39,7 +39,7 @@ return [
             [
                 'title' => 'Plugin',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/calendar"],
                 ]
             ],
         ],

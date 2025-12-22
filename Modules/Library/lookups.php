@@ -66,50 +66,50 @@ return [
             [
                 'title' => 'Entry',
                 'items' => [
-                    ['title' => 'Book',      'href' => "/{$pg}/entry/book"],
-                    ['title' => 'Magazine',  'href' => "/{$pg}/entry/magazine"],
-                    ['title' => 'Journal',   'href' => "/{$pg}/entry/journal"],
-                    ['title' => 'Newspaper', 'href' => "/{$pg}/entry/newspaper"],
+                    ['title' => 'Book',      'href' => "/module/{$pg}/entry/book"],
+                    ['title' => 'Magazine',  'href' => "/module/{$pg}/entry/magazine"],
+                    ['title' => 'Journal',   'href' => "/module/{$pg}/entry/journal"],
+                    ['title' => 'Newspaper', 'href' => "/module/{$pg}/entry/newspaper"],
                 ]
             ],
             [
                 'title' => 'List',
                 'items' => [
-                    ['title' => 'Book',      'href' => "/{$pg}/list/book"],
-                    ['title' => 'Magazine',  'href' => "/{$pg}/list/magazine"],
-                    ['title' => 'Journal',   'href' => "/{$pg}/list/journal"],
-                    ['title' => 'Newspaper', 'href' => "/{$pg}/list/newspaper"],
+                    ['title' => 'Book',      'href' => "/module/{$pg}/list/book"],
+                    ['title' => 'Magazine',  'href' => "/module/{$pg}/list/magazine"],
+                    ['title' => 'Journal',   'href' => "/module/{$pg}/list/journal"],
+                    ['title' => 'Newspaper', 'href' => "/module/{$pg}/list/newspaper"],
                 ]
             ],
             [
                 'title' => 'Allotment',
                 'items' => [
-                    ['title' => 'New Allotment',  'href' => "/{$pg}/allotment/create"],
-                    ['title' => 'Allotment List', 'href' => "/{$pg}/allotment/list"],
+                    ['title' => 'New Allotment',  'href' => "/module/{$pg}/allotment/create"],
+                    ['title' => 'Allotment List', 'href' => "/module/{$pg}/allotment/list"],
                 ]
             ],
             [
                 'title' => 'Report',
                 'items' => [
-                    ['title' => 'Stock Report',     'href' => "/{$pg}/report/stock"],
-                    ['title' => 'Allotment Report', 'href' => "/{$pg}/report/allotment"],
+                    ['title' => 'Stock Report',     'href' => "/module/{$pg}/report/stock"],
+                    ['title' => 'Allotment Report', 'href' => "/module/{$pg}/report/allotment"],
                 ]
             ],
             [
                 'title' => 'Settings',
                 'items' => [
-                    ['title' => 'Book Settings',       'href' => "/{$pg}/settings/book"],
-                    ['title' => 'Journal Settings',    'href' => "/{$pg}/settings/journal"],
-                    ['title' => 'Newspaper Settings',  'href' => "/{$pg}/settings/newspaper"],
-                    ['title' => 'Magazine Settings',   'href' => "/{$pg}/settings/magazine"],
-                    ['title' => 'Allotment Settings',  'href' => "/{$pg}/settings/allotment"],
-                    ['title' => 'Penalty Settings',    'href' => "/{$pg}/settings/penalty"],
+                    ['title' => 'Book Settings',       'href' => "/module/{$pg}/settings/book"],
+                    ['title' => 'Journal Settings',    'href' => "/module/{$pg}/settings/journal"],
+                    ['title' => 'Newspaper Settings',  'href' => "/module/{$pg}/settings/newspaper"],
+                    ['title' => 'Magazine Settings',   'href' => "/module/{$pg}/settings/magazine"],
+                    ['title' => 'Allotment Settings',  'href' => "/module/{$pg}/settings/allotment"],
+                    ['title' => 'Penalty Settings',    'href' => "/module/{$pg}/settings/penalty"],
                 ]
             ],
             [
                 'title' => 'Plugin',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/calendar"],
                 ]
             ],
         ],

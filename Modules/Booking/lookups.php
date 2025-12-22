@@ -62,27 +62,27 @@ return [
             [
                 'title' => 'Allotment',
                 'items' => [
-                    ['title' => 'Perform Allotment (Form)',  'href' => "/{$pg}/allotment-entry"],
-                    ['title' => 'Perform Allotment (Table)', 'href' => "/{$pg}/allotment-entry/list"],
-                    ['title' => 'View Booking List',         'href' => "/{$pg}/list"],
+                    ['title' => 'Perform Allotment (Form)',  'href' => "/module/{$pg}/allotment-entry"],
+                    ['title' => 'Perform Allotment (Table)', 'href' => "/module/{$pg}/allotment-entry/list"],
+                    ['title' => 'View Booking List',         'href' => "/module/{$pg}/list"],
                 ]
             ],
 
             [
                 'title' => 'Building',
                 'items' => [
-                    ['title' => 'Add Building',       'href' => "/{$pg}/building-entry"],
-                    ['title' => 'View Building List', 'href' => "/{$pg}/building-entry/list"],
+                    ['title' => 'Add Building',       'href' => "/module/{$pg}/building-entry"],
+                    ['title' => 'View Building List', 'href' => "/module/{$pg}/building-entry/list"],
                 ]
             ],
 
-            ['title' => 'View Report', 'href' => "/{$pg}/report"],
-            ['title' => 'Settings',    'href' => "/{$pg}/settings"],
+            ['title' => 'View Report', 'href' => "/module/{$pg}/report"],
+            ['title' => 'Settings',    'href' => "/module/{$pg}/settings"],
 
             [
                 'title' => 'Plugin',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/{$pg}/calendar"],
+                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/calendar"],
                 ]
             ],
         ],

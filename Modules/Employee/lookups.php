@@ -41,27 +41,27 @@ return [
         'href'  => "/{$pg}",
         'items' => [
             ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/{$pg}/create"],
-            ['title' => 'View List', 'href' => "/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/{$pg}/settings"],
+            ['title' => 'Add New',   'href' => "/module/{$pg}/create"],
+            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
             [
                 'title' => 'Settings',
                 'items' => [
-                    ['title' => 'Salary Settings', 'href' => "/{$pg}/settings/salary"],
+                    ['title' => 'Salary Settings', 'href' => "/module/{$pg}/settings/salary"],
                 ]
             ],
             [
                 'title' => 'Report',
                 'items' => [
-                    ['title' => 'Salary Report', 'href' => "/{$pg}/report/salary"],
+                    ['title' => 'Salary Report', 'href' => "/module/{$pg}/report/salary"],
                 ]
             ],
-            ['title' => 'Bulk Operation', 'href' => "/{$pg}/bulk"],
+            ['title' => 'Bulk Operation', 'href' => "/module/{$pg}/bulk"],
             [
                 'title' => 'Plugin',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/{$pg}/plugin/calendar"],
+                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
                 ]
             ],
         ],

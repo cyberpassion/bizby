@@ -32,12 +32,12 @@ return [
             ['title' => 'Home',      'href' => "/module/{$pg}/home"],
             ['title' => 'Add New',   'href' => "/module/{$pg}/create"],
             ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/{$pg}/settings"],
+            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
             [
                 'title' => 'Plugin',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/{$pg}/plugin/calendar"],
+                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
                 ]
             ],
         ],
