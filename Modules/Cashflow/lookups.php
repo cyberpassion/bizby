@@ -86,7 +86,7 @@ return [
                 [
                     'title' => 'Plugin',
                     'items' => [
-                        ['title' => 'View Calendar', 'href' => "/module/{$pg}/calendar"],
+                        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
                     ]
                 ],
             ],

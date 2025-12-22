@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Shared\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -9,27 +10,27 @@ class SearchApiController extends Controller
 {
     public function search(Request $request, string $module)
     {
-        $search = $request->query('q');
+        $query = trim((string) $request->query('q'));
 
-        if (!$search) {
+        if ($query === '') {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Search query missing'
+                'status'  => 'error',
+                'message' => 'Search query missing',
             ], 422);
         }
 
         $handler = SearchRegistry::resolve($module);
 
-        if (!$handler) {
+        if (!$handler || !is_callable($handler)) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid module'
+                'status'  => 'error',
+                'message' => 'Invalid module',
             ], 404);
         }
 
         return response()->json([
             'status' => 'success',
-            'data' => $handler->search($search, $request)
+            'data'   => $handler($query, $request), // ✅ CALLABLE
         ]);
     }
 }

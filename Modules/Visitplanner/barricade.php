@@ -1,6 +1,21 @@
 <?php
 return [
-    'path.visitplanner.create' => [],
+    'path.visitplanner.create' => [
+		[
+            'type'     => 'exists',
+            'resource' => 'terms',
+            'filter'   => ['module'=>'shared','group'=>'sessions'],
+            'message'  => 'Please add sessions before adding proceeding.',
+            'action'   => '/module/shared/terms/shared/sessions',
+        ],
+		[
+            'type'     => 'exists',
+            'resource' => 'products',
+            'filter'   => ['status'=>true],
+            'message'  => 'Please add products before adding proceeding.',
+            'action'   => '/module/product/new',
+        ]
+	],
 	'path.visitplanner.read' => [],
 	'path.visitplanner.update' => [],
 	'path.visitplanner.delete' => [],
