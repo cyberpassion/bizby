@@ -46,8 +46,8 @@ return [
     ],
 ],
 
-	'consultation_mode-json'	=>	['call'=>'Call'],
-    'consultation_status-json' => [
+	'consultation-mode'	=>	['call'=>'Call'],
+    'consultation-status' => [
         1 => 'Active',
         2 => 'Deleted',
     ],
@@ -141,34 +141,34 @@ return [
         'consultation-visitreminder' => 'Consultation Visit Reminder'
     ],
 
-    'mandatoryFields-consultation_entry' => ['patient_name','phone_number','age','consultation_date'],
+    'mandatoryFields-consultation-entry' => ['patient_name','phone_number','age','consultation_date'],
 
-    'dateFields-consultation_entry' => ['dob','consultation_date'],
+    'dateFields-consultation-entry' => ['dob','consultation_date'],
 
-    'mandatoryFields-consultation_followup-entry' => ['thread_parent'],
+    'mandatoryFields-consultation-followup-entry' => ['thread_parent'],
 
-    'dateFields-consultation_followup-entry' => ['consultation_date'],
+    'dateFields-consultation-followup-entry' => ['consultation_date'],
 
-    'jsonFields-consultation_entry' => ["consultation_for"],
+    'jsonFields-consultation-entry' => ["consultation_for"],
 
-    'listFilters-consultation_list' => [
+    'listFilters-consultation-list' => [
         "admin" => [
-            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
-            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
-            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
-            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
-            'consultation_status_filter' => "Status/status/consultation_status-json"
+            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date",
+            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date",
+            'consultation_with_filter one' => "Doctor/consultation_with/employee_id",
+            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode",
+            'consultation_status_filter' => "Status/status/consultation_status"
         ],
         "portal" => [
-            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
-            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
-            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
-            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
-            'consultation_status_filter' => "Status/status/consultation_status-json"
+            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date",
+            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date",
+            'consultation_with_filter one' => "Doctor/consultation_with/employee_id",
+            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode",
+            'consultation_status_filter' => "Status/status/consultation_status"
         ]
     ],
 
-    'listFilters-consultation_detail_update' => [
+    'listFilters-consultation-detail-update' => [
         'admin'  => [
             $pg => [
                 'Edit'         => "{$pg}/entry/update",
@@ -191,10 +191,10 @@ return [
 
     'consultation_consultation-report' => [
         "admin" => [
-            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
+            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with"
         ],
         "portal" => [
-            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
+            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with"
         ]
     ],
 
@@ -230,7 +230,7 @@ return [
         "report"   => [["phone_number" => '{$phone_number}']]
     ],
 
-    'formPrefills-consultation_entry' => [
+    'formPrefills-consultation-entry' => [
         "columns" => [
             'product'       => 'default_product',
             'contact_mode'  => 'default_contact_mode',
@@ -241,31 +241,31 @@ return [
         ]
     ],
 
-    'consultation_through_mode-json' => [
+    'consultation-through-mode' => [
         'call'          => 'Call',
         'direct-visit'  => 'Direct Visit'
     ],
 
-    'consultation_document-json' => [
+    'consultation-document' => [
         'consultation-slip' => 'Consultation Slip'
     ],
 
-    'consultation_plan_tag-json' => [
+    'consultation-plan-tag' => [
         'regular'   => 'Regular',
         'urgent'    => 'Urgent',
         'emergency' => 'Emergency'
     ],
 
-    'consultation_status-json' => [
+    'consultation-status' => [
         '1'  => 'Active',
         '2'  => 'Deleted',
         '21' => 'Departed',
         '22' => 'Cancelled'
     ],
 
-    'treatment_type-json' => ["consultation","test","room-allotment"],
+    'treatment-type' => ["consultation","test","room-allotment"],
 
-    'consultation_bulk_operation-list' => [
+    'consultation-bulk_operation-list' => [
         "document:consultation-slip" => "Print Consultation Slip",
         "send:sms"                   => "Send Consultation SMS",
         "send:email"                 => "Send Consultation Email",
@@ -273,13 +273,13 @@ return [
         "op:restore"                 => "Restore Consultation"
     ],
 
-    'consultation_slip_copy-list' => [
+    'consultation-slip-copy-list' => [
         "all"     => "All",
         "patient" => "Patient Copy Only",
         "office"  => "Office Copy Only"
     ],
 
-    'consultation_sort_results_by-json' => [
+    'consultation-sort-results-by' => [
         "consultation_date" => "Consultation Date",
         "patient_name"      => "Patient Name",
         "age"               => "Age",
