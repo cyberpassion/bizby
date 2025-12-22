@@ -5,7 +5,7 @@ use Illuminate\Routing\Controller;
 use Modules\Booking\Models\Venue;
 use Illuminate\Http\Request;
 
-class VenueApiController extends Controller
+class BookingVenueApiController extends Controller
 {
     public function index()
     {

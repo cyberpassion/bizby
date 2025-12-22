@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('venues', function (Blueprint $table) {
+        Schema::create('booking_venues', function (Blueprint $table) {
 		    $table->id();
 
 		    // Multi-tenant (optional but recommended)
@@ -35,6 +35,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('venues');
+        Schema::dropIfExists('booking_venues');
     }
 };
