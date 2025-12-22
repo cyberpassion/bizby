@@ -4,30 +4,52 @@ namespace Modules\Shared\Providers;
 
 use Modules\Shared\Services\LookupRegistry;
 use Modules\Shared\Models\Term;
+use Modules\Employee\Models\Employee;
+use Modules\Student\Models\Student;
+use Illuminate\Support\Str;
 
 class SharedLookupProvider
 {
     public function register()
     {
         LookupRegistry::registerFallback(
-            fn (string $key) => $this->resolveFromTerms($key)
+            fn (string $key) => $this->resolve($key)
         );
     }
 
-    protected function resolveFromTerms(string $key): array
+    /**
+     * Global fallback resolver
+     */
+    protected function resolve(string $key): array
     {
-        // Expecting: module.group
         if (!str_contains($key, '.')) {
             return [];
         }
 
-        [$module, $group] = explode('.', $key, 2);
+        [$namespace, $group] = explode('.', $key, 2);
 
-        // Safety: avoid accidental global queries
-        if (!$module || !$group) {
+        if (!$namespace || !$group) {
             return [];
         }
 
+        // ---------------------------------
+        // 1️⃣ PLURAL namespaces → TABLES
+        // ---------------------------------
+        if (Str::plural($namespace) === $namespace) {
+            return $this->resolveFromTables($namespace, $group);
+        }
+
+        // ---------------------------------
+        // 2️⃣ SINGULAR namespaces → TERMS
+        // ---------------------------------
+        return $this->resolveFromTerms($namespace, $group);
+    }
+
+    /**
+     * Existing TERMS logic (UNCHANGED)
+     */
+    protected function resolveFromTerms(string $module, string $group): array
+    {
         return Term::where('module', $module)
             ->where('group', $group)
             ->orderBy('sort_order')
@@ -36,5 +58,51 @@ class SharedLookupProvider
                 $term->id => $term->name
             ])
             ->toArray();
+    }
+
+    /**
+     * NEW: Table-backed lookups (plural only)
+     */
+    protected function resolveFromTables(string $namespace, string $group): array
+    {
+        return match ($namespace) {
+
+            'employees' => $this->employees($group),
+            'students'  => $this->students($group),
+
+            default => [],
+        };
+    }
+
+    protected function employees(string $group): array
+    {
+        return match ($group) {
+
+            'list' => Employee::where('status', true)
+                ->orderBy('name')
+                ->pluck('name', 'id')
+                ->toArray(),
+
+            'doctors' => Employee::where('role', 'doctor')
+                ->where('status', true)
+                ->orderBy('name')
+                ->pluck('name', 'id')
+                ->toArray(),
+
+            default => [],
+        };
+    }
+
+    protected function students(string $group): array
+    {
+        return match ($group) {
+
+            'list' => Student::where('status', true)
+                ->orderBy('name')
+                ->pluck('name', 'id')
+                ->toArray(),
+
+            default => [],
+        };
     }
 }
