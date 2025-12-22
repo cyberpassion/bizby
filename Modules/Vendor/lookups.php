@@ -82,7 +82,7 @@ return [
                         'sample_export'		=>	['sno', 'vendor_official_name', 'vendor_official_address', 'vendor_official_email', 'vendor_official_phone', 'vendor_terms_and_condition', 'vendor_person', 'vendor_person_designation', 'vendor_person_email', 'vendor_person_phone'],
                         'selected_columns'	=>	['vendor_official_name', 'vendor_person', 'vendor_person_phone']
     ],
-    'mandatoryFields-vendor_entry_update' => [
+    'mandatoryFields-vendor-entry-update' => [
                         'vendor_official_name',
                         'vendor_official_address',
                         'vendor_official_email',
@@ -93,18 +93,18 @@ return [
                         'vendor_person_email',
                         'vendor_person_phone'
     ],
-    'dateFields-vendor_entry_update' => [],
+    'dateFields-vendor-entry-update' => [],
 
-    'additionalFields-vendor_entry_update' => [],
+    'additionalFields-vendor-entry-update' => [],
 
-    'jsonFields-vendor_entry_update' => ['region'],
+    'jsonFields-vendor-entry-update' => ['region'],
 
-    'vendor_setting-json' => [
+    'vendor-setting' => [
                        'Settings'					=>	'settings',
                        'Client Settings'			=>	['vendor','settings'],
                        'Vendor Settings'			=>	['vendor','settings']
     ],
-    'listFilters-vendor_list' => [
+    'listFilters-vendor-list' => [
                         "admin"	=>	[
                             'vendor_status_filter one'		=> "Status/status/vendor_status-json"
                         ],
@@ -112,7 +112,7 @@ return [
                             'vendor_status_filter one'		=> "Status/status/vendor_status-json"
                         ]
     ],
-    'listFilters-vendor_activity-list' => [
+    'listFilters-vendor-activity-list' => [
                         "admin"	=>	[
                             'vendor_status_filter one'		=> "Activity/activity/vendor_activity-json",
                             'vendor_operation_filter one'	=> "Operation/operation/vendor_operation-json"
@@ -122,28 +122,28 @@ return [
                             'vendor_operation_filter one'	=> "Operation/operation/vendor_operation-json"
                         ]
     ],
-    'vendor_status-json' => [
+    'vendor-status' => [
                         "1"				=>	"Active",
                         "11"			=>	"Awaiting Approval",
                         "2"				=>	"Inactive",
     ],
-    'vendor_document-json' => [
+    'vendor-document' => [
                         'performance'					=>	'Performance',
                         'agreement'						=> 'Agreement',
                         'certificate'					=> 'Certificate',
                         'vendor-id-card'				=> 'ID Card'
     ],
-    'vendor_bulk_operation-list' => [
+    'vendor-bulk-operation-list' => [
                         "document:performance"			=>	'Performance',
                         "document:agreement"			=>	'Agreement',
                         "document:certificate"			=>	'Certificate',
                         "document:vendor-id-card"		=>	'ID Card'
     ],
-    'vendor_level-json' => ["Silver","Gold","Platinum"],
+    'vendor-level-json' => ["Silver","Gold","Platinum"],
 
     'interactiveEntity-vendor' => ['vendor'],
 
-    'vendor_bulk_operation-list' => [
+    'vendor-bulk-operation-list' => [
                         "view:detail"		=>	"View Detail",
                         "op:remove"			=>	"Delete",
                         "op:restore"		=>	"Restore"

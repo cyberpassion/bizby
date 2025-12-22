@@ -85,10 +85,10 @@ return [
         'selected_columns' => ['absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status']
     ],
 
-    "mandatoryFields-attendance_entry_update" => ['selected-ids'],
+    "mandatoryFields-attendance-entry-update" => ['selected-ids'],
     "dateFields-attendance_entry_update"      => ['date'],
 
-    "listFilters-attendance_list" => [
+    "listFilters-attendance-list" => [
         "admin" => [
             'session_filter' => "Session/session/session-json",
             'month_filter'   => "Month/month/month-json",
@@ -99,7 +99,7 @@ return [
         ]
     ],
 
-    "listFilters-attendance_sheet-filters_new" => [
+    "listFilters-attendance-sheet-filters-new" => [
         "admin" => [
             'month_filter'   => "Month/month/month-json",
             'date_filter'    => "Date/date/date-list",
@@ -112,7 +112,7 @@ return [
         ]
     ],
 
-    "listFilters-attendance_employee_sheet-filters_new" => [
+    "listFilters-attendance-employee-sheet-filters-new" => [
         "admin" => [
             'employee_type_filter' => "Type/employee_type/employee_type-json",
             'month_filter'         => "Month/month/month-json",
@@ -127,7 +127,7 @@ return [
         ]
     ],
 
-    "listFilters-attendance_stduent_sheet-filters_new" => [
+    "listFilters-attendance-stduent-sheet-filters-new" => [
         "admin" => [
             'current_class_filter' => "Class/current_class/class-json",
             'month_filter'         => "Month/month/month-json",
@@ -142,7 +142,7 @@ return [
         ]
     ],
 
-    "listFilters-attendance_tabled-options_new" => [
+    "listFilters-attendance-tabled-options-new" => [
         "admin" => [
             'change_report_format' => "Format/report_type/attendance_report_type-list"
         ],
@@ -151,7 +151,7 @@ return [
         ]
     ],
 
-    "listFilters-attendance_detail_update" => [
+    "listFilters-attendance-detail-update" => [
         'admin' => [
             $pg => [
                 'Edit'         => "{$pg}/entry/update",
@@ -203,11 +203,11 @@ return [
         ]]
     ],
 
-    "employee_attendance_adding_mode-json" => [
+    "employee-attendance-adding-mode" => [
         "manual" => "Manually"
     ],
 
-    "attendance_report_type-list" => [
+    "attendance-report-type-list" => [
         "attendance-register-count-only" => "Day Attendance (Percentage & Count)",
         "attendance-register"            => "Day Attendance (Absentee Names Highlighted)",
         "singleday-absentee"              => "Day Absentees Only",
@@ -216,7 +216,7 @@ return [
         "portal-access-report"            => "Portal & App Access Report"
     ],
 
-    "attendance_paid_unpaid-json" => [
+    "attendance-paid-unpaid-json" => [
         'false' => 'Unpaid',
         'true'  => 'Paid'
     ]

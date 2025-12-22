@@ -86,11 +86,11 @@ return [
 
 	"cronList-registration" => ['registration-notification' => 'Registration Notification'],
 
-	"mandatoryFields-registration_entry_update" => ['name','phone_number'],
+	"mandatoryFields-registration-entry-update" => ['name','phone_number'],
 
-	"dateFields-registration_public-entry_update" => ['date','dob'],
+	"dateFields-registration-public-entry-update" => ['date','dob'],
 
-	"listFilters-registration_list" => [
+	"listFilters-registration-list" => [
                         "admin"	=>	[
                             'date_filter' => "Date/date/registration_date-json",
                                'registration_type_filter' => "Type/type/registration_type-json",
@@ -102,7 +102,7 @@ return [
                                'registration_status_filter' => "Status/status/status-json"
                         ]
 	],
-	"listFilters-registration_fee-entry" =>  [
+	"listFilters-registration-fee-entry" =>  [
                         "admin"	=>	[],
                         "portal" =>	[
                             $pg			=>	[
@@ -151,7 +151,7 @@ return [
                         "list"   => [[ "phone_number" => '{$phone_number}' ]],
                         "report" => [[ "phone_number" => '{$phone_number}' ]]
 	],
-	"formPrefills-registration_entry_new" => [
+	"formPrefills-registration-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -161,19 +161,19 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
 	],
-	"registration_document-json" => [
+	"registration-document" => [
                         'registration-slip'		=>	'Registration Slip',
                         'registration-form'		=>	'Registration Form'
 	],
-	"public_registration_status-json" => ["1"=>"ACTIVE","11"=>"PENDING APPROVAL"],
+	"public-registration-status" => ["1"=>"ACTIVE","11"=>"PENDING APPROVAL"],
 
-	"registration_bulk_operation-list" => [
+	"registration-bulk-operation-list" => [
                         "registration:detail"	=>	"Move to",
                         "view:detail"			=>	"View Detail",
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
 	],
-	"public_registration_flow-json" => [
+	"public-registration-flow" => [
                         "default"	=>	"Default"
 	],
 

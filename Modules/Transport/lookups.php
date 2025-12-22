@@ -100,7 +100,7 @@ return [
                             'status_filter one'			=> 'Status/status/status-json',
                         ]
     ],
-    'listFilters-transport_vehicle-stoppage-entry_new' => [
+    'listFilters-transport-vehicle-stoppage-entry-new' => [
                         "admin"	=>	[
                             'session_filter one'		=> 'Session/session/session-json',
                             'status_filter one'			=> 'Status/status/status-json',
@@ -110,11 +110,11 @@ return [
                             'status_filter one'			=> 'Status/status/status-json',
                         ]
     ],
-    'transport_vehicle_tracking_event-list' => [
+    'transport-vehicle-tracking-event-list' => [
                         "overspeed"		=>	"Overspeeding",
                         "sent-sos"		=>	"Sent SOS"
     ],
-    'transport_vehicle_gps_update_interval-json' => [
+    'transport-vehicle-gps-update-interval' => [
                         "10"	=>	"10 seconds",
                         "15"	=>	"15 seconds",
                         "30"	=>	"30 seconds",
@@ -123,7 +123,7 @@ return [
                         "180"	=>	"3 minutes",
                         "300"	=>	"5 minutes"
     ],
-    'sort_student_results_by-list' => [
+    'sort-student-results-by-list' => [
                         "student_name"				=>	"STUDENT NAME",
                         "father_name"				=>	"FATHER NAME",
                         "sr_no"						=>	"SR NO.",
@@ -134,7 +134,7 @@ return [
                         "punch_id"					=>	"ATTENDANCE PUNCH ID",
                         "transport_pickup_location"	=>	"TRANSPORT STOP"
     ],
-    'sort_student_cash_results_by-list' => [
+    'sort-student-cash-results-by-list' => [
                         "student_name"				=>	"STUDENT NAME",
                         "father_name"				=>	"FATHER NAME",
                         "sr_no"						=>	"SR NO.",
@@ -146,38 +146,38 @@ return [
                         "balance"					=>	"BALANCE AMOUNT",
                         "concession"				=>	"CONCESSION AMOUNT"
     ],
-    'sort_student_fee_history_results_by-list' => [
+    'sort-student-fee-history-results-by-list' => [
                         "date"						=>	"Fee Date",
                         "cash_code"					=>	"Cash Code"
     ],
-    'removal_reason-json' => ["Moved to Another School","Name Striked"],
+    'removal-reason' => ["Moved to Another School","Name Striked"],
 
-    'fee_slip_copy-list' => [
+    'fee-slip-copy-list' => [
                         "all"			=>	"All",
                         "parent"		=>	"Parent Copy Only",
                         "office"		=>	"Office Copy Only"
     ],
-    'fee_intake_pattern-list' => [
+    'fee-intake-pattern-list' => [
                         "monthly"		=>	"Monthly",
                         "bimonthly"		=>	"Bi-Monthly",
                         "quarterly"		=>	"Quarterly",
                         "semesterwise"	=>	"Semester-Wise",
                         "yearly"		=>	"Yearly"
     ],
-    'fee_intake_student_type-list' => ["all"=>"All Students","new"=>"New Students Only","old"=>"Old Students Only"],
+    'fee-intake-student-type-list' => ["all"=>"All Students","new"=>"New Students Only","old"=>"Old Students Only"],
 
-    'old_new-json' => ["OLD","NEW"],
+    'old-new' => ["OLD","NEW"],
 
-    'student_report_format-list' => ["tabled"=>"Tabled Report","graphical"=>"Graphical Report"],
+    'student-report-format-list' => ["tabled"=>"Tabled Report","graphical"=>"Graphical Report"],
 
-    'student_report_type-list' => [
+    'student-report-type-list' => [
                         "all-studying"		=>	"All Studying Students",
                         "new-admission"		=>	"New Admission in Session",
                         "old-admission"		=>	"Old Admission in Session",
                         "promoted-only"		=>	"Previous Session Students",
                         "registration-only"	=>	"Registration Only Students",
     ],
-    'cash_report_type-list' => [
+    'cash-report-type-list' => [
                         "fee_collection_minified"					=>	"Fee Collection (Minified)",
                         "fee_collection_detailed"					=>	"Fee Collection (Detailed)",
                         "inward_outward_flow_minified"				=>	"Inward-Outward Cash Flow (Minified)",
@@ -186,12 +186,12 @@ return [
     ],
     'religion-list' => ["HINDU","MUSLIM","CHRISTIAN","SIKH","BUDDHIST","JAIN","OTHER","ATHIEST"],
 
-    'transport_bulk_operation-list' => [
+    'transport-bulk-operation-list' => [
                         "view:detail"		=>	"View Detail",
                         "op:remove"			=>	"Delete",
                         "op:restore"		=>	"Restore"
     ],
-    'exam_type-list' => [
+    'exam-type-list' => [
                         "annual"		=>	"Annual",
                         "half-yearly"	=>	"Half Yearly",
                         "quarterly"		=>	"Quarterly",
@@ -199,7 +199,7 @@ return [
                         "weekly"		=>	"Weekly",
                         "other"			=>	"Other"
     ],
-    'affiliation_board-json' => [
+    'affiliation-board' => [
                         "other"				=>	"OTHER",
                         "cbse"				=>	"CBSE",
                         "icse"				=>	"ICSE",
@@ -207,26 +207,26 @@ return [
                         "rajasthan_baord"	=>	"RAJASTHAN BOARD",
                         "dbrau"				=>	"DBRAU"
     ],
-    'student_cash_report_type-list' => [
+    'student-cash-report-type-list' => [
                         "minified"				=>	"Total Paid Amount (Minified)",
                         "detailed-all-fee"		=>	"Total Paid Amount (Detailed Fee)",
                         "detailed-regular-fee"	=>	"Total Paid Amount (Detailed Regular Fee)"
     ],
-    'student_cash_report_subtype-list' => [
+    'student-cash-report-subtype-list' => [
                         "all"				=>	"Complete Report",
                         'dues-only'			=>	"Student with Dues",
                         "fully-paid"		=>	"Students with Full Payment Done",
                         'none-paid'			=>	"Students with No Payment Done",
                         'concession-given'	=>	"Concession Given"
     ],
-    'sort_cash_results_by-list' => [
+    'sort-cash-results-by-list' => [
                         "date"					=>	"Date",
                         "cash_context_id"		=>	"Single Receipt No",
                         "cash_id"				=>	"Receipt No",
                         "payment_mode"			=>	"Payment Mode",
                         "fee_remark"			=>	"Remark"
     ],
-    'group_results_by-list' => [
+    'group-results-by-list' => [
                         "current_section"					=>	"SECTION",
                         "gender"							=>	"GENDER",
                         "category"							=>	"CATEGORY",
@@ -252,11 +252,11 @@ return [
                         "-7 days"	=>	"PAST 7 DAYS",
                         "+7 days"	=>	"NEXT 7 DAYS"
     ],
-    'student_resident_type-json' => [
+    'student-resident-type' => [
                         "day-scholar"		=>	"Day Scholar",
                         "hosteler"			=>	"Hosteler"
     ],
-    'sms_type-json' => [
+    'sms-type' => [
                         "registration_sms"	=>	"Registration SMS",
                         "sms_student_entry_new"		=>	"Admission SMS",
                         "birthday_sms"		=>	"Birthday SMS",
@@ -266,7 +266,7 @@ return [
                         "exammarks_sms"		=>	"Exam Marks SMS",
                         "custom_sms"		=>	"Custom SMS"
     ],
-    'student_module_document_upload_type-json' => [
+    'student-module-document-upload-type' => [
                         /*"logo"						=> "Logo",
                         "watermark"					=> "Watermark",
                         "cover-image"				=> "Cover Image",
@@ -275,7 +275,7 @@ return [
                         "cashier-signature"			=> "Cashier Signature",
                         "fee-structure"				=> "Fee Structure Excel"
     ],
-    'subject_type-json' => [
+    'subject-type' => [
                         "compulsory"	=>	"Compulsory",
                         "optional"		=>	"Optional"
     ]

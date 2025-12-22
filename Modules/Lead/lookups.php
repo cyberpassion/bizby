@@ -44,7 +44,7 @@ return [
     ],
 ],
 
-	"lead-message_text" => [
+	"lead-message-text" => [
                         "next_visit_date_scheduled|true"	=>	"Visit Scheduled Successfully",
                         "next_visit_date_scheduled|false"	=>	"Visit Scheduling Failed",
 	],
@@ -118,21 +118,21 @@ return [
 	],
 	"cronList-lead" => ['lead-followupreminders' => 'Lead Upcoming Followups'],
 
-	"mandatoryFields-lead_entry_update" => ['potential_client_name','potential_client_email','potential_client_mobile_number','next_date'],
+	"mandatoryFields-lead-entry-update" => ['potential_client_name','potential_client_email','potential_client_mobile_number','next_date'],
 
-	"dateFields-lead_entry_update" => ['contact_date','next_date'],
+	"dateFields-lead-entry-update" => ['contact_date','next_date'],
 
-	"additionalFields-lead_entry_update" => ['assigned_to'],
+	"additionalFields-lead-entry-update" => ['assigned_to'],
 
-	"mandatoryFields-lead_followup_entry_update" => ['thread_parent','contact_remark'],
+	"mandatoryFields-lead-followup-entry-update" => ['thread_parent','contact_remark'],
 
-	"dateFields-lead_followup_entry_update" => ['contact_followup_date'],
+	"dateFields-lead-followup-entry-update" => ['contact_followup_date'],
 
-	"mandatoryFields-lead_visitplanner_entry_update" => ['visit_by_id','next_visit_date'],
+	"mandatoryFields-lead-visitplanner-entry-update" => ['visit_by_id','next_visit_date'],
 
-	"dateFields-lead_visitplanner_entry_update" => ['next_visit_date'],
+	"dateFields-lead-visitplanner-entry-update" => ['next_visit_date'],
 
-	"listFilters-lead_list" => [
+	"listFilters-lead-list" => [
                         "admin"	=>	[
                             "category_filter"	=>	"Category/category/lead_category-json",
                             "date_filter"		=>	"Date/date/contact_date-json",
@@ -150,14 +150,14 @@ return [
                             "lead_response"		=>	"Response/contact_response/lead_contact_response-json",
                         ]
 	],
-	"listFilters-lead_followup-entry_update" => [
+	"listFilters-lead-followup-entry-update" => [
                         'admin' =>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/followup-entry/update"
                             ]
                         )
 	],
-	"listFilters-lead_lead-report_new" => [
+	"listFilters-lead-lead-report-new" => [
                         "admin"	=>	[
                             'report_type_filter'	=> "Report Type/report_type/lead_report_type-json",
                             'report_level_filter' 	=> "Progress/report_subtype/lead_progress_level-json",
@@ -169,7 +169,7 @@ return [
                             'report_response_filter' => "Response/report_subtype/lead_contact_response-json"
                         ]
 	],
-	"lead_document-json" => [
+	"lead-document" => [
 		                'proposal'					=> 'Proposal'
 	],
 	"permissionAdmin-lead" => [
@@ -224,7 +224,7 @@ return [
                             ],
                         ]
 	],
-	"formPrefills-lead_entry_new" => [
+	"formPrefills-lead-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -234,9 +234,9 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
 	],
-	"search_column-json" => ["potential_client_name","potential_client_mobile_number"],
+	"search-column" => ["potential_client_name","potential_client_mobile_number"],
 
-	"lead_contact_after-json" => [
+	"lead-contact-after" => [
 		                "1 days"	=>	"1 Day",
                         "4 days"	=>	"4 Days",
                         "7 days"	=>	"7 Days",
@@ -247,33 +247,33 @@ return [
                         "180 days"	=>	"6 Months",
                         "365 days"	=>	"1 Year"
 	],
-	"lead_bulk_operation-list" => [
+	"lead-bulk-operation-list" => [
                         "view:detail"			=>	"View Lead Details",
                         "send:email"			=>	"Send Email",
                         "send:sms"				=>	"Send SMS",
                         "op:remove"				=>	"Delete Lead",
                         "op:restore"			=>	"Restore Lead"
 	],
-	"lead_report_type-json" => [
+	"lead-report-type" => [
                         "contact_made"			=>	"Contact Made",
                         "followups_done"		=>	"Followups Done",
                         "no_followups"			=>	"No Followup Done",
                         "upcoming_followups"	=>	"Upcoming Followups",
                         "missed_followups"		=>	"Missed Followups"
 	],
-	"lead_progress_level-json" => [
+	"lead-progress-level" => [
 		                'UNDER DISCUSSION'	=>	'UNDER DISCUSSION',
                         'PROPOSAL SENT'		=>	'PROPOSAL SENT',
                         'FINAL DISCUSSION'	=>	'FINAL DISCUSSION',
                         'DATA ERROR'		=>	'DATA ERROR'
 	],
-	"lead_status-json" => [
+	"lead-status" => [
                         "1"		=>	"PROGRESS",
                         "12"	=>	"CLOSED",
                         "19"	=>	"LOST",
                         "2"		=>	"DELETED",
                         "11"	=>	"NC"
 	],
-	"advancedInfo_connectors-json" => ["canbe_assigned"	=>	true]
+	"advancedInfo-connectors" => ["canbe_assigned"	=>	true]
 
 ];

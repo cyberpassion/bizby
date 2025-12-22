@@ -77,13 +77,13 @@ return [
                         'selected_columns'	=>	['requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time']
      ],
      'cronList-meetingmanager' => ['meetingmanager-remindernotification' => 'Meeting Reminder'],
-     'mandatoryFields-meetingmanager_entry_update' => ['requested_by_name'],
+     'mandatoryFields-meetingmanager-entry-update' => ['requested_by_name'],
 
-     'dateFields-meetingmanager_entry_update' => ['meeting_date','meeting_exit_date'],
+     'dateFields-meetingmanager-entry-update' => ['meeting_date','meeting_exit_date'],
 
-     'additionalFields-meetingmanager_entry_update' => [],
+     'additionalFields-meetingmanager-entry-update' => [],
 
-     'listFilters-meetingmanager_list' => [
+     'listFilters-meetingmanager-list' => [
                         "admin"	=>	[
                              'meeting_head_filter' 	=> "Head/meeting_type/meeting_type-json",
                             'date_filter' 			=> "Date/meeting_date/meeting_date-json",
@@ -97,7 +97,7 @@ return [
                             'status_filter' 		=> "Status/status/status-json"
                         ]
     ],
-    'formPrefills-meetingmanager_entry_new' => [
+    'formPrefills-meetingmanager-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -107,12 +107,12 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'meetingmanager_document-json' => [
+    'meetingmanager-document' => [
                         'meetingmanager-slip'		=>	'Meeting Slip'
     ],
-    'meeting_priority-json' => [1,2,3,4,5],
+    'meeting-priority' => [1,2,3,4,5],
 
-    'meeting_manager_bulk_operation-list' => [
+    'meeting-manager-bulk-operation-list' => [
                         "view:detail"					=>	"Print Detail",
                         "document:slip"					=>	"Print Slip",
                         "op:remove"						=>	"Delete",

@@ -95,11 +95,11 @@ return [
         'announcement-notification' => 'Announcement Notification'
     ],
 
-    "mandatoryFields-announcement_entry_update" => ['announcement', 'recipients'],
+    "mandatoryFields-announcement-entry-update" => ['announcement', 'recipients'],
     "dateFields-announcement_entry_update"      => ['end_date'],
     "duplicacyCheckFields-announcement_entry_new"=> ['date', 'announcement'],
 
-    "listFilters-announcement_list" => [
+    "listFilters-announcement-list" => [
         "admin" => [
             'date_filter'                   => "Date/date/announcement_date-json",
             'announcement_category_filter' => "Catgory/category/announcement_category-json",
@@ -112,7 +112,7 @@ return [
         ]
     ],
 
-    "listFilters-announcement_detail_update" => [
+    "listFilters-announcement-detail-update" => [
         'admin' => [
             $pg => [
                 'Edit'         => "{$pg}/entry/update",
@@ -171,7 +171,7 @@ return [
         "report" => [["recipient" => '{$login_type}-{$byline}']]
     ],
 
-    "formPrefills-announcement_entry_new" => [
+    "formPrefills-announcement-entry-new" => [
         "columns" => [
             'product'       => 'default_product',
             'contact_mode'  => 'default_contact_mode',
@@ -182,11 +182,11 @@ return [
         ]
     ],
 
-    "announcement_bulk_operation-list" => [
+    "announcement-bulk-operation-list" => [
         "view:detail" => "View Detail",
         "op:remove"   => "Delete",
         "op:restore"  => "Restore"
     ],
 
-    "announcement_document_upload_type-json" => ["pdf"]
+    "announcement-document-upload-type" => ["pdf"]
 ];

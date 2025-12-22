@@ -91,15 +91,15 @@ return [
     ],
     'cronList-visitplanner' => ['visitplanner-scheduledvisits' => 'Scheduled Visits'],
 
-    'mandatoryFields-visitplanner_entry_update' => ['visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
+    'mandatoryFields-visitplanner-entry-update' => ['visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
 
-    'dateFields-visitplanner_entry_update' => ['date','visit_date'],
+    'dateFields-visitplanner-entry-update' => ['date','visit_date'],
 
-    'additionalFields-visitplanner_entry_update' => [],
+    'additionalFields-visitplanner-entry-update' => [],
 
-    'jsonFields-visitplanner_entry_update' => ['visit_team_member_json','visit_product'],
+    'jsonFields-visitplanner-entry-update' => ['visit_team_member_json','visit_product'],
 
-    'listFilters-avisitplanner_list' => [
+    'listFilters-avisitplanner-list' => [
                         "admin"	=>	[
                             'visitplanner_session_filter' => "Session/session/session-json",
                             'visitplanner_employee_filter' => "Employee/visit_by_id/employee_id-json",
@@ -120,7 +120,7 @@ return [
                         "list"   => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
                         "report" => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]]
     ],
-    'formPrefills-visitplanner_entry_new' => [
+    'formPrefills-visitplanner-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -130,29 +130,29 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'visitplanner_expectation-json' => [
+    'visitplanner-expectation' => [
                         "high"		=>	"High",
                         "average"	=>	"Average",
                         "low"		=>	"Low"
     ],
-    'visitplanner_status-json' => [
+    'visitplanner-status' => [
                         "1"		=>	"Active",
                         "11"	=>	"Postponed",
                         "2"		=>	"Deleted",
                         "21"	=>	"Cancelled"
     ],
-    'visitplanner_visitactivity_generation_status-json' => [
+    'visitplanner-visitactivity-generation-status' => [
                         'all'	=>	"All",
                         '1'		=>	"VAR Generated",
                         '2'		=>	"Pending VAR"
     ],
-    'visitplanner_week_name-json' => ["week-1","week-2","week-3","week-4","week-5"],
+    'visitplanner-week-name' => ["week-1","week-2","week-3","week-4","week-5"],
 
-    'sort_visitplanner_results_by-list' => [
+    'sort-visitplanner-results-by-list' => [
                         'datetime'			=>	"Date & Time",
                         'expectedexpense'	=>	"Expected Expense"
     ],
-    'visitplanner_bulk_operation-list' => [
+    'visitplanner-bulk-operation-list' => [
                         "view:detail"		=>	"View Visit Planner Details",
                         "send:email"		=>	"Send Email",
                         "send:sms"			=>	"Send SMS",

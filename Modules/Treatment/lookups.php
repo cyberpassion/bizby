@@ -84,13 +84,13 @@ return [
                         'sample_export'		=>	['sno', 'treatment_date', 'treatment_time', 'observedby', 'observation', 'treatment_given', 'treatment_remark'],
                         'selected_columns'	=>	['treatment_date', 'treatment_time', 'observedby', 'observation', 'treatment_given', 'treatment_remark']
     ],
-    'mandatoryFields-treatment_entry_update' => [],
+    'mandatoryFields-treatment-entry-update' => [],
 
-    'dateFields-treatment_entry_update' => ['treatment_date'],
+    'dateFields-treatment-entry-update' => ['treatment_date'],
 
-    'additionalFields-treatment_entry_update' => [],
+    'additionalFields-treatment-entry-update' => [],
 
-    'listFilters-treatment_list' => [
+    'listFilters-treatment-list' => [
                         "admin"	=>	[
                             'treatment_date_filter' => "Date/treatment_date/treatment_entry_date-json",
                             'treatment_nextdate_filter' => "Next Date/next_date/treatment_next_entry_date-json",
@@ -106,7 +106,7 @@ return [
                             'treatment_status_filter' => "Status/status/treatment_status-json"
                         ]
     ],
-    'formPrefills-treatment_entry_new' => [
+    'formPrefills-treatment-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -116,24 +116,24 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'treatment_status-json' => [
+    'treatment-status' => [
                         '1'		=>	'Active',
                         '2'		=>	'Deleted',
                         '21'	=>	'Departed'
     ],
-    'treatment_type-json' => ["treatment","test","room-allotment"],
+    'treatment-type' => ["treatment","test","room-allotment"],
 
-    'treatment_report_type-json' => [
+    'treatment-report-type' => [
                         "stock"			=>	"All Treatment List",
                         "treatment"		=>	"Patient Treatment"
     ],
-    'treatment_bulk_operation-list' => [
+    'treatment-bulk-operation-list' => [
                         "document:treatment_detail"		=>	"Print Treatment Details",
                         "send:sms"						=>	"Send Treatment SMS",
                         "send:email"					=>	"Send Treatment Email",
                         "op:remove"						=>	"Delete Treatment Entry",
                         "op:restore"					=>	"Restore Treatment Entry"
     ],
-    'treatment_unit-json' => ["unit"	=>	"Sample"]
+    'treatment-unit' => ["unit"	=>	"Sample"]
 
 ];

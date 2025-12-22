@@ -173,17 +173,17 @@ return [
                         'stock-entry'		=>	['item_name', 'category', 'isbn', 'publication', 'available_quantity','allotted_quantity','total_quantity', 'status']
     ],
     'cronList-library' => ['library-itemreturnnotification' => 'Library Item Return Notification'],
-    'mandatoryFields-library_entry_update' => ['item_name'],
-    'dateFields-library_entry_update' => ['publishing_date'],
-    'additionalFields-library_entry_update' => [],
+    'mandatoryFields-library-entry-update' => ['item_name'],
+    'dateFields-library-entry-update' => ['publishing_date'],
+    'additionalFields-library-entry-update' => [],
 
-    'mandatoryFields-library_item-allotment-entry_update' => ['selected-ids1', 'selected-ids2'],
+    'mandatoryFields-library-item-allotment-entry-update' => ['selected-ids1', 'selected-ids2'],
 
-    'dateFields-library_item-allotment-entry_update' => ['allotment_date', 'scheduled_return_date'],
+    'dateFields-library-item-allotment-entry-update' => ['allotment_date', 'scheduled_return_date'],
 
-    'additionalFields-library_item-allotment-entry_update' => [],
+    'additionalFields-library-item-allotment-entry-update' => [],
 
-    'listFilters-library_book_list' => [
+    'listFilters-library-book-list' => [
                         "admin"	=>	[
                             'entity_type_filter' => 'Entity Type/entity_type/library_entity_type-json',
                             'language_filter' => 'Language/language/language-json',
@@ -197,7 +197,7 @@ return [
     
                         ]
     ],
-    'listFilters-library_item' => [
+    'listFilters-library-item' => [
                         "admin"	=>	[
                             'item_filter'	=>	"Item/item_id/library_item-json"
                         ],
@@ -205,7 +205,7 @@ return [
                             'item_filter'	=>	"Item/item_id/library_item-json"
                         ]
     ],
-    'listFilters-library_penalty-entry_new' => [
+    'listFilters-library-penalty-entry-new' => [
                         "admin"	=>	[
                             'session_filter one' => 'Session/session/session-json',
                             'status_filter' => 'Status/status/status-json',
@@ -217,35 +217,35 @@ return [
     
                         ]
     ],
-    'library_entity_type-json' => [
+    'library-entity-type' => [
                         'book'		=>	'Book',
                         'magazine'	=>	'Magazine',
                         'newspaper'	=>	'Newspaper',
                         'journal'	=>	'Journal'
     ],
-    'library_book_average_rating-json' => [1,2,3,4,5],
+    'library-book-average-rating' => [1,2,3,4,5],
     
-    'item_recipient_type-json' => ['student' => "Student", 'employee' => "Teacher/Employee"],
+    'item-recipient-type' => ['student' => "Student", 'employee' => "Teacher/Employee"],
 
-    'library_book_status-json' => ['1' => 'AVAILABLE', '2' => 'NOT-AVAILABLE'],
+    'library-book-status' => ['1' => 'AVAILABLE', '2' => 'NOT-AVAILABLE'],
 
-    'item_allotment_type-json' => ["item" => "Single/Multiple Item"],
+    'item-allotment-type' => ["item" => "Single/Multiple Item"],
 
-    'item_allotment_status-json' => ["all" => "All", "pending_return" => "Pending Return", "pending_return-overdue" => "Return Overdue", "late-return" => "Late Return"],
+    'item-allotment-status' => ["all" => "All", "pending_return" => "Pending Return", "pending_return-overdue" => "Return Overdue", "late-return" => "Late Return"],
 
-    'sort_library_results_by-list' => [
+    'sort-library-results-by-list' => [
                         "item_name"			=>	"ITEM NAME",
                         "date"				=>	"ENTRY DATE",
                         "datetime"			=>	"ENTRY DATETIME"
     ],
-    'library_bulk_operation-list' => [
+    'library-bulk-operation-list' => [
                         "send:email"		=>	"Send Email",
                         "send:sms"			=>	"Send SMS",
     ],
-    'library_book_bulk_operation-list' => [
+    'library-book-bulk-operation-list' => [
                         "view:details"					=>	"View Details"
     ],
-    'library_penalty_amount_type-json' => [
+    'library-penalty-amount-type' => [
                         "flat"					=>	"Flat Value",
                         "per-day"				=>	"Per Day",
     ],

@@ -35,9 +35,9 @@ return [
     // ===================================================================
     // User Module List Filters
     // ===================================================================
-    "listFilters-user_entry_update" =>
-    "listFilters-user_list_update" =>
-    "listFilters-user_detail_update" => (function () {
+    "listFilters-user-entry-update" =>
+    "listFilters-user-list-update" =>
+    "listFilters-user-detail-update" => (function () {
         $pg = \v3\C\user::$pg;
         return [
             'admin' => [
@@ -61,18 +61,18 @@ return [
     // ===================================================================
     // Primary Modules / ERPs
     // ===================================================================
-    "cyperp-json" =>
-    "primarymodule-json" => \v3\M\Option\Core::get_available_primary_module_names(),
+    "cyperp" =>
+    "primarymodule" => \v3\M\Option\Core::get_available_primary_module_names(),
 
     // ===================================================================
     // Login Types
     // ===================================================================
-    "login_type-json" => array_keys(\v3\C\Module::get_all_allowed_logins()),
+    "login-type" => array_keys(\v3\C\Module::get_all_allowed_logins()),
 
     // ===================================================================
     // Business Types
     // ===================================================================
-    "business_type-json" => [
+    "business-type" => [
         "individual"               => "Individual",
         "school"                   => "School",
         "college"                  => "College",
@@ -138,7 +138,7 @@ return [
     // ===================================================================
     // Option Names (excluding is_* flags)
     // ===================================================================
-    "option_name-json" => (function () {
+    "option-name" => (function () {
         $allOptions = \v3\C\Settings::reformat_values_for_prefill(\v3\M\Option\Module::get());
         $res = ['Select'];
         foreach (array_keys($allOptions) as $optionName) {
@@ -152,7 +152,7 @@ return [
     // ===================================================================
     // Themes
     // ===================================================================
-    "theme-json" => [
+    "theme" => [
         "#3f51b5"       => "DEFAULT BLUE",
         "orangered"     => "ORANGE RED",
         "deepskyblue"   => "SKY BLUE",
@@ -181,7 +181,7 @@ return [
     // ===================================================================
     // Indian States (uppercase values)
     // ===================================================================
-    "indian_state-json" => array_map('strtoupper', [
+    "indian-state" => array_map('strtoupper', [
         "AP" => "Andhra Pradesh",
         "AR" => "Arunachal Pradesh",
         "AS" => "Assam",
@@ -223,7 +223,7 @@ return [
     // ===================================================================
     // Indian State → Districts
     // ===================================================================
-    "indian_state_district-json" => [
+    "indian-state-district" => [
         'AN'=>['name'=>'ANDAMAN AND NICOBAR ISLAND (UT)','districts'=>['NICOBAR','NORTH AND MIDDLE ANDAMAN','SOUTH ANDAMAN']],
         'AP'=>['name'=>'ANDHRA PRADESH','districts'=>['ANANTAPUR','CHITTOOR','EAST GODAVARI','GUNTUR','KRISHNA','KURNOOL','PRAKASAM','SRIKAKULAM','SRI POTTI SRIRAMULU NELLORE','VISAKHAPATNAM','VIZIANAGARAM','WEST GODAVARI','YSR DISTRICT,KADAPA (CUDDAPAH)']],
         'AR'=>['name'=>'ARUNACHAL PRADESH','districts'=>['ANJAW','CHANGLANG','DIBANG VALLEY','EAST KAMENG','EAST SIANG','KRA DAADI','KURUNG KUMEY','LOHIT','LONGDING','LOWER DIBANG VALLEY','LOWER SIANG','LOWER SUBANSIRI','NAMSAI','PAPUM PARE','SIANG','TAWANG','TIRAP','UPPER SIANG','UPPER SUBANSIRI','WEST KAMENG','WEST SIANG']],
@@ -265,7 +265,7 @@ return [
     // ===================================================================
     // Country Mobile Codes
     // ===================================================================
-    "country_mobile_code-json" => [
+    "country-mobile-code" => [
         '44' => 'UK (+44)', '1' => 'USA (+1)', '213' => 'Algeria (+213)', '376' => 'Andorra (+376)', '244' => 'Angola (+244)',
         '1264' => 'Anguilla (+1264)', '1268' => 'Antigua & Barbuda (+1268)', '54' => 'Argentina (+54)', '374' => 'Armenia (+374)',
         '297' => 'Aruba (+297)', '61' => 'Australia (+61)', '43' => 'Austria (+43)', '994' => 'Azerbaijan (+994)',
@@ -324,24 +324,24 @@ return [
     // ===================================================================
     // Miscellaneous
     // ===================================================================
-    "blood_group-json"           => ["","A+","A-","B+","B-","AB+","AB-","O+","O-"],
+    "blood-group"           => ["","A+","A-","B+","B-","AB+","AB-","O+","O-"],
     "month-list"                 => ["january"=>"January","february"=>"February","march"=>"March","april"=>"April","may"=>"May","june"=>"June","july"=>"July","august"=>"August","september"=>"September","october"=>"October","november"=>"November","december"=>"December"],
-    "month-json"                 => ["01"=>"January","02"=>"February","03"=>"March","04"=>"April","05"=>"May","06"=>"June","07"=>"July","08"=>"August","09"=>"September","10"=>"October","11"=>"November","12"=>"December"],
+    "month"                 => ["01"=>"January","02"=>"February","03"=>"March","04"=>"April","05"=>"May","06"=>"June","07"=>"July","08"=>"August","09"=>"September","10"=>"October","11"=>"November","12"=>"December"],
     "weekday-list"               => ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'],
     "date-list" => "month_day-list" => array_combine(range(1,31), array_map(fn($i)=>"{$i} d", range(1,31))),
     "hour-list"                  => array_combine(array_map(fn($i)=>str_pad($i,2,0,STR_PAD_LEFT), range(0,24)), array_map(fn($i)=>str_pad($i,2,0,STR_PAD_LEFT).' hr', range(0,24))),
     "minute-list"                => range(1,59),
     "bdayfilter-list"            => ["today"=>"BDAY TODAY","tomorrow"=>"BDAY TOMORROW","-7 days"=>"PAST 7 DAYS","+7 days"=>"NEXT 7 DAYS"],
-    "report_display_type-json"   => ["tabled"=>"Tabled"],
-    "status-json"                => ["1"=>"ACTIVE","2"=>"DELETED"],
-    "yes_no-json"                => ['true'=>'Yes','false'=>'No'],
-    "boolean-json"               => [true=>'Yes',false=>'No'],
-    "year-json"                  => range(2000, 2049),
+    "report-display-type"   => ["tabled"=>"Tabled"],
+    "status"                => ["1"=>"ACTIVE","2"=>"DELETED"],
+    "yes-no"                => ['true'=>'Yes','false'=>'No'],
+    "boolean"               => [true=>'Yes',false=>'No'],
+    "year"                  => range(2000, 2049),
 
     // ===================================================================
     // Term Tags (Active terms only)
     // ===================================================================
-    "term_tag-json" => (function () {
+    "term-tag" => (function () {
         $allTags = \Db::get(\v3\M\Term::$table, ['status' => 1]);
         return $allTags
             ? create_key_value_pair($allTags, 'term_name', 'term_name')
@@ -370,24 +370,24 @@ return [
         'selected_columns' => ['username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status']
     ],
 
-    // ===================================================================
-    // Admin Permissions - User Module
-    // ===================================================================
-    "permissionAdmin-user" => (function () {
+     // ===================================================================
+     // Admin Permissions - User Module
+      // ===================================================================
+      "permissionAdmin-user" => (function () {
         $pg = \v3\C\User::$pg;
         return [
             'restricted' => [
                 '2' => [
                     ['pg' => $pg, 'sub_pg' => 'entry'],
                     ['pg' => $pg, 'sub_pg' => 'list'],
-                ],
+                 ],
                 '3' => [
                     ['pg' => $pg, 'sub_pg' => 'entry'],
-                    ['pg' => $pg, 'sub_pg' => 'list']
-                ]
-            ]
-        ];
-    })(),
+                      ['pg' => $pg, 'sub_pg' => 'list']
+                 ]
+              ]
+        ]; 
+    })(),  
 
     // ===================================================================
     // Admin Permissions - Permission Module
@@ -405,16 +405,16 @@ return [
             ]
         ];
     })(),
-
+ 
     // ===================================================================
     // Column Name Mapping - Term & Generic Module
     // ===================================================================
-    "columnNameMapping-module" =>
-    "columnNameMapping-terms" => [
-        'ptr'       => 'SNo',
-        'term_id'   => 'ID',
-        'term_name' => 'Name',
-    ],
+      "columnNameMapping-module" =>
+     "columnNameMapping-terms" => [
+          'ptr'       => 'SNo',
+         'term_id'   => 'ID',
+         'term_name' => 'Name',
+    ], 
 
     // ===================================================================
     // Default Columns - Term Module

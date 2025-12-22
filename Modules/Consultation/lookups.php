@@ -47,7 +47,7 @@ return [
 ],
 
 	'consultation-mode'	=>	['call'=>'Call'],
-    'consultation-status' => [
+    'consultation_status' => [
         1 => 'Active',
         2 => 'Deleted',
     ],
@@ -141,30 +141,30 @@ return [
         'consultation-visitreminder' => 'Consultation Visit Reminder'
     ],
 
-    'mandatoryFields-consultation-entry' => ['patient_name','phone_number','age','consultation_date'],
+    'mandatoryFields-consultation_entry' => ['patient_name','phone_number','age','consultation_date'],
 
-    'dateFields-consultation-entry' => ['dob','consultation_date'],
+    'dateFields-consultation_entry' => ['dob','consultation_date'],
 
-    'mandatoryFields-consultation-followup-entry' => ['thread_parent'],
+    'mandatoryFields-consultation_followup-entry' => ['thread_parent'],
 
-    'dateFields-consultation-followup-entry' => ['consultation_date'],
+    'dateFields-consultation_followup-entry' => ['consultation_date'],
 
-    'jsonFields-consultation-entry' => ["consultation_for"],
+    'jsonFields-consultation_entry' => ["consultation_for"],
 
-    'listFilters-consultation-list' => [
+    'listFilters-consultation_list' => [
         "admin" => [
-            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date",
-            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date",
-            'consultation_with_filter one' => "Doctor/consultation_with/employee_id",
-            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode",
-            'consultation_status_filter' => "Status/status/consultation_status"
+            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
+            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
+            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
+            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
+            'consultation_status_filter' => "Status/status/consultation_status-json"
         ],
         "portal" => [
-            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date",
-            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date",
-            'consultation_with_filter one' => "Doctor/consultation_with/employee_id",
-            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode",
-            'consultation_status_filter' => "Status/status/consultation_status"
+            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
+            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
+            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
+            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
+            'consultation_status_filter' => "Status/status/consultation_status-json"
         ]
     ],
 
@@ -189,12 +189,12 @@ return [
         ]
     ],
 
-    'consultation_consultation-report' => [
+    'consultation-consultation-report' => [
         "admin" => [
-            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with"
+            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
         ],
         "portal" => [
-            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with"
+            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
         ]
     ],
 
@@ -265,7 +265,7 @@ return [
 
     'treatment-type' => ["consultation","test","room-allotment"],
 
-    'consultation-bulk_operation-list' => [
+    'consultation-bulk-operation-list' => [
         "document:consultation-slip" => "Print Consultation Slip",
         "send:sms"                   => "Send Consultation SMS",
         "send:email"                 => "Send Consultation Email",

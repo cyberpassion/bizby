@@ -94,19 +94,19 @@ return [
                         "cyp_coupon",
                         "cyp_notification"
     ],
-    'mandatoryFields-subscription_entry_update' => [],
+    'mandatoryFields-subscription-entry-update' => [],
 
-    'dateFields-subscription_entry_update' => ['start_date','end_date'],
+    'dateFields-subscription-entry-update' => ['start_date','end_date'],
 
-    'additionalFields-subscription_entry_update' => [],
+    'additionalFields-subscription-entry-update' => [],
 
-    'mandatoryFields-subscription_plan-entry_update' => ["plan_name","plan_pricing"],
+    'mandatoryFields-subscription-plan-entry-update' => ["plan_name","plan_pricing"],
 
-    'dateFields-subscription_plan-entry_update' => [],
+    'dateFields-subscription-plan-entry-update' => [],
 
-    'additionalFields-subscription_plan-entry_update' => [],
+    'additionalFields-subscription-plan-entry-update' => [],
 
-    'listFilters-subscription_list' => [
+    'listFilters-subscription-list' => [
                         "admin"	=>	[
                             'nextdate' 						=> "Next Date/range-next_date/filter_date_range-json",
                             'subscription_plan'				=> "Plan/subscription_plan_id/subscription_plan-json",
@@ -120,7 +120,7 @@ return [
                             'subsciption_status_filter'		=> "Status/status/status-json"
                         ]
     ],
-    'listFilters-subscription_plan-list' => [
+    'listFilters-subscription-plan-list' => [
                         "admin"	=>	[
                             'subscription_plan_type'		=> "Plan Type/plan_type/subscription_plan_type-json",
                             'subsciption_status_filter'		=> "Status/status/status-json"
@@ -130,23 +130,23 @@ return [
                             'subsciption_status_filter'		=> "Status/status/status-json"
                         ]
     ],
-    'subscription_plan_duration-json' => [
+    'subscription-plan-duration' => [
                         '365'	=>  'Yearly',
                         '30'	=>  'Monthly'
     ],
-    'subscription_plan_type-json' => [
+    'subscription-plan-type' => [
                         'standalone'	=>	'Standalone',
                         'addon'			=>	'Addon'
     ],
-    'subscription_status-json' => [
+    'subscription-status' => [
                         1	=>	'Active',
                         2	=>	'Suspended'
     ],
-    'subscription_report_type-json' => [
+    'subscription-report-type' => [
                         "plan"			=>	"All Subscription List",
                         "purchases"		=>	"Subscription Purchases"
     ],
-    'subscription_bulk_operation-list' => [
+    'subscription-bulk-operation-list' => [
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
     ]

@@ -74,7 +74,7 @@ return [
 					'sample_export'		=>	['sno', 'timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status'],
 					'selected_columns'	=>	['timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status']
      ],
-     'listFilters-timetable_list' => [
+     'listFilters-timetable-list' => [
 					"admin"	=>	[
     					'current_session_filter' => "Session/session/session-json",
     					'current_class_filter' => "Class/class/class-json",
@@ -88,12 +88,12 @@ return [
     					'status_filter' => "Status/status/status-json"
 					]
     ],
-    'timetable_bulk_operation-list' => [
+    'timetable-bulk-operation-list' => [
 					"view:detail"		=>	"View Detail",
 					"op:remove"			=>	"Delete",
 					"op:restore"		=>	"Restore"
     ],
-    'formPrefills-timetable_entry_new' => [
+    'formPrefills-timetable-entry-new' => [
 					"columns"	=>	[
 						'product'		=>	'default_product',
 						'contact_mode'	=>	'default_contact_mode',
@@ -103,10 +103,10 @@ return [
 						'current_date'	=>	['contact_date']
 					]
     ],
-    'mandatoryFields-timetable_entry_update' => ['module','timetable_official_name','timetable_official_address','timetable_official_email','timetable_official_phone','send_notification_message'],
+    'mandatoryFields-timetable-entry-update' => ['module','timetable_official_name','timetable_official_address','timetable_official_email','timetable_official_phone','send_notification_message'],
 
-    'dateFields-timetable_entry_update' => [],
+    'dateFields-timetable-entry-update' => [],
 
-    'additionalFields-timetable_entry_update' => []
+    'additionalFields-timetable-entry-update' => []
 
 ];

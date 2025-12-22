@@ -148,15 +148,15 @@ return [
     ],
     "cronList-cashflow" => ['cashflow-daycashreport' => 'Day Cash Report Message'],
 
-    "mandatoryFields-cashflow_entry_update" => ['date','paid','remark'],
+    "mandatoryFields-cashflow-entry-update" => ['date','paid','remark'],
 
-    "dateFields-cashflow_entry_update" => ['date'],
+    "dateFields-cashflow-entry-update" => ['date'],
 
-    "mandatoryFields-cashflow_payment-entry_update" => ['date','paid'],
+    "mandatoryFields-cashflow-payment-entry-update" => ['date','paid'],
 
-    "dateFields-cashflow_payment-entry_update" => ['date'],
+    "dateFields-cashflow-payment-entry-update" => ['date'],
 
-    "listFilters-cashflow_online-payment-list" => [
+    "listFilters-cashflow-online-payment-list" => [
                         "admin"	=>	[
                             'cash_context_filter' => "Cash Context/cash_context/cashflow_context_onlinepayment-json",
                             'date_filter' => "Date/date/cashflow_date-json",
@@ -168,7 +168,7 @@ return [
                                'status_filter' => "Status/status/status-json"
                         ]
     ],
-    "listFilters-cashflow_detail_update" => [
+    "listFilters-cashflow-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Print Voucher'	=>	"{$pg}/payment-voucher",
@@ -180,7 +180,7 @@ return [
                         ),
                         'portal' => []
     ],
-    "listFilters-cashflow_cashflow-report_new" => [
+    "listFilters-cashflow-cashflow-report-new" => [
                         "admin"	=>	[
                             'cashflow_report_type_filter'	=> "Report Type/cash_type/cashflow_report_type-json"
                         ],
@@ -239,7 +239,7 @@ return [
                             ]
                         ]
     ],
-    "formPrefills-cashflow_entry_new" => [
+    "formPrefills-cashflow-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -249,24 +249,24 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'cashflow_type-json' => [
+    'cashflow-type' => [
                         'expense'	=>	'expense',
                         'income'	=>	'income'
     ],
-    "search_column-json" => ['cash_id', 'remark', 'fee_remark', 'cash_type_remark', 'additional_info'],
+    "search-column" => ['cash_id', 'remark', 'fee_remark', 'cash_type_remark', 'additional_info'],
 
-    "cashflow_bulk_operation-list" => [
+    "cashflow-bulk-operation-list" => [
                         "print_voucher"			=>	"Print Voucher",
                         "view:detail"			=>	"View Detail",
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
     ],
-    "online_payment_update_duration-json" => [
+    "online-payment-update-duration" => [
                         "instant"				=>	"Autocapture",
                         "24 hours"				=>	"1 Working Day",
                         "48 hours"				=>	"2 Working Days",
                         "48-72 hours"			=>	"2-3 Working Days"
     ],
-    "cashflow_report_type-json" => ["income"=>"Income","expense"=>"Expense","all"=>"Income vs Expense"]
+    "cashflow-report-type" => ["income"=>"Income","expense"=>"Expense","all"=>"Income vs Expense"]
 
 ];

@@ -79,13 +79,13 @@ return [
     ],
     "interactiveEntity-contact" => ['contact'],
 
-    "mandatoryFields-contact_entry_update" => ['contact_name','phone_number'],
+    "mandatoryFields-contact-entry-update" => ['contact_name','phone_number'],
 
-    "dateFields-contact_entry_update" => ['dob','next_date'],
+    "dateFields-contact-entry-update" => ['dob','next_date'],
 
-    "duplicacyCheckFields-contact_entry_new" => ['phone_number'],
+    "duplicacyCheckFields-contact-entry-new" => ['phone_number'],
 
-    "listFilters-contact_list" => [
+    "listFilters-contact-list" => [
                         "admin"	=>	[
                              'sort' 		=> "Contact Type/contact_type/business_type-json",
                             'state' 	=> "State/state/indian_state-json",
@@ -99,7 +99,7 @@ return [
                             'status' 	=> "Status/status/contact_status-json"
                         ]
     ],
-    "listFilters-contact_detail_update" => [
+    "listFilters-contact-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Profile'		=>	"{$pg}/profile",
@@ -111,7 +111,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-contact_contact-report_new" => [
+    "listFilters-contact-contact-report-new" => [
                         "admin"	=>	[
                             'report_type_filter'	=> "Report Type/report_type/contact_type-json",
                             'status_filter'			=> "Status/status/contact_status-json"
@@ -151,7 +151,7 @@ return [
                         "list"		=>	[[ "contact_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "contact_id"	=>	'{$login_id}' ]]
     ],
-    "formPrefills-contact_entry_new" => [
+    "formPrefills-contact-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -161,20 +161,20 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    "contact_search_column-json" => ["contact_name","phone_number"],
+    "contact-search-column" => ["contact_name","phone_number"],
 
-    'contact_group_results_by-json' => [
+    'contact-group-results-by' => [
                         'contact_type'						=>	'CUSTOMER TYPE',
                         'status'							=>	'STATUS'
     ],
-    'contact_sort_results_by-json' => [
+    'contact-sort-results-by' => [
                         'contact_name'						=>	'CUSTOMER NAME',
                         'contact_id'						=>	'id'
     ],
-    'contact_group_results_display_type-json' => [
+    'contact-group-results-display-type' => [
                         'complete_list'						=>	'COMPLETE LIST'
     ],
-    "contact_bulk_operation-list" => [
+    "contact-bulk-operation-list" => [
                         "view:detail"	=>	"View Contact Details",
                         "op:remove"		=>	"Delete",
                         "op:restore"	=>	"Restore"

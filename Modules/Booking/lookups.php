@@ -228,25 +228,25 @@ return [
     ],
     "interactiveEntity-booking" => ['booking'],
 
-    "mandatoryFields-booking_building-entry_new" => ['building_name'],
+    "mandatoryFields-booking_building-entry-new" => ['building_name'],
 
-    "mandatoryFields-booking_building-entry_update" => ['building_id'],
+    "mandatoryFields-booking-building-entry-update" => ['building_id'],
 
-    "dateFields-booking_entry_update" => ['date'],
+    "dateFields-booking-entry-update" => ['date'],
 
-    "duplicacyCheckFields-booking_slot-entry_new" => ['building_id', 'slot_name'],
+    "duplicacyCheckFields-booking-slot-entry-new" => ['building_id', 'slot_name'],
 
-    "mandatoryFields-booking_slot-entry_update" => ['building_id','slot_type','slot_type','day_cost'],
+    "mandatoryFields-booking-slot-entry-update" => ['building_id','slot_type','slot_type','day_cost'],
 
-    "mandatoryFields-booking_quickdeallot-entry_update" => ['checkout_datetime'],
+    "mandatoryFields-booking-quickdeallot-entry-update" => ['checkout_datetime'],
 
-    "dateFields-booking_transfer_entry_update" => ['booking_date'],
+    "dateFields-booking-transfer-entry-update" => ['booking_date'],
 
-    "dateFields-booking_quickdeallot-entry_update" => ['booking_datetime'],
+    "dateFields-booking-quickdeallot-entry-update" => ['booking_datetime'],
 
-    "mandatoryFields-booking-building_entry_update" => ['building_name'],
+    "mandatoryFields-booking-building-entry-update" => ['building_name'],
 
-    "listFilters-booking_building_list" => [
+    "listFilters-booking-building-list" => [
                         "admin"	=>	[
                             'building_id_filter' => "Building/building_id/building-json",
                         ],
@@ -254,7 +254,7 @@ return [
                             'building_id_filter' => "Building/building_id/building-json",
                         ]
     ],
-    "listFilters-booking_entry_new" => [
+    "listFilters-booking-entry-new" => [
                         "admin"	=>	[
                             'booking_type_filter' 	=> "Booking Type/booking_type/booking_type-json",
                             'booking_status_filter' => "Status/status/booking_status-json",
@@ -265,7 +265,7 @@ return [
                             'booking_status_filter' => "Status/status/booking_status-json",
                         ]
     ],
-    "listFilters-booking_building-entry" => [
+    "listFilters-booking-building-entry" => [
                         "admin"	=>	[
                             'booking_allotment_filter' => "Building/building_id/building-json",
                             'building_status_filter' => "Status/status/building_status-json",
@@ -275,7 +275,7 @@ return [
                             'building_status_filter' => "Status/status/building_status-json",
                         ]
     ],
-    "listFilters-booking_building-detail_update" => [
+    "listFilters-booking-building-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/building-entry/update",
@@ -289,7 +289,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-booking_listing-detail_update" => [
+    "listFilters-booking-listing-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/slot-entry/update",
@@ -299,7 +299,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-booking_slot-detail_update" => [
+    "listFilters-booking-slot-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/slot-entry/update",
@@ -309,7 +309,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-booking_allotment-entry_update" => [
+    "listFilters-booking-allotment-entry-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
                                 'Edit'			=>	"{$pg}/allotment-entry/update",
@@ -317,7 +317,7 @@ return [
                             ]
                         )
     ],
-    "listFilters-booking_booking-report_new" => [
+    "listFilters-booking-booking-report-new" => [
                         "admin"	=>	[
                             'booking_allotment_filter' 			=> "Building/building_id/building-json",
                             'report_booking_type_filter'		=> "Booking Type/booking_type/booking_type-json",
@@ -359,55 +359,55 @@ return [
                         "list"   => [[ "phone_number" => '{$phone_number}' ]],
                         "report" => [[ "phone_number" => '{$phone_number}' ]]
     ],
-    "jsonFields-booking-building_entry" => ['building_employee'],
+    "jsonFields-booking-building-entry" => ['building_employee'],
 
     "interactiveEntity-booking" => ['booking'],
 
-    "booking_status-json" => [
+    "booking-status" => [
                         '1'		=>	'Active',
                         '11'	=>	'Expected',
                         '2'		=>	'Departed',
                         '21'	=>	'Cancelled'
     ],
-    "booking_single_day_count_rule-json" => [
+    "booking-single-day-count-rule" => [
                         "default"	=>	"As per Checkin and Checkout Time",
                         "12-hours"	=>	"12 Hours",
                         "24-hours"	=>	"24 Hours"
     ],
-    "booking_single_unit-json" => [
+    "booking-single-unit" => [
                         'day',
                         'hour',
                         'minute'
     ],
-    "booking_fee_type-json" => ['total' => 'Total', 'per-day' => 'Per Day'],
+    "booking-fee-type" => ['total' => 'Total', 'per-day' => 'Per Day'],
 
-    "booking_document-json" => [
+    "booking-document" => [
                         'booking-invoice'			=>	'Booking Invoice',
                         'booking-confirmation-slip'	=>	'Booking Confirmation Slip'
     ],
-    "booking_type-json" => [
+    "booking-type" => [
                         ""			=>	"Select",
                         "regular"	=>	"Regular Booking",
                         "scheduled"	=>	"Scheduled Booking"
     ],
-    "booking_status-json" => [
+    "booking-status" => [
                         "1"			=>	"Confirmed",
                         "11"		=>	"Not Confirmed"
     ],
-    "booking_availability_status-json" => [
+    "booking-availability-status" => [
                         "1"			=>	"Available",
                         "11"		=>	"Partially Available",
                         "2"			=>	"Not Available",
                         "all"			=>	"All"
     ],
-    "cash_report_type-list" => [
+    "cash-report-type-list" => [
                         "cash_collection_minified"					=>	"Cash Collection (Minified)",
                         "cash_collection_detailed"					=>	"Cash Collection (Detailed)",
                         "inward_outward_flow_minified"				=>	"Inward-Outward Cash Flow (Minified)",
                         "inward_outward_flow_detailed"				=>	"Inward-Outward Cash Flow (Detailed)",
                         "inward_outward_flow_minified_cumulative"	=>	"Inward-Outward Cash Flow (Minified & Cumulative)"
     ],
-    "booking_bulk_operation-list" => [
+    "booking-bulk-operation-list" => [
                         "document:booking-confirmation-slip"	=>	"Booking Confirmation Slip",
                         "document:booking-invoice"				=>	"Booking Invoice",
                         "document:gst-invoice-slip"				=>	"GST Slip",
@@ -422,7 +422,7 @@ return [
                         "op:remove"								=>	"Delete",
                         "op:restore"							=>	"Restore"
     ],
-    "sort_booking_results_by-json" => [
+    "sort-booking-results-by" => [
                         "building_id"						=>	"Building",
                         "booking_group_id"					=>	"Booking Group ID"
     ]

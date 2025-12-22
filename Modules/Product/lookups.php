@@ -128,20 +128,20 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'product_document-json' => [
+    'product_document' => [
                         'product-brochure'		=>	'Product Brochure'
     ],
-    'stock_status-json' => [
+    'stock_status' => [
                         'in-stock'			=>	'IN STOCK',
                         'low-stock'			=>	'LOW STOCK',
                         'out-of-stock'		=>	'OUT OF STOCK'
     ],
-    'product_cancel_reason-json' => [
+    'product_cancel_reason' => [
                         1	=>	'For Customer Satisfaction',
                         11	=>	'Faulty/Defective',
                         19	=>	'Poor Quality'
     ],
-    'product_group_results_by-json' => [
+    'product_group_results_by' => [
                         'product_type'						=>	'PRODUCT TYPE',
                         'brand_name'						=>	'BRAND NAME',
                         'total_quantity'					=>	'TOTAL STOCK',
@@ -149,23 +149,23 @@ return [
                         'sold_stock'						=>	'SOLD STOCK',
                         'status'							=>	'STATUS'
     ],
-    'product_sort_results_by-json' => [
+    'product_sort_results_by' => [
                         'product_name'						=>	'PRODUCT NAME',
                         'brand_name'						=>	'BRAND NAME',
                         'total_quantity'					=>	'TOTAL STOCK',
                         'available_stock'					=>	'AVAILABLE STOCK',
                         'sold_stock'						=>	'SOLD STOCK',
     ],
-    'product_group_results_display_type-json' => ['complete_list'						=>	'COMPLETE LIST'],
-    'stock_price_type-json' => [
+    'product-group-results-display-type' => ['complete_list'						=>	'COMPLETE LIST'],
+    'stock-price-type' => [
                         'total'										=>	'Total',
                         'per-unit'									=>	'Per Unit'
     ],
-    'product_unit-json' => [
+    'product-unit' => [
                         'qty'				=>	'QTY',
                         'kg'				=>	'KG'
     ],
-    'product_bulk_operation-list' => [
+    'product-bulk-operation-list' => [
                         "view:detail"			=>	"View Product Details",
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
