@@ -3,26 +3,6 @@ $pg = 'vendor';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-vendor' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,28 @@ return [
         ],
     ],
 ],
+
+    'vendor.list-filters' => [
+                        "admin"	=>	[
+                            'vendor_status_filter one'		=> "Status/status/vendor_status-json"
+                        ],
+                        "portal" => [
+                            'vendor_status_filter one'		=> "Status/status/vendor_status-json"
+                        ]
+    ],
+    'vendor.bulk-operations' => [
+                        "document:performance"			=>	'Performance',
+                        "document:agreement"			=>	'Agreement',
+                        "document:certificate"			=>	'Certificate',
+                        "document:vendor-id-card"		=>	'ID Card'
+    ],
+    'vendor.bulk-operations' => [
+                        "view:detail"		=>	"View Detail",
+                        "op:remove"			=>	"Delete",
+                        "op:restore"		=>	"Restore"
+    ], 
+
+
     'communicationTemplate-vendor' => [
                         "vendor_entry_new_sms"		=>	"New Vendor Entry SMS",
                         "vendor_entry_new_whatsapp"	=>	"New Vendor Entry Whatsapp",
@@ -104,14 +106,7 @@ return [
                        'Client Settings'			=>	['vendor','settings'],
                        'Vendor Settings'			=>	['vendor','settings']
     ],
-    'listFilters-vendor-list' => [
-                        "admin"	=>	[
-                            'vendor_status_filter one'		=> "Status/status/vendor_status-json"
-                        ],
-                        "portal" => [
-                            'vendor_status_filter one'		=> "Status/status/vendor_status-json"
-                        ]
-    ],
+
     'listFilters-vendor-activity-list' => [
                         "admin"	=>	[
                             'vendor_status_filter one'		=> "Activity/activity/vendor_activity-json",
@@ -133,20 +128,10 @@ return [
                         'certificate'					=> 'Certificate',
                         'vendor-id-card'				=> 'ID Card'
     ],
-    'vendor-bulk-operation-list' => [
-                        "document:performance"			=>	'Performance',
-                        "document:agreement"			=>	'Agreement',
-                        "document:certificate"			=>	'Certificate',
-                        "document:vendor-id-card"		=>	'ID Card'
-    ],
-    'vendor-level-json' => ["Silver","Gold","Platinum"],
+    
+    'vendor-level' => ["Silver","Gold","Platinum"],
 
     'interactiveEntity-vendor' => ['vendor'],
 
-    'vendor-bulk-operation-list' => [
-                        "view:detail"		=>	"View Detail",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"		=>	"Restore"
-    ]
 
 ];

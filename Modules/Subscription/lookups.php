@@ -3,26 +3,6 @@ $pg = 'subscription';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-subscription' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,32 @@ return [
         ],
     ],
 ],
+    'subscription.list-filters' => [
+                        "admin"	=>	[
+                            'nextdate' 						=> "Next Date/range-next_date/filter_date_range-json",
+                            'subscription_plan'				=> "Plan/subscription_plan_id/subscription_plan-json",
+                            'subscription_plan_type'		=> "Plan Type/plan_type/subscription_plan_type-json",
+                            'subsciption_status_filter'		=> "Status/status/status-json"
+                        ],
+                        "portal" => [
+                            'nextdate' 						=> "Next Date/range-next_date/filter_date_range-json",
+                            'subscription_plan'				=> "Plan/subscription_plan_id/subscription_plan-json",
+                            'subscription_plan_type'		=> "Plan Type/plan_type/subscription_plan_type-json",
+                            'subsciption_status_filter'		=> "Status/status/status-json"
+                        ]
+    ],
+    'subscription.bulk-operations' => [
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ], 
+
+
+
+
+
+
+
+
     'communicationTemplate-subscription' => [
                         "subscription_entry_new_sms"				=>	"New Subscription Entry SMS",
                         "subscription_entry_new_whatsapp"			=>	"New Subscription Entry Whatsapp",
@@ -106,20 +112,6 @@ return [
 
     'additionalFields-subscription-plan-entry-update' => [],
 
-    'listFilters-subscription-list' => [
-                        "admin"	=>	[
-                            'nextdate' 						=> "Next Date/range-next_date/filter_date_range-json",
-                            'subscription_plan'				=> "Plan/subscription_plan_id/subscription_plan-json",
-                            'subscription_plan_type'		=> "Plan Type/plan_type/subscription_plan_type-json",
-                            'subsciption_status_filter'		=> "Status/status/status-json"
-                        ],
-                        "portal" => [
-                            'nextdate' 						=> "Next Date/range-next_date/filter_date_range-json",
-                            'subscription_plan'				=> "Plan/subscription_plan_id/subscription_plan-json",
-                            'subscription_plan_type'		=> "Plan Type/plan_type/subscription_plan_type-json",
-                            'subsciption_status_filter'		=> "Status/status/status-json"
-                        ]
-    ],
     'listFilters-subscription-plan-list' => [
                         "admin"	=>	[
                             'subscription_plan_type'		=> "Plan Type/plan_type/subscription_plan_type-json",
@@ -146,8 +138,4 @@ return [
                         "plan"			=>	"All Subscription List",
                         "purchases"		=>	"Subscription Purchases"
     ],
-    'subscription-bulk-operation-list' => [
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ]
 ];

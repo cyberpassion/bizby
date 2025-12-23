@@ -3,60 +3,6 @@ $pg = 'library';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-library' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                [
-                    'Entry' => [
-                        ['Book'      => "/{$pg}/entry/book"],
-                        ['Magazine'  => "/{$pg}/entry/magazine"],
-                        ['Journal'   => "/{$pg}/entry/journal"],
-                        ['Newspaper' => "/{$pg}/entry/newspaper"],
-                    ]
-                ],
-                [
-                    'List' => [
-                        ['Book'      => "/{$pg}/list/book"],
-                        ['Magazine'  => "/{$pg}/list/magazine"],
-                        ['Journal'   => "/{$pg}/list/journal"],
-                        ['Newspaper' => "/{$pg}/list/newspaper"],
-                    ]
-                ],
-                [
-                    'Allotment' => [
-                        ['New Allotment'  => "/{$pg}/allotment/create"],
-                        ['Allotment List' => "/{$pg}/allotment/list"],
-                    ]
-                ],
-                [
-                    'Report' => [
-                        ['Stock Report'     => "/{$pg}/report/stock"],
-                        ['Allotment Report' => "/{$pg}/report/allotment"],
-                    ]
-                ],
-                [
-                    'Settings' => [
-                        ['Book Settings'       => "/{$pg}/settings/book"],
-                        ['Journal Settings'    => "/{$pg}/settings/journal"],
-                        ['Newspaper Settings'  => "/{$pg}/settings/newspaper"],
-                        ['Magazine Settings'   => "/{$pg}/settings/magazine"],
-                        ['Allotment Settings'  => "/{$pg}/settings/allotment"],
-                        ['Penalty Settings'    => "/{$pg}/settings/penalty"],
-                    ]
-                ],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [

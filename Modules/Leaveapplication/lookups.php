@@ -3,26 +3,6 @@ $pg = 'leaveapplication';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-leaves' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,19 @@ return [
         ],
     ],
 ],
+
+    'leaveapplication.leave-type' => [
+                        'casual-leave'		=>	'Casual Leave',
+                        'sick-leave'		=>	'Sick Leave',
+                        'medical-leave'		=>	'Medical Leave',
+                        'maternity-leave'	=>	'Maternity Leave',
+                        'paternity-leave'	=>	'Paternity Leave'
+    ],
+
+
+
+
+    
     'communicationTemplate-leaveapplication' => [
                         "leaveapplication_entry_new_sms"			=>	"New Leaveapplication Entry SMS",
                         "leaveapplication_entry_new_whatsapp"		=>	"New Leaveapplication Entry Whatsapp",
@@ -109,7 +102,7 @@ return [
     'dateFields-leaveapplication-entry-update' => [
         
     ],
-    'additionalFields-leaveapplication_-ntry-update' => [
+    'additionalFields-leaveapplication-entry-update' => [
 
     ],
     'listFilters-leaveapplication-list' => [
@@ -150,13 +143,6 @@ return [
     ],
     'leave-day' => ["single"=>"One Day","half-day"=>"Half Day","multiple"=>"Multiple Days"],
     'leave-shift' => ["morning"=>"Morning","afternoon"=>"Afternoon"],
-    'leaveapplication-type' => [
-                        'casual-leave'		=>	'Casual Leave',
-                        'sick-leave'		=>	'Sick Leave',
-                        'medical-leave'		=>	'Medical Leave',
-                        'maternity-leave'	=>	'Maternity Leave',
-                        'paternity-leave'	=>	'Paternity Leave'
-    ],
     'leaveapplication_report_type-list' => [
                         "singleday"				=>	"SingleDay Report",
                         "multiday"				=>	"Multiday Report"

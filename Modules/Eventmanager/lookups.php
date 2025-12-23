@@ -3,26 +3,7 @@ $pg = 'eventmanager';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-patient' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/new"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-                    [
-                        'Plugin' => [
-                            ['View Calendar' => "/{$pg}/calendar"],
-                        ]
-                    ],
-				],
-			],
-		],
-	],
+    
     'sidebar-menu' => [
         [
             'title' => ucfirst($pg),

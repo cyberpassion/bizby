@@ -3,26 +3,6 @@ $pg = 'transport';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-transport' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['New Vehicle Entry' => "/{$pg}/new"],
-                ['View List'         => "/{$pg}/list"],
-                ['Stops'             => "/{$pg}/stops"],
-                ['Settings'          => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,28 @@ return [
         ],
     ],
 ],
+    'transport.list-filters' => [
+                        "admin"	=>	[
+                            'route_filter one'			=> 'Route/route_name/transport_route-list',
+                            'vehicle_type_filter one'	=> 'Vehicle Type/vehicle_type/transport_vehicle_type-list',
+                            'status_filter one'			=> 'Status/status/status-json',
+                        ],
+                        "portal" => [
+                            'route_filter one'			=> 'Route/route_name/transport_route-list',
+                            'vehicle_type_filter one'	=> 'Vehicle Type/vehicle_type/transport_vehicle_type-list',
+                            'status_filter one'			=> 'Status/status/status-json',
+                        ]
+    ],
+    'transport.bulk-operations' => [
+                        "view:detail"		=>	"View Detail",
+                        "op:remove"			=>	"Delete",
+                        "op:restore"		=>	"Restore"
+    ],
+
+
+
+
+
     'communicationTemplate-transport' => [
                         "transport_entry_new_sms"		=>	"New Transport Entry SMS",
                         "transport_entry_new_whatsapp"	=>	"New Transport Entry Whatsapp",
@@ -82,24 +84,12 @@ return [
                         'sample_export'		=>	['sno', 'route_name', 'registration_number', 'driver_name', 'remark'],
                         'selected_columns'	=>	['route_name', 'registration_number', 'driver_name', 'remark']
     ],
-    'mandatoryFields-transport_vehicle_entry_update' => ['selected-ids'],
+    'mandatoryFields-transport-vehicle-entry-update' => ['selected-ids'],
 
-    'dateFields-transport_entry_update' => ['insurance_renewal_date'],
+    'dateFields-transport-entry-update' => ['insurance_renewal_date'],
 
-    'additionalFields-transport_entry_update' => [],
+    'additionalFields-transport-entry-update' => [],
 
-    'listFilters-transport_list' => [
-                        "admin"	=>	[
-                            'route_filter one'			=> 'Route/route_name/transport_route-list',
-                            'vehicle_type_filter one'	=> 'Vehicle Type/vehicle_type/transport_vehicle_type-list',
-                            'status_filter one'			=> 'Status/status/status-json',
-                        ],
-                        "portal" => [
-                            'route_filter one'			=> 'Route/route_name/transport_route-list',
-                            'vehicle_type_filter one'	=> 'Vehicle Type/vehicle_type/transport_vehicle_type-list',
-                            'status_filter one'			=> 'Status/status/status-json',
-                        ]
-    ],
     'listFilters-transport-vehicle-stoppage-entry-new' => [
                         "admin"	=>	[
                             'session_filter one'		=> 'Session/session/session-json',
@@ -186,11 +176,6 @@ return [
     ],
     'religion-list' => ["HINDU","MUSLIM","CHRISTIAN","SIKH","BUDDHIST","JAIN","OTHER","ATHIEST"],
 
-    'transport-bulk-operation-list' => [
-                        "view:detail"		=>	"View Detail",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"		=>	"Restore"
-    ],
     'exam-type-list' => [
                         "annual"		=>	"Annual",
                         "half-yearly"	=>	"Half Yearly",

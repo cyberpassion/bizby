@@ -9,44 +9,6 @@ return [
 | TOP MENU (Booking)
 |--------------------------------------------------------------------------
 */
-'menuItem-booking' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-
-                // Allotment
-                [
-                    'Allotment' => [
-                        ['Perform Allotment (Form)'  => "/{$pg}/allotment-entry"],
-                        ['Perform Allotment (Table)' => "/{$pg}/allotment-entry/list"],
-                        ['View Booking List'         => "/{$pg}/list"],
-                    ]
-                ],
-
-                // Venue
-                [
-                    'Venue' => [
-                        ['Add Venue'       => "/{$pg}/new-venue"],
-                        ['View Venue List' => "/{$pg}/building-entry/list"],
-                    ]
-                ],
-
-                ['View Report' => "/{$pg}/report"],
-                ['Settings'    => "/{$pg}/settings"],
-
-                // Plugin
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 /*
 |--------------------------------------------------------------------------

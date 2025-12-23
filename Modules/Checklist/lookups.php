@@ -4,37 +4,6 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-    'menuItem-checklist' => [
-        'admin' => [
-            'parent' => [
-                $pg => '#',
-            ],
-            'child' => [
-                $pg => [
-
-                    ['Add New'   => "/{$pg}/new"],
-                    ['View List' => "/{$pg}/list"],
-
-                    [
-                        'Plans' => [
-                            ['Create New'     => "/{$pg}/new-plan"],
-                            ['View Plan List' => "/{$pg}/plan-list"],
-                        ]
-                    ],
-
-					['Settings'  => "/{$pg}/settings"],
-					['Report'    => "/{$pg}/report"],
-
-                    [
-                        'Plugin' => [
-                            ['View Calendar' => "/{$pg}/calendar"],
-                        ]
-                    ],
-                ],
-            ],
-        ],
-    ],
-
     'sidebar-menu' => [
         [
             'title' => ucfirst($pg),
@@ -253,11 +222,11 @@ return [
                         '2'		=>	'Deleted',
                         '21'	=>	'Rejected'
     ],
-    "checklist-listing-status-json" => [
+    "checklist-listing-status" => [
                         '1'		=>	'Active',
                         '2'		=>	'Deleted'
     ],
-    "checklist-point-status-json" => [
+    "checklist-point-status" => [
                         '1'		=>	'Active',
                         '11'	=>	'Draft',
                         '12'	=>	'Under Review',

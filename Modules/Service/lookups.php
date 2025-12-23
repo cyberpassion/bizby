@@ -3,26 +3,6 @@ $pg = 'service';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-service' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,28 @@ return [
         ],
     ],
 ],
+    'service.list-filters' => [
+                        "admin"	=>	[
+                               'service_price_filter one' => "Price/service_price/service_price-json",
+                            'service_type_filter one' => "Type/service_type/service_type-json"
+                        ],
+                        "portal" => [
+                            'service_price_filter one' => "Price/service_price/service_price-json",
+                            'service_type_filter one' => "Type/service_type/service_type-json"
+                        ]
+    ],
+    'service.bulk-operations' => [
+                        "view:detail"				=>	"View Details",
+                        "document:request-slip"		=>	"Print Request Slip",
+                        "document:request-report"	=>	"Print Request Report",
+                        "op:remove"					=>	"Delete",
+                        "op:restore"				=>	"Restore"
+    ],
+
+
+
+
+
     'communicationTemplate-service' => [
                         "service_entry_new_sms"		    =>	"New Service Entry SMS",
                         "service_entry_new_whatsapp"	=>	"New Service Entry Whatsapp",
@@ -79,16 +81,6 @@ return [
                         'report'			=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
                         'sample_export'		=>	['sno', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
                         'selected_columns'	=>	['date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description']
-    ],
-    'listFilters-service-list' => [
-                        "admin"	=>	[
-                               'service_price_filter one' => "Price/service_price/service_price-json",
-                            'service_type_filter one' => "Type/service_type/service_type-json"
-                        ],
-                        "portal" => [
-                            'service_price_filter one' => "Price/service_price/service_price-json",
-                            'service_type_filter one' => "Type/service_type/service_type-json"
-                        ]
     ],
     'listFilters-service-listing-entry-new' => [
                         "admin"	=>	[
@@ -151,12 +143,5 @@ return [
                         'day',
                         'visit'
     ],
-    'service-listing-bulk-operation-list' => [
-                        "view:detail"				=>	"View Details",
-                        "document:request-slip"		=>	"Print Request Slip",
-                        "document:request-report"	=>	"Print Request Report",
-                        "op:remove"					=>	"Delete",
-                        "op:restore"				=>	"Restore"
-    ]
 
 ];

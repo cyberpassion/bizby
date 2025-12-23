@@ -3,21 +3,6 @@ $pg = 'contact';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-contact' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/new"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
     'sidebar-menu' => [
         [
             'title' => ucfirst($pg),
@@ -31,6 +16,16 @@ return [
             ],
         ],
     ],
+    'contact.contact-group-results-by' => [
+                        'contact_type'						=>	'CUSTOMER TYPE',
+                        'status'							=>	'STATUS'
+    ],
+
+
+
+
+    
+
     "communicationTemplate-contact" => [
                         "contact_entry_new_sms"				=>	"New Contact Entry SMS",
                         "contact_entry_new_whatsapp"			=>	"New Contact Entry Whatsapp",
@@ -163,10 +158,6 @@ return [
     ],
     "contact-search-column" => ["contact_name","phone_number"],
 
-    'contact-group-results-by' => [
-                        'contact_type'						=>	'CUSTOMER TYPE',
-                        'status'							=>	'STATUS'
-    ],
     'contact-sort-results-by' => [
                         'contact_name'						=>	'CUSTOMER NAME',
                         'contact_id'						=>	'id'

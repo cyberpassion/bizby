@@ -3,26 +3,6 @@ $pg = 'signup';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-signup' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,13 @@ return [
         ],
     ],
 ],
+
+    'signup.bulk-operations' => [
+					"view:detail"		=>	"View Detail",
+					"op:remove"			=>	"Delete",
+					"op:restore"			=>	"Restore"
+	],
+	
     'communicationTemplate-signup' => [
 						"signup_entry_new_sms"		=>	"New Signup Entry SMS",
 						"signup_entry_new_whatsapp"	=>	"New Signup Entry Whatsapp",
@@ -92,10 +79,5 @@ return [
     'dateFields-signup-entry-update' => [],
 
     'additionalFields-signup-entry-update' => [],
-
-    'signup-bulk-operation-list' => [
-					"view:detail"		=>	"View Detail",
-					"op:remove"			=>	"Delete",
-					"op:restore"			=>	"Restore"
-    ] 
+ 
 ];

@@ -3,26 +3,6 @@ $pg = 'visitactivity';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-visitactivity' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,28 @@ return [
         ],
     ],
 ],
+'visitactivity.list-filters' => [
+                        "admin"	=>	[
+                            'visitactivity_visitby_filter' 	=> "Visit By/visit_by_id/employee_id-json",
+                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
+                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
+                        ],
+                        "portal" => [
+                            'visitactivity_visitby_filter' => "Visit By/visit_by_id/employee_id-json",
+                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
+                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
+                        ]
+    ],
+    'visitplanner.bulk-operations' => [
+                        "view:detail"			=>	"View Visit Activity Details",
+                        "send:email"			=>	"Send Notification Email",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ]
+
+
+
+
     'communicationTemplate-visitactivity' => [
                         "visitactivity_entry_new_sms"		=>	"New Visitactivity Entry SMS",
                         "visitactivity_entry_new_whatsapp"	=>	"New Visitactivity Entry Whatsapp",
@@ -105,18 +107,6 @@ return [
                         'email_to',
                         'competitors'
     ],
-    'listFilters-visitactivity-list' => [
-                        "admin"	=>	[
-                            'visitactivity_visitby_filter' 	=> "Visit By/visit_by_id/employee_id-json",
-                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
-                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
-                        ],
-                        "portal" => [
-                            'visitactivity_visitby_filter' => "Visit By/visit_by_id/employee_id-json",
-                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
-                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
-                        ]
-    ],
     'formPrefills-visitactivity-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -149,11 +139,5 @@ return [
                         11	=>	'Autosaved',
                         2	=>	'Deleted'
     ],
-    'visitactivity-bulk-operation-list' => [
-                        "view:detail"			=>	"View Visit Activity Details",
-                        "send:email"			=>	"Send Notification Email",
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ]
 
 ];

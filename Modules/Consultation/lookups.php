@@ -3,27 +3,6 @@ $pg = 'consultation';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-consultation' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -141,17 +120,17 @@ return [
         'consultation-visitreminder' => 'Consultation Visit Reminder'
     ],
 
-    'mandatoryFields-consultation_entry' => ['patient_name','phone_number','age','consultation_date'],
+    'mandatoryFields-consultation-entry' => ['patient_name','phone_number','age','consultation_date'],
 
-    'dateFields-consultation_entry' => ['dob','consultation_date'],
+    'dateFields-consultation-entry' => ['dob','consultation_date'],
 
-    'mandatoryFields-consultation_followup-entry' => ['thread_parent'],
+    'mandatoryFields-consultation-followup-entry' => ['thread_parent'],
 
-    'dateFields-consultation_followup-entry' => ['consultation_date'],
+    'dateFields-consultation-followup-entry' => ['consultation_date'],
 
-    'jsonFields-consultation_entry' => ["consultation_for"],
+    'jsonFields-consultation-entry' => ["consultation_for"],
 
-    'listFilters-consultation_list' => [
+    'listFilters-consultation-list' => [
         "admin" => [
             'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
             'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",

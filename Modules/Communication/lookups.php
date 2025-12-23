@@ -4,43 +4,6 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-    'menuItem-communication' => [
-        'admin' => [
-            'parent' => [
-                $pg => '#',
-            ],
-            'child' => [
-                $pg => [
-
-                    [
-                        'Send' => [
-                            ['Send SMS'      => "/{$pg}/new"],
-                            ['Send Email'    => "/{$pg}/new"],
-                            ['Send Whatsapp' => "/{$pg}/new"],
-                        ]
-                    ],
-
-                    ['View List' => "/{$pg}/list"],
-                    ['Report'    => "/{$pg}/report"],
-                    ['Settings'  => "/{$pg}/settings"],
-
-                    [
-                        'Template' => [
-                            ['Add New'   => "/{$pg}/new"],
-                            ['View List' => "/{$pg}/list"],
-                        ]
-                    ],
-
-                    [
-                        'Plugin' => [
-                            ['View Calendar' => "/{$pg}/calendar"],
-                        ]
-                    ],
-                ],
-            ],
-        ],
-    ],
-
     'sidebar-menu' => [
         [
             'title' => ucfirst($pg),

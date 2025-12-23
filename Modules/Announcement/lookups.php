@@ -3,26 +3,6 @@ $pg = 'announcement';
 $commonSettingsRoute = '/settings';
 
 return [
-    'menuItem-announcement' => [
-        'admin' => [
-            'parent' => [
-                $pg => '#',
-            ],
-            'child' => [
-                $pg => [
-                    ['Add New'   => "/{$pg}/new"],
-                    ['View List' => "/{$pg}/list"],
-                    ['Report'    => "/{$pg}/report"],
-                    ['Settings'  => "/{$pg}/settings"],
-                    [
-                        'Plugin' => [
-                            ['View Calendar' => "/{$pg}/calendar"],
-                        ]
-                    ],
-                ],
-            ],
-        ],
-    ],
 
     'sidebar-menu' => [
         [
@@ -96,8 +76,8 @@ return [
     ],
 
     "mandatoryFields-announcement-entry-update" => ['announcement', 'recipients'],
-    "dateFields-announcement_entry_update"      => ['end_date'],
-    "duplicacyCheckFields-announcement_entry_new"=> ['date', 'announcement'],
+    "dateFields-announcement-entry-update"      => ['end_date'],
+    "duplicacyCheckFields-announcement-entry-new"=> ['date', 'announcement'],
 
     "listFilters-announcement-list" => [
         "admin" => [

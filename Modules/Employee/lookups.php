@@ -3,37 +3,6 @@ $pg = 'employee';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-employee' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Settings'  => "/{$pg}/settings"],
-                ['Report'    => "/{$pg}/report"],
-                [
-                    'Settings' => [
-                        ['Salary Settings' => "/{$pg}/settings/salary"],
-                    ]
-                ],
-                [
-                    'Report' => [
-                        ['Salary Report' => "/{$pg}/report/salary"],
-                    ]
-                ],
-                ['Bulk Operation' => "/{$pg}/bulk"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/plugin/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -193,7 +162,7 @@ return [
                         "list"		=>	[[ "employee_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "employee_id"	=>	'{$login_id}' ]]
 	],
-	"formPrefills- employee-entry-new" => [
+	"formPrefills-employee-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',

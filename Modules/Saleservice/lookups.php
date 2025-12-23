@@ -3,26 +3,6 @@ $pg = 'saleservice';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-saleservice' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,48 @@ return [
         ],
     ],
 ],
+
+    'saleservice.crons' => [
+                        'saleservice-duedate' 	=> 'Sale/Service Due Date',
+                        'saleservice-nextdate' => 'Sale/Service Next Date'
+    ],
+    'saleservice.list-filters' => [
+                        "admin"	=>	[
+                            'sort one' => "Product/offering_id/offerring_id-json",
+    //    					'sort customer' => "Customer/buyer_id/buyer_id-json s2",
+                            'saleby two' => "Done By/saleservice_by/employee_id-json",
+                            'saledate two' => "Date/saleservice_date/saleservice_date-json",
+                            'nextdate two' => "Next Date/range-next_date/filter_date_range-json",
+                            'sort status' => "Status/status/saleservice_status-json"
+                        ],
+                        "portal" => [
+                            'sort one' => "Product/offering_id/offerring_id-json",
+    //    					'sort customer' => "Customer/buyer_id/buyer_id-json s2",
+                            'saleby two' => "Done By/saleservice_by/employee_id-json",
+                            'saledate two' => "Date/saleservice_date/saleservice_date-json",
+                            'nextdate two' => "Next Date/range-next_date/filter_date_range-json",
+                            'sort status' => "Status/status/saleservice_status-json"
+                        ]
+    ],
+    'stock.bulk-operations' => [
+                        "view:detail"			=>	"Print Stock Details",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ],
+    'saleservice.bulk-operations' => [
+                        "view:detail"		=>	"View Sales/Service Details",
+                        "send:email"		=>	"Send Email",
+                        "send:sms"			=>	"Send SMS",
+                        "op:remove"			=>	"Delete",
+                        "op:restore"		=>	"Restore"
+    ],
+
+
+
+
+
+
+
     'communicationTemplate-saleservice' => [
                         "saleservice_entry_new_sms"			=>	"New Sales/Service Entry SMS",
                         "saleservice_entry_new_whatsapp"	=>	"New Sales/Service Entry Whatsapp",
@@ -78,10 +100,6 @@ return [
     ],
     'moduleCashType-saleservice' => ['saleservice-payment'	=>	'Sale & Service Payment'],
 
-    'cronList-saleservice' => [
-                        'saleservice-duedate' 	=> 'Sale/Service Due Date',
-                        'saleservice-nextdate' => 'Sale/Service Next Date'
-    ],
     'mandatoryOptionsBeforeUsing-saleservice' => [
                         'missing_option'	=>	[
                             'Official Name'				=>	'official_name',
@@ -109,24 +127,6 @@ return [
                         'report'			=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
                         'sample_export'		=>	['sno','buyer','amount','balance','payment_info'],
                         'selected_columns'	=>	['buyer','amount','balance','payment_info']
-    ],
-    'listFilters-saleservice-list' => [
-                        "admin"	=>	[
-                            'sort one' => "Product/offering_id/offerring_id-json",
-    //    					'sort customer' => "Customer/buyer_id/buyer_id-json s2",
-                            'saleby two' => "Done By/saleservice_by/employee_id-json",
-                            'saledate two' => "Date/saleservice_date/saleservice_date-json",
-                            'nextdate two' => "Next Date/range-next_date/filter_date_range-json",
-                            'sort status' => "Status/status/saleservice_status-json"
-                        ],
-                        "portal" => [
-                            'sort one' => "Product/offering_id/offerring_id-json",
-    //    					'sort customer' => "Customer/buyer_id/buyer_id-json s2",
-                            'saleby two' => "Done By/saleservice_by/employee_id-json",
-                            'saledate two' => "Date/saleservice_date/saleservice_date-json",
-                            'nextdate two' => "Next Date/range-next_date/filter_date_range-json",
-                            'sort status' => "Status/status/saleservice_status-json"
-                        ]
     ],
     'listFilters-saleservice-saleservice-report-new' => [
                         "admin"	=>	[
@@ -200,18 +200,6 @@ return [
     'stock-price-type' => [
                         'total'										=>	'Total',
                         'per-unit'									=>	'Per Unit'
-    ],
-    'stock-bulk-operation-list' => [
-                        "view:detail"			=>	"Print Stock Details",
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ],
-    'saleservice-bulk-operation-list' => [
-                        "view:detail"		=>	"View Sales/Service Details",
-                        "send:email"		=>	"Send Email",
-                        "send:sms"			=>	"Send SMS",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"		=>	"Restore"
     ],
     'cash-report-type-list' => [
                         "cash_collection_minified"					=>	"Cash Collection (Minified)",

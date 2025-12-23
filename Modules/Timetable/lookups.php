@@ -3,26 +3,6 @@ $pg = 'timetable';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-timetable' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['View Report' => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -42,6 +22,30 @@ return [
         ],
     ],
 ],
+    'timetable.list-filters' => [
+					"admin"	=>	[
+    					'current_session_filter' => "Session/session/session-json",
+    					'current_class_filter' => "Class/class/class-json",
+    					'current_section_filter' => "Section/section/section-json",
+    					'status_filter' => "Status/status/status-json"
+					],
+					"portal" => [
+    					'current_session_filter' => "Session/session/session-json",
+    					'current_class_filter' => "Class/class/class-json",
+						'current_section_filter' => "Section/section/section-json",
+    					'status_filter' => "Status/status/status-json"
+					]
+    ],
+	'timetable.bulk-operations' => [
+					"view:detail"		=>	"View Detail",
+					"op:remove"			=>	"Delete",
+					"op:restore"		=>	"Restore"
+    ],
+
+
+
+
+
      'communicationTemplate-timetable' => [
 						"timetable_entry_new_sms"		=>	"New Timetable Entry SMS",
 						"timetable_entry_new_whatsapp"	=>	"New Timetable Entry Whatsapp",
@@ -74,25 +78,6 @@ return [
 					'sample_export'		=>	['sno', 'timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status'],
 					'selected_columns'	=>	['timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status']
      ],
-     'listFilters-timetable-list' => [
-					"admin"	=>	[
-    					'current_session_filter' => "Session/session/session-json",
-    					'current_class_filter' => "Class/class/class-json",
-    					'current_section_filter' => "Section/section/section-json",
-    					'status_filter' => "Status/status/status-json"
-					],
-					"portal" => [
-    					'current_session_filter' => "Session/session/session-json",
-    					'current_class_filter' => "Class/class/class-json",
-						'current_section_filter' => "Section/section/section-json",
-    					'status_filter' => "Status/status/status-json"
-					]
-    ],
-    'timetable-bulk-operation-list' => [
-					"view:detail"		=>	"View Detail",
-					"op:remove"			=>	"Delete",
-					"op:restore"		=>	"Restore"
-    ],
     'formPrefills-timetable-entry-new' => [
 					"columns"	=>	[
 						'product'		=>	'default_product',

@@ -3,26 +3,6 @@ $pg = 'treatment';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-treatment' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'      => "/{$pg}/new"],
-                ['View List'    => "/{$pg}/list"],
-                ['View Report'  => "/{$pg}/report"],
-                ['Settings'     => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -42,6 +22,33 @@ return [
         ],
     ],
 ],
+
+    'treatment.list-filters' => [
+                        "admin"	=>	[
+                            'treatment_date_filter' => "Date/treatment_date/treatment_entry_date-json",
+                            'treatment_nextdate_filter' => "Next Date/next_date/treatment_next_entry_date-json",
+                            'treatment_with_filter one' => "Doctor/treatment_with/employee_id-json",
+                            'treatment_through_filter one' => "Mode/treatment_through/treatment_through_mode-json",
+                            'treatment_status_filter' => "Status/status/treatment_status-json"
+                        ],
+                        "portal" => [
+                            'treatment_date_filter' => "Date/treatment_date/treatment_entry_date-json",
+                            'treatment_nextdate_filter' => "Next Date/next_date/treatment_next_entry_date-json",
+                            'treatment_with_filter one' => "Doctor/treatment_with/employee_id-json",
+                            'treatment_through_filter one' => "Mode/treatment_through/treatment_through_mode-json",
+                            'treatment_status_filter' => "Status/status/treatment_status-json"
+                        ]
+    ],
+    'treatment.bulk-operations' => [
+                        "document:treatment_detail"		=>	"Print Treatment Details",
+                        "send:sms"						=>	"Send Treatment SMS",
+                        "send:email"					=>	"Send Treatment Email",
+                        "op:remove"						=>	"Delete Treatment Entry",
+                        "op:restore"					=>	"Restore Treatment Entry"
+    ],
+
+
+
     'communicationTemplate-treatment' => [
                         "treatment_entry_new_sms"		=>	"New Treatment Entry SMS",
                         "treatment_entry_new_whatsapp"	=>	"New Treatment Entry Whatsapp",
@@ -90,22 +97,6 @@ return [
 
     'additionalFields-treatment-entry-update' => [],
 
-    'listFilters-treatment-list' => [
-                        "admin"	=>	[
-                            'treatment_date_filter' => "Date/treatment_date/treatment_entry_date-json",
-                            'treatment_nextdate_filter' => "Next Date/next_date/treatment_next_entry_date-json",
-                            'treatment_with_filter one' => "Doctor/treatment_with/employee_id-json",
-                            'treatment_through_filter one' => "Mode/treatment_through/treatment_through_mode-json",
-                            'treatment_status_filter' => "Status/status/treatment_status-json"
-                        ],
-                        "portal" => [
-                            'treatment_date_filter' => "Date/treatment_date/treatment_entry_date-json",
-                            'treatment_nextdate_filter' => "Next Date/next_date/treatment_next_entry_date-json",
-                            'treatment_with_filter one' => "Doctor/treatment_with/employee_id-json",
-                            'treatment_through_filter one' => "Mode/treatment_through/treatment_through_mode-json",
-                            'treatment_status_filter' => "Status/status/treatment_status-json"
-                        ]
-    ],
     'formPrefills-treatment-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -126,13 +117,6 @@ return [
     'treatment-report-type' => [
                         "stock"			=>	"All Treatment List",
                         "treatment"		=>	"Patient Treatment"
-    ],
-    'treatment-bulk-operation-list' => [
-                        "document:treatment_detail"		=>	"Print Treatment Details",
-                        "send:sms"						=>	"Send Treatment SMS",
-                        "send:email"					=>	"Send Treatment Email",
-                        "op:remove"						=>	"Delete Treatment Entry",
-                        "op:restore"					=>	"Restore Treatment Entry"
     ],
     'treatment-unit' => ["unit"	=>	"Sample"]
 
