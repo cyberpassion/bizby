@@ -4,60 +4,32 @@ use Illuminate\Support\Facades\Route;
 use Modules\Booking\Http\Controllers\BookingVenueApiController;
 use Modules\Booking\Http\Controllers\BookableUnitApiController;
 use Modules\Booking\Http\Controllers\BookingApiController;
+use Modules\Booking\Http\Controllers\BookingUnitPricingApiController;
 
 Route::prefix('v1')->group(function () {
-
     Route::prefix('booking')->group(function () {
 
-        /* -----------------------------
-         | Bookable Units
-         |-----------------------------*/
-        Route::get(
-            '/venues/{venue}/units',
-            [BookableUnitApiController::class, 'index']
-        );
+        // Units
+        Route::get('/venues/{venue}/units', [BookableUnitApiController::class, 'index']);
+        Route::post('/venues/{venue}/units', [BookableUnitApiController::class, 'store']);
+        Route::get('/venues/{venue}/units/{unit}', [BookableUnitApiController::class, 'show']);
+        Route::put('/venues/{venue}/units/{unit}', [BookableUnitApiController::class, 'update']);
+        Route::delete('/venues/{venue}/units/{unit}', [BookableUnitApiController::class, 'destroy']);
 
-        Route::post(
-            '/venues/{venue}/units',
-            [BookableUnitApiController::class, 'store']
-        );
+        // Unit pricing
+        Route::get('/units/{unit}/pricing', [BookingUnitPricingApiController::class, 'index']);
+        Route::post('/units/{unit}/pricing', [BookingUnitPricingApiController::class, 'store']);
+        Route::put('/units/{unit}/pricing/{pricing}', [BookingUnitPricingApiController::class, 'update']);
+        Route::delete('/units/{unit}/pricing/{pricing}', [BookingUnitPricingApiController::class, 'destroy']);
 
-		Route::get(
-			'/venues/{venue}/units/{unit}',
-			[BookableUnitApiController::class, 'show']);
+        // Bookings
+        Route::get('/venues/{venue}/bookings', [BookingApiController::class, 'index']);
+        Route::post('/bookings', [BookingApiController::class, 'store']);
+        Route::post('/bookings/preview-fee', [BookingApiController::class, 'previewFee']);
+        Route::post('/bookings/{booking}/cancel', [BookingApiController::class, 'cancel']);
 
-        Route::put(
-            '/venues/{venue}/units/{unit}',
-            [BookableUnitApiController::class, 'update']
-        );
-
-        Route::delete(
-            '/venues/{venue}/units/{unit}',
-            [BookableUnitApiController::class, 'destroy']
-        );
-
-        /* -----------------------------
-         | Bookings
-         |-----------------------------*/
-        Route::get(
-            '/venues/{venue}/bookings',
-            [BookingApiController::class, 'index']
-        );
-
-        Route::post(
-            '/bookings',
-            [BookingApiController::class, 'store']
-        );
-
-        Route::post(
-            '/bookings/{booking}/cancel',
-            [BookingApiController::class, 'cancel']
-        );
-
-		/* -----------------------------
-         | Venues
-         |-----------------------------*/
+        // Venues
         Route::apiResource('venues', BookingVenueApiController::class);
-
     });
 });
+
