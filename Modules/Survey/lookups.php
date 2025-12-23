@@ -23,6 +23,30 @@ return [
         ],
     ],
 ],
+ 
+    'survey.crons' => ['survey-notification' => 'Survey Notification'],
+    'survey.list-filters' => [
+                        "admin"	=>	[
+                            'date_filter'					=> "Date/date/survey_date-json",
+                            'survey_category_filter one'	=> "Category/survey_type/survey_category-json",
+                            'survey_status_filter one'		=> "Status/status/status-json"
+                        ],
+                        "portal" => [
+                            'date_filter'					=> "Date/date/survey_date-json",
+                               'survey_category_filter one'	=> "Category/survey_type/survey_category-json",
+                            'survey_status_filter one'		=> "Status/status/status-json"
+                        ]
+    ],
+    'survey.bulk-operations' => [
+                        "view:detail"		=>	"View Detail",
+                        "view:responses"	=>	"View Responses",
+                        "op:remove"			=>	"Delete",
+                        "op:restore"		=>	"Restore"
+    ],
+
+
+
+
     'communicationTemplate-survey' => [
                         "survey_entry_new_sms"		    =>	"New Survey Entry SMS",
                         "survey_entry_new_whatsapp"    	=>	"New Survey Entry Whatsapp",
@@ -63,7 +87,6 @@ return [
                         'sample_export'		=>	['sno', 'category', 'question', 'recipient', 'responses', 'added_by'],
                         'selected_columns'	=>	['category', 'question', 'recipient', 'responses', 'added_by']
     ],
-    'cronList-survey' => ['survey-notification' => 'Survey Notification'],
 
     'mandatoryFields-survey-entry-update' => ['question','option_1','option_2','option_3','option_4','end_date','recipients'],
 
@@ -71,18 +94,6 @@ return [
 
     'additionalFields-survey-entry-update' => [],
 
-    'listFilters-survey-list' => [
-                        "admin"	=>	[
-                            'date_filter'					=> "Date/date/survey_date-json",
-                            'survey_category_filter one'	=> "Category/survey_type/survey_category-json",
-                            'survey_status_filter one'		=> "Status/status/status-json"
-                        ],
-                        "portal" => [
-                            'date_filter'					=> "Date/date/survey_date-json",
-                               'survey_category_filter one'	=> "Category/survey_type/survey_category-json",
-                            'survey_status_filter one'		=> "Status/status/status-json"
-                        ]
-    ],
     'permissionAllowedFiltersPortal-survey' => [
                         "entry"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
                         "list"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
@@ -98,11 +109,5 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'survey-bulk-operation-list' => [
-                        "view:detail"		=>	"View Detail",
-                        "view:responses"	=>	"View Responses",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"		=>	"Restore"
-    ]
 
 ];

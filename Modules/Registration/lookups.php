@@ -23,6 +23,28 @@ return [
         ],
     ],
 ],
+    "registration.crons" => ['registration-notification' => 'Registration Notification'],
+    "registration.list-filters" => [
+                        "admin"	=>	[
+                            'date_filter' => "Date/date/registration_date-json",
+                               'registration_type_filter' => "Type/type/registration_type-json",
+                            'registration_status_filter' => "Status/status/status-json"
+                        ],
+                        "portal" => [
+                            'date_filter' => "Date/date/registration_date-json",
+                            'registration_type_filter' => "Type/type/registration_type-json",
+                               'registration_status_filter' => "Status/status/status-json"
+                        ]
+	],
+    "registration.bulk-operations" => [
+                        "registration:detail"	=>	"Move to",
+                        "view:detail"			=>	"View Detail",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+	],
+
+
+
 
 	"communicationTemplate-registration" => [
                         "registration_entry_new_sms"		=>	"New Registration Entry SMS",
@@ -64,24 +86,10 @@ return [
 	],
 	"interactiveEntity-registration" => ['registration'],
 
-	"cronList-registration" => ['registration-notification' => 'Registration Notification'],
-
 	"mandatoryFields-registration-entry-update" => ['name','phone_number'],
 
 	"dateFields-registration-public-entry-update" => ['date','dob'],
 
-	"listFilters-registration-list" => [
-                        "admin"	=>	[
-                            'date_filter' => "Date/date/registration_date-json",
-                               'registration_type_filter' => "Type/type/registration_type-json",
-                            'registration_status_filter' => "Status/status/status-json"
-                        ],
-                        "portal" => [
-                            'date_filter' => "Date/date/registration_date-json",
-                            'registration_type_filter' => "Type/type/registration_type-json",
-                               'registration_status_filter' => "Status/status/status-json"
-                        ]
-	],
 	"listFilters-registration-fee-entry" =>  [
                         "admin"	=>	[],
                         "portal" =>	[
@@ -147,12 +155,6 @@ return [
 	],
 	"public-registration-status" => ["1"=>"ACTIVE","11"=>"PENDING APPROVAL"],
 
-	"registration-bulk-operation-list" => [
-                        "registration:detail"	=>	"Move to",
-                        "view:detail"			=>	"View Detail",
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-	],
 	"public-registration-flow" => [
                         "default"	=>	"Default"
 	],

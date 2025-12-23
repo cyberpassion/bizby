@@ -23,6 +23,26 @@ return [
         ],
     ],
 ],
+'visitactivity.list-filters' => [
+                        "admin"	=>	[
+                            'visitactivity_visitby_filter' 	=> "Visit By/visit_by_id/employee_id-json",
+                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
+                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
+                        ],
+                        "portal" => [
+                            'visitactivity_visitby_filter' => "Visit By/visit_by_id/employee_id-json",
+                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
+                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
+                        ]
+    ],
+    'visitplanner.bulk-operations' => [
+                        "view:detail"			=>	"View Visit Activity Details",
+                        "send:email"			=>	"Send Notification Email",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ]
+
+
 
 
     'communicationTemplate-visitactivity' => [
@@ -87,18 +107,6 @@ return [
                         'email_to',
                         'competitors'
     ],
-    'listFilters-visitactivity-list' => [
-                        "admin"	=>	[
-                            'visitactivity_visitby_filter' 	=> "Visit By/visit_by_id/employee_id-json",
-                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
-                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
-                        ],
-                        "portal" => [
-                            'visitactivity_visitby_filter' => "Visit By/visit_by_id/employee_id-json",
-                            'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
-                            'visitactivity_status_filter' 	=> "Status/status/visitactivity_status-json"
-                        ]
-    ],
     'formPrefills-visitactivity-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -131,11 +139,5 @@ return [
                         11	=>	'Autosaved',
                         2	=>	'Deleted'
     ],
-    'visitactivity-bulk-operation-list' => [
-                        "view:detail"			=>	"View Visit Activity Details",
-                        "send:email"			=>	"Send Notification Email",
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ]
 
 ];

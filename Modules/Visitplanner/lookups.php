@@ -30,6 +30,30 @@ return [
                         '2'		=>	"Pending VAR"
     ],
 'visitplanner.week-name' => ["week-1","week-2","week-3","week-4","week-5"],
+'visitplanner.bulk-operations' => [
+                        "view:detail"		=>	"View Visit Planner Details",
+                        "send:email"		=>	"Send Email",
+                        "send:sms"			=>	"Send SMS",
+                        "op:remove"			=>	"Delete",
+                        "op:restore"		=>	"Restore"
+],
+'visitplanner.crons' => ['visitplanner-scheduledvisits' => 'Scheduled Visits'],
+'visitplanner.list-filters' => [
+                        "admin"	=>	[
+                            'visitplanner_session_filter' => "Session/session/session-json",
+                            'visitplanner_employee_filter' => "Employee/visit_by_id/employee_id-json",
+                            'visitplanner_month_filter' => "Month/month/month-json",
+                            'visitplanner_week_filter' => "Week/week/visitplanner_week-json",
+                            'visitplanner_status_filter' => "Status/status/status-json"
+                        ],
+                        "portal" => [
+                            'visitplanner_session_filter' => "Session/session/session-json",
+                            'visitplanner_employee_filter' => "Employee/visit_by_id/employee_id-json",
+                            'visitplanner_month_filter' => "Month/month/month-json",
+                            'visitplanner_week_filter' => "Week/week/visitplanner_week-json",
+                            'visitplanner_status_filter' => "Status/status/status-json"
+                        ]
+    ],
 
 
 
@@ -79,7 +103,6 @@ return [
                         'sample_export'		=>	['sno', 'visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
                         'selected_columns'	=>	['visitplanner_id','visit_company','visit_by_name', 'session', 'month', 'week', 'created_by_name']
     ],
-    'cronList-visitplanner' => ['visitplanner-scheduledvisits' => 'Scheduled Visits'],
 
     'mandatoryFields-visitplanner-entry-update' => ['visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
 
@@ -89,22 +112,6 @@ return [
 
     'jsonFields-visitplanner-entry-update' => ['visit_team_member_json','visit_product'],
 
-    'listFilters-avisitplanner-list' => [
-                        "admin"	=>	[
-                            'visitplanner_session_filter' => "Session/session/session-json",
-                            'visitplanner_employee_filter' => "Employee/visit_by_id/employee_id-json",
-                            'visitplanner_month_filter' => "Month/month/month-json",
-                            'visitplanner_week_filter' => "Week/week/visitplanner_week-json",
-                            'visitplanner_status_filter' => "Status/status/status-json"
-                        ],
-                        "portal" => [
-                            'visitplanner_session_filter' => "Session/session/session-json",
-                            'visitplanner_employee_filter' => "Employee/visit_by_id/employee_id-json",
-                            'visitplanner_month_filter' => "Month/month/month-json",
-                            'visitplanner_week_filter' => "Week/week/visitplanner_week-json",
-                            'visitplanner_status_filter' => "Status/status/status-json"
-                        ]
-    ],
     'permissionAllowedFiltersPortal-visitplanner' => [
                         "entry"  => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
                         "list"   => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
@@ -137,12 +144,5 @@ return [
                         'datetime'			=>	"Date & Time",
                         'expectedexpense'	=>	"Expected Expense"
     ],
-    'visitplanner-bulk-operation-list' => [
-                        "view:detail"		=>	"View Visit Planner Details",
-                        "send:email"		=>	"Send Email",
-                        "send:sms"			=>	"Send SMS",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"		=>	"Restore"
-    ]
 
 ];

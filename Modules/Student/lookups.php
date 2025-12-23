@@ -4,38 +4,94 @@ $commonSettingsRoute = '/settings';
 
 return [
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-				[
-				  'title' => 'Report',
-				  'href'  => "/module/{$pg}/report",
-				  'items' => [
-						['title' => 'Student', 'href'  => "/module/{$pg}/report"],
-						['title' => 'Fee Collection', 'href'  => "/module/{$pg}/feereport"],
-						['title' => 'Dues', 'href' => "/module/{$pg}/duesreport"],
-					]
-				],
-				[
-				  'title' => 'Settings',
-				  'href'  => "/module/{$pg}/settings",
-				  'items' => [
-						['title' => 'Basic', 'href'  => "/module/{$pg}/settings"],
-						['title' => 'Academic Years', 'href' => "/module/{$pg}/academicyears"],
-						['title' => 'Classes', 'href' => "/module/shared/terms/student/classes"],
-						['title' => 'Sections', 'href' => "/module/shared/terms/student/sections"],
-						['title' => 'Fee Head', 'href' => "/module/shared/terms/student/fee-heads"],
-						['title' => 'Fee Structure', 'href' => "/module/{$pg}/fee-structure"],
-						['title' => 'Other', 'href' => "/module/{$pg}/other-section"]
-					]
-				],
+    [
+        'title' => ucfirst($pg),
+        'href'  => "/{$pg}",
+        'items' => [
+
+            /* -------------------------
+             | Dashboard
+             |-------------------------*/
+            [
+                'title' => 'Dashboard',
+                'href'  => "/module/{$pg}/home",
+            ],
+
+            /* -------------------------
+             | Student Management
+             |-------------------------*/
+            [
+                'title' => 'Students',
+                'items' => [
+                    ['title' => 'Add Student',   'href' => "/module/{$pg}/new-student"],
+                    ['title' => 'Student List',  'href' => "/module/{$pg}/students-list"],
+                    ['title' => 'Promote / Transfer', 'href' => "/module/{$pg}/promote"],
+                ]
+            ],
+
+            /* -------------------------
+             | Academic Setup
+             |-------------------------*/
+            [
+                'title' => 'Academic Setup',
+                'items' => [
+                    ['title' => 'Academic Years', 'href' => "/module/{$pg}/academicyears"],
+                    ['title' => 'Classes',        'href' => "/module/shared/terms/student/classes"],
+                    ['title' => 'Sections',       'href' => "/module/shared/terms/student/sections"],
+                ]
+            ],
+
+            /* -------------------------
+             | Fee Management
+             |-------------------------*/
+            [
+                'title' => 'Fee Management',
+                'items' => [
+                    ['title' => 'Fee Heads',       'href' => "/module/shared/terms/student/fee-heads"],
+                    ['title' => 'Fee Structure',   'href' => "/module/{$pg}/fee-structure"],
+                    ['title' => 'Assign Fees',     'href' => "/module/{$pg}/assign-fees"],
+                    ['title' => 'Fee Collection', 'href' => "/module/{$pg}/fee-collection"],
+                    ['title' => 'Dues',            'href' => "/module/{$pg}/dues"],
+                ]
+            ],
+
+            /* -------------------------
+             | Reports
+             |-------------------------*/
+            [
+                'title' => 'Reports',
+                'items' => [
+                    ['title' => 'Student',        'href' => "/module/{$pg}/report-students"],
+                    ['title' => 'Fee Collection', 'href' => "/module/{$pg}/report-fees"],
+                    ['title' => 'Dues',           'href' => "/module/{$pg}/report-dues"],
+                ]
+            ],
+
+            /* -------------------------
+             | Settings
+             |-------------------------*/
+            [
+                'title' => 'Settings',
+                'items' => [
+                    ['title' => 'Basic',            'href' => "/module/{$pg}/settings"],
+                    ['title' => 'Admission Rules',  'href' => "/module/{$pg}/admission-rules"],
+                    ['title' => 'Fee Rules',        'href' => "/module/{$pg}/fee-rules"],
+                    ['title' => 'Other',            'href' => "/module/{$pg}/other-section"],
+                ]
+            ],
+
+            /* -------------------------
+             | Plugins
+             |-------------------------*/
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    ['title' => 'Integrations', 'href' => "/module/{$pg}/plugins"],
+                ]
             ],
         ],
     ],
+],
 
     "student.student-document-upload-type" => [
                         /*"logo"						=> "Logo",
@@ -58,6 +114,48 @@ return [
                         '2x'	=>	'Deleted (Other Reasons)',
                         '127'	=>	'Cancelled', // Legacy
     ],
+    "student.crons" => ['student-birthday' => 'Student Birthday Message'],
+    "student.list-filters" => [
+                        "admin"	=>	[
+                            'current_session_filter' => "Session/current_session/session-json",
+                            'current_class_filter' => "Class/current_class/class-json",
+                            'current_section_filter' => "Section/current_section/section-json",
+                            'where_you_found_us_filter' => "Source/where_you_found_us/where_you_found_us-json",
+                            'status_filter' => "Status/status/student_status-json"
+                        ],
+                        "portal" => [
+                            'current_session_filter' => "Session/current_session/session-json",
+                            'current_class_filter' => "Class/current_class/class-json",
+                            'current_section_filter' => "Section/current_section/section-json",
+                            'where_you_found_us_filter' => "Source/where_you_found_us/where_you_found_us-json",
+                            'status_filter' => "Status/status/student_status-json"
+                        ]
+    ],
+    "student.bulk-operations" => [
+                        "document:admission-form"			=>	"Print Admission Form",
+                        "document:id-card"					=>	"Print ID Card",
+                        "document:activity-undertaking"	=>	"Print Activities Undertaking",
+                        "document:character-certificate"	=>	"Print Character Certificate",
+                        "document:medical-certificate"		=>	"Print Medical Certificate",
+                        "document:transfer-certificate"	=>	"Print Transfer Certificate",
+                        "document:bonafide-certificate"	=>	"Print Bonafide Certificate",
+                        "document:dob-certificate"			=>	"Print DOB Certificate",
+                        "document:fee-certificate"			=>	"Print Fee Certificate",
+                        "document:exam-form"				=>	"Print Exam Form",
+                        "document:admit-card"				=>	"Print Admit Card",
+                        "send:email"					=>	"Send Email",
+                        "send:sms"						=>	"Send SMS",
+                        //"forward-exam-form"			=>	"Forward Exam Form for Submission",
+                        "student:promote"					=>	"Promote Class (One or More Student)",
+                        "student:promote-all"				=>	"Promote All Class Students at Once",
+                        "student:demote"					=>	"Demote Class (One or More Student)",
+                        "student:demote-all"				=>	"Demote All Class Students at Once",
+                        "student:bulk-discount"		=>	"Bulk Discount",
+                        //"relieved-tc-given"				=>	"Relieved/TC Given",
+                        "op:remove"						=>	"Delete",
+                        "op:restore"					=>	"Restore"
+    ],
+
     
 
 
@@ -128,30 +226,12 @@ return [
     ],
     "interactiveEntity-student" => ['student'],
 
-    "cronList-student" => ['student-birthday' => 'Student Birthday Message'],
-
     "mandatoryFields-student-entry-update" => ['student_name', 'phone_number'],
 
     "dateFields-student-entry-update" => ['admission_date', 'caste_date', 'income_date', 'dob'],
 
     "jsonFields-student-entry-update" => ['subjects', 'documents_submitted'],
 
-    "listFilters-student-list" => [
-                        "admin"	=>	[
-                            'current_session_filter' => "Session/current_session/session-json",
-                            'current_class_filter' => "Class/current_class/class-json",
-                            'current_section_filter' => "Section/current_section/section-json",
-                            'where_you_found_us_filter' => "Source/where_you_found_us/where_you_found_us-json",
-                            'status_filter' => "Status/status/student_status-json"
-                        ],
-                        "portal" => [
-                            'current_session_filter' => "Session/current_session/session-json",
-                            'current_class_filter' => "Class/current_class/class-json",
-                            'current_section_filter' => "Section/current_section/section-json",
-                            'where_you_found_us_filter' => "Source/where_you_found_us/where_you_found_us-json",
-                            'status_filter' => "Status/status/student_status-json"
-                        ]
-    ],
     "listFilters-student-student-day-cash-report-new" => [
                         "admin"	=>	[
                             'cash_report_type_filter' => "Report Type/cash_report_type/cash_report_type-list"
@@ -330,30 +410,6 @@ return [
     ],
     "religion-list" => ["HINDU", "MUSLIM", "CHRISTIAN", "SIKH", "BUDDHIST", "JAIN", "OTHER", "ATHIEST"],
 
-    "student-bulk-operation-list" => [
-                        "document:admission-form"			=>	"Print Admission Form",
-                        "document:id-card"					=>	"Print ID Card",
-                        "document:activity-undertaking"	=>	"Print Activities Undertaking",
-                        "document:character-certificate"	=>	"Print Character Certificate",
-                        "document:medical-certificate"		=>	"Print Medical Certificate",
-                        "document:transfer-certificate"	=>	"Print Transfer Certificate",
-                        "document:bonafide-certificate"	=>	"Print Bonafide Certificate",
-                        "document:dob-certificate"			=>	"Print DOB Certificate",
-                        "document:fee-certificate"			=>	"Print Fee Certificate",
-                        "document:exam-form"				=>	"Print Exam Form",
-                        "document:admit-card"				=>	"Print Admit Card",
-                        "send:email"					=>	"Send Email",
-                        "send:sms"						=>	"Send SMS",
-                        //"forward-exam-form"			=>	"Forward Exam Form for Submission",
-                        "student:promote"					=>	"Promote Class (One or More Student)",
-                        "student:promote-all"				=>	"Promote All Class Students at Once",
-                        "student:demote"					=>	"Demote Class (One or More Student)",
-                        "student:demote-all"				=>	"Demote All Class Students at Once",
-                        "student:bulk-discount"		=>	"Bulk Discount",
-                        //"relieved-tc-given"				=>	"Relieved/TC Given",
-                        "op:remove"						=>	"Delete",
-                        "op:restore"					=>	"Restore"
-    ],
     "exam-type-list" => [
                         "annual"		=>	"Annual",
                         "half-yearly"	=>	"Half Yearly",

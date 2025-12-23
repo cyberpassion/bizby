@@ -23,6 +23,13 @@ return [
         ],
     ],
 ],
+
+    'signup.bulk-operations' => [
+					"view:detail"		=>	"View Detail",
+					"op:remove"			=>	"Delete",
+					"op:restore"			=>	"Restore"
+	],
+	
     'communicationTemplate-signup' => [
 						"signup_entry_new_sms"		=>	"New Signup Entry SMS",
 						"signup_entry_new_whatsapp"	=>	"New Signup Entry Whatsapp",
@@ -72,10 +79,5 @@ return [
     'dateFields-signup-entry-update' => [],
 
     'additionalFields-signup-entry-update' => [],
-
-    'signup-bulk-operation-list' => [
-					"view:detail"		=>	"View Detail",
-					"op:remove"			=>	"Delete",
-					"op:restore"			=>	"Restore"
-    ] 
+ 
 ];
