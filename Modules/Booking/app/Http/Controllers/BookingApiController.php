@@ -54,15 +54,83 @@ class BookingApiController extends Controller
 	}
 
     public function cancel(Booking $booking)
-    {
-        $booking->update([
-            'status' => 'cancelled',
-        ]);
+	{
+	    if ($booking->billed_at) {
+    	    return response()->json([
+        	    'status'  => 'failed',
+            	'message' => 'Cannot cancel a billed booking',
+	        ], 409);
+    	}
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Booking cancelled successfully',
-            'data'    => $booking,
-        ]);
-    }
+	    $booking->update([
+    	    'status' => 'cancelled',
+	    ]);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Booking cancelled successfully',
+	    ]);
+	}
+
+	public function generateInvoice(
+	    Booking $booking,
+    	BookingFeeService $feeService
+	) {
+    	if ($booking->billed_at) {
+        	return response()->json([
+            	'status'  => 'failed',
+	            'message' => 'Invoice already generated',
+    	    ], 409);
+    	}
+
+	    if ($booking->status === 'cancelled') {
+    	    return response()->json([
+        	    'status'  => 'failed',
+            	'message' => 'Cannot bill a cancelled booking',
+	        ], 422);
+    	}
+
+	    $amount = $feeService->calculate($booking);
+	    $tax    = round($amount * 0.18, 2); // GST example
+    	$total  = $amount + $tax;
+
+	    $booking->update([
+			'invoice_number' => 'INV-' . now()->format('Ymd') . '-' . $booking->id,
+	        'amount'       => $amount,
+    	    'tax'          => $tax,
+        	'total_amount' => $total,
+	        'currency'     => 'INR',
+    	    'billed_at'    => now(),
+        	'status'       => 'confirmed',
+	        'invoice_snapshot' => [
+    	        'amount'    => $amount,
+        	    'tax'       => $tax,
+            	'total'     => $total,
+	            'currency'  => 'INR',
+    	        'issued_at' => now(),
+        	],
+	    ]);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Invoice generated successfully',
+        	'data'    => $booking->invoice_snapshot,
+	    ]);
+	}
+
+	public function invoice(Booking $booking)
+	{
+    	if (!$booking->invoice_snapshot) {
+	        return response()->json([
+    	        'status'  => 'failed',
+        	    'message' => 'Invoice not generated yet',
+        	], 404);
+    	}
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'data'   => $booking->invoice_snapshot,
+    	]);
+	}
+
 }

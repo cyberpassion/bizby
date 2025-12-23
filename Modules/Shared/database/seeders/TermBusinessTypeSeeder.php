@@ -60,8 +60,7 @@ class TermBusinessTypeSeeder extends Seeder
             'Startup',
             'Freelancer',
             'Consultancy',
-            'Export / Import',
-            'Other'
+            'Export / Import'
         ];
 
         foreach ($businessTypes as $index => $type) {

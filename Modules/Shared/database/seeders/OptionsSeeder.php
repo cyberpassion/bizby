@@ -14,30 +14,30 @@ class OptionsSeeder extends Seeder
     {
         $options = [
             [
-                'option_name' => 'site_name',
-                'option_value' => 'My SaaS App',
+                'name' => 'site_name',
+                'value' => 'My SaaS App',
                 'autoload' => 'yes',
             ],
             [
-                'option_name' => 'site_email',
-                'option_value' => 'support@mysaasapp.com',
+                'name' => 'site_email',
+                'value' => 'support@mysaasapp.com',
                 'autoload' => 'yes',
             ],
             [
-                'option_name' => 'timezone',
-                'option_value' => 'Asia/Kolkata',
+                'name' => 'timezone',
+                'value' => 'Asia/Kolkata',
                 'autoload' => 'yes',
             ],
             [
-                'option_name' => 'currency',
-                'option_value' => 'INR',
+                'name' => 'currency',
+                'value' => 'INR',
                 'autoload' => 'yes',
             ],
         ];
 
         foreach ($options as $option) {
             DB::table('options')->updateOrInsert(
-                ['option_name' => $option['option_name']], // check by option_name
+                ['name' => $option['name']], // check by name
                 array_merge($option, [
                     'client_id' => 1,
                     'status' => 1,

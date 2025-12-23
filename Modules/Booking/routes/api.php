@@ -28,8 +28,11 @@ Route::prefix('v1')->group(function () {
         Route::post('/bookings/preview-fee', [BookingApiController::class, 'previewFee']);
         Route::post('/bookings/{booking}/cancel', [BookingApiController::class, 'cancel']);
 
+		// Invoice / Billing
+		Route::post('/bookings/{booking}/generate-invoice',[BookingApiController::class, 'generateInvoice']);
+		Route::get('/bookings/{booking}/invoice',[BookingApiController::class, 'invoice']);
+
         // Venues
         Route::apiResource('venues', BookingVenueApiController::class);
     });
 });
-

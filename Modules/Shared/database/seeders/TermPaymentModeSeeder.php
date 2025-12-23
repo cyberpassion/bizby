@@ -55,8 +55,7 @@ class TermPaymentModeSeeder extends Seeder
             'SWIFT Transfer',
 
             /* ---------- Other ---------- */
-            'Crypto Currency',
-            'Other'
+            'Crypto Currency'
         ];
 
         foreach ($paymentModes as $index => $mode) {

@@ -59,29 +59,103 @@ return [
         'href'  => "/{$pg}",
         'items' => [
 
-			['title' => 'Add New',  'href' => "/module/{$pg}/new"],
-            ['title' => 'View List','href' => "/module/{$pg}/list"],
-
+            /* -------------------------
+             | Dashboard
+             |-------------------------*/
             [
-                'title' => 'Venue',
+                'title' => 'Dashboard',
+                'href'  => "/module/{$pg}",
+            ],
+
+            /* -------------------------
+             | Venues
+             |-------------------------*/
+            [
+                'title' => 'Venues',
                 'items' => [
-                    ['title' => 'Add New',    'href' => "/module/{$pg}/new-venue"],
-                    ['title' => 'Venue List', 'href' => "/module/{$pg}/venue-list"],
+                    ['title' => 'Add Venue',   'href' => "/module/{$pg}/new-venue"],
+                    ['title' => 'Venue List',  'href' => "/module/{$pg}/venues-list"],
                 ]
             ],
 
-            ['title' => 'View Report', 'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',    'href' => "/module/{$pg}/settings"],
-
+            /* -------------------------
+             | Units
+             |-------------------------*/
             [
-                'title' => 'Plugin',
+                'title' => 'Units',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
+                    ['title' => 'Add Unit',  'href' => "/module/{$pg}/new-unit"],
+                    ['title' => 'Unit List', 'href' => "/module/{$pg}/units-list"],
+                ]
+            ],
+
+            /* -------------------------
+             | Pricing
+             |-------------------------*/
+            [
+                'title' => 'Pricing',
+                'items' => [
+                    ['title' => 'Set Pricing',  'href' => "/module/{$pg}/new-pricing"],
+                    ['title' => 'Pricing List','href' => "/module/{$pg}/pricings-list"],
+                ]
+            ],
+
+            /* -------------------------
+             | Bookings
+             |-------------------------*/
+            [
+                'title' => 'Bookings',
+                'items' => [
+                    ['title' => 'Add Booking',   'href' => "/module/{$pg}/new-booking"],
+                    ['title' => 'Booking List',  'href' => "/module/{$pg}/booking-list"],
+                    ['title' => 'Calendar View', 'href' => "/module/{$pg}/calendar"],
+                ]
+            ],
+
+            /* -------------------------
+             | Billing & Invoices
+             |-------------------------*/
+            [
+                'title' => 'Billing & Invoices',
+                'items' => [
+                    ['title' => 'Generate Invoice', 'href' => "/module/{$pg}/new-invoice"],
+                    ['title' => 'Invoice List',     'href' => "/module/{$pg}/invoices-list"],
+                ]
+            ],
+
+            /* -------------------------
+             | Reports
+             |-------------------------*/
+            [
+                'title' => 'Reports',
+                'items' => [
+                    ['title' => 'Booking',   'href' => "/module/{$pg}/report-bookings"],
+                    ['title' => 'Revenue',   'href' => "/module/{$pg}/report-revenue"],
+                    ['title' => 'Occupancy', 'href' => "/module/{$pg}/report-occupancy"],
+                ]
+            ],
+
+            /* -------------------------
+             | Settings
+             |-------------------------*/
+            [
+                'title' => 'Settings',
+                'href'  => "/module/{$pg}/settings",
+            ],
+
+            /* -------------------------
+             | Plugins
+             |-------------------------*/
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    ['title' => 'Integrations', 'href' => "/module/{$pg}/plugins"],
                 ]
             ],
         ],
     ],
 ],
+
 
 /*
 |--------------------------------------------------------------------------

@@ -79,8 +79,7 @@ class TermAcademicQualificationSeeder extends Seeder
 
             /* ---------- Other ---------- */
             'Vocational Training',
-            'Skill Development Course',
-            'Other'
+            'Skill Development Course'
         ];
 
         foreach ($qualifications as $index => $qualification) {

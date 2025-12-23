@@ -11,6 +11,11 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
 		    $table->id();
 
+			$table->string('invoice_number')
+              ->nullable()
+              ->unique()
+              ->after('invoice_snapshot');
+
 		    $table->foreignId('booking_venue_id')
 		        ->constrained()
         		->cascadeOnDelete();
@@ -35,6 +40,7 @@ return new class extends Migration
 		    // notes, preferences, doctor, occasion
 
 		    $table->timestamps();
+			$table->json('invoice_snapshot')->nullable();
 
 		    $table->index(['booking_venue_id', 'bookable_unit_id']);
     		$table->index(['start_at', 'end_at']);
