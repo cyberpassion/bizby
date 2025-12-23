@@ -40,7 +40,7 @@ return [
                         "send:email"			=>	"Send Notification Email",
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
-    ]
+	],
 
 
 
