@@ -14,15 +14,16 @@ return [
 
                     ['Add New'   => "/{$pg}/new"],
                     ['View List' => "/{$pg}/list"],
-                    ['Settings'  => "/{$pg}/settings"],
-                    ['Report'    => "/{$pg}/report"],
 
                     [
                         'Plans' => [
-                            ['Create New'     => "/{$pg}/new"],
-                            ['View Plan List' => "/{$pg}/list"],
+                            ['Create New'     => "/{$pg}/new-plan"],
+                            ['View Plan List' => "/{$pg}/plan-list"],
                         ]
                     ],
+
+					['Settings'  => "/{$pg}/settings"],
+					['Report'    => "/{$pg}/report"],
 
                     [
                         'Plugin' => [

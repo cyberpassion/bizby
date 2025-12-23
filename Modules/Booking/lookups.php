@@ -26,11 +26,11 @@ return [
                     ]
                 ],
 
-                // Building
+                // Venue
                 [
-                    'Building' => [
-                        ['Add Building'       => "/{$pg}/building-entry"],
-                        ['View Building List' => "/{$pg}/building-entry/list"],
+                    'Venue' => [
+                        ['Add Venue'       => "/{$pg}/new-venue"],
+                        ['View Venue List' => "/{$pg}/building-entry/list"],
                     ]
                 ],
 
@@ -59,20 +59,14 @@ return [
         'href'  => "/{$pg}",
         'items' => [
 
-            [
-                'title' => 'Allotment',
-                'items' => [
-                    ['title' => 'Perform Allotment (Form)',  'href' => "/module/{$pg}/allotment-entry"],
-                    ['title' => 'Perform Allotment (Table)', 'href' => "/module/{$pg}/allotment-entry/list"],
-                    ['title' => 'View Booking List',         'href' => "/module/{$pg}/list"],
-                ]
-            ],
+			['title' => 'Add New',  'href' => "/module/{$pg}/new"],
+            ['title' => 'View List','href' => "/module/{$pg}/list"],
 
             [
-                'title' => 'Building',
+                'title' => 'Venue',
                 'items' => [
-                    ['title' => 'Add Building',       'href' => "/module/{$pg}/building-entry"],
-                    ['title' => 'View Building List', 'href' => "/module/{$pg}/building-entry/list"],
+                    ['title' => 'Add New',    'href' => "/module/{$pg}/new-venue"],
+                    ['title' => 'Venue List', 'href' => "/module/{$pg}/venue-list"],
                 ]
             ],
 
@@ -146,13 +140,13 @@ return [
                                     'routes'=>	[
                                         'php'=>	'#',
                                         'pwa'=>	"/{$pg}/building-entry/entry",
-                                        'app'=>	"/{$pg}/building-entry"
+                                        'app'=>	"/{$pg}/new-venue"
                                     ]
                                 ],
                                 [
                                     'table'	=>	'#',
                                     'params'=>	[],
-                                    'label'	=>	'Building Slots not Added',
+                                    'label'	=>	'Venue Slots not Added',
                                     'routeLabel'	=>	'Set Now',
                                     'routes'=>	[
                                         'php'=>	'#',
@@ -171,8 +165,8 @@ return [
                                     'routeLabel'	=>	'Set Now',
                                     'routes'=>	[
                                         'php'=>	'#',
-                                        'pwa'=>	"/{$pg}/building-entry",
-                                        'app'=>	"/{$pg}/building-entry"
+                                        'pwa'=>	"/{$pg}/new-venue",
+                                        'app'=>	"/{$pg}/new-venue"
                                     ]
                                 ]
                             ]
@@ -248,10 +242,10 @@ return [
 
     "listFilters-booking-building-list" => [
                         "admin"	=>	[
-                            'building_id_filter' => "Building/building_id/building-json",
+                            'building_id_filter' => "Venue/building_id/building-json",
                         ],
                         "portal" => [
-                            'building_id_filter' => "Building/building_id/building-json",
+                            'building_id_filter' => "Venue/building_id/building-json",
                         ]
     ],
     "listFilters-booking-entry-new" => [
@@ -267,11 +261,11 @@ return [
     ],
     "listFilters-booking-building-entry" => [
                         "admin"	=>	[
-                            'booking_allotment_filter' => "Building/building_id/building-json",
+                            'booking_allotment_filter' => "Venue/building_id/building-json",
                             'building_status_filter' => "Status/status/building_status-json",
                         ],
                         "portal" => [
-                            'booking_allotment_filter' => "Building/building_id/building-json",
+                            'booking_allotment_filter' => "Venue/building_id/building-json",
                             'building_status_filter' => "Status/status/building_status-json",
                         ]
     ],
@@ -319,12 +313,12 @@ return [
     ],
     "listFilters-booking-booking-report-new" => [
                         "admin"	=>	[
-                            'booking_allotment_filter' 			=> "Building/building_id/building-json",
+                            'booking_allotment_filter' 			=> "Venue/building_id/building-json",
                             'report_booking_type_filter'		=> "Booking Type/booking_type/booking_type-json",
                             'report_availability_type_filter'	=> "Availability/status/booking_availability_status-json"
                         ],
                         "portal" => [
-                            'booking_allotment_filter' 			=> "Building/building_id/building-json",
+                            'booking_allotment_filter' 			=> "Venue/building_id/building-json",
                             'report_booking_type_filter'		=> "Booking Type/booking_type/booking_type-json",
                             'report_availability_type_filter'	=> "Availability/status/booking_availability_status-json"
                         ]
@@ -423,7 +417,7 @@ return [
                         "op:restore"							=>	"Restore"
     ],
     "sort-booking-results-by" => [
-                        "building_id"						=>	"Building",
+                        "building_id"						=>	"Venue",
                         "booking_group_id"					=>	"Booking Group ID"
     ]
 

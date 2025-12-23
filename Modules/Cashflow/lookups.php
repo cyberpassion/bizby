@@ -57,30 +57,22 @@ return [
                 [
                     'title' => 'Expense',
                     'items' => [
-                        ['title' => 'Add New Expense',   'href' => "/module/{$pg}/new"],
-                        ['title' => 'View Expense List', 'href' => "/module/{$pg}/list"],
-                        ['title' => 'View Report',       'href' => "/module/{$pg}/report"],
+                        ['title' => 'Add New',   'href' => "/module/{$pg}/new-expense"],
+                        ['title' => 'View List', 'href' => "/module/{$pg}/expense-list"],
                     ]
                 ],
 
                 [
                     'title' => 'Income',
                     'items' => [
-                        ['title' => 'Add New Income',   'href' => "/module/{$pg}/new"],
-                        ['title' => 'View Income List', 'href' => "/module/{$pg}/list"],
-                        ['title' => 'View Report',      'href' => "/module/{$pg}/report"],
+                        ['title' => 'Add New',   'href' => "/module/{$pg}/new-income"],
+                        ['title' => 'View List', 'href' => "/module/{$pg}/income-list"],
                     ]
                 ],
 
-                [
-                    'title' => 'Online Payments',
-                    'items' => [
-                        ['title' => 'View Online Payments', 'href' => "/module/{$pg}/list"],
-                        ['title' => 'View Report',          'href' => "/module/{$pg}/report"],
-                        ['title' => 'Settings',             'href' => "/module/{$pg}/settings"],
-                    ]
-                ],
+                ['title' => 'View Online Payments', 'href' => "/module/{$pg}/online-payment-list"],
 
+				['title' => 'View Report',          'href' => "/module/{$pg}/report"],
                 ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
 
                 [
