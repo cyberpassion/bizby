@@ -27,6 +27,14 @@ class BookableUnit extends Model
         return $this->hasMany(Booking::class);
     }
 
+	public function pricings()
+    {
+        return $this->hasMany(
+            BookingUnitPricing::class,
+            'bookable_unit_id'
+        );
+    }
+
 	protected function dynamicFillable()
     {
         // Example dynamic load from DB table

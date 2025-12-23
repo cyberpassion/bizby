@@ -21,7 +21,7 @@ class BookingService
 
         if ($exists) {
             throw ValidationException::withMessages([
-                'booking' => 'This unit is already booked for the selected time.'
+                'booking' => ['This unit is already booked for the selected time.'],
             ]);
         }
 
@@ -30,4 +30,5 @@ class BookingService
             'status' => 'confirmed',
         ]);
     }
+	
 }
