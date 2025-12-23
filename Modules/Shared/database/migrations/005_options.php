@@ -12,13 +12,13 @@ return new class extends Migration
             // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
             $table->commonSaasFields();
 
-            $table->longText('name')->nullable();
+            $table->longText('name');
             $table->longText('value')->nullable();
 
-            $table->string('autoload');
+            $table->string('autoload')->nullable();
 
             /* ============== Indexes (Recommended) ============== */
-            $table->index('autoload');
+            //$table->index('autoload');
         });
     }
 

@@ -4,38 +4,46 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-            [
-                'title' => 'Settings',
-                'items' => [
-                    ['title' => 'Salary Settings', 'href' => "/module/{$pg}/settings/salary"],
-                ]
-            ],
-            [
-                'title' => 'Report',
-                'items' => [
-                    ['title' => 'Salary Report', 'href' => "/module/{$pg}/report/salary"],
-                ]
-            ],
-            ['title' => 'Bulk Operation', 'href' => "/module/{$pg}/bulk"],
-            [
-                'title' => 'Plugin',
-                'items' => [
-                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
-                ]
-            ],
-        ],
-    ],
-],
+	'sidebar-menu' => [
+    	[
+	        'title' => ucfirst($pg),
+    	    'href'  => "/{$pg}",
+        	'items' => [
+            	['title' => 'Home',      'href' => "/module/{$pg}/home"],
+	            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
+    	        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+        	    ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            	['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+	            [
+    	            'title' => 'Settings',
+        	        'items' => [
+            	        ['title' => 'Salary Settings', 'href' => "/module/{$pg}/settings/salary"],
+                	]
+	            ],
+    	        [
+        	        'title' => 'Report',
+            	    'items' => [
+                	    ['title' => 'Salary Report', 'href' => "/module/{$pg}/report/salary"],
+                	]
+	            ],
+    	        ['title' => 'Bulk Operation', 'href' => "/module/{$pg}/bulk"],
+        	    [
+            	    'title' => 'Plugin',
+                	'items' => [
+                    	['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
+                	]
+            	],
+        	],
+    	],
+	],
+
+	'employee-status' => [
+		'1'		=>	'Active',
+        '11'	=>	'Draft',
+        '2'		=>	'Deleted',
+        '21'	=>	'Departed'
+	],
+
 	"communicationTemplate-employee" => [
                         "employee_entry_new_sms"		=>	"New Employee Entry SMS",
                         "employee_entry_new_whatsapp"	=>	"New Employee Entry Whatsapp",
@@ -174,12 +182,6 @@ return [
 	],
 	"search-column" => ["employee_name", "phone_number"],
 
-	"employee-status" => [
-		                '1'		=>	'Active',
-                        '11'	=>	'Draft',
-                        '2'		=>	'Deleted',
-                        '21'	=>	'Departed'
-	],
 	"employee-document" => [
 		                 'offer-letter'					=> 'Offer Letter',
                         'employer-bond'					=> 'Employer Bond',

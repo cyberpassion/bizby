@@ -4,46 +4,48 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-            [
-                'title' => 'Plugin',
-                'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
-            ],
-        ],
-    ],
-],
-
+	'sidebar-menu' => [
+    	[
+	        'title' => ucfirst($pg),
+    	    'href'  => "/{$pg}",
+        	'items' => [
+            	['title' => 'Home',      'href' => "/module/{$pg}/home"],
+	            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
+    	        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+        	    ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            	['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+	            [
+    	            'title' => 'Plugin',
+        	        'items' => [
+            	        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
+                	]
+            	],
+        	],
+    	],
+	],
     'vendor.list-filters' => [
-                        "admin"	=>	[
-                            'vendor_status_filter one'		=> "Status/status/vendor_status-json"
-                        ],
-                        "portal" => [
-                            'vendor_status_filter one'		=> "Status/status/vendor_status-json"
-                        ]
+		'admin'	=>	[
+        	'vendor_status_filter one'		=> "Status/status/vendor_status-json"
+        ],
+        'portal' => [
+        	'vendor_status_filter one'		=> "Status/status/vendor_status-json"
+        ]
     ],
     'vendor.bulk-operations' => [
-                        "document:performance"			=>	'Performance',
-                        "document:agreement"			=>	'Agreement',
-                        "document:certificate"			=>	'Certificate',
-                        "document:vendor-id-card"		=>	'ID Card'
+		'document:performance'			=>	'Performance',
+		'document:agreement'			=>	'Agreement',
+		'document:certificate'			=>	'Certificate',
+		'document:vendor-id-card'		=>	'ID Card'
     ],
     'vendor.bulk-operations' => [
-                        "view:detail"		=>	"View Detail",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"		=>	"Restore"
-    ], 
-
+		'view:detail'		=>	"View Detail",
+		'op:remove'			=>	"Delete",
+		'op:restore'		=>	"Restore"
+    ],
+	'vendor.statuses'	=>	[
+		true	=>	'Active',
+		false	=>	'Deleted'
+	],
 
     'communicationTemplate-vendor' => [
                         "vendor_entry_new_sms"		=>	"New Vendor Entry SMS",
@@ -108,11 +110,11 @@ return [
     ],
 
     'listFilters-vendor-activity-list' => [
-                        "admin"	=>	[
+                        'admin'	=>	[
                             'vendor_status_filter one'		=> "Activity/activity/vendor_activity-json",
                             'vendor_operation_filter one'	=> "Operation/operation/vendor_operation-json"
                         ],
-                        "portal" => [
+                        'portal' => [
                             'vendor_status_filter one'		=> "Activity/activity/vendor_activity-json",
                             'vendor_operation_filter one'	=> "Operation/operation/vendor_operation-json"
                         ]

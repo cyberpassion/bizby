@@ -20,7 +20,7 @@ return [
             'resource' => 'academic_years',
             'filter'   => ['is_active' => true, 'is_locked' => false],
             'message'  => 'Please create an Academic Year before adding students.',
-            'action'   => '/module/student/academicyears',
+            'action'   => '/module/student/academic-years',
         ],
     ],
 
@@ -44,7 +44,7 @@ return [
             'resource' => 'academic_years',
             'filter'   => ['is_active' => true, 'is_locked' => false],
             'message'  => 'Please create an Academic Year before adding students.',
-            'action'   => '/module/student/academicyears',
+            'action'   => '/module/student/academic-years',
         ],
     ],
 

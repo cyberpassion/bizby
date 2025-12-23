@@ -43,7 +43,7 @@ class OptionApiController extends SharedApiController
 
         return response()->json([
             'status' => 'success',
-            'data'   => ['data'=>$option],
+            'data'   => $option,
         ]);
     }
 
@@ -61,8 +61,45 @@ class OptionApiController extends SharedApiController
 
 	    return response()->json([
     	    'status' => 'success',
-        	'data'   => ['data'=>$options],
+        	'data'   => $options,
 	    ]);
+	}
+
+	public function store(\Illuminate\Http\Request $request)
+	{
+    	$payload = $request->except(['_token']);
+
+	    if (empty($payload)) {
+    	    return response()->json([
+        	    'status'  => 'error',
+            	'message' => 'No options provided',
+	        ], 422);
+    	}
+
+	    $saved = [];
+
+	    foreach ($payload as $name => $value) {
+    	    // Skip invalid keys
+        	if (!is_string($name) || $name === '') {
+            	continue;
+        	}
+
+	        $option = Option::updateOrCreate(
+    	        ['name' => $name],
+        	    [
+            	    'value'    => is_array($value) ? json_encode($value) : $value,
+                	'autoload' => $request->input('autoload'), // optional
+	            ]
+    	    );
+
+	        $saved[$name] = $option->value;
+    	}
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Options saved successfully',
+        	'data'    => ['data' => $saved],
+    	]);
 	}
 
 }

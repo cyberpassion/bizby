@@ -11,7 +11,7 @@ return [
 		[
             'type'     => 'exists',
             'resource' => 'terms',
-            'filter'   => ['module'=>'product','group'=>'product-brand-names'],
+            'filter'   => ['module'=>'product','group'=>'brand-names'],
             'message'  => 'Please add brand names before adding proceeding.',
             'action'   => '/module/shared/terms/product/brand-names',
         ]

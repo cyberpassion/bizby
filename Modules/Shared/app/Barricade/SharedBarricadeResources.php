@@ -2,6 +2,8 @@
 
 namespace Modules\Shared\Barricade;
 
+use Illuminate\Support\Facades\Schema;
+
 use Modules\Shared\Services\BarricadeResourceRegistry;
 
 // Shared
@@ -95,6 +97,14 @@ class SharedBarricadeResources
         BarricadeResourceRegistry::register(
             $resource,
             function (array $filter) use ($modelClass): bool {
+
+                $model = new $modelClass();
+
+                // 🔒 SAFETY: table not migrated yet
+                if (!Schema::hasTable($model->getTable())) {
+                    return false;
+                }
+
                 $query = $modelClass::query();
 
                 foreach ($filter as $column => $value) {
@@ -105,4 +115,5 @@ class SharedBarricadeResources
             }
         );
     }
+
 }

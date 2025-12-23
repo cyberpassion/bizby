@@ -4,6 +4,7 @@ namespace Modules\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Schema;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -19,24 +20,7 @@ class Lead extends Model
         return \Modules\Lead\Database\Factories\LeadFactory::new();
     }
 
-    protected $fillable = [
-        'lead_code',
-        'name',
-        'contact_person',
-        'mobile',
-        'email',
-        'district',
-        'state',
-        'pincode',
-        'website',
-        'category_id',
-        'source_id',
-        'stage_id',
-        'is_existing_client',
-        'place',
-        'next_followup_date',
-        'thread_parent_id',
-    ];
+    protected $fillable = [];
 
     /**
      * Polymorphic creator
@@ -74,5 +58,16 @@ class Lead extends Model
 	{
     	return $this->hasMany(LeadFollowup::class);
 	}
+
+	protected function dynamicFillable()
+    {
+        // Example dynamic load from DB table
+        return Schema::getColumnListing($this->getTable());
+    }
+
+    public function getFillable()
+    {
+        return $this->dynamicFillable();
+    }
 
 }

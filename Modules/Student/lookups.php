@@ -23,9 +23,9 @@ return [
             [
                 'title' => 'Students',
                 'items' => [
-                    ['title' => 'Add Student',   'href' => "/module/{$pg}/new-student"],
-                    ['title' => 'Student List',  'href' => "/module/{$pg}/students-list"],
-                    ['title' => 'Promote / Transfer', 'href' => "/module/{$pg}/promote"],
+                    ['title' => 'Add Student',   'href' => "/module/{$pg}/new"],
+                    ['title' => 'View List',  'href' => "/module/{$pg}/list"],
+                    ['title' => 'Transfer', 'href' => "/module/{$pg}/transfer"],
                 ]
             ],
 
@@ -35,7 +35,7 @@ return [
             [
                 'title' => 'Academic Setup',
                 'items' => [
-                    ['title' => 'Academic Years', 'href' => "/module/{$pg}/academicyears"],
+                    ['title' => 'Academic Years', 'href' => "/module/{$pg}/academic-years"],
                     ['title' => 'Classes',        'href' => "/module/shared/terms/student/classes"],
                     ['title' => 'Sections',       'href' => "/module/shared/terms/student/sections"],
                 ]
@@ -48,10 +48,7 @@ return [
                 'title' => 'Fee Management',
                 'items' => [
                     ['title' => 'Fee Heads',       'href' => "/module/shared/terms/student/fee-heads"],
-                    ['title' => 'Fee Structure',   'href' => "/module/{$pg}/fee-structure"],
-                    ['title' => 'Assign Fees',     'href' => "/module/{$pg}/assign-fees"],
-                    ['title' => 'Fee Collection', 'href' => "/module/{$pg}/fee-collection"],
-                    ['title' => 'Dues',            'href' => "/module/{$pg}/dues"],
+                    ['title' => 'Fee Structure',   'href' => "/module/{$pg}/fee-structure"]
                 ]
             ],
 

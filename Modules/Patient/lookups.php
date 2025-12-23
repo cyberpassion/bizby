@@ -4,26 +4,34 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-            [
-                'title' => 'Plugin',
-                'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
-            ],
-        ],
-    ],
-],
+	'sidebar-menu' => [
+    	[
+	        'title' => ucfirst($pg),
+    	    'href'  => "/{$pg}",
+        	'items' => [
+            	['title' => 'Home',      'href' => "/module/{$pg}/home"],
+	            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
+    	        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+        	    ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            	['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+	            [
+    	            'title' => 'Plugin',
+        	        'items' => [
+            	        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
+                	]
+	            ],
+    	    ],
+    	],
+	],
 
+	"patient.statuses" => [
+		"1"		=>	"ACTIVE",
+        "11"	=>	"Referred to Affiliate Hospital",
+        "12"	=>	"Payment Issue",
+        "2"		=>	"Relieved from this Hospital",
+        "21"	=>	"Referred to Other Hospital",
+        "22"	=>	"Deceased"
+    ],
 
     "communicationTemplate-patient" => [
                         "patient_entry_new_sms"		    =>	"New Patient Entry SMS",
@@ -138,14 +146,7 @@ return [
                         'discharge-card' => 'Discharge Card',
                         'patient-invoice' => 'Patient Invoice',
     ],
-    "patient-status" => [
-                        "1"		=>	"ACTIVE",
-                        "11"	=>	"Referred to Affiliate Hospital",
-                        "12"	=>	"Payment Issue",
-                        "2"		=>	"Relieved from this Hospital",
-                        "21"	=>	"Referred to Other Hospital",
-                        "22"	=>	"Deceased"
-    ],
+
     "patient-sort-results-by" => ["patient_name"=>"Patient Name","age"=>"Age","father_name"=>"Father Name"],
 
     "patient-bulk-operation-list" => [

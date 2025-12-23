@@ -16,6 +16,14 @@ return [
             ],
         ],
     ],
+
+	"note.statuses" => [
+		"1"		=>	"All",
+		"11"	=>	"Pending Only",
+		"12"	=>	"Resolved Only",
+		"2"		=>	"Deleted"
+	],
+
 	"communicationTemplate-note" => [
                         "note_entry_new_sms"		=>	"New Note Entry SMS",
                         "note_entry_new_whatsapp"	=>	"New Note Entry Whatsapp",
@@ -143,7 +151,6 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
 	],
-	"note-status" => ["1"=>"All","11"=>"Pending Only","12"=>"Resolved Only","2"=>"Deleted"],
 
 	"note-bulk-operation-list" => [
                         "view:detail"		=>	"View Detail",

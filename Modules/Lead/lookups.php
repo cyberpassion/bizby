@@ -4,25 +4,33 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-            [
-                'title' => 'Plugin',
-                'items' => [
-                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
-                ]
-            ],
-        ],
-    ],
-],
+	'sidebar-menu' => [
+    	[
+	        'title' => ucfirst($pg),
+    	    'href'  => "/{$pg}",
+        	'items' => [
+            	['title' => 'Home',      'href' => "/module/{$pg}/home"],
+	            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
+    	        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+        	    ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            	['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+            	[
+	                'title' => 'Plugin',
+    	            'items' => [
+        	            ['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
+            	    ]
+            	],
+	        ],
+    	],
+	],
+
+	"lead.statuses" => [
+		"1"		=>	"PROGRESS",
+        "12"	=>	"CLOSED",
+        "19"	=>	"LOST",
+        "2"		=>	"DELETED",
+        "11"	=>	"NC"
+	],
 
 	"lead-message-text" => [
                         "next_visit_date_scheduled|true"	=>	"Visit Scheduled Successfully",
@@ -246,13 +254,6 @@ return [
                         'PROPOSAL SENT'		=>	'PROPOSAL SENT',
                         'FINAL DISCUSSION'	=>	'FINAL DISCUSSION',
                         'DATA ERROR'		=>	'DATA ERROR'
-	],
-	"lead-status" => [
-                        "1"		=>	"PROGRESS",
-                        "12"	=>	"CLOSED",
-                        "19"	=>	"LOST",
-                        "2"		=>	"DELETED",
-                        "11"	=>	"NC"
 	],
 	"advancedInfo-connectors" => ["canbe_assigned"	=>	true]
 
