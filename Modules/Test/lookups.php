@@ -3,38 +3,6 @@ $pg = 'test';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-test' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                [
-                    'Single New' => [
-                        ['Create New' => "/{$pg}/single/create"],
-                        ['View List'  => "/{$pg}/single/list"],
-                        ['View Report'=> "/{$pg}/single/report"],
-                    ]
-                ],
-                [
-                    'Package' => [
-                        ['Create New' => "/{$pg}/package/create"],
-                        ['View List'  => "/{$pg}/package/list"],
-                        ['View Report'=> "/{$pg}/package/report"],
-                    ]
-                ],
-                ['Pool'     => "/{$pg}/pool"],
-                ['Settings' => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [

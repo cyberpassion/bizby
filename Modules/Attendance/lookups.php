@@ -3,26 +3,6 @@ $pg = 'attendance';
 $commonSettingsRoute = '/settings';
 
 return [
-    'menuItem-attendance' => [
-        'admin' => [
-            'parent' => [
-                $pg => '#',
-            ],
-            'child' => [
-                $pg => [
-                    ['Add New'   => "/{$pg}/new"],
-                    ['View List' => "/{$pg}/list"],
-                    ['Report'    => "/{$pg}/report"],
-                    ['Settings'  => "/{$pg}/settings"],
-                    [
-                        'Plugin' => [
-                            ['View Calendar' => "/{$pg}/calendar"],
-                        ]
-                    ],
-                ],
-            ],
-        ],
-    ],
 
     'sidebar-menu' => [
         [
@@ -86,7 +66,7 @@ return [
     ],
 
     "mandatoryFields-attendance-entry-update" => ['selected-ids'],
-    "dateFields-attendance_entry_update"      => ['date'],
+    "dateFields-attendance-entry-update"      => ['date'],
 
     "listFilters-attendance-list" => [
         "admin" => [
@@ -216,7 +196,7 @@ return [
         "portal-access-report"            => "Portal & App Access Report"
     ],
 
-    "attendance-paid-unpaid-json" => [
+    "attendance-paid-unpaid" => [
         'false' => 'Unpaid',
         'true'  => 'Paid'
     ]

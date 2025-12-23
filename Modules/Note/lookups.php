@@ -3,21 +3,6 @@ $pg = 'note';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-note' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/new"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
     'sidebar-menu' => [
         [
             'title' => ucfirst($pg),

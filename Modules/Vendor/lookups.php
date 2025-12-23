@@ -3,26 +3,6 @@ $pg = 'vendor';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-vendor' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -139,7 +119,7 @@ return [
                         "document:certificate"			=>	'Certificate',
                         "document:vendor-id-card"		=>	'ID Card'
     ],
-    'vendor-level-json' => ["Silver","Gold","Platinum"],
+    'vendor-level' => ["Silver","Gold","Platinum"],
 
     'interactiveEntity-vendor' => ['vendor'],
 

@@ -3,34 +3,6 @@ $pg = 'product';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-product' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                [
-                    'Stock' => [
-                        ['Add New'   => "/{$pg}/stock/create"],
-                        ['View List' => "/{$pg}/stock/list"],
-                        ['Report'    => "/{$pg}/stock/report"],
-                        ['Settings'  => "/{$pg}/stock/settings"],
-                    ]
-                ],
-                ['Settings' => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -100,13 +72,13 @@ return [
                         'sample_export'		=>	['sno', 'product_name', 'brand_name','sale_price'],
                         'selected_columns'	=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability', 'status']
     ],
-    'mandatoryFields-product_entry_update' => ['product_name','sale_price'],
+    'mandatoryFields-product-entry-update' => ['product_name','sale_price'],
 
-    'dateFields-product_entry_update' => [],
+    'dateFields-product-entry-update' => [],
 
-    'additionalFields-product_entry_update' => [],
+    'additionalFields-product-entry-update' => [],
 
-    'listFilters-product_list' => [
+    'listFilters-product-list' => [
                         "admin"	=>	[
                             'sort' => "Type/product_type/product_type-json",
                             'status' => "Avlb. Status/availability/product_availability_status-json",
@@ -118,7 +90,7 @@ return [
                             'sort status' => "Entry Status/status/product_status-json"
                         ]
     ],
-    'formPrefills-product_entry_new' => [
+    'formPrefills-product-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
                             'contact_mode'	=>	'default_contact_mode',
@@ -128,20 +100,20 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    'product_document' => [
+    'product-document' => [
                         'product-brochure'		=>	'Product Brochure'
     ],
-    'stock_status' => [
+    'stock-status' => [
                         'in-stock'			=>	'IN STOCK',
                         'low-stock'			=>	'LOW STOCK',
                         'out-of-stock'		=>	'OUT OF STOCK'
     ],
-    'product_cancel_reason' => [
+    'product-cancel-reason' => [
                         1	=>	'For Customer Satisfaction',
                         11	=>	'Faulty/Defective',
                         19	=>	'Poor Quality'
     ],
-    'product_group_results_by' => [
+    'product-group-results-by' => [
                         'product_type'						=>	'PRODUCT TYPE',
                         'brand_name'						=>	'BRAND NAME',
                         'total_quantity'					=>	'TOTAL STOCK',
@@ -149,7 +121,7 @@ return [
                         'sold_stock'						=>	'SOLD STOCK',
                         'status'							=>	'STATUS'
     ],
-    'product_sort_results_by' => [
+    'product-sort-results-by' => [
                         'product_name'						=>	'PRODUCT NAME',
                         'brand_name'						=>	'BRAND NAME',
                         'total_quantity'					=>	'TOTAL STOCK',

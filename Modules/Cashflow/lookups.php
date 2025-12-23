@@ -4,50 +4,6 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-    'menuItem-cashflow' => [
-        'admin' => [
-            'parent' => [
-                $pg => '#',
-            ],
-            'child' => [
-                $pg => [
-
-                    [
-                        'Expense' => [
-                            ['Add New Expense'   => "/{$pg}/new"],
-                            ['View Expense List' => "/{$pg}/list"],
-                            ['View Report'       => "/{$pg}/report"],
-                        ]
-                    ],
-
-                    [
-                        'Income' => [
-                            ['Add New Income'   => "/{$pg}/new"],
-                            ['View Income List' => "/{$pg}/list"],
-                            ['View Report'      => "/{$pg}/report"],
-                        ]
-                    ],
-
-                    [
-                        'Online Payments' => [
-                            ['View Online Payments' => "/{$pg}/list"],
-                            ['View Report'          => "/{$pg}/report"],
-                            ['Settings'             => "/{$pg}/settings"],
-                        ]
-                    ],
-
-                    ['Settings' => "/{$pg}/settings"],
-
-                    [
-                        'Plugin' => [
-                            ['View Calendar' => "/{$pg}/calendar"],
-                        ]
-                    ],
-                ],
-            ],
-        ],
-    ],
-
     'sidebar-menu' => [
         [
             'title' => ucfirst($pg),

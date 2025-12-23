@@ -3,26 +3,6 @@ $pg = 'transport';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-transport' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['New Vehicle Entry' => "/{$pg}/new"],
-                ['View List'         => "/{$pg}/list"],
-                ['Stops'             => "/{$pg}/stops"],
-                ['Settings'          => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [

@@ -3,26 +3,6 @@ $pg = 'lead';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-lead' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/plugin/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [

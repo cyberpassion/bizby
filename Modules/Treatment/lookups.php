@@ -3,26 +3,6 @@ $pg = 'treatment';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-treatment' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'      => "/{$pg}/new"],
-                ['View List'    => "/{$pg}/list"],
-                ['View Report'  => "/{$pg}/report"],
-                ['Settings'     => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [

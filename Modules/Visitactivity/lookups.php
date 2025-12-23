@@ -3,26 +3,6 @@ $pg = 'visitactivity';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-visitactivity' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
 
 'sidebar-menu' => [
     [
@@ -43,6 +23,8 @@ return [
         ],
     ],
 ],
+
+
     'communicationTemplate-visitactivity' => [
                         "visitactivity_entry_new_sms"		=>	"New Visitactivity Entry SMS",
                         "visitactivity_entry_new_whatsapp"	=>	"New Visitactivity Entry Whatsapp",

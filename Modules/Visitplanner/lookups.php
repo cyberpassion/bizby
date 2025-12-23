@@ -3,26 +3,7 @@ $pg = 'visitplanner';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-visit-planner' => [
-    'admin' => [
-        'parent' => [
-            $pg => '#',
-        ],
-        'child' => [
-            $pg => [
-                ['Add New'   => "/{$pg}/new"],
-                ['View List' => "/{$pg}/list"],
-                ['Report'    => "/{$pg}/report"],
-                ['Settings'  => "/{$pg}/settings"],
-                [
-                    'Plugin' => [
-                        ['View Calendar' => "/{$pg}/calendar"],
-                    ]
-                ],
-            ],
-        ],
-    ],
-],
+	
 
 'sidebar-menu' => [
     [
@@ -43,6 +24,15 @@ return [
         ],
     ],
 ],
+'visitplanner.visitactivity-generation-status' => [
+                        'all'	=>	"All",
+                        '1'		=>	"VAR Generated",
+                        '2'		=>	"Pending VAR"
+    ],
+'visitplanner.week-name' => ["week-1","week-2","week-3","week-4","week-5"],
+
+
+
     'communicationTemplate-visitplanner' => [
                         "visitplanner_entry_new_sms"				=>	"New Visitplanner Entry SMS",
                         "visitplanner_entry_new_whatsapp"			=>	"New Visitplanner Entry Whatsapp",
@@ -141,12 +131,7 @@ return [
                         "2"		=>	"Deleted",
                         "21"	=>	"Cancelled"
     ],
-    'visitplanner-visitactivity-generation-status' => [
-                        'all'	=>	"All",
-                        '1'		=>	"VAR Generated",
-                        '2'		=>	"Pending VAR"
-    ],
-    'visitplanner-week-name' => ["week-1","week-2","week-3","week-4","week-5"],
+    
 
     'sort-visitplanner-results-by-list' => [
                         'datetime'			=>	"Date & Time",

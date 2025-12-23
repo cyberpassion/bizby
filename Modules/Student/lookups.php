@@ -3,21 +3,6 @@ $pg = 'student';
 $commonSettingsRoute = '/settings';
 
 return [
-	'menuItem-student' => [
-		'admin'	=>	[
-			'parent'		=>	[
-				$pg	=>	'#',
-			],
-			'child'		=>	[
-				$pg	=>	[
-					['Add New'		=> "/{$pg}/new"],
-	                ['View List'	=> "/{$pg}/list"],
-    	            ['Report'		=> "/{$pg}/report"],
-        	        ['Settings'		=> "/{$pg}/settings"],
-				],
-			],
-		],
-	],
     'sidebar-menu' => [
         [
             'title' => ucfirst($pg),
@@ -51,6 +36,32 @@ return [
             ],
         ],
     ],
+
+    "student.student-document-upload-type" => [
+                        /*"logo"						=> "Logo",
+                        "watermark"					=> "Watermark",
+                        "cover-image"				=> "Cover Image",
+                        "document-border"			=> "Document Border",*/
+                        "principal-signature"		=> "Principal Signature",
+                        "cashier-signature"			=> "Cashier Signature",
+                        "fee-structure"				=> "Fee Structure Excel"
+    ],
+    // New Lookups
+	"student.statuses" => [
+                        '1'		=>	'Active',
+                        '11'	=>	'Draft',
+                        '19'	=>	'Promoted',
+                        '2'		=>	'Deleted',
+                        '21'	=>	'TC Generated',
+                        '22'	=>	'Departed w/o TC',
+                        '23'	=>	'Rusticated',
+                        '2x'	=>	'Deleted (Other Reasons)',
+                        '127'	=>	'Cancelled', // Legacy
+    ],
+    
+
+
+
 	"communicationTemplate-student" => [
                         "student_entry_new_sms"		    =>	"New Student Entry SMS",
                         "student_entry_new_whatsapp"	=>	"New Student Entry Whatsapp",
@@ -414,15 +425,6 @@ return [
                         "exammarks_sms"		=>	"Exam Marks SMS",
                         "custom_sms"		=>	"Custom SMS"
     ],
-    "student-module-document-upload-type" => [
-                        /*"logo"						=> "Logo",
-                        "watermark"					=> "Watermark",
-                        "cover-image"				=> "Cover Image",
-                        "document-border"			=> "Document Border",*/
-                        "principal-signature"		=> "Principal Signature",
-                        "cashier-signature"			=> "Cashier Signature",
-                        "fee-structure"				=> "Fee Structure Excel"
-    ],
     "subject-type" => [
                         "compulsory"	=>	"Compulsory",
                         "optional"		=>	"Optional"
@@ -688,17 +690,5 @@ return [
 		"section"	=> "Section"
 	],
 
-	// New Lookups
-	"student.statuses" => [
-                        '1'		=>	'Active',
-                        '11'	=>	'Draft',
-                        '19'	=>	'Promoted',
-                        '2'		=>	'Deleted',
-                        '21'	=>	'TC Generated',
-                        '22'	=>	'Departed w/o TC',
-                        '23'	=>	'Rusticated',
-                        '2x'	=>	'Deleted (Other Reasons)',
-                        '127'	=>	'Cancelled', // Legacy
-    ],
 
 ];
