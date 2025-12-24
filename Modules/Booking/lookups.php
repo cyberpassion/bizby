@@ -118,6 +118,27 @@ return [
     ],
 ],
 
+"booking.unit-types" => [
+    "room"  => "Room",
+    "table" => "Table",
+    "bed"   => "Bed",
+    "villa" => "Villa",
+    "desk"  => "Desk",
+],
+
+"booking.booking-types" => [
+    "stay"      => "Stay",
+    "slot"      => "Slot",
+    "admission" => "Admission",
+],
+
+"booking.charge-types" => [
+    "per_night" => "Per Night",
+    "per_day"   => "Per Day",
+    "per_hour"  => "Per Hour",
+    "per_slot"  => "Per Slot",
+],
+
 /*
 |--------------------------------------------------------------------------
 | VENUE TYPES

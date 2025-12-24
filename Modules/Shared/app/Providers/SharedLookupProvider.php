@@ -7,6 +7,8 @@ use Modules\Shared\Models\Term;
 use Modules\Employee\Models\Employee;
 use Modules\Student\Models\Student;
 use Illuminate\Support\Str;
+use Modules\Booking\Models\BookableUnit;
+use Modules\Booking\Models\BookingVenue;
 
 class SharedLookupProvider
 {
@@ -69,6 +71,7 @@ class SharedLookupProvider
 
             'employees' => $this->employees($group),
             'students'  => $this->students($group),
+			'bookings'  => $this->bookings($group),
 
             default => [],
         };
@@ -105,4 +108,23 @@ class SharedLookupProvider
             default => [],
         };
     }
+
+	protected function bookings(string $group): array
+    {
+        return match ($group) {
+
+            'venues-list' => BookingVenue::where('is_active', true)
+                ->orderBy('name')
+                ->pluck('name', 'id')
+                ->toArray(),
+
+			'units-list' => BookableUnit::where('is_active', true)
+                ->orderBy('name')
+                ->pluck('name', 'id')
+                ->toArray(),
+
+            default => [],
+        };
+    }
+
 }

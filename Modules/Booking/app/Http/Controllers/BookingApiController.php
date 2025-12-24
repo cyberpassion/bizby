@@ -20,7 +20,7 @@ class BookingApiController extends Controller
         return response()->json([
             'status'  => 'success',
             'message' => 'Bookings fetched successfully',
-            'data'    => $bookings,
+            'data'    => ['data'=>$bookings],
         ]);
     }
 

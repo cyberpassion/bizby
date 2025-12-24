@@ -11,70 +11,101 @@ use Modules\Booking\Models\BookingUnitPricing;
 class BookingUnitPricingApiController extends Controller
 {
     /**
-     * List pricing for a unit
-     */
-    public function index(BookableUnit $unit)
-    {
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Pricing fetched successfully',
-            'data'    => $unit->pricings,
-        ]);
-    }
+	 * List pricing (nested + flat)
+	 */
+	public function index(Request $request, ?BookableUnit $unit = null)
+	{
+    	$query = BookingUnitPricing::query();
+
+	    // Route-model binding has priority
+    	if ($unit) {
+        	$query->where('bookable_unit_id', $unit->id);
+	    }
+    	// Fallback to query param
+    	elseif ($request->filled('bookable_unit_id')) {
+        	$query->where('bookable_unit_id', $request->query('bookable_unit_id'));
+    	}
+
+	    $pricings = $query->get();
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Pricing fetched successfully',
+        	'data'    => [
+            	'data' => $pricings
+        	],
+    	]);
+	}
 
     /**
-     * Store pricing for a unit
-     */
-    public function store(Request $request, BookableUnit $unit)
-    {
-        $data = $request->validate([
-            'booking_type' => 'required|string',
-            'charge_type'  => 'required|in:per_night,per_day,per_hour,per_slot',
-            'price'        => 'required|numeric|min:0',
-        ]);
+	 * Store pricing (nested + flat)
+	 */
+	public function store(Request $request, ?BookableUnit $unit = null)
+	{
+    	$data = $request->validate([
+        	'bookable_unit_id' => 'required_without:unit|exists:bookable_units,id',
+        	'booking_type'     => 'required|string',
+        	'charge_type'      => 'required|in:per_night,per_day,per_hour,per_slot',
+        	'price'            => 'required|numeric|min:0',
+	    ]);
 
-        // Prevent duplicate pricing per booking_type
-        if ($unit->pricings()->where('booking_type', $data['booking_type'])->exists()) {
-            throw ValidationException::withMessages([
-                'booking_type' => ['Pricing already exists for this booking type.'],
-            ]);
-        }
+	    // 🔐 Never trust client if unit comes from URL
+    	$unitId = $unit?->id ?? $data['bookable_unit_id'];
 
-        $pricing = $unit->pricings()->create($data);
+	    // Prevent duplicate pricing per booking_type
+    	if (
+        	BookingUnitPricing::where('bookable_unit_id', $unitId)
+            	->where('booking_type', $data['booking_type'])
+            	->exists()
+	    ) {
+    	    throw ValidationException::withMessages([
+        	    'booking_type' => ['Pricing already exists for this booking type.'],
+        	]);
+	    }
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Pricing created successfully',
-            'data'    => $pricing,
-        ], 201);
-    }
+	    $pricing = BookingUnitPricing::create([
+    	    'bookable_unit_id' => $unitId,
+        	'booking_type'     => $data['booking_type'],
+        	'charge_type'      => $data['charge_type'],
+        	'price'            => $data['price'],
+	    ]);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Pricing created successfully',
+        	'data'    => $pricing,
+	    ], 201);
+	}
 
     /**
-     * Update pricing
-     */
-    public function update(
-        Request $request,
-        BookableUnit $unit,
-        BookingUnitPricing $pricing
-    ) {
-        // Safety: ensure pricing belongs to unit
-        if ($pricing->bookable_unit_id !== $unit->id) {
-            abort(404);
-        }
+	 * Update pricing (nested + flat)
+	 */
+	public function update(
+	    Request $request,
+    	?BookableUnit $unit = null,
+    	BookingUnitPricing $pricing
+	) {
+    	// 🔐 If unit is provided in URL, assert ownership
+    	if ($unit && $pricing->bookable_unit_id !== $unit->id) {
+        	abort(404);
+    	}
 
-        $data = $request->validate([
-            'charge_type' => 'sometimes|in:per_night,per_day,per_hour,per_slot',
-            'price'       => 'sometimes|numeric|min:0',
-        ]);
+	    $data = $request->validate([
+    	    'charge_type' => 'sometimes|in:per_night,per_day,per_hour,per_slot',
+        	'price'       => 'sometimes|numeric|min:0',
+	    ]);
 
-        $pricing->update($data);
+	    // 🔒 Prevent unit hopping always
+    	unset($data['bookable_unit_id']);
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Pricing updated successfully',
-            'data'    => $pricing,
-        ]);
-    }
+	    $pricing->update($data);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Pricing updated successfully',
+        	'data'    => $pricing,
+	    ]);
+	}
 
     /**
      * Delete pricing
