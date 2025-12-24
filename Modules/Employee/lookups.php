@@ -43,6 +43,48 @@ return [
         '2'		=>	'Deleted',
         '21'	=>	'Departed'
 	],
+    "employee.crons" => [
+		                'employee-birthday' => 'Employee Birthday Message'
+	],
+    "employee.list-filters" => [
+                        "admin"	=>	[
+                             'employee_type_filter one'	=> "Employee Type/employee_type/employee_type-json",
+                            'sort status' 				=> "Status/status/status-json"
+                        ],
+                        "portal" => [
+                             'employee_type_filter one' 	=> "Employee Type/employee_type/employee_type-json",
+                              'sort status' 				=> "Status/status/status-json"
+                        ]
+	],
+    "employee.bulk-operations" => [
+                        "document:offer-letter"				=>	"Print Offer Letter",
+                        "document:employer-bond"			=>	"Print Employer Bond",
+                        "document:appointment-letter"		=>	"Print Appointment Letter",
+                        "document:salary-increment-letter"	=>	"Print Salary Increment Letter",
+                        "document:relieving-letter"			=>	"Print Relieving Letter",
+                        "document:experience-certificate"	=>	"Print Experience Certificate",
+                        "document:internship-certificate"	=>	"Print Internship Certificate",
+                        "document:employee-id-card"			=>	"Print ID Card",
+                        "send:email"					=>	"Send Email",
+                        "send:sms"						=>	"Send SMS",
+                        "op:remove"						=>	"Delete",
+                        "op:restore"					=>	"Restore"
+    ],
+    "employee.default-columns" => [
+		                'entry'				=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
+                        'list'				=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
+                        'detail'			=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
+                        'report'			=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
+                        'sample_export'		=>	['sno', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id'],
+                        'selected_columns'	=>	['employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id']
+	],
+    "employee.permission-allowed-filters-portal" => [
+                        "profile"	=>	[[ "employee_id"	=>	'{$login_id}' ]],
+                        "list"		=>	[[ "employee_id"	=>	'{$login_id}' ]],
+                        "report"	=>	[[ "employee_id"	=>	'{$login_id}' ]]
+	],
+
+    
 
 	"communicationTemplate-employee" => [
                         "employee_entry_new_sms"		=>	"New Employee Entry SMS",
@@ -85,20 +127,9 @@ return [
                         "cyp_message",
                         "employees"
 	],
-	"defaultColumns-employee" => [
-		                'entry'				=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
-                        'list'				=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
-                        'detail'			=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
-                        'report'			=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
-                        'sample_export'		=>	['sno', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id'],
-                        'selected_columns'	=>	['employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id']
-	],
 
 	"interactiveEntity-employee" =>['employee'],
     
-	"cronList-employee" => [
-		                'employee-birthday' => 'Employee Birthday Message'
-	],
 	"mandatoryFields-employee-entry-update" => ['employee_name', 'phone_number'],
 
 	"dateFields-employee-entry-update" => ['dob', 'date', 'date_of_joining', 'date_of_relieving'],
@@ -107,16 +138,6 @@ return [
 
 	"jsonFields-employee-entry-update" => ['qualifications', 'job_responsibility', 'teaching_subjects', 'teaching_classes', 'announcement_permission', 'attendance_permission'],
 
-	"listFilters-employee-list" => [
-                        "admin"	=>	[
-                             'employee_type_filter one'	=> "Employee Type/employee_type/employee_type-json",
-                            'sort status' 				=> "Status/status/status-json"
-                        ],
-                        "portal" => [
-                             'employee_type_filter one' 	=> "Employee Type/employee_type/employee_type-json",
-                              'sort status' 				=> "Status/status/status-json"
-                        ]
-	],
 	"listFilters-employee-employee-report-new" => [
                         "admin"	=>	[
                             'report_type_filter'	=> "Report Type/report_type/employee_type-json"
@@ -165,11 +186,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'report'],
                         ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
 	],
-	"permissionAllowedFiltersPortal-employee" => [
-                        "profile"	=>	[[ "employee_id"	=>	'{$login_id}' ]],
-                        "list"		=>	[[ "employee_id"	=>	'{$login_id}' ]],
-                        "report"	=>	[[ "employee_id"	=>	'{$login_id}' ]]
-	],
 	"formPrefills-employee-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -193,20 +209,6 @@ return [
                         'internship-certificate'		=> 'Internship Certificate',
                         'employee-id-card'				=> 'ID Card'
 	],
-	"employee-bulk-operation-list" => [
-                        "document:offer-letter"				=>	"Print Offer Letter",
-                        "document:employer-bond"			=>	"Print Employer Bond",
-                        "document:appointment-letter"		=>	"Print Appointment Letter",
-                        "document:salary-increment-letter"	=>	"Print Salary Increment Letter",
-                        "document:relieving-letter"			=>	"Print Relieving Letter",
-                        "document:experience-certificate"	=>	"Print Experience Certificate",
-                        "document:internship-certificate"	=>	"Print Internship Certificate",
-                        "document:employee-id-card"			=>	"Print ID Card",
-                        "send:email"					=>	"Send Email",
-                        "send:sms"						=>	"Send SMS",
-                        "op:remove"						=>	"Delete",
-                        "op:restore"					=>	"Restore"
-    ],
 	"sort-employee-results-by-list" => [
                         "employee_name"		=>	"EMPLOYEE NAME",
                         "father_name"		=>	"FATHER NAME",

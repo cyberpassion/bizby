@@ -46,6 +46,20 @@ return [
 		true	=>	'Active',
 		false	=>	'Deleted'
 	],
+  'vendor.default-columns' => [
+                        'entry'				=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
+                        'list'				=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
+                        'detail'			=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
+                        'report'			=>	['vendor_id', 'vendor_official_name', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
+                        'sample_export'		=>	['sno', 'vendor_official_name', 'vendor_official_address', 'vendor_official_email', 'vendor_official_phone', 'vendor_terms_and_condition', 'vendor_person', 'vendor_person_designation', 'vendor_person_email', 'vendor_person_phone'],
+                        'selected_columns'	=>	['vendor_official_name', 'vendor_person', 'vendor_person_phone']
+    ],
+    'vendor.statuses' => [
+                        "1"				=>	"Active",
+                        "11"			=>	"Awaiting Approval",
+                        "2"				=>	"Inactive",
+    ],
+    
 
     'communicationTemplate-vendor' => [
                         "vendor_entry_new_sms"		=>	"New Vendor Entry SMS",
@@ -63,29 +77,21 @@ return [
                         'vendor_official_address'	=>	'Address',
                         'vendor_person'				=>	'Person',
                         'vendor_person_phone'		=>	'P/Phone',
-                        'vendor_person_email'		=>	'P/Email',
+                        'vendor_person_email'		=>	'P/Email', 
                         'code_attaches'				=>	'C/Attaches',
-                        'expected_income'			=>	'Exp Income'
-    ],
+                        'expected_income'			=>	'Exp Income'  
+    ], 
     'moduleTable-vendor' => [
                         "cyp_activity",
                         "cyp_advancedinfo",
                         "cyp_allotment",
                         "cyp_cash",
                         "cyp_option",
-                        "cyp_upload",
+                         "cyp_upload",
                         "cyp_notification",
                         "cyp_message",
                         "cyp_vendor"
-    ],
-    'defaultColumns-vendor' => [
-                        'entry'				=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
-                        'list'				=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
-                        'detail'			=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
-                        'report'			=>	['vendor_id', 'vendor_official_name', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'vendor_official_name', 'vendor_official_address', 'vendor_official_email', 'vendor_official_phone', 'vendor_terms_and_condition', 'vendor_person', 'vendor_person_designation', 'vendor_person_email', 'vendor_person_phone'],
-                        'selected_columns'	=>	['vendor_official_name', 'vendor_person', 'vendor_person_phone']
-    ],
+    ], 
     'mandatoryFields-vendor-entry-update' => [
                         'vendor_official_name',
                         'vendor_official_address',
@@ -119,11 +125,7 @@ return [
                             'vendor_operation_filter one'	=> "Operation/operation/vendor_operation-json"
                         ]
     ],
-    'vendor-status' => [
-                        "1"				=>	"Active",
-                        "11"			=>	"Awaiting Approval",
-                        "2"				=>	"Inactive",
-    ],
+    
     'vendor-document' => [
                         'performance'					=>	'Performance',
                         'agreement'						=> 'Agreement',

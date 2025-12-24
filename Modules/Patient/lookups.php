@@ -32,6 +32,43 @@ return [
         "21"	=>	"Referred to Other Hospital",
         "22"	=>	"Deceased"
     ],
+    "patient.list-filters" => [
+                        "admin"	=>	[
+                            'patient_status_filter' => "Status/status/patient_status-json"
+                        ],
+                        "portal" => [
+                            'patient_status_filter' => "Status/status/patient_status-json"
+                        ]
+    ],
+    "patient.bulk-operations" => [
+                        "document:registration-form"	=>	"Print Registration Form",
+                        "document:id-card"				=>	'ID Card',
+                        "document:discharge-card"		=>	'Discharge Card',
+                        "document:patient-invoice"		=>	'Patient Invoice',
+                        "document:medical-certificate"	=>	'Medical Certificate',
+                        "document:transfer-certificate"	=>	'Transfer Certificate',
+                        "send:sms"						=>	"Send SMS to Patient",
+                        "send:email"					=>	"Send Email to Patient",
+                        "op:remove"						=>	"Delete Patient",
+                        "op:restore"					=>	"Restore Patient"
+    ],
+    "patient.default-columns" => [
+                        'entry'				=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
+                        'list'				=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
+                        'detail'			=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
+                        'report'			=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
+                        'sample_export'		=>	['sno', 'patient_name', 'phone_number', 'age'],
+                        'selected_columns'	=>	['patient_name', 'phone_number', 'age']
+    ],
+    "patient.permission-allowed-filters-portal" => [
+                        "profile"	=>	[[ "patient_id"	=>	'{$login_id}' ]],
+                        "list"		=>	[[ "patient_id"	=>	'{$login_id}' ]],
+                        "report"	=>	[[ "patient_id"	=>	'{$login_id}' ]]
+    ],
+
+
+
+
 
     "communicationTemplate-patient" => [
                         "patient_entry_new_sms"		    =>	"New Patient Entry SMS",
@@ -67,14 +104,6 @@ return [
                         "employees",
                         "cyp_patient"
     ],
-    "defaultColumns-patient" => [
-                        'entry'				=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
-                        'list'				=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
-                        'detail'			=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
-                        'report'			=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
-                        'sample_export'		=>	['sno', 'patient_name', 'phone_number', 'age'],
-                        'selected_columns'	=>	['patient_name', 'phone_number', 'age']
-    ],
     "interactiveEntity-patient" => ['patient'],
 
     "mandatoryFields-patient-entry-update" => ['patient_name','phone_number','age'],
@@ -83,14 +112,6 @@ return [
 
     "duplicacyCheckFields-patient-entry-new" => ['date','patient_name','phone_number'],
 
-    "listFilters-patient-list" => [
-                        "admin"	=>	[
-                            'patient_status_filter' => "Status/status/patient_status-json"
-                        ],
-                        "portal" => [
-                            'patient_status_filter' => "Status/status/patient_status-json"
-                        ]
-    ],
     "permissionAdmin-patient" => [
                         'restricted'=>	[
                             '2'	=>	[['pg' => $pg, 'sub_pg'	=>	'settings']],
@@ -126,11 +147,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'report'],
                         ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
     ],
-    "permissionAllowedFiltersPortal-patient" => [
-                        "profile"	=>	[[ "patient_id"	=>	'{$login_id}' ]],
-                        "list"		=>	[[ "patient_id"	=>	'{$login_id}' ]],
-                        "report"	=>	[[ "patient_id"	=>	'{$login_id}' ]]
-    ],
     "formPrefills-patient-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -149,18 +165,6 @@ return [
 
     "patient-sort-results-by" => ["patient_name"=>"Patient Name","age"=>"Age","father_name"=>"Father Name"],
 
-    "patient-bulk-operation-list" => [
-                        "document:registration-form"	=>	"Print Registration Form",
-                        "document:id-card"				=>	'ID Card',
-                        "document:discharge-card"		=>	'Discharge Card',
-                        "document:patient-invoice"		=>	'Patient Invoice',
-                        "document:medical-certificate"	=>	'Medical Certificate',
-                        "document:transfer-certificate"	=>	'Transfer Certificate',
-                        "send:sms"						=>	"Send SMS to Patient",
-                        "send:email"					=>	"Send Email to Patient",
-                        "op:remove"						=>	"Delete Patient",
-                        "op:restore"					=>	"Restore Patient"
-    ],
     "patient-slip-copy-list" => [
                         "all"			=>	"All",
                         "patient"		=>	"Patient Copy Only",

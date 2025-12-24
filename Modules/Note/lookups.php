@@ -23,6 +23,45 @@ return [
 		"12"	=>	"Resolved Only",
 		"2"		=>	"Deleted"
 	],
+    "note.crons" => ['note-timeboundnotification' => 'Note Reminders'],
+    "note.list-filters" => [
+                        "admin"	=>	[
+                            'date_filter' => "date/date/note_date-json",
+                            'session_filter' => "Session/session/session-json",
+                            'added_by_filter' => "added by/added_by_type/added_by_type-list",
+                            'note_type' => "note type/note_type/student_note_type-json",
+                            'status' => "status/status/status-json"
+                        ],
+                        "portal" => [
+                            'date_filter' => "date/date/note_date-json",
+                            'session_filter' => "Session/session/session-json",
+                            'added_by_filter' => "added by/added_by_type/added_by_type-list",
+                            'note_type' => "note type/note_type/student_note_type-json",
+                            'status' => "status/status/status-json"
+                        ]
+	],
+    "note.bulk-operations" => [
+                        "view:detail"		=>	"View Detail",
+                        "op:remove"			=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ],
+    "note.default-columns" => [
+		                'entry'				=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
+                        'list'				=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
+                        'detail'			=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
+                        'report'			=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
+                        'sample_export'		=>	['sno', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status'],
+                        'selected_columns'	=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status']
+	],
+    "note.permission-allowed-filters-portal" => [
+                        "entry"				=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
+                        "list"				=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
+                        "sent_by_me-list"	=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
+                        "report"			=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]]
+	],
+
+
+
 
 	"communicationTemplate-note" => [
                         "note_entry_new_sms"		=>	"New Note Entry SMS",
@@ -34,7 +73,7 @@ return [
                         "note_sender_new_sms"		=>	"New Note Sender SMS",
                         "note_sender_new_whatsapp"	=>	"New Note Sender Whatsapp",
                         "note_sender_new_email"		=>	"New Note Sender Email",
-                        "note_comment_new_sms"		=>	"New Note Comment SMS",
+                         "note_comment_new_sms"		=>	"New Note Comment SMS",
                         "note_comment_new_whatsapp"	=>	"New Note Comment Whatsapp",
                         "note_comment_new_email"	=>	"New Note Comment Email",
 	],
@@ -62,15 +101,6 @@ return [
                         "cyp_message",
                         "cyp_note"
 	],
-	"defaultColumns-note" => [
-		                'entry'				=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
-                        'list'				=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
-                        'detail'			=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
-                        'report'			=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
-                        'sample_export'		=>	['sno', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status'],
-                        'selected_columns'	=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status']
-	],
-	"cronList-note" => ['note-timeboundnotification' => 'Note Reminders'],
 
 	"mandatoryFields-note-entry-update" => ['information'],
 
@@ -80,22 +110,6 @@ return [
 
 	"duplicacyCheckFields-note-entry-new" => ['added_by_type','added_by','added_for_type','added_for_id','information'],
 
-	"listFilters-note-list" => [
-                        "admin"	=>	[
-                            'date_filter' => "date/date/note_date-json",
-                            'session_filter' => "Session/session/session-json",
-                            'added_by_filter' => "added by/added_by_type/added_by_type-list",
-                            'note_type' => "note type/note_type/student_note_type-json",
-                            'status' => "status/status/status-json"
-                        ],
-                        "portal" => [
-                            'date_filter' => "date/date/note_date-json",
-                            'session_filter' => "Session/session/session-json",
-                            'added_by_filter' => "added by/added_by_type/added_by_type-list",
-                            'note_type' => "note type/note_type/student_note_type-json",
-                            'status' => "status/status/status-json"
-                        ]
-	],
 	"listFilters-note-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
@@ -135,12 +149,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'report'],
                         ['pg' => $pg, 'sub_pg'	=>	'note-report'],
 	],
-	"permissionAllowedFiltersPortal-note" => [
-                        "entry"				=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
-                        "list"				=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
-                        "sent_by_me-list"	=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
-                        "report"			=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]]
-	],
 	"formPrefills-note-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -152,10 +160,5 @@ return [
                         ]
 	],
 
-	"note-bulk-operation-list" => [
-                        "view:detail"		=>	"View Detail",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ]
 
 ];

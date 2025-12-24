@@ -41,6 +41,19 @@ return [
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
 	],
+    'visitactivity.default-columns' => [
+                        'entry'				=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
+                        'list'				=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
+                        'detail'			=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
+                        'report'			=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
+                        'sample_export'		=>	['sno', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status'],
+                        'selected_columns'	=>	['visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status']
+    ],
+    'visitactivity.statuses' => [
+                        1	=>	'Submitted',
+                        11	=>	'Autosaved',
+                        2	=>	'Deleted'
+    ],
 
 
 
@@ -84,14 +97,6 @@ return [
                         "cyp_message",
                         "cyp_visitactivity"
     ],
-    'defaultColumns-visitactivity' => [
-                        'entry'				=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
-                        'list'				=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
-                        'detail'			=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
-                        'report'			=>	['visitactivity_id', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status','tags', 'status'],
-                        'sample_export'		=>	['sno', 'visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status'],
-                        'selected_columns'	=>	['visit_date', 'visit_by_name', 'visit_team_member_json', 'company_name', 'company_official_mobile_number', 'detailed_report', 'next_action_plan', 'visit_status']
-    ],
     'mandatoryFields-visitactivity-entry-update' => ['movement_from','company_official_mobile_number','company_address'],
 
     'dateFields-visitactivity-entry-update' => ['visit_date','next_visit_date'],
@@ -133,11 +138,6 @@ return [
     'sort-visitactivity-results-by-list' => [
                         'datetime'		=>	"Date & Time",
                         'total_expense'	=>	"Total Expense"
-    ],
-    'visitactivity-status' => [
-                        1	=>	'Submitted',
-                        11	=>	'Autosaved',
-                        2	=>	'Deleted'
     ],
 
 ];

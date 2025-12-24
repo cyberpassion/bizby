@@ -46,6 +46,19 @@ return [
                         "op:remove"						=>	"Delete Treatment Entry",
                         "op:restore"					=>	"Restore Treatment Entry"
     ],
+    'treatment.default-columns' => [
+                        'entry'				=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
+                        'list'				=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
+                        'detail'			=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
+                        'report'			=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
+                        'sample_export'		=>	['sno', 'treatment_date', 'treatment_time', 'observedby', 'observation', 'treatment_given', 'treatment_remark'],
+                        'selected_columns'	=>	['treatment_date', 'treatment_time', 'observedby', 'observation', 'treatment_given', 'treatment_remark']
+    ],
+    'treatment.statuses' => [
+                        '1'		=>	'Active',
+                        '2'		=>	'Deleted',
+                        '21'	=>	'Departed'
+    ],
 
 
 
@@ -83,14 +96,6 @@ return [
                         "cyp_patient",
                         "cyp_treatment"
     ],
-    'defaultColumns-treatment' => [
-                        'entry'				=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
-                        'list'				=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
-                        'detail'			=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
-                        'report'			=>	['treatment_id', 'treatment_date', 'treatment_time', 'person', 'observedby', 'observation', 'treatment_given', 'treatment_remark','tags', 'status'],
-                        'sample_export'		=>	['sno', 'treatment_date', 'treatment_time', 'observedby', 'observation', 'treatment_given', 'treatment_remark'],
-                        'selected_columns'	=>	['treatment_date', 'treatment_time', 'observedby', 'observation', 'treatment_given', 'treatment_remark']
-    ],
     'mandatoryFields-treatment-entry-update' => [],
 
     'dateFields-treatment-entry-update' => ['treatment_date'],
@@ -106,11 +111,6 @@ return [
                         "groups"	=>	[
                             'current_date'	=>	['contact_date']
                         ]
-    ],
-    'treatment-status' => [
-                        '1'		=>	'Active',
-                        '2'		=>	'Deleted',
-                        '21'	=>	'Departed'
     ],
     'treatment-type' => ["treatment","test","room-allotment"],
 

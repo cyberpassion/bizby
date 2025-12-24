@@ -23,6 +23,39 @@ return [
             ],
         ],
     ],
+    "announcement.crons" => [
+        'announcement-notification' => 'Announcement Notification'
+    ],
+    "announcement.list-filters" => [
+        "admin" => [
+            'date_filter'                   => "Date/date/announcement_date-json",
+            'announcement_category_filter' => "Catgory/category/announcement_category-json",
+            'announcement_status_filter'   => "Status/status/status-json"
+        ],
+        "portal" => [
+            'date_filter'                   => "Date/date/announcement_date-json",
+            'announcement_category_filter' => "Catgory/category/announcement_category-json",
+            'announcement_status_filter'   => "Status/status/status-json"
+        ]
+    ],
+    "announcement.bulk-operations" => [
+        "view:detail" => "View Detail",
+        "op:remove"   => "Delete",
+        "op:restore"  => "Restore"
+    ],
+    "announcement.default-columns" => [
+        'entry'          => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
+        'list'           => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
+        'detail'         => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
+        'report'         => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
+        'sample_export'  => ['sno', 'announcement_id', 'announcement', 'category', 'recipient', 'added_by'],
+        'selected_columns'=> ['announcement_id', 'announcement', 'category', 'recipient', 'added_by']
+    ],
+    "announcement.permission-allowed-filters-portal" => [
+        "entry"  => [["recipient" => '{$login_type}-{$byline}']],
+        "list"   => [["recipient" => '{$login_type}-{$byline}']],
+        "report" => [["recipient" => '{$login_type}-{$byline}']]
+    ],
 
     "communicationTemplate-announcement" => [
         "announcement_entry_new_sms"       => "New Announcement Entry SMS",
@@ -62,35 +95,9 @@ return [
         "cyp_announcement"
     ],
 
-    "defaultColumns-announcement" => [
-        'entry'          => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
-        'list'           => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
-        'detail'         => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
-        'report'         => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
-        'sample_export'  => ['sno', 'announcement_id', 'announcement', 'category', 'recipient', 'added_by'],
-        'selected_columns'=> ['announcement_id', 'announcement', 'category', 'recipient', 'added_by']
-    ],
-
-    "cronList-announcement" => [
-        'announcement-notification' => 'Announcement Notification'
-    ],
-
     "mandatoryFields-announcement-entry-update" => ['announcement', 'recipients'],
     "dateFields-announcement-entry-update"      => ['end_date'],
     "duplicacyCheckFields-announcement-entry-new"=> ['date', 'announcement'],
-
-    "listFilters-announcement-list" => [
-        "admin" => [
-            'date_filter'                   => "Date/date/announcement_date-json",
-            'announcement_category_filter' => "Catgory/category/announcement_category-json",
-            'announcement_status_filter'   => "Status/status/status-json"
-        ],
-        "portal" => [
-            'date_filter'                   => "Date/date/announcement_date-json",
-            'announcement_category_filter' => "Catgory/category/announcement_category-json",
-            'announcement_status_filter'   => "Status/status/status-json"
-        ]
-    ],
 
     "listFilters-announcement-detail-update" => [
         'admin' => [
@@ -145,12 +152,6 @@ return [
         ['pg' => $pg, 'sub_pg' => 'report']
     ],
 
-    "permissionAllowedFiltersPortal-announcement" => [
-        "entry"  => [["recipient" => '{$login_type}-{$byline}']],
-        "list"   => [["recipient" => '{$login_type}-{$byline}']],
-        "report" => [["recipient" => '{$login_type}-{$byline}']]
-    ],
-
     "formPrefills-announcement-entry-new" => [
         "columns" => [
             'product'       => 'default_product',
@@ -160,12 +161,6 @@ return [
         "groups" => [
             'current_date' => ['contact_date']
         ]
-    ],
-
-    "announcement-bulk-operation-list" => [
-        "view:detail" => "View Detail",
-        "op:remove"   => "Delete",
-        "op:restore"  => "Restore"
     ],
 
     "announcement-document-upload-type" => ["pdf"]

@@ -42,6 +42,20 @@ return [
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
 	],
+    "registration.default-columns" => [
+		                'entry'				=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
+                        'list'				=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
+                        'detail'			=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
+                        'report'			=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
+                        'sample_export'		=>	['sno', 'date', 'name', 'phone_number', 'email_id', 'permanent_address'],
+                        'selected_columns'	=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type']
+	],
+    "registration.permission-allowed-filters-portal" => [
+                        "profile"=>	[[ "phone_number" => '{$phone_number}' ]],
+                        "list"   => [[ "phone_number" => '{$phone_number}' ]],
+                        "report" => [[ "phone_number" => '{$phone_number}' ]]
+	],
+
 
 
 
@@ -76,14 +90,7 @@ return [
                         "cyp_message",
                         "cyp_registration"
 	],
-	"defaultColumns-registration" => [
-		                'entry'				=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
-                        'list'				=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
-                        'detail'			=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
-                        'report'			=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
-                        'sample_export'		=>	['sno', 'date', 'name', 'phone_number', 'email_id', 'permanent_address'],
-                        'selected_columns'	=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type']
-	],
+	
 	"interactiveEntity-registration" => ['registration'],
 
 	"mandatoryFields-registration-entry-update" => ['name','phone_number'],
@@ -133,11 +140,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'upload'],
                         ['pg' => $pg, 'sub_pg'	=>	'report'],
                         ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
-	],
-	"permissionAllowedFiltersPortal-registration" => [
-                        "profile"=>	[[ "phone_number" => '{$phone_number}' ]],
-                        "list"   => [[ "phone_number" => '{$phone_number}' ]],
-                        "report" => [[ "phone_number" => '{$phone_number}' ]]
 	],
 	"formPrefills-registration-entry-new" => [
                         "columns"	=>	[

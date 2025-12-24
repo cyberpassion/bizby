@@ -23,6 +23,42 @@ return [
             ],
         ],
     ],
+    "eventmanager.crons" => ['eventmanager-notification' => 'Event Notification'],
+    "eventmanager.list-filters" => [
+                        "admin"	=>	[
+                            'date_filter' 				=> "Date/event_date/event_date-json",
+                            'eventmanager_head_filter'	=> "Type/event_type/event_type-json",
+                            'status_filter'				=> "Status/status/eventmanager_status-json"
+                        ],
+                        "portal" => [
+                            'date_filter'				=> "Date/event_date/event_date-json",
+                            'eventmanager_head_filter'	=> "Type/event_type/event_type-json",
+                            'status_filter'				=> "Status/status/eventmanager_status-json"
+                        ]
+    ],
+    "eventmanager.bulk-operations" => [
+                        "view:detail"		=>	"View Event Details",
+                        "send:sms"			=>	"Send SMS to Participants",
+                        "send:email"		=>	"Send Email to Participants",
+                        "op:remove"			=>	"Delete Event",
+                        "op:restore"		=>	"Restore Event"
+    ],
+    "eventmanager.default-columns" => [
+                        'entry'				=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
+                        'list'				=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
+                        'detail'			=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
+                        'report'			=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
+                        'sample_export'		=>	['sno', 'event_name', 'event_description', 'event_on', 'event_participants'],
+                        'selected_columns'	=>	['event_name', 'event_description', 'event_on', 'event_participants']
+    ],
+    "eventmanager.permission-allowed-filters-portal" => [
+                        "entry"		=>	[["participant"	=>	'{$login_type}-{$byline}']],
+                        "list"		=>	[["participant"	=>	'{$login_type}-{$byline}']],
+                        "report"	=>	[["participant"	=>	'{$login_type}-{$byline}']]
+    ],
+
+
+    
     "communicationTemplate-eventmanager" => [
                         "eventmanager_entry_new_sms"		=>	"New Eventmanager Entry SMS",
                         "eventmanager_entry_new_whatsapp"	=>	"New Eventmanager Entry Whatsapp",
@@ -54,32 +90,11 @@ return [
                         "cyp_message",
                         "cyp_event"
     ],
-    "defaultColumns-eventmanager" => [
-                        'entry'				=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
-                        'list'				=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
-                        'detail'			=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
-                        'report'			=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
-                        'sample_export'		=>	['sno', 'event_name', 'event_description', 'event_on', 'event_participants'],
-                        'selected_columns'	=>	['event_name', 'event_description', 'event_on', 'event_participants']
-    ],
-    "cronList-eventmanager" => ['eventmanager-notification' => 'Event Notification'],
 
     "mandatoryFields-eventmanager-entry-update" => ['event_name','event_participants'],
 
     "dateFields-eventmanager-entry-update" => ['date'],
 
-    "listFilters-eventmanager-list" => [
-                        "admin"	=>	[
-                            'date_filter' 				=> "Date/event_date/event_date-json",
-                            'eventmanager_head_filter'	=> "Type/event_type/event_type-json",
-                            'status_filter'				=> "Status/status/eventmanager_status-json"
-                        ],
-                        "portal" => [
-                            'date_filter'				=> "Date/event_date/event_date-json",
-                            'eventmanager_head_filter'	=> "Type/event_type/event_type-json",
-                            'status_filter'				=> "Status/status/eventmanager_status-json"
-                        ]
-    ],
     "listFilters-eventmanager-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
@@ -117,11 +132,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'report'],
                         //['pg' => $pg, 'sub_pg'	=>	'settings']
     ],
-    "permissionAllowedFiltersPortal-eventmanager" => [
-                        "entry"		=>	[["participant"	=>	'{$login_type}-{$byline}']],
-                        "list"		=>	[["participant"	=>	'{$login_type}-{$byline}']],
-                        "report"	=>	[["participant"	=>	'{$login_type}-{$byline}']]
-    ],
     "formPrefills-eventmanager-entry-new" => 
                     [
                         "columns"	=>	[
@@ -133,12 +143,5 @@ return [
                             'current_date'	=>	['contact_date']
                         ]
     ],
-    "eventmanager-bulk-operation-list" => [
-                        "view:detail"		=>	"View Event Details",
-                        "send:sms"			=>	"Send SMS to Participants",
-                        "send:email"		=>	"Send Email to Participants",
-                        "op:remove"			=>	"Delete Event",
-                        "op:restore"		=>	"Restore Event"
-    ]
 
 ];

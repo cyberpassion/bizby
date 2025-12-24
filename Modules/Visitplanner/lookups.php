@@ -54,6 +54,25 @@ return [
                             'visitplanner_status_filter' => "Status/status/status-json"
                         ]
     ],
+    'visitplanner.default-columns' => [
+                        'entry'				=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
+                        'list'				=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
+                        'detail'			=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
+                        'report'			=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
+                        'sample_export'		=>	['sno', 'visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
+                        'selected_columns'	=>	['visitplanner_id','visit_company','visit_by_name', 'session', 'month', 'week', 'created_by_name']
+    ],
+    'visitplanner.permission-allowed-filters-portal' => [
+                        "entry"  => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
+                        "list"   => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
+                        "report" => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]]
+    ],
+    'visitplanner.statuses' => [
+                        "1"		=>	"Active",
+                        "11"	=>	"Postponed",
+                        "2"		=>	"Deleted",
+                        "21"	=>	"Cancelled"
+    ],
 
 
 
@@ -95,14 +114,6 @@ return [
                         "cyp_message",
                         "cyp_visitplanner"
     ],
-    'defaultColumns-visitplanner' => [
-                        'entry'				=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'list'				=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'detail'			=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'report'			=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'sample_export'		=>	['sno', 'visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
-                        'selected_columns'	=>	['visitplanner_id','visit_company','visit_by_name', 'session', 'month', 'week', 'created_by_name']
-    ],
 
     'mandatoryFields-visitplanner-entry-update' => ['visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
 
@@ -112,11 +123,6 @@ return [
 
     'jsonFields-visitplanner-entry-update' => ['visit_team_member_json','visit_product'],
 
-    'permissionAllowedFiltersPortal-visitplanner' => [
-                        "entry"  => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
-                        "list"   => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
-                        "report" => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]]
-    ],
     'formPrefills-visitplanner-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -131,14 +137,7 @@ return [
                         "high"		=>	"High",
                         "average"	=>	"Average",
                         "low"		=>	"Low"
-    ],
-    'visitplanner-status' => [
-                        "1"		=>	"Active",
-                        "11"	=>	"Postponed",
-                        "2"		=>	"Deleted",
-                        "21"	=>	"Cancelled"
-    ],
-    
+    ],    
 
     'sort-visitplanner-results-by-list' => [
                         'datetime'			=>	"Date & Time",

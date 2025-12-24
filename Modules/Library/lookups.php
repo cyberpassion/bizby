@@ -61,6 +61,28 @@ return [
         ],
     ],
 ],
+    'library.crons' => ['library-itemreturnnotification' => 'Library Item Return Notification'],
+    'library.bulk-operations' => [
+                        "send:email"		=>	"Send Email",
+                        "send:sms"			=>	"Send SMS",
+    ],
+    'library.default-columns' => [
+                        'entry'				=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'book-entry'		=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'newspaper-entry'	=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'journal-entry'		=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'magazine-entry'	=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'list'				=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'detail'			=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'report'			=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
+                        'allotment-list'	=>	['batch_group_id', 'allotment_id', 'allotment_date', 'recipient_name', 'scheduled_return_date', 'actual_return_date', 'delay', 'penalty','tags', 'status'],
+                        'sample_export'		=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
+                        'selected_columns'	=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
+                        'stock-entry'		=>	['item_name', 'category', 'isbn', 'publication', 'available_quantity','allotted_quantity','total_quantity', 'status']
+    ],
+
+    
+
     'communicationTemplate-library' => [
                         "library_itemallotment_new_sms"		    =>	"New Library Item Allotment SMS",
                         "library_itemallotment_new_whatsapp"	=>	"New Library Entry Whatsapp",
@@ -104,21 +126,6 @@ return [
                         "cyp_library_item",
                         "cyp_library_item_allotment"
     ],
-    'defaultColumns-library' => [
-                        'entry'				=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'book-entry'		=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'newspaper-entry'	=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'journal-entry'		=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'magazine-entry'	=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'list'				=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'detail'			=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'report'			=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
-                        'allotment-list'	=>	['batch_group_id', 'allotment_id', 'allotment_date', 'recipient_name', 'scheduled_return_date', 'actual_return_date', 'delay', 'penalty','tags', 'status'],
-                        'sample_export'		=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
-                        'selected_columns'	=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
-                        'stock-entry'		=>	['item_name', 'category', 'isbn', 'publication', 'available_quantity','allotted_quantity','total_quantity', 'status']
-    ],
-    'cronList-library' => ['library-itemreturnnotification' => 'Library Item Return Notification'],
     'mandatoryFields-library-entry-update' => ['item_name'],
     'dateFields-library-entry-update' => ['publishing_date'],
     'additionalFields-library-entry-update' => [],
@@ -183,10 +190,6 @@ return [
                         "item_name"			=>	"ITEM NAME",
                         "date"				=>	"ENTRY DATE",
                         "datetime"			=>	"ENTRY DATETIME"
-    ],
-    'library-bulk-operation-list' => [
-                        "send:email"		=>	"Send Email",
-                        "send:sms"			=>	"Send SMS",
     ],
     'library-book-bulk-operation-list' => [
                         "view:details"					=>	"View Details"

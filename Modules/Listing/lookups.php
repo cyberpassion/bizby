@@ -23,6 +23,33 @@ return [
         ],
     ],
 ],
+    'listing.list-filters' => [
+					"admin"	=>	[
+					    'listing_category_filter' => "Catgory/category/listing_category-json",
+						'listing_status_filter' => "Status/status/status-json"
+					],
+					"portal" => [
+					    'listing_category_filter' => "Catgory/category/listing_category-json",
+						'listing_status_filter' => "Status/status/status-json"
+					]
+    ],
+    'listing.bulk-operations' => [
+					"view:detail"		=>	"View Detail",
+					"op:remove"			=>	"Delete",
+					"op:restore"			=>	"Restore"
+    ],
+    'listing.default-columns' => [
+                    'entry'				=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
+					'list'				=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
+					'detail'			=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
+					'report'			=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
+					'sample_export'		=>	[],
+					'selected_columns'	=>	[]
+    ],
+
+
+
+
     'communicationTemplate-listing' => [
 						"listing_entry_new_sms"		    =>	"New Listing Entry SMS",
 						"listing_entry_new_whatsapp"	=>	"New Listing Entry Whatsapp",
@@ -48,29 +75,6 @@ return [
 					"cyp_notification",
 					"cyp_message",
 					"cyp_listing"
-    ],
-    'defaultColumns-listing' => [
-                    'entry'				=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
-					'list'				=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
-					'detail'			=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
-					'report'			=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
-					'sample_export'		=>	[],
-					'selected_columns'	=>	[]
-    ],
-    'listFilters-listing-list' => [
-					"admin"	=>	[
-					    'listing_category_filter' => "Catgory/category/listing_category-json",
-						'listing_status_filter' => "Status/status/status-json"
-					],
-					"portal" => [
-					    'listing_category_filter' => "Catgory/category/listing_category-json",
-						'listing_status_filter' => "Status/status/status-json"
-					]
-    ],
-    'listing-bulk-operation-list' => [
-					"view:detail"		=>	"View Detail",
-					"op:remove"			=>	"Delete",
-					"op:restore"			=>	"Restore"
     ],
     
 ];

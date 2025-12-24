@@ -59,6 +59,15 @@ return [
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
     ],
+    'test.default-columns' => [
+                        'entry'				=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients'. 'tags', 'status'],
+                        'list'				=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
+                        'detail'			=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
+                        'report'			=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
+                        'sample_export'		=>	['sno', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status'],
+                        'selected_columns'	=>	['test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status']
+    ],
+
 
 
 
@@ -116,15 +125,6 @@ return [
                         "cyp_test_question_pool_multiplechoice",
                         "cyp_test_result"
     ],
-    'defaultColumns-test' => [
-                        'entry'				=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients'. 'tags', 'status'],
-                        'list'				=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
-                        'detail'			=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
-                        'report'			=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status'],
-                        'selected_columns'	=>	['test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status']
-    ],
-
     'mandatoryFields-test-package-entry-update' => ['package_name','package_information'],
 
     'mandatoryFields-test-entry-update' => ['test_name','question_count','total_time'],

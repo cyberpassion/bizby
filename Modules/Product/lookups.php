@@ -32,6 +32,41 @@ return [
         ],
     ],
 ],
+    'product.list-filters' => [
+                        "admin"	=>	[
+                            'sort' => "Type/product_type/product_type-json",
+                            'status' => "Avlb. Status/availability/product_availability_status-json",
+                            'sort status' => "Status/status/product_status-json"
+                        ],
+                        "portal" => [
+                            'sort' => "Type/product_type/product_type-json",
+                            'status' => "Avlb. Status/availability/product_availability_status-json",
+                            'sort status' => "Entry Status/status/product_status-json"
+                        ]
+    ],
+    'product.bulk-operations' => [
+                        "view:detail"			=>	"View Product Details",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ],
+    'product.default-columns' => [
+                        'entry'				=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'list'				=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'detail'			=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'report'			=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'sample_export'		=>	['sno', 'product_name', 'brand_name','sale_price'],
+                        'selected_columns'	=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability', 'status']
+    ],
+    'stock.statuses' => [
+                        'in-stock'			=>	'IN STOCK',
+                        'low-stock'			=>	'LOW STOCK',
+                        'out-of-stock'		=>	'OUT OF STOCK'
+    ],
+
+
+
+
+
     'communicationTemplate-product' => [
                         "product_entry_new_sms"		    =>	"New Product Entry SMS",
                         "product_entry_new_whatsapp"	=>	"New Product Entry Whatsapp",
@@ -64,32 +99,12 @@ return [
                         "cyp_stock",
                         "cyp_product"
     ],
-    'defaultColumns-product' => [
-                        'entry'				=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'list'				=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'detail'			=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'report'			=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'sample_export'		=>	['sno', 'product_name', 'brand_name','sale_price'],
-                        'selected_columns'	=>	['product_id', 'product_name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability', 'status']
-    ],
     'mandatoryFields-product-entry-update' => ['product_name','sale_price'],
 
     'dateFields-product-entry-update' => [],
 
     'additionalFields-product-entry-update' => [],
 
-    'listFilters-product-list' => [
-                        "admin"	=>	[
-                            'sort' => "Type/product_type/product_type-json",
-                            'status' => "Avlb. Status/availability/product_availability_status-json",
-                            'sort status' => "Status/status/product_status-json"
-                        ],
-                        "portal" => [
-                            'sort' => "Type/product_type/product_type-json",
-                            'status' => "Avlb. Status/availability/product_availability_status-json",
-                            'sort status' => "Entry Status/status/product_status-json"
-                        ]
-    ],
     'formPrefills-product-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -102,11 +117,6 @@ return [
     ],
     'product-document' => [
                         'product-brochure'		=>	'Product Brochure'
-    ],
-    'stock-status' => [
-                        'in-stock'			=>	'IN STOCK',
-                        'low-stock'			=>	'LOW STOCK',
-                        'out-of-stock'		=>	'OUT OF STOCK'
     ],
     'product-cancel-reason' => [
                         1	=>	'For Customer Satisfaction',
@@ -137,10 +147,5 @@ return [
                         'qty'				=>	'QTY',
                         'kg'				=>	'KG'
     ],
-    'product-bulk-operation-list' => [
-                        "view:detail"			=>	"View Product Details",
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-]
 
 ];

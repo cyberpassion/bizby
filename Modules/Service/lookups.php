@@ -40,6 +40,22 @@ return [
                         "op:remove"					=>	"Delete",
                         "op:restore"				=>	"Restore"
     ],
+    'service.default-columns' => [
+                        'entry'				=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
+                        'list'				=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
+                        'detail'			=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
+                        'report'			=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
+                        'sample_export'		=>	['sno', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
+                        'selected_columns'	=>	['date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description']
+    ],
+    'service.statuses' => [
+                        1	=>	'Active',
+                        2	=>	'Deleted'
+    ],
+    'service.statuses' => [
+                        "1"			=>	"Requested",
+                        "2"			=>	"Completed"
+    ],
 
 
 
@@ -73,14 +89,6 @@ return [
                         "cyp_message",
                         "cyp_saleservice",
                         "cyp_service_listing"
-    ],
-    'defaultColumns-service' => [
-                        'entry'				=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
-                        'list'				=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
-                        'detail'			=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
-                        'report'			=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
-                        'sample_export'		=>	['sno', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
-                        'selected_columns'	=>	['date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description']
     ],
     'listFilters-service-listing-entry-new' => [
                         "admin"	=>	[
@@ -118,10 +126,6 @@ return [
 
     'duplicacyCheckFields-service-request-new' => ['date', 'requested_by_type', 'requested_by', 'service_id'],
 
-    'service-status' => [
-                        1	=>	'Active',
-                        2	=>	'Deleted'
-    ],
     'service-document' => [
                         'request-slip'		=>	'Request Slip',
                         'request-report'	=>	'Final Report',
@@ -132,10 +136,7 @@ return [
                         'in-stock'			=>	'AVAILABLE',
                         'out-of-stock'		=>	'NOT AVAILABLE'
     ],
-    'service-status' => [
-                        "1"			=>	"Requested",
-                        "2"			=>	"Completed"
-    ],
+    
     'service-unit' => [
                         'unit',
                         'kg',

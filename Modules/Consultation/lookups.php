@@ -48,8 +48,58 @@ return [
 	'15 d'	=>	'15 Days',
 	'30 d'	=>	'30 Days'
 ],
-
-	'consultation-mode'	=>	['call'=>'Call'],
+'consultation.crons' => [
+        'consultation-visitreminder' => 'Consultation Visit Reminder'
+],
+'consultation.list-filters' => [
+        "admin" => [
+            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
+            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
+            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
+            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
+            'consultation_status_filter' => "Status/status/consultation_status-json"
+        ],
+        "portal" => [
+            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
+            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
+            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
+            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
+            'consultation_status_filter' => "Status/status/consultation_status-json"
+        ]
+],
+'consultation.bulk-operations' => [
+        "document:consultation-slip" => "Print Consultation Slip",
+        "send:sms"                   => "Send Consultation SMS",
+        "send:email"                 => "Send Consultation Email",
+        "op:remove"                  => "Delete Consultation",
+        "op:restore"                 => "Restore Consultation"
+],
+'consultation.default-columns' => [
+        'entry'   => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
+        'list'    => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
+        'detail'  => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
+         'report'  => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
+         'sample_export' => ['sno','consultation_date','patient_name','phone_number','age','next_date','consultation_fee'],
+         'selected_columns' => ['consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee']
+],
+'consultation.permission-allowed-filters-portal' => [
+        "profile"  => [["phone_number" => '{$phone_number}']],
+        "list"     => [["phone_number" => '{$phone_number}']],
+        "detail"   => [["phone_number" => '{$phone_number}']],
+        "history"  => [["phone_number" => '{$phone_number}']],
+        "document" => [["phone_number" => '{$phone_number}']],
+        "report"   => [["phone_number" => '{$phone_number}']]
+],
+'consultation.statuses' => [
+        '1'  => 'Active',
+        '2'  => 'Deleted',
+        '21' => 'Departed',
+        '22' => 'Cancelled'
+],
+ 
+  
+ 
+	'consultatio  n-mode'	=>	['call'=>'Call'],
     'consultation_status' => [
         1 => 'Active',
         2 => 'Deleted',
@@ -88,14 +138,14 @@ return [
                 'routes'      => [
                     'php'=> '/employee/entry/create',
                     'pwa'=> "/employee/entry/entry",
-                    'app'=> "/employee/entry"
-                ]
-            ]
-        ],
-        'all' => [
-            'missing_option' => [
-                [
-                    'label'       => 'Consulation Default Duration',
+                      'app'=> "/employee/entry"
+                 ]
+             ]
+        ],  
+        ' all' => [
+             'missing_option' => [
+                  [
+                      'label'       => 'Consulation Default Duration',
                     'option_name' => 'consultation_default_duration',
                     'routeLabel'  => 'Set Now',
                     'routes'      => $commonSettingsRoute
@@ -113,11 +163,11 @@ return [
                     'routes'      => $commonSettingsRoute
                 ]
             ]
-        ]
-    ],
-
-	'moduleTable-consultation' => [
-        "terms",
+         ]
+     ],
+  
+	 'moduleTable-consultation' => [
+          "terms",
         "cyp_activity",
         "cyp_advancedinfo",
         "cyp_allotment",
@@ -128,48 +178,18 @@ return [
         "cyp_message",
         "consultations"
     ],
-
-	'defaultColumns-consultation' => [
-        'entry'   => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
-        'list'    => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
-        'detail'  => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
-        'report'  => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
-        'sample_export' => ['sno','consultation_date','patient_name','phone_number','age','next_date','consultation_fee'],
-        'selected_columns' => ['consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee']
-    ],
-
+ 
     'interactiveEntity-consultation' => ['consultation'],
-
-    'cronList-consultation' => [
-        'consultation-visitreminder' => 'Consultation Visit Reminder'
-    ],
 
     'mandatoryFields-consultation-entry' => ['patient_name','phone_number','age','consultation_date'],
 
     'dateFields-consultation-entry' => ['dob','consultation_date'],
-
-    'mandatoryFields-consultation-followup-entry' => ['thread_parent'],
-
-    'dateFields-consultation-followup-entry' => ['consultation_date'],
-
+ 
+     'mandatoryFields-consultation-followup-entry' => ['thread_parent'],
+ 
+         'dateFields-consultation-followup-entry' => ['consultation_date'],
+ 
     'jsonFields-consultation-entry' => ["consultation_for"],
-
-    'listFilters-consultation-list' => [
-        "admin" => [
-            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
-            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
-            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
-            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
-            'consultation_status_filter' => "Status/status/consultation_status-json"
-        ],
-        "portal" => [
-            'consultation_date_filter' => "Date/consultation_date/consultation_entry_date-json",
-            'consultation_nextdate_filter' => "Next Date/next_date/consultation_next_entry_date-json",
-            'consultation_with_filter one' => "Doctor/consultation_with/employee_id-json",
-            'consultation_through_filter one' => "Mode/consultation_through/consultation_through_mode-json",
-            'consultation_status_filter' => "Status/status/consultation_status-json"
-        ]
-    ],
 
     'listFilters-consultation-detail-update' => [
         'admin'  => [
@@ -180,25 +200,25 @@ return [
                 'View Details' => "{$pg}/detail",
                 'View History' => "{$pg}/history",
                 'Download Docs'=> ""
-            ]
+             ]
         ],
         'portal' => [
             $pg => [
                 'Print'        => "{$pg}/document",
-                'View Details' => "{$pg}/detail",
-                'View History' => "{$pg}/history",
-                'Download Docs'=> ""
-            ]
-        ]
-    ],
-
-    'consultation-consultation-report' => [
-        "admin" => [
-            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
-        ],
-        "portal" => [
-            'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
-        ]
+                 'View Details' => "{$pg}/detail",
+                  'View History' => "{$pg}/history",
+                 'Download Docs'=> ""
+             ]
+          ]
+     ],
+  
+    'consultat ion-consultation-report' => [
+        "admi n" => [
+              'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
+        ], 
+        "por tal" => [
+             'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
+        ]  
     ],
 
     'permissionAdmin-consultation' => [
@@ -211,26 +231,17 @@ return [
 
     'permissionPortal-consultation' => [
         'restricted' => [],
-        'allowed' => [
-            ['pg'=>$pg,'sub_pg'=>'home'],
-            ['pg'=>$pg,'sub_pg'=>'profile'],
-            ['pg'=>$pg,'sub_pg'=>'list'],
-            ['pg'=>$pg,'sub_pg'=>'detail'],
-            ['pg'=>$pg,'sub_pg'=>'report'],
-            ['pg'=>$pg,'sub_pg'=>'document'],
+        'allowe d' => [
+            [  'pg'=>$pg,'sub_pg'=>'home'],
+             ['pg'=>$pg,'sub_pg'=>'profile'],
+             ['pg'=>$pg,'sub_pg'=>'list'],
+              ['pg'=>$pg,'sub_pg'=>'detail'],
+             ['pg'=>$pg,'sub_pg'=>'report'],
+             ['pg'=>$pg,'sub_pg'=>'document'],
             ['pg'=>$pg,'sub_pg'=>'upload'],
             ['pg'=>$pg,'sub_pg'=>'history'],
             ['pg'=>$pg,'sub_pg'=>"$pg-report"]
-        ]
-    ],
-
-    'permissionAllowedFiltersPortal-consultation' => [
-        "profile"  => [["phone_number" => '{$phone_number}']],
-        "list"     => [["phone_number" => '{$phone_number}']],
-        "detail"   => [["phone_number" => '{$phone_number}']],
-        "history"  => [["phone_number" => '{$phone_number}']],
-        "document" => [["phone_number" => '{$phone_number}']],
-        "report"   => [["phone_number" => '{$phone_number}']]
+         ]
     ],
 
     'formPrefills-consultation-entry' => [
@@ -259,22 +270,8 @@ return [
         'emergency' => 'Emergency'
     ],
 
-    'consultation-status' => [
-        '1'  => 'Active',
-        '2'  => 'Deleted',
-        '21' => 'Departed',
-        '22' => 'Cancelled'
-    ],
 
     'treatment-type' => ["consultation","test","room-allotment"],
-
-    'consultation-bulk-operation-list' => [
-        "document:consultation-slip" => "Print Consultation Slip",
-        "send:sms"                   => "Send Consultation SMS",
-        "send:email"                 => "Send Consultation Email",
-        "op:remove"                  => "Delete Consultation",
-        "op:restore"                 => "Restore Consultation"
-    ],
 
     'consultation-slip-copy-list' => [
         "all"     => "All",

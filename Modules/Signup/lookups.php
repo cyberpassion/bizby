@@ -29,6 +29,15 @@ return [
 					"op:remove"			=>	"Delete",
 					"op:restore"			=>	"Restore"
 	],
+	'signup.default-columns' => [
+                    'entry'				=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
+					'list'				=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
+					'detail'			=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
+					'report'			=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
+					'sample_export'		=>	['sno', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status'],
+					'selected_columns'	=>	['name', 'phone_number', 'signup_label', 'signup_info', 'payment_status']
+    ],
+	
 	
     'communicationTemplate-signup' => [
 						"signup_entry_new_sms"		=>	"New Signup Entry SMS",
@@ -65,14 +74,6 @@ return [
 					"cyp_signup",
 					"cyp_signup_config",
 					"cyp_notification"
-    ],
-    'defaultColumns-signup' => [
-                    'entry'				=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
-					'list'				=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
-					'detail'			=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
-					'report'			=>	['signup_id', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status','tags', 'status'],
-					'sample_export'		=>	['sno', 'name', 'phone_number', 'signup_label', 'signup_info', 'payment_status'],
-					'selected_columns'	=>	['name', 'phone_number', 'signup_label', 'signup_info', 'payment_status']
     ],
     'mandatoryFields-signup-entry-update' => ['module','signup_official_name','signup_official_address','signup_official_email','signup_official_phone','send_notification_message'],
 

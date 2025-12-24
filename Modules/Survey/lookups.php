@@ -43,6 +43,19 @@ return [
                         "op:remove"			=>	"Delete",
                         "op:restore"		=>	"Restore"
     ],
+    'survey.default-columns' => [
+                        'entry'				=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
+                        'list'				=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
+                        'detail'			=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
+                        'report'			=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
+                        'sample_export'		=>	['sno', 'category', 'question', 'recipient', 'responses', 'added_by'],
+                        'selected_columns'	=>	['category', 'question', 'recipient', 'responses', 'added_by']
+    ],
+    'survey.permission-allowed-filters-portal' => [
+                        "entry"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
+                        "list"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
+                        "report"	=>	[["recipient"	=>	'{$login_type}-{$byline}']]
+    ],
 
 
 
@@ -79,14 +92,6 @@ return [
                         "cyp_survey",
                         "cyp_surveyresponse"
     ],
-    'defaultColumns-survey' => [
-                        'entry'				=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
-                        'list'				=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
-                        'detail'			=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
-                        'report'			=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
-                        'sample_export'		=>	['sno', 'category', 'question', 'recipient', 'responses', 'added_by'],
-                        'selected_columns'	=>	['category', 'question', 'recipient', 'responses', 'added_by']
-    ],
 
     'mandatoryFields-survey-entry-update' => ['question','option_1','option_2','option_3','option_4','end_date','recipients'],
 
@@ -94,11 +99,6 @@ return [
 
     'additionalFields-survey-entry-update' => [],
 
-    'permissionAllowedFiltersPortal-survey' => [
-                        "entry"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
-                        "list"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
-                        "report"	=>	[["recipient"	=>	'{$login_type}-{$byline}']]
-    ],
     'formPrefills-survey-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',

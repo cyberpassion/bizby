@@ -152,6 +152,24 @@ return [
                         "op:remove"						=>	"Delete",
                         "op:restore"					=>	"Restore"
     ],
+    "student.default-columns" => [
+                        'entry'				=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'tags', 'status'],
+                        'list'				=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'tags', 'status'],
+                        'detail'			=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'tags', 'status'],
+                        'report'			=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'status'],
+                        'sample_export'		=>	['sno','student_name', 'father_name', 'phone_number','admission_class','admission_section','admission_session','current_class', 'current_section','current_session','permanent_address'],
+                        'selected_columns'	=>	['student_name', 'father_name', 'phone_number','admission_class','admission_section','admission_session','current_class', 'current_section','current_section','permanent_address'],
+                        'day-report'		=>	['admission_id', 'student_name', 'father_name', 'phone_number', 'dob', 'status'],
+                        'dues-report'		=>	['admission_id', 'student_name', 'father_name', 'phone_number', 'permanent_address', 'dob', 'status']
+    ],
+    "student.permission-allowed-filters-portal" => [
+                        "list"			=>	[[ "admission_id"	=>	'{$login_id}' ]],
+                        "profile"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
+                        "upload"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
+                        "report"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
+                        "fee-history"	=>	[[ "admission_id"	=>	'{$login_id}' ]],
+                        //"fee-slip"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
+    ],
 
     
 
@@ -210,16 +228,6 @@ return [
                         "cyp_notification",
                         "cyp_message",
                         "students"
-    ],
-    "defaultColumns-student" => [
-                        'entry'				=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'tags', 'status'],
-                        'list'				=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'tags', 'status'],
-                        'detail'			=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'tags', 'status'],
-                        'report'			=>	['admission_id','student_name', 'father_name', 'phone_number', 'current_class', 'current_section', 'permanent_address', 'status'],
-                        'sample_export'		=>	['sno','student_name', 'father_name', 'phone_number','admission_class','admission_section','admission_session','current_class', 'current_section','current_session','permanent_address'],
-                        'selected_columns'	=>	['student_name', 'father_name', 'phone_number','admission_class','admission_section','admission_session','current_class', 'current_section','current_section','permanent_address'],
-                        'day-report'		=>	['admission_id', 'student_name', 'father_name', 'phone_number', 'dob', 'status'],
-                        'dues-report'		=>	['admission_id', 'student_name', 'father_name', 'phone_number', 'permanent_address', 'dob', 'status']
     ],
     "interactiveEntity-student" => ['student'],
 
@@ -285,14 +293,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'fee-history'],
                         ['pg' => $pg, 'sub_pg'	=>	'fee-slip'],
                         ['pg' => $pg, 'sub_pg'	=>	'upload'],
-    ],
-    "permissionAllowedFiltersPortal-student" => [
-                        "list"			=>	[[ "admission_id"	=>	'{$login_id}' ]],
-                        "profile"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
-                        "upload"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
-                        "report"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
-                        "fee-history"	=>	[[ "admission_id"	=>	'{$login_id}' ]],
-                        //"fee-slip"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
     ],
     "formPrefills-student-entry-new" => [
                         "columns"	=>	[

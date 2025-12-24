@@ -41,6 +41,44 @@ return [
         ],
     ],
 
+    "cashflow.crons" => ['cashflow-daycashreport' => 'Day Cash Report Message'],
+    "cashflow.bulk-operations" => [
+                        "print_voucher"			=>	"Print Voucher",
+                        "view:detail"			=>	"View Detail",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ],
+    "cashflow.default-columns" => [
+                         'entry'					=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
+                        'list'					=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
+                        'detail'				=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
+                        'report'				=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
+                        'sample_export'			=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
+                        'selected_columns'		=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
+                        'online-payment-list'	=>	['cash_id', 'date', 'online_payee_name', 'paid', 'payment_transaction_id', 'payment_confirmation', 'verified_by', 'status'],
+    ],
+    "cashflow.permission-allowed-filters-portal" => [
+                        "entry"	=>	[
+                            [
+                                "payee_type"	=>	'{$login_type}',
+                                "payee_id"		=>	'{$login_id}'
+                            ],
+                        ],
+                        "list"	=>	[
+                            [
+                                "payee_type"	=>	'{$login_type}',
+                                "payee_id"		=>	'{$login_id}'
+                            ],
+                        ],
+                        "report"	=>	[
+                            [
+                                "payee_type"	=>	'{$login_type}',
+                                "payee_id"		=>	'{$login_id}'
+                            ]
+                        ]
+    ],
+
+
     "communicationTemplate-cashflow" => [
                         "cashflow_entry_new_sms"		=>	"New Cashflow Entry SMS",
                         "cashflow_entry_new_whatsapp"	=>	"New Cashflow Entry Whatsapp",
@@ -85,16 +123,6 @@ return [
                         "cyp_message",
                         "cyp_cash"
     ],
-    "defaultColumns-cashflow" => [
-                         'entry'					=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
-                        'list'					=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
-                        'detail'				=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
-                        'report'				=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
-                        'sample_export'			=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
-                        'selected_columns'		=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
-                        'online-payment-list'	=>	['cash_id', 'date', 'online_payee_name', 'paid', 'payment_transaction_id', 'payment_confirmation', 'verified_by', 'status'],
-    ],
-    "cronList-cashflow" => ['cashflow-daycashreport' => 'Day Cash Report Message'],
 
     "mandatoryFields-cashflow-entry-update" => ['date','paid','remark'],
 
@@ -167,26 +195,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'history'],
                         //['pg' => $pg, 'sub_pg'	=>	'settings']
     ],
-    "permissionAllowedFiltersPortal-cashflow" => [
-                        "entry"	=>	[
-                            [
-                                "payee_type"	=>	'{$login_type}',
-                                "payee_id"		=>	'{$login_id}'
-                            ],
-                        ],
-                        "list"	=>	[
-                            [
-                                "payee_type"	=>	'{$login_type}',
-                                "payee_id"		=>	'{$login_id}'
-                            ],
-                        ],
-                        "report"	=>	[
-                            [
-                                "payee_type"	=>	'{$login_type}',
-                                "payee_id"		=>	'{$login_id}'
-                            ]
-                        ]
-    ],
     "formPrefills-cashflow-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -203,12 +211,6 @@ return [
     ],
     "search-column" => ['cash_id', 'remark', 'fee_remark', 'cash_type_remark', 'additional_info'],
 
-    "cashflow-bulk-operation-list" => [
-                        "print_voucher"			=>	"Print Voucher",
-                        "view:detail"			=>	"View Detail",
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ],
     "online-payment-update-duration" => [
                         "instant"				=>	"Autocapture",
                         "24 hours"				=>	"1 Working Day",

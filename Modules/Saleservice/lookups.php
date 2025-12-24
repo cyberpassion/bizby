@@ -58,8 +58,19 @@ return [
                         "op:remove"			=>	"Delete",
                         "op:restore"		=>	"Restore"
     ],
-
-
+    'saleservice.default-columns' => [
+                        'entry'				=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
+                        'list'				=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
+                        'detail'			=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
+                        'report'			=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
+                        'sample_export'		=>	['sno','buyer','amount','balance','payment_info'],
+                        'selected_columns'	=>	['buyer','amount','balance','payment_info']
+    ],
+    'saleservice.statuses' => [
+                        '1'									=>	'ACTIVE',
+                        '11'								=>	'EXCHANGED',
+                        '2'									=>	'RETURNED/DELETED'
+    ],
 
 
 
@@ -120,14 +131,7 @@ return [
                         "cyp_message",
                         "cyp_saleservice"
     ],
-    'defaultColumns-saleservice' => [
-                        'entry'				=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
-                        'list'				=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
-                        'detail'			=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
-                        'report'			=>	['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
-                        'sample_export'		=>	['sno','buyer','amount','balance','payment_info'],
-                        'selected_columns'	=>	['buyer','amount','balance','payment_info']
-    ],
+    
     'listFilters-saleservice-saleservice-report-new' => [
                         "admin"	=>	[
                             'report_type_filter'	=> "Report Type/report_type/saleservice_cash_report_type-json",
@@ -170,11 +174,6 @@ return [
     ],
     'default-invoice-type' => ['gst-invoice'=>'GST','non-gst-invoice'=>'Simple'],
 
-    'saleservice-status' => [
-                        '1'									=>	'ACTIVE',
-                        '11'								=>	'EXCHANGED',
-                        '2'									=>	'RETURNED/DELETED'
-    ],
     'saleservice-document' => ['saleservice-invoice'	=> 'Print Invoice'],
 
     'customer-group-results-by' => [

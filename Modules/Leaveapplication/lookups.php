@@ -31,6 +31,48 @@ return [
                         'maternity-leave'	=>	'Maternity Leave',
                         'paternity-leave'	=>	'Paternity Leave'
     ],
+    'leaveapplication.crons' => [
+        'leaveapplication-notificationtohr'=>'Leave Application Notification to HR'
+    ],
+    'leaveapplication.list-filters' => [
+                        "admin"	=>	[
+                            'session_filter' => 'Session/current_session/session-json',
+                            'month_filter' => 'Month/month/month-json',
+                            'interval_filter' => 'Interval/leave_days/leave_days-list',
+                            'leave_reason_filter' => 'Date/leave_date/leave_reason_type-list',
+                            'status_filter' => 'Status/status/leaveapplication_status-json',
+    
+                        ],
+                        "portal" => [
+                            'session_filter' => 'Session/current_session/session-json',
+                            'month_filter' => 'Month/month/month-json',
+                            'interval_filter' => 'Interval/leave_days/leave_days-list',
+                            'leave_reason_filter' => 'Date/leave_date/leave_reason_type-list',
+                            'status_filter' => 'Status/status/leaveapplication_status-json',
+                        ]
+    ],
+    'leaveapplication.bulk-operations' => [
+                        "view:detail"		=>	"View Detail",
+                        "op:remove"			=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ],
+    'leaveapplication.default-columns' => [
+                        'entry'				=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
+                        'list'				=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
+                        'detail'			=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
+                        'report'			=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
+                        'sample_export'		=>	['sno', 'applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status'],
+                        'selected_columns'	=>	['applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status']
+    ],
+    'leaveapplication.statuses' => [
+                        '1'		=>	'In-Review',
+                        '10'	=>	'Accepted',
+                        '11'	=>	'Rejected',
+                        //'12'	=>	'Not Reviewed by HR',
+                        //'13'	=>	'Modified by HR',
+                        //'15'	=>	'Out of Office Work',
+                        '2'		=>	'Canceled by Applicant'
+    ],
 
 
 
@@ -85,17 +127,6 @@ return [
                         "cyp_attendance",
                         "cyp_leaveapplication"
     ],
-    'defaultColumns-leaveapplication' => [
-                        'entry'				=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
-                        'list'				=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
-                        'detail'			=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
-                        'report'			=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
-                        'sample_export'		=>	['sno', 'applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status'],
-                        'selected_columns'	=>	['applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status']
-    ],
-    'cronList-leaveapplication' => [
-        'leaveapplication-notificationtohr'=>'Leave Application Notification to HR'
-    ],
     'mandatoryFields-leaveapplication-entry-update' => [
 
     ],
@@ -105,23 +136,7 @@ return [
     'additionalFields-leaveapplication-entry-update' => [
 
     ],
-    'listFilters-leaveapplication-list' => [
-                        "admin"	=>	[
-                            'session_filter' => 'Session/current_session/session-json',
-                            'month_filter' => 'Month/month/month-json',
-                            'interval_filter' => 'Interval/leave_days/leave_days-list',
-                            'leave_reason_filter' => 'Date/leave_date/leave_reason_type-list',
-                            'status_filter' => 'Status/status/leaveapplication_status-json',
     
-                        ],
-                        "portal" => [
-                            'session_filter' => 'Session/current_session/session-json',
-                            'month_filter' => 'Month/month/month-json',
-                            'interval_filter' => 'Interval/leave_days/leave_days-list',
-                            'leave_reason_filter' => 'Date/leave_date/leave_reason_type-list',
-                            'status_filter' => 'Status/status/leaveapplication_status-json',
-                        ]
-    ],
     'listFilters-leaveapplication-sheet-filters-entry-new' => [
                         "admin"	=>	[
                             'session_filter'	=> "Session/current_session/session-json",
@@ -132,15 +147,6 @@ return [
                             'month_filter'		=> "Month/month/month-json",
                         ]
     ],
-    'leaveapplication-status' => [
-                        '1'		=>	'In-Review',
-                        '10'	=>	'Accepted',
-                        '11'	=>	'Rejected',
-                        //'12'	=>	'Not Reviewed by HR',
-                        //'13'	=>	'Modified by HR',
-                        //'15'	=>	'Out of Office Work',
-                        '2'		=>	'Canceled by Applicant'
-    ],
     'leave-day' => ["single"=>"One Day","half-day"=>"Half Day","multiple"=>"Multiple Days"],
     'leave-shift' => ["morning"=>"Morning","afternoon"=>"Afternoon"],
     'leaveapplication_report_type-list' => [
@@ -148,10 +154,5 @@ return [
                         "multiday"				=>	"Multiday Report"
     ],
     'leave-days-list' => ['1 day','2 days','3 days','4 days','5 days','6 days','> 7 days'],
-    'leaveapplication-bulk-operation-list' => [
-                        "view:detail"		=>	"View Detail",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ],
 
 ];

@@ -43,6 +43,51 @@ return [
         ],
     ],
 
+     "communication.list-filters" => [
+                        "admin"	=>	[
+                            'date_filter' => "Date/date/communication_date-json",
+                            'recipient_filter' => "Recipient/recipient_type/communication_recipient_type-json",
+                            'communication_mode_filter one' => "Mode/mode/communication_mode-json"
+                        ],
+                        "portal" => [
+                            'date_filter' => "Date/date/communication_date-json",
+                            'recipient_filter' => "Recipient/recipient_type/communication_recipient_type-json",
+                            'communication_mode_filter one' => "Mode/mode/communication_mode-json"
+                        ]
+    ],
+    "communication.bulk-operations" => [
+                        "view:detail"	=>	"View Detail"
+    ],
+    "communication.default-columns" => [
+                        'entry'				=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
+                        'list'				=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
+                        'detail'			=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
+                        'report'			=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
+                        'sample_export'		=>	['sno', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
+                        'selected_columns'	=>	['message', 'mode', 'recipient_type', 'recipients', 'messages_count']
+    ],
+    "communication.permission-allowed-filters-portal" => [
+                        "entry"	=>	[
+                            [
+                                "recipient_type"	=>	'{$login_type}',
+                                "recipient_id"		=>	'{$login_id}'
+                            ],
+                        ],
+                        "list"	=>	[
+                            [
+                                "recipient_type"	=>	'{$login_type}',
+                                "recipient_id"		=>	'{$login_id}'
+                            ],
+                        ],
+                        "report"	=>	[
+                            [
+                                "recipient_type"	=>	'{$login_type}',
+                                "recipient_id"		=>	'{$login_id}'
+                            ],
+                        ]
+    ],
+
+
     "columnNameMapping-communication" => [
                         'ptr'			=>	'SNo',
                         'date'			=>	'Date',
@@ -65,28 +110,8 @@ return [
                         "cyp_notification",
                         "cyp_message",
     ],
-    "defaultColumns-communication" => [
-                        'entry'				=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
-                        'list'				=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
-                        'detail'			=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
-                        'report'			=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
-                        'sample_export'		=>	['sno', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
-                        'selected_columns'	=>	['message', 'mode', 'recipient_type', 'recipients', 'messages_count']
-    ],
     "mandatoryFields-communication-entry-update" => ['template_key'],
 
-    "listFilters-communication-list" => [
-                        "admin"	=>	[
-                            'date_filter' => "Date/date/communication_date-json",
-                            'recipient_filter' => "Recipient/recipient_type/communication_recipient_type-json",
-                            'communication_mode_filter one' => "Mode/mode/communication_mode-json"
-                        ],
-                        "portal" => [
-                            'date_filter' => "Date/date/communication_date-json",
-                            'recipient_filter' => "Recipient/recipient_type/communication_recipient_type-json",
-                            'communication_mode_filter one' => "Mode/mode/communication_mode-json"
-                        ]
-    ],
     "listFilters-communication-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
@@ -122,26 +147,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'report'],
                         //['pg' => $pg, 'sub_pg'	=>	'settings']
     ],
-    "permissionAllowedFiltersPortal-communication" => [
-                        "entry"	=>	[
-                            [
-                                "recipient_type"	=>	'{$login_type}',
-                                "recipient_id"		=>	'{$login_id}'
-                            ],
-                        ],
-                        "list"	=>	[
-                            [
-                                "recipient_type"	=>	'{$login_type}',
-                                "recipient_id"		=>	'{$login_id}'
-                            ],
-                        ],
-                        "report"	=>	[
-                            [
-                                "recipient_type"	=>	'{$login_type}',
-                                "recipient_id"		=>	'{$login_id}'
-                            ],
-                        ]
-    ],
     "formPrefills-communication-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -169,9 +174,6 @@ return [
                         "te"	=>	"Telugu",
                         "ta"	=>	"Tamil",
                         "ur"	=>	"Urdu"
-    ],
-    "communication-bulk-operation-list" => [
-                        "view:detail"	=>	"View Detail"
     ],
     "communication-document-upload-type" => ["pdf"]
 

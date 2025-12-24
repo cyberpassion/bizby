@@ -41,6 +41,19 @@ return [
                         "op:remove"				=>	"Delete",
                         "op:restore"			=>	"Restore"
     ], 
+    'subscription.default-columns' => [
+                        'entry'				=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
+                        'list'				=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
+                        'detail'			=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
+                        'report'			=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
+                        'sample_export'		=>	['sno','subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
+                        'selected_columns'	=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
+                        'udx-available-addons'	=>	['subscription_plan_id','plan_name','plan_type','plan_pricing','options'],
+    ],
+    'subscription.statuses' => [
+                        1	=>	'Active',
+                        2	=>	'Suspended'
+    ],
 
 
 
@@ -76,15 +89,6 @@ return [
                         'estimated_amount'		=>	'Estimated Amount',
                         'subscription_category'	=>	'Category',
                         'subscription_type'		=>	'Type'
-    ],
-    'defaultColumns-subscription' => [
-                        'entry'				=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
-                        'list'				=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
-                        'detail'			=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
-                        'report'			=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
-                        'sample_export'		=>	['sno','subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
-                        'selected_columns'	=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
-                        'udx-available-addons'	=>	['subscription_plan_id','plan_name','plan_type','plan_pricing','options'],
     ],
     'mandatoryOptionsBeforeUsing-subscription' => [
                         'missing_option'	=>	[]
@@ -129,10 +133,6 @@ return [
     'subscription-plan-type' => [
                         'standalone'	=>	'Standalone',
                         'addon'			=>	'Addon'
-    ],
-    'subscription-status' => [
-                        1	=>	'Active',
-                        2	=>	'Suspended'
     ],
     'subscription-report-type' => [
                         "plan"			=>	"All Subscription List",

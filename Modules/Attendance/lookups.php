@@ -23,6 +23,39 @@ return [
             ],
         ],
     ],
+    "attendance.list-filters" => [
+        "admin" => [
+            'session_filter' => "Session/session/session-json",
+            'month_filter'   => "Month/month/month-json",
+        ],
+        "portal" => [
+            'session_filter' => "Session/session/session-json",
+            'month_filter'   => "Month/month/month-json",
+        ]
+    ],
+    "attendance.default-columns" => [
+        'entry'            => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
+        'list'             => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
+        'detail'           => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
+        'report'           => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
+        'sample_export'    => ['sno', 'absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status'],
+        'selected_columns' => ['absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status']
+    ],
+    "attendance.permission-allowed-filters-portal" => [
+        "entry" => [[
+            "absentee_type" => '{$login_type}',
+            "absentee_id"   => '{$login_id}'
+        ]],
+        "list" => [[
+            "absentee_type" => '{$login_type}',
+            "absentee_id"   => '{$login_id}'
+        ]],
+        "report" => [[
+            "absentee_type" => '{$login_type}',
+            "absentee_id"   => '{$login_id}'
+        ]]
+    ],
+    
 
     "communicationTemplate-attendance" => [
         "attendance_entry_new_sms"       => "New Attendance Entry SMS",
@@ -56,28 +89,9 @@ return [
         "cyp_announcement"
     ],
 
-    "defaultColumns-attendance" => [
-        'entry'            => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
-        'list'             => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
-        'detail'           => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
-        'report'           => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
-        'sample_export'    => ['sno', 'absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status'],
-        'selected_columns' => ['absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status']
-    ],
-
     "mandatoryFields-attendance-entry-update" => ['selected-ids'],
     "dateFields-attendance-entry-update"      => ['date'],
 
-    "listFilters-attendance-list" => [
-        "admin" => [
-            'session_filter' => "Session/session/session-json",
-            'month_filter'   => "Month/month/month-json",
-        ],
-        "portal" => [
-            'session_filter' => "Session/session/session-json",
-            'month_filter'   => "Month/month/month-json",
-        ]
-    ],
 
     "listFilters-attendance-sheet-filters-new" => [
         "admin" => [
@@ -168,20 +182,6 @@ return [
         ['pg' => $pg, 'sub_pg' => 'report'],
     ],
 
-    "permissionAllowedFiltersPortal-attendance" => [
-        "entry" => [[
-            "absentee_type" => '{$login_type}',
-            "absentee_id"   => '{$login_id}'
-        ]],
-        "list" => [[
-            "absentee_type" => '{$login_type}',
-            "absentee_id"   => '{$login_id}'
-        ]],
-        "report" => [[
-            "absentee_type" => '{$login_type}',
-            "absentee_id"   => '{$login_id}'
-        ]]
-    ],
 
     "employee-attendance-adding-mode" => [
         "manual" => "Manually"

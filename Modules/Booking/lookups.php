@@ -127,6 +127,39 @@ return [
     "hotel"       	=> "Hotel",
     "restaurant"	=> "Restaurant"
 ],
+"booking.bulk-operations" => [
+                        "document:booking-confirmation-slip"	=>	"Booking Confirmation Slip",
+                        "document:booking-invoice"				=>	"Booking Invoice",
+                        "document:gst-invoice-slip"				=>	"GST Slip",
+                        "document:simple-invoice-slip"			=>	"Simple Slip",
+                        "view:detail"							=>	"View Detail",
+                        "form:booking/deallotment-entry/new"	=>	"Exit",
+                        //"op:perform_booking-extension"			=>	"Extend Booking",
+                        //"op:perform_booking-cancellation"		=>	"Cancel Booking",
+                        //"op:perform_booking-transfer"			=>	"Transfer Booking",
+                        "send:email"							=>	"Send Email",
+                        "send:sms"								=>	"Send SMS",
+                        "op:remove"								=>	"Delete",
+                        "op:restore"							=>	"Restore"
+    ],
+    "booking.default-columns" => [
+                        'entry'				=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
+                        'list'				=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
+                        'detail'			=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
+                        'report'			=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
+                        'sample_export'		=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
+                        'selected_columns'	=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
+                        'building-entry'	=>	['building_id', 'building_name', 'building_incharge', 'building_incharge_phone', 'building_description', 'building_employees', 'options'],
+    ],
+    "booking.permission-allowed-filters-portal" => [
+                        "profile"=>	[[ "phone_number" => '{$phone_number}' ]],
+                        "list"   => [[ "phone_number" => '{$phone_number}' ]],
+                        "report" => [[ "phone_number" => '{$phone_number}' ]]
+    ],
+    "booking.statuses" => [
+                        "1"			=>	"Confirmed",
+                        "11"		=>	"Not Confirmed"
+    ],
 
 /*
 |--------------------------------------------------------------------------
@@ -256,15 +289,6 @@ return [
                         "cyp_booking_building",
                         "cyp_booking_listing"
     ],
-    "defaultColumns-booking" => [
-                        'entry'				=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
-                        'list'				=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
-                        'detail'			=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
-                        'report'			=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
-                        'sample_export'		=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
-                        'selected_columns'	=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
-                        'building-entry'	=>	['building_id', 'building_name', 'building_incharge', 'building_incharge_phone', 'building_description', 'building_employees', 'options'],
-    ],
     "interactiveEntity-booking" => ['booking'],
 
     "mandatoryFields-booking_building-entry-new" => ['building_name'],
@@ -393,11 +417,7 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'detail'],
                         ['pg' => $pg, 'sub_pg'	=>	'report'],
     ],
-    "permissionAllowedFiltersPortal-booking" => [
-                        "profile"=>	[[ "phone_number" => '{$phone_number}' ]],
-                        "list"   => [[ "phone_number" => '{$phone_number}' ]],
-                        "report" => [[ "phone_number" => '{$phone_number}' ]]
-    ],
+    
     "jsonFields-booking-building-entry" => ['building_employee'],
 
     "interactiveEntity-booking" => ['booking'],
@@ -429,10 +449,7 @@ return [
                         "regular"	=>	"Regular Booking",
                         "scheduled"	=>	"Scheduled Booking"
     ],
-    "booking-status" => [
-                        "1"			=>	"Confirmed",
-                        "11"		=>	"Not Confirmed"
-    ],
+    
     "booking-availability-status" => [
                         "1"			=>	"Available",
                         "11"		=>	"Partially Available",
@@ -445,21 +462,6 @@ return [
                         "inward_outward_flow_minified"				=>	"Inward-Outward Cash Flow (Minified)",
                         "inward_outward_flow_detailed"				=>	"Inward-Outward Cash Flow (Detailed)",
                         "inward_outward_flow_minified_cumulative"	=>	"Inward-Outward Cash Flow (Minified & Cumulative)"
-    ],
-    "booking-bulk-operation-list" => [
-                        "document:booking-confirmation-slip"	=>	"Booking Confirmation Slip",
-                        "document:booking-invoice"				=>	"Booking Invoice",
-                        "document:gst-invoice-slip"				=>	"GST Slip",
-                        "document:simple-invoice-slip"			=>	"Simple Slip",
-                        "view:detail"							=>	"View Detail",
-                        "form:booking/deallotment-entry/new"	=>	"Exit",
-                        //"op:perform_booking-extension"			=>	"Extend Booking",
-                        //"op:perform_booking-cancellation"		=>	"Cancel Booking",
-                        //"op:perform_booking-transfer"			=>	"Transfer Booking",
-                        "send:email"							=>	"Send Email",
-                        "send:sms"								=>	"Send SMS",
-                        "op:remove"								=>	"Delete",
-                        "op:restore"							=>	"Restore"
     ],
     "sort-booking-results-by" => [
                         "building_id"						=>	"Venue",

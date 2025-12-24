@@ -23,6 +23,35 @@ return [
         ],
     ],
 ],
+    "examresult.list-filters" => [
+                        "admin"	=>	[
+                            'session' => "Session/exam_session/session-json",
+                            'class' => "Class/exam_class/class-json",
+                            'status' => "Status/status/status-json",
+    
+                        ],
+                        "portal" => [
+                            'session' => "Session/exam_session/session-json",
+                            'class' => "Class/exam_class/class-json",
+                            'status' => "Status/status/status-json"
+                        ]
+    ],
+    "examresult.bulk-operations" => [
+                        'examresult:single-report-card'		=>	'Print Report Card',
+                        'examresult:eoy-report-card'		=>	'Print EOY Report Card',
+                        //'examresult:send-marks-sms'			=>	'Send Marks SMS',
+                        'op:delete'							=>	'Delete',
+                        'op:restore'						=>	'Restore'
+    ],
+    "examresult.default-columns" => [
+                        'entry'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
+                        'list'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
+                        'detail'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
+                        'report'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
+                        'sample_export'		=>	['sno', 'exam_name', 'exam_class', 'exam_section', 'exam_session'],
+                        'selected_columns'	=>	['exam_name', 'exam_class', 'exam_section', 'exam_session']
+    ],
+
 
     "communicationTemplate-examresult" => [
                         "examresult_entry_new_sms"		=>	"New Examresult Entry SMS",
@@ -55,29 +84,8 @@ return [
                         "cyp_examresult",
                         "cyp_examresult_mark"
     ],
-    "defaultColumns-examresult" => [
-                        'entry'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
-                        'list'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
-                        'detail'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
-                        'report'				=>	['exam_id', 'exam_name', 'exam_class', 'exam_section', 'exam_session','tags', 'status'],
-                        'sample_export'		=>	['sno', 'exam_name', 'exam_class', 'exam_section', 'exam_session'],
-                        'selected_columns'	=>	['exam_name', 'exam_class', 'exam_section', 'exam_session']
-    ],
     "mandatoryFields-examresult-entry-update" => ['module', 'examresult_official_name', 'examresult_official_address', 'examresult_official_email', 'examresult_official_phone', 'send_notification_message'],
 
-    "listFilters-examresult-list" => [
-                        "admin"	=>	[
-                            'session' => "Session/exam_session/session-json",
-                            'class' => "Class/exam_class/class-json",
-                            'status' => "Status/status/status-json",
-    
-                        ],
-                        "portal" => [
-                            'session' => "Session/exam_session/session-json",
-                            'class' => "Class/exam_class/class-json",
-                            'status' => "Status/status/status-json"
-                        ]
-    ],
     "listFilters-examresult-tabled-options-new" => [
                         "admin"	=>	[
                             'sortby' => "Sort By/sortby/examresult_sortby-json",
@@ -169,12 +177,5 @@ return [
                         "sapa"			=>	"Subject Assessment & Periodic Assessment",
                         "hy"			=>	"Half-Yearly & Annual"
     ],
-    "examresult-bulk-operation-list" => [
-                        'examresult:single-report-card'		=>	'Print Report Card',
-                        'examresult:eoy-report-card'		=>	'Print EOY Report Card',
-                        //'examresult:send-marks-sms'			=>	'Send Marks SMS',
-                        'op:delete'							=>	'Delete',
-                        'op:restore'						=>	'Restore'
-    ]
 
 ];

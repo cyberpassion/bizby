@@ -40,6 +40,14 @@ return [
                         "op:remove"			=>	"Delete",
                         "op:restore"		=>	"Restore"
     ],
+    'transpor.default-columnst' => [
+                         'entry'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                         'list'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                          'detail'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                         'report'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                          'sample_export'		=>	['sno', 'route_name', 'registration_number', 'driver_name', 'remark'],
+                         'selected_columns'	=>	['route_name', 'registration_number', 'driver_name', 'remark']
+    ],
 
 
 
@@ -50,17 +58,17 @@ return [
                         "transport_entry_new_whatsapp"	=>	"New Transport Entry Whatsapp",
                         "transport_entry_new_email"		=>	"New Transport Entry Email",
     ],
-    'columnNameMapping-transport' => [
+    'columnNameMapping-transport' => [ 
                         'ptr'								=>	'SNo',
-                        'route_name'						=>	'Name',
+                        'route_name'				 		=>	'Name',
                         'registration_number'				=>	'Reg No',
-                        'transport_id'						=>	'ID',
-                        'transport_vehicle_id'				=>	'ID',
-                        'driver_name'						=>	'Driver Name'
+                        'transport_id'				 		=>	'ID',
+                        'transport_vehicle_id'		 		=>	'ID',
+                        'driver_name'				 		=>	'Driver Name'
     ],
     'mandatoryOptionsBeforeUsing-transport' => [
                         'missing_option'	=>	[]
-    ],
+    ],  
     'moduleTable-transport' => [
                         "cyp_term",
                         "cyp_activity",
@@ -75,15 +83,7 @@ return [
                         "cyp_transport_vehicle_reading",
                         "cyp_transport_vehicle_stoppage",
                         "cyp_transport_vehicle_tracking"
-    ],
-    'defaultColumns-transport' => [
-                        'entry'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                        'list'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                        'detail'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                        'report'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                        'sample_export'		=>	['sno', 'route_name', 'registration_number', 'driver_name', 'remark'],
-                        'selected_columns'	=>	['route_name', 'registration_number', 'driver_name', 'remark']
-    ],
+    ],   
     'mandatoryFields-transport-vehicle-entry-update' => ['selected-ids'],
 
     'dateFields-transport-entry-update' => ['insurance_renewal_date'],

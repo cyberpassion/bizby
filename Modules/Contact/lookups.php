@@ -20,6 +20,42 @@ return [
                         'contact_type'						=>	'CUSTOMER TYPE',
                         'status'							=>	'STATUS'
     ],
+    "contact.crons" => [
+                        'contact-due_date' 	=> 'Contact Due Date',
+                        'contact-birthday' 	=> 'Contact Birthday Message'
+    ],
+    "contact.list-filters" => [
+                        "admin"	=>	[
+                             'sort' 		=> "Contact Type/contact_type/business_type-json",
+                            'state' 	=> "State/state/indian_state-json",
+                            'nextdate' 	=> "Next Date/range-next_date/filter_date_range-json",
+                            'status' 	=> "Status/status/contact_status-json"
+                        ],
+                        "portal" => [
+                             'sort' 		=> "Contact Type/contact_type/business_type-json",
+                            'state' 	=> "State/state/indian_state-json",
+                            'nextdate' 	=> "Next Date/range-next_date/filter_date_range-json",
+                            'status' 	=> "Status/status/contact_status-json"
+                        ]
+    ],
+    "contact.bulk-operations" => [
+                        "view:detail"	=>	"View Contact Details",
+                        "op:remove"		=>	"Delete",
+                        "op:restore"	=>	"Restore"
+    ],
+    "contact.default-columns" => [
+                        'entry'				=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
+                        'list'				=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
+                        'detail'			=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
+                        'report'			=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
+                        'sample_export'		=>	['sno', 'contact_name', 'phone_number', 'email_id', 'next_date'],
+                        'selected_columns'	=>	['contact_name', 'phone_number','email_id']
+    ],
+    "contact.permission-allowed-filters-portal" => [
+                        "profile"	=>	[[ "contact_id"	=>	'{$login_id}' ]],
+                        "list"		=>	[[ "contact_id"	=>	'{$login_id}' ]],
+                        "report"	=>	[[ "contact_id"	=>	'{$login_id}' ]]
+    ],
 
 
 
@@ -43,10 +79,6 @@ return [
                         'contact_type'		=>	'Type',
                         'additional_information'=>	'Information'
     ],
-    "cronList-contact" => [
-                        'contact-due_date' 	=> 'Contact Due Date',
-                        'contact-birthday' 	=> 'Contact Birthday Message'
-    ],
     "mandatoryOptionsBeforeUsing-contact" => [
                         'missing_option'	=>	[
                             //'Contact Types'			=>	'contact_type-json'
@@ -64,14 +96,6 @@ return [
                         "cyp_message",
                         "cyp_contact"
     ],
-    "defaultColumns-contact" => [
-                        'entry'				=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
-                        'list'				=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
-                        'detail'			=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
-                        'report'			=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'contact_name', 'phone_number', 'email_id', 'next_date'],
-                        'selected_columns'	=>	['contact_name', 'phone_number','email_id']
-    ],
     "interactiveEntity-contact" => ['contact'],
 
     "mandatoryFields-contact-entry-update" => ['contact_name','phone_number'],
@@ -80,20 +104,6 @@ return [
 
     "duplicacyCheckFields-contact-entry-new" => ['phone_number'],
 
-    "listFilters-contact-list" => [
-                        "admin"	=>	[
-                             'sort' 		=> "Contact Type/contact_type/business_type-json",
-                            'state' 	=> "State/state/indian_state-json",
-                            'nextdate' 	=> "Next Date/range-next_date/filter_date_range-json",
-                            'status' 	=> "Status/status/contact_status-json"
-                        ],
-                        "portal" => [
-                             'sort' 		=> "Contact Type/contact_type/business_type-json",
-                            'state' 	=> "State/state/indian_state-json",
-                            'nextdate' 	=> "Next Date/range-next_date/filter_date_range-json",
-                            'status' 	=> "Status/status/contact_status-json"
-                        ]
-    ],
     "listFilters-contact-detail-update" => [
                         'admin'	=>	array(
                             $pg			=>	[
@@ -141,11 +151,6 @@ return [
                         ['pg' => $pg, 'sub_pg'	=>	'document'],
                         ['pg' => $pg, 'sub_pg'	=>	'history'],
     ],
-    "permissionAllowedFiltersPortal-contact" => [
-                        "profile"	=>	[[ "contact_id"	=>	'{$login_id}' ]],
-                        "list"		=>	[[ "contact_id"	=>	'{$login_id}' ]],
-                        "report"	=>	[[ "contact_id"	=>	'{$login_id}' ]]
-    ],
     "formPrefills-contact-entry-new" => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -165,10 +170,5 @@ return [
     'contact-group-results-display-type' => [
                         'complete_list'						=>	'COMPLETE LIST'
     ],
-    "contact-bulk-operation-list" => [
-                        "view:detail"	=>	"View Contact Details",
-                        "op:remove"		=>	"Delete",
-                        "op:restore"	=>	"Restore"
-    ]
 
 ];

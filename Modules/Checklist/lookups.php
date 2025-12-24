@@ -33,6 +33,54 @@ return [
             ],
         ],
     ],
+    "checklist.list-filters" => [
+                            "admin"	=>	[
+                                "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",
+                                "status-filter"		=>	"Status/status/checklist_status-json"
+                            ],
+                            "portal" => [
+                                "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",
+                                "status-filter"		=>	"Status/status/checklist_status-json"
+                            ]
+    ],
+    "checklist.bulk-operations" => [
+                        "view:detail"			=>	"View Checklist Details",
+                        "op:remove"				=>	"Delete",
+                        "op:restore"			=>	"Restore"
+    ],
+    "checklist.default-columns" => [
+                        'entry'				=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'list'				=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'detail'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'report'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
+                        'sample_export'		=>	['sno', 'checklist_name', 'checklist_info', 'remark', 'status'],
+                        'selected_columns'	=>	['checklist_name', 'checklist_info', 'remark'],
+                        'listing-list'		=>	['listing_id', 'listing_type', 'listing_name', 'listing_name', 'tags', 'status'],
+                        'listing-point-list'=>	['point_name', 'point_assigned_to', 'point_time_limit', 'point_description', 'status']
+    ],
+    "checklist.permission-allowed-filters-portal" => [
+                        "entry"					=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
+                        "list"					=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
+                        "listing-point-list"	=>	[["point_assigned_to"	=>	'{$login_type}-{$login_id}']],
+                        "report"				=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
+    ],
+    "checklist.permission-allowed-filters-portal" => [
+                        ['pg' => $pg, 'sub_pg'	=>	'home'],
+                        ['pg' => $pg, 'sub_pg'	=>	'entry'],
+                        ['pg' => $pg, 'sub_pg'	=>	'list'],
+                        ['pg' => $pg, 'sub_pg'	=>	'listing-point-list'],
+                        ['pg' => $pg, 'sub_pg'	=>	'history'],
+                        ['pg' => $pg, 'sub_pg'	=>	'report'],
+                        ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
+    ],
+    "checklist.statuses" => [
+                        '1'		=>	'Under Process',
+                        '15'	=>	'Completed',
+                        '2'		=>	'Deleted',
+                        '21'	=>	'Rejected'
+    ],
+
+
 
     "communicationTemplate-checklist" => [
                         "checklist_entry_new_sms"		=>	"New Checklist Entry SMS",
@@ -93,30 +141,10 @@ return [
                         ],
                         'missing_option'	=>	[]
     ],
-    "defaultColumns-checklist" => [
-                        'entry'				=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
-                        'list'				=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
-                        'detail'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
-                        'report'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
-                        'sample_export'		=>	['sno', 'checklist_name', 'checklist_info', 'remark', 'status'],
-                        'selected_columns'	=>	['checklist_name', 'checklist_info', 'remark'],
-                        'listing-list'		=>	['listing_id', 'listing_type', 'listing_name', 'listing_name', 'tags', 'status'],
-                        'listing-point-list'=>	['point_name', 'point_assigned_to', 'point_time_limit', 'point_description', 'status']
-    ],
     "mandatoryFields-checklist-complete-entry-update" => ["checklist_description"],
 
     "dateFields-checklist-listing-point-entry-update" => ['point_start_date','point_end_date'],
 
-    "listFilters-checklist-list" => [
-                            "admin"	=>	[
-                                "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",
-                                "status-filter"		=>	"Status/status/checklist_status-json"
-                            ],
-                            "portal" => [
-                                "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",
-                                "status-filter"		=>	"Status/status/checklist_status-json"
-                            ]
-    ],
     "listFilters-checklist-listing-list" => [
                             "admin"	=>	[
                                 "checklist_listing"	=>	"Listing Type/listing_type/checklist_listing_type-json",
@@ -193,21 +221,6 @@ return [
                             ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
                         ]
     ],
-    "permissionAllowedPortal-checklist" => [
-                        ['pg' => $pg, 'sub_pg'	=>	'home'],
-                        ['pg' => $pg, 'sub_pg'	=>	'entry'],
-                        ['pg' => $pg, 'sub_pg'	=>	'list'],
-                        ['pg' => $pg, 'sub_pg'	=>	'listing-point-list'],
-                        ['pg' => $pg, 'sub_pg'	=>	'history'],
-                        ['pg' => $pg, 'sub_pg'	=>	'report'],
-                        ['pg' => $pg, 'sub_pg'	=>	"{$pg}-report"], // logic is different in portal_page_access_barricade
-    ],
-    "permissionAllowedFiltersPortal-checklist" => [
-                        "entry"					=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
-                        "list"					=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
-                        "listing-point-list"	=>	[["point_assigned_to"	=>	'{$login_type}-{$login_id}']],
-                        "report"				=>	[["checklist_by"		=>	'{$login_type}-{$login_id}']],
-    ],
     "search-column" => ["checklist_name"],
 
     "checklist-point-duration-type-list" => [
@@ -215,12 +228,6 @@ return [
                         "hours"		=>	"Hours",
                         "days"		=>	"Days",
                         "months"	=>	"Months"
-    ],
-    "checklist-tatus" => [
-                        '1'		=>	'Under Process',
-                        '15'	=>	'Completed',
-                        '2'		=>	'Deleted',
-                        '21'	=>	'Rejected'
     ],
     "checklist-listing-status" => [
                         '1'		=>	'Active',
@@ -244,10 +251,4 @@ return [
                         'start-end-date'	=>	'Start & End Date',
                         'duration'			=>	'Duration'
     ],
-    "checklist-bulk-operation" => [
-                        "view:detail"			=>	"View Checklist Details",
-                        "op:remove"				=>	"Delete",
-                        "op:restore"			=>	"Restore"
-    ]
-
 ];

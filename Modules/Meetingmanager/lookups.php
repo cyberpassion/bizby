@@ -23,6 +23,39 @@ return [
         ],
     ],
 ],
+    'meetingmanager.crons' => ['meetingmanager-remindernotification' => 'Meeting Reminder'],
+    'meetingmanager.list-filters' => [
+                        "admin"	=>	[
+                             'meeting_head_filter' 	=> "Head/meeting_type/meeting_type-json",
+                            'date_filter' 			=> "Date/meeting_date/meeting_date-json",
+                            'meeting_with_filter' 	=> "Meeting With/meeting_with/meeting_with-list",
+                            'status_filter' 		=> "Status/status/status-json"
+                        ],
+                        "portal" => [
+                             'meeting_head_filter' 	=> "Head/meeting_type/meeting_type-json",
+                            'date_filter' 			=> "Date/meeting_date/meeting_date-json",
+                            'meeting_with_filter' 	=> "Meeting With/meeting_with/meeting_with-list",
+                            'status_filter' 		=> "Status/status/status-json"
+                        ]
+    ],
+    'meeting.bulk-operations' => [
+                        "view:detail"					=>	"Print Detail",
+                        "document:slip"					=>	"Print Slip",
+                        "op:remove"						=>	"Delete",
+                        "op:restore"					=>	"Restore",
+                        "meetingmanager:reminder-sms"	=>	"Send Reminder SMS"
+    ],
+    'meetingmanager.default-columns' => [
+                        'entry'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
+                        'list'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
+                        'detail'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
+                        'report'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
+                        'sample_export'		=>	['sno', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time'],
+                        'selected_columns'	=>	['requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time']
+     ],
+
+
+
     'communicationTemplate-meetingmanager' => [
                         "meetingmanager_entry_new_sms"		=>	"New Meetingmanager Entry SMS",
                         "meetingmanager_entry_new_whatsapp"	=>	"New Meetingmanager Entry Whatsapp",
@@ -48,35 +81,12 @@ return [
                         "cyp_message",
                         "cyp_meeting"
      ],
-     'defaultColumns-meetingmanager' => [
-                        'entry'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
-                        'list'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
-                        'detail'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
-                        'report'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time'],
-                        'selected_columns'	=>	['requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time']
-     ],
-     'cronList-meetingmanager' => ['meetingmanager-remindernotification' => 'Meeting Reminder'],
      'mandatoryFields-meetingmanager-entry-update' => ['requested_by_name'],
 
      'dateFields-meetingmanager-entry-update' => ['meeting_date','meeting_exit_date'],
 
      'additionalFields-meetingmanager-entry-update' => [],
 
-     'listFilters-meetingmanager-list' => [
-                        "admin"	=>	[
-                             'meeting_head_filter' 	=> "Head/meeting_type/meeting_type-json",
-                            'date_filter' 			=> "Date/meeting_date/meeting_date-json",
-                            'meeting_with_filter' 	=> "Meeting With/meeting_with/meeting_with-list",
-                            'status_filter' 		=> "Status/status/status-json"
-                        ],
-                        "portal" => [
-                             'meeting_head_filter' 	=> "Head/meeting_type/meeting_type-json",
-                            'date_filter' 			=> "Date/meeting_date/meeting_date-json",
-                            'meeting_with_filter' 	=> "Meeting With/meeting_with/meeting_with-list",
-                            'status_filter' 		=> "Status/status/status-json"
-                        ]
-    ],
     'formPrefills-meetingmanager-entry-new' => [
                         "columns"	=>	[
                             'product'		=>	'default_product',
@@ -92,11 +102,4 @@ return [
     ],
     'meeting-priority' => [1,2,3,4,5],
 
-    'meeting-manager-bulk-operation-list' => [
-                        "view:detail"					=>	"Print Detail",
-                        "document:slip"					=>	"Print Slip",
-                        "op:remove"						=>	"Delete",
-                        "op:restore"					=>	"Restore",
-                        "meetingmanager:reminder-sms"	=>	"Send Reminder SMS"
-    ]
 ];
