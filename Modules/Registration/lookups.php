@@ -55,6 +55,42 @@ return [
                         "list"   => [[ "phone_number" => '{$phone_number}' ]],
                         "report" => [[ "phone_number" => '{$phone_number}' ]]
 	],
+    "registration.documents" => [
+                        'registration-slip'		=>	'Registration Slip',
+                        'registration-form'		=>	'Registration Form'
+	],
+    'registration.list-columns' => [
+                        'id',
+                        'registration_type',
+                        'name',
+                        'gender',
+                        'phone',
+                        'session',
+    ],
+
+    'registration.list-filters' => [
+                        'registration_type',
+                        'name',
+                        'phone',
+                        'gender',
+                        'session',
+    ],
+
+    'registration.report-columns' => [
+                        'id',
+                        'registration_type',
+                        'session',
+                        'name',
+                        'gender',
+                        'dob',
+                        'age',
+                        'phone',
+                        'email',
+                        'category',
+                        'nationality',
+                        'created_at',
+    ],
+
 
 
 
@@ -150,10 +186,6 @@ return [
                         "groups"	=>	[
                             'current_date'	=>	['contact_date']
                         ]
-	],
-	"registration-document" => [
-                        'registration-slip'		=>	'Registration Slip',
-                        'registration-form'		=>	'Registration Form'
 	],
 	"public-registration-status" => ["1"=>"ACTIVE","11"=>"PENDING APPROVAL"],
 

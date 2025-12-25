@@ -56,6 +56,35 @@ return [
                         "list"		=>	[["participant"	=>	'{$login_type}-{$byline}']],
                         "report"	=>	[["participant"	=>	'{$login_type}-{$byline}']]
     ],
+    'eventmanager.list-columns' => [
+                        'id',
+                        'event_name',
+                        'event_type',
+                        'event_start_date',
+                        'event_end_date',
+                        'status',
+    ],
+
+    'eventmanager.list-filters' => [
+                       'event_name',
+                       'event_type',
+                       'event_start_date',
+                       'event_end_date',
+                       'status',
+    ],
+
+    'eventmanager.report-columns' => [
+                       'id',
+                       'event_name',
+                       'event_type',
+                       'event_start_date',
+                       'event_end_date',
+                       'participant',
+                       'event_participants',
+                       'event_description',
+                       'event_remark',
+                       'status',
+    ],
 
 
     

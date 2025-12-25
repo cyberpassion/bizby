@@ -46,6 +46,33 @@ return [
                         "list"		=>	[[ "customer_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "customer_id"	=>	'{$login_id}' ]]
     ],
+    'customer.list-columns' => [
+                        'id',
+                        'name',
+                        'phone',
+                        'customer_type',
+                        'business_type',
+                        'status',
+    ],
+
+    'customer.list-filters' => [
+                        'name',
+                        'phone',
+                        'customer_type',
+                        'business_type',
+                        'status',
+    ],
+
+    'customer.report-columns' => [
+                        'id',
+                        'name',
+                        'customer_type',
+                        'business_type',
+                        'phone',
+                        'email',
+                        'state',
+                        'status',
+    ],
 
 
     

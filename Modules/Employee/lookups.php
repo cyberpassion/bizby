@@ -83,6 +83,49 @@ return [
                         "list"		=>	[[ "employee_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "employee_id"	=>	'{$login_id}' ]]
 	],
+    "employee.documents" => [
+		                 'offer-letter'					=> 'Offer Letter',
+                        'employer-bond'					=> 'Employer Bond',
+                        'appointment-letter'			=> 'Appointment Letter',
+                        'salary-increment-letter'		=> 'Salary Increment Letter',
+                        'promotion-letter'				=> 'Promotion Letter',
+                        'relieving-letter'				=> 'Relieving Letter',
+                        'experience-certificate'		=> 'Experience Certificate',
+                        'internship-certificate'		=> 'Internship Certificate',
+                        'employee-id-card'				=> 'ID Card'
+	],
+    'employee.list-columns' => [
+                        'id',
+                        'name',
+                        'employee_type',
+                        'designation',
+                        'phone',
+                        'status',
+    ],
+
+    'employee.list-filters' => [
+                        'name',
+                        'employee_type',
+                        'designation',
+                        'phone',
+                        'status',
+    ],
+
+    'employee.report-columns' => [
+                        'id',
+                        'name',
+                        'employee_type',
+                        'designation',
+                        'gender',
+                        'age',
+                        'phone',
+                        'email',
+                        'date_of_joining',
+                        'job_location',
+                        'current_salary',
+                        'status',
+    ],
+
 
     
 
@@ -198,17 +241,6 @@ return [
 	],
 	"search-column" => ["employee_name", "phone_number"],
 
-	"employee-document" => [
-		                 'offer-letter'					=> 'Offer Letter',
-                        'employer-bond'					=> 'Employer Bond',
-                        'appointment-letter'			=> 'Appointment Letter',
-                        'salary-increment-letter'		=> 'Salary Increment Letter',
-                        'promotion-letter'				=> 'Promotion Letter',
-                        'relieving-letter'				=> 'Relieving Letter',
-                        'experience-certificate'		=> 'Experience Certificate',
-                        'internship-certificate'		=> 'Internship Certificate',
-                        'employee-id-card'				=> 'ID Card'
-	],
 	"sort-employee-results-by-list" => [
                         "employee_name"		=>	"EMPLOYEE NAME",
                         "father_name"		=>	"FATHER NAME",

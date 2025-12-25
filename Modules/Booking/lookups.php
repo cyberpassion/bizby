@@ -181,6 +181,16 @@ return [
                         "1"			=>	"Confirmed",
                         "11"		=>	"Not Confirmed"
     ],
+    "booking.statuses" => [
+                        '1'		=>	'Active',
+                        '11'	=>	'Expected',
+                        '2'		=>	'Departed',
+                        '21'	=>	'Cancelled'
+    ],
+    "booking.documents" => [
+                        'booking-invoice'			=>	'Booking Invoice',
+                        'booking-confirmation-slip'	=>	'Booking Confirmation Slip'
+    ],
 
 /*
 |--------------------------------------------------------------------------
@@ -442,13 +452,6 @@ return [
     "jsonFields-booking-building-entry" => ['building_employee'],
 
     "interactiveEntity-booking" => ['booking'],
-
-    "booking-status" => [
-                        '1'		=>	'Active',
-                        '11'	=>	'Expected',
-                        '2'		=>	'Departed',
-                        '21'	=>	'Cancelled'
-    ],
     "booking-single-day-count-rule" => [
                         "default"	=>	"As per Checkin and Checkout Time",
                         "12-hours"	=>	"12 Hours",
@@ -461,10 +464,6 @@ return [
     ],
     "booking-fee-type" => ['total' => 'Total', 'per-day' => 'Per Day'],
 
-    "booking-document" => [
-                        'booking-invoice'			=>	'Booking Invoice',
-                        'booking-confirmation-slip'	=>	'Booking Confirmation Slip'
-    ],
     "booking-type" => [
                         ""			=>	"Select",
                         "regular"	=>	"Regular Booking",

@@ -62,6 +62,42 @@ return [
                         'low-stock'			=>	'LOW STOCK',
                         'out-of-stock'		=>	'OUT OF STOCK'
     ],
+    'product.documents' => [
+                        'product-brochure'		=>	'Product Brochure'
+    ],
+    
+    'product.list-columns' => [
+                        'id',
+                        'product_name',
+                        'brand_name',
+                        'product_type',
+                        'sale_price',
+                        'available_stock',
+    ],
+
+    'product.list-filters' => [
+                        'product_type',
+                        'brand_name',
+                        'availability',
+                        'sale_price',
+                        'status',
+    ],
+
+    'product.report-columns' => [
+                        'id',
+                        'product_type',
+                        'brand_name',
+                        'product_name',
+                        'unit',
+                        'retail_price',
+                        'sale_price',
+                        'total_quantity',
+                        'sold_quantity',
+                        'available_stock',
+                        'availability',
+                        'created_at',
+    ],
+
 
 
 
@@ -114,9 +150,6 @@ return [
                         "groups"	=>	[
                             'current_date'	=>	['contact_date']
                         ]
-    ],
-    'product-document' => [
-                        'product-brochure'		=>	'Product Brochure'
     ],
     'product-cancel-reason' => [
                         1	=>	'For Customer Satisfaction',

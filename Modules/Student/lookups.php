@@ -170,6 +170,51 @@ return [
                         "fee-history"	=>	[[ "admission_id"	=>	'{$login_id}' ]],
                         //"fee-slip"		=>	[[ "admission_id"	=>	'{$login_id}' ]],
     ],
+    "student.documents" => [
+                        'activity-undertaking'	=> 'Activity Undertaking',
+                        'admission-form'		=> 'Admission Form',
+                        'admit-card'			=> 'Admit Card',
+                        'bonafide-certificate'	=> 'Bonafide Certificate',
+                        'dob-certificate'		=> 'DOB Certificate',
+                        'character-certificate' => 'Character Certificate',
+                        'fee-certificate'		=> 'Fee Certificate',
+                        'student-id-card'		=> 'ID Card',
+                        'medical-certificate'	=> 'Medical Certificate',
+                        'transfer-certificate'	=> 'Transfer Certificate',
+                        'fee-structure'			=> 'Fee Structure'
+    ],
+    'student.list-columns' => [
+                        'admission_number',
+                        'name',
+                        'gender',
+                        'phone',
+                        'father_name',
+                        'category',
+                        'status',
+    ],
+
+    'student.list-filters' => [
+                        'gender',
+                        'category',
+                        'status',
+                        'admission_date',
+    ],
+
+    'student.report-columns' => [
+                        'admission_number',
+                        'admission_date',
+                        'name',
+                        'gender',
+                        'dob',
+                        'age',
+                        'category',
+                        'nationality',
+                        'phone',
+                        'email',
+                        'father_name',
+                        'mother_name',
+    ],
+
 
     
 
@@ -313,19 +358,6 @@ return [
                         'Fee Settings'				=>	'fee-settings',
                         'Fee Structure'				=>	'fee-structure-settings',
                         'Class Settings'			=>	'class-settings'
-    ],
-    "student-document" => [
-                        'activity-undertaking'	=> 'Activity Undertaking',
-                        'admission-form'		=> 'Admission Form',
-                        'admit-card'			=> 'Admit Card',
-                        'bonafide-certificate'	=> 'Bonafide Certificate',
-                        'dob-certificate'		=> 'DOB Certificate',
-                        'character-certificate' => 'Character Certificate',
-                        'fee-certificate'		=> 'Fee Certificate',
-                        'student-id-card'		=> 'ID Card',
-                        'medical-certificate'	=> 'Medical Certificate',
-                        'transfer-certificate'	=> 'Transfer Certificate',
-                        'fee-structure'			=> 'Fee Structure'
     ],
     "student-portal-feature-visibility-permission" => [
                          '1'		=>	'Active',

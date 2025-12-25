@@ -59,6 +59,44 @@ return [
                         "11"			=>	"Awaiting Approval",
                         "2"				=>	"Inactive",
     ],
+    'vendor.documents' => [
+                        'performance'					=>	'Performance',
+                        'agreement'						=> 'Agreement',
+                        'certificate'					=> 'Certificate',
+                        'vendor-id-card'				=> 'ID Card'
+    ],
+    'vendor.list-columns' => [
+                        'vendor_code',
+                        'name',
+                        'vendor_type',
+                        'phone',
+                        'state',
+                        'status',
+    ],
+
+    'vendor.list-filters' => [
+                        'vendor_type',
+                        'state',
+                        'district',
+                        'status',
+                        'vendor_parent_id',
+    ],
+
+    'vendor.report-columns' => [
+                       'vendor_code',
+                       'name',
+                       'vendor_type',
+                       'vendor_gstin',
+                       'vendor_pan',
+                       'phone',
+                       'email',
+                       'vendor_person',
+                       'vendor_person_phone',
+                       'state',
+                       'district',
+                       'incentive_percentage',
+    ],
+
     
 
     'communicationTemplate-vendor' => [
@@ -124,13 +162,6 @@ return [
                             'vendor_status_filter one'		=> "Activity/activity/vendor_activity-json",
                             'vendor_operation_filter one'	=> "Operation/operation/vendor_operation-json"
                         ]
-    ],
-    
-    'vendor-document' => [
-                        'performance'					=>	'Performance',
-                        'agreement'						=> 'Agreement',
-                        'certificate'					=> 'Certificate',
-                        'vendor-id-card'				=> 'ID Card'
     ],
     
     'vendor-level' => ["Silver","Gold","Platinum"],

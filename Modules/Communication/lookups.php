@@ -86,6 +86,44 @@ return [
                             ],
                         ]
     ],
+'communication.list-columns' => [
+    'request_id',
+    'recipient_type',
+    'sent_to',
+    'mode',
+    'service_name',
+    'status',
+],
+
+'communication.list-filters' => [
+    'session',
+    'recipient_type',
+    'mode',
+    'service_name',
+    'status',
+    'batch_id',
+    'created_at',
+],
+
+'communication.report-columns' => [
+    'message_id',
+    'request_id',
+    'batch_id',
+    'recipient_type',
+    'recipient_id',
+    'sent_to',
+    'mode',
+    'service_name',
+    'status',
+    'session',
+    'created_at',
+],
+
+
+
+
+
+
 
 
     "columnNameMapping-communication" => [

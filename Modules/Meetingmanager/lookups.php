@@ -53,6 +53,44 @@ return [
                         'sample_export'		=>	['sno', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time'],
                         'selected_columns'	=>	['requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time']
      ],
+     'meetingmanager.documents' => [
+                        'meetingmanager-slip'		=>	'Meeting Slip'
+    ],
+    'meetingmanager.list-column' => [
+                        'meeting_date',
+                        'meeting_time',
+                        'requested_by_name',
+                        'meeting_with',
+                        'meeting_type',
+                        'priority',
+    ],
+
+    'meetingmanager.list-filters' => [
+                        'meeting_date',
+                        'meeting_type',
+                        'meeting_with_type',
+                        'meeting_with_id',
+                        'priority',
+                        'status',
+                        'meeting_group_id',
+                        'created_at',
+    ],
+
+    'meetingmanager.report-columns' => [
+                        'id',
+                        'meeting_group_id',
+                        'meeting_type',
+                        'meeting_date',
+                        'meeting_time',
+                        'requested_by_name',
+                        'phone_number',
+                        'email',
+                        'meeting_with',
+                        'priority',
+                        'status',
+                        'meeting_exit_date',
+    ],
+
 
 
 
@@ -96,9 +134,6 @@ return [
                         "groups"	=>	[
                             'current_date'	=>	['contact_date']
                         ]
-    ],
-    'meetingmanager-document' => [
-                        'meetingmanager-slip'		=>	'Meeting Slip'
     ],
     'meeting-priority' => [1,2,3,4,5],
 

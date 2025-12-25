@@ -54,6 +54,37 @@ return [
                         11	=>	'Autosaved',
                         2	=>	'Deleted'
     ],
+    'visitactivity.list-columns' => [
+                       'visit_date',
+                       'visit_by',
+                       'company_name',
+                       'visit_status',
+                       'total_expense_amount',
+    ];
+
+    'visitactivity.list-filters' => [
+                       'visit_date',
+                       'visit_by',
+                       'company_name',
+                       'visit_status',
+                       'visit_region',
+    ];
+
+    'visitactivity.report-columns' => [
+                       'visit_date',
+                       'visit_by',
+                       'company_name',
+                       'company_official_name',
+                       'company_official_email',
+                       'company_official_mobile_number',
+                       'visit_status',
+                       'reason_for_dissatisfaction',
+                       'products_discussed',
+                       'detailed_report',
+                       'next_action_plan',
+                       'total_expense_amount',
+   ];
+
 
 
 

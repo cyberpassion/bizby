@@ -41,13 +41,44 @@ return [
                         "op:restore"		=>	"Restore"
     ],
     'transpor.default-columnst' => [
-                         'entry'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                         'list'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                          'detail'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                         'report'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                          'sample_export'		=>	['sno', 'route_name', 'registration_number', 'driver_name', 'remark'],
-                         'selected_columns'	=>	['route_name', 'registration_number', 'driver_name', 'remark']
+                        'entry'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                        'list'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                        'detail'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                        'report'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
+                        'sample_export'		=>	['sno', 'route_name', 'registration_number', 'driver_name', 'remark'],
+                        'selected_columns'	=>	['route_name', 'registration_number', 'driver_name', 'remark']
     ],
+    'transport.list-columns' => [
+                        'route_name',
+                        'registration_number',
+                        'vehicle_type',
+                        'seating_capacity',
+                        'driver_name',
+                        'to_start',
+    ];
+
+    'transport.list-filters' => [
+                        'route_name',
+                        'vehicle_type',
+                        'driver_name',
+                        'status',
+    ];
+
+    'transport.report-columns' => [
+                        'route_name',
+                        'registration_number',
+                        'vehicle_type',
+                        'seating_capacity',
+                        'driver_name',
+                        'driver_phone_number',
+                        'to_start',
+                        'to_end',
+                        'fro_start',
+                        'fro_end',
+                        'insurance_renewal_date',
+                        'additional_info',
+    ];
+
 
 
 

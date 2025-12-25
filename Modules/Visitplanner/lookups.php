@@ -73,10 +73,7 @@ return [
                         "2"		=>	"Deleted",
                         "21"	=>	"Cancelled"
     ],
-
-
-
-    'communicationTemplate-visitplanner' => [
+    'visitplanner.communication-notifications' => [
                         "visitplanner_entry_new_sms"				=>	"New Visitplanner Entry SMS",
                         "visitplanner_entry_new_whatsapp"			=>	"New Visitplanner Entry Whatsapp",
                         "visitplanner_entry_new_email"				=>	"New Visitplanner Entry Email",
@@ -84,6 +81,41 @@ return [
                         "visitplanner_scheduledvisits_new_whatsapp"	=>	"New Visitplanner Scheduled Visits Whatsapp",
                         "visitplanner_scheduledvisits_new_email"	=>	"New Visitplanner Scheduled Visits Email"
     ],
+    'visitplanner.list-columns' => [
+                        'id',
+                        'visit_date',
+                        'visit_time',
+                        'visit_by',
+                        'visit_company',
+                        'state',
+    ],
+
+    'visitplanner.list-filters' => [
+                        'visit_date',
+                        'visit_by',
+                        'visit_company',
+                        'state',
+                        'district',
+    ],
+
+    'visitplanner.report-columns' => [
+                        'id',
+                        'session',
+                        'month',
+                        'week',
+                        'visit_date',
+                        'visit_time',
+                        'visit_by',
+                        'visit_company',
+                        'visit_company_type',
+                        'state',
+                        'district',
+                        'visit_reason',
+    ],
+
+
+
+    
     'columnNameMapping-visitplanner' => [
                         'visitplanner_id'	=>	'VID',
                         'visit_by_name'		=>	'Name',

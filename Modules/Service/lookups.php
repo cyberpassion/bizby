@@ -56,6 +56,43 @@ return [
                         "1"			=>	"Requested",
                         "2"			=>	"Completed"
     ],
+    'service.documents' => [
+                        'request-slip'		=>	'Request Slip',
+                        'request-report'	=>	'Final Report',
+                        'request-invoice'	=>	'Invoice',
+                        'service-brochure'	=>	'Service Brochure'
+    ],
+    'service.list-columns' => [
+                        'request_group_id',
+                        'requested_by',
+                        'request_size',
+                        'request_size_unit',
+                        'service_price',
+                        'status',
+    ],
+
+    'service.list-filters' => [
+                        'request_group_id',
+                        'requested_by_type',
+                        'service_done_by',
+                        'status',
+                        'created_at',
+    ],
+
+    'service.report-columns' => [
+                        'request_group_id',
+                        'requested_by_type',
+                        'requested_by',
+                        'request_size',
+                        'request_size_unit',
+                        'request_description',
+                        'service_id',
+                        'service_done_by',
+                        'service_price',
+                        'gst',
+                        'status',
+    ],
+
 
 
 
@@ -126,12 +163,6 @@ return [
 
     'duplicacyCheckFields-service-request-new' => ['date', 'requested_by_type', 'requested_by', 'service_id'],
 
-    'service-document' => [
-                        'request-slip'		=>	'Request Slip',
-                        'request-report'	=>	'Final Report',
-                        'request-invoice'	=>	'Invoice',
-                        'service-brochure'	=>	'Service Brochure'
-    ],
     'service-availability-status' => [
                         'in-stock'			=>	'AVAILABLE',
                         'out-of-stock'		=>	'NOT AVAILABLE'

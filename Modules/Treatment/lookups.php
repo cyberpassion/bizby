@@ -59,6 +59,38 @@ return [
                         '2'		=>	'Deleted',
                         '21'	=>	'Departed'
     ],
+    'treatment.list-columns' => [
+                        'id',
+                        'patient_id',
+                        'treatment_date',
+                        'treatment_time',
+                        'treatment_given',
+                        'patient_status',
+    ],
+
+    'treatment.list-filters' => [
+                        'patient_id',
+                        'treatment_date',
+                        'patient_status',
+                        'user_id',
+                        'treatment_recipient_type',
+    ],
+
+    'treatment.report-columns' => [
+                        'id',
+                        'patient_id',
+                        'treatment_sno',
+                        'treatment_date',
+                        'treatment_time',
+                        'observedby',
+                        'observation',
+                        'treatment_given',
+                        'treatment_fee',
+                        'patient_status',
+                        'treatment_recipient',
+                        'created_at',
+    ],
+
 
 
 

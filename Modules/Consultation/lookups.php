@@ -96,10 +96,56 @@ return [
         '21' => 'Departed',
         '22' => 'Cancelled'
 ],
- 
+'consultation.documents' => [
+        'consultation-slip' => 'Consultation Slip'
+],
+'consultation.list-columns' => [
+        'id',
+        'consultation_date',
+        'consultation_time',
+        'name',
+        'phone',
+        'consultant_type',
+        'consultant_id',
+        'consultation_type',
+        'status',
+        'consultation_fee',
+        'next_date',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Consultation Report Columns
+    |--------------------------------------------------------------------------
+    */
+    'consultation.report-columns' => [
+        'id',
+        'consultation_date',
+        'consultation_time',
+        'consultation_type',
+        'consultant_type',
+        'consultant_id',
+        'name',
+        'gender',
+        'age',
+        'phone',
+        'channel',
+        'consultation_fee',
+        'referred_by',
+        'referred_to',
+        'next_date',
+        'status',
+        'created_at',
+    ],
+
+
+
+
+
+    
   
  
-	'consultatio  n-mode'	=>	['call'=>'Call'],
+	'consultation-mode'	=>	['call'=>'Call'],
     'consultation_status' => [
         1 => 'Active',
         2 => 'Deleted',
@@ -212,7 +258,7 @@ return [
           ]
      ],
   
-    'consultat ion-consultation-report' => [
+    'consultation-consultation-report' => [
         "admi n" => [
               'consultation_with_filter' => "Consultation With/consultation_with/consultation_with-json"
         ], 
@@ -258,10 +304,6 @@ return [
     'consultation-through-mode' => [
         'call'          => 'Call',
         'direct-visit'  => 'Direct Visit'
-    ],
-
-    'consultation-document' => [
-        'consultation-slip' => 'Consultation Slip'
     ],
 
     'consultation-plan-tag' => [

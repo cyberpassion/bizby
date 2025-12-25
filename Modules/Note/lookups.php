@@ -59,6 +59,39 @@ return [
                         "sent_by_me-list"	=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],
                         "report"			=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]]
 	],
+    'note.list-columns' => [
+                        'id',
+                        'subject',
+                        'note_type',
+                        'context',
+                        'added_by',
+                        'created_at',
+    ],
+
+    'note.list-filters' => [
+                        'note_type',
+                        'context',
+                        'context_type',
+                        'added_by_id',
+                        'status',
+                        'created_at',
+    ],
+
+    'note.report-columns' => [
+                        'id',
+                        'subject',
+                        'note_type',
+                        'context',
+                        'context_type',
+                        'context_id',
+                        'added_for',
+                        'added_by',
+                        'information',
+                        'note_end_date',
+                        'note_end_time',
+                        'created_at',
+    ],
+
 
 
 

@@ -51,6 +51,41 @@ return [
                         'sample_export'		=>	['sno', 'exam_name', 'exam_class', 'exam_section', 'exam_session'],
                         'selected_columns'	=>	['exam_name', 'exam_class', 'exam_section', 'exam_session']
     ],
+    'examresult.list-columns' => [
+                        'id',
+                        'exam_session',
+                        'exam_name',
+                        'exam_class',
+                        'exam_type',
+                        'announcement_datetime',
+    ],
+
+    'examresult.list-filters' => [
+                        'exam_session',
+                        'exam_class',
+                        'exam_section',
+                        'exam_type',
+                        'announcement_datetime',
+    ],
+
+    'examresult.report-columns' => [
+                        'id',
+                        'exam_session',
+                        'exam_name',
+                        'exam_class',
+                        'exam_section',
+                        'exam_type',
+                        'examinee_id_type',
+                        'announcement_datetime',
+                        'exam_options',
+                        'remark',
+                        'status',
+    ],
+
+
+
+
+
 
 
     "communicationTemplate-examresult" => [

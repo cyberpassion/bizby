@@ -56,6 +56,41 @@ return [
                         "list"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],
                         "report"	=>	[["recipient"	=>	'{$login_type}-{$byline}']]
     ],
+    'survey.list-columns' => [
+                        'survey_id',
+                        'category',
+                        'recipient',
+                        'session',
+                        'month',
+                        'end_date',
+                        'status',
+    ],
+
+    'survey.list-filters' => [
+                         'category',
+                         'recipient',
+                         'session',
+                         'month',
+                         'status',
+    ],
+
+    'survey.report-columns' => [
+                         'survey_id',
+                         'category',
+                         'recipient',
+                         'session',
+                         'month',
+                         'question',
+                         'option_1',
+                         'option_1_responses',
+                         'option_2',
+                         'option_2_responses',
+                         'option_3',
+                         'option_3_responses',
+                         'option_4',
+                         'option_4_responses',
+    ],
+
 
 
 

@@ -35,5 +35,6 @@
     "Treatment": true,
     "Vendor": true,
     "Visitactivity": true,
-    "Visitplanner": true
+    "Visitplanner": true,
+    "Migration": true
 }

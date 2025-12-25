@@ -79,6 +79,44 @@ return [
                         '2'		=>	'Deleted',
                         '21'	=>	'Rejected'
     ],
+    "checklist.documents" => ['end-report'		=> 'Report'],
+    'checklist.list-columns' => [
+    'id',
+    'checklist_name',
+    'listing_id',
+    'is_sequence_to_follow',
+    'checklist_by',
+    'checklist_by_type',
+    'status',
+    'created_at',
+],
+
+
+'checklist.list-filters' => [
+    'checklist_name',
+    'listing_id',
+    'is_sequence_to_follow',
+    'checklist_by_type',
+    'status',
+],
+
+
+'checklist.report-columns' => [
+    'id',
+    'checklist_name',
+    'checklist_description',
+    'listing_id',
+    'is_sequence_to_follow',
+    'status_remark',
+    'checklist_by',
+    'checklist_by_type',
+    'checklist_by_id',
+    'status',
+    'created_by',
+    'created_at',
+    'updated_at',
+],
+
 
 
 
@@ -242,9 +280,6 @@ return [
                         '21'	=>	'Rejected'
     ],
     "checklist-listing-document" => ['listing-points'	=> 'View Checklist'],
-
-    "checklist-document" => ['end-report'		=> 'Report'],
-
     "checklist-listing-time-type" => [
                         '-'					=> 'None',
                         'start-end-time'	=>	'Start and End Time',

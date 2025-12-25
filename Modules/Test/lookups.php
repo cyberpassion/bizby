@@ -67,6 +67,54 @@ return [
                         'sample_export'		=>	['sno', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status'],
                         'selected_columns'	=>	['test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status']
     ],
+    'test.documents' => ['question-paper'	=> 'Question Paper'],
+    'test.list-columns' => [
+                        'id',
+                        'test_name',
+                        'test_package',
+                        'test_set',
+                        'session',
+                        'recipient',
+                        'test_date',
+                        'total_time',
+                        'question_count',
+                        'status',
+    ],
+
+    'test.list-filters' => [
+                        'test_package',
+                        'test_set',
+                        'test_name',
+                        'session',
+                        'recipient',
+                        'test_date',
+                        'status',
+    ],
+
+    'test.report-columns' => [
+                       'id',
+                       'test_package',
+                       'test_set',
+                       'test_name',
+                       'test_language',
+                       'test_format',
+                       'test_structure',
+                       'test_marking_format',
+                       'question_source',
+                       'question_count',
+                       'test_date',
+                       'total_time',
+                       'start_time',
+                       'end_time',
+                       'is_strict_timing',
+                       'max_attempts_allowed',
+                       'test_interface',
+                       'instructions',
+                       'instructions_translated',
+                       'created_for',
+                       'response',
+    ],
+
 
 
 
@@ -160,7 +208,6 @@ return [
                             'limit' => 'Limit/limit/test_pool_limit-json',
                         ]
     ],
-    'test-document' => ['question-paper'	=> 'Question Paper'],
 
     'test-report-by-attempt-type' => ['attempted'=>'ATTEMPTED','not-attempted'=>'NOT-ATTEMPED'],
 

@@ -56,6 +56,34 @@ return [
                         "list"		=>	[[ "contact_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "contact_id"	=>	'{$login_id}' ]]
     ],
+'contact.list-columns' => [
+    'id',
+    'name',
+    'phone',
+    'email',
+    'reference_name',
+    'status',
+],
+
+'contact.list-filters' => [
+    'name',
+    'phone',
+    'email',
+    'reference_name',
+    'status',
+],
+
+'contact.report-columns' => [
+    'id',
+    'reference_name',
+    'name',
+    'gender',
+    'age',
+    'phone',
+    'email',
+    'status',
+],
+
 
 
 

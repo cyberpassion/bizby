@@ -65,6 +65,43 @@ return [
                         "list"		=>	[[ "patient_id"	=>	'{$login_id}' ]],
                         "report"	=>	[[ "patient_id"	=>	'{$login_id}' ]]
     ],
+    "patient.documents" => [
+                        'id-card' => 'ID Card',
+                        'discharge-card' => 'Discharge Card',
+                        'patient-invoice' => 'Patient Invoice',
+    ],
+    'patient.list-columns' => [
+                        'id',
+                        'name',
+                        'gender',
+                        'age',
+                        'phone',
+                        'admission_date',
+    ],
+
+    'patient.list-filters' => [
+                        'name',
+                        'phone',
+                        'gender',
+                        'patient_type',
+                        'admission_date',
+    ],
+
+    'patient.report-columns' => [
+                        'id',
+                        'name',
+                        'gender',
+                        'age',
+                        'phone',
+                        'patient_type',
+                        'admission_date',
+                        'room_number',
+                        'bed_number',
+                        'is_emergency_case',
+                        'provisional_diagnosis',
+                        'discharge_date',
+    ],
+
 
 
 
@@ -156,11 +193,6 @@ return [
                         "groups"	=>	[
                             'current_date'	=>	['contact_date']
                         ]
-    ],
-    "patient-document" => [
-                        'id-card' => 'ID Card',
-                        'discharge-card' => 'Discharge Card',
-                        'patient-invoice' => 'Patient Invoice',
     ],
 
     "patient-sort-results-by" => ["patient_name"=>"Patient Name","age"=>"Age","father_name"=>"Father Name"],

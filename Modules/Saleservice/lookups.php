@@ -71,6 +71,39 @@ return [
                         '11'								=>	'EXCHANGED',
                         '2'									=>	'RETURNED/DELETED'
     ],
+    'saleservice.documents' => ['saleservice-invoice'	=> 'Print Invoice'],
+                        'saleservice.list-columns' => [
+                        'invoice_number',
+                        'saleservice_date',
+                        'buyer_id',
+                        'category',
+                        'offering_quantity',
+                        'total_price',
+    ],
+
+    'saleservice.list-filters' => [
+                        'saleservice_date',
+                        'buyer_id',
+                        'category',
+                        'invoice_type',
+                        'month',
+    ],
+
+    'saleservice.report-columns' => [
+                        'invoice_prefix',
+                        'invoice_number',
+                        'saleservice_date',
+                        'buyer_id',
+                        'buyer_type',
+                        'category',
+                        'offering_type',
+                        'offering_quantity',
+                        'offering_unit',
+                        'taxable_price',
+                        'gst_percentage',
+                        'total_price',
+    ],
+
 
 
 
@@ -173,8 +206,6 @@ return [
                         'out-of-stock'		=>	'OUT OF STOCK'
     ],
     'default-invoice-type' => ['gst-invoice'=>'GST','non-gst-invoice'=>'Simple'],
-
-    'saleservice-document' => ['saleservice-invoice'	=> 'Print Invoice'],
 
     'customer-group-results-by' => [
                         'buyer_type'						=>	'Buyer Type',

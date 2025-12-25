@@ -55,6 +55,44 @@ return [
             "absentee_id"   => '{$login_id}'
         ]]
     ],
+    'attendance.list-columns' => [
+    'absent_date',
+    'absentee_id',
+    'absentee_type',
+    'absent_date_part',
+    'absent_duration',
+    'is_paid',
+],
+
+'attendance.list-filters' => [
+    'session',
+    'month',
+    'absent_date',
+    'absentee_type',
+    'absent_code',
+    'is_paid',
+    'status',
+],
+
+'attendance.report-columns' => [
+    'id',
+    'absent_date',
+    'session',
+    'month',
+    'absentee_type',
+    'absentee_id',
+    'absent_date_part',
+    'absent_duration',
+    'absent_code',
+    'absent_reason',
+    'is_paid',
+    'created_at',
+],
+
+
+
+
+
     
 
     "communicationTemplate-attendance" => [

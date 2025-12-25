@@ -60,8 +60,6 @@ return [
 
 
 
-
-
     'communicationTemplate-subscription' => [
                         "subscription_entry_new_sms"				=>	"New Subscription Entry SMS",
                         "subscription_entry_new_whatsapp"			=>	"New Subscription Entry Whatsapp",

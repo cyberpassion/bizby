@@ -85,8 +85,41 @@ return [
                             ],
                         ]
 	],
+    "lead.documents" => [
+		                'proposal'					=> 'Proposal'
+	],
+    'lead.list-columns' => [
+                       'lead_code',
+                       'name',
+                       'contact_person',
+                       'mobile',
+                       'stage_id',
+                       'next_followup_date',
+    ], 
 
+    'lead.list-filters' => [
+                       'stage_id',
+                       'category_id',
+                       'source_id',
+                       'assigned_to_id',
+                       'district',
+                       'next_followup_date',
+    ],
 
+    'lead.report-columns' => [
+                       'lead_code',
+                       'name',
+                       'contact_person',
+                       'mobile',
+                       'email',
+                       'district',
+                       'state',
+                       'category_id',
+                       'source_id',
+                       'stage_id',
+                       'assigned_to_id',
+                       'next_followup_date',
+    ],
 
 
 
@@ -189,9 +222,6 @@ return [
                             'report_level_filter' 	=> "Progress/report_subtype/lead_progress_level-json",
                             'report_response_filter' => "Response/report_subtype/lead_contact_response-json"
                         ]
-	],
-	"lead-document" => [
-		                'proposal'					=> 'Proposal'
 	],
 	"permissionAdmin-lead" => [
                         'restricted'=>	[

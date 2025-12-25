@@ -73,6 +73,37 @@ return [
                         //'15'	=>	'Out of Office Work',
                         '2'		=>	'Canceled by Applicant'
     ],
+    'leaveapplication.list-columns' => [
+                        'leaveapplication_id',
+                        'applicant',
+                        'session',
+                        'leave_date',
+                        'leave_type',
+                        'leave_duration',
+    ],
+
+    'leaveapplication.list-filters' => [
+                        'applicant_id',
+                        'leave_type',
+                        'leave_date',
+                        'session',
+                        'month',
+    ],
+
+    'leaveapplication.report-columns' => [
+                        'leaveapplication_id',
+                        'applicant',
+                        'applicant_type',
+                        'session',
+                        'month',
+                        'leave_date',
+                        'leave_date_part',
+                        'leave_duration',
+                        'leave_duration_part',
+                        'leave_type',
+                        'leave_reason',
+                        'hr_response_remark',
+    ],
 
 
 
