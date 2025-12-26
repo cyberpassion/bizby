@@ -16,4 +16,15 @@ class RegistrationApiController extends SharedApiController
     {
         return [];
     }
+
+    public function extraStats()
+	{
+    	return [
+       		'male_registrations' => Registration::where('gender', 'M')->count(),
+        	'female_registrations' => Registration::where('gender', 'F')->count(),
+        	'revenue_total' => 500000
+    	];
+	}
+
+
 }
