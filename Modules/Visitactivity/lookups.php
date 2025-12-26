@@ -60,7 +60,7 @@ return [
                        'company_name',
                        'visit_status',
                        'total_expense_amount',
-    ];
+	],
 
     'visitactivity.list-filters' => [
                        'visit_date',
@@ -68,7 +68,7 @@ return [
                        'company_name',
                        'visit_status',
                        'visit_region',
-    ];
+	],
 
     'visitactivity.report-columns' => [
                        'visit_date',
@@ -83,7 +83,7 @@ return [
                        'detailed_report',
                        'next_action_plan',
                        'total_expense_amount',
-   ];
+	],
 
 
 

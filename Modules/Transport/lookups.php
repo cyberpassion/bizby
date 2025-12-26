@@ -55,14 +55,14 @@ return [
                         'seating_capacity',
                         'driver_name',
                         'to_start',
-    ];
+	],
 
     'transport.list-filters' => [
                         'route_name',
                         'vehicle_type',
                         'driver_name',
                         'status',
-    ];
+	],
 
     'transport.report-columns' => [
                         'route_name',
@@ -77,7 +77,7 @@ return [
                         'fro_end',
                         'insurance_renewal_date',
                         'additional_info',
-    ];
+	],
 
 
 

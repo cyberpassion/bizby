@@ -116,7 +116,7 @@ return [
 		'2' => 'DELETED',
 	],
 
-	'shared.contact-modes' => [
+	'shared.communication-modes' => [
 	    'call'        => 'Call',
     	'sms'         => 'SMS',
 	    'whatsapp'    => 'WhatsApp',
