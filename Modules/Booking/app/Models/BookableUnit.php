@@ -14,7 +14,7 @@ class BookableUnit extends Model
 
     protected $casts = [
         'meta' => 'array',
-        'is_active' => 'boolean',
+        'status' => 'boolean',
     ];
 
     public function venue()

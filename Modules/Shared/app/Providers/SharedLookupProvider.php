@@ -113,12 +113,12 @@ class SharedLookupProvider
     {
         return match ($group) {
 
-            'venues-list' => BookingVenue::where('is_active', true)
+            'venues-list' => BookingVenue::where('status', true)
                 ->orderBy('name')
                 ->pluck('name', 'id')
                 ->toArray(),
 
-			'units-list' => BookableUnit::where('is_active', true)
+			'units-list' => BookableUnit::where('status', true)
                 ->orderBy('name')
                 ->pluck('name', 'id')
                 ->toArray(),

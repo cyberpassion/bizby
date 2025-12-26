@@ -12,7 +12,11 @@ use Modules\Shared\Models\Term;
 // Core modules
 use Modules\Announcement\Models\Announcement;
 use Modules\Attendance\Models\Attendance;
+
+use Modules\Booking\Models\BookingVenue;
+use Modules\Booking\Models\BookableUnit;
 use Modules\Booking\Models\Booking;
+use Modules\Booking\Models\BookingUnitPricing;
 use Modules\Cashflow\Models\Cashflow;
 use Modules\Checklist\Models\Checklist;
 use Modules\Communication\Models\Communication;
@@ -55,7 +59,12 @@ class SharedBarricadeResources
         // 🔹 CORE / BUSINESS ENTITIES
         self::registerResource('announcements', Announcement::class);
         self::registerResource('attendances', Attendance::class);
-        self::registerResource('bookings', Booking::class);
+        
+		self::registerResource('bookings', Booking::class);
+		self::registerResource('bookings-venue', BookingVenue::class);
+		self::registerResource('bookings-unit', BookableUnit::class);
+		self::registerResource('bookings-pricing', BookingUnitPricing::class);
+
         self::registerResource('cashflows', Cashflow::class);
         self::registerResource('checklists', Checklist::class);
         self::registerResource('communications', Communication::class);

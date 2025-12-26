@@ -27,7 +27,7 @@ return new class extends Migration
 		    $table->string('code')->nullable();
 		    // internal reference
 
-		    $table->boolean('is_active')->default(true);
+		    $table->boolean('status')->default(true);
 
 		    $table->json('meta')->nullable();
     		/*

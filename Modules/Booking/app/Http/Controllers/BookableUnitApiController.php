@@ -108,7 +108,7 @@ class BookableUnitApiController extends Controller
     {
         $this->assertUnitBelongsToVenue($venue, $unit);
 
-        $unit->update(['is_active' => false]);
+        $unit->update(['status' => false]);
 
         return response()->json([
             'status' => 'success',

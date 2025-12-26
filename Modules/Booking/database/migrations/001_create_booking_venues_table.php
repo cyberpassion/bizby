@@ -26,7 +26,7 @@ return new class extends Migration
 		    $table->json('meta')->nullable();
     		// check_in_time, policies, amenities, departments
 
-		    $table->boolean('is_active')->default(true);
+		    $table->boolean('status')->default(true);
 
 		    $table->timestamps();
 		});
