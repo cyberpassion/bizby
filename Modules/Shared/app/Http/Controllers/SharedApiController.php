@@ -2,6 +2,8 @@
 
 namespace Modules\Shared\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -178,77 +180,220 @@ abstract class SharedApiController extends Controller
         ], Response::HTTP_OK);
     }
 
-	/**
-	 * Universal stats function for all modules
-	 *
-	 * Usage:
-	 * - /api/consultation/stats
-	 * - /api/students/stats
-	 * - /api/fees/stats
-	 *
-	 * Controller can override:
-	 * - fields for charts
-	 * - fields for sum
-	 * - custom overview
-	 */
-	public function stats(Request $request)
+/* ======================================================
+ | STATS ENDPOINT (INSTRUCTION-DRIVEN, COUNT ONLY)
+ | GET /{module}/stats
+ |
+ | Supports:
+ | - metrics=total_records
+ | - aggregates=count:gender=M,count:status=completed
+ | - group_by=gender,status
+ | - filters=gender:M,status:completed
+ | - from=YYYY-MM-DD
+ | - to=YYYY-MM-DD
+ |
+ | Defaults apply ONLY when no instructions are provided
+ ====================================================== */
+public function stats(Request $request)
+{
+    $model = $this->model();
+    $query = $model::query();
+
+    /* ------------------------------------
+     | DATE FILTERS
+     ------------------------------------ */
+    if ($request->filled('from')) {
+        $query->whereDate('created_at', '>=', $request->from);
+    }
+
+    if ($request->filled('to')) {
+        $query->whereDate('created_at', '<=', $request->to);
+    }
+
+    /* ------------------------------------
+     | GENERIC FILTERS
+     | filters=gender:M,status:completed
+     ------------------------------------ */
+    if ($request->filled('filters')) {
+        foreach (explode(',', $request->filters) as $filter) {
+            [$key, $value] = array_pad(explode(':', $filter, 2), 2, null);
+            if ($key && $value !== null) {
+                $query->where($key, $value);
+            }
+        }
+    }
+
+    /* ------------------------------------
+     | DETECT IF CLIENT SENT INSTRUCTIONS
+     ------------------------------------ */
+    $hasInstructions =
+        $request->filled('metrics') ||
+        $request->filled('aggregates') ||
+        $request->filled('group_by');
+
+    /* ------------------------------------
+     | METRICS
+     ------------------------------------ */
+    $metricKeys = $hasInstructions
+        ? array_filter(explode(',', $request->get('metrics', '')))
+        : $this->defaultMetrics();
+
+    $metrics = [];
+
+    foreach ($metricKeys as $metric) {
+        if ($metric === 'total_records') {
+            $metrics['total_records'] = (clone $query)->count();
+        }
+    }
+
+    /* ------------------------------------
+     | AGGREGATES (Conditional counts)
+     ------------------------------------ */
+    $aggregateKeys = $hasInstructions
+        ? array_filter(explode(',', $request->get('aggregates', '')))
+        : $this->defaultAggregates();
+
+    foreach ($aggregateKeys as $aggregate) {
+        [$fn, $expr] = array_pad(explode(':', $aggregate, 2), 2, null);
+
+        if ($fn === 'count' && $expr) {
+            [$field, $value] = array_pad(explode('=', $expr, 2), 2, null);
+
+            if ($field && $value !== null) {
+                $metrics["count_{$field}_{$value}"] =
+                    (clone $query)->where($field, $value)->count();
+            }
+        }
+    }
+
+    /* ------------------------------------
+     | GROUPED STATS
+     ------------------------------------ */
+    $groupFields = $hasInstructions
+        ? array_filter(explode(',', $request->get('group_by', '')))
+        : $this->defaultGroups();
+
+    $groups = [];
+
+    foreach ($groupFields as $field) {
+        if (!$this->isAllowedChart($field)) {
+            continue;
+        }
+
+        $groups[$field] = (clone $query)
+            ->select($field, DB::raw('COUNT(*) as total'))
+            ->groupBy($field)
+            ->pluck('total', $field)
+            ->toArray();
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Stats generated successfully.',
+        'data' => array_filter([
+            'metrics' => $metrics ?: null,
+            'groups'  => $groups  ?: null,
+        ]),
+    ], Response::HTTP_OK);
+}
+
+    /* ======================================================
+ | GRAPHS ENDPOINT (INSTRUCTION-DRIVEN)
+ | GET /{module}/graphs
+ |
+ | Supports:
+ | - charts=gender,channel,status
+ | - from=YYYY-MM-DD
+ | - to=YYYY-MM-DD
+ | Defaults:
+ | - charts → allowedCharts()
+ ====================================================== */
+public function graphs(Request $request)
+{
+    $model = $this->model();
+    $query = $model::query();
+
+    /* ------------------------------------
+     | DATE FILTERS
+     ------------------------------------ */
+    if ($request->filled('from')) {
+        $query->whereDate('created_at', '>=', $request->from);
+    }
+
+    if ($request->filled('to')) {
+        $query->whereDate('created_at', '<=', $request->to);
+    }
+
+    /* ------------------------------------
+     | CHART FIELDS
+     | Default → allowedCharts()
+     ------------------------------------ */
+    $chartFields = $request->filled('charts')
+        ? array_filter(explode(',', $request->get('charts')))
+        : $this->allowedCharts();
+
+    $charts = [];
+
+    foreach ($chartFields as $field) {
+        if (!$this->isAllowedChart($field)) {
+            continue;
+        }
+
+        $charts[$field] = $this->chartData($query, $field);
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Graph data generated successfully.',
+        'data' => [
+            'charts' => $charts,
+        ],
+    ], Response::HTTP_OK);
+}
+
+    /* ======================================================
+     | HELPERS
+     ====================================================== */
+
+    protected function chartData($query, string $field): array
+    {
+        return (clone $query)
+            ->select($field, DB::raw('COUNT(*) as total'))
+            ->groupBy($field)
+            ->get()
+            ->map(fn ($row) => [
+                'label' => (string) $row->{$field},
+                'value' => (int) $row->total,
+            ])
+            ->values()
+            ->toArray();
+    }
+
+	 protected function allowedCharts(): array
+    {
+        return [];
+    }
+
+    protected function isAllowedChart(string $field): bool
+    {
+        $allowed = $this->allowedCharts();
+
+        return empty($allowed) || in_array($field, $allowed, true);
+    }
+
+	protected function defaultMetrics(): array
 	{
-    	$model = $this->model();
-
-	    // Step 1: Basic Count
-    	$total = $model::count();
-
-	    // Step 2: Optional chart fields (you can pass via query or controller override)
-    	// Example: /api/consultation/stats?charts=gender,channel
-    	$chartFields = explode(',', $request->get('charts', ''));
-
-	    $charts = [];
-    	foreach ($chartFields as $field) {
-        	if (!$field) continue;
-        	$charts[$field] = $this->getChartCounts($model, $field);
-    	}
-
-	    // Step 3: Optional SUM fields
-    	// Example: /api/consultation/stats?sum=amount,fee
-    	$sumFields = explode(',', $request->get('sum', ''));
-
-	    $sums = [];
-    	foreach ($sumFields as $field) {
-        	if (!$field) continue;
-        	$sums[$field] = $model::sum($field);
-    	}
-
-	    // Step 4: Base overview
-    	$overview = [
-        	'total_records' => $total,
-    	];
-
-	    // Step 5: Allow child controller to inject extra overview
-    	if (method_exists($this, 'extraStats')) {
-        	$overview = array_merge($overview, $this->extraStats());
-    	}
-
-	    return response()->json([
-    	    'status' => 'success',
-        	'message' => 'Stats generated successfully.',
-	        'data' => [
-    	        'overview' => $overview,
-        	    'charts' => $charts,
-            	'sums' => $sums
-       		]
-	    ], Response::HTTP_OK);
+    	return ['total_records'];
 	}
 
-	/**
-	 * Universal chart helper for all modules
-	 */
-	protected function getChartCounts($model, $field)
+	protected function defaultAggregates(): array
 	{
-    	return $model::select($field)
-        	->selectRaw('COUNT(*) as total')
-        	->groupBy($field)
-        	->pluck('total', $field)
-        	->toArray();
+    	return [];
+	}
+
+	protected function defaultGroups(): array
+	{
+    	return [];
 	}
 
 }

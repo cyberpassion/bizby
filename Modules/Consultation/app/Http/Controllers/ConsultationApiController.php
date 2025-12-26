@@ -17,13 +17,34 @@ class ConsultationApiController extends SharedApiController
         return [];
     }
 
-	public function extraStats()
+	// Default Graphs to Display
+	protected function allowedCharts(): array
+    {
+        return [
+            'gender',
+            'channel'
+        ];
+    }
+
+	// Default Metrics
+	protected function defaultMetrics(): array
+	{
+    	return ['total_records'];
+	}
+
+	// Default Sums
+	protected function defaultAggregates(): array
 	{
     	return [
-       		'male_consultations' => Consultation::where('gender', 'M')->count(),
-        	'female_consultations' => Consultation::where('gender', 'F')->count(),
-        	'revenue_total' => 500000
-    	];
+        	'count:gender=M',
+        	'count:gender=F',
+	    ];
+	}
+
+	// Default grouping columns
+	protected function defaultGroups(): array
+	{
+    	return ['gender'];
 	}
 
 }
