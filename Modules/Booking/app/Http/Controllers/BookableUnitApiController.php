@@ -33,6 +33,45 @@ class BookableUnitApiController extends Controller
 	    ]);
 	}
 
+	public function index1(Request $request)
+	{
+    	$query = BookableUnit::query();
+
+	    // Allowed filters (query_param => column)
+    	$filters = [
+        	'booking_venue_id' => 'booking_venue_id',
+        	'unit_type'        => 'unit_type'
+	    ];
+
+	    foreach ($filters as $param => $column) {
+    	    if ($request->filled($param)) {
+        	    $query->where($column, $request->input($param));
+        	}
+    	}
+
+	    // Range filters
+    	if ($request->filled('min_capacity')) {
+        	$query->where('capacity', '>=', $request->min_capacity);
+    	}
+
+	    if ($request->filled('max_capacity')) {
+    	    $query->where('capacity', '<=', $request->max_capacity);
+    	}
+
+	    // Sorting
+    	$sortBy  = $request->get('sort_by', 'id');
+    	$sortDir = $request->get('sort_dir', 'asc');
+
+	    if (in_array($sortBy, ['id', 'capacity', 'created_at'])) {
+    	    $query->orderBy($sortBy, $sortDir);
+    	}
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'data'   => $query->paginate($request->get('per_page', 20)),
+	    ]);
+	}
+
     /**
 	 * Store a new unit (supports both nested & flat routes)
 	 */

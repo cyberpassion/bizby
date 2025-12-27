@@ -9,20 +9,55 @@ use Modules\Booking\Models\Booking;
 use Modules\Booking\Services\BookingService;
 use Modules\Booking\Services\BookingFeeService;
 
+use Carbon\Carbon;
+
 class BookingApiController extends Controller
 {
-    public function index($venueId)
-    {
-        $bookings = Booking::where('booking_venue_id', $venueId)
-            ->latest()
-            ->get();
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Bookings fetched successfully',
-            'data'    => ['data'=>$bookings],
-        ]);
-    }
+	public function index($venueId)
+	{
+	    $bookings = Booking::where('booking_venue_id', $venueId)
+    	    ->latest()
+        	->get()
+        	->map(function ($booking) {
+            	return [
+                	// 🔹 Core fields
+	                'id'                => $booking->id,
+    	            'booking_venue_id'  => $booking->booking_venue_id,
+        	        'bookable_unit_id'  => $booking->bookable_unit_id,
+            	    'booking_type'      => $booking->booking_type,
+                	'status'            => $booking->status,
+                	'meta'              => $booking->meta,
+
+	                // 🔹 Original datetime (source of truth)
+    	            'start_at'          => $booking->start_at,
+        	        'end_at'            => $booking->end_at,
+
+	                // 🔹 Normalized fields (UI-ready)
+    	            'start_date'        => Carbon::parse($booking->start_at)->toDateString(),
+        	        'end_date'          => $booking->end_at
+            	        ? Carbon::parse($booking->end_at)->toDateString()
+                	    : null,
+
+	                'start_time'        => Carbon::parse($booking->start_at)->format('H:i'),
+    	            'end_time'          => $booking->end_at
+        	            ? Carbon::parse($booking->end_at)->format('H:i')
+            	        : null,
+
+	                // 🔹 Audit
+    	            'created_at'        => $booking->created_at,
+        	        'updated_at'        => $booking->updated_at,
+            	];
+        	});
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Bookings fetched successfully',
+        	'data'    => [
+            	'data' => $bookings,
+        	],
+    	]);
+	}
 
     public function store( Request $request, BookingService $bookingService, BookingFeeService $feeService ) {
 	    $data = $request->validate([

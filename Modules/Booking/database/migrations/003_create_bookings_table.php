@@ -9,43 +9,39 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
-		    $table->id();
+            $table->id();
 
-			$table->string('invoice_number')
-              ->nullable()
-              ->unique()
-              ->after('invoice_snapshot');
+            // Foreign keys
+            $table->foreignId('booking_venue_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-		    $table->foreignId('booking_venue_id')
-		        ->constrained()
-        		->cascadeOnDelete();
+            $table->foreignId('bookable_unit_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-		    $table->foreignId('bookable_unit_id')
-        		->constrained()
-		        ->cascadeOnDelete();
+            // Who booked (User | Customer | Patient)
+            $table->nullableMorphs('booked_by');
 
-		    // who booked it
-		    $table->nullableMorphs('booked_by');
-    		// User | Customer | Patient
+            // Booking details
+            $table->string('booking_type')->nullable(); // stay | slot | admission
+            $table->timestamp('start_at');
+            $table->timestamp('end_at')->nullable();
+            $table->string('status')->default('pending'); // pending | confirmed | cancelled | completed
 
-		    $table->string('booking_type')->nullable();
-    		// stay | slot | admission
+            // Invoice data
+            $table->json('invoice_snapshot')->nullable();
+            $table->string('invoice_number')->nullable()->unique();
 
-		    $table->timestamp('start_at');
-		    $table->timestamp('end_at')->nullable();
-		    $table->string('status')->default('pending');
-    		// pending | confirmed | cancelled | completed
+            // Metadata
+            $table->json('meta')->nullable(); // notes, preferences, doctor, occasion
 
-		    $table->json('meta')->nullable();
-		    // notes, preferences, doctor, occasion
+            $table->timestamps();
 
-		    $table->timestamps();
-			$table->json('invoice_snapshot')->nullable();
-
-		    $table->index(['booking_venue_id', 'bookable_unit_id']);
-    		$table->index(['start_at', 'end_at']);
-		});
-
+            // Indexes
+            $table->index(['booking_venue_id', 'bookable_unit_id']);
+            $table->index(['start_at', 'end_at']);
+        });
     }
 
     public function down(): void

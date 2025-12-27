@@ -16,7 +16,7 @@ Route::prefix('v1')->group(function () {
 		Route::put('/venues/units/{unit}', [BookableUnitApiController::class, 'update']); // SAME 2 VARIATION 1 FOR FORMS
 
         Route::get('/venues/{venue}/units', [BookableUnitApiController::class, 'index']); // SAME 4
-		Route::get('/venues/units', [BookableUnitApiController::class, 'index']); // SAME 4 VARIATION
+		Route::get('/venues/units', [BookableUnitApiController::class, 'index1']); // SAME 4 VARIATION
 
         Route::get('/venues/{venue}/units/{unit}', [BookableUnitApiController::class, 'show']);
         Route::delete('/venues/{venue}/units/{unit}', [BookableUnitApiController::class, 'destroy']);

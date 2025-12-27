@@ -17,13 +17,51 @@ class BookingUnitPricingApiController extends Controller
 	{
     	$query = BookingUnitPricing::query();
 
-	    // Route-model binding has priority
+	    /*
+    	|--------------------------------------------------------------------------
+	    | 1. Route-model binding has highest priority
+    	|--------------------------------------------------------------------------
+	    */
     	if ($unit) {
         	$query->where('bookable_unit_id', $unit->id);
-	    }
-    	// Fallback to query param
+    	}
+
+	    /*
+    	|--------------------------------------------------------------------------
+	    | 2. Bulk fetch via query param (CSV or array)
+    	|--------------------------------------------------------------------------
+	    */
+    	elseif ($request->filled('bookable_unit_ids')) {
+	        $ids = $request->query('bookable_unit_ids');
+
+	        // Support CSV: 10,11,12  OR array: [10,11,12]
+    	    $unitIds = is_array($ids)
+        	    ? $ids
+            	: array_filter(array_map('intval', explode(',', $ids)));
+
+	        if (empty($unitIds)) {
+    	        abort(422, 'Invalid bookable_unit_ids');
+        	}
+
+	        $query->whereIn('bookable_unit_id', $unitIds);
+    	}
+
+	    /*
+    	|--------------------------------------------------------------------------
+	    | 3. Backward compatibility: single ID via query
+    	|--------------------------------------------------------------------------
+	    */
     	elseif ($request->filled('bookable_unit_id')) {
         	$query->where('bookable_unit_id', $request->query('bookable_unit_id'));
+    	}
+
+	    /*
+    	|--------------------------------------------------------------------------
+	    | 4. Optional filters
+    	|--------------------------------------------------------------------------
+	    */
+    	if ($request->filled('booking_type')) {
+        	$query->where('booking_type', $request->query('booking_type'));
     	}
 
 	    $pricings = $query->get();
@@ -31,10 +69,8 @@ class BookingUnitPricingApiController extends Controller
 	    return response()->json([
     	    'status'  => 'success',
         	'message' => 'Pricing fetched successfully',
-        	'data'    => [
-            	'data' => $pricings
-        	],
-    	]);
+        	'data'    => $pricings,
+	    ]);
 	}
 
     /**
