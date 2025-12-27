@@ -4,70 +4,85 @@ namespace Modules\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
-
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lead extends Model
 {
+    use HasFactory, SoftDeletes;
 
-	use HasFactory;
+    protected $table = 'leads';
 
-	protected static function newFactory()
+    protected $fillable = [
+        'lead_code',
+        'name',
+        'contact_person',
+        'mobile',
+        'email',
+        'district',
+        'state',
+        'pincode',
+        'website',
+        'generated_by_id',
+        'generated_by_type',
+        'assigned_to_id',
+        'assigned_to_type',
+        'category_id',
+        'source_id',
+        'stage_id',
+        'is_existing_client',
+        'place',
+        'next_followup_date',
+        'thread_parent_id',
+    ];
+
+    protected $casts = [
+        'is_existing_client' => 'boolean',
+        'next_followup_date' => 'date',
+    ];
+
+    /* =========================
+     | Relationships
+     |=========================*/
+
+    public function followups()
     {
-        return \Modules\Lead\Database\Factories\LeadFactory::new();
+        return $this->hasMany(
+            LeadFollowup::class,
+            'lead_id'
+        )->orderBy('contact_date', 'desc');
     }
 
-    protected $fillable = [];
-
-    /**
-     * Polymorphic creator
-     */
-    public function generatedBy(): MorphTo
+    public function generatedBy()
     {
-        return $this->morphTo('generated_by');
+        return $this->morphTo(
+            __FUNCTION__,
+            'generated_by_type',
+            'generated_by_id'
+        );
     }
 
-    /**
-     * Polymorphic assignee
-     */
-    public function assignedTo(): MorphTo
+    public function assignedTo()
     {
-        return $this->morphTo('assigned_to');
+        return $this->morphTo(
+            __FUNCTION__,
+            'assigned_to_type',
+            'assigned_to_id'
+        );
     }
 
-    /**
-     * Lead Followups
-     */
-    public function followups(): HasMany
+    public function parent()
     {
-        return $this->hasMany(LeadFollowup::class, 'lead_id');
+        return $this->belongsTo(
+            self::class,
+            'thread_parent_id'
+        );
     }
 
-    /**
-     * Notes (optional)
-     */
-    public function notes(): MorphMany
+    public function children()
     {
-        return $this->morphMany('App\\Models\\Note', 'noteable');
+        return $this->hasMany(
+            self::class,
+            'thread_parent_id'
+        );
     }
-
-	public function leadfollowups()
-	{
-    	return $this->hasMany(LeadFollowup::class);
-	}
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
-
 }

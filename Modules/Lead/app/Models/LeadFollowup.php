@@ -4,41 +4,53 @@ namespace Modules\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeadFollowup extends Model
 {
+    use HasFactory, SoftDeletes;
 
-	use HasFactory;
-
-	protected static function newFactory()
-    {
-        return \Modules\Lead\Database\Factories\LeadFollowupFactory::new();
-    }
+    protected $table = 'lead_followups';
 
     protected $fillable = [
         'lead_id',
+        'contact_by_id',
+        'contact_by_type',
         'contact_date',
         'mode',
         'reference_no',
         'response',
         'remark',
         'next_followup_date',
+        'client_id',
+        'created_by',
+        'updated_by',
+        'deleted_by',
     ];
 
-    /**
-     * Parent Lead
-     */
+    protected $casts = [
+        'contact_date' => 'datetime',
+        'next_followup_date' => 'date',
+    ];
+
+    /* =========================
+     | Relationships
+     |=========================*/
+
     public function lead()
     {
-        return $this->belongsTo(Lead::class, 'lead_id');
+        return $this->belongsTo(
+            Lead::class,
+            'lead_id'
+        );
     }
 
-    /**
-     * Polymorphic - Who contacted the lead
-     */
-    public function contactBy(): MorphTo
+    public function contactBy()
     {
-        return $this->morphTo('contact_by');
+        return $this->morphTo(
+            __FUNCTION__,
+            'contact_by_type',
+            'contact_by_id'
+        );
     }
 }

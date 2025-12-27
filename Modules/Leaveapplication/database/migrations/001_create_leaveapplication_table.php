@@ -10,35 +10,104 @@ return new class extends Migration
     {
         Schema::create('leaveapplications', function (Blueprint $table) {
 
-            // SaaS Common Fields
+            // =========================
+            // Common SaaS fields
+            // =========================
+            /*
+                id
+                client_id
+                status
+                created_by
+                updated_by
+                deleted_by
+                timestamps
+                soft deletes
+            */
             $table->commonSaasFields();
 
-            // Leave Application Fields
-            $table->unsignedBigInteger('leaveapplication_id');
+            // =========================
+            // Who is applying for leave
+            // =========================
+            $table->nullableMorphs('entity');
+            /*
+                Student
+                Employee
+                User
+            */
 
-            // Applicant Info
-            $table->string('applicant_type', 255)->nullable();
-            $table->unsignedBigInteger('applicant_id')->nullable();
-            $table->string('applicant')->nullable();
+            // =========================
+            // Leave period
+            // =========================
+            $table->date('start_date');
+            $table->date('end_date');
+            /*
+                single day or multi-day leave
+            */
 
-            // Session Details
-            $table->string('session', 255);
-            $table->string('month', 255);
+            // =========================
+            // Leave granularity
+            // =========================
+            $table->string('type')->nullable();
+            /*
+                full_day
+                half_day
+                session
+            */
 
-            // Leave Date & Duration
-            $table->date('leave_date')->nullable();
-            $table->string('leave_date_part', 255)->nullable();
+            $table->string('session_ref')->nullable();
+            /*
+                Morning
+                Period 3
+                Lecture 5
+            */
 
-            $table->float('leave_duration')->nullable();
-            $table->string('leave_duration_part', 255)->nullable();
+            // =========================
+            // Leave classification
+            // =========================
+            $table->string('leave_code')->nullable();
+            /*
+                casual
+                sick
+                paid
+                unpaid
+                exam
+            */
 
-            // Leave Details
-            $table->string('leave_type', 255)->nullable();
-            $table->longText('leave_reason')->nullable();
+            // =========================
+            // Reason & attachments
+            // =========================
+            $table->text('reason')->nullable();
 
-            // HR Review
-            $table->boolean('is_considered_by_hr')->default(0);
-            $table->string('hr_response_remark', 255)->nullable();
+            // =========================
+            // Approval workflow
+            // =========================
+            $table->string('approval_status')->default('pending');
+            /*
+                pending
+                approved
+                rejected
+                cancelled
+            */
+
+            $table->nullableMorphs('approved_by');
+            $table->dateTime('approved_at')->nullable();
+
+            // =========================
+            // Attendance integration
+            // =========================
+            $table->boolean('affects_attendance')->default(true);
+
+            // =========================
+            // Extra metadata
+            // =========================
+            $table->json('meta')->nullable();
+
+            // =========================
+            // Indexes
+            // =========================
+            $table->index(['start_date', 'end_date']);
+            $table->index(['entity_id', 'entity_type']);
+            $table->index('approval_status');
         });
     }
 
@@ -47,4 +116,3 @@ return new class extends Migration
         Schema::dropIfExists('leaveapplications');
     }
 };
-

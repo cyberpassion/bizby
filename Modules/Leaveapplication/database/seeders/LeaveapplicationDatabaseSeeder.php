@@ -11,6 +11,8 @@ class LeaveapplicationDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+			LeaveapplicationSeeder::class,
+		]);
     }
 }

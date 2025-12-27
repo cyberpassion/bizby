@@ -4,57 +4,55 @@ namespace Modules\Note\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Note extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $table = 'notes';
 
-    /**
-     * Attribute casting.
-     */
+    protected $fillable = [
+        'note_thread_id',
+        'sender_id',
+        'sender_type',
+        'receiver_id',
+        'receiver_type',
+        'message',
+        'message_type',
+        'read_at',
+        'meta',
+    ];
+
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'note_date' => 'date', // Laravel will cast it to Carbon
+        'read_at' => 'datetime',
+        'meta'    => 'array',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
+    /* =========================
+     | Relationships
+     |=========================*/
 
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function thread()
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): NoteFactory
-    // {
-    //     return NoteFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->belongsTo(NoteThread::class, 'note_thread_id');
     }
 
-    public function getFillable()
+    public function sender()
     {
-        return $this->dynamicFillable();
+        return $this->morphTo(
+            __FUNCTION__,
+            'sender_type',
+            'sender_id'
+        );
     }
 
+    public function receiver()
+    {
+        return $this->morphTo(
+            __FUNCTION__,
+            'receiver_type',
+            'receiver_id'
+        );
+    }
 }

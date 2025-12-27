@@ -4,57 +4,62 @@ namespace Modules\Leaveapplication\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Leaveapplication extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $table = 'leaveapplications';
 
-    /**
-     * Attribute casting.
-     */
+    protected $fillable = [
+        'entity_id',
+        'entity_type',
+        'start_date',
+        'end_date',
+        'type',
+        'session_ref',
+        'leave_code',
+        'reason',
+        'approval_status',
+        'approved_by_id',
+        'approved_by_type',
+        'approved_at',
+        'affects_attendance',
+        'meta',
+    ];
+
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'leaveapplication_date' => 'date', // Laravel will cast it to Carbon
+        'start_date'         => 'date',
+        'end_date'           => 'date',
+        'approved_at'        => 'datetime',
+        'affects_attendance' => 'boolean',
+        'meta'               => 'array',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
+    /* =========================
+     | Relationships
+     |=========================*/
 
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function entity()
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): LeaveapplicationFactory
-    // {
-    //     return LeaveapplicationFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->morphTo();
     }
 
-    public function getFillable()
+    public function approvedBy()
     {
-        return $this->dynamicFillable();
+        return $this->morphTo(
+            __FUNCTION__,
+            'approved_by_type',
+            'approved_by_id'
+        );
     }
 
+    public function attendanceLinks()
+    {
+        return $this->hasMany(
+            LeaveapplicationAttendanceLink::class,
+            'leaveapplication_id'
+        );
+    }
 }

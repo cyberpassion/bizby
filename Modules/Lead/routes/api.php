@@ -10,9 +10,12 @@ use Modules\Lead\Http\Controllers\LeadFollowupApiController;
 
 // Temporarily disable auth middleware
 Route::prefix('v1')->group(function () {
-    Route::apiResource('leads', LeadApiController::class)->names('leads');
-	// Lead Users
-    Route::prefix('lead/{id}')->group(function () {
-		Route::apiResource('followups', LeadFollowupApiController::class)->names('lead.followups');
-	});
+
+    Route::apiResource('leads', LeadApiController::class);
+
+    Route::apiResource(
+        'leads.followups',
+        LeadFollowupApiController::class
+    )->shallow();
+
 });

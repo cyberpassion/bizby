@@ -44,12 +44,15 @@ return new class extends Migration
 		    // Indexes
 		    $table->index('lead_id');
     		$table->index('contact_date');
+
+			$table->foreign('lead_id')->references('id')->on('leads')->cascadeOnDelete();
+
 		});
 
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('lead_follwups');
+        Schema::dropIfExists('lead_followups');
     }
 };

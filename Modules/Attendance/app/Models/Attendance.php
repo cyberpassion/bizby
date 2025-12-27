@@ -4,57 +4,43 @@ namespace Modules\Attendance\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class Attendance extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $table = 'attendances';
 
-    /**
-     * Attribute casting.
-     */
+    protected $fillable = [
+        'attendance_session_id',
+        'entity_id',
+        'entity_type',
+        'status',
+        'in_time',
+        'out_time',
+        'code',
+        'reason',
+    ];
+
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'attendance_date' => 'date', // Laravel will cast it to Carbon
+        'in_time'  => 'datetime:H:i',
+        'out_time' => 'datetime:H:i',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
+    /* =========================
+     | Relationships
+     |=========================*/
 
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function session()
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): AttendanceFactory
-    // {
-    //     return AttendanceFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->belongsTo(
+            AttendanceSession::class,
+            'attendance_session_id'
+        );
     }
 
-    public function getFillable()
+    public function entity()
     {
-        return $this->dynamicFillable();
+        return $this->morphTo();
     }
-
 }

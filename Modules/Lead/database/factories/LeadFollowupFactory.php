@@ -1,31 +1,40 @@
 <?php
 
-namespace Modules\Lead\Database\Factories;
+namespace Database\Factories;
 
-use Modules\Lead\Models\LeadFollowup;
-use Modules\Lead\Models\Lead;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LeadFollowupFactory extends Factory
 {
-    protected $model = LeadFollowup::class;
-
-    public function definition()
+    public function definition(): array
     {
         return [
-            'lead_id'            => Lead::factory(),
-            'contact_date'       => $this->faker->dateTimeBetween('-30 days', '+7 days'),
-            'mode'               => $this->faker->randomElement([
+            'contact_date' => $this->faker->dateTimeBetween('-30 days', 'now'),
+
+            'mode' => $this->faker->randomElement([
                 'call',
                 'visit',
                 'whatsapp',
                 'email',
-                'sms',
+                'sms'
             ]),
-            'reference_no'       => null,
-            'response'           => $this->faker->optional()->sentence(6),
-            'remark'             => $this->faker->optional()->paragraph(2),
+
+            'reference_no' => $this->faker->optional()->uuid(),
+
+            'response' => $this->faker->sentence(),
+            'remark' => $this->faker->optional()->paragraph(),
+
             'next_followup_date' => $this->faker->optional()->date(),
+
+            // Morphs
+            'contact_by_id' => null,
+            'contact_by_type' => null,
+
+            // SaaS audit
+            'client_id' => null,
+            'created_by' => null,
+            'updated_by' => null,
+            'deleted_by' => null,
         ];
     }
 }

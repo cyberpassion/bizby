@@ -14,7 +14,7 @@ class LeadDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            LeadSeeder::class,
+            LeadSeeder::class
         ]);
     }
 }
