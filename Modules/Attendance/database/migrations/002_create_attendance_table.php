@@ -28,7 +28,7 @@ return new class extends Migration
     */
 
     // Attendance status
-    $table->string('status')->default('present');
+    $table->string('attendance_status')->default('present');
     /*
         present
         absent
@@ -43,8 +43,6 @@ return new class extends Migration
     // Optional reason / metadata
     $table->string('code')->nullable();
     $table->text('reason')->nullable();
-
-    $table->timestamps();
 
     // Indexes
     $table->index(['attendance_session_id']);

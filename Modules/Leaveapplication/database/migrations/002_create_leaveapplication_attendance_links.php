@@ -15,8 +15,8 @@ return new class extends Migration
             // =========================
             // Leave application
             // =========================
-            $table->foreignId('leave_application_id')
-                  ->constrained('leave_applications')
+            $table->foreignId('leaveapplication_id')
+                  ->constrained('leaveapplications')
                   ->cascadeOnDelete();
 
             // =========================
@@ -32,11 +32,11 @@ return new class extends Migration
             // Indexes & constraints
             // =========================
             $table->unique(
-                ['leave_application_id', 'attendance_id'],
-                'uniq_leave_attendance'
+                ['leaveapplication_id', 'attendance_id'],
+                'uniq_leaveapplication_attendance'
             );
 
-            $table->index('leave_application_id');
+            $table->index('leaveapplication_id');
             $table->index('attendance_id');
         });
     }

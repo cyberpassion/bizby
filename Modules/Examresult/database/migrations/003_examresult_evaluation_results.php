@@ -61,20 +61,13 @@ return new class extends Migration
                 Excellent
             */
 
-            $table->string('status')->nullable();
+            $table->string('result_status')->nullable();
             /*
                 pass
                 fail
                 absent
                 evaluated
             */
-
-            // =========================
-            // Remarks / notes
-            // =========================
-            $table->text('remark')->nullable();
-
-            $table->timestamps();
 
             // =========================
             // Indexes

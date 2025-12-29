@@ -85,8 +85,6 @@ return new class extends Migration
                 internal / external flags
             */
 
-            $table->timestamps();
-
             // =========================
             // Indexes
             // =========================

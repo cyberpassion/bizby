@@ -81,8 +81,6 @@ return new class extends Migration
                 system flags
             */
 
-            $table->timestamps();
-
             // =========================
             // Indexes
             // =========================

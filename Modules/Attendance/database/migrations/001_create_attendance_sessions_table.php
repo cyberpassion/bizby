@@ -50,8 +50,6 @@ return new class extends Migration
     $table->nullableMorphs('taken_by');
     // User | Employee | Teacher | System
 
-    $table->timestamps();
-
     // Indexes
     $table->index(['session_date']);
 });
