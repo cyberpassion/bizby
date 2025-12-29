@@ -71,13 +71,13 @@ class TermBankSeeder extends Seeder
             DB::table('terms')->updateOrInsert(
                 [
                     'slug' => Str::slug($bank),
-                    'group' => 'bank',
+                    'group' => 'banks',
                 ],
                 [
                     'client_id'  => 1,
                     'status'     => 1,
                     'name'       => $bank,
-                    'module'     => 'finance',
+                    'module'     => 'shared',
                     'sort_order' => $index + 1,
                     'created_at' => now(),
                     'updated_at' => now(),

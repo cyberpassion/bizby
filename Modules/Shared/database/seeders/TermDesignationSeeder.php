@@ -4,101 +4,46 @@ namespace Modules\Shared\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class TermDesignationSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('terms')->insert([
-            [
-                'client_id'  => 1,
+        $designations = [
+            ['owner',        'Owner'],
+            ['director',     'Director'],
+            ['manager',      'Manager'],
+            ['team_lead',    'Team Lead'],
+            ['executive',    'Executive'],
+            ['sales_exec',   'Sales Executive'],
+            ['marketing',    'Marketing Executive'],
+            ['support',      'Support Executive'],
+            ['hr',           'HR'],
+            ['accountant',   'Accountant'],
+            ['staff',        'Staff'],
+            ['intern',       'Intern'],
+        ];
+
+        $data = [];
+
+        foreach ($designations as $index => [$slug, $label]) {
+            $data[] = [
+                'client_id'  => 1, // default tenant
                 'status'     => 1,
-                'name'       => 'Principal',
-                'slug'       => Str::slug('Principal'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 1,
+                'name'       => $label,
+                'slug'       => $slug,
+                'group'      => 'designations',
+                'module'     => 'shared',
+                'sort_order' => $index + 1,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Vice Principal',
-                'slug'       => Str::slug('Vice Principal'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Head of Department',
-                'slug'       => Str::slug('Head of Department'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Professor',
-                'slug'       => Str::slug('Professor'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 4,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Assistant Professor',
-                'slug'       => Str::slug('Assistant Professor'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 5,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Lecturer',
-                'slug'       => Str::slug('Lecturer'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 6,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Lab Assistant',
-                'slug'       => Str::slug('Lab Assistant'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 7,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'client_id'  => 1,
-                'status'     => 1,
-                'name'       => 'Clerk',
-                'slug'       => Str::slug('Clerk'),
-                'group'      => 'designation',
-                'module'     => 'employee',
-                'sort_order' => 8,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+            ];
+        }
+
+        DB::table('terms')->upsert(
+            $data,
+            ['slug', 'client_id'],
+            ['status', 'updated_at']
+        );
     }
 }

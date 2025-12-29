@@ -5,6 +5,7 @@ namespace Modules\Lead\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Lead\Models\Lead;
+use Illuminate\Support\Facades\DB;
 
 class LeadApiController extends Controller
 {
@@ -38,13 +39,20 @@ class LeadApiController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'lead_code' => 'required|unique:leads,lead_code',
             'name' => 'required|string',
             'mobile' => 'nullable|string',
             'email' => 'nullable|email',
         ]);
 
-        $lead = Lead::create($data);
+		$lead = DB::transaction(function () use ($data) {
+		    $lead = Lead::create($data);
+
+		    $lead->update([
+        		'lead_code' => 'LEAD-' . str_pad($lead->id, 5, '0', STR_PAD_LEFT),
+		    ]);
+
+		    return $lead;
+		});
 
         return response()->json([
             'status' => 'success',
@@ -90,4 +98,13 @@ class LeadApiController extends Controller
             'message' => 'Lead deleted successfully',
         ]);
     }
+
+	public function mandatoryFields() {
+		return response()->json([
+            'status' => 'success',
+            'message' => 'Lead deleted successfully',
+			'data'	=>	[]
+        ]);
+	}
+
 }

@@ -121,6 +121,9 @@ return [
                        'next_followup_date',
     ],
 
+	'lead.lead-categories' => [
+		'default' => 'Default',
+	],
 
 
 
@@ -284,12 +287,6 @@ return [
                         "no_followups"			=>	"No Followup Done",
                         "upcoming_followups"	=>	"Upcoming Followups",
                         "missed_followups"		=>	"Missed Followups"
-	],
-	"lead-progress-level" => [
-		                'UNDER DISCUSSION'	=>	'UNDER DISCUSSION',
-                        'PROPOSAL SENT'		=>	'PROPOSAL SENT',
-                        'FINAL DISCUSSION'	=>	'FINAL DISCUSSION',
-                        'DATA ERROR'		=>	'DATA ERROR'
 	],
 	"advancedInfo-connectors" => ["canbe_assigned"	=>	true]
 

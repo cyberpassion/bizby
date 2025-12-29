@@ -68,7 +68,7 @@ class TermPaymentModeSeeder extends Seeder
                     'client_id'  => 1,
                     'status'     => 1,
                     'name'       => $mode,
-                    'module'     => 'payment',
+                    'module'     => 'shared',
                     'sort_order' => $index + 1,
                     'created_at' => now(),
                     'updated_at' => now(),

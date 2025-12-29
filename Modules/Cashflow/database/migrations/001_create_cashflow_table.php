@@ -8,61 +8,121 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cashflows_old', function (Blueprint $table) {
+        Schema::create('cashflows', function (Blueprint $table) {
 
-            // SaaS standard fields
+            // =========================
+            // Common SaaS fields
+            // =========================
+            /*
+                id
+                client_id
+                created_by
+                updated_by
+                deleted_by
+                timestamps
+                soft deletes
+            */
             $table->commonSaasFields();
 
-            // Module Specific Fields
-            $table->bigInteger('cash_id');
-            $table->bigInteger('parent_id');
+            // =========================
+            // Direction of money
+            // =========================
+            $table->string('direction');
+            /*
+                in  → income / incoming
+                out → expense / outgoing
+            */
 
-            $table->string('cash_flow', 64);
-            $table->string('cash_context', 255);
-            $table->unsignedBigInteger('cash_context_id');
+            // =========================
+            // Amount
+            // =========================
+            $table->decimal('amount', 12, 2);
 
-            $table->string('pattern_name', 255);
-            $table->string('cash_type', 64);
-            $table->string('session', 64);
+            // =========================
+            // Date of transaction
+            // =========================
+            $table->date('transaction_date');
 
-            $table->string('payee_type', 255);
-            $table->string('payee_id', 64);
+            // =========================
+            // Classification (what is this money for)
+            // =========================
+            $table->string('category')->nullable();
+            /*
+                fee
+                salary
+                rent
+                donation
+                purchase
+            */
 
-            $table->string('payable', 64);
-            $table->string('paid', 64);
-            $table->string('balance', 64);
-            $table->string('concession', 64);
+            $table->string('sub_category')->nullable();
+            /*
+                tuition_fee
+                electricity
+                internet
+            */
 
-            $table->string('cash_code', 255);
+            // =========================
+            // Payment mode
+            // =========================
+            $table->string('payment_mode')->nullable();
+            /*
+                cash
+                bank
+                upi
+                card
+                cheque
+            */
 
-            $table->text('cash_type_remark');
-            $table->string('fee_remark', 255);
+            // =========================
+            // Reference / receipt
+            // =========================
+            $table->string('reference_no')->nullable();
 
-            $table->string('payment_order_id', 255);
-            $table->string('payment_transaction_id', 255);
-            $table->string('payment_confirmation', 255);
+            // =========================
+            // Party involved
+            // =========================
+            $table->nullableMorphs('party');
+            /*
+                Student
+                User
+                Vendor
+                Employee
+            */
 
-            $table->text('additional_info');
-            $table->string('payment_mode', 255);
+            // =========================
+            // Linked entity (optional)
+            // =========================
+            $table->nullableMorphs('related_to');
+            /*
+                Invoice
+                Fee
+                Salary
+                Booking
+            */
 
-            $table->bigInteger('user_id')->nullable();
+            // =========================
+            // Notes
+            // =========================
+            $table->text('description')->nullable();
 
-            $table->string('entry_by', 255)->nullable();
-            $table->string('entry_by_type', 255)->nullable();
-            $table->bigInteger('entry_by_id')->nullable();
+            // =========================
+            // Extra data
+            // =========================
+            $table->json('meta')->nullable();
 
-            $table->tinyInteger('is_captured')->nullable();
-            $table->tinyInteger('is_refunded')->nullable();
-
-            $table->string('verified_by', 64)->nullable();
-
-            $table->bigInteger('thread_parent')->nullable();
+            // =========================
+            // Indexes
+            // =========================
+            $table->index('direction');
+            $table->index('transaction_date');
+            $table->index(['category', 'sub_category']);
+            $table->index(['party_id', 'party_type']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('cashflows_old');
+        Schema::dropIfExists('cashflows');
     }
 };
-

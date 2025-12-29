@@ -10,51 +10,16 @@ class Patient extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
-
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'patient_date' => 'date', // Laravel will cast it to Carbon
+    protected $fillable = [
+        'name',
+        'phone',
+        'age',
+        'gender',
+        'address',
     ];
 
-    /**
-     * Default attribute values
-     */
+    protected $casts = [];
     protected $attributes = [];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
-    {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): PatientFactory
-    // {
-    //     return PatientFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
+    protected $appends = [];
 
 }

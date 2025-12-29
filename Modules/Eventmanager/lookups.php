@@ -86,8 +86,10 @@ return [
                        'status',
     ],
 
+	'eventmanager.event-types' => [
+		'default' => 'Default',
+	],
 
-    
     "communicationTemplate-eventmanager" => [
                         "eventmanager_entry_new_sms"		=>	"New Eventmanager Entry SMS",
                         "eventmanager_entry_new_whatsapp"	=>	"New Eventmanager Entry Whatsapp",

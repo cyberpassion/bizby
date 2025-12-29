@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Cashflow\Http\Controllers\CashflowController;
+use Modules\Cashflow\Http\Controllers\CashflowApiController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('cashflows', CashflowController::class)->names('cashflow');
@@ -10,5 +10,9 @@ use Modules\Cashflow\Http\Controllers\CashflowController;
 
 // Temporarily disable auth middleware
 Route::prefix('v1')->group(function () {
-    Route::apiResource('cashflows', CashflowApiController::class)->names('cashflows');
+
+    Route::apiResource(
+        'cashflows',
+        CashflowApiController::class
+    );
 });

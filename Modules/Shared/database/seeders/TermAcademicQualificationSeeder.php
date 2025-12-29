@@ -86,13 +86,13 @@ class TermAcademicQualificationSeeder extends Seeder
             DB::table('terms')->updateOrInsert(
                 [
                     'slug'  => Str::slug($qualification),
-                    'group' => 'qualification',
+                    'group' => 'qualifications',
                 ],
                 [
                     'client_id'  => 1,
                     'status'     => 1,
                     'name'       => $qualification,
-                    'module'     => 'education',
+                    'module'     => 'shared',
                     'sort_order' => $index + 1,
                     'created_at' => now(),
                     'updated_at' => now(),

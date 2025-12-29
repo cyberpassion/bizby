@@ -4,25 +4,25 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-            [
-                'title' => 'Plugin',
-                'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
-            ],
-        ],
-    ],
-],
+	'sidebar-menu' => [
+    	[
+	        'title' => ucfirst($pg),
+    	    'href'  => "/{$pg}",
+        	'items' => [
+            	['title' => 'Home',      'href' => "/module/{$pg}/home"],
+	            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
+    	        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+        	    ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            	['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+            	[
+                	'title' => 'Plugin',
+	                'items' => [
+    	                ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
+        	        ]
+            	],
+        	],
+    	],
+	],
  
     'survey.crons' => ['survey-notification' => 'Survey Notification'],
     'survey.list-filters' => [
@@ -90,7 +90,9 @@ return [
                          'option_4',
                          'option_4_responses',
     ],
-
+	'survey.survey-categories' => [
+		'default' => 'Default',
+	],
 
 
 

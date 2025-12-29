@@ -13,7 +13,7 @@ return new class extends Migration
             $table->commonSaasFields();
 
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('group');
             $table->string('module')->nullable();
 

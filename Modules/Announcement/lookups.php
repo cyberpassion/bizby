@@ -57,39 +57,38 @@ return [
         "report" => [["recipient" => '{$login_type}-{$byline}']]
     ],
     'announcement.list-columns' => [
-    'id',
-    'category',
-    'recipient',
-    'session',
-    'end_date',
-    'added_by',
+	    'id',
+    	'category',
+	    'recipient',
+    	'session',
+	    'end_date',
+    	'added_by',
     ],
-
     'announcement.list-filters' => [
-    'category',
-    'recipient',
-    'session',
-    'month',
-    'status',
-    'end_date',
+	    'category',
+    	'recipient',
+	    'session',
+    	'month',
+    	'status',
+    	'end_date',
     ],
-
     'announcement.report-columns' => [
-    'id',
-    'category',
-    'recipient',
-    'announcement',
-    'session',
-    'month',
-    'end_date',
-    'added_by_type',
-    'added_by',
-    'entry_source',
-    'status',
-    'created_at',
+	    'id',
+   		'category',
+	    'recipient',
+    	'announcement',
+	    'session',
+    	'month',
+	    'end_date',
+    	'added_by_type',
+	    'added_by',
+    	'entry_source',
+	    'status',
+    	'created_at',
     ],
-
-    
+    'announcement.announcement-categories' => [
+		'default'	=>	'Default'
+	],
 
     "communicationTemplate-announcement" => [
         "announcement_entry_new_sms"       => "New Announcement Entry SMS",

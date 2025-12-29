@@ -70,72 +70,6 @@ return [
     "login-type" => array_keys(\v3\C\Module::get_all_allowed_logins()),
 
     // ===================================================================
-    // Business Types
-    // ===================================================================
-    "business-type" => [
-        "individual"               => "Individual",
-        "school"                   => "School",
-        "college"                  => "College",
-        "university"               => "University",
-        "petrol_pump"              => "Petrol Pump",
-        "hospital"                 => "Hospital",
-        "clinic"                   => "Clinic",
-        "shop_owner"               => "Shop Owner",
-        "retail_store"             => "Retail Store",
-        "restaurant"               => "Restaurant",
-        "cafe"                     => "Cafe",
-        "supermarket"              => "Supermarket",
-        "bank"                     => "Bank",
-        "financial_institution"    => "Financial Institution",
-        "insurance_company"        => "Insurance Company",
-        "real_estate_agency"       => "Real Estate Agency",
-        "construction_company"     => "Construction Company",
-        "it_services"              => "IT Services",
-        "software_development"     => "Software Development",
-        "consulting_firm"          => "Consulting Firm",
-        "legal_services"           => "Legal Services",
-        "accounting_firm"          => "Accounting Firm",
-        "marketing_agency"         => "Marketing Agency",
-        "advertising_agency"       => "Advertising Agency",
-        "travel_agency"            => "Travel Agency",
-        "hotel"                    => "Hotel",
-        "motel"                    => "Motel",
-        "resort"                   => "Resort",
-        "tour_operator"            => "Tour Operator",
-        "car_rental"               => "Car Rental",
-        "manufacturing"            => "Manufacturing",
-        "warehouse"                => "Warehouse",
-        "logistics"                => "Logistics",
-        "transportation"           => "Transportation",
-        "pharmaceutical_company"   => "Pharmaceutical Company",
-        "biotechnology"            => "Biotechnology",
-        "agriculture"              => "Agriculture",
-        "farm"                     => "Farm",
-        "food_processing"          => "Food Processing",
-        "textile_industry"         => "Textile Industry",
-        "apparel_industry"         => "Apparel Industry",
-        "automotive_industry"      => "Automotive Industry",
-        "electronics"              => "Electronics",
-        "telecommunications"       => "Telecommunications",
-        "media_entertainment"      => "Media and Entertainment",
-        "publishing"               => "Publishing",
-        "education_services"       => "Education Services",
-        "health_wellness"          => "Health and Wellness",
-        "fitness_center"           => "Fitness Center",
-        "beauty_salon"             => "Beauty Salon",
-        "barber_shop"              => "Barber Shop",
-        "dry_cleaning"             => "Dry Cleaning",
-        "laundry_services"         => "Laundry Services",
-        "furniture_store"          => "Furniture Store",
-        "home_improvement"         => "Home Improvement",
-        "garden_center"            => "Garden Center",
-        "pet_store"                => "Pet Store",
-        "veterinary_clinic"        => "Veterinary Clinic",
-        "non_profit_organization"  => "Non-Profit Organization",
-        "government_agency"        => "Government Agency"
-    ],
-
-    // ===================================================================
     // Option Names (excluding is_* flags)
     // ===================================================================
     "option-name" => (function () {
@@ -181,7 +115,7 @@ return [
     // ===================================================================
     // Indian States (uppercase values)
     // ===================================================================
-    "indian-state" => array_map('strtoupper', [
+    "indian-states" => array_map('strtoupper', [
         "AP" => "Andhra Pradesh",
         "AR" => "Arunachal Pradesh",
         "AS" => "Assam",

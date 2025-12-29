@@ -4,45 +4,48 @@ namespace Modules\Cashflow\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cashflow extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $table = 'cashflows';
 
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'cashflow_date' => 'date', // Laravel will cast it to Carbon
+    protected $fillable = [
+        'direction',          // in | out
+        'amount',
+        'currency',
+        'transaction_date',
+        'category',
+        'sub_category',
+        'payment_mode',
+        'reference_no',
+        'party_id',
+        'party_type',
+        'related_to_id',
+        'related_to_type',
+        'description',
+        'meta',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
+    protected $casts = [
+        'transaction_date' => 'date',
+        'amount'           => 'decimal:2',
+        'meta'             => 'array',
+    ];
 
-    // Factory (if you use factories)
-    // protected static function newFactory(): CashflowFactory
-    // {
-    //     return CashflowFactory::new();
-    // }
+    /* =========================
+     | Relationships
+     |=========================*/
 
-	protected function dynamicFillable()
+    public function party()
     {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->morphTo();
     }
 
-    public function getFillable()
+    public function relatedTo()
     {
-        return $this->dynamicFillable();
+        return $this->morphTo();
     }
-
 }

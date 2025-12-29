@@ -14,7 +14,8 @@ return new class extends Migration
     		$table->commonSaasFields();
 
 		    // Lead basic properties
-		    $table->string('lead_code')->unique();
+		    $table->string('lead_code')->nullable()->unique();
+
     		$table->string('name');
 		    $table->string('contact_person')->nullable();
     		$table->string('mobile', 20)->nullable();

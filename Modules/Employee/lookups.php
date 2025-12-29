@@ -37,7 +37,7 @@ return [
     	],
 	],
 
-	'employee-status' => [
+	'employee.statuses' => [
 		'1'		=>	'Active',
         '11'	=>	'Draft',
         '2'		=>	'Deleted',

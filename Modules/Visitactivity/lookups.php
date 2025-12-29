@@ -4,26 +4,26 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-            [
-                'title' => 'Plugin',
-                'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
-            ],
-        ],
-    ],
-],
-'visitactivity.list-filters' => [
+	'sidebar-menu' => [
+    	[
+	        'title' => ucfirst($pg),
+    	    'href'  => "/{$pg}",
+        	'items' => [
+            	['title' => 'Home',      'href' => "/module/{$pg}/home"],
+	            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
+    	        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
+        	    ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+            	['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+	            [
+    	            'title' => 'Plugin',
+        	        'items' => [
+            	        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
+                	]
+            	],
+	        ],
+    	],
+	],
+	'visitactivity.list-filters' => [
                         "admin"	=>	[
                             'visitactivity_visitby_filter' 	=> "Visit By/visit_by_id/employee_id-json",
                             'visitactivity_date_filter' 	=> "Date/visit_date/visitactivity_date-json",
@@ -85,7 +85,19 @@ return [
                        'total_expense_amount',
 	],
 
-
+	'visitactivity.visit-statuses' => [
+                        '0'		=>	'Select',
+                        '1'		=>	'Visit Done',
+                        '2'		=>	'Cancelled',
+                        '11'	=>	'Postponed by Client',
+                        '12'	=>	'Postponed by Office'
+    ],
+    'visitactivity.customer-statuses' => [
+                        "new-customer"			=>	"New Customer",
+                        "old-customer"			=>	"Old Customer",
+                        "dissatisfied-customer"	=>	"Dissatisfied Customer",
+                        "biased-customer"		=>	"Biased Customer"
+    ],
 
 
 
@@ -152,19 +164,6 @@ return [
                         "groups"	=>	[
                             'current_date'	=>	['contact_date']
                         ]
-    ],
-    'visitactivity-visit-status' => [
-                        '0'		=>	'Select',
-                        '1'		=>	'Visit Done',
-                        '2'		=>	'Cancelled',
-                        '11'	=>	'Postponed by Client',
-                        '12'	=>	'Postponed by Office'
-    ],
-    'visitactivity-customer-type' => [
-                        "new-customer"			=>	"New Customer",
-                        "old-customer"			=>	"Old Customer",
-                        "dissatisfied-customer"	=>	"Dissatisfied Customer",
-                        "biased-customer"		=>	"Biased Customer"
     ],
     'sort-visitactivity-results-by-list' => [
                         'datetime'		=>	"Date & Time",
