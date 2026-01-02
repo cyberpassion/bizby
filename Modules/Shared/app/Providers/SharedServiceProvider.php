@@ -52,6 +52,18 @@ class SharedServiceProvider extends ServiceProvider
         });
 		$this->app->singleton(PayableResolver::class);
 
+		// Loading Plesk API to create/delete databases for tenants
+		$this->mergeConfigFrom(
+		    module_path('Shared', 'Config/plesk.php'),
+    		'plesk'
+		);
+
+		// Loading Email templates
+		$this->loadViewsFrom(
+			module_path('Shared', 'resources/views'),
+        	'shared'
+    	);
+
 		// Morph map registrations
 		Relation::morphMap([
             'employee' => \Modules\Employee\Models\Employee::class

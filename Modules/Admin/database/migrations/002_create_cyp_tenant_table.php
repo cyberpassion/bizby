@@ -12,26 +12,38 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tenants', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');                 // Tenant / Client Name
-            //$table->string('code')->unique();       // Short code like XYZUNI
-            $table->string('domain')->nullable();   // website or subdomain
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            
-            // Billing / SaaS Metadata
-            $table->string('plan')->nullable();     // basic/premium/etc.
-            $table->date('valid_till')->nullable(); // subscription validity
+		    $table->id();
 
-            // Status
-            $table->boolean('is_active')->default(true);
+		    // Basic Info
+		    $table->string('name');
+		    $table->string('domain')->nullable();
+		    $table->string('email')->nullable();
+    		$table->string('phone')->nullable();
 
-            // JSON settings (optional)
-            $table->json('settings')->nullable();
+		    // SaaS / Billing
+		    $table->string('plan')->nullable();
+    		$table->date('valid_till')->nullable();
 
-            $table->timestamps();
-            $table->softDeletes();
-        });
+		    // Tenant DB (future-proof)
+		    $table->string('db_name')->nullable()->unique();
+		    $table->string('db_host')->nullable();
+		    $table->string('db_username')->nullable();
+		    $table->text('db_password')->nullable(); // encrypt later
+
+		    // API Key (HASHED)
+		    $table->string('api_key_hash', 64)->unique()->nullable();
+    		$table->timestamp('api_key_last_used_at')->nullable();
+
+		    // Status
+		    $table->boolean('is_active')->default(true);
+
+		    // Optional settings
+		    $table->json('settings')->nullable();
+
+		    $table->timestamps();
+    		$table->softDeletes();
+		});
+
     }
 
     /**

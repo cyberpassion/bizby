@@ -14,6 +14,8 @@ use Modules\Shared\Http\Controllers\SearchApiController;
 
 use Modules\Shared\Http\Controllers\RazorpayWebhookController;
 
+use Modules\Shared\Http\Controllers\PleskDatabaseApiController;
+
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('shareds', SharedController::class)->names('shared');
 });*/
@@ -50,4 +52,9 @@ Route::prefix('v1')->group(function () {
 	Route::get('/barricade/{key}', [BarricadeApiController::class, 'get']);
 
 	Route::get('/search/{module}', [SearchApiController::class, 'search']);
+
+	// Temporoary
+	Route::post('/infra/databases', [PleskDatabaseApiController::class, 'store']);
+    Route::delete('/infra/databases/{name}', [PleskDatabaseApiController::class, 'destroy']);
+
 });
