@@ -12,7 +12,7 @@ class TenantDatabaseService
      |-------------------------------------------------*/
     public function create(string $databaseName): void
     {
-        match (config('tenancy.db_driver')) {
+        match (config('tenant.db_driver')) {
             'sql'   => $this->createViaSql($databaseName),
             'plesk' => $this->createViaPlesk($databaseName),
             default => throw new \Exception('Invalid TENANT_DB_DRIVER'),
@@ -34,7 +34,7 @@ class TenantDatabaseService
      |-------------------------------------------------*/
     public function delete(string $databaseName): bool
     {
-        return match (config('tenancy.db_driver')) {
+        return match (config('tenant.db_driver')) {
             'sql'   => $this->deleteViaSql($databaseName),
             'plesk' => $this->deleteViaPlesk($databaseName),
             default => throw new \Exception('Invalid TENANT_DB_DRIVER'),
