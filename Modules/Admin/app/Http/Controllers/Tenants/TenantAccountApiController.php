@@ -9,6 +9,7 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 use Illuminate\Support\Facades\DB;
 
 use Stancl\Tenancy\Database\Models\Tenant as TenancyTenant;
+use Modules\Shared\Services\TenantDatabaseService;
 
 class TenantAccountApiController extends SharedApiController
 {
@@ -29,7 +30,7 @@ class TenantAccountApiController extends SharedApiController
     	];
 	}
 
-	public function storeWithTenancy(Request $request)
+	public function storeWithTenancy(Request $request, TenantDatabaseService $dbService)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -50,8 +51,8 @@ class TenantAccountApiController extends SharedApiController
         // 2️⃣ Decide tenant database name
         $databaseName = 'tenant_' . $tenantAccount->id . '_db';
 
-        // ⚠️ This requires CREATE DATABASE privilege
-        DB::statement("CREATE DATABASE IF NOT EXISTS `$databaseName`");
+        // 🔑 Create DB (SQL locally, Plesk on server)
+	    $dbService->create($databaseName);
 
         // 3️⃣ Create TENANCY tenant (infra)
         $tenancyTenant = TenancyTenant::create([

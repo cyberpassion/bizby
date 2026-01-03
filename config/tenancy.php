@@ -11,6 +11,8 @@ return [
 
     'domain_model' => Domain::class,
 
+	'db_driver' => env('TENANT_DB_DRIVER', 'sql'),
+
     /**
      * The list of domains hosting your central app.
      *
