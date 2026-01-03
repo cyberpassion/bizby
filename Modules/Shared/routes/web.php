@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Import ALL Mailables at the top
@@ -166,4 +168,16 @@ if (app()->isLocal()) {
     Route::get('/_preview/email/inactivity', fn () =>
         new InactivityNudgeMail('Ravi Sharma', 'https://bizby.app/login')
     );
+
+	// Test sending of real emails
+	Route::get('/_test/email/send-login-otp', function () {
+	    Mail::to('ravi@cyberpassion.com')
+    	    ->send(new LoginOtpMail(
+        	    'Ravi Sharma',
+            	'482913'
+	        ));
+
+	    return '✅ Login OTP test email sent';
+	});
+
 }

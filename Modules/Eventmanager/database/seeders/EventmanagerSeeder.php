@@ -22,7 +22,7 @@ class EventmanagerSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark'              => 'Initial event seed',
                 'system_remark'       => 'Seeder generated event',
-                'meta_info'           => json_encode(['seed' => true]),
+                'meta'           => json_encode(['seed' => true]),
 
                 // ===== event fields =====
                 'event_start_date'    => '2025-01-10',
@@ -45,7 +45,7 @@ class EventmanagerSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark'              => 'Initial event seed',
                 'system_remark'       => 'Seeder generated event',
-                'meta_info'           => json_encode(['seed' => true]),
+                'meta'           => json_encode(['seed' => true]),
 
                 'event_start_date'    => '2025-02-05',
                 'event_end_date'      => null,

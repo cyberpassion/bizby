@@ -86,7 +86,11 @@ class OnlinePaymentApiController extends SharedApiController
     protected function determineAmount($payable): float
     {
 
-        // Registration
+		// Tenant
+        if ($payable instanceof \Modules\Admin\Models\Tenant) {
+            return 100;
+        }
+		// Registration
         if ($payable instanceof \Modules\Registration\Models\Registration) {
             return $payable->registration_fee;
         }
@@ -196,5 +200,25 @@ class OnlinePaymentApiController extends SharedApiController
         	'message' => 'Payment received. Confirmation in progress.',
     	]);
 	}
+
+	public function resolve(Request $request, PaymentResolveService $service)
+    {
+        $data = $request->validate([
+            'entity'   => 'required|string',
+            'entity_id'=> 'required|integer',
+            'purpose'  => 'required|string',
+        ]);
+
+        $result = $service->resolve(
+            entity: $data['entity'],
+            entityId: $data['entity_id'],
+            purpose: $data['purpose']
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $result,
+        ]);
+    }
 
 }

@@ -25,7 +25,7 @@ class ConsultationSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark' => 'First consultation entry',
                 'system_remark' => null,
-                'meta_info' => json_encode(['ip' => '127.0.0.1']),
+                'meta' => json_encode(['ip' => '127.0.0.1']),
 
                 'consultation_group_id' => 10,
                 'consultation_date' => '2025-01-15',

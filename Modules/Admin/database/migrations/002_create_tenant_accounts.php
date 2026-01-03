@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('tenant_accounts', function (Blueprint $table) {
 		    $table->id();
 
 		    // Basic Info
-		    $table->string('name');
+		    $table->string('name')->nullable();
 		    $table->string('domain')->nullable();
 		    $table->string('email')->nullable();
     		$table->string('phone')->nullable();
@@ -24,18 +24,13 @@ return new class extends Migration
 		    $table->string('plan')->nullable();
     		$table->date('valid_till')->nullable();
 
-		    // Tenant DB (future-proof)
-		    $table->string('db_name')->nullable()->unique();
-		    $table->string('db_host')->nullable();
-		    $table->string('db_username')->nullable();
-		    $table->text('db_password')->nullable(); // encrypt later
-
 		    // API Key (HASHED)
 		    $table->string('api_key_hash', 64)->unique()->nullable();
     		$table->timestamp('api_key_last_used_at')->nullable();
 
-		    // Status
-		    $table->boolean('is_active')->default(true);
+		    // Lifecycle Status
+		    $table->string('status')->default('draft')->index();
+    		// draft | payment_pending | trial | active | suspended | cancelled
 
 		    // Optional settings
 		    $table->json('settings')->nullable();
@@ -51,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('tenant_accounts');
     }
 };

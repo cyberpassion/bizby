@@ -20,7 +20,8 @@
         "mpdf/mpdf": "^8.2",
         "nwidart/laravel-modules": "*",
         "razorpay/razorpay": "^2.9",
-        "sentry/sentry-laravel": "^4.19"
+        "sentry/sentry-laravel": "^4.19",
+        "stancl/tenancy": "^3.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -107,11 +107,6 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             // =========================
-            // Extra data
-            // =========================
-            $table->json('meta')->nullable();
-
-            // =========================
             // Indexes
             // =========================
             $table->index('direction');

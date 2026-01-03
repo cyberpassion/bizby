@@ -54,7 +54,7 @@ class SharedServiceProvider extends ServiceProvider
 
 		// Loading Plesk API to create/delete databases for tenants
 		$this->mergeConfigFrom(
-		    module_path('Shared', 'Config/plesk.php'),
+		    module_path('Shared', 'config/plesk.php'),
     		'plesk'
 		);
 

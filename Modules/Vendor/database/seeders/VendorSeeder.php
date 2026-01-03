@@ -20,7 +20,7 @@ class VendorSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark' => 'Default Vendor Added',
                 'system_remark' => 'Seeder entry',
-                'meta_info' => null,
+                'meta' => null,
 
                 'vendor_type' => 'Distributor',
                 'vendor_code' => 'VND-' . rand(1000,9999),

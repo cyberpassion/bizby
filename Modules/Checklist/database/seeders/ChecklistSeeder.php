@@ -22,7 +22,7 @@ class ChecklistSeeder extends Seeder
                 'entry_source_ref_id'  => null,
                 'remark'               => 'Initial checklist seed',
                 'system_remark'        => 'Seeder generated record',
-                'meta_info'            => json_encode(['seed' => true]),
+                'meta'            => json_encode(['seed' => true]),
 
                 // ===== checklist fields =====
                 'checklist_name'       => 'Daily Operations Checklist',
@@ -45,7 +45,7 @@ class ChecklistSeeder extends Seeder
                 'entry_source_ref_id'  => null,
                 'remark'               => 'Initial checklist seed',
                 'system_remark'        => 'Seeder generated record',
-                'meta_info'            => json_encode(['seed' => true]),
+                'meta'            => json_encode(['seed' => true]),
 
                 'checklist_name'       => 'Security Checklist',
                 'checklist_description'=> 'Checklist for daily security checks',

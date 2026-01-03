@@ -71,10 +71,6 @@ return new class extends Migration
             // =========================
             $table->timestamp('read_at')->nullable();
 
-            // =========================
-            // Attachments & extra data
-            // =========================
-            $table->json('meta')->nullable();
             /*
                 attachments
                 links

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Http\Controllers;
+namespace Modules\Admin\Http\Controllers\Admins;
 
 use Modules\Admin\Models\Admin;
 use Modules\Shared\Http\Controllers\SharedApiController;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Admin\Http\Controllers;
+namespace Modules\Admin\Http\Controllers\Tenants;
 
-use Modules\Admin\Models\TenantModule;
+use Modules\Admin\Models\Tenants\TenantModule;
 use Modules\Shared\Http\Controllers\SharedApiController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-class TenantModuleController extends SharedApiController
+class TenantModuleApiController extends SharedApiController
 {
     protected function model()
     {
@@ -80,7 +80,7 @@ class TenantModuleController extends SharedApiController
 	    $activatedModules = [];
 
 	    foreach ($modules as $moduleData) {
-    	    $validator = \Validator::make($moduleData, $this->validationRules());
+    	    $validator = Validator::make($moduleData, $this->validationRules());
 
 	        if ($validator->fails()) {
     	        return response()->json([

@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Admin\Models;
+namespace Modules\Admin\Models\Tenants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Tenant extends Model
+class TenantAccount extends Model
 {
     use HasFactory;
 

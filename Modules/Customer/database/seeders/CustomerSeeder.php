@@ -26,7 +26,7 @@ class CustomerSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark' => 'First customer added',
                 'system_remark' => null,
-                'meta_info' => json_encode(['ip' => '127.0.0.1']),
+                'meta' => json_encode(['ip' => '127.0.0.1']),
 
                 // Custom Fields
                 'business_type' => 'Retail',
@@ -70,7 +70,7 @@ class CustomerSeeder extends Seeder
                 'entry_source_ref_id' => 2,
                 'remark' => 'Mobile entry',
                 'system_remark' => 'Synced from mobile app',
-                'meta_info' => json_encode(['device' => 'Android']),
+                'meta' => json_encode(['device' => 'Android']),
 
                 'business_type' => 'Wholesale',
                 'customer_type' => 'Regular',

@@ -22,7 +22,7 @@ class ContactSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark'              => 'Initial contact seed',
                 'system_remark'       => 'Seeder generated record',
-                'meta_info'           => json_encode(['seed' => true]),
+                'meta'           => json_encode(['seed' => true]),
 
                 // ===== reference fields =====
                 'reference_name'      => 'Patient',
@@ -55,7 +55,7 @@ class ContactSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark'              => 'Initial contact seed',
                 'system_remark'       => 'Seeder generated record',
-                'meta_info'           => json_encode(['seed' => true]),
+                'meta'           => json_encode(['seed' => true]),
 
                 'reference_name'      => 'Visitor',
                 'reference_id'        => 202,

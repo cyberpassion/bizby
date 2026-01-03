@@ -25,7 +25,7 @@ class AttendanceSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark' => 'Attendance entry created manually',
                 'system_remark' => null,
-                'meta_info' => json_encode(['ip' => '127.0.0.1']),
+                'meta' => json_encode(['ip' => '127.0.0.1']),
 
                 // Module-specific fields
                 'absent_date' => '2025-02-01',
@@ -55,7 +55,7 @@ class AttendanceSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark' => 'Auto-marked attendance',
                 'system_remark' => 'Late entry detected by system',
-                'meta_info' => json_encode(['device' => 'mobile']),
+                'meta' => json_encode(['device' => 'mobile']),
 
                 'absent_date' => '2025-02-02',
                 'session' => '2024-2025',

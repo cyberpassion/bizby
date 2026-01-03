@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
                 'entry_source_ref_id'   => null,
                 'remark'                => 'Initial product entry',
                 'system_remark'         => 'Seeder generated record',
-                'meta_info'             => json_encode([
+                'meta'             => json_encode([
                     'ip' => '127.0.0.1',
                     'device' => 'Seeder',
                 ]),
@@ -62,7 +62,7 @@ class ProductSeeder extends Seeder
                 'entry_source_ref_id'   => null,
                 'remark'                => 'Initial product entry 2',
                 'system_remark'         => 'Seeder generated record',
-                'meta_info'             => json_encode([
+                'meta'             => json_encode([
                     'ip' => '127.0.0.1',
                     'device' => 'Seeder',
                 ]),

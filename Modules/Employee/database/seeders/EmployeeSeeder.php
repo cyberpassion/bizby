@@ -26,7 +26,7 @@ class EmployeeSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark' => 'Employee added manually',
                 'system_remark' => null,
-                'meta_info' => json_encode(['ip' => '127.0.0.1']),
+                'meta' => json_encode(['ip' => '127.0.0.1']),
 
 
                 // ========== Module-Specific Fields ==========
@@ -104,7 +104,7 @@ class EmployeeSeeder extends Seeder
                 'entry_source_ref_id' => 2,
                 'remark' => 'Auto-sync employee',
                 'system_remark' => 'Synced from HRMS App',
-                'meta_info' => json_encode(['device' => 'Android']),
+                'meta' => json_encode(['device' => 'Android']),
 
 
                 // ========== Module-Specific Fields ==========

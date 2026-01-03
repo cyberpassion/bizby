@@ -3,7 +3,7 @@
 @section('content')
 <p>Hello {{ $name }},</p>
 
-<p>{{ $message }}</p>
+<p>{{ $content }}</p>
 
 @if($actionUrl)
     <p style="margin:24px 0;">

@@ -1,5 +1,5 @@
 @extends('shared::emails.layout')
 
 @section('content')
-<p>{{ $message }}</p>
+<p>{{ $content }}</p>
 @endsection

@@ -16,7 +16,7 @@ return new class extends Migration
 
 		    // Link to Tenant
 		    $table->unsignedBigInteger('tenant_id');
-    		$table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+    		$table->foreign('tenant_id')->references('id')->on('tenant_accounts')->onDelete('cascade');
 
 		    // Optional: Link to Module (if this installation is module-specific)
 		    $table->unsignedBigInteger('module_id')->nullable(); // FK to tenant_modules

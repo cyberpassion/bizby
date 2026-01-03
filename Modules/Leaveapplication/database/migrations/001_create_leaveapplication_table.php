@@ -98,11 +98,6 @@ return new class extends Migration
             $table->boolean('affects_attendance')->default(true);
 
             // =========================
-            // Extra metadata
-            // =========================
-            $table->json('meta')->nullable();
-
-            // =========================
             // Indexes
             // =========================
             $table->index(['start_date', 'end_date']);

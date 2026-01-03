@@ -74,10 +74,6 @@ return new class extends Migration
             // =========================
             $table->date('evaluation_date')->nullable();
 
-            // =========================
-            // Rules / configuration
-            // =========================
-            $table->json('meta')->nullable();
             /*
                 weightage
                 grading rules

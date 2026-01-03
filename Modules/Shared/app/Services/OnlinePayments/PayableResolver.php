@@ -11,7 +11,8 @@ class PayableResolver
      * List of allowed payable models
      */
     protected array $payables = [
-		\Modules\Registration\Models\Registration::class
+		\Modules\Registration\Models\Registration::class,
+		\Modules\Admin\Models\Tenant::class
         // add more payables here
     ];
 

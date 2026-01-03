@@ -70,7 +70,7 @@ return [
         ],
 		'tenant_users' => [
      	   'driver' => 'eloquent',
-        	'model' => Modules\Admin\Models\TenantUser::class,
+        	'model' => Modules\Admin\Models\Tenants\TenantUser::class,
     	]
         // 'users' => [
         //     'driver' => 'database',

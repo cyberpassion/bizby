@@ -11,7 +11,7 @@ class CriticalReminderMail extends Mailable
 
     public function __construct(
         public string $name,
-        public string $message,
+        public string $content,
         public string $actionUrl,
         public string $actionText
     ) {}
@@ -20,6 +20,9 @@ class CriticalReminderMail extends Mailable
     {
         return $this
             ->subject('Action Required')
-            ->view('shared::emails.notifications.reminder-critical');
+            ->view('shared::emails.notifications.reminder-critical')
+			->with([
+                'content' => $this->content,
+            ]);;
     }
 }

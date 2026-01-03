@@ -106,7 +106,7 @@ class BlueprintMacroServiceProvider extends ServiceProvider
              * - Internal logs
              * -----------------------------------------------------
              */
-            $this->json('meta_info')
+            $this->json('meta')
                 ->nullable()
                 ->comment('Dynamic metadata: IP, device, versioning, logs');
         });

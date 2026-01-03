@@ -23,7 +23,7 @@ class RegistrationSeeder extends Seeder
                 'entry_source_ref_id'   => null,
                 'remark'                => 'Initial registration entry',
                 'system_remark'         => 'Seeder generated record',
-                'meta_info'             => json_encode([
+                'meta'             => json_encode([
                     'ip' => '127.0.0.1',
                     'device' => 'Seeder',
                 ]),
@@ -64,7 +64,7 @@ class RegistrationSeeder extends Seeder
                 'entry_source_ref_id'   => null,
                 'remark'                => 'Second registration entry',
                 'system_remark'         => 'Seeder generated record',
-                'meta_info'             => json_encode([
+                'meta'             => json_encode([
                     'ip' => '127.0.0.1',
                     'device' => 'Seeder',
                 ]),

@@ -11,7 +11,7 @@ class GenericReminderMail extends Mailable
 
     public function __construct(
         public string $name,
-        public string $message,
+        public string $content,
         public ?string $actionUrl = null,
         public ?string $actionText = null
     ) {}
@@ -20,6 +20,9 @@ class GenericReminderMail extends Mailable
     {
         return $this
             ->subject('Notification from Bizby')
-            ->view('shared::emails.notifications.reminder-generic');
+            ->view('shared::emails.notifications.reminder-generic')
+			->with([
+                'content' => $this->content,
+            ]);;
     }
 }

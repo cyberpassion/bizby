@@ -5,7 +5,7 @@
 
 <div style="padding:16px;background:#fee2e2;border-radius:6px;">
     <strong>Action Required</strong><br><br>
-    {{ $message }}
+    {{ $content }}
 </div>
 
 <p style="margin-top:24px;">

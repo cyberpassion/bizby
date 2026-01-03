@@ -91,7 +91,7 @@ class PatientSeeder extends Seeder
                 'entry_source_ref_id' => null,
                 'remark' => 'Sample patient entry created by seeder.',
                 'system_remark' => null,
-                'meta_info' => json_encode(['ip' => '127.0.0.1']),
+                'meta' => json_encode(['ip' => '127.0.0.1']),
 
                 // Timestamps
                 'created_at' => now(),
