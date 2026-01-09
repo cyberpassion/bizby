@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Timetable\Http\Controllers\TimetableController;
+use Modules\Timetable\Http\Controllers\TimetableApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('timetables', TimetableController::class)->names('timetable');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('timetables', TimetableApiController::class)->names('timetables');
-});
+        Route::apiResource(
+            'timetables',
+            TimetableApiController::class
+        )->names('timetables');
+    });

@@ -2,13 +2,15 @@
 
 namespace Modules\Admin\Http\Controllers\Tenants;
 
+use Illuminate\Support\Facades\Artisan;
+
 use Illuminate\Http\Request;
+use Modules\Shared\Response\ApiResponse;
+
 use Modules\Admin\Models\Tenants\TenantAccount;
 use Modules\Shared\Http\Controllers\SharedApiController;
 
-use Illuminate\Support\Facades\DB;
-
-use Stancl\Tenancy\Database\Models\Tenant as TenancyTenant;
+use App\Models\Tenant as TenancyTenant;
 use Modules\Shared\Services\TenantDatabaseService;
 
 class TenantAccountApiController extends SharedApiController
@@ -49,21 +51,18 @@ class TenantAccountApiController extends SharedApiController
         ]);
 
         // 2️⃣ Decide tenant database name
-        $databaseName = 'tenant_' . $tenantAccount->id . '_db';
-
-        // 🔑 Create DB (SQL locally, Plesk on server)
-	    $dbService->create($databaseName);
+		$tenantId = $tenantAccount->id;
+		$databaseName = config('tenancy.database.prefix') . $tenantId . config('tenancy.database.suffix');
 
         // 3️⃣ Create TENANCY tenant (infra)
         $tenancyTenant = TenancyTenant::create([
-            'id' => 'tenant_' . $tenantAccount->id,
-            'data' => [
-                'database' => $databaseName,
-                'db_host' => config('database.connections.mysql.host'),
-                'db_username' => config('database.connections.mysql.username'),
-                'db_password' => config('database.connections.mysql.password'),
-            ],
+            'id' => $tenantId,
+			'tenancy_db_name'	=>	$databaseName,
         ]);
+
+		// 🔑 Create DB (SQL locally, Plesk on server)
+		// this could be later moved post payment rather than while tenant creation
+	    $dbService->create($databaseName);
 
         // 4️⃣ Link tenancy → business tenant
         $tenantAccount->update([
@@ -71,9 +70,9 @@ class TenantAccountApiController extends SharedApiController
         ]);
 
         // 5️⃣ OPTIONAL: run tenant migrations
-        // Artisan::call('tenants:migrate', [
-        //     '--tenants' => [$tenancyTenant->id],
-        // ]);
+        Artisan::call('tenants:migrate', [
+            '--tenants' => [$tenancyTenant->id]
+        ]);
 
         return response()->json([
             'status' => 'success',

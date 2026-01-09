@@ -36,7 +36,7 @@ class TenantModuleApiController extends SharedApiController
         return response()->json([
             'status'  => 'success',
             'message' => 'Modules fetched successfully.',
-            'data'    => $modules
+            'data'    => ['data'=>$modules]
         ]);
     }
 

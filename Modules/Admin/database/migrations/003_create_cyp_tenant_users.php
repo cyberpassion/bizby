@@ -11,35 +11,40 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenant_users', function (Blueprint $table) {
-            $table->id();
+       Schema::create('tenant_users', function (Blueprint $table) {
+		    $table->id();
 
-            // Relation to main tenant
-            $table->unsignedBigInteger('tenant_id');
-            $table->foreign('tenant_id')->references('id')->on('tenant_accounts')->onDelete('cascade');
+		    // 🔗 Tenant reference (central DB)
+		    $table->unsignedBigInteger('tenant_id');
+		    $table->foreign('tenant_id')
+        		->references('id')
+        		->on('tenant_accounts')
+        		->cascadeOnDelete();
 
-            // User info
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->nullable();
+		    // 🔗 Global user reference
+		    $table->unsignedBigInteger('user_id');
+		    $table->foreign('user_id')
+        		->references('id')
+				->on('users')
+				->cascadeOnDelete();
 
-            // Auth-related fields
-            $table->string('password');
-            $table->rememberToken();
+		    // Role inside tenant
+		    $table->string('role')->default('staff');
+    		// superadmin, principal, hod, accounts, clerk, operator, student
 
-            // Role inside tenant
-            $table->string('role')->default('staff'); 
-            // examples: superadmin, principal, hod, accounts, clerk, operator
+		    // Status
+    		$table->boolean('is_active')->default(true);
 
-            // Status
-            $table->boolean('is_active')->default(true);
+	    	// Optional tenant-specific settings
+   			$table->json('meta')->nullable();
 
-            // Extra settings if needed
-            $table->json('meta')->nullable();
+		    $table->timestamps();
+		    $table->softDeletes();
 
-            $table->timestamps();
-            $table->softDeletes();
-        });
+		    // 🚨 Important constraints
+    		$table->unique(['tenant_id', 'user_id']); // one role per tenant
+		});
+
     }
 
     /**

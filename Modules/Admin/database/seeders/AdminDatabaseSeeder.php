@@ -9,6 +9,7 @@ use Modules\Admin\Database\Seeders\InstallationSeeder;
 use Modules\Admin\Database\Seeders\TenantSeeder;
 use Modules\Admin\Database\Seeders\TenantModulesSeeder;
 use Modules\Admin\Database\Seeders\TenantUserSeeder;
+use Modules\Admin\Database\Seeders\ModuleSeeder;
 
 class AdminDatabaseSeeder extends Seeder
 {
@@ -16,10 +17,11 @@ class AdminDatabaseSeeder extends Seeder
     {
         $this->call([
             // Admin module seeders
-            TenantSeeder::class,
-			InstallationSeeder::class,
-            TenantModulesSeeder::class,
-            TenantUserSeeder::class
+            //TenantSeeder::class,
+			//InstallationSeeder::class,
+            //TenantModulesSeeder::class,
+            //TenantUserSeeder::class,
+			ModuleSeeder::class
         ]);
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use \Illuminate\Http\Middleware\HandleCors;
 
+use App\Http\Middleware\InitializeTenancyByHeader;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -17,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 		$middleware->prepend(HandleCors::class);
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
+		$middleware->alias([
+            'tenant' => InitializeTenancyByHeader::class,
+        ]);
 
         $middleware->web(append: [
             HandleAppearance::class,

@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Listing\Http\Controllers\ListingController;
+use Modules\Listing\Http\Controllers\ListingApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('listings', ListingController::class)->names('listing');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('listings', ListingApiController::class)->names('listings');
-});
+        Route::apiResource(
+            'listings',
+            ListingApiController::class
+        )->names('listings');
+    });

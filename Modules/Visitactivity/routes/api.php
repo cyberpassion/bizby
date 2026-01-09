@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Visitactivity\Http\Controllers\VisitactivityController;
+use Modules\Visitactivity\Http\Controllers\VisitactivityApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('visitactivities', VisitactivityController::class)->names('visitactivity');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('visitactivitys', VisitactivityApiController::class)->names('visitactivity');
-});
+        Route::apiResource(
+            'visitactivities',
+            VisitactivityApiController::class
+        )->names('visitactivities');
+    });

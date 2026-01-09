@@ -5,7 +5,10 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 use Modules\Shared\Http\Controllers\LookupsApiController; // Options Controller
 use Modules\Shared\Http\Controllers\UploadApiController; // Upload Controller
 use Modules\Shared\Http\Controllers\TermApiController;
-use Modules\Shared\Http\Controllers\OnlinePaymentApiController;
+
+use Modules\Shared\Http\Controllers\OnlinePayments\OnlinePaymentApiController;
+use Modules\Shared\Http\Controllers\OnlinePayments\PaymentPayableApiController;
+
 use Modules\Shared\Http\Controllers\OptionApiController;
 use Modules\Shared\Http\Controllers\ActivityLogApiController;
 use Modules\Shared\Http\Controllers\FormApiController;
@@ -14,9 +17,9 @@ use Modules\Shared\Http\Controllers\SearchApiController;
 
 use Modules\Shared\Http\Controllers\RazorpayWebhookController;
 
-use Modules\Shared\Http\Controllers\PleskDatabaseApiController;
+use Modules\Shared\Http\Controllers\DatabaseManagementApiController;
 
-use Modules\Shared\Http\Controllers\Schedules\TenantScheduleApiController;
+use Modules\Shared\Http\Controllers\Schedules\ScheduleApiController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('shareds', SharedController::class)->names('shared');
@@ -43,11 +46,120 @@ Route::prefix('v1')->group(function () {
 	// Activity Logs
 	Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
 
-	// Online payment
-	Route::post('/online-payments/initiate', [OnlinePaymentApiController::class, 'initiate']);
-	Route::put('/online-payments/{id}/complete', [OnlinePaymentApiController::class, 'complete']);
-	Route::post('/online-payments/resolve', [OnlinePaymentApiController::class,'resolve']);
-	Route::apiResource('online-payments', OnlinePaymentApiController::class)->names('onlinePayment');
+	// ------------------------------------------------------------------
+	// Payables (Business Intent Layer)
+	// ------------------------------------------------------------------
+	// Handles creation, preview, and lifecycle of PaymentPayable records.
+	// A PaymentPayable represents a *frozen billing intent* BEFORE payment.
+	// Examples: tenant onboarding, renewal, add-on modules, penalties.
+	//
+	// Notes:
+	// - Does NOT process money
+	// - Does NOT talk to payment gateways
+	// - Driven by domain models implementing the Payable contract
+	// ------------------------------------------------------------------
+
+	Route::post(
+    	'/payment-payables/resolve',
+    	[PaymentPayableApiController::class, 'resolve']
+	);
+	// Resolve a payable entity (tenant, registration, etc.) and return
+	// a lightweight summary (amount, purpose, snapshot).
+	// Used by UI to quickly understand "what is being paid".
+	// Does NOT create any database record.
+
+	Route::post(
+	    '/payment-payables/preview',
+    	[PaymentPayableApiController::class, 'preview']
+	);
+	// Preview a payable BEFORE checkout.
+	// Returns computed billing details such as:
+	// - payable amount
+	// - validity / renewal dates
+	// - module breakdown
+	// - charge type (onboarding, renewal, addon)
+	// Does NOT create any database record.
+
+	Route::post(
+    	'/payment-payables/checkout',
+    	[PaymentPayableApiController::class, 'checkout']
+	);
+	// Create a PaymentPayable record (frozen billing intent).
+	// This locks the amount, purpose, and snapshot so that:
+	// - frontend cannot tamper values
+	// - pricing remains consistent during payment
+	// Called AFTER preview and BEFORE initiating payment gateway flow.
+
+	Route::post(
+    	'/payment-payables/{id}/cancel',
+    	[PaymentPayableApiController::class, 'cancel']
+	);
+	// Cancel a pending PaymentPayable intent.
+	// Used when user abandons checkout or wants to restart payment.
+	// Only affects unpaid, pending payables.
+	// Does NOT refund money (refunds are handled at payment level).
+
+
+	// ------------------------------------------------------------------
+	// Online Payments (Money & Gateway Layer)
+	// ------------------------------------------------------------------
+	// Handles actual payment transactions with external gateways
+	// (Razorpay, Stripe, etc.).
+	//
+	// Responsibilities:
+	// - Create gateway payment/order
+	// - Record gateway references
+	// - Track payment status lifecycle
+	// - Trigger post-payment business finalization
+	//
+	// Notes:
+	// - NEVER calculates amounts
+	// - NEVER decides business logic (renewal, activation, etc.)
+	// - Operates strictly on PaymentPayable records
+	// ------------------------------------------------------------------
+
+	Route::post(
+    	'/online-payments/initiate',
+    	[OnlinePaymentApiController::class, 'initiate']
+	);
+	// Initiate payment for an existing PaymentPayable.
+	// Creates a payment transaction and gateway order.
+	// Called AFTER checkout and BEFORE user completes payment.
+
+	Route::put(
+    	'/online-payments/{id}/complete',
+    	[OnlinePaymentApiController::class, 'complete']
+	);
+	// Receive gateway payment reference after user completes payment.
+	// Saves gateway payment ID and marks transaction as "processing".
+	// Does NOT execute any business logic.
+
+	Route::put(
+    	'/online-payments/{id}/finalize',
+    	[OnlinePaymentApiController::class, 'finalize']
+	);
+	// Finalize payment AFTER successful gateway confirmation.
+	// Executes post-payment business logic such as:
+	// - Activating tenant
+	// - Renewing subscription
+	// - Enabling modules
+	// This operation is idempotent and safe to retry.
+
+	Route::put(
+    	'/online-payments/{id}/status',
+    	[OnlinePaymentApiController::class, 'status']
+	);
+	// Fetch current payment status for frontend polling.
+	// Used to check whether payment is pending, processing, or finalized.
+	// Does NOT mutate any data.
+
+	Route::apiResource(
+    	'online-payments',
+    	OnlinePaymentApiController::class
+	)->names('onlinePayment');
+	// Standard RESTful endpoints for listing and viewing payments.
+	// Used for dashboards, audit logs, and admin tooling.
+	// Should NOT be used to mutate payment lifecycle directly.
 
 	// Payment Webhooks
 	Route::post('webhooks/razorpay', [RazorpayWebhookController::class, 'handle']);
@@ -56,17 +168,23 @@ Route::prefix('v1')->group(function () {
 
 	Route::get('/search/{module}', [SearchApiController::class, 'search']);
 
-	// Tenant Schedules
-	Route::get('/tenant/schedules', [TenantScheduleApiController::class, 'index']);
-    Route::post('/tenant/schedules', [TenantScheduleApiController::class, 'store']);
-    Route::patch('/tenant/schedules/{tenantSchedule}', [TenantScheduleApiController::class, 'update']);
-    Route::patch('/tenant/schedules/{tenantSchedule}/toggle', [TenantScheduleApiController::class, 'toggle']);
-    Route::post('/tenant/schedules/{tenantSchedule}/run', [TenantScheduleApiController::class, 'runNow']);
-	Route::get('/tenant/schedules/{tenantSchedule}', [TenantScheduleApiController::class, 'show']);
-	Route::get('/tenant/schedules/{tenantSchedule}/runs', [TenantScheduleApiController::class, 'runs']);
+	// History
+	Route::get('/schedules/{schedule}/runs', [ScheduleApiController::class, 'runs']);
 
 	// Temporary
-	Route::post('/infra/databases', [PleskDatabaseApiController::class, 'store']);
-    Route::delete('/infra/databases/{name}', [PleskDatabaseApiController::class, 'destroy']);
+	Route::post('/infra/databases', [DatabaseManagementApiController::class, 'store']);
+    Route::delete('/infra/databases/{name}', [DatabaseManagementApiController::class, 'destroy']);
 
+});
+
+// Schedules
+Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+	Route::get('/schedules', [ScheduleApiController::class, 'index']);
+    Route::post('/schedules', [ScheduleApiController::class, 'store']);
+    Route::get('/schedules/{schedule}', [ScheduleApiController::class, 'show']);
+    Route::put('/schedules/{schedule}', [ScheduleApiController::class, 'update']);
+	Route::delete('/schedules/{schedule}', [ScheduleApiController::class, 'destroy']);
+
+    Route::post('/schedules/{schedule}/toggle', [ScheduleApiController::class, 'toggle']);
+    Route::post('/schedules/{schedule}/run', [ScheduleApiController::class, 'runNow']);
 });

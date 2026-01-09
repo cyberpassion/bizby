@@ -7,25 +7,19 @@ use InvalidArgumentException;
 
 class PayableResolver
 {
-    /**
-     * List of allowed payable models
-     */
     protected array $payables = [
-		\Modules\Registration\Models\Registration::class,
-		\Modules\Admin\Models\Tenant::class
-        // add more payables here
+        'tenant'	=>	\Modules\Admin\Models\Tenants\TenantAccount::class
     ];
 
-    /**
-     * Resolve payable model safely
-     */
     public function resolve(string $type, int $id): Model
     {
-        if (! in_array($type, $this->payables, true)) {
+        if (! array_key_exists($type, $this->payables)) {
             throw new InvalidArgumentException('Invalid payable type');
         }
 
-        $model = $type::find($id);
+        $modelClass = $this->payables[$type];
+
+        $model = $modelClass::find($id);
 
         if (! $model) {
             throw new InvalidArgumentException('Payable record not found');

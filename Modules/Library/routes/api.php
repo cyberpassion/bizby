@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Library\Http\Controllers\LibraryController;
+use Modules\Library\Http\Controllers\LibraryApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('libraries', LibraryController::class)->names('library');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('librarys', LibraryApiController::class)->names('librarys');
-});
+        Route::apiResource(
+            'librarys',
+            LibraryApiController::class
+        )->names('librarys');
+    });

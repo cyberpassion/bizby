@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Treatment\Http\Controllers\TreatmentController;
+use Modules\Treatment\Http\Controllers\TreatmentApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('treatments', TreatmentController::class)->names('treatment');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('treatments', TreatmentApiController::class)->names('treatments');
-});
+        Route::apiResource(
+            'treatments',
+            TreatmentApiController::class
+        )->names('treatments');
+    });

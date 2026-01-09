@@ -8,6 +8,10 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
+// Schedule
+use Modules\Shared\Services\Schedules\ScheduleJobRegistry;
+use Modules\Admin\Jobs\Tenants\SendTenantUpcomingRenewals;
+
 class AdminServiceProvider extends ServiceProvider
 {
     use PathNamespace;
@@ -27,6 +31,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+		$this->registerScheduleJobs();
     }
 
     /**
@@ -151,4 +156,12 @@ class AdminServiceProvider extends ServiceProvider
 
         return $paths;
     }
+
+	private function registerScheduleJobs() {
+		ScheduleJobRegistry::register(
+            'tenants:renewals:upcoming',
+            fn () => dispatch(new SendTenantUpcomingRenewals())
+        );
+	}
+
 }

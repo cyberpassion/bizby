@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Eventmanager\Http\Controllers\EventmanagerController;
+use Modules\Eventmanager\Http\Controllers\EventmanagerApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('eventmanagers', EventmanagerController::class)->names('eventmanager');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('eventmanagers', EventmanagerApiController::class)->names('eventmanagers');
-});
+        Route::apiResource(
+            'eventmanagers',
+            EventmanagerApiController::class
+        )->names('eventmanagers');
+    });

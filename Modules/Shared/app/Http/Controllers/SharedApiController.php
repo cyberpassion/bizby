@@ -104,6 +104,14 @@ abstract class SharedApiController extends Controller
      */
     public function store(Request $request)
     {
+
+		/*return response()->json([
+		    'tenant_id'          => tenant('id'),
+		    'tenant_db_config'   => tenant('tenancy_db_name'),          // canonical value
+    		'active_connection'  => DB::getDefaultConnection(),  // mysql / central
+		    'active_db_runtime'  => DB::connection()->getDatabaseName(), // runtime check
+		]);*/
+
         //$validated = $request->validate($this->validationRules());
 		$validated = $request->all();
         $model = $this->model();

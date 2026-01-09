@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Service\Http\Controllers\ServiceController;
+use Modules\Service\Http\Controllers\ServiceApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('services', ServiceController::class)->names('service');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('services', ServiceApiController::class)->names('services');
-});
+        Route::apiResource(
+            'services',
+            ServiceApiController::class
+        )->names('services');
+    });

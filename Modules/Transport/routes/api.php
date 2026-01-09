@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Transport\Http\Controllers\TransportController;
+use Modules\Transport\Http\Controllers\TransportApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('transports', TransportController::class)->names('transport');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('transports', TransportApiController::class)->names('transports');
-});
+        Route::apiResource(
+            'transports',
+            TransportApiController::class
+        )->names('transports');
+    });
+

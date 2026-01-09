@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Survey\Http\Controllers\SurveyController;
+use Modules\Survey\Http\Controllers\SurveyApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('surveys', SurveyController::class)->names('survey');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('surveys', SurveyApiController::class)->names('surveys');
-});
+        Route::apiResource(
+            'surveys',
+            SurveyApiController::class
+        )->names('surveys');
+    });

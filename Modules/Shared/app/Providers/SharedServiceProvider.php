@@ -165,7 +165,9 @@ class SharedServiceProvider extends ServiceProvider
      */
     protected function registerCommands(): void
     {
-        // $this->commands([]);
+        $this->commands([
+			\Modules\Shared\Console\SyncScheduleJobs::class
+		]);
     }
 
     /**

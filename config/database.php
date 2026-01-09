@@ -31,6 +31,40 @@ return [
 
     'connections' => [
 
+		/*
+    	|--------------------------------------------------------------------------
+	    | CENRAL DATABASE CONNECTION
+    	|--------------------------------------------------------------------------
+	    */
+		'central' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'strict' => true,
+        ],
+
+		/*
+    	|--------------------------------------------------------------------------
+	    | TENANT TEMPLATE (NOT REAL CONNECTION)
+    	|--------------------------------------------------------------------------
+	    */
+    	'tenant_template' => [
+        	'driver' => 'mysql',          // 🔑 THIS is what fixes the error
+	        'host' => env('DB_HOST'),
+    	    'port' => env('DB_PORT'),
+        	'database' => null,            // MUST be null
+	        'username' => env('DB_USERNAME'),
+    	    'password' => env('DB_PASSWORD'),
+        	'charset' => 'utf8mb4',
+        	'collation' => 'utf8mb4_unicode_ci',
+        	'strict' => true,
+		],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),

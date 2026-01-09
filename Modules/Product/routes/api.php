@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Product\Http\Controllers\ProductApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('products', ProductController::class)->names('product');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('products', ProductApiController::class)->names('products');
-});
+        Route::apiResource(
+            'products',
+            ProductApiController::class
+        )->names('products');
+    });

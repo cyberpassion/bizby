@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Subscription\Http\Controllers\SubscriptionController;
+use Modules\Subscription\Http\Controllers\SubscriptionApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('subscriptions', SubscriptionController::class)->names('subscription');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('subscriptions', SubscriptionApiController::class)->names('subscriptions');
-});
+        Route::apiResource(
+            'subscriptions',
+            SubscriptionApiController::class
+        )->names('subscriptions');
+    });

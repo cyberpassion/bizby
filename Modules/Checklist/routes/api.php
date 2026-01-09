@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Checklist\Http\Controllers\ChecklistController;
+use Modules\Checklist\Http\Controllers\ChecklistApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('checklists', ChecklistController::class)->names('checklist');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('checklists', ChecklistApiController::class)->names('checklists');
-});
+        Route::apiResource(
+            'checklists',
+            ChecklistApiController::class
+        )->names('checklists');
+    });

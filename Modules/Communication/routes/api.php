@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Communication\Http\Controllers\CommunicationController;
+use Modules\Communication\Http\Controllers\CommunicationApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('communications', CommunicationController::class)->names('communication');
-});*/
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
 
-// Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
-    Route::apiResource('communication', CommunicationApiController::class)->names('communications');
-});
+        Route::apiResource(
+            'communication',
+            CommunicationApiController::class
+        )->names('communications');
+    });
