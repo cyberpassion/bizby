@@ -17,6 +17,10 @@ return new class extends Migration
 		    $table->unsignedBigInteger('tenant_id');
 		    $table->foreign('tenant_id')->references('id')->on('tenant_accounts')->onDelete('cascade');
 
+			$table->unsignedBigInteger('module_id')->nullable();
+
+			$table->foreign('module_id')->references('id')->on('modules')->nullOnDelete();
+
 		    $table->string('module_key'); // e.g. "finance", "student", "hostel", "library"
 		    $table->string('module_name'); // readable name if needed
 

@@ -39,4 +39,12 @@ class TenantModule extends Model
         return $this->dynamicFillable();
     }
 
+	public function module()
+    {
+        return $this->belongsTo(
+            \Modules\Admin\Models\Modules\Module::class,
+            'module_id'
+        );
+    }
+
 }

@@ -6,6 +6,8 @@ use InvalidArgumentException;
 use Modules\Admin\Models\Tenants\TenantAccount;
 use Modules\Shared\Models\OnlinePayments\PaymentPayable;
 
+use Modules\Admin\Enums\ChargeType;
+
 /**
  * Class TenantPaymentService
  *
@@ -28,11 +30,11 @@ class TenantPaymentService
     public function calculateAmount(
         TenantAccount $tenant,
         string $chargeType
-    ): float {
+    ): float {echo ChargeType::ONBOARDING;die();
         return match ($chargeType) {
-            'renewal'    => $this->renewalAmount($tenant),
-            'addon'      => $this->addonAmount($tenant),
-            'onboarding' => $this->onboardingAmount($tenant),
+            ChargeType::RENEWAL    => $this->renewalAmount($tenant),
+            ChargeType::ADDON      => $this->addonAmount($tenant),
+            ChargeType::ONBOARDING => $this->onboardingAmount($tenant),
             default      => throw new InvalidArgumentException('Invalid charge type'),
         };
     }
@@ -55,9 +57,9 @@ class TenantPaymentService
             'tenant_id'   => $tenant->id,
             'charge_type' => $chargeType,
             'breakdown'   => match ($chargeType) {
-                'renewal'    => $this->renewalSnapshot($tenant),
-                'addon'      => $this->addonSnapshot($tenant),
-                'onboarding' => $this->onboardingSnapshot($tenant),
+                ChargeType::RENEWAL    => $this->renewalSnapshot($tenant),
+                ChargeType::ADDON      => $this->addonSnapshot($tenant),
+                ChargeType::ONBOARDING => $this->onboardingSnapshot($tenant),
             },
             'total'       => $this->calculateAmount($tenant, $chargeType),
         ];
@@ -83,9 +85,9 @@ class TenantPaymentService
 
         // Apply effects based on charge type
         match ($payment->charge_type) {
-            'renewal'    => $this->finalizeRenewal($tenant),
-            'addon'      => $this->finalizeAddon($tenant),
-            'onboarding' => $this->finalizeOnboarding($tenant),
+            ChargeType::RENEWAL    => $this->finalizeRenewal($tenant),
+            ChargeType::ADDON      => $this->finalizeAddon($tenant),
+            ChargeType::ONBOARDING => $this->finalizeOnboarding($tenant),
         };
     }
 

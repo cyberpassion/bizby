@@ -47,4 +47,13 @@ class Module extends Model
     {
         return $query->where('is_billable', true);
     }
+
+	public function tenantModules()
+    {
+        return $this->hasMany(
+            \Modules\Admin\Models\Tenants\TenantModule::class,
+            'module_id'
+        );
+    }
+
 }

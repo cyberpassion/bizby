@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Schema;
 
 // Online Payments Specific
 use Modules\Shared\Contracts\OnlinePayments\Payable;
+use Modules\Shared\Contracts\OnlinePayments\FinalizePayment;
 use Modules\Shared\Models\OnlinePayments\PaymentPayable;
 
 use Modules\Admin\Services\TenantPaymentService;
 
-class TenantAccount extends Model implements Payable
+use Modules\Admin\Enums\ChargeType;
+
+class TenantAccount extends Model implements Payable, FinalizePayment
 {
     use HasFactory;
 
@@ -123,4 +126,62 @@ class TenantAccount extends Model implements Payable
         // Optional: trigger tenant activation
         // $this->activate();
     }
+
+	/* =====================================================
+     | Payament Finalize
+     |=====================================================*/
+
+    public function finalizePayment(PaymentPayable $payable): void
+    {
+        match ($payable->charge_type) {
+            ChargeType::ONBOARDING	=> $this->activateTenant(),
+			ChargeType::RENEWAL		=> $this->renewTenant($payable),
+	        ChargeType::ADDON		=> $this->activateAddon($payable),
+            default => throw new \InvalidArgumentException('Invalid finalization type'),
+        };
+    }
+
+    protected function activateTenant(): void
+    {
+        $this->update([
+            'status' => 'active',
+        ]);
+    }
+
+	protected function renewTenant(PaymentPayable $payable): void
+	{
+    	$duration = $payable->meta['duration'] ?? '1_year';
+
+	    $extendBy = match ($duration) {
+    	    '1_year'  => now()->addYear(),
+        	'6_month' => now()->addMonths(6),
+       		default   => now()->addYear(),
+	    };
+
+	    $this->update([
+    	    'valid_till' => $this->valid_till && $this->valid_till->isFuture()
+        	    ? $this->valid_till->add($extendBy->diff(now()))
+            	: $extendBy,
+	    ]);
+	}
+
+	protected function activateAddon(PaymentPayable $payable): void
+	{
+    	$addonKey = $payable->meta['addon_key'] ?? null;
+
+	    if (! $addonKey) {
+    	    throw new \InvalidArgumentException('Addon key missing');
+    	}
+
+	    $expiresInMonths = (int) ($payable->meta['expires_in_months'] ?? 12);
+
+	    $this->addons()->updateOrCreate(
+    	    ['addon_key' => $addonKey],
+        	[
+            	'is_active'  => true,
+            	'valid_till' => now()->addMonths($expiresInMonths),
+        	]
+    	);
+	}
+
 }
