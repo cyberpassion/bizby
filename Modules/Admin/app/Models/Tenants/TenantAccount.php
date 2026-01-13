@@ -11,7 +11,7 @@ use Modules\Shared\Contracts\OnlinePayments\Payable;
 use Modules\Shared\Contracts\OnlinePayments\FinalizePayment;
 use Modules\Shared\Models\OnlinePayments\PaymentPayable;
 
-use Modules\Admin\Services\TenantPaymentService;
+use Modules\Admin\Services\Tenants\TenantPaymentService;
 
 use Modules\Admin\Enums\ChargeType;
 
@@ -134,9 +134,9 @@ class TenantAccount extends Model implements Payable, FinalizePayment
     public function finalizePayment(PaymentPayable $payable): void
     {
         match ($payable->charge_type) {
-            ChargeType::ONBOARDING	=> $this->activateTenant(),
-			ChargeType::RENEWAL		=> $this->renewTenant($payable),
-	        ChargeType::ADDON		=> $this->activateAddon($payable),
+            ChargeType::ONBOARDING->value	=> $this->activateTenant(),
+			ChargeType::RENEWAL->value		=> $this->renewTenant($payable),
+	        ChargeType::ADDON->value		=> $this->activateAddon($payable),
             default => throw new \InvalidArgumentException('Invalid finalization type'),
         };
     }

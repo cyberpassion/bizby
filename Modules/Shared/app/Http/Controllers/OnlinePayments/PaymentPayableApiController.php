@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Shared\Models\OnlinePayments\PaymentPayable;
 use Modules\Shared\Services\OnlinePayments\PayableResolver;
-use Modules\Admin\Services\TenantPaymentService;
+use Modules\Admin\Services\Tenants\TenantPaymentService;
 
 class PaymentPayableApiController extends Controller
 {

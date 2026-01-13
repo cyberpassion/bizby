@@ -120,6 +120,20 @@ Route::prefix('v1')->group(function () {
         // Does NOT trigger refunds.
     });
 
+	/*
+    |--------------------------------------------------------------------------
+    | Tenant Provisioning - FOR DEVELOPER ONLY
+    |--------------------------------------------------------------------------
+    | DEVELOPER / LOCAL
+    |--------------------------------------------------------------------------
+    */
+	if (! app()->environment('production')) {
+		Route::post('/tenants/{tenant}/provision-test', [
+    		TenantAccountApiController::class,
+    		'provisionForTesting'
+		]);
+	}
+
     /*
     |--------------------------------------------------------------------------
     | Tenant Installations

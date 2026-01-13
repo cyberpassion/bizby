@@ -45,7 +45,7 @@ class SendTenantUpcomingRenewals implements ShouldQueue
     {
         try {
             Mail::to($subscription->tenant_email)
-                ->send(new \Modules\Shared\Mail\Admin\AdminAlertMail($subscription));
+                ->send(new \Modules\Admin\Mails\Admin\AdminAlertMail($subscription));
 
         } catch (\Throwable $e) {
             Log::error('Failed to send tenant renewal reminder', [

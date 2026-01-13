@@ -5,7 +5,7 @@ namespace Modules\Admin\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Services\AuthTokenService;
-use Modules\Shared\Mail\Auth\LoginOtpMail;
+use Modules\Admin\Mails\Auth\LoginOtpMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Modules\Admin\Models\AuthToken;

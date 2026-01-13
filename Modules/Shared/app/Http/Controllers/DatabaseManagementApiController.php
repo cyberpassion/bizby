@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 
-use Modules\Shared\Services\TenantDatabaseService;
+use Modules\Admin\Services\Tenants\TenantDatabaseService;
 use Modules\Shared\Responses\ApiResponse;
 
 class DatabaseManagementApiController extends Controller

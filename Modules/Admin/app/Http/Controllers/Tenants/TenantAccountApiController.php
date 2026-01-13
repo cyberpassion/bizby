@@ -3,15 +3,12 @@
 namespace Modules\Admin\Http\Controllers\Tenants;
 
 use Illuminate\Support\Facades\Artisan;
-
 use Illuminate\Http\Request;
-use Modules\Shared\Response\ApiResponse;
 
 use Modules\Admin\Models\Tenants\TenantAccount;
 use Modules\Shared\Http\Controllers\SharedApiController;
-
-use App\Models\Tenant as TenancyTenant;
-use Modules\Shared\Services\TenantDatabaseService;
+use Modules\Admin\Services\Tenants\TenantDatabaseService;
+use Modules\Admin\Jobs\Tenants\ProvisionTenantJob;
 
 class TenantAccountApiController extends SharedApiController
 {
@@ -25,23 +22,24 @@ class TenantAccountApiController extends SharedApiController
         return [];
     }
 
-	public function extraStats()
-	{
-    	return [
-       		'premium_plan' => TenantAccount::where('plan', 'premium')->count()
-    	];
-	}
+    public function extraStats()
+    {
+        return [
+            'premium_plan' => TenantAccount::where('plan', 'premium')->count()
+        ];
+    }
 
-	public function storeWithTenancy(Request $request, TenantDatabaseService $dbService)
+	// Create Tenant Account
+    public function storeWithTenancy(Request $request, TenantDatabaseService $dbService)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'domain' => 'nullable|string|max:255',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|string|max:20',
-            'plan' => 'nullable|string|max:50',
+            'name'       => 'required|string|max:255',
+            'domain'     => 'nullable|string|max:255',
+            'email'      => 'nullable|email',
+            'phone'      => 'nullable|string|max:20',
+            'plan'       => 'nullable|string|max:50',
             'valid_till' => 'nullable|date',
-            'settings' => 'nullable|array',
+            'settings'   => 'nullable|array',
         ]);
 
         // 1️⃣ Create BUSINESS tenant (central DB)
@@ -50,35 +48,45 @@ class TenantAccountApiController extends SharedApiController
             'status' => 'draft',
         ]);
 
-        // 2️⃣ Decide tenant database name
-		$tenantId = $tenantAccount->id;
-		$databaseName = config('tenancy.database.prefix') . $tenantId . config('tenancy.database.suffix');
-
-        // 3️⃣ Create TENANCY tenant (infra)
-        $tenancyTenant = TenancyTenant::create([
-            'id' => $tenantId,
-			'tenancy_db_name'	=>	$databaseName,
-        ]);
-
-		// 🔑 Create DB (SQL locally, Plesk on server)
-		// this could be later moved post payment rather than while tenant creation
-	    $dbService->create($databaseName);
-
-        // 4️⃣ Link tenancy → business tenant
-        $tenantAccount->update([
-            'tenancy_id' => $tenancyTenant->id,
-        ]);
-
-        // 5️⃣ OPTIONAL: run tenant migrations
-        Artisan::call('tenants:migrate', [
-            '--tenants' => [$tenancyTenant->id]
-        ]);
-
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Tenant account created successfully',
-            'data' => $tenantAccount,
+            'data'    => $tenantAccount->fresh(),
         ], 201);
     }
+
+	// Provision Tenant - Create database, migrate, create user and all
+    public function paymentCompleted(TenantAccount $tenant)
+	{
+    	$tenant->update(['status' => 'paid']);
+
+	    ProvisionTenantJob::dispatch($tenant->id);
+
+	    return response()->json([
+    	    'status'  => 'paid',
+        	'message' => 'Payment received. Provisioning has started.',
+	    ]);
+	}
+
+	public function provisionForTesting(TenantAccount $tenant)
+	{
+    	if (app()->environment('production')) {
+        	abort(404);
+   		}
+
+	    if (! in_array($tenant->status, ['paid', 'failed', 'draft'])) {
+    	    return response()->json([
+        	    'status'  => 'invalid_state',
+            	'message' => 'Tenant cannot be provisioned in current state',
+	        ], 409);
+    	}
+
+	    ProvisionTenantJob::dispatch($tenant->id);
+
+	    return response()->json([
+    	    'status'  => 'provisioning',
+        	'message' => 'Provisioning started (testing only)',
+	    ]);
+	}
 
 }

@@ -1,0 +1,21 @@
+<?php
+namespace Modules\Shared\Mails\Reports;
+
+use Illuminate\Mail\Mailable;
+
+class ReportSummaryMail extends Mailable
+{
+    public function __construct(
+        public string $name,
+        public string $title,
+        public array $metrics,
+        public ?string $actionUrl = null
+    ) {}
+
+    public function build()
+    {
+        return $this
+            ->subject($this->title)
+            ->view('shared::emails.reports.summary');
+    }
+}

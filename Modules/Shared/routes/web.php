@@ -10,29 +10,18 @@ use Illuminate\Support\Facades\Mail;
 |--------------------------------------------------------------------------
 */
 
-use Modules\Shared\Mail\Auth\LoginOtpMail;
-use Modules\Shared\Mail\Auth\ForgotPasswordMail;
-use Modules\Shared\Mail\Auth\RegistrationConfirmationMail;
-use Modules\Shared\Mail\Auth\RegistrationPendingReminderMail;
-use Modules\Shared\Mail\Auth\EmailVerificationMail;
-use Modules\Shared\Mail\Auth\LoginAlertMail;
-use Modules\Shared\Mail\Auth\AccountLockedMail;
+use Modules\Shared\Mails\Billing\SubscriptionActivatedMail;
+use Modules\Shared\Mails\Billing\SubscriptionExpiringMail;
+use Modules\Shared\Mails\Billing\PaymentFailedMail;
 
-use Modules\Shared\Mail\Billing\SubscriptionActivatedMail;
-use Modules\Shared\Mail\Billing\SubscriptionExpiringMail;
-use Modules\Shared\Mail\Billing\PaymentFailedMail;
+use Modules\Shared\Mails\Notifications\GenericReminderMail;
+use Modules\Shared\Mails\Notifications\ReminderListMail;
+use Modules\Shared\Mails\Notifications\CriticalReminderMail;
 
-use Modules\Shared\Mail\Notifications\GenericReminderMail;
-use Modules\Shared\Mail\Notifications\ReminderListMail;
-use Modules\Shared\Mail\Notifications\CriticalReminderMail;
-
-use Modules\Shared\Mail\Reports\ReportSummaryMail;
-use Modules\Shared\Mail\Reports\ReportTableMail;
-use Modules\Shared\Mail\Reports\ReportReadyMail;
-use Modules\Shared\Mail\Reports\ReportFailedMail;
-
-use Modules\Shared\Mail\Admin\AdminAlertMail;
-use Modules\Shared\Mail\Engagement\InactivityNudgeMail;
+use Modules\Shared\Mails\Reports\ReportSummaryMail;
+use Modules\Shared\Mails\Reports\ReportTableMail;
+use Modules\Shared\Mails\Reports\ReportReadyMail;
+use Modules\Shared\Mails\Reports\ReportFailedMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,35 +30,6 @@ use Modules\Shared\Mail\Engagement\InactivityNudgeMail;
 */
 
 if (app()->isLocal()) {
-
-    // AUTH
-    Route::get('/_preview/email/login-otp', fn () =>
-        new LoginOtpMail('Ravi Sharma', '482913')
-    );
-
-    Route::get('/_preview/email/forgot-password', fn () =>
-        new ForgotPasswordMail('Ravi Sharma', 'https://bizby.app/reset/abc123')
-    );
-
-    Route::get('/_preview/email/registration-confirmation', fn () =>
-        new RegistrationConfirmationMail('Ravi Sharma', 'https://bizby.app/login')
-    );
-
-    Route::get('/_preview/email/registration-pending', fn () =>
-        new RegistrationPendingReminderMail('Ravi Sharma', 'https://bizby.app/register/resume')
-    );
-
-    Route::get('/_preview/email/email-verification', fn () =>
-        new EmailVerificationMail('Ravi Sharma', 'https://bizby.app/verify/email/xyz')
-    );
-
-    Route::get('/_preview/email/login-alert', fn () =>
-        new LoginAlertMail('Ravi Sharma', '103.21.45.67', 'Chrome on macOS')
-    );
-
-    Route::get('/_preview/email/account-locked', fn () =>
-        new AccountLockedMail('Ravi Sharma')
-    );
 
     // BILLING
     Route::get('/_preview/email/subscription-activated', fn () =>
@@ -158,26 +118,5 @@ if (app()->isLocal()) {
             'Database timeout while generating report'
         )
     );
-
-    // ADMIN
-    Route::get('/_preview/email/admin-alert', fn () =>
-        new AdminAlertMail('New tenant created: ABC School (ID: 1023)')
-    );
-
-    // ENGAGEMENT
-    Route::get('/_preview/email/inactivity', fn () =>
-        new InactivityNudgeMail('Ravi Sharma', 'https://bizby.app/login')
-    );
-
-	// Test sending of real emails
-	Route::get('/_test/email/send-login-otp', function () {
-	    Mail::to('ravi@cyberpassion.com')
-    	    ->send(new LoginOtpMail(
-        	    'Ravi Sharma',
-            	'482913'
-	        ));
-
-	    return '✅ Login OTP test email sent';
-	});
 
 }
