@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Admin\Services\Tenants;
 
 use Modules\Admin\Models\Tenants\TenantAccount;
@@ -11,21 +12,48 @@ class TenantAdminService
 {
     public function createCentralAdmin(TenantAccount $tenant): void
     {
-        // Force central context
+        // Ensure central DB context
         Tenancy::end();
 
-        DB::connection(config('tenancy.database.central_connection'))
-            ->table('users')
-            ->updateOrInsert(
-                ['email' => $tenant->email],
-                [
-                    'name'       => $tenant->name,
-                    'password'   => Hash::make(Str::random(16)),
-                    //'role'       => 'admin',
-                    //'tenant_id'  => $tenant->id,
-                    'updated_at'=> now(),
-                    'created_at'=> now(),
-                ]
-            );
+        $central = config('tenancy.database.central_connection');
+
+        DB::connection($central)->transaction(function () use ($tenant, $central) {
+
+            // 1️⃣ Create / Update central user
+			//$password = Str::random(16);
+			$password = 'password';
+            $userId = DB::connection($central)
+                ->table('users')
+                ->updateOrInsert(
+                    ['email' => $tenant->email],
+                    [
+                        'name'        => $tenant->name,
+                        'password'    => Hash::make($password),
+                        'updated_at'  => now(),
+                        'created_at'  => now(),
+                    ]
+                );
+
+            // Fetch user id (updateOrInsert doesn't return it)
+            $user = DB::connection($central)
+                ->table('users')
+                ->where('email', $tenant->email)
+                ->first();
+
+            // 2️⃣ Map user to tenant with role
+            DB::connection($central)
+                ->table('tenant_users')
+                ->updateOrInsert(
+                    [
+                        'user_id'   => $user->id,
+                        'tenant_id' => $tenant->id,
+                    ],
+                    [
+                        'role'       => 'admin',
+                        'updated_at' => now(),
+                        'created_at' => now(),
+                    ]
+                );
+        });
     }
 }

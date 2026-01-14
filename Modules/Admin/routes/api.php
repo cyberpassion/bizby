@@ -187,18 +187,9 @@ Route::prefix('v1/auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| User Management (Authenticated)
-|--------------------------------------------------------------------------
-*/
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::post('users', [AuthApiController::class, 'createUser']);
-});
-
-/*
-|--------------------------------------------------------------------------
 | Tenant-Scoped User Provisioning
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth:sanctum', 'tenant'])->prefix('v1/tenants')->group(function () {
-    Route::post('users', [TenantUserApiController::class, 'provisionUser']);
+Route::middleware(['auth:sanctum','identify.tenant.header'])->prefix('v1/tenants')->group(function () {
+    Route::post('{tenantId}/users', [TenantUserApiController::class, 'provisionUser']);
 });

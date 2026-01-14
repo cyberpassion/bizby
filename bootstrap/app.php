@@ -9,6 +9,7 @@ use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use \Illuminate\Http\Middleware\HandleCors;
 
 use App\Http\Middleware\InitializeTenancyByHeader;
+use App\Http\Middleware\IdentifyTenantByHeader;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 		$middleware->alias([
             'tenant' => InitializeTenancyByHeader::class,
+			'identify.tenant.header' => IdentifyTenantByHeader::class,
         ]);
 
         $middleware->web(append: [

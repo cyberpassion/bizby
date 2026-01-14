@@ -29,7 +29,7 @@ return new class extends Migration
 				->cascadeOnDelete();
 
 		    // Role inside tenant
-		    $table->string('role')->default('staff');
+		    $table->string('role')->nullable();
     		// superadmin, principal, hod, accounts, clerk, operator, student
 
 		    // Status

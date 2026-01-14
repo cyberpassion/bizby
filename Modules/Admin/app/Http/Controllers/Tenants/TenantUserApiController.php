@@ -29,39 +29,38 @@ class TenantUserApiController extends SharedChildApiController
         return [];
     }
 
-	public function provisionUser(Request $request)
+	public function provisionUser(Request $request, int $tenantId)
 	{
-
-	    $data = $request->validate([
-    	    'name'     => 'required|string|max:255',
-        	'email'    => 'required|email',
-        	'password' => 'required|string|min:6',
+	    // 1️⃣ Validate request
+    	$data = $request->validate([
+        	'name'     => 'required|string|max:255',
+	        'email'    => 'required|email',
+    	    'password' => 'required|string|min:6',
         	'role'     => 'required|string',
 	    ]);
 
-	    // 1️⃣ Get tenancy tenant (stancl)
-    	$tenancyTenantId = tenant('id'); // e.g. tenant_1
+	    // 2️⃣ Get resolved tenant from middleware (AUTHORITATIVE)
+    	$tenant = app('resolvedTenant');
 
-	    if (! $tenancyTenantId) {
+	    if (! $tenant) {
     	    return response()->json([
         	    'status'  => 'error',
             	'message' => 'Tenant context missing',
 	        ], 400);
     	}
 
-	    // 2️⃣ Resolve BUSINESS tenant
-    	$tenantAccount = TenantAccount::where('tenancy_id', $tenancyTenantId)->first();
-
-	    if (! $tenantAccount) {
-    	    return response()->json([
-        	    'status'  => 'error',
-            	'message' => 'Tenant account not found',
-	        ], 404);
+	    // 3️⃣ SECURITY CHECK: URL tenant must match header tenant
+    	if ((int) $tenantId !== (int) $tenant->id) {
+        	return response()->json([
+            	'status'  => 'error',
+            	'message' => 'Tenant mismatch',
+	        ], 403);
     	}
 
-	    return DB::transaction(function () use ($data, $tenantAccount) {
+	    // 4️⃣ Provision user safely (CENTRAL DB)
+    	return DB::transaction(function () use ($data, $tenant) {
 
-	        // 3️⃣ Create or reuse global user
+	        // Create or reuse global user
     	    $user = User::firstOrCreate(
         	    ['email' => $data['email']],
             	[
@@ -70,28 +69,28 @@ class TenantUserApiController extends SharedChildApiController
 	            ]
     	    );
 
-	        // 4️⃣ Assign user to tenant
+	        // Assign user to tenant
     	    $tenantUser = TenantUser::updateOrCreate(
         	    [
-            	    'tenant_id' => $tenantAccount->id,
+            	    'tenant_id' => $tenant->id,
                 	'user_id'   => $user->id,
 	            ],
     	        [
         	        'role'      => $data['role'],
             	    'is_active' => true,
             	]
-	        );
+        	);
 
 	        return response()->json([
     	        'status'  => 'success',
         	    'message' => 'User provisioned successfully',
             	'data'    => [
                 	'user'        => $user,
-	                'tenant_user' => $tenantUser,
-    	            'tenant'      => $tenantAccount->only(['id', 'name']),
-        	    ],
-        	], 201);
-	    });
+            	    'tenant_user' => $tenantUser,
+                	'tenant'      => $tenant->only(['id', 'name']),
+	            ],
+    	    ], 201);
+    	});
 	}
 
 }
