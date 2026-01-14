@@ -11,6 +11,8 @@ use Modules\Admin\Services\Tenants\TenantDatabaseService;
 
 use App\Models\Tenant as TenancyTenant;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Stancl\Tenancy\Facades\Tenancy;
 
 class TenantProvisioningService
 {
@@ -24,8 +26,6 @@ class TenantProvisioningService
         }
 
         $this->createDatabase($tenant, $dbService);
-        $this->runMigrations($tenant);
-        $this->createAdminUser($tenant);
         $this->seedDefaults($tenant);
     }
 
@@ -49,11 +49,6 @@ class TenantProvisioningService
             'tenancy_db_name' => $databaseName,
         ]);
 
-        // Create physical DB
-        if (! $dbService->create($databaseName)) {
-            throw new \RuntimeException('Tenant database creation failed');
-        }
-
         // Link tenancy → business tenant
         $tenant->update([
             'tenancy_id' => $tenancyTenant->id,
@@ -61,50 +56,15 @@ class TenantProvisioningService
     }
 
     /**
-     * Run tenant migrations
-     */
-    protected function runMigrations(TenantAccount $tenant): void
-    {
-        Artisan::call('tenants:migrate', [
-            '--tenants' => [$tenant->tenancy_id],
-        ]);
-    }
-
-    /**
-     * Create initial admin user inside tenant DB
-     */
-    protected function createAdminUser(TenantAccount $tenant): void
-    {
-        tenancy()->initialize($tenant->tenancy_id);
-
-        User::firstOrCreate(
-            ['email' => $tenant->email],
-            [
-                'name'     => $tenant->name,
-                'password' => Hash::make(Str::random(16)),
-                'role'     => 'admin',
-            ]
-        );
-
-        tenancy()->end();
-    }
-
-    /**
      * Seed default data (roles, settings, etc.)
      */
     protected function seedDefaults(TenantAccount $tenant): void
-    {
-        tenancy()->initialize($tenant->tenancy_id);
+	{	
+    	Artisan::call('tenants:seed', [
+	        '--tenants' => [$tenant->id],
+    	    '--class'   => \Modules\Shared\Database\Seeders\SharedDatabaseSeeder::class,
+        	'--force'   => true,
+	    ]);
+	}
 
-        // Examples:
-        // RoleSeeder::run();
-        // SettingsSeeder::run();
-        // Module defaults later
-		Artisan::call('db:seed', [
-        	'--class' => \Modules\Admin\Database\Seeders\AdminDatabaseSeeder::class,
-        	'--force' => true,
-    	]);
-
-        tenancy()->end();
-    }
 }

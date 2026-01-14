@@ -10,6 +10,10 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 use Modules\Admin\Services\Tenants\TenantDatabaseService;
 use Modules\Admin\Jobs\Tenants\ProvisionTenantJob;
 
+use Modules\Shared\Helpers\PleskHelper;
+
+use Illuminate\Support\Facades\DB;
+
 class TenantAccountApiController extends SharedApiController
 {
     protected function model()
@@ -70,8 +74,12 @@ class TenantAccountApiController extends SharedApiController
 
 	public function provisionForTesting(TenantAccount $tenant)
 	{
+
     	if (app()->environment('production')) {
-        	abort(404);
+        	return response()->json([
+            	'status'  => 'forbidden',
+            	'message' => 'This endpoint is disabled in production',
+	        ], 403);
    		}
 
 	    if (! in_array($tenant->status, ['paid', 'failed', 'draft'])) {
@@ -82,6 +90,7 @@ class TenantAccountApiController extends SharedApiController
     	}
 
 	    ProvisionTenantJob::dispatch($tenant->id);
+		//ProvisionTenantJob::dispatchSync($tenant->id);
 
 	    return response()->json([
     	    'status'  => 'provisioning',

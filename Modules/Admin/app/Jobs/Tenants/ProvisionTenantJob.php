@@ -12,6 +12,8 @@ use Modules\Admin\Models\Tenants\TenantAccount;
 use Modules\Admin\Services\Tenants\TenantProvisioningService;
 use Modules\Admin\Services\Tenants\TenantDatabaseService;
 
+use Stancl\Tenancy\Facades\Tenancy;
+
 class ProvisionTenantJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -24,6 +26,9 @@ class ProvisionTenantJob implements ShouldQueue
         TenantProvisioningService $provisioningService,
         TenantDatabaseService $dbService
     ) {
+
+		Tenancy::end();
+
         $tenant = TenantAccount::findOrFail($this->tenantId);
 
         $tenant->update(['status' => 'provisioning']);
@@ -31,6 +36,9 @@ class ProvisionTenantJob implements ShouldQueue
         $provisioningService->provision($tenant, $dbService);
 
         $tenant->update(['status' => 'active']);
+
+		event(new \Modules\Admin\Events\TenantActivated($tenant->id));
+
     }
 
     public function failed(Throwable $e): void

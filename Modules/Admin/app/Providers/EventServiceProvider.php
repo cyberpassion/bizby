@@ -11,7 +11,11 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+		\Modules\Admin\Events\TenantActivated::class => [
+        	\Modules\Admin\Listeners\CreateCentralTenantAdmin::class,
+    	]
+	];
 
     /**
      * Indicates if events should be discovered.

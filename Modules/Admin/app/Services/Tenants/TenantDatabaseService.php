@@ -29,8 +29,9 @@ class TenantDatabaseService
     protected function createViaPlesk(string $databaseName): bool
     {
         $response = PleskHelper::createBlankDatabase($databaseName);
-		if( isset($response['response']['name']) ) {
-			return true;
+		return true;
+		if( isset($response['status']) ) {
+			return $response['status'];
 		}
 		return false;
     }
