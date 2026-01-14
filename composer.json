@@ -21,7 +21,8 @@
         "nwidart/laravel-modules": "*",
         "razorpay/razorpay": "^2.9",
         "sentry/sentry-laravel": "^4.19",
-        "stancl/tenancy": "^3.9"
+        "stancl/tenancy": "^3.9",
+        "plesk/ext-laravel-integration": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
