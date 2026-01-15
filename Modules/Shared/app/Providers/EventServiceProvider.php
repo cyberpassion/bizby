@@ -4,6 +4,11 @@ namespace Modules\Shared\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
+use Modules\Shared\Notifications\Events\ActivityOccurred;
+use Modules\Shared\Notifications\Listeners\SendActivityEmail;
+use Modules\Shared\Notifications\Listeners\SendActivitySms;
+use Modules\Shared\Notifications\Listeners\SendActivityWhatsapp;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -11,7 +16,13 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+		ActivityOccurred::class => [
+        	SendActivityEmail::class,
+        	SendActivitySms::class,
+        	SendActivityWhatsapp::class,
+    	]
+	];
 
     /**
      * Indicates if events should be discovered.

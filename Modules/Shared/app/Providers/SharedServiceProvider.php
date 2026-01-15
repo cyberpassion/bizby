@@ -38,6 +38,17 @@ class SharedServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
 
+		// Register all scheduled jobs for module
+		//$this->registerScheduleJobs();
+
+		// Load activity-mails from config
+		$path = module_path($this->name, 'config/activity-mails.php');
+
+		if (file_exists($path)) {
+		    $this->mergeConfigFrom($path, 'activity-mails');
+		}
+
+
 		// Lookups
 		$this->loadPhpLookupsFromModules(); // Registers all lookup keys returning static values
 		$this->loadDynamicLookupsFromProviders(); // Register all lookup keys wherein we fetch dynamic values
