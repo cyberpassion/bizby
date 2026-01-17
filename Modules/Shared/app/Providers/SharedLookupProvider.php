@@ -127,4 +127,18 @@ class SharedLookupProvider
         };
     }
 
+	public function getLookups()
+    {
+        return [
+            'shared.modules.flat' => fn() => $this->modules()
+        ];
+    }
+
+	protected function modules()
+    {
+        return collect(LookupRegistry::get('shared.modules'))
+        ->flatMap(fn ($group) => $group)
+        ->toArray();
+    }
+
 }

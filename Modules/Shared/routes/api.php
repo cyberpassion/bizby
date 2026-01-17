@@ -22,6 +22,7 @@ use Modules\Shared\Http\Controllers\DatabaseManagementApiController;
 // Schedules
 use Modules\Shared\Http\Controllers\Schedules\ScheduleJobRegistryApiController;
 use Modules\Shared\Http\Controllers\Schedules\ScheduleApiController;
+use Modules\Shared\Http\Controllers\Schedules\ScheduleRunApiController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('shareds', SharedController::class)->names('shared');
@@ -33,6 +34,7 @@ Route::prefix('v1')->group(function () {
 
 	// Lookups for common static values like gender, list of countries
 	Route::get('/lookups/{key}', [LookupsApiController::class, 'get']);
+
 	Route::get('/form/{module}/{name}', [FormApiController::class, 'show']);
 
 	// Terms for dynamic values like student classes etc
@@ -180,18 +182,27 @@ Route::prefix('v1')->group(function () {
 });
 
 // Schedules
-// middleware(['auth:sanctum'])->
+// ->middleware(['auth:sanctum'])
 Route::prefix('v1')->group(function () {
 
-	// Jobs
-	Route::get('/scheduler/jobs', [ScheduleJobRegistryApiController::class, 'index']);
+    /* ---------------- Job registry ---------------- */
+    Route::get('/scheduler/jobs', [ScheduleJobRegistryApiController::class, 'index']);
+    Route::get('/scheduler/jobs/{key}', [ScheduleJobRegistryApiController::class, 'show']);
 
-	Route::get('/schedules', [ScheduleApiController::class, 'index']);
+    /* ---------------- Schedules CRUD ---------------- */
+    Route::get('/schedules', [ScheduleApiController::class, 'index']);
     Route::post('/schedules', [ScheduleApiController::class, 'store']);
     Route::get('/schedules/{schedule}', [ScheduleApiController::class, 'show']);
     Route::put('/schedules/{schedule}', [ScheduleApiController::class, 'update']);
-	Route::delete('/schedules/{schedule}', [ScheduleApiController::class, 'destroy']);
+    Route::delete('/schedules/{schedule}', [ScheduleApiController::class, 'destroy']);
 
+    /* ---------------- Schedule actions ---------------- */
     Route::post('/schedules/{schedule}/toggle', [ScheduleApiController::class, 'toggle']);
     Route::post('/schedules/{schedule}/run', [ScheduleApiController::class, 'runNow']);
+    Route::post('/schedules/{schedule}/pause', [ScheduleApiController::class, 'pause']);
+    Route::post('/schedules/{schedule}/resume', [ScheduleApiController::class, 'resume']);
+
+    /* ---------------- Schedule runs (logs) ---------------- */
+    Route::get('/schedules/{schedule}/runs', [ScheduleRunApiController::class, 'index']);
+    Route::get('/schedules/{schedule}/runs/{run}', [ScheduleRunApiController::class, 'show']);
 });

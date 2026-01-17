@@ -1,6 +1,90 @@
 <?php
-
 return [
+
+    /* ======================================================
+     | MODULE GROUPS (used for UI, permissions, marketplace)
+     ====================================================== */
+
+    'shared.modules' => [
+
+        /* ---------------- CORE (always enabled) ---------------- */
+        'core' => [
+            //'admin'        => 'Admin',
+            //'shared'       => 'Shared',
+            'signup'       => 'Signup',
+            'subscription' => 'Subscription',
+            'library'      => 'Library',
+        ],
+
+        /* ---------------- PEOPLE ---------------- */
+        'people' => [
+            'student'  => 'Student',
+            'employee' => 'Employee',
+            'customer' => 'Customer',
+            'patient'  => 'Patient',
+            'vendor'   => 'Vendor',
+            'lead'     => 'Lead',
+        ],
+
+        /* ---------------- ACTIVITY ---------------- */
+        'activity' => [
+            'attendance'      => 'Attendance',
+            'survey'          => 'Survey',
+            'checklist'       => 'Checklist',
+            'note'            => 'Notes',
+            'eventmanager'    => 'Events',
+            'meetingmanager'  => 'Meetings',
+            'visitactivity'   => 'Visits',
+            'taskplanner'     => 'Task Planner',
+        ],
+
+        /* ---------------- COMMUNICATION ---------------- */
+        'communication' => [
+            'communication' => 'Communication Hub',
+            'sms'           => 'SMS',
+            'whatsapp'      => 'WhatsApp',
+            'email'         => 'Email',
+            'notification'  => 'Notifications',
+        ],
+
+        /* ---------------- BUSINESS / OPERATIONS ---------------- */
+        'business' => [
+            'booking'     => 'Booking',
+            'billing'     => 'Billing',
+            'cashflow'    => 'Cashflow',
+            'listing'     => 'Listing',
+            'product'     => 'Product',
+            'saleservice' => 'Sales & Service',
+            'service'     => 'Service Management',
+            'transport'   => 'Transport',
+            'inventory'   => 'Inventory',
+        ],
+
+        /* ---------------- EDUCATION ---------------- */
+        'education' => [
+            'registration' => 'Registration',
+            'examresult'   => 'Exam Result',
+            'timetable'    => 'Timetable',
+            'attendance'   => 'Attendance',
+            'library'      => 'Library',
+        ],
+
+        /* ---------------- HEALTHCARE ---------------- */
+        'healthcare' => [
+            'treatment'    => 'Treatment',
+            'consultation' => 'Consultation',
+            'patient'      => 'Patient',
+        ],
+
+        /* ---------------- SYSTEM / PLUGINS ---------------- */
+        'system' => [
+            'scheduler'   => 'Scheduler',
+            'report'      => 'Reports',
+            'download'    => 'Download',
+            'integration' => 'Integrations',
+            'plugin'      => 'Plugins',
+        ],
+    ],
 
 	/* ---------------- Shared Lookups ---------------- */
 

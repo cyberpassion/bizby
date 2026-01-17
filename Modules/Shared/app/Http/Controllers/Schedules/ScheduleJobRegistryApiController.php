@@ -8,19 +8,44 @@ use Modules\Shared\Models\Schedules\ScheduleJobRegistry;
 
 class ScheduleJobRegistryApiController extends Controller
 {
+    /**
+     * List all available schedulable jobs
+     */
     public function index(Request $request)
     {
-        $module = $request->query('module');
+        $module = $request->query('module', 'all');
 
-        $query = ScheduleJobRegistry::where('is_active', true);
+        $query = ScheduleJobRegistry::query()
+            ->where('is_active', true);
 
-        if ($module && $module !== 'all') {
+        // Filter by module (optional)
+        if ($module !== 'all') {
             $query->where('module', $module);
         }
 
+        $jobs = $query
+            ->orderBy('module')
+            ->orderBy('key')
+            ->get();
+
         return response()->json([
             'status' => 'success',
-            'data' => $query->orderBy('module')->orderBy('key')->get()
+            'data'   => $jobs,
+        ]);
+    }
+
+    /**
+     * Show single job definition (optional but recommended)
+     */
+    public function show(string $key)
+    {
+        $job = ScheduleJobRegistry::where('key', $key)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $job,
         ]);
     }
 }
