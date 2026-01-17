@@ -19,6 +19,8 @@ use Modules\Shared\Http\Controllers\RazorpayWebhookController;
 
 use Modules\Shared\Http\Controllers\DatabaseManagementApiController;
 
+// Schedules
+use Modules\Shared\Http\Controllers\Schedules\ScheduleJobRegistryApiController;
 use Modules\Shared\Http\Controllers\Schedules\ScheduleApiController;
 
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
@@ -178,7 +180,12 @@ Route::prefix('v1')->group(function () {
 });
 
 // Schedules
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+// middleware(['auth:sanctum'])->
+Route::prefix('v1')->group(function () {
+
+	// Jobs
+	Route::get('/scheduler/jobs', [ScheduleJobRegistryApiController::class, 'index']);
+
 	Route::get('/schedules', [ScheduleApiController::class, 'index']);
     Route::post('/schedules', [ScheduleApiController::class, 'store']);
     Route::get('/schedules/{schedule}', [ScheduleApiController::class, 'show']);

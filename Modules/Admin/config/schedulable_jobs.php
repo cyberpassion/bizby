@@ -1,6 +1,7 @@
 <?php
 return [
     'SendTenantUpcomingRenewals' => [
+		'module'=> 'Admin',
         'class' => \Modules\Admin\Jobs\Tenants\SendTenantUpcomingRenewals::class,
         'description' => 'Send renewal reminder emails',
 

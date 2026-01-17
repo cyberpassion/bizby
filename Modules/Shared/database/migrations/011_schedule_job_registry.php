@@ -15,10 +15,10 @@ return new class extends Migration
             $table->string('key')->unique();
 
             // Module ownership
-            $table->string('module')->index();
+            $table->string('module')->nullable()->index();
 
             // Job class
-            $table->string('job_class');
+            $table->string('job_class')->nullable();
 
             // UI metadata
             $table->string('description')->nullable();
