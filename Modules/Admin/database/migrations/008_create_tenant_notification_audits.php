@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notification_audits', function ($table) {
+        Schema::create('tenant_notification_audits', function ($table) {
 		    $table->id();
 		    $table->unsignedBigInteger('tenant_id');
 		    $table->string('activity_key');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notification_audits');
+        Schema::dropIfExists('tenant_notification_audits');
     }
 };

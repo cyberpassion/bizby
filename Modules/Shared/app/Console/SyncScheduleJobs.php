@@ -8,35 +8,38 @@ use Modules\Shared\Models\Schedules\ScheduleJobRegistry as JobModel;
 
 class SyncScheduleJobs extends Command
 {
-    protected $signature = 'schedules:sync-jobs';
+    protected $signature = 'schedules:sync-jobs {--force : Update existing jobs}';
     protected $description = 'Sync registered schedule jobs into database';
 
     public function handle(): int
     {
-        $keys = ScheduleJobRegistry::all();
+        $jobs = ScheduleJobRegistry::all(); // now returns DETAILS
 
-        foreach ($keys as $key) {
+        $keys = [];
+
+        foreach ($jobs as $key => $job) {
+            $keys[] = $key;
+
             JobModel::updateOrCreate(
                 ['key' => $key],
                 [
-                    'description' => $this->guessDescription($key),
-                    'is_active'   => true,
+                    'module'        => $job['module'] ?? null,
+                    'job_class'     => $job['class'],
+                    'description'   => $job['description'],
+                    'default_config'=> $job['defaults'] ?? [],
+                    'allowed_frequencies' => $job['allowed_frequencies'] ?? [],
+                    'is_active'     => true,
                 ]
             );
         }
 
-        // Disable orphaned DB jobs
+        // Disable orphaned jobs (module removed)
         JobModel::whereNotIn('key', $keys)->update([
             'is_active' => false,
         ]);
 
-        $this->info('Schedule jobs synced successfully.');
+        $this->info('✔ Schedule jobs synced successfully.');
 
         return self::SUCCESS;
-    }
-
-    protected function guessDescription(string $key): string
-    {
-        return ucfirst(str_replace(':', ' → ', $key));
     }
 }

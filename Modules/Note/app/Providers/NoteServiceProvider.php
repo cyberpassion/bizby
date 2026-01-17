@@ -31,11 +31,11 @@ class NoteServiceProvider extends ServiceProvider
 		// Register all scheduled jobs for module
 		//$this->registerScheduleJobs();
 
-		// Load activity-mails from config
-		$path = module_path($this->name, 'config/activity-mails.php');
+		// Load notifications from config
+		$path = module_path($this->name, 'config/notifications.php');
 
 		if (file_exists($path)) {
-		    $this->mergeConfigFrom($path, 'activity-mails');
+		    $this->mergeConfigFrom($path, 'notifications');
 		}
 
     }

@@ -11,7 +11,7 @@ class NotificationPreviewController extends Controller
     {
         abort_unless(app()->isLocal(), 403);
 
-        $config = config("activity-mails.$activityKey");
+        $config = config("notifications.$activityKey");
         abort_if(! $config, 404, 'Activity mail not found');
 
         $emailConfig = $config['email'] ?? null;

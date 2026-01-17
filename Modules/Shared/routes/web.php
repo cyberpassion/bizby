@@ -16,7 +16,7 @@ if (app()->isLocal()) {
 Route::get('/_preview/sms/{activityKey}', function ($activityKey) {
     abort_unless(app()->isLocal(), 403);
 
-    $config = config("activity-mails.$activityKey");
+    $config = config("notifications.$activityKey");
     abort_if(! $config, 404);
 
     $event = new ActivityOccurred(
@@ -46,7 +46,7 @@ Route::get('/_preview/sms/{activityKey}', function ($activityKey) {
 Route::get('/_preview/whatsapp/{activityKey}', function ($activityKey) {
     abort_unless(app()->isLocal(), 403);
 
-    $config = config("activity-mails.$activityKey");
+    $config = config("notifications.$activityKey");
     abort_if(! $config, 404);
 
     $event = new ActivityOccurred(

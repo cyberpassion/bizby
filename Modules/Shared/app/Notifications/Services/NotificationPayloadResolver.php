@@ -12,7 +12,7 @@ class NotificationPayloadResolver
      */
 	public function email(ActivityOccurred $event): array
 	{
-    	$email = config("activity-mails.{$event->activityKey}.email");
+    	$email = config("notifications.{$event->activityKey}.email");
 
 	    if (! $email) {
     	    return [
@@ -34,7 +34,7 @@ class NotificationPayloadResolver
      */
     public function sms(ActivityOccurred $event): array
     {
-        $sms = config("activity-mails.{$event->activityKey}.sms");
+        $sms = config("notifications.{$event->activityKey}.sms");
 
         if (! $sms) {
             return app()->isLocal()
@@ -58,7 +58,7 @@ class NotificationPayloadResolver
      */
     public function whatsapp(ActivityOccurred $event): array
     {
-        $wa = config("activity-mails.{$event->activityKey}.whatsapp");
+        $wa = config("notifications.{$event->activityKey}.whatsapp");
 
         if (! $wa) {
             return [

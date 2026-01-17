@@ -8,7 +8,7 @@ class NotificationAuditService
 {
     public function log(array $data): int
     {
-        return DB::table('notification_audits')->insertGetId([
+        return DB::table('tenant_notification_audits')->insertGetId([
             ...$data,
             'created_at' => now(),
             'updated_at' => now(),
@@ -17,7 +17,7 @@ class NotificationAuditService
 
     public function markFailed(int $id, string $error): void
     {
-        DB::table('notification_audits')
+        DB::table('tenant_notification_audits')
             ->where('id', $id)
             ->update([
                 'status' => 'failed',

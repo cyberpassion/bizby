@@ -10,7 +10,6 @@ use RecursiveIteratorIterator;
 
 // Schedule
 use Modules\Shared\Services\Schedules\ScheduleJobRegistry;
-use Modules\Admin\Jobs\Tenants\SendTenantUpcomingRenewals;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -34,12 +33,13 @@ class AdminServiceProvider extends ServiceProvider
 
 		// Register all scheduled jobs for module
 		//$this->registerScheduleJobs();
+		$this->registerSchedulableJobs();
 
-		// Load activity-mails from config
-		$path = module_path($this->name, 'config/activity-mails.php');
+		// Load notifications from config
+		$path = module_path($this->name, 'config/notifications.php');
 
 		if (file_exists($path)) {
-		    $this->mergeConfigFrom($path, 'activity-mails');
+		    $this->mergeConfigFrom($path, 'notifications');
 		}
 
     }
@@ -167,11 +167,29 @@ class AdminServiceProvider extends ServiceProvider
         return $paths;
     }
 
-	private function registerScheduleJobs() {
-		ScheduleJobRegistry::register(
-            'tenants:renewals:upcoming',
-            fn () => dispatch(new SendTenantUpcomingRenewals())
-        );
+	private function registerSchedulableJobs(): void
+	{
+    	$path = module_path($this->name, 'config/schedulable_jobs.php');
+
+	    if (! file_exists($path)) {
+    	    return;
+    	}
+
+	    $jobs = require $path;
+
+	    foreach ($jobs as $key => $job) {
+    	    ScheduleJobRegistry::register(
+			    key: $this->nameLower . '.' . $key,
+			    handler: fn () => dispatch(app($job['class'])),
+			    meta: [
+			        'class' => $job['class'],
+			        'description' => $job['description'] ?? null,
+			        'defaults' => $job['defaults'] ?? [],
+			        'allowed_frequencies' => $job['allowed_frequencies'] ?? [],
+			        'module' => $this->nameLower,
+    			]
+			);
+    	}
 	}
 
 }
