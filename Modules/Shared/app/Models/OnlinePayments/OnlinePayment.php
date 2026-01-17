@@ -23,4 +23,9 @@ class OnlinePayment extends Model
         return $this->dynamicFillable();
     }
 
+	public function payable()
+	{
+    	return $this->morphTo();
+	}
+
 }

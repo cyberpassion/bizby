@@ -76,9 +76,7 @@ class SharedServiceProvider extends ServiceProvider
     	);
 
 		// Morph map registrations
-		Relation::morphMap([
-            'employee' => \Modules\Employee\Models\Employee::class
-        ]);
+		$this->registerMorphMaps();
     }
 
 	// Registers all lookup keys returning static values
@@ -286,4 +284,57 @@ class SharedServiceProvider extends ServiceProvider
 
         return $paths;
     }
+
+	private function registerMorphMaps(): void
+	{
+		Relation::morphMap([
+			/* ================= CORE ================= */
+            'signup'       => \Modules\Signup\Models\Signup::class,
+            'subscription' => \Modules\Subscription\Models\Subscription::class,
+			'tenant'       => \Modules\Admin\Models\Tenants\TenantAccount::class,
+
+            /* ================= PEOPLE ================= */
+            'student'  => \Modules\Student\Models\Student::class,
+            'employee' => \Modules\Employee\Models\Employee::class,
+            'customer' => \Modules\Customer\Models\Customer::class,
+            'patient'  => \Modules\Patient\Models\Patient::class,
+            'vendor'   => \Modules\Vendor\Models\Vendor::class,
+            'lead'     => \Modules\Lead\Models\Lead::class,
+
+            /* ================= ACTIVITY ================= */
+            'attendance'     => \Modules\Attendance\Models\Attendance::class,
+            'survey'         => \Modules\Survey\Models\Survey::class,
+            'checklist'      => \Modules\Checklist\Models\Checklist::class,
+            //'note'           => \Modules\Notes\Models\Note::class,
+            //'event'          => \Modules\Events\Models\Event::class,
+            //'meeting'        => \Modules\Meetings\Models\Meeting::class,
+            //'visit'          => \Modules\Visits\Models\Visit::class,
+            //'task'           => \Modules\TaskPlanner\Models\Task::class,
+
+            /* ================= COMMUNICATION ================= */
+            'communication' => \Modules\Communication\Models\Communication::class,
+
+            /* ================= BUSINESS / OPERATIONS ================= */
+            'booking'     => \Modules\Booking\Models\Booking::class,
+            'cashflow'    => \Modules\Cashflow\Models\Cashflow::class,
+            'listing'     => \Modules\Listing\Models\Listing::class,
+            'product'     => \Modules\Product\Models\Product::class,
+            'saleservice' => \Modules\SaleService\Models\SaleService::class,
+            'service'     => \Modules\Service\Models\Service::class,
+            'transport'   => \Modules\Transport\Models\Transport::class,
+
+            /* ================= EDUCATION ================= */
+            'registration' => \Modules\Registration\Models\Registration::class,
+            //'examresult'   => \Modules\ExamResult\Models\ExamResult::class,
+            'timetable'    => \Modules\Timetable\Models\Timetable::class,
+            'attendance' => \Modules\Attendance\Models\Attendance::class,
+            'library'    => \Modules\Library\Models\Library::class,
+
+            /* ================= HEALTHCARE ================= */
+            'treatment'    => \Modules\Treatment\Models\Treatment::class,
+            'consultation' => \Modules\Consultation\Models\Consultation::class,
+            'patient'   	=> \Modules\Patient\Models\Patient::class,
+		]);
+	}
+
 }

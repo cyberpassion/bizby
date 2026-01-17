@@ -219,7 +219,7 @@ class OnlinePaymentApiController extends SharedApiController
     	    abort(400, 'Payment not successful yet');
     	}
 
-	    $payable = PaymentPayable::findOrFail($payment->payment_payable_id);
+	    $payable = $payment->payable;
 
 	    if ($payable->status === 'paid') {
     	    return response()->json([
@@ -229,8 +229,8 @@ class OnlinePaymentApiController extends SharedApiController
     	}
 
 	    $model = app(PayableResolver::class)->resolve(
-    	    $payable->payable_type,
-        	$payable->payable_id
+    	    $payment->payable_type,
+        	$payment->payable_id
 	    );
 
 	    $model->markAsPaid($payable);

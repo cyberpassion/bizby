@@ -25,6 +25,8 @@ class SyncScheduleJobs extends Command
                 [
                     'module'        => $job['module'] ?? null,
                     'job_class'     => $job['class'],
+					'module'        => $job['module'] ?? null,
+					'name'          => $job['name'],
                     'description'   => $job['description'],
                     'default_config'=> $job['defaults'] ?? [],
                     'allowed_frequencies' => $job['allowed_frequencies'] ?? [],

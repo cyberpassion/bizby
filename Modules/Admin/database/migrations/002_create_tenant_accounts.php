@@ -17,8 +17,8 @@ return new class extends Migration
 		    // Basic Info
 		    $table->string('name')->nullable();
 		    $table->string('domain')->nullable();
-		    $table->string('email')->nullable();
-    		$table->string('phone')->nullable();
+		    $table->string('email')->nullable()->unique();
+    		$table->string('phone')->nullable()->unique();
 
 		    // SaaS / Billing
 		    $table->string('plan')->nullable();

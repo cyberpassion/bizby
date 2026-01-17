@@ -10,7 +10,10 @@ class ScheduleJobRegistry extends Model
 
     protected $fillable = [
         'key',
+		'name',
         'description',
+		'module',
+		'job_class',
         'is_active',
     ];
 

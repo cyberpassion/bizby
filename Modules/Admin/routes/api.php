@@ -19,6 +19,7 @@ use Modules\Admin\Http\Controllers\Tenants\TenantUserApiController;
 use Modules\Admin\Http\Controllers\Tenants\TenantModuleApiController;
 use Modules\Admin\Http\Controllers\InstallationController;
 use Modules\Admin\Http\Controllers\AuthTokenApiController;
+use Modules\Admin\Http\Controllers\Auth\PasswordResetApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -192,4 +193,15 @@ Route::prefix('v1/auth')->group(function () {
 */
 Route::middleware(['auth:sanctum','identify.tenant.header'])->prefix('v1/tenants')->group(function () {
     Route::post('{tenantId}/users', [TenantUserApiController::class, 'provisionUser']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Password Reset APIs
+|--------------------------------------------------------------------------
+*/
+Route::prefix('v1/auth/password')->group(function () {
+    Route::post('forgot', [PasswordResetApiController::class, 'forgot']);
+	Route::post('verify', [PasswordResetApiController::class, 'verify']);
+    Route::post('reset', [PasswordResetApiController::class, 'reset']);
 });

@@ -183,6 +183,7 @@ class AdminServiceProvider extends ServiceProvider
 			    handler: fn () => dispatch(app($job['class'])),
 			    meta: [
 			        'class' => $job['class'],
+					'name' => $job['name'] ?? null,
 			        'description' => $job['description'] ?? null,
 			        'defaults' => $job['defaults'] ?? [],
 			        'allowed_frequencies' => $job['allowed_frequencies'] ?? [],

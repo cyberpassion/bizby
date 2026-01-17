@@ -15,6 +15,7 @@ class ScheduleJobRegistry
             'key' => $key,
             'handler' => $handler,
             'class' => $meta['class'] ?? null,
+			'name' => $meta['name'] ?? null,
             'description' => $meta['description'] ?? null,
             'defaults' => $meta['defaults'] ?? [],
             'allowed_frequencies' => $meta['allowed_frequencies'] ?? [],
