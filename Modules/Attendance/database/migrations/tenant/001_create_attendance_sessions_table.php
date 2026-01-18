@@ -27,6 +27,17 @@ return new class extends Migration
     $table->time('start_time')->nullable();
     $table->time('end_time')->nullable();
 
+	$table->string('mode')->default('manual');
+	/*
+		manual
+		qr
+		biometric
+		rfid
+		geofence
+		self
+		system
+	*/
+
     // Context (generic, NOT education-specific)
     $table->string('context')->nullable();
     /*

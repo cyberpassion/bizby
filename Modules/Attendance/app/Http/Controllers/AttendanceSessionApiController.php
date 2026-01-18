@@ -4,68 +4,41 @@ namespace Modules\Attendance\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Attendance\Services\AttendanceService;
 use Modules\Attendance\Models\AttendanceSession;
 
 class AttendanceSessionApiController extends Controller
 {
-    /**
-     * List attendance sessions
-     * Optional filters:
-     * ?type=day|lecture
-     * ?date=2025-01-15
-     */
+    public function __construct(private AttendanceService $service) {}
+
     public function index(Request $request)
     {
-        $query = AttendanceSession::query();
-
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
-        }
-
-        if ($request->filled('date')) {
-            $query->where('session_date', $request->date);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $query
-                ->withCount('attendances')
-                ->latest('session_date')
-                ->paginate(20),
-        ]);
+        return AttendanceSession::query()
+            ->when($request->date, fn($q) => $q->whereDate('session_date', $request->date))
+            ->when($request->type, fn($q) => $q->where('type', $request->type))
+            ->latest()
+            ->paginate(50);
     }
 
-    /**
-     * Create attendance session
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
-            'type'         => 'required|string',
+            'type' => 'required|string',
+            'mode' => 'nullable|string',
             'session_date' => 'required|date',
-            'start_time'   => 'nullable',
-            'end_time'     => 'nullable',
-            'context'      => 'nullable|string',
-            'reference'    => 'nullable|string',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
+            'context' => 'nullable|string',
+            'reference' => 'nullable|string',
         ]);
 
-        $session = AttendanceSession::create($data);
+        $session = $this->service->createSession($data, $request->user());
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Attendance session created',
-            'data'    => $session,
-        ], 201);
+        return response()->json($session, 201);
     }
 
-    /**
-     * Show single session with attendances
-     */
     public function show(AttendanceSession $attendanceSession)
     {
-        return response()->json([
-            'status' => 'success',
-            'data' => $attendanceSession->load('attendances.entity'),
-        ]);
+        return $attendanceSession->load('attendances');
     }
 }

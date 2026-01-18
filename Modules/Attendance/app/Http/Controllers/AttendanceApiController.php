@@ -6,59 +6,63 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Attendance\Models\Attendance;
 use Modules\Attendance\Models\AttendanceSession;
+use Modules\Attendance\Services\AttendanceService;
 
 class AttendanceApiController extends Controller
 {
-    /**
-     * Mark attendance for a session
-     */
-    public function store(Request $request, AttendanceSession $attendanceSession)
+    public function __construct(private AttendanceService $service) {}
+
+    public function mark(Request $request, AttendanceSession $session)
     {
         $data = $request->validate([
-            'entity_id'   => 'required|integer',
+            'entity_id' => 'required|integer',
             'entity_type' => 'required|string',
-            'status'      => 'required|string',
-            'in_time'     => 'nullable',
-            'out_time'    => 'nullable',
-            'code'        => 'nullable|string',
-            'reason'      => 'nullable|string',
+            'attendance_status' => 'required|string',
+            'in_time' => 'nullable',
+            'out_time' => 'nullable',
+            'source' => 'nullable|string',
+            'code' => 'nullable|string',
+            'reason' => 'nullable|string',
         ]);
 
-        $attendance = $attendanceSession
-            ->attendances()
-            ->create($data);
-
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Attendance marked',
-            'data'    => $attendance,
-        ], 201);
+        return $this->service->markAttendance($session, $data);
     }
 
-    /**
-     * Update attendance
-     */
-    public function update(Request $request, Attendance $attendance)
+    public function bulk(Request $request, AttendanceSession $session)
     {
-        $attendance->update($request->all());
+        $items = $request->validate([
+            'items' => 'required|array',
+            'items.*.entity_id' => 'required',
+            'items.*.entity_type' => 'required',
+            'items.*.attendance_status' => 'required',
+        ])['items'];
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Attendance updated',
-            'data'    => $attendance,
-        ]);
+        $this->service->bulkMark($session, $items);
+
+        return response()->json(['status' => 'ok']);
     }
 
-    /**
-     * Delete attendance entry
-     */
-    public function destroy(Attendance $attendance)
+    public function punch(Request $request, Attendance $attendance)
     {
-        $attendance->delete();
-
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Attendance deleted',
+        $data = $request->validate([
+            'type' => 'required|in:in,out',
+            'time' => 'required',
         ]);
+
+        return $this->service->punch($attendance, $data['type'], $data['time']);
+    }
+
+    public function selfPunch(Request $request)
+    {
+        $data = $request->validate([
+            'type' => 'required|in:in,out',
+            'time' => 'required',
+        ]);
+
+        return $this->service->selfPunch(
+            $request->user(),
+            $data['type'],
+            $data['time']
+        );
     }
 }

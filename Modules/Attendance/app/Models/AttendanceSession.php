@@ -16,6 +16,7 @@ class AttendanceSession extends Model
         'session_date',
         'start_time',
         'end_time',
+		'mode',
         'context',
         'reference',
         'taken_by_id',
@@ -23,10 +24,10 @@ class AttendanceSession extends Model
     ];
 
     protected $casts = [
-        'session_date' => 'date',
-        'start_time'   => 'datetime:H:i',
-        'end_time'     => 'datetime:H:i',
-    ];
+	    'session_date' => 'date',
+    	'start_time'   => 'string',
+    	'end_time'     => 'string',
+	];
 
     /* =========================
      | Relationships
@@ -48,4 +49,28 @@ class AttendanceSession extends Model
             'taken_by_id'
         );
     }
+
+	public function scopeForDate($q, $date)
+	{
+    	return $q->where('session_date', $date);
+	}
+
+	public function scopeOfType($q, $type)
+	{
+    	return $q->where('type', $type);
+	}
+
+	public function mark($entity, $status = 'present', array $extra = [])
+	{
+    	return $this->attendances()->updateOrCreate(
+        	[
+            	'entity_id' => $entity->id,
+	            'entity_type' => get_class($entity),
+    	    ],
+        	array_merge([
+            	'attendance_status' => $status,
+	        ], $extra)
+    	);
+	}
+
 }

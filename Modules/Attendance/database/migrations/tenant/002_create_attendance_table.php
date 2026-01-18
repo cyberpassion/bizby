@@ -10,45 +10,60 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
 
-    // SaaS common fields
-    $table->commonSaasFields();
+		    // SaaS common fields
+		    $table->commonSaasFields();
 
-    // Session
-    $table->foreignId('attendance_session_id')
-          ->constrained()
-          ->cascadeOnDelete();
+		    // Session
+		    $table->foreignId('attendance_session_id')
+        		->constrained()
+        		->cascadeOnDelete();
 
-    // Who attended
-    $table->nullableMorphs('entity');
-    /*
-        Student
-        User
-        Employee
-        Trainee
-    */
+		    // Who attended
+		    $table->nullableMorphs('entity');
+		    /*
+        		Student
+		        User
+        		Employee
+		        Trainee
+    		*/
 
-    // Attendance status
-    $table->string('attendance_status')->default('present');
-    /*
-        present
-        absent
-        late
-        leave
-    */
+		    // Attendance status
+		    $table->string('attendance_status')->default('present');
+    		/*
+		        present
+        		absent
+		        late
+        		leave
+		    */
 
-    // Optional timing
-    $table->time('in_time')->nullable();
-    $table->time('out_time')->nullable();
+			$table->string('source')->default('admin');
+			/*
+				admin
+				teacher
+				self
+				device
+				api
+				system
+			*/
 
-    // Optional reason / metadata
-    $table->string('code')->nullable();
-    $table->text('reason')->nullable();
+		    // Optional timing
+		    $table->time('in_time')->nullable();
+    		$table->time('out_time')->nullable();
 
-    // Indexes
-    $table->index(['attendance_session_id']);
-    $table->index(['entity_id', 'entity_type']);
-});
+		    // Optional reason / metadata
+		    $table->string('code')->nullable();
+    		$table->text('reason')->nullable();
 
+		    // Indexes
+		    $table->index(['attendance_session_id']);
+		    $table->index(['entity_id', 'entity_type']);
+			$table->unique([
+	    		'attendance_session_id',
+		    	'entity_id',
+    			'entity_type'
+			]);
+
+		});
 
     }
 

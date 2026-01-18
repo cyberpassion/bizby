@@ -15,7 +15,8 @@ class Attendance extends Model
         'attendance_session_id',
         'entity_id',
         'entity_type',
-        'status',
+        'attendance_status',
+		'source',
         'in_time',
         'out_time',
         'code',
@@ -23,9 +24,9 @@ class Attendance extends Model
     ];
 
     protected $casts = [
-        'in_time'  => 'datetime:H:i',
-        'out_time' => 'datetime:H:i',
-    ];
+	    'in_time'  => 'string',
+    	'out_time' => 'string',
+	];
 
     /* =========================
      | Relationships
@@ -43,4 +44,10 @@ class Attendance extends Model
     {
         return $this->morphTo();
     }
+
+	public function scopePresent($q)
+	{
+    	return $q->where('attendance_status', 'present');
+	}
+
 }
