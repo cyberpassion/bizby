@@ -2,136 +2,109 @@
 
 namespace Modules\Shared\Http\Controllers\OnlinePayments;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Shared\Models\OnlinePayments\OnlinePayment;
-use Modules\Shared\Services\OnlinePayments\RazorpayService;
-use Modules\Shared\Services\OnlinePayments\PayableResolver;
-use Modules\Shared\Models\OnlinePayments\PaymentPayable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
-use Modules\Shared\Http\Controllers\SharedApiController;
+use Modules\Shared\Models\OnlinePayments\OnlinePayment;
+use Modules\Shared\Models\OnlinePayments\PaymentPayable;
+use Modules\Shared\Services\OnlinePayments\PayableResolver;
+use Modules\Shared\Services\OnlinePayments\RazorpayService;
 
-class OnlinePaymentApiController extends SharedApiController
+class OnlinePaymentApiController extends Controller
 {
+    protected function model() {
+        return OnlinePayment::class;
+    }
 
-	protected function model() {
-		return OnlinePayment::class;
-	}
     protected function validationRules($id = null)
     {
         return [];
     }
 
-    public function initiate(
-        Request $request,
-        PayableResolver $resolver,
-        RazorpayService $razorpay
-    ) {
-        // 1️⃣ Resolve payable safely
-        $payable = $resolver->resolve(
-            $request->payable_type,
-            $request->payable_id
-        );
+    /**
+     * Read-only: frontend can poll payment status
+     */
+    public function show(int $id)
+    {
+        $payment = OnlinePayment::findOrFail($id);
 
-        // 2️⃣ Check payable state (optional but recommended)
-        if (method_exists($payable, 'isPayable') && ! $payable->isPayable()) {
-            abort(400, 'This item is not payable');
-        }
-
-        // 3️⃣ Determine payable amount (CORE FIX)
-        $amount = $this->determineAmount($payable);
-
-        if ($amount <= 0) {
-            abort(400, 'Invalid payable amount');
-        }
-
-        // 4️⃣ Create online payment record
-        $payment = OnlinePayment::create([
-            'payable_type'    => $request->payable_type,
-            'payable_id'      => $request->payable_id,
-            'amount'          => $amount,
-            'currency'        => 'INR',
-            'payment_gateway' => 'razorpay',
-            'payment_method'  => $request->payment_method,
-            'payment_status'  => 'initiated',
-            'entry_source'    => 'web',
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'id'       => $payment->id,
+                'status'   => $payment->status,
+                'amount'   => $payment->amount,
+                'currency' => $payment->currency,
+                'paid_at'  => $payment->paid_at,
+				'key'      => config('services.razorpay.key'),
+            ]
         ]);
-
-        // 5️⃣ Create Razorpay order (SERVER-SIDE)
-        $order = $razorpay->createOrder(
-            $payment->amount,
-            'pay_' . $payment->id
-        );
-
-        // 6️⃣ Update payment with gateway order id
-        $payment->update([
-            'gateway_order_id' => $order['id'],
-            'payment_status'   => 'pending',
-        ]);
-
-        // 7️⃣ Return checkout data
-		return response()->json([
-    	    'status'  => 'success',
-        	'message' => 'Payment Initiated successfully.',
-	        'data'    => [
-                'payment_id'        => $payment->id,
-                'gateway_order_id' => $order['id'],
-                'amount'            => (int) ($payment->amount * 100),
-                'currency'          => 'INR',
-                'key'               => config('services.razorpay.key'),
-            ],
-        ], Response::HTTP_OK);
     }
 
     /**
-     * Determine amount based on payable type & rules
+     * Razorpay webhook (ONLY source of truth)
      */
-    protected function determineAmount($payable): float
-    {
+    public function razorpayWebhook(
+        Request $request,
+        RazorpayService $razorpay
+    ) {
+        // 1️⃣ Verify signature (CRITICAL)
+        $razorpay->verifyWebhookSignature(
+		    $request->getContent(), // raw body
+    		$request->header('X-Razorpay-Signature')
+		);
 
-		// Tenant
-        if ($payable instanceof \Modules\Admin\Models\Tenants\TenantAccount) {
-            return 100;
-        }
-		// Registration
-        if ($payable instanceof \Modules\Registration\Models\Registration) {
-            return $payable->registration_fee;
+        $event = $request->input('event');
+        $payload = $request->input('payload.payment.entity');
+
+        if (! $payload) {
+            return response()->json(['status' => 'ignored']);
         }
 
-        // Default (safety)
-        abort(400, 'Unsupported payable type');
+        $gatewayPaymentId = $payload['id'];
+        $gatewayOrderId   = $payload['order_id'];
+        $status           = $payload['status'];
+
+        // 2️⃣ Find payment
+        $payment = OnlinePayment::where('gateway_order_id', $gatewayOrderId)->first();
+
+        if (! $payment) {
+            logger()->warning('Payment not found for gateway order', [
+                'order_id' => $gatewayOrderId
+            ]);
+            return response()->json(['status' => 'ignored']);
+        }
+
+        // 3️⃣ Idempotency guard
+        if (in_array($payment->status, ['success', 'failed'])) {
+            return response()->json(['status' => 'ok']);
+        }
+
+        DB::transaction(function () use ($payment, $status, $gatewayPaymentId) {
+
+            // 4️⃣ Update payment record
+            if ($status === 'captured') {
+                $payment->update([
+                    'status'             => 'success',
+                    'gateway_payment_id' => $gatewayPaymentId,
+                    'paid_at'            => now(),
+                ]);
+            } elseif ($status === 'failed') {
+                $payment->update([
+                    'status'             => 'failed',
+                    'gateway_payment_id' => $gatewayPaymentId,
+                ]);
+            }
+
+            // 5️⃣ Finalize payable ONLY if success
+            if ($payment->status === 'success') {
+                $this->finalize($payment);
+            }
+        });
+
+        return response()->json(['status' => 'ok']);
     }
-
-	public function show($id)
-	{
-    	$payment = OnlinePayment::findOrFail($id);
-
-	    // Safety: only allow pending payments
-    	/*if (! in_array($payment->payment_status, ['initiated', 'pending'])) {
-        	return response()->json([
-            	'status'  => 'error',
-	            'message' => 'Payment is not payable',
-    	    ], Response::HTTP_BAD_REQUEST);
-    	}*/
-
-	    // Safety: ensure gateway order exists
-    	if (! $payment->gateway_order_id) {
-        	return response()->json([
-            	'status'  => 'error',
-            	'message' => 'Payment gateway order not found',
-	        ], Response::HTTP_BAD_REQUEST);
-    	}
-
-	    return response()->json([
-    	    'status' => 'success',
-        	'data'   => [
-            	'payment_id'        => $payment->id,
-	            'gateway_order_id' => $payment->gateway_order_id,
-    	        'amount'            => (int) ($payment->amount * 100), // paise
-        	    'currency'          => $payment->currency,
-            	'key'               => config('services.razorpay.key'),
-        	],
-	    ], Response::HTTP_OK);
-	}
 
 	public function complete(Request $request, $id)
 	{
@@ -156,6 +129,14 @@ class OnlinePaymentApiController extends SharedApiController
     	    'system_remark'      => 'Received payment_id from frontend',
     	]);
 
+		// 2️⃣ Link payable snapshot to this payment (IMPORTANT)
+	    if ($payment->payable && !$payment->payable->online_payment_id) {
+			PaymentPayable::where('id', $payment->payment_payable_id)
+			    ->whereNull('online_payment_id')
+			    ->update(['online_payment_id' => $payment->id]);
+    	}
+
+		// 3️⃣ Try immediate capture (Razorpay specific)
 	    try {
     	    $razorpay = new \Razorpay\Api\Api(
         	    config('services.razorpay.key'),
@@ -197,58 +178,44 @@ class OnlinePaymentApiController extends SharedApiController
         	]);
     	}
 
+		// ⚠️ ONLY FOR LOCAL TESTING
+	    if (app()->environment('local', 'testing')) {
+    	    app(self::class)->finalize($payment);
+    	}
+
 	    return response()->json([
     	    'status'  => 'success',
         	'message' => 'Payment received. Confirmation in progress.',
     	]);
 	}
 
-	public function finalize(int $id)
-	{
-	    $payment = OnlinePayment::findOrFail($id);
+    /**
+     * Finalize payable (business logic)
+     */
+    public function finalize(OnlinePayment $payment)
+    {
+        $payable = PaymentPayable::with('payable')->findOrFail(
+            $payment->payment_payable_id
+        );
 
-	    // Idempotency
-    	if ($payment->status === 'success') {
-        	return response()->json([
-            	'status' => 'success',
-            	'message' => 'Payment already finalized',
-	        ]);
-    	}
+        // Idempotent
+        if ($payable->status === 'paid') {
+            return;
+        }
 
-	    if ($payment->payment_status !== 'success') {
-    	    abort(400, 'Payment not successful yet');
-    	}
+        $model = $payable->payable;
 
-	    $payable = $payment->payable;
+        if (! $model) {
+            throw new \Exception('Payable model missing');
+        }
 
-	    if ($payable->status === 'paid') {
-    	    return response()->json([
-        	    'status' => 'success',
-            	'message' => 'Payable already resolved',
-	        ]);
-    	}
+        // Execute domain logic
+        $model->markAsPaid($payable);
 
-	    $model = app(PayableResolver::class)->resolve(
-    	    $payment->payable_type,
-        	$payment->payable_id
-	    );
-
-	    $model->markAsPaid($payable);
-
-	    $payable->update([
-    	    'status'      => 'paid',
-        	'resolved_at' => now(),
-	    ]);
-
-	    $payment->update([
-    	    'status'  => 'success',
-        	'paid_at' => now(),
-	    ]);
-
-	    return response()->json([
-    	    'status'  => 'success',
-        	'message' => 'Payment finalized successfully',
-	    ]);
-	}
-
+        // Update source of truth
+        $payable->update([
+            'status'      => 'paid',
+            'resolved_at' => now(),
+        ]);
+    }
 }

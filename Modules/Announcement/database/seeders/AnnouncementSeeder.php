@@ -14,7 +14,7 @@ class AnnouncementSeeder extends Seeder
     {
         $announcements = [
             [
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
                 'announcement_id' => null,
 
@@ -38,7 +38,7 @@ class AnnouncementSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
                 'announcement_id' => null,
 

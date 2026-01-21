@@ -29,7 +29,7 @@ class TermEmployeeTypeSeeder extends Seeder
 
         foreach ($types as $index => $type) {
             $data[] = [
-                'client_id'  => 1, // default / system
+                'tenant_id'  => 1, // default / system
                 'status'     => 1,
                 'name'       => $type,
                 'slug'       => Str::slug($type),
@@ -43,7 +43,7 @@ class TermEmployeeTypeSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug','client_id'],
+            ['slug','tenant_id'],
             ['status','updated_at']
         );
     }

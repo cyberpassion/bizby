@@ -15,7 +15,7 @@ class BookingSeeder extends Seeder
         $bookings = [
             [
                 // ===== SaaS common fields =====
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
                 'created_by' => 1,
                 'updated_by' => 1,
@@ -76,7 +76,7 @@ class BookingSeeder extends Seeder
             DB::table('bookings')->updateOrInsert(
                 [
                     'booking_id_sno' => $data['booking_id_sno'],
-                    'client_id' => $data['client_id'],
+                    'tenant_id' => $data['tenant_id'],
                 ],
                 $data
             );

@@ -23,7 +23,7 @@ class TermMaritalStatusSeeder extends Seeder
 
         foreach ($statuses as $index => $status) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $status,
                 'slug'       => Str::slug($status), // single, married, widowed...
@@ -37,7 +37,7 @@ class TermMaritalStatusSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

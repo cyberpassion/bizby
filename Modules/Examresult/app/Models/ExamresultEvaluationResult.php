@@ -2,16 +2,17 @@
 
 namespace Modules\Examresult\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ExamresultEvaluationResult extends Model
+class ExamresultEvaluationResult extends TenantModel
 {
     use HasFactory;
 
     protected $table = 'examresult_evaluation_results';
 
     protected $fillable = [
+        'tenant_id',
         'evaluation_id',
         'evaluation_component_id',
         'entity_id',
@@ -19,13 +20,8 @@ class ExamresultEvaluationResult extends Model
         'score',
         'max_score',
         'grade',
-        'status',
-        'remark',
+        'result_status',
     ];
-
-    /* =========================
-     | Relationships
-     |=========================*/
 
     public function evaluation()
     {

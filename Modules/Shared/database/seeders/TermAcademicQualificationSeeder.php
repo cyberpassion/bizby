@@ -89,7 +89,7 @@ class TermAcademicQualificationSeeder extends Seeder
                     'group' => 'qualifications',
                 ],
                 [
-                    'client_id'  => 1,
+                    'tenant_id'  => 1,
                     'status'     => 1,
                     'name'       => $qualification,
                     'module'     => 'shared',

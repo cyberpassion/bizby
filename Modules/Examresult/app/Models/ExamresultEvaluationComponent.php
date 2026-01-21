@@ -2,10 +2,10 @@
 
 namespace Modules\Examresult\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ExamresultEvaluationComponent extends Model
+class ExamresultEvaluationComponent extends TenantModel
 {
     use HasFactory;
 
@@ -22,10 +22,6 @@ class ExamresultEvaluationComponent extends Model
     protected $casts = [
         'meta' => 'array',
     ];
-
-    /* =========================
-     | Relationships
-     |=========================*/
 
     public function evaluation()
     {

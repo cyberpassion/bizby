@@ -11,7 +11,7 @@ class TermCasteSeeder extends Seeder
     {
         DB::table('terms')->insert([
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'General',
                 'slug'       => 'general',
@@ -22,7 +22,7 @@ class TermCasteSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'OBC',
                 'slug'       => 'obc',
@@ -33,7 +33,7 @@ class TermCasteSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'SC',
                 'slug'       => 'sc',
@@ -44,7 +44,7 @@ class TermCasteSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'ST',
                 'slug'       => 'st',
@@ -55,7 +55,7 @@ class TermCasteSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'EWS',
                 'slug'       => 'ews',

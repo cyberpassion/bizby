@@ -22,7 +22,7 @@ class TermCompanySizeSeeder extends Seeder
 
         foreach ($sizes as $index => [$range, $label]) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $label,
                 'slug'       => str_replace('+','plus',str_replace('-','_',$range)),
@@ -34,6 +34,6 @@ class TermCompanySizeSeeder extends Seeder
             ];
         }
 
-        DB::table('terms')->upsert($data, ['slug','client_id'], ['status','updated_at']);
+        DB::table('terms')->upsert($data, ['slug','tenant_id'], ['status','updated_at']);
     }
 }

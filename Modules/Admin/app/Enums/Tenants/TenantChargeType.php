@@ -1,7 +1,7 @@
 <?php
-namespace Modules\Admin\Enums;
+namespace Modules\Admin\Enums\Tenants;
 
-enum ChargeType: string
+enum TenantChargeType: string
 {
     case ONBOARDING = 'onboarding';
     case RENEWAL    = 'renewal';

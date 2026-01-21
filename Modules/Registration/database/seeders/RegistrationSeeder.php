@@ -12,7 +12,7 @@ class RegistrationSeeder extends Seeder
     {
         DB::table('registrations')->insert([
             [
-                'client_id'             => 1,
+                'tenant_id'             => 1,
                 'status'                => 1,
                 'created_by'            => 1,
                 'updated_by'            => 1,
@@ -53,7 +53,7 @@ class RegistrationSeeder extends Seeder
             ],
 
             [
-                'client_id'             => 1,
+                'tenant_id'             => 1,
                 'status'                => 1,
                 'created_by'            => 1,
                 'updated_by'            => 1,

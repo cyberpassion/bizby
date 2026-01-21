@@ -10,60 +10,70 @@ return new class extends Migration
     {
         Schema::create('attendance_sessions', function (Blueprint $table) {
 
-    // SaaS common fields
-    $table->commonSaasFields();
+		    // SaaS common fields
+    		$table->commonSaasFields();
 
-    // Session identity
-    $table->string('type');
-    /*
-        day        → school day-wise
-        lecture    → college/coaching
-        shift      → office/factory
-        event      → seminar/workshop
-    */
+		    // Session identity
+    		$table->string('type');
+	    	/*
+	    	    day        → school day-wise
+    	    	lecture    → college/coaching
+        		shift      → office/factory
+        		event      → seminar/workshop
+		    */
 
-    // When
-    $table->date('session_date');
-    $table->time('start_time')->nullable();
-    $table->time('end_time')->nullable();
+		    // When
+    		$table->date('session_date');
+    		$table->time('start_time')->nullable();
+    		$table->time('end_time')->nullable();
 
-	$table->string('mode')->default('manual');
-	/*
-		manual
-		qr
-		biometric
-		rfid
-		geofence
-		self
-		system
-	*/
+			$table->string('mode')->default('manual');
+			/*
+				manual
+				qr
+				biometric
+				rfid
+				geofence
+				self
+				system
+			*/
 
-    // Context (generic, NOT education-specific)
-    $table->string('context')->nullable();
-    /*
-        examples:
-        "Classroom A"
-        "Batch Morning"
-        "Room 204"
-        "Online Zoom"
-    */
+		    // Context (generic, NOT education-specific)
+    		$table->string('context')->nullable();
+    		/*
+	        	examples:
+		        "Classroom A"
+    		    "Batch Morning"
+        		"Room 204"
+        		"Online Zoom"
+		    */
 
-    // Optional reference
-    $table->string('reference')->nullable();
-    /*
-        examples:
-        "Period 1"
-        "Lecture 5"
-        "Morning Session"
-    */
+		    // Optional reference
+    		$table->string('reference')->nullable();
+	    	/*
+    	    	examples:
+        		"Period 1"
+        		"Lecture 5"
+        		"Morning Session"
+		    */
 
-    // Who took attendance
-    $table->nullableMorphs('taken_by');
-    // User | Employee | Teacher | System
+		    // Who took attendance
+    		$table->nullableMorphs('taken_by');
+    		// User | Employee | Teacher | System
 
-    // Indexes
-    $table->index(['session_date']);
-});
+		    // Indexes
+    		$table->index(['session_date']);
+
+			$table->unique([
+    			'tenant_id',
+			    'type',
+		    	'session_date',
+			    'start_time',
+			    'end_time',
+			    'context'
+			], 'unique_attendance_session_per_slot');
+
+		});
 
     }
 

@@ -12,6 +12,7 @@ class AttendanceSession extends Model
     protected $table = 'attendance_sessions';
 
     protected $fillable = [
+		'tenant_id',
         'type',
         'session_date',
         'start_time',

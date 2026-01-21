@@ -42,6 +42,8 @@ Route::prefix('v1')->group(function () {
 
 	// Uploads
 	Route::apiResource('uploads', UploadApiController::class)->names('upload');
+	Route::post('uploads/bulk-data', [UploadApiController::class, 'bulkData'])->name('uploads.bulkData');
+	Route::post('uploads/bulk-documents', [UploadApiController::class, 'bulkDocuments'])->name('uploads.bulkDocuments');
 
 	// Options
 	Route::apiResource('options', OptionApiController::class)->names('option');
@@ -93,7 +95,6 @@ Route::prefix('v1')->group(function () {
 	// - frontend cannot tamper values
 	// - pricing remains consistent during payment
 	// Called AFTER preview and BEFORE initiating payment gateway flow.
-
 	Route::post(
     	'/payment-payables/{id}/cancel',
     	[PaymentPayableApiController::class, 'cancel']
@@ -148,6 +149,23 @@ Route::prefix('v1')->group(function () {
 	// - Renewing subscription
 	// - Enabling modules
 	// This operation is idempotent and safe to retry.
+
+	Route::get(
+	    '/online-payments/{payment}/payable',
+    	[PaymentPayableApiController::class, 'showByPayment']
+	);
+	// Fetch frozen PaymentPayable snapshot by online_payment_id.
+	// Used AFTER payment for:
+	// - receipt page
+	// - invoice download
+	// - email receipt
+	// - audit logs
+	//
+	// IMPORTANT:
+	// - Returns immutable snapshot (what user actually paid)
+	// - Does NOT recalculate amounts
+	// - Safe to refresh (idempotent)
+	// - Works even if pricing rules change later
 
 	Route::put(
     	'/online-payments/{id}/status',

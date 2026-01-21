@@ -39,7 +39,7 @@ class OptionsSeeder extends Seeder
             DB::table('options')->updateOrInsert(
                 ['name' => $option['name']], // check by name
                 array_merge($option, [
-                    'client_id' => 1,
+                    'tenant_id' => 1,
                     'status' => 1,
                     'created_by' => 1,
                     'updated_by' => 1,

@@ -46,7 +46,7 @@ class TermLanguageSeeder extends Seeder
 
         foreach ($languages as [$name, $code]) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => $code, // short code slug
@@ -60,7 +60,7 @@ class TermLanguageSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

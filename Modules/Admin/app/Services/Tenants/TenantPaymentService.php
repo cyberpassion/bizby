@@ -6,7 +6,9 @@ use InvalidArgumentException;
 use Modules\Admin\Models\Tenants\TenantAccount;
 use Modules\Shared\Models\OnlinePayments\PaymentPayable;
 
-use Modules\Admin\Enums\ChargeType;
+use Modules\Admin\Enums\Tenants\TenantChargeType;
+
+use Modules\Shared\Services\OnlinePayments\PreviewFormatter;
 
 /**
  * Class TenantPaymentService
@@ -32,9 +34,9 @@ class TenantPaymentService
         string $chargeType
     ): float {
         return match ($chargeType) {
-            ChargeType::RENEWAL->value    => $this->renewalAmount($tenant),
-            ChargeType::ADDON->value      => $this->addonAmount($tenant),
-            ChargeType::ONBOARDING->value => $this->onboardingAmount($tenant),
+            TenantChargeType::RENEWAL->value    => $this->renewalAmount($tenant),
+            TenantChargeType::ADDON->value      => $this->addonAmount($tenant),
+            TenantChargeType::ONBOARDING->value => $this->onboardingAmount($tenant),
             default      => throw new InvalidArgumentException('Invalid charge type'),
         };
     }
@@ -57,9 +59,9 @@ class TenantPaymentService
             'tenant_id'   => $tenant->id,
             'charge_type' => $chargeType,
             'breakdown'   => match ($chargeType) {
-                ChargeType::RENEWAL->value    => $this->renewalSnapshot($tenant),
-                ChargeType::ADDON->value      => $this->addonSnapshot($tenant),
-                ChargeType::ONBOARDING->value => $this->onboardingSnapshot($tenant),
+                TenantChargeType::RENEWAL->value    => $this->renewalSnapshot($tenant),
+                TenantChargeType::ADDON->value      => $this->addonSnapshot($tenant),
+                TenantChargeType::ONBOARDING->value => $this->onboardingSnapshot($tenant),
             },
             'total'       => $this->calculateAmount($tenant, $chargeType),
         ];
@@ -85,9 +87,9 @@ class TenantPaymentService
 
         // Apply effects based on charge type
         match ($payment->charge_type) {
-            ChargeType::RENEWAL->value    => $this->finalizeRenewal($tenant),
-            ChargeType::ADDON->value      => $this->finalizeAddon($tenant),
-            ChargeType::ONBOARDING->value => $this->finalizeOnboarding($tenant),
+            TenantChargeType::RENEWAL->value    => $this->finalizeRenewal($tenant),
+            TenantChargeType::ADDON->value      => $this->finalizeAddon($tenant),
+            TenantChargeType::ONBOARDING->value => $this->finalizeOnboarding($tenant),
         };
     }
 
@@ -175,7 +177,6 @@ class TenantPaymentService
 	public function preview(TenantAccount $tenant, string $chargeType): array
 	{
     	$now = now();
-
 	    $currentValidTill = $tenant->valid_till;
 
 	    $start = $currentValidTill && $currentValidTill->isFuture()
@@ -184,27 +185,38 @@ class TenantPaymentService
 
 	    $end = $start->copy()->addYear();
 
-	    $modules = $tenant->modules()
-    	    ->where('is_active', true)
-        	->get();
+	    $modules = $tenant->modules()->where('is_active', true)->get();
 
-	    $amount = $modules->sum('price');
+	    $items = $modules->map(fn ($m) => [
+    	    'code'       => $m->module_key,
+        	'label'      => $m->module_name,
+	        'quantity'   => 1,
+    	    'unit_price' => $m->price,
+        	'total'      => $m->price,
+	        'meta'       => [],
+    	])->values();
 
-	    return [
-    	    'charge_type'        => $chargeType,
-        	'current_valid_till' => $currentValidTill,
-	        'renewal_start'      => $start,
-    	    'renewal_end'        => $end,
-        	'amount'             => $amount,
-	        'currency'           => 'INR',
-    	    'modules'            => $modules->map(fn ($m) => [
-        	    'module_key' => $m->module_key,
-            	'name'       => $m->module_name,
-            	'price'      => $m->price,
-	        ]),
-    	    'can_renew' => true,
-        	'reason'    => null,
-    	];
+	    $subtotal = $items->sum('total');
+
+	    return PreviewFormatter::make([
+    	    'charge_type'    => $chargeType,
+
+	        'reference_type' => 'tenant',
+    	    'reference_id'   => $tenant->id,
+
+	        'items'          => $items,
+
+    	    'period_start'   => $start,
+        	'period_end'     => $end,
+
+	        'subtotal'       => $subtotal,
+    	    'total'          => $subtotal,
+
+	        'currency'       => 'INR',
+
+    	    'can_pay'        => true,
+        	'reason'         => null,
+	    ]);
 	}
 
 }

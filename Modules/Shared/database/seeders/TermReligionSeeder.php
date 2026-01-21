@@ -12,7 +12,7 @@ class TermReligionSeeder extends Seeder
     {
         DB::table('terms')->insert([
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Hindu',
                 'slug'       => Str::slug('Hindu'),
@@ -23,7 +23,7 @@ class TermReligionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Muslim',
                 'slug'       => Str::slug('Muslim'),
@@ -34,7 +34,7 @@ class TermReligionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Christian',
                 'slug'       => Str::slug('Christian'),
@@ -45,7 +45,7 @@ class TermReligionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Sikh',
                 'slug'       => Str::slug('Sikh'),
@@ -56,7 +56,7 @@ class TermReligionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Buddhist',
                 'slug'       => Str::slug('Buddhist'),
@@ -67,7 +67,7 @@ class TermReligionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Jain',
                 'slug'       => Str::slug('Jain'),
@@ -78,7 +78,7 @@ class TermReligionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Others',
                 'slug'       => Str::slug('Others'),

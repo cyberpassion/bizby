@@ -12,12 +12,12 @@ return new class extends Migration
 			$table->id();
 
 		    $table->string('name');
-		    $table->unsignedBigInteger('client_id');
+		    $table->unsignedBigInteger('tenant_id');
 
 		    $table->timestamps();
 
-		    $table->unique(['name', 'client_id']);
-    		$table->index('client_id');
+		    $table->unique(['name', 'tenant_id']);
+    		$table->index('tenant_id');
 		});
 
     }

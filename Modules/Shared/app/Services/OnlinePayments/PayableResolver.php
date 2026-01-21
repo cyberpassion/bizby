@@ -7,8 +7,11 @@ use InvalidArgumentException;
 
 class PayableResolver
 {
+	// We list all supported payable types here
     protected array $payables = [
-        'tenant'	=>	\Modules\Admin\Models\Tenants\TenantAccount::class
+        'tenant'		=>	\Modules\Admin\Models\Tenants\TenantAccount::class,
+		'student'		=>	\Modules\Student\Models\Student::class,
+		'registration'	=>	\Modules\Registration\Models\Registration::class
     ];
 
     public function resolve(string $type, int $id): Model

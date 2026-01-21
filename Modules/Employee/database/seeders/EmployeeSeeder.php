@@ -13,7 +13,7 @@ class EmployeeSeeder extends Seeder
 
             [
                 // ========== SaaS Common Fields ==========
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
                 'created_by' => 1,
                 'updated_by' => 1,
@@ -91,7 +91,7 @@ class EmployeeSeeder extends Seeder
 
             [
                 // ========== SaaS Common Fields ==========
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
                 'created_by' => 1,
                 'updated_by' => 1,

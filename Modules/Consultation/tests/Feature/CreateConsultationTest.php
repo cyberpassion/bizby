@@ -11,7 +11,7 @@ uses(TestCase::class); // we want to view data hence not refreshing DB
 it('can create a consultation entry', function () {
 
     $data = [
-        'client_id' => 1,
+        'tenant_id' => 1,
         'status' => 1,
         'created_by' => 1,
         'updated_by' => 1,

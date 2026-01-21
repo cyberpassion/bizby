@@ -2,10 +2,10 @@
 
 namespace Modules\Attendance\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Attendance extends Model
+class Attendance extends TenantModel
 {
     use HasFactory;
 

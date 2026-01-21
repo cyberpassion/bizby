@@ -4,50 +4,83 @@ namespace Modules\Examresult\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Examresult\Models\ExamresultEvaluation;
 use Modules\Examresult\Models\ExamresultEvaluationResult;
 
 class ExamresultResultApiController extends Controller
 {
-    /**
-     * Get results for a single evaluation
-     */
-    public function evaluationResults($evaluationId)
+    public function store(Request $request)
     {
-        $results = ExamresultEvaluationResult::where('evaluation_id', $evaluationId)
-            ->with(['component', 'entity'])
-            ->get();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $results,
+        $data = $request->validate([
+            'evaluation_id' => 'required|integer',
+            'evaluation_component_id' => 'nullable|integer',
+            'entity_id' => 'required|integer',
+            'entity_type' => 'required|string',
+            'score' => 'nullable|numeric',
+            'max_score' => 'nullable|numeric',
+            'grade' => 'nullable|string',
+            'result_status' => 'nullable|string',
         ]);
+
+        return ExamresultEvaluationResult::updateOrCreate(
+            [
+                'evaluation_id' => $data['evaluation_id'],
+                'evaluation_component_id' => $data['evaluation_component_id'] ?? null,
+                'entity_id' => $data['entity_id'],
+                'entity_type' => $data['entity_type'],
+            ],
+            $data
+        );
     }
 
-    /**
-     * Get combined results using group_code (annual report input)
-     */
-    public function groupResults(Request $request)
+    public function bulkStore(Request $request)
     {
-        $request->validate([
-            'group_code' => 'required|string',
-        ]);
+        $items = $request->validate([
+            'items' => 'required|array',
+            'items.*.evaluation_id' => 'required',
+            'items.*.entity_id' => 'required',
+            'items.*.entity_type' => 'required',
+        ])['items'];
 
-        $evaluationIds = ExamresultEvaluation::where(
-            'group_code',
-            $request->group_code
-        )->pluck('id');
+        foreach ($items as $item) {
+            ExamresultEvaluationResult::updateOrCreate(
+                [
+                    'evaluation_id' => $item['evaluation_id'],
+                    'evaluation_component_id' => $item['evaluation_component_id'] ?? null,
+                    'entity_id' => $item['entity_id'],
+                    'entity_type' => $item['entity_type'],
+                ],
+                $item
+            );
+        }
 
-        $results = ExamresultEvaluationResult::whereIn(
-                'evaluation_id',
-                $evaluationIds
-            )
+        return ['status' => 'ok'];
+    }
+
+    public function evaluationResults($id)
+    {
+        return ExamresultEvaluationResult::where('evaluation_id', $id)
             ->with(['component', 'entity'])
             ->get();
+    }
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $results,
-        ]);
+    public function groupResults(Request $request)
+    {
+        $evaluationIds = \Modules\Examresult\Models\ExamresultEvaluation::where(
+            'group_code', $request->group_code
+        )->pluck('id');
+
+        return ExamresultEvaluationResult::whereIn('evaluation_id', $evaluationIds)
+            ->with(['component', 'entity'])
+            ->get();
+    }
+
+    public function import(Request $request)
+    {
+        return ['status' => 'import not implemented yet'];
+    }
+
+    public function export(Request $request)
+    {
+        return ['status' => 'export not implemented yet'];
     }
 }

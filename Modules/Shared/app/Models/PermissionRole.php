@@ -13,7 +13,7 @@ class PermissionRole extends Model
 
     protected $fillable = [
         'name',
-        'client_id',
+        'tenant_id',
     ];
 
     /**

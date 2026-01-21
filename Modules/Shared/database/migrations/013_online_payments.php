@@ -11,6 +11,10 @@ return new class extends Migration
         Schema::create('online_payments', function (Blueprint $table) {
 		    $table->commonSaasFields();
 
+			$table->foreignId('payment_payable_id')
+          	->constrained('payment_payables')
+          	->restrictOnDelete();
+
 		    $table->unsignedBigInteger('user_id')->nullable();
 		    $table->morphs('payable');
 

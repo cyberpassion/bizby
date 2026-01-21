@@ -22,7 +22,7 @@ class LeadFollowup extends Model
         'response',
         'remark',
         'next_followup_date',
-        'client_id',
+        'tenant_id',
         'created_by',
         'updated_by',
         'deleted_by',

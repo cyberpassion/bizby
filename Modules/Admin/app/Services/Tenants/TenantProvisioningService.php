@@ -16,7 +16,7 @@ use Stancl\Tenancy\Facades\Tenancy;
 
 class TenantProvisioningService
 {
-    public function provision(
+    /*public function provision(
         TenantAccount $tenant,
         TenantDatabaseService $dbService
     ): void {
@@ -27,7 +27,36 @@ class TenantProvisioningService
 
         $this->createDatabase($tenant, $dbService);
         $this->seedDefaults($tenant);
-    }
+    }*/
+	public function provision(
+	    TenantAccount $tenant,
+    	TenantDatabaseService $dbService
+	): void {
+    	if ($tenant->tenancy_id) {
+        	return;
+    	}
+
+	    $tenant->update([
+    	    'status' => 'provisioning',
+        	'provision_started_at' => now(),
+	    ]);
+
+	    try {
+    	    $this->createDatabase($tenant, $dbService);
+        	$this->seedDefaults($tenant);
+
+	        $tenant->update([
+    	        'status' => 'active',
+        	    'provisioned_at' => now(),
+	        ]);
+    	} catch (\Throwable $e) {
+        	$tenant->update([
+            	'status' => 'failed',
+	        ]);
+
+    	    throw $e;
+    	}
+	}
 
     /**
      * Create tenancy record + physical database

@@ -22,7 +22,7 @@ class TermLeadStageSeeder extends Seeder
 
         foreach ($stages as $index => [$slug, $label]) {
             $data[] = [
-                'client_id'  => 1, // default client / tenant
+                'tenant_id'  => 1, // default client / tenant
                 'status'     => 1,
                 'name'       => $label,
                 'slug'       => $slug,
@@ -36,7 +36,7 @@ class TermLeadStageSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

@@ -12,13 +12,13 @@ class AttendanceSessionApiController extends Controller
     public function __construct(private AttendanceService $service) {}
 
     public function index(Request $request)
-    {
-        return AttendanceSession::query()
-            ->when($request->date, fn($q) => $q->whereDate('session_date', $request->date))
-            ->when($request->type, fn($q) => $q->where('type', $request->type))
-            ->latest()
-            ->paginate(50);
-    }
+	{
+	    return AttendanceSession::where('tenant_id', tenant()->id)
+    	    ->when($request->date, fn($q) => $q->whereDate('session_date', $request->date))
+        	->when($request->type, fn($q) => $q->where('type', $request->type))
+        	->latest()
+        	->paginate(50);
+	}
 
     public function store(Request $request)
     {
@@ -37,8 +37,13 @@ class AttendanceSessionApiController extends Controller
         return response()->json($session, 201);
     }
 
-    public function show(AttendanceSession $attendanceSession)
-    {
-        return $attendanceSession->load('attendances');
-    }
+    public function show($id)
+	{
+	    $session = AttendanceSession::where('id', $id)
+    	    ->where('tenant_id', tenant()->id)
+        	->firstOrFail();
+
+	    return $session->load('attendances');
+	}
+
 }

@@ -2,11 +2,11 @@
 
 namespace Modules\Vendor\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Vendor extends Model
+class Vendor extends TenantModel
 {
     use HasFactory;
 

@@ -33,7 +33,7 @@ return new class extends Migration
 		    $table->date('next_followup_date')->nullable();
 
 		    // Audit fields for SaaS
-	    	$table->unsignedBigInteger('client_id')->nullable();
+	    	$table->unsignedBigInteger('tenant_id')->nullable();
     		$table->unsignedBigInteger('created_by')->nullable();
 		    $table->unsignedBigInteger('updated_by')->nullable();
     		$table->unsignedBigInteger('deleted_by')->nullable();

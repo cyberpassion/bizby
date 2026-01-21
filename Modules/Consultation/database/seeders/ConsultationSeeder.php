@@ -12,7 +12,7 @@ class ConsultationSeeder extends Seeder
     {
         DB::table('consultations')->insert([
             [
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
                 'created_by' => 1,
                 'updated_by' => 1,

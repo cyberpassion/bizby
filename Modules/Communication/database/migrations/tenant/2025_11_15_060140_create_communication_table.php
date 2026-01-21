@@ -33,7 +33,7 @@ return new class extends Migration
             $table->tinyInteger('status');
 
             // Client / Session Info
-            $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->string('session', 64)->nullable();
 
             // Timestamps

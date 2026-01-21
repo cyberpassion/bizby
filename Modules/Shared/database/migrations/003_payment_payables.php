@@ -17,7 +17,14 @@ return new class extends Migration
             $table->string('payable_type');   // tenant_account | student_fee | registration | etc
             $table->unsignedBigInteger('payable_id');
 
-			$table->unsignedBigInteger('online_payment_id')->nullable()->index();
+			$table->unsignedBigInteger('online_payment_id')->nullable();
+
+			$table->foreign('online_payment_id')
+			    ->references('id')
+			    ->on('online_payments')
+			    ->nullOnDelete();
+
+			$table->unique('online_payment_id');
 
             /* ---------------------------------
              | Optional Tenant Context

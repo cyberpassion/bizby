@@ -12,7 +12,7 @@ class ContactSeeder extends Seeder
         DB::table('contacts')->insert([
             [
                 // ===== commonSaasFields =====
-                'client_id'           => 1,
+                'tenant_id'           => 1,
                 'status'              => 1,
                 'created_by'          => 1,
                 'updated_by'          => 1,
@@ -45,7 +45,7 @@ class ContactSeeder extends Seeder
                 'marital_status'      => 0,
             ],
             [
-                'client_id'           => 1,
+                'tenant_id'           => 1,
                 'status'              => 1,
                 'created_by'          => 1,
                 'updated_by'          => 1,

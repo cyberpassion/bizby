@@ -11,7 +11,7 @@ class TermBloodGroupSeeder extends Seeder
     {
         DB::table('terms')->insert([
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'A+',
                 'slug'       => 'a-plus',
@@ -22,7 +22,7 @@ class TermBloodGroupSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 2,
+                'tenant_id'  => 2,
                 'status'     => 1,
                 'name'       => 'A-',
                 'slug'       => 'a-minus',
@@ -33,7 +33,7 @@ class TermBloodGroupSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'B+',
                 'slug'       => 'b-plus',
@@ -44,7 +44,7 @@ class TermBloodGroupSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 2,
+                'tenant_id'  => 2,
                 'status'     => 1,
                 'name'       => 'B-',
                 'slug'       => 'b-minus',
@@ -55,7 +55,7 @@ class TermBloodGroupSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'O+',
                 'slug'       => 'o-plus',
@@ -66,7 +66,7 @@ class TermBloodGroupSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 2,
+                'tenant_id'  => 2,
                 'status'     => 1,
                 'name'       => 'O-',
                 'slug'       => 'o-minus',
@@ -77,7 +77,7 @@ class TermBloodGroupSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'AB+',
                 'slug'       => 'ab-plus',
@@ -88,7 +88,7 @@ class TermBloodGroupSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 2,
+                'tenant_id'  => 2,
                 'status'     => 1,
                 'name'       => 'AB-',
                 'slug'       => 'ab-minus',

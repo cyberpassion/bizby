@@ -20,7 +20,7 @@ class TermPrioritySeeder extends Seeder
 
         foreach ($priorities as $index => $priority) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $priority,
                 'slug'       => Str::slug($priority), // low, average, high
@@ -34,7 +34,7 @@ class TermPrioritySeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

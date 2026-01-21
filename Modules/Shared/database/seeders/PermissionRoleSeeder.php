@@ -13,18 +13,18 @@ class PermissionRoleSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            ['name' => 'Super Admin', 'client_id' => 1],
-            ['name' => 'Admin', 'client_id' => 1],
-            ['name' => 'Accountant', 'client_id' => 1],
-            ['name' => 'Teacher', 'client_id' => 1],
-            ['name' => 'Student', 'client_id' => 1],
+            ['name' => 'Super Admin', 'tenant_id' => 1],
+            ['name' => 'Admin', 'tenant_id' => 1],
+            ['name' => 'Accountant', 'tenant_id' => 1],
+            ['name' => 'Teacher', 'tenant_id' => 1],
+            ['name' => 'Student', 'tenant_id' => 1],
         ];
 
         foreach ($roles as $role) {
             DB::table('permission_roles')->updateOrInsert(
                 [
                     'name' => $role['name'],
-                    'client_id' => $role['client_id'],
+                    'tenant_id' => $role['tenant_id'],
                 ],
                 [
                     'created_at' => now(),

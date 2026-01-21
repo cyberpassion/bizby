@@ -12,7 +12,7 @@ class EventmanagerSeeder extends Seeder
         DB::table('eventmanagers')->insert([
             [
                 // ===== commonSaasFields =====
-                'client_id'           => 1,
+                'tenant_id'           => 1,
                 'status'              => 1,
                 'created_by'          => 1,
                 'updated_by'          => 1,
@@ -35,7 +35,7 @@ class EventmanagerSeeder extends Seeder
                 'event_remark'        => 'Bring laptops for hands-on sessions',
             ],
             [
-                'client_id'           => 1,
+                'tenant_id'           => 1,
                 'status'              => 1,
                 'created_by'          => 1,
                 'updated_by'          => 1,

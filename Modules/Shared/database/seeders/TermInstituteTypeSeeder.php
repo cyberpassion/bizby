@@ -60,7 +60,7 @@ class TermInstituteTypeSeeder extends Seeder
 
         foreach ($types as $index => $type) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $type,
                 'slug'       => Str::slug($type),
@@ -74,7 +74,7 @@ class TermInstituteTypeSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

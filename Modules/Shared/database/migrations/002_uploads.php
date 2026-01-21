@@ -19,13 +19,17 @@ return new class extends Migration
 			$table->string('reference_type', 255)->nullable();
 
 			// The entity this upload belongs to (e.g., student, employee, customer)
-            $table->unsignedBigInteger('reference_id');
+            $table->unsignedBigInteger('reference_id')->nullable();
 
             // The type/key of the document (e.g., profile_photo, resume, certificate)
             $table->string('file_key');
 
             // Add document_path column (nullable because file may not be uploaded initially)
             $table->string('document_path')->nullable();
+
+			$table->string('disk')->nullable();
+
+			$table->unique(['reference_type', 'reference_id', 'file_key'],'uploads_unique_ref');
 
         });
     }

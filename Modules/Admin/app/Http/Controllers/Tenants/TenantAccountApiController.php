@@ -10,9 +10,8 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 use Modules\Admin\Services\Tenants\TenantDatabaseService;
 use Modules\Admin\Jobs\Tenants\ProvisionTenantJob;
 
-use Modules\Shared\Helpers\PleskHelper;
+use Modules\Admin\Services\Tenants\TenantProvisioningService;
 
-use Illuminate\Support\Facades\DB;
 
 class TenantAccountApiController extends SharedApiController
 {
@@ -60,16 +59,20 @@ class TenantAccountApiController extends SharedApiController
     }
 
 	// Provision Tenant - Create database, migrate, create user and all
-    public function paymentCompleted(TenantAccount $tenant)
+    public function paymentCompleted(TenantAccount $tenant, TenantProvisioningService $service)
 	{
-    	$tenant->update(['status' => 'paid']);
+    	/*$tenant->update(['status' => 'paid']);
 
 	    ProvisionTenantJob::dispatch($tenant->id);
 
 	    return response()->json([
     	    'status'  => 'paid',
         	'message' => 'Payment received. Provisioning has started.',
-	    ]);
+	    ]);*/
+		return response()->json([
+        	'status'  => 'paid',
+        	'message' => 'Payment received. Provisioning will start shortly.',
+    	]);
 	}
 
 	public function provisionForTesting(TenantAccount $tenant)

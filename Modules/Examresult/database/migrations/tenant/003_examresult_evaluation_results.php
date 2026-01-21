@@ -84,6 +84,7 @@ return new class extends Migration
                 'entity_id',
                 'entity_type'
             ], 'uniq_examresult_entity_score');
+
         });
     }
 

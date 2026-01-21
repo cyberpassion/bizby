@@ -80,7 +80,7 @@ class TermNationalitySeeder extends Seeder
             $slug = strtolower($code) . '-' . strtolower(str_replace(' ', '-', $name));
 
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => $slug, // eg: in-indian
@@ -94,7 +94,7 @@ class TermNationalitySeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

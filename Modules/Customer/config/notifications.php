@@ -15,7 +15,7 @@ return [
             /* PREVIEW DATA (customers table aligned) */
             'preview' => [
                 'id'              => 101,
-                'client_id'       => 1,
+                'tenant_id'       => 1,
                 'business_type'   => 'Retail',
                 'customer_type'   => 'B2B',
 
@@ -44,7 +44,7 @@ return [
 
             'preview' => [
                 'id'            => 101,
-                'client_id'     => 1,
+                'tenant_id'     => 1,
                 'name'          => 'Ravi Sharma',
                 'email'         => 'ravi@example.com',
                 'mobile'        => '9876543210',

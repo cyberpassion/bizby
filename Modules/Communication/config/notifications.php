@@ -24,7 +24,7 @@ return [
                 'mode'           => 'email',              // email | sms | whatsapp
                 'service_name'   => 'Bulk Communication',
                 'status'         => 1,                    // 0=failed | 1=sent | 2=queued
-                'client_id'      => 1,
+                'tenant_id'      => 1,
                 'session'        => 'web',
             ],
 
@@ -65,7 +65,7 @@ return [
                 'mode'           => 'email',
                 'service_name'   => 'Direct Message',
                 'status'         => 1,
-                'client_id'      => 1,
+                'tenant_id'      => 1,
                 'session'        => 'admin-panel',
             ],
 

@@ -36,7 +36,7 @@ return new class extends Migration
              (avoid if logs must survive deletions)
             */
             // $table->foreign('user_id')->references('id')->on('users');
-            // $table->foreign('client_id')->references('id')->on('clients');
+            // $table->foreign('tenant_id')->references('id')->on('clients');
         });
     }
 

@@ -35,7 +35,7 @@ class TermLeadSourceSeeder extends Seeder
 
         foreach ($sources as $index => $source) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $source,
                 'slug'       => Str::slug($source),
@@ -49,7 +49,7 @@ class TermLeadSourceSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

@@ -65,7 +65,7 @@ class TermPaymentModeSeeder extends Seeder
                     'group' => 'payment_mode',
                 ],
                 [
-                    'client_id'  => 1,
+                    'tenant_id'  => 1,
                     'status'     => 1,
                     'name'       => $mode,
                     'module'     => 'shared',

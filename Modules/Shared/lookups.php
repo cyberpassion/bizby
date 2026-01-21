@@ -88,6 +88,11 @@ return [
 
 	/* ---------------- Shared Lookups ---------------- */
 
+	'shared.bulk_upload_types' => [
+	    'data' => 'Bulk Data Import',
+    	'document' => 'Bulk Document Import',
+	],
+
 	'shared.yes_nos' => [
 		'Y' => 'Yes',
 		'N' => 'No',

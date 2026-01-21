@@ -2,16 +2,17 @@
 
 namespace Modules\Examresult\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ExamresultEvaluation extends Model
+class ExamresultEvaluation extends TenantModel
 {
     use HasFactory;
 
     protected $table = 'examresult_evaluations';
 
     protected $fillable = [
+        'tenant_id',
         'name',
         'type',
         'group_code',
@@ -24,10 +25,6 @@ class ExamresultEvaluation extends Model
         'meta' => 'array',
         'evaluation_date' => 'date',
     ];
-
-    /* =========================
-     | Relationships
-     |=========================*/
 
     public function components()
     {

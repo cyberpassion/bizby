@@ -28,4 +28,12 @@ class OnlinePayment extends Model
     	return $this->morphTo();
 	}
 
+	public function payableRecord()
+	{
+    	return $this->hasOne(
+	        PaymentPayable::class,
+    	    'online_payment_id'
+    	);
+	}
+
 }

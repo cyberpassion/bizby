@@ -12,7 +12,7 @@ class ProductSeeder extends Seeder
     {
         DB::table('products')->insert([
             [
-                'client_id'             => 1,
+                'tenant_id'             => 1,
                 'status'                => 1,
                 'created_by'            => 1,
                 'updated_by'            => 1,
@@ -51,7 +51,7 @@ class ProductSeeder extends Seeder
             ],
 
             [
-                'client_id'             => 1,
+                'tenant_id'             => 1,
                 'status'                => 1,
                 'created_by'            => 1,
                 'updated_by'            => 1,

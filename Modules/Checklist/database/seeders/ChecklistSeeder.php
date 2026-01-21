@@ -12,7 +12,7 @@ class ChecklistSeeder extends Seeder
         DB::table('checklists')->insert([
             [
                 // ===== commonSaasFields =====
-                'client_id'            => 1,
+                'tenant_id'            => 1,
                 'status'               => 1,
                 'created_by'           => 1,
                 'updated_by'           => 1,
@@ -35,7 +35,7 @@ class ChecklistSeeder extends Seeder
                 'checklist_by_id'      => 1,
             ],
             [
-                'client_id'            => 1,
+                'tenant_id'            => 1,
                 'status'               => 1,
                 'created_by'           => 1,
                 'updated_by'           => 1,

@@ -9,7 +9,7 @@ return [
         $clients = \Db::core_connect()->select('cyp_client', ['module' => ['!', 'admin']]);
         $res = [];
         foreach ($clients as $client) {
-            $res[$client['client_id']] = strtoupper($client['client_official_name']);
+            $res[$client['tenant_id']] = strtoupper($client['client_official_name']);
         }
         return $res;
     })(),

@@ -41,7 +41,7 @@ class TermUnitSeeder extends Seeder
 
         foreach ($units as $index => [$name, $symbol, $type]) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => strtolower($symbol),
@@ -55,7 +55,7 @@ class TermUnitSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

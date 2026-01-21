@@ -12,6 +12,10 @@ class PaymentPayable extends Model
 
     protected $fillable = [];
 
+	protected $casts = [
+        'meta' => 'array',
+    ];
+
     protected function dynamicFillable()
     {
         // Example dynamic load from DB table
@@ -22,5 +26,18 @@ class PaymentPayable extends Model
     {
         return $this->dynamicFillable();
     }
+
+	public function onlinePayment()
+	{
+    	return $this->belongsTo(
+        	OnlinePayment::class,
+        	'online_payment_id'
+    	);
+	}
+
+	public function payable()
+	{
+    	return $this->morphTo();
+	}
 
 }

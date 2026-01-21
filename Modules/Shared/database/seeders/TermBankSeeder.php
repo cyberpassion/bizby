@@ -74,7 +74,7 @@ class TermBankSeeder extends Seeder
                     'group' => 'banks',
                 ],
                 [
-                    'client_id'  => 1,
+                    'tenant_id'  => 1,
                     'status'     => 1,
                     'name'       => $bank,
                     'module'     => 'shared',

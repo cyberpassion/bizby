@@ -28,7 +28,7 @@ class TermDesignationSeeder extends Seeder
 
         foreach ($designations as $index => [$slug, $label]) {
             $data[] = [
-                'client_id'  => 1, // default tenant
+                'tenant_id'  => 1, // default tenant
                 'status'     => 1,
                 'name'       => $label,
                 'slug'       => $slug,
@@ -42,7 +42,7 @@ class TermDesignationSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

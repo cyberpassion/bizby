@@ -109,7 +109,7 @@ class TermDepartmentSeeder extends Seeder
 
         foreach ($departments as $index => $department) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $department,
                 'slug'       => Str::slug($department),
@@ -123,7 +123,7 @@ class TermDepartmentSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

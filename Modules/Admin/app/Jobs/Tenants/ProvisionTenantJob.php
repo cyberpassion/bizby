@@ -27,17 +27,17 @@ class ProvisionTenantJob implements ShouldQueue
         TenantDatabaseService $dbService
     ) {
 
-		Tenancy::end();
+		Tenancy::end(); // VERY IMPORTANT
 
-        $tenant = TenantAccount::findOrFail($this->tenantId);
+	    $tenant = TenantAccount::findOrFail($this->tenantId);
 
-        $tenant->update(['status' => 'provisioning']);
+	    if ($tenant->tenancy_id) {
+    	    return; // idempotent
+    	}
 
-        $provisioningService->provision($tenant, $dbService);
+	    $provisioningService->provision($tenant, $dbService);
 
-        $tenant->update(['status' => 'active']);
-
-		event(new \Modules\Admin\Events\TenantActivated($tenant->id));
+	    event(new \Modules\Admin\Events\TenantActivated($tenant->id));
 
     }
 

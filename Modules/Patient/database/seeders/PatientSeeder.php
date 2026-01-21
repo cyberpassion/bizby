@@ -15,7 +15,7 @@ class PatientSeeder extends Seeder
     {
         DB::table('patients')->insert([
             [
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
 
                 // Person Fields

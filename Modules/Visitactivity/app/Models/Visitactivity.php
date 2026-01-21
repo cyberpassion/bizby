@@ -2,11 +2,11 @@
 
 namespace Modules\Visitactivity\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Visitactivity extends Model
+class Visitactivity extends TenantModel
 {
     use HasFactory;
 

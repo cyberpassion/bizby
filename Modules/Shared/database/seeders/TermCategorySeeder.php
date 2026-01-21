@@ -12,7 +12,7 @@ class TermCategorySeeder extends Seeder
     {
         DB::table('terms')->insert([
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'General',
                 'slug'       => Str::slug('General'),
@@ -23,7 +23,7 @@ class TermCategorySeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'OBC',
                 'slug'       => Str::slug('OBC'),
@@ -34,7 +34,7 @@ class TermCategorySeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'SC',
                 'slug'       => Str::slug('SC'),
@@ -45,7 +45,7 @@ class TermCategorySeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'ST',
                 'slug'       => Str::slug('ST'),
@@ -56,7 +56,7 @@ class TermCategorySeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'EWS',
                 'slug'       => Str::slug('EWS'),

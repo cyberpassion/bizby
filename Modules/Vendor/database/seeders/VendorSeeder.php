@@ -12,7 +12,7 @@ class VendorSeeder extends Seeder
     {
         DB::table('vendors')->insert([
             [
-                'client_id' => 1,
+                'tenant_id' => 1,
                 'status' => 1,
                 'created_by' => 1,
                 'updated_by' => 1,

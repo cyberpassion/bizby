@@ -29,7 +29,7 @@ class BlueprintMacroServiceProvider extends ServiceProvider
             $this->id();
 
             // Multitenancy: Which client/tenant this record belongs to
-            $this->unsignedBigInteger('client_id')
+            $this->unsignedBigInteger('tenant_id')
                 ->nullable()
                 ->index()
                 ->comment('Tenant/Client owner ID');

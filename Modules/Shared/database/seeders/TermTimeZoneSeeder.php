@@ -29,7 +29,7 @@ class TermTimeZoneSeeder extends Seeder
 
         foreach ($timezones as $index => [$tz, $label]) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $label,
                 'slug'       => strtolower(str_replace('/', '-', $tz)),
@@ -43,7 +43,7 @@ class TermTimeZoneSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

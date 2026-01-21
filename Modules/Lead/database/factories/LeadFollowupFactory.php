@@ -31,7 +31,7 @@ class LeadFollowupFactory extends Factory
             'contact_by_type' => null,
 
             // SaaS audit
-            'client_id' => null,
+            'tenant_id' => null,
             'created_by' => null,
             'updated_by' => null,
             'deleted_by' => null,

@@ -74,7 +74,7 @@ class TermUniversitySeeder extends Seeder
 
         foreach ($universities as $index => $university) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $university,
                 'slug'       => Str::slug($university),

@@ -8,38 +8,67 @@ use Modules\Examresult\Models\ExamresultEvaluation;
 
 class ExamresultEvaluationApiController extends Controller
 {
-    /**
-     * List evaluations
-     * Optional: ?group_code=2024_ANNUAL
-     */
     public function index(Request $request)
     {
-        $query = ExamresultEvaluation::query();
+        $q = ExamresultEvaluation::query();
 
         if ($request->filled('group_code')) {
-            $query->where('group_code', $request->group_code);
+            $q->where('group_code', $request->group_code);
         }
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $query
-                ->with('components')
-                ->orderBy('sequence')
-                ->get(),
-        ]);
+        return $q->with('components')
+            ->orderBy('sequence')
+            ->get();
     }
 
-    /**
-     * Show single evaluation with components
-     */
     public function show($id)
     {
-        $evaluation = ExamresultEvaluation::with('components')
-            ->findOrFail($id);
+        return ExamresultEvaluation::with('components')->findOrFail($id);
+    }
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $evaluation,
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string',
+            'type' => 'nullable|string',
+            'group_code' => 'nullable|string',
+            'sequence' => 'nullable|integer',
+            'evaluation_date' => 'nullable|date',
+            'meta' => 'nullable|array',
         ]);
+
+        return ExamresultEvaluation::create($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $evaluation = ExamresultEvaluation::findOrFail($id);
+
+        $evaluation->update($request->only([
+            'name','type','group_code','sequence','evaluation_date','meta'
+        ]));
+
+        return $evaluation;
+    }
+
+    public function destroy($id)
+    {
+        ExamresultEvaluation::findOrFail($id)->delete();
+        return response()->json(['status' => 'deleted']);
+    }
+
+    public function lock($id)
+    {
+        $evaluation = ExamresultEvaluation::findOrFail($id);
+        $evaluation->status = 'locked';
+        $evaluation->save();
+
+        return ['status' => 'locked'];
+    }
+
+    public function recalculate($id)
+    {
+        // hook for future grade/rank logic
+        return ['status' => 'recalculated'];
     }
 }

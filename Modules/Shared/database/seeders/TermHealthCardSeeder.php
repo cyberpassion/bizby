@@ -39,7 +39,7 @@ class TermHealthCardSeeder extends Seeder
 
         foreach ($healthCards as $index => $card) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $card,
                 'slug'       => Str::slug($card),
@@ -53,7 +53,7 @@ class TermHealthCardSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

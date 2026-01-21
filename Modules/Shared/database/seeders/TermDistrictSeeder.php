@@ -252,7 +252,7 @@ class TermDistrictSeeder extends Seeder
         foreach ($districts as $state => $items) {
             foreach ($items as $district) {
                 $data[] = [
-                    'client_id'  => 1,
+                    'tenant_id'  => 1,
                     'status'     => 1,
                     'name'       => "$district, $state",
                     'slug'       => Str::slug($district),
@@ -267,7 +267,7 @@ class TermDistrictSeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

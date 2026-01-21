@@ -2,59 +2,40 @@
 
 namespace Modules\Registration\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use \App\Models\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
-class Registration extends Model
+use Modules\Registration\Models\Traits\RegistrationPayable;
+
+// Online Payments Specific
+use Modules\Shared\Contracts\OnlinePayments\Payable;
+use Modules\Shared\Contracts\OnlinePayments\FinalizePayment;
+
+class Registration extends TenantModel implements Payable, FinalizePayment
 {
-    use HasFactory;
+	use HasFactory;
+	use RegistrationPayable; // Payable implementation trait
+    protected $fillable = [
+        'user_id', 'type', 'status', 'submitted_at', 'meta'
+    ];
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
-
-    /**
-     * Attribute casting.
-     */
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'registration_date' => 'date', // Laravel will cast it to Carbon
+        'meta' => 'array',
+        'submitted_at' => 'datetime',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
-
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function steps()
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): RegistrationFactory
-    // {
-    //     return RegistrationFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->hasMany(RegistrationStep::class);
     }
 
-    public function getFillable()
+    public function documents()
     {
-        return $this->dynamicFillable();
+        return $this->hasMany(RegistrationDocument::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(RegistrationPayment::class);
+    }
 }

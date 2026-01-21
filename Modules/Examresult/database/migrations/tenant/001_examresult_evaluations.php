@@ -85,6 +85,7 @@ return new class extends Migration
             // Indexes
             // =========================
             $table->index('group_code');
+
         });
     }
 

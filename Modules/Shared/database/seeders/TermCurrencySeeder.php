@@ -105,7 +105,7 @@ class TermCurrencySeeder extends Seeder
 
         foreach ($currencies as $index => [$code, $name]) {
             $data[] = [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => $name,
                 'slug'       => strtolower($code), // usd, inr, eur
@@ -119,7 +119,7 @@ class TermCurrencySeeder extends Seeder
 
         DB::table('terms')->upsert(
             $data,
-            ['slug', 'client_id'],
+            ['slug', 'tenant_id'],
             ['status', 'updated_at']
         );
     }

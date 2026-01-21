@@ -12,7 +12,7 @@ class TermSchoolBoardSeeder extends Seeder
     {
         DB::table('terms')->insert([
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'CBSE',
                 'slug'       => Str::slug('CBSE'),
@@ -23,7 +23,7 @@ class TermSchoolBoardSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'ICSE',
                 'slug'       => Str::slug('ICSE'),
@@ -34,7 +34,7 @@ class TermSchoolBoardSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'UP Board',
                 'slug'       => Str::slug('UP Board'),
@@ -45,7 +45,7 @@ class TermSchoolBoardSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'MP Board',
                 'slug'       => Str::slug('MP Board'),
@@ -56,7 +56,7 @@ class TermSchoolBoardSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'RBSE',
                 'slug'       => Str::slug('RBSE'),
@@ -67,7 +67,7 @@ class TermSchoolBoardSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Bihar Board',
                 'slug'       => Str::slug('Bihar Board'),

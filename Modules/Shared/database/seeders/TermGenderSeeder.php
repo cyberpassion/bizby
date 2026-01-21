@@ -12,7 +12,7 @@ class TermGenderSeeder extends Seeder
     {
         DB::table('terms')->insert([
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Male',
                 'slug'       => Str::slug('Male'),
@@ -23,7 +23,7 @@ class TermGenderSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Female',
                 'slug'       => Str::slug('Female'),
@@ -34,7 +34,7 @@ class TermGenderSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id'  => 1,
+                'tenant_id'  => 1,
                 'status'     => 1,
                 'name'       => 'Other',
                 'slug'       => Str::slug('Other'),
