@@ -31,13 +31,13 @@ class PermissionApiController extends Controller
             'updated_at' => now(),
         ]);
 
-        return response()->json(['message' => 'Permission created']);
+        return response()->json(['status'=>'success', 'message' => 'Permission created']);
     }
 
     // DELETE /api/permissions/{id}
     public function destroy($id)
     {
         DB::table('permission_permissions')->where('id', $id)->delete();
-        return response()->json(['message' => 'Permission deleted']);
+        return response()->json(['status'=>'success', 'message' => 'Permission deleted']);
     }
 }

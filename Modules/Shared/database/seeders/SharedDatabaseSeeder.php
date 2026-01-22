@@ -54,11 +54,20 @@ class SharedDatabaseSeeder extends Seeder
             TermSeeder::class,
 
             // Permissions
-            PermissionPermissionsSeeder::class,
-            PermissionRoleSeeder::class,
-            PermissionRolePermissionsSeeder::class,
-			PermissionUserRoleSeeder::class,
-			PermissionUserPermissionSeeder::class,
+            // 1. Create roles (Owner, Admin, Staff)
+		    PermissionRoleSeeder::class,
+
+		    // 2. Create all permissions (users.*, orders.*, etc.)
+		    PermissionPermissionsSeeder::class,
+
+		    // 3. Assign permissions to roles
+		    PermissionRolePermissionsSeeder::class,
+
+		    // 4. Assign roles to users
+		    PermissionUserRoleSeeder::class,
+
+		    // 5. Assign direct user permissions (overrides)
+		    PermissionUserPermissionSeeder::class,
 
             // System
             OptionsSeeder::class,

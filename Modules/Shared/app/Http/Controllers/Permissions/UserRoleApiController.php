@@ -17,7 +17,7 @@ class UserRoleApiController extends Controller
         ]);
 
         foreach ($request->role_ids as $rid) {
-            DB::table('user_roles')->updateOrInsert([
+            DB::table('permission_user_roles')->updateOrInsert([
                 'user_id' => $userId,
                 'role_id' => $rid
             ]);
@@ -31,7 +31,7 @@ class UserRoleApiController extends Controller
     // DELETE /api/users/{user}/roles
     public function revoke(Request $request, $userId)
     {
-        DB::table('user_roles')
+        DB::table('permission_user_roles')
             ->where('user_id', $userId)
             ->whereIn('role_id', $request->role_ids)
             ->delete();

@@ -39,7 +39,7 @@ class Permissions
                     ->where('r.tenant_id', $tenantId)
                     ->whereIn('r.id', function ($q) use ($userId) {
                         $q->select('role_id')
-                          ->from('user_roles')
+                          ->from('permission_user_roles')
                           ->where('user_id', $userId);
                     })
                     ->select('p.slug', 'rp.scope')

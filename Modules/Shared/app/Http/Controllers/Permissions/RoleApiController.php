@@ -30,7 +30,7 @@ class RoleApiController extends Controller
             'updated_at' => now(),
         ]);
 
-        return response()->json(['message' => 'Role created']);
+        return response()->json(['status'=>'success', 'message' => 'Role created']);
     }
 
     // DELETE /api/roles/{id}
@@ -41,6 +41,6 @@ class RoleApiController extends Controller
             ->where('tenant_id', tenant()->id)
             ->delete();
 
-        return response()->json(['message' => 'Role deleted']);
+        return response()->json(['status'=>'success', 'message' => 'Role deleted']);
     }
 }

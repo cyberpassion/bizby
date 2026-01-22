@@ -7,65 +7,39 @@ use Illuminate\Support\Facades\DB;
 
 class PermissionRolePermissionsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        /**
-         * Assumption:
-         * - permission_roles table already seeded
-         * - permission_permissions table already seeded
-         */
+        $roles = DB::table('permission_roles')->pluck('id', 'name');
+        $permissions = DB::table('permission_permissions')->pluck('id', 'slug');
 
-        // Role wise permission mapping (by slug)
-        $rolePermissions = [
-            'Super Admin' => ['*'], // all permissions
-            'Admin' => [
-                'user.view', 'user.create', 'user.update',
-                'role.view', 'role.create', 'role.update',
-            ],
-            'Accountant' => [
-                'fee.view', 'fee.collect', 'payment.view',
-            ],
-            'Teacher' => [
-                'student.view', 'attendance.manage',
-            ],
-            'Student' => [
-                'profile.view',
-            ],
-        ];
+        foreach ($permissions as $pid) {
+            DB::table('permission_role_permissions')->insert([
+                'role_id' => $roles['Owner'],
+                'permission_id' => $pid,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
 
-        foreach ($rolePermissions as $roleName => $permissionSlugs) {
-
-            $role = DB::table('permission_roles')
-                ->where('name', $roleName)
-                ->first();
-
-            if (!$role) {
-                continue; // role not found → skip
+        foreach ($permissions as $slug => $pid) {
+            if (!str_contains($slug, 'plans')) {
+                DB::table('permission_role_permissions')->insert([
+                    'role_id' => $roles['Admin'],
+                    'permission_id' => $pid,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
             }
+        }
 
-            // Super Admin → all permissions
-            if (in_array('*', $permissionSlugs)) {
-                $permissions = DB::table('permission_permissions')->get();
-            } else {
-                $permissions = DB::table('permission_permissions')
-                    ->whereIn('slug', $permissionSlugs)
-                    ->get();
-            }
-
-            foreach ($permissions as $permission) {
-                DB::table('permission_role_permissions')->updateOrInsert(
-                    [
-                        'role_id' => $role->id,
-                        'permission_id' => $permission->id,
-                    ],
-                    [
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]
-                );
+        foreach ($permissions as $slug => $pid) {
+            if (str_ends_with($slug, '.view')) {
+                DB::table('permission_role_permissions')->insert([
+                    'role_id' => $roles['Staff'],
+                    'permission_id' => $pid,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
             }
         }
     }

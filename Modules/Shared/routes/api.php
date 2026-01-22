@@ -235,7 +235,8 @@ Route::prefix('v1')->group(function () {
 
 // Permissions
 // protect these by ->middleware('permission:permissions.manage')
-Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
+// middleware(['auth:sanctum', 'tenant'])->
+Route::prefix('v1')->group(function () {
 
     // permissions
     Route::get('/permissions', [PermissionApiController::class, 'index']);
@@ -260,5 +261,3 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
     Route::delete('/users/{user}/permissions', [UserPermissionApiController::class, 'revoke']);
 
 });
-
-Route::get('/permissions/tree', [PermissionTreeApiController::class, 'index'])->middleware(['auth:sanctum', 'tenant', 'permission:permissions.view']);
