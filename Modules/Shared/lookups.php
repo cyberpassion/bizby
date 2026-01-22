@@ -712,4 +712,10 @@ return [
 	    '2029-30' => '2029-30',
 	],
 
+	'permission.user_roles' => [
+		'1' => 'Owner',
+		'2' => 'Admin',
+		'3' => 'Staff'
+	]
+
 ];

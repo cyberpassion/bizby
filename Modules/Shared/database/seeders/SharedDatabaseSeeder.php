@@ -3,43 +3,46 @@
 namespace Modules\Shared\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Shared\Database\Seeders\TermSeeder;
 
-use Modules\Shared\Database\Seeders\PermissionPermissionsSeeder;
-use Modules\Shared\Database\Seeders\PermissionRoleSeeder;
-use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
-use Modules\Shared\Database\Seeders\PermissionUserRoleSeeder;
-use Modules\Shared\Database\Seeders\PermissionUserPermissionSeeder;
+// use Modules\Shared\Database\Seeders\Developer\ActivityLogsSeeder;
 
-use Modules\Shared\Database\Seeders\OptionsSeeder;
-use Modules\Shared\Database\Seeders\ActivityLogsSeeder;
+use Modules\Shared\Database\Seeders\Options\OptionsSeeder;
 
-use Modules\Shared\Database\Seeders\TermUniversitySeeder;
-use Modules\Shared\Database\Seeders\TermSchoolBoardSeeder;
-use Modules\Shared\Database\Seeders\TermReligionSeeder;
-use Modules\Shared\Database\Seeders\TermCategorySeeder;
-use Modules\Shared\Database\Seeders\TermCasteSeeder;
-use Modules\Shared\Database\Seeders\TermDesignationSeeder;
-use Modules\Shared\Database\Seeders\TermGenderSeeder;
-use Modules\Shared\Database\Seeders\TermBankSeeder;
-use Modules\Shared\Database\Seeders\TermAcademicQualificationSeeder;
-use Modules\Shared\Database\Seeders\TermPaymentModeSeeder;
-use Modules\Shared\Database\Seeders\TermBloodGroupSeeder;
-use Modules\Shared\Database\Seeders\TermCompanySizeSeeder;
-use Modules\Shared\Database\Seeders\TermEmployeeTypeSeeder;
-use Modules\Shared\Database\Seeders\TermHealthCardSeeder;
-use Modules\Shared\Database\Seeders\TermLeadSourceSeeder;
-use Modules\Shared\Database\Seeders\TermLeadStageSeeder;
-use Modules\Shared\Database\Seeders\TermRelationTypeSeeder;
-use Modules\Shared\Database\Seeders\TermCurrencySeeder;
-use Modules\Shared\Database\Seeders\TermDepartmentSeeder;
-use Modules\Shared\Database\Seeders\TermLanguageSeeder;
-use Modules\Shared\Database\Seeders\TermInstituteTypeSeeder;
-use Modules\Shared\Database\Seeders\TermMaritalStatusSeeder;
-use Modules\Shared\Database\Seeders\TermNationalitySeeder;
-use Modules\Shared\Database\Seeders\TermPrioritySeeder;
-use Modules\Shared\Database\Seeders\TermTimeZoneSeeder;
-use Modules\Shared\Database\Seeders\TermUnitSeeder;
+// Permissions
+use Modules\Shared\Database\Seeders\Permissions\PermissionPermissionsSeeder;
+use Modules\Shared\Database\Seeders\Permissions\PermissionRoleSeeder;
+use Modules\Shared\Database\Seeders\Permissions\PermissionRolePermissionsSeeder;
+use Modules\Shared\Database\Seeders\Permissions\PermissionUserRoleSeeder;
+use Modules\Shared\Database\Seeders\Permissions\PermissionUserPermissionSeeder;
+
+// Terms
+use Modules\Shared\Database\Seeders\Terms\TermSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermUniversitySeeder;
+use Modules\Shared\Database\Seeders\Terms\TermSchoolBoardSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermReligionSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermCategorySeeder;
+use Modules\Shared\Database\Seeders\Terms\TermCasteSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermDesignationSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermGenderSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermBankSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermAcademicQualificationSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermPaymentModeSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermBloodGroupSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermCompanySizeSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermEmployeeTypeSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermHealthCardSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermLeadSourceSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermLeadStageSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermRelationTypeSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermCurrencySeeder;
+use Modules\Shared\Database\Seeders\Terms\TermDepartmentSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermLanguageSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermInstituteTypeSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermMaritalStatusSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermNationalitySeeder;
+use Modules\Shared\Database\Seeders\Terms\TermPrioritySeeder;
+use Modules\Shared\Database\Seeders\Terms\TermTimeZoneSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermUnitSeeder;
 
 class SharedDatabaseSeeder extends Seeder
 {
@@ -50,28 +53,30 @@ class SharedDatabaseSeeder extends Seeder
     {
         $this->call([
 
+			// Just for testing purposes
+			// ActivityLogsSeeder::class,
+
+			// System
+            OptionsSeeder::class,
+
             // Core
             TermSeeder::class,
 
             // Permissions
-            // 1. Create roles (Owner, Admin, Staff)
+            // Create roles (Owner, Admin, Staff)
 		    PermissionRoleSeeder::class,
 
-		    // 2. Create all permissions (users.*, orders.*, etc.)
+		    // Create all permissions (users.*, orders.*, etc.)
 		    PermissionPermissionsSeeder::class,
 
-		    // 3. Assign permissions to roles
+		    // Assign permissions to roles
 		    PermissionRolePermissionsSeeder::class,
 
-		    // 4. Assign roles to users
+		    // Assign roles to users
 		    PermissionUserRoleSeeder::class,
 
-		    // 5. Assign direct user permissions (overrides)
+		    // Assign direct user permissions (overrides)
 		    PermissionUserPermissionSeeder::class,
-
-            // System
-            OptionsSeeder::class,
-            ActivityLogsSeeder::class,
 
             // Academic / Institute
             TermUniversitySeeder::class,

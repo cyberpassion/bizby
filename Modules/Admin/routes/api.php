@@ -191,9 +191,15 @@ Route::prefix('v1/auth')->group(function () {
 | Tenant-Scoped User Provisioning
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth:sanctum','identify.tenant.header'])->prefix('v1/tenants')->group(function () {
-    Route::post('{tenantId}/users', [TenantUserApiController::class, 'provisionUser']);
-});
+Route::middleware(['auth:sanctum','identify.tenant.header'])
+    ->prefix('v1/tenants/{tenantId}')
+    ->group(function () {
+
+        Route::post('/users', [TenantUserApiController::class, 'provisionUser']);
+        Route::put('/users/{id}', [TenantUserApiController::class, 'updateUser']);
+        Route::delete('/users/{id}', [TenantUserApiController::class, 'destroyUser']);
+
+    });
 
 /*
 |--------------------------------------------------------------------------
