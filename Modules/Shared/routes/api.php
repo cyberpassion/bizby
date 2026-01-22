@@ -24,6 +24,14 @@ use Modules\Shared\Http\Controllers\Schedules\ScheduleJobRegistryApiController;
 use Modules\Shared\Http\Controllers\Schedules\ScheduleApiController;
 use Modules\Shared\Http\Controllers\Schedules\ScheduleRunApiController;
 
+// Permissions
+use Modules\Shared\Http\Controllers\Permissions\PermissionApiController;
+use Modules\Shared\Http\Controllers\Permissions\RoleApiController;
+use Modules\Shared\Http\Controllers\Permissions\RolePermissionApiController;
+use Modules\Shared\Http\Controllers\Permissions\UserRoleApiController;
+use Modules\Shared\Http\Controllers\Permissions\UserPermissionApiController;
+use Modules\Shared\Http\Controllers\Permissions\PermissionTreeApiController;
+
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('shareds', SharedController::class)->names('shared');
 });*/
@@ -224,3 +232,33 @@ Route::prefix('v1')->group(function () {
     Route::get('/schedules/{schedule}/runs', [ScheduleRunApiController::class, 'index']);
     Route::get('/schedules/{schedule}/runs/{run}', [ScheduleRunApiController::class, 'show']);
 });
+
+// Permissions
+// protect these by ->middleware('permission:permissions.manage')
+Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
+
+    // permissions
+    Route::get('/permissions', [PermissionApiController::class, 'index']);
+    Route::post('/permissions', [PermissionApiController::class, 'store']);
+    Route::delete('/permissions/{id}', [PermissionApiController::class, 'destroy']);
+
+    // roles
+    Route::get('/roles', [RoleApiController::class, 'index']);
+    Route::post('/roles', [RoleApiController::class, 'store']);
+    Route::delete('/roles/{id}', [RoleApiController::class, 'destroy']);
+
+    // role permissions
+    Route::post('/roles/{role}/permissions', [RolePermissionApiController::class, 'assign']);
+    Route::delete('/roles/{role}/permissions', [RolePermissionApiController::class, 'revoke']);
+
+    // user roles
+    Route::post('/users/{user}/roles', [UserRoleApiController::class, 'assign']);
+    Route::delete('/users/{user}/roles', [UserRoleApiController::class, 'revoke']);
+
+    // user permissions
+    Route::post('/users/{user}/permissions', [UserPermissionApiController::class, 'assign']);
+    Route::delete('/users/{user}/permissions', [UserPermissionApiController::class, 'revoke']);
+
+});
+
+Route::get('/permissions/tree', [PermissionTreeApiController::class, 'index'])->middleware(['auth:sanctum', 'tenant', 'permission:permissions.view']);

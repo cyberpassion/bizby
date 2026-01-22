@@ -10,6 +10,7 @@ use \Illuminate\Http\Middleware\HandleCors;
 
 use App\Http\Middleware\InitializeTenancyByHeader;
 use App\Http\Middleware\IdentifyTenantByHeader;
+use Modules\Shared\Http\Middleware\CheckPermission;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
 		$middleware->alias([
             'tenant' => InitializeTenancyByHeader::class,
 			'identify.tenant.header' => IdentifyTenantByHeader::class,
+			'permission' => CheckPermission::class
         ]);
 
         $middleware->web(append: [

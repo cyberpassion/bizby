@@ -77,6 +77,10 @@ class SharedServiceProvider extends ServiceProvider
 
 		// Morph map registrations
 		$this->registerMorphMaps();
+
+		// Load global helpers
+		require_once module_path('Shared', 'app/Helpers/helpers.php');
+
     }
 
 	// Registers all lookup keys returning static values

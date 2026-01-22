@@ -19,10 +19,10 @@ return new class extends Migration
 
 			$table->unsignedBigInteger('online_payment_id')->nullable();
 
-			$table->foreign('online_payment_id')
+			/*$table->foreign('online_payment_id')
 			    ->references('id')
 			    ->on('online_payments')
-			    ->nullOnDelete();
+			    ->nullOnDelete();*/
 
 			$table->unique('online_payment_id');
 

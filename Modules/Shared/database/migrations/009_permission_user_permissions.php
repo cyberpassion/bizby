@@ -8,23 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('permission_role_permissions', function (Blueprint $table) {
+        Schema::create('permission_user_permissions', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('permission_id');
+            $table->unsignedBigInteger('tenant_id');
 
-            // override scope per role (VERY useful)
-            $table->string('scope')->nullable(); // own / team / tenant / custom
+            $table->string('scope')->nullable();
 
             $table->timestamps();
 
-            $table->unique(['role_id', 'permission_id']);
-
-            $table->foreign('role_id')
-                ->references('id')
-                ->on('permission_roles')
-                ->cascadeOnDelete();
+            // 👇 MANUAL index name (FIX)
+            $table->unique(
+                ['user_id', 'permission_id', 'tenant_id'],
+                'pup_user_perm_tenant_unique'
+            );
 
             $table->foreign('permission_id')
                 ->references('id')
@@ -35,6 +34,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('permission_role_permissions');
+        Schema::dropIfExists('permission_user_permissions');
     }
 };

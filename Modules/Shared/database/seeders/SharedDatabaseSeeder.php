@@ -4,9 +4,13 @@ namespace Modules\Shared\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Shared\Database\Seeders\TermSeeder;
+
 use Modules\Shared\Database\Seeders\PermissionPermissionsSeeder;
 use Modules\Shared\Database\Seeders\PermissionRoleSeeder;
 use Modules\Shared\Database\Seeders\PermissionRolePermissionsSeeder;
+use Modules\Shared\Database\Seeders\PermissionUserRoleSeeder;
+use Modules\Shared\Database\Seeders\PermissionUserPermissionSeeder;
+
 use Modules\Shared\Database\Seeders\OptionsSeeder;
 use Modules\Shared\Database\Seeders\ActivityLogsSeeder;
 
@@ -53,6 +57,8 @@ class SharedDatabaseSeeder extends Seeder
             PermissionPermissionsSeeder::class,
             PermissionRoleSeeder::class,
             PermissionRolePermissionsSeeder::class,
+			PermissionUserRoleSeeder::class,
+			PermissionUserPermissionSeeder::class,
 
             // System
             OptionsSeeder::class,

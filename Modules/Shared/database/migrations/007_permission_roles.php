@@ -9,17 +9,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permission_roles', function (Blueprint $table) {
-			$table->id();
+            $table->id();
 
-		    $table->string('name');
-		    $table->unsignedBigInteger('tenant_id');
+            $table->string('name');
+            $table->unsignedBigInteger('tenant_id'); // SaaS tenant scope
 
-		    $table->timestamps();
+            // optional but recommended
+            $table->string('guard')->default('web');
 
-		    $table->unique(['name', 'tenant_id']);
-    		$table->index('tenant_id');
-		});
+            $table->timestamps();
 
+            $table->unique(['name', 'tenant_id']);
+            $table->index('tenant_id');
+        });
     }
 
     public function down(): void
