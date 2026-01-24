@@ -716,6 +716,16 @@ return [
 		'1' => 'Owner',
 		'2' => 'Admin',
 		'3' => 'Staff'
+	],
+
+	'settings.options' => [
+		'subscription'  => 'Subscription',
+		'modules'  		=> 'Modules',
+		'addons'        => 'Addons',
+    	'security'      => 'Security',
+		'team'          => 'Team',
+	    'integrations'  => 'Integrations',
+		'billing'       => 'Billing',
 	]
 
 ];

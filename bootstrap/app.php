@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 		$middleware->alias([
             'tenant' => InitializeTenancyByHeader::class,
-			'identify.tenant.header' => IdentifyTenantByHeader::class,
+			'identify.tenant' => IdentifyTenantByHeader::class,
 			'permission' => CheckPermission::class
         ]);
 

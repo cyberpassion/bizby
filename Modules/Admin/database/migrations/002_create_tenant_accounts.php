@@ -32,6 +32,8 @@ return new class extends Migration
 		    $table->string('status')->default('draft')->index();
     		// draft | payment_pending | trial | active | suspended | cancelled
 
+			$table->date('grace_till')->nullable();
+
 		    // Optional settings
 		    $table->json('settings')->nullable();
 

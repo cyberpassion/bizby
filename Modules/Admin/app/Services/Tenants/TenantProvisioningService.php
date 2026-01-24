@@ -44,6 +44,7 @@ class TenantProvisioningService
 	    try {
     	    $this->createDatabase($tenant, $dbService);
         	$this->seedDefaults($tenant);
+			$this->createInitialSubscription($tenant);
 
 	        $tenant->update([
     	        'status' => 'active',
@@ -95,5 +96,36 @@ class TenantProvisioningService
         	'--force'   => true,
 	    ]);
 	}
+
+	/**
+     * 🔥 Create initial subscription (trial)
+     */
+    protected function createInitialSubscription(TenantAccount $tenant): void
+    {
+        $planKey = 'trial';
+        $plan = config("billing.plans.$planKey");
+
+        $startsAt = now();
+        $endsAt = $plan['unit'] === 'days'
+            ? now()->addDays($plan['duration'])
+            : now()->addMonths($plan['duration']);
+
+        DB::table('tenant_subscriptions')->insert([
+            'tenant_id' => $tenant->id,
+            'plan'      => $planKey,
+            'amount'    => 0,
+            'starts_at' => $startsAt,
+            'ends_at'   => $endsAt,
+            'status'    => 'active',
+            'created_at'=> now(),
+            'updated_at'=> now(),
+        ]);
+
+        $tenant->update([
+            'plan'       => $planKey,
+            'valid_till' => $endsAt,
+            'status'     => 'trial',
+        ]);
+    }
 
 }

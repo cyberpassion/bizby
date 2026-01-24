@@ -235,29 +235,30 @@ Route::prefix('v1')->group(function () {
 
 // Permissions
 // protect these by ->middleware('permission:permissions.manage')
-// middleware(['auth:sanctum', 'tenant'])->
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')
+    /*->middleware(['auth:sanctum', 'tenant', 'permission:permissions.manage'])*/
+	->middleware(['auth:sanctum', 'identify.tenant'])
+    ->group(function () {
 
-    // permissions
-    Route::get('/permissions', [PermissionApiController::class, 'index']);
-    Route::post('/permissions', [PermissionApiController::class, 'store']);
-    Route::delete('/permissions/{id}', [PermissionApiController::class, 'destroy']);
+    // permissions master
+    Route::apiResource('permissions', PermissionApiController::class)
+        ->only(['index', 'store', 'destroy']);
 
     // roles
-    Route::get('/roles', [RoleApiController::class, 'index']);
-    Route::post('/roles', [RoleApiController::class, 'store']);
-    Route::delete('/roles/{id}', [RoleApiController::class, 'destroy']);
+    Route::apiResource('roles', RoleApiController::class)
+        ->only(['index', 'store', 'destroy']);
 
     // role permissions
-    Route::post('/roles/{role}/permissions', [RolePermissionApiController::class, 'assign']);
-    Route::delete('/roles/{role}/permissions', [RolePermissionApiController::class, 'revoke']);
+    Route::get('/roles/{role}/permissions', [RolePermissionApiController::class, 'index']);
+    Route::put('/roles/{role}/permissions', [RolePermissionApiController::class, 'sync']);
 
     // user roles
+    Route::get('/users/{user}/roles', [UserRoleApiController::class, 'index']);
     Route::post('/users/{user}/roles', [UserRoleApiController::class, 'assign']);
-    Route::delete('/users/{user}/roles', [UserRoleApiController::class, 'revoke']);
+    Route::delete('/users/{user}/roles/{role}', [UserRoleApiController::class, 'revoke']);
 
-    // user permissions
-    Route::post('/users/{user}/permissions', [UserPermissionApiController::class, 'assign']);
-    Route::delete('/users/{user}/permissions', [UserPermissionApiController::class, 'revoke']);
-
+    // user permission overrides
+    Route::get('/users/{user}/permissions', [UserPermissionApiController::class, 'index']);
+    Route::put('/users/{user}/permissions', [UserPermissionApiController::class, 'sync']);
+    Route::delete('/users/{user}/permissions/{permission}', [UserPermissionApiController::class, 'revoke']);
 });

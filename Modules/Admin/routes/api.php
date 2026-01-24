@@ -13,13 +13,19 @@ use Illuminate\Support\Facades\Route;
 
 use Modules\Admin\Http\Controllers\Auth\AuthApiController;
 use Modules\Admin\Http\Controllers\Admins\AdminApiController;
-use Modules\Admin\Http\Controllers\Modules\ModuleApiController;
 use Modules\Admin\Http\Controllers\Tenants\TenantAccountApiController;
 use Modules\Admin\Http\Controllers\Tenants\TenantUserApiController;
 use Modules\Admin\Http\Controllers\Tenants\TenantModuleApiController;
 use Modules\Admin\Http\Controllers\InstallationController;
 use Modules\Admin\Http\Controllers\AuthTokenApiController;
 use Modules\Admin\Http\Controllers\Auth\PasswordResetApiController;
+
+use Modules\Admin\Http\Controllers\Modules\ModuleApiController;
+use Modules\Admin\Http\Controllers\Addons\AddonApiController;
+
+use Modules\Admin\Http\Controllers\Billings\BillingApiController;
+use Modules\Admin\Http\Controllers\Billings\BillingModuleApiController;
+use Modules\Admin\Http\Controllers\Billings\BillingAddonApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +72,46 @@ Route::prefix('v1')->group(function () {
 	
         Route::patch('/{id}/toggle', [ModuleApiController::class, 'toggle'])
             ->name('admin.modules.toggle');
+        // Enable or disable a module globally.
+    });
+
+	/*
+    |--------------------------------------------------------------------------
+    | Admin Addons – Product Catalog Layer
+    |--------------------------------------------------------------------------
+    | Global definition of system addons.
+    |
+    | Responsibilities:
+    | - Define available addons (name, description, base price)
+    | - Control billing behavior (billable / core)
+    | - Enable or disable modules globally
+    |
+    | Notes:
+    | - Does NOT assign modules to tenants
+    | - Does NOT process payments
+    | - Tenant-specific activation happens via tenant_modules
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('admin/addons')->group(function () {
+
+        Route::get('/', [AddonApiController::class, 'index'])
+            ->name('admin.addons.index');
+        // List all addons in the global catalog.
+        Route::post('/', [AddonApiController::class, 'store'])
+            ->name('admin.addons.store');
+        // Create a new addon (catalog entry).
+
+        Route::put('/{id}', [AddonApiController::class, 'update'])
+            ->name('admin.addons.update');
+        // Update addon metadata or pricing.
+        // Does NOT affect existing tenant price snapshots.
+
+		Route::get('/{id}', [AddonApiController::class, 'show'])
+            ->name('admin.addons.show');
+        // Get single addon
+
+        Route::patch('/{id}/toggle', [AddonApiController::class, 'toggle'])
+            ->name('admin.addons.toggle');
         // Enable or disable a module globally.
     });
 
@@ -184,6 +230,7 @@ Route::prefix('v1/auth')->group(function () {
         Route::get('me', [AuthApiController::class, 'me']);
         Route::post('logout', [AuthApiController::class, 'logout']);
     });
+
 });
 
 /*
@@ -191,7 +238,7 @@ Route::prefix('v1/auth')->group(function () {
 | Tenant-Scoped User Provisioning
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth:sanctum','identify.tenant.header'])
+Route::middleware(['auth:sanctum','identify.tenant'])
     ->prefix('v1/tenants/{tenantId}')
     ->group(function () {
 
@@ -210,4 +257,36 @@ Route::prefix('v1/auth/password')->group(function () {
     Route::post('forgot', [PasswordResetApiController::class, 'forgot']);
 	Route::post('verify', [PasswordResetApiController::class, 'verify']);
     Route::post('reset', [PasswordResetApiController::class, 'reset']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Billing APIs
+|--------------------------------------------------------------------------
+*/
+Route::prefix('v1/billing')
+    ->middleware(['auth:sanctum', 'identify.tenant'])
+    ->group(function () {
+
+    // Subscription
+    Route::get('/subscription', [BillingApiController::class, 'subscription']);
+    Route::post('/subscription/renew', [BillingApiController::class, 'renew']);
+    Route::post('/subscription/cancel', [BillingApiController::class, 'cancel']);
+
+    // Plans
+    Route::get('/plans', [BillingApiController::class, 'plans']);
+    Route::post('/plan/change', [BillingApiController::class, 'changePlan']);
+
+    // Modules
+    Route::get('/modules', [BillingModuleApiController::class, 'index']);
+    Route::post('/modules/add', [BillingModuleApiController::class, 'add']);
+    Route::post('/modules/remove', [BillingModuleApiController::class, 'remove']);
+
+    // Addons
+    Route::get('/addons', [BillingAddonApiController::class, 'index']);
+    Route::post('/addons/add', [BillingAddonApiController::class, 'add']);
+    Route::post('/addons/remove', [BillingAddonApiController::class, 'remove']);
+
+    // Invoices
+    Route::get('/invoices', [BillingApiController::class, 'invoices']);
 });

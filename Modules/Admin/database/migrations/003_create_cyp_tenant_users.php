@@ -27,10 +27,6 @@ return new class extends Migration
 
             // ✅ Correct role reference (RBAC)
             $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')
-                ->references('id')
-                ->on('permission_roles')
-                ->restrictOnDelete(); // prevent deleting roles in use
 
             // Status
             $table->boolean('is_active')->default(true);

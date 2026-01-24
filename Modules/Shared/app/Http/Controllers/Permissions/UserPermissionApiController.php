@@ -9,6 +9,26 @@ use Illuminate\Support\Facades\Cache;
 
 class UserPermissionApiController extends Controller
 {
+
+	public function index($userId)
+	{
+    	$permissions = DB::table('permission_user_permissions as pup')
+	        ->join('permissions as p', 'p.id', '=', 'pup.permission_id')
+    	    ->where('pup.user_id', $userId)
+        	->where('pup.tenant_id', tenant()->id)
+        	->select(
+            	'p.id',
+	            'p.key',
+    	        'p.label',
+        	    'pup.allow'
+	        )
+    	    ->get();
+
+	    return response()->json([
+    	    'data' => $permissions
+	    ]);
+	}
+
     // POST /api/users/{user}/permissions
     public function assign(Request $request, $userId)
     {

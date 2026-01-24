@@ -42,6 +42,9 @@ class AdminServiceProvider extends ServiceProvider
 		    $this->mergeConfigFrom($path, 'notifications');
 		}
 
+		// Load billing config
+		$this->mergeConfigFrom(module_path($this->name, 'config/billing.php'), 'billing');
+
     }
 
     /**
