@@ -14,7 +14,7 @@ class TenantUser extends Authenticatable
 	protected $connection = 'central';
 
     protected $fillable = [
-        'user_id', 'name', 'email', 'password', 'tenant_id', 'role_id'
+        'user_id', 'name', 'email', 'password', 'tenant_id', 'role_id', 'tfa_enabled'
     ];
 
     protected $hidden = [

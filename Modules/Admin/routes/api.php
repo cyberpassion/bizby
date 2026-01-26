@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 use Modules\Admin\Http\Controllers\Auth\AuthApiController;
+use Modules\Admin\Http\Controllers\Auth\TfaApiController;
+
 use Modules\Admin\Http\Controllers\Admins\AdminApiController;
 use Modules\Admin\Http\Controllers\Tenants\TenantAccountApiController;
 use Modules\Admin\Http\Controllers\Tenants\TenantUserApiController;
@@ -230,6 +232,12 @@ Route::prefix('v1/auth')->group(function () {
         Route::get('me', [AuthApiController::class, 'me']);
         Route::post('logout', [AuthApiController::class, 'logout']);
     });
+
+	Route::middleware(['auth:sanctum','identify.tenant'])->group(function () {
+		Route::get('login/flow', [AuthApiController::class, 'loginFlow']);
+		Route::post('tfa/send', [TfaApiController::class, 'sendTenantTfa']);
+	    Route::post('tfa/verify', [TfaApiController::class, 'verifyTenantTfa']);
+	});
 
 });
 

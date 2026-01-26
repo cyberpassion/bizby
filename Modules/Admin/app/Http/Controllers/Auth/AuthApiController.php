@@ -8,7 +8,8 @@ use Illuminate\Validation\ValidationException;
 
 use App\Models\User;
 use Modules\Admin\Models\Tenants\TenantUser;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use Modules\Admin\Models\Tenants\TenantAccount;
 
 class AuthApiController extends Controller
 {
@@ -80,5 +81,41 @@ class AuthApiController extends Controller
             'message' => 'Logged out',
         ]);
     }
+
+	/* ---------------------------
+     | LOGOUT
+     |---------------------------*/
+	public function loginFlow(Request $request)
+	{
+
+    	$tenant = app('resolvedTenant'); // from middleware
+		$user = $request->user()->id;
+
+	    // 1️⃣ No tenant selected
+    	if (!$tenant) {
+        	return response()->json([
+            	'step' => 'tenant_select',
+				'redirect' => '/auth/login/tenant-selector'
+	        ]);
+    	}
+
+		$tenantAccountInfo = TenantAccount::find($tenant->id);
+
+	    // 2️⃣ Tenant-level TFA (and not verified yet)
+		$verified = Cache::get("tfa_verified:{$user}:{$tenant->id}");
+		Cache::forget("tfa_verified:{$user}:{$tenant->id}");
+
+		if ($tenantAccountInfo->tfa_enabled && ! $verified) {
+		    return response()->json([
+        		'step' => 'tenant_tfa'
+		    ]);
+		}
+
+	    // 3️⃣ All good → dashboard
+    	return response()->json([
+        	'step' => 'done',
+        	'redirect' => '/module/dashboard'
+	    ]);
+	}
 
 }
