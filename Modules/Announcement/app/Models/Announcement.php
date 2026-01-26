@@ -2,11 +2,11 @@
 
 namespace Modules\Announcement\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Announcement extends Model
+class Announcement extends TenantModel
 {
     use HasFactory;
 

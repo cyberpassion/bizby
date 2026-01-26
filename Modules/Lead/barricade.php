@@ -1,6 +1,6 @@
 <?php
 return [
-    'path.lead.create' => [
+	'path.lead.create' => [
 		[
             'type'     => 'exists',
             'resource' => 'terms',

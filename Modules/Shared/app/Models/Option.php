@@ -2,11 +2,11 @@
 
 namespace Modules\Shared\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Option extends Model
+class Option extends TenantModel
 {
     use HasFactory;
 

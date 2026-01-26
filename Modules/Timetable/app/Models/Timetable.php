@@ -2,11 +2,11 @@
 
 namespace Modules\Timetable\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Timetable extends Model
+class Timetable extends TenantModel
 {
     use HasFactory;
 

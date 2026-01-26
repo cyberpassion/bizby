@@ -33,7 +33,7 @@ class TenantUserApiController extends SharedChildApiController
      * POST /tenants/{tenantId}/users
      * Create (provision) user in tenant
      */
-    public function storeUser(Request $request, int $tenantId)
+    public function provisionUser(Request $request, int $tenantId)
     {
         $data = $request->validate([
             'name'     => 'required|string|max:255',
@@ -47,44 +47,55 @@ class TenantUserApiController extends SharedChildApiController
             return response()->json(['message' => 'Tenant mismatch'], 403);
         }
 
-        return DB::transaction(function () use ($data, $tenant) {
+        /** ----------------------------
+         * 1. Global user (NO transaction)
+         * ---------------------------- */
+        $user = User::firstOrCreate(
+            ['email' => $data['email']],
+            [
+                'name'     => $data['name'],
+                'password' => Hash::make($data['password']),
+            ]
+        );
 
-            // Global user
-            $user = User::firstOrCreate(
-                ['email' => $data['email']],
-                [
-                    'name'     => $data['name'],
-                    'password' => Hash::make($data['password']),
-                ]
-            );
+        /** ----------------------------
+         * 2. Validate role
+         * ---------------------------- */
+        $role = DB::table('permission_roles')
+            ->where('id', $data['role_id'])
+            ->where('tenant_id', $tenant->id)
+            ->first();
 
-            // Validate role
-            $role = DB::table('permission_roles')
-                ->where('name', $data['role_id'])
-                ->where('tenant_id', $tenant->id)
-                ->first();
+        if (!$role) {
+            abort(422, 'Invalid role');
+        }
 
-            if (!$role) {
-                abort(422, 'Invalid role');
-            }
-
-            // Tenant scoped user
-            $tenantUser = TenantUser::updateOrCreate(
+        /** ----------------------------
+         * 3. Tenant user (FAST transaction)
+         * ---------------------------- */
+        $tenantUser = DB::transaction(function () use ($tenant, $user, $role) {
+            DB::table('tenant_users')->updateOrInsert(
                 [
                     'tenant_id' => $tenant->id,
                     'user_id'   => $user->id,
                 ],
                 [
-                    'role_id'      => $role->name,
-                    'is_active' => true,
+                    'role_id'    => $role->id,
+                    'is_active'  => true,
+                    'updated_at' => now(),
+                    'created_at' => now(),
                 ]
             );
 
-            return response()->json([
-                'status' => 'success',
-                'data'   => $tenantUser
-            ], 201);
+            return TenantUser::where('tenant_id', $tenant->id)
+                ->where('user_id', $user->id)
+                ->first();
         });
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $tenantUser
+        ], 201);
     }
 
     /**
@@ -109,11 +120,13 @@ class TenantUserApiController extends SharedChildApiController
 
         if (isset($data['role_id'])) {
             $role = DB::table('permission_roles')
-                ->where('name', $data['role_id'])
+                ->where('id', $data['role_id'])
                 ->where('tenant_id', $tenant->id)
                 ->first();
 
-            if (!$role) abort(422, 'Invalid role');
+            if (!$role) {
+                abort(422, 'Invalid role');
+            }
         }
 
         $tenantUser->update($data);

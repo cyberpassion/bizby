@@ -37,6 +37,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+			$table->index('role_id');
+
             // 🚨 One user per tenant
             $table->unique(['tenant_id', 'user_id'], 'tenant_user_unique');
         });

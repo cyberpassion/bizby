@@ -2,11 +2,11 @@
 
 namespace Modules\Consultation\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Consultation extends Model
+class Consultation extends TenantModel
 {
     use HasFactory;
 

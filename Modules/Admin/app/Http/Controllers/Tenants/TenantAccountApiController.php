@@ -2,7 +2,6 @@
 
 namespace Modules\Admin\Http\Controllers\Tenants;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 
 use Modules\Admin\Models\Tenants\TenantAccount;
@@ -10,8 +9,13 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 use Modules\Admin\Services\Tenants\TenantDatabaseService;
 use Modules\Admin\Jobs\Tenants\ProvisionTenantJob;
 
+use Modules\Admin\Models\Tenants\TenantInstallation;
+
 use Modules\Admin\Services\Tenants\TenantProvisioningService;
 
+use Modules\Admin\Enums\Tenants\InstallationStatus;
+use Modules\Admin\Enums\Tenants\OperationType;
+use Modules\Admin\Enums\Tenants\TargetType;
 
 class TenantAccountApiController extends SharedApiController
 {
@@ -61,14 +65,6 @@ class TenantAccountApiController extends SharedApiController
 	// Provision Tenant - Create database, migrate, create user and all
     public function paymentCompleted(TenantAccount $tenant, TenantProvisioningService $service)
 	{
-    	/*$tenant->update(['status' => 'paid']);
-
-	    ProvisionTenantJob::dispatch($tenant->id);
-
-	    return response()->json([
-    	    'status'  => 'paid',
-        	'message' => 'Payment received. Provisioning has started.',
-	    ]);*/
 		return response()->json([
         	'status'  => 'paid',
         	'message' => 'Payment received. Provisioning will start shortly.',
@@ -85,14 +81,22 @@ class TenantAccountApiController extends SharedApiController
 	        ], 403);
    		}
 
-	    if (! in_array($tenant->status, ['paid', 'failed', 'draft'])) {
+	    /*if (! in_array($tenant->status, ['paid', 'failed', 'draft'])) {
     	    return response()->json([
         	    'status'  => 'invalid_state',
             	'message' => 'Tenant cannot be provisioned in current state',
 	        ], 409);
-    	}
+    	}*/
 
-	    ProvisionTenantJob::dispatch($tenant->id);
+		$install = TenantInstallation::create([
+		    'tenant_id'   => $tenant->id,
+		    'target_type' => TargetType::TENANT,
+		    'operation'   => OperationType::PROVISION,
+    		'status'      => InstallationStatus::PENDING,
+		]);
+
+		ProvisionTenantJob::dispatch($install->id);
+	    //ProvisionTenantJob::dispatch($tenant->id);
 		//ProvisionTenantJob::dispatchSync($tenant->id);
 
 	    return response()->json([

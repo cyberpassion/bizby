@@ -2,11 +2,11 @@
 
 namespace Modules\Leaveapplication\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Leaveapplication extends Model
+class Leaveapplication extends TenantModel
 {
     use HasFactory, SoftDeletes;
 

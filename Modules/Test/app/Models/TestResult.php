@@ -2,11 +2,11 @@
 
 namespace Modules\Test\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class TestResult extends Model
+class TestResult extends TenantModel
 {
     use HasFactory;
 

@@ -5,7 +5,6 @@ use Modules\Shared\Services\BarricadeRegistry;
 use Modules\Shared\Services\BarricadeResourceRegistry;
 use Illuminate\Support\Facades\Log;
 
-
 class BarricadeService
 {
     public static function evaluate(string $key): array

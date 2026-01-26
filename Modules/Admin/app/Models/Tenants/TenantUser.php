@@ -11,9 +11,10 @@ class TenantUser extends Authenticatable
     use HasApiTokens, Notifiable; // <-- Add HasApiTokens here
 
     protected $table = 'tenant_users';
+	protected $connection = 'central';
 
     protected $fillable = [
-        'user_id', 'name', 'email', 'password', 'tenant_id', 'role'
+        'user_id', 'name', 'email', 'password', 'tenant_id', 'role_id'
     ];
 
     protected $hidden = [

@@ -31,9 +31,7 @@ class Notification extends Model
     /**
      * Appended attributes (computed, not in DB)
      */
-    protected $appends = [
-        'doctor_namee'
-    ];
+    protected $appends = [];
 
 	// Example for doctor_name
     public function getDoctorNameeAttribute()

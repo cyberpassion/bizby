@@ -2,7 +2,7 @@
 
 namespace Modules\Vendor\Models;
 
-use App\Models\TenantModel;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 

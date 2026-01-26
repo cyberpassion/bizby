@@ -2,11 +2,11 @@
 
 namespace Modules\Survey\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Surveyresponse extends Model
+class Surveyresponse extends TenantModel
 {
     use HasFactory;
 

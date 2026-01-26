@@ -2,11 +2,11 @@
 
 namespace Modules\Eventmanager\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Eventmanager extends Model
+class Eventmanager extends TenantModel
 {
     use HasFactory;
 

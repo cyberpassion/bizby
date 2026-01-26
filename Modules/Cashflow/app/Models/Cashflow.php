@@ -2,11 +2,11 @@
 
 namespace Modules\Cashflow\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cashflow extends Model
+class Cashflow extends TenantModel
 {
     use HasFactory, SoftDeletes;
 

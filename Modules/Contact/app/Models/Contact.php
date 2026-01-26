@@ -2,11 +2,11 @@
 
 namespace Modules\Contact\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Contact extends Model
+class Contact extends TenantModel
 {
     use HasFactory;
 

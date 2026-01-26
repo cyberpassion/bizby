@@ -2,11 +2,11 @@
 
 namespace Modules\Lead\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Lead extends Model
+class Lead extends TenantModel
 {
     use HasFactory, SoftDeletes;
 

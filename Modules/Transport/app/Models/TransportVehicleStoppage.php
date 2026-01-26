@@ -2,11 +2,11 @@
 
 namespace Modules\Transport\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class TransportVehicleStoppage extends Model
+class TransportVehicleStoppage extends TenantModel
 {
     use HasFactory;
 

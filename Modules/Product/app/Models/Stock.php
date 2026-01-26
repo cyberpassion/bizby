@@ -2,11 +2,11 @@
 
 namespace Modules\Product\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Stock extends Model
+class Stock extends TenantModel
 {
     use HasFactory;
 

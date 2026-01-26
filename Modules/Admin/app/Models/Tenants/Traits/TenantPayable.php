@@ -6,6 +6,12 @@ use Modules\Shared\Models\OnlinePayments\PaymentPayable;
 use Modules\Admin\Services\Tenants\TenantPaymentService;
 use Modules\Admin\Enums\Tenants\TenantChargeType;
 
+use Modules\Admin\Enums\Tenants\InstallationStatus;
+use Modules\Admin\Enums\Tenants\OperationType;
+use Modules\Admin\Enums\Tenants\TargetType;
+
+use Modules\Admin\Models\Tenants\TenantInstallation;
+
 /* =====================================================
  | Payable Interface Implementation
  |=====================================================*/
@@ -47,7 +53,16 @@ trait TenantPayable
         //app(TenantPaymentService::class)->finalize($this, $payment);
 
         // Provisioning handled async
-        \Modules\Admin\Jobs\Tenants\ProvisionTenantJob::dispatch($this->id);
+        //\Modules\Admin\Jobs\Tenants\ProvisionTenantJob::dispatch($this->id);
+
+		$install = TenantInstallation::create([
+		    'tenant_id'   => $this->id,
+		    'target_type' => TargetType::TENANT,
+		    'operation'   => OperationType::PROVISION,
+    		'status'      => InstallationStatus::PENDING,
+		]);
+
+		\Modules\Admin\Jobs\Tenants\ProvisionTenantJob::dispatch($install->id);
     }
 
     /* =====================================================

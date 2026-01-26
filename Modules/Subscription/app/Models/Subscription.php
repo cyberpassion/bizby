@@ -2,11 +2,11 @@
 
 namespace Modules\Subscription\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Subscription extends Model
+class Subscription extends TenantModel
 {
     use HasFactory;
 

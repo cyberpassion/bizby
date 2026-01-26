@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Database\Seeders;
+namespace Modules\Admin\Database\Seeders\Developer;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class TenantUserSeeder extends Seeder
                 'email' => 'john@alphauni.edu',
                 'phone' => '9876543210',
                 'password' => Hash::make('password123'),
-                'role' => 'superadmin',
+                'role_id' => 1,
                 'is_active' => true,
                 'meta' => json_encode(['department' => 'IT']),
                 'created_at' => now(),
@@ -29,7 +29,7 @@ class TenantUserSeeder extends Seeder
                 'email' => 'jane@betacollege.edu',
                 'phone' => '9123456780',
                 'password' => Hash::make('password123'),
-                'role' => 'principal',
+                'role_id' => 2,
                 'is_active' => true,
                 'meta' => json_encode(['department' => 'Admin']),
                 'created_at' => now(),

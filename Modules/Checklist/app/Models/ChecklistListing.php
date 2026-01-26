@@ -2,11 +2,11 @@
 
 namespace Modules\Checklist\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class ChecklistListing extends Model
+class ChecklistListing extends TenantModel
 {
     use HasFactory;
 

@@ -3,129 +3,145 @@
 namespace Modules\Admin\Services\Tenants;
 
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-
-use Modules\Admin\Models\Tenants\TenantAccount;
-use Modules\Admin\Services\Tenants\TenantDatabaseService;
-
-use App\Models\Tenant as TenancyTenant;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Modules\Admin\Models\Tenants\TenantAccount;
+use Modules\Admin\Models\Tenants\TenantInstallation;
+use Modules\Admin\Services\Tenants\TenantDatabaseService;
+use App\Models\Tenant as TenancyTenant;
 use Stancl\Tenancy\Facades\Tenancy;
+
+use Modules\Admin\Services\Tenants\TenantInstallationStateService;
 
 class TenantProvisioningService
 {
-    /*public function provision(
+    public function __construct(
+        protected TenantInstallationStateService $state
+    ) {}
+
+    /**
+     * Main provisioning entry (called by Job)
+     */
+    public function provision(
         TenantAccount $tenant,
+        TenantInstallation $install,
         TenantDatabaseService $dbService
     ): void {
-        // 🔐 Idempotency guard
         if ($tenant->tenancy_id) {
             return;
         }
 
-        $this->createDatabase($tenant, $dbService);
-        $this->seedDefaults($tenant);
-    }*/
-	public function provision(
-	    TenantAccount $tenant,
-    	TenantDatabaseService $dbService
-	): void {
-    	if ($tenant->tenancy_id) {
-        	return;
-    	}
+        tenancy()->central(function () use ($tenant, $install, $dbService) {
 
-	    $tenant->update([
-    	    'status' => 'provisioning',
-        	'provision_started_at' => now(),
-	    ]);
+            $this->state->running($install, 'start', 1);
 
-	    try {
-    	    $this->createDatabase($tenant, $dbService);
-        	$this->seedDefaults($tenant);
-			$this->createInitialSubscription($tenant);
+            $tenant->update([
+                'status' => 'provisioning',
+                'provision_started_at' => now(),
+            ]);
 
-	        $tenant->update([
-    	        'status' => 'active',
-        	    'provisioned_at' => now(),
-	        ]);
-    	} catch (\Throwable $e) {
-        	$tenant->update([
-            	'status' => 'failed',
-	        ]);
+            try {
+                // -------- PHASE 1: CENTRAL --------
+                $this->state->running($install, 'create_database', 10);
+                $this->createDatabase($tenant, $dbService);
 
-    	    throw $e;
-    	}
-	}
+                // -------- PHASE 2: TENANT -------- MIGRATION IS DONE AUTOMATICALLY AFTER DATABASE CREATION
+                // $this->state->running($install, 'migrate', 40);
+                // $this->runTenantMigrations($tenant);
+
+				// -------- PHASE 2: TENANT SEEDING --------
+                $this->state->running($install, 'seed', 60);
+                $this->seedDefaults($tenant);
+
+                // -------- PHASE 3: CENTRAL --------
+                $this->state->running($install, 'subscription', 80);
+                $this->createInitialSubscription($tenant);
+
+                $this->state->running($install, 'activate', 95);
+                $tenant->update([
+                    'status' => 'active',
+                    'provisioned_at' => now(),
+                ]);
+
+                $this->state->completed($install);
+
+            } catch (\Throwable $e) {
+                $this->state->failed($install, $e);
+                $tenant->update(['status' => 'failed']);
+                throw $e;
+            }
+        });
+    }
 
     /**
-     * Create tenancy record + physical database
+     * CENTRAL: create infra
      */
-    protected function createDatabase(
+    public function createDatabase(
         TenantAccount $tenant,
         TenantDatabaseService $dbService
     ): void {
         $tenantId = $tenant->id;
 
-        $databaseName =
-            config('tenancy.database.prefix')
-            . $tenantId
-            . config('tenancy.database.suffix');
-
-        // Create tenancy tenant (infra)
-        $tenancyTenant = TenancyTenant::create([
-            'id'              => $tenantId,
-            'tenancy_db_name' => $databaseName,
+        TenancyTenant::create([
+            'id' => $tenantId,
+            'tenancy_db_name' =>
+                config('tenancy.database.prefix')
+                . $tenantId
+                . config('tenancy.database.suffix'),
         ]);
 
-        // Link tenancy → business tenant
-        $tenant->update([
-            'tenancy_id' => $tenancyTenant->id,
-        ]);
+        $tenant->update(['tenancy_id' => $tenantId]);
     }
 
     /**
-     * Seed default data (roles, settings, etc.)
+     * TENANT: migrate
      */
-    protected function seedDefaults(TenantAccount $tenant): void
-	{	
-    	Artisan::call('tenants:seed', [
-	        '--tenants' => [$tenant->id],
-    	    '--class'   => \Modules\Shared\Database\Seeders\SharedDatabaseSeeder::class,
-        	'--force'   => true,
-	    ]);
-	}
-
-	/**
-     * 🔥 Create initial subscription (trial)
-     */
-    protected function createInitialSubscription(TenantAccount $tenant): void
+    public function runTenantMigrations(TenantAccount $tenant): void
     {
-        $planKey = 'trial';
-        $plan = config("billing.plans.$planKey");
+        Tenancy::initialize($tenant->id);
 
-        $startsAt = now();
-        $endsAt = $plan['unit'] === 'days'
-            ? now()->addDays($plan['duration'])
-            : now()->addMonths($plan['duration']);
+        Artisan::call('tenants:migrate', [
+            '--tenants' => [$tenant->id],
+            '--force'   => true,
+        ]);
 
-        DB::table('tenant_subscriptions')->insert([
-            'tenant_id' => $tenant->id,
-            'plan'      => $planKey,
-            'amount'    => 0,
-            'starts_at' => $startsAt,
-            'ends_at'   => $endsAt,
-            'status'    => 'active',
-            'created_at'=> now(),
-            'updated_at'=> now(),
+        Tenancy::end();
+    }
+
+    /**
+     * TENANT: seed
+     */
+    public function seedDefaults(TenantAccount $tenant): void
+    {
+        Tenancy::initialize($tenant->id);
+
+        Artisan::call('tenants:seed', [
+            '--tenants' => [$tenant->id],
+            '--class'   => \Modules\Shared\Database\Seeders\SharedDatabaseSeeder::class,
+            '--force'   => true,
+        ]);
+
+        Tenancy::end();
+    }
+
+    /**
+     * CENTRAL: subscription
+     */
+    public function createInitialSubscription(TenantAccount $tenant): void
+    {
+        DB::connection('central')->table('tenant_subscriptions')->insert([
+            'tenant_id'  => $tenant->id,
+            'plan'       => 'trial',
+            'amount'     => 0,
+            'starts_at'  => now(),
+            'ends_at'    => now()->addDays(14),
+            'status'     => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         $tenant->update([
-            'plan'       => $planKey,
-            'valid_till' => $endsAt,
-            'status'     => 'trial',
+            'plan'       => 'trial',
+            'valid_till' => now()->addDays(14),
         ]);
     }
-
 }

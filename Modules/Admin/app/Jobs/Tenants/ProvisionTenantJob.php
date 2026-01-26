@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Admin\Jobs\Tenants;
 
 use Throwable;
@@ -9,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 use Modules\Admin\Models\Tenants\TenantAccount;
+use Modules\Admin\Models\Tenants\TenantInstallation;
 use Modules\Admin\Services\Tenants\TenantProvisioningService;
 use Modules\Admin\Services\Tenants\TenantDatabaseService;
 
@@ -18,33 +20,54 @@ class ProvisionTenantJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(
-        public int $tenantId
-    ) {}
+    // OLD
+    // public function __construct(public int $tenantId) {}
+
+    // NEW
+    public function __construct(public int $installationId) {}
 
     public function handle(
         TenantProvisioningService $provisioningService,
         TenantDatabaseService $dbService
     ) {
+        // 🔒 Always force central context in queue jobs
+        Tenancy::end();
 
-		Tenancy::end(); // VERY IMPORTANT
+        // Load installation & tenant
+        $install = TenantInstallation::findOrFail($this->installationId);
+        $tenant  = TenantAccount::findOrFail($install->tenant_id);
 
-	    $tenant = TenantAccount::findOrFail($this->tenantId);
+        // OLD idempotency
+        // if ($tenant->tenancy_id) {
+        //     return;
+        // }
 
-	    if ($tenant->tenancy_id) {
-    	    return; // idempotent
-    	}
+        // NEW idempotency (installation-aware)
+        if ($install->status === \Modules\Admin\Enums\Tenants\InstallationStatus::COMPLETED) {
+            return;
+        }
 
-	    $provisioningService->provision($tenant, $dbService);
+        // Delegate ALL logic to service
+        $provisioningService->provision($tenant, $install, $dbService);
 
-	    event(new \Modules\Admin\Events\TenantActivated($tenant->id));
-
+        // Fire event AFTER successful provisioning
+        event(new \Modules\Admin\Events\TenantActivated($tenant->id));
     }
 
     public function failed(Throwable $e): void
     {
-        TenantAccount::where('id', $this->tenantId)
-            ->update(['status' => 'failed']);
+        // OLD (buggy – tenantId no longer exists)
+        // TenantAccount::where('id', $this->tenantId)
+        //     ->update(['status' => 'failed']);
+
+        // NEW (safe)
+        $install = TenantInstallation::find($this->installationId);
+        if ($install) {
+            $install->update([
+                'status' => \Modules\Admin\Enums\Tenants\InstallationStatus::FAILED,
+                'last_error' => $e->getMessage(),
+            ]);
+        }
 
         report($e);
     }

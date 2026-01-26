@@ -2,11 +2,11 @@
 
 namespace Modules\Student\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class StudentFeeSubmissionItem extends Model
+class StudentFeeSubmissionItem extends TenantModel
 {
 	use HasFactory;
 

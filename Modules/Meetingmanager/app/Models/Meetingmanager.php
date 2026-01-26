@@ -2,11 +2,11 @@
 
 namespace Modules\Meetingmanager\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Meetingmanager extends Model
+class Meetingmanager extends TenantModel
 {
     use HasFactory;
 

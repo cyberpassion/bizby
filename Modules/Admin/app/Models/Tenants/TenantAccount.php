@@ -17,10 +17,12 @@ class TenantAccount extends Model implements Payable, FinalizePayment
     use HasFactory;
 	use TenantPayable; // Payable implementation trait
 
+	protected $connection = 'central';
+
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = ['status'];
 
     /**
      * Default attribute values

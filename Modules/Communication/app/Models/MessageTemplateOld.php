@@ -2,11 +2,11 @@
 
 namespace Modules\Communication\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class MessageTemplateOld extends Model
+class MessageTemplateOld extends TenantModel
 {
     use HasFactory;
 

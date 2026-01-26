@@ -11,10 +11,7 @@ class CreateCentralTenantAdmin implements ShouldQueue
 {
     public function handle(TenantActivated $event): void
     {
-        Tenancy::end();
-
         $tenant = TenantAccount::findOrFail($event->tenantId);
-
         app(TenantAdminService::class)->createCentralAdmin($tenant);
     }
 }

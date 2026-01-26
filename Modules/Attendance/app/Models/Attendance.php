@@ -2,7 +2,7 @@
 
 namespace Modules\Attendance\Models;
 
-use App\Models\TenantModel;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Attendance extends TenantModel

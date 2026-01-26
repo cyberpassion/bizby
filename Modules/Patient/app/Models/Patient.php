@@ -2,11 +2,11 @@
 
 namespace Modules\Patient\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class Patient extends Model
+class Patient extends TenantModel
 {
     use HasFactory;
 

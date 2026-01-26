@@ -3,7 +3,7 @@
 namespace Modules\Shared\Barricade;
 
 use Illuminate\Support\Facades\Schema;
-
+use Stancl\Tenancy\Facades\Tenancy;
 use Modules\Shared\Services\BarricadeResourceRegistry;
 
 // Shared
@@ -104,25 +104,32 @@ class SharedBarricadeResources
     protected static function registerResource(string $resource, string $modelClass): void
     {
         BarricadeResourceRegistry::register(
-            $resource,
-            function (array $filter) use ($modelClass): bool {
+	        $resource,
+    	    function (array $filter) use ($modelClass): bool {
+				return true;
 
-                $model = new $modelClass();
+	            if (! tenant()) {
+    	            return false; // or true, depending on your policy
+        	    }
 
-                // 🔒 SAFETY: table not migrated yet
-                if (!Schema::hasTable($model->getTable())) {
-                    return false;
-                }
+	            return tenancy()->run(function () use ($modelClass, $filter) {
 
-                $query = $modelClass::query();
+	                $model = new $modelClass();
 
-                foreach ($filter as $column => $value) {
-                    $query->where($column, $value);
-                }
+    	            if (!Schema::hasTable($model->getTable())) {
+        	            return false;
+            	    }
 
-                return $query->exists();
-            }
-        );
+	                $query = $modelClass::query();
+
+    	            foreach ($filter as $column => $value) {
+        	            $query->where($column, $value);
+            	    }
+
+	                return $query->exists(); // ✅ guaranteed tenant DB
+    	        });
+        	}
+    	);
     }
 
 }

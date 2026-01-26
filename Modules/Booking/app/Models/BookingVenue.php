@@ -1,11 +1,11 @@
 <?php
 namespace Modules\Booking\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
 
-class BookingVenue extends Model
+class BookingVenue extends TenantModel
 {
 
 	use HasFactory;
