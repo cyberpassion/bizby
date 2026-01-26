@@ -5,6 +5,7 @@ namespace Modules\Admin\Models\Tenants;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Modules\Shared\Models\PermissionRole;
 
 class TenantUser extends Authenticatable
 {
@@ -31,5 +32,15 @@ class TenantUser extends Authenticatable
         	$this->attributes['password'] = \Illuminate\Support\Facades\Hash::make($value);
     	}
 	}
+
+	public function tenant()
+    {
+        return $this->belongsTo(TenantAccount::class, 'tenant_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(PermissionRole::class, 'role_id');
+    }
 
 }

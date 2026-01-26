@@ -61,12 +61,15 @@ class AuthApiController extends Controller
      |---------------------------*/
     public function tenants(Request $request)
     {
-        $userTenants = TenantUser::where('user_id', $request->user()->id)->get();
-		return response()->json([
-            'status'  => 'success',
-            'message' => 'Tenants Found',
-			'data'		=> $userTenants
-        ]);
+        $userTenants = TenantUser::with(['tenant', 'role'])
+	        ->where('user_id', $request->user()->id)
+    	    ->get();
+
+	    return response()->json([
+	        'status'  => 'success',
+    	    'message' => 'Tenants Found',
+        	'data'    => $userTenants
+	    ]);
     }
 
     /* ---------------------------
