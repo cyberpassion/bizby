@@ -4,18 +4,72 @@ $commonSettingsRoute = '/settings';
 
 return [
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
             ],
+
+            /* =========================
+             | Note Management
+             ========================= */
+            [
+                'title' => 'Notes',
+                'items' => [
+                    [
+                        'title'      => 'Add Note',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.note.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.note.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Note Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.note",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
         ],
     ],
+],
+
 
 	"note.statuses" => [
 		"1"		=>	"All",

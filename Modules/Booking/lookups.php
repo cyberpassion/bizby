@@ -17,106 +17,175 @@ return [
 */
 'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
 
-            /* -------------------------
+            /* =========================
              | Dashboard
-             |-------------------------*/
+             ========================= */
             [
-                'title' => 'Dashboard',
-                'href'  => "/module/{$pg}",
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}",
+                'permission' => "{$pg}.dashboard.view",
             ],
 
-            /* -------------------------
-             | Venues
-             |-------------------------*/
+            /* =========================
+             | Venues Management
+             ========================= */
             [
                 'title' => 'Venues',
                 'items' => [
-                    ['title' => 'Add Venue',   'href' => "/module/{$pg}/new-venue"],
-                    ['title' => 'Venue List',  'href' => "/module/{$pg}/venues-list"],
-                ]
+                    [
+                        'title'      => 'Add Venue',
+                        'href'       => "/module/{$pg}/new-venue",
+                        'permission' => "{$pg}.venue.create",
+                    ],
+                    [
+                        'title'      => 'Venue List',
+                        'href'       => "/module/{$pg}/venues-list",
+                        'permission' => "{$pg}.venue.view",
+                    ],
+                ],
             ],
 
-            /* -------------------------
-             | Units
-             |-------------------------*/
+            /* =========================
+             | Units Management
+             ========================= */
             [
                 'title' => 'Units',
                 'items' => [
-                    ['title' => 'Add Unit',  'href' => "/module/{$pg}/new-unit"],
-                    ['title' => 'Unit List', 'href' => "/module/{$pg}/units-list"],
-                ]
+                    [
+                        'title'      => 'Add Unit',
+                        'href'       => "/module/{$pg}/new-unit",
+                        'permission' => "{$pg}.unit.create",
+                    ],
+                    [
+                        'title'      => 'Unit List',
+                        'href'       => "/module/{$pg}/units-list",
+                        'permission' => "{$pg}.unit.view",
+                    ],
+                ],
             ],
 
-            /* -------------------------
-             | Pricing
-             |-------------------------*/
+            /* =========================
+             | Pricing Management
+             ========================= */
             [
                 'title' => 'Pricing',
                 'items' => [
-                    ['title' => 'Set Pricing',  'href' => "/module/{$pg}/new-pricing"],
-                    ['title' => 'Pricing List','href' => "/module/{$pg}/pricings-list"],
-                ]
+                    [
+                        'title'      => 'Set Pricing',
+                        'href'       => "/module/{$pg}/new-pricing",
+                        'permission' => "{$pg}.pricing.create",
+                    ],
+                    [
+                        'title'      => 'Pricing List',
+                        'href'       => "/module/{$pg}/pricings-list",
+                        'permission' => "{$pg}.pricing.view",
+                    ],
+                ],
             ],
 
-            /* -------------------------
-             | Bookings
-             |-------------------------*/
+            /* =========================
+             | Booking Management
+             ========================= */
             [
                 'title' => 'Bookings',
                 'items' => [
-                    ['title' => 'Add Booking',   'href' => "/module/{$pg}/new-booking"],
-                    ['title' => 'Booking List',  'href' => "/module/{$pg}/booking-list"],
-                    ['title' => 'Calendar View', 'href' => "/module/{$pg}/calendar"],
-                ]
+                    [
+                        'title'      => 'Add Booking',
+                        'href'       => "/module/{$pg}/new-booking",
+                        'permission' => "{$pg}.booking.create",
+                    ],
+                    [
+                        'title'      => 'Booking List',
+                        'href'       => "/module/{$pg}/booking-list",
+                        'permission' => "{$pg}.booking.view",
+                    ],
+                    [
+                        'title'      => 'Calendar View',
+                        'href'       => "/module/{$pg}/calendar",
+                        'permission' => "{$pg}.booking.calendar",
+                    ],
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Billing & Invoices
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Billing & Invoices',
                 'items' => [
-                    ['title' => 'Generate Invoice', 'href' => "/module/{$pg}/new-invoice"],
-                    ['title' => 'Invoice List',     'href' => "/module/{$pg}/invoices-list"],
-                ]
+                    [
+                        'title'      => 'Generate Invoice',
+                        'href'       => "/module/{$pg}/new-invoice",
+                        'permission' => "{$pg}.invoice.create",
+                    ],
+                    [
+                        'title'      => 'Invoice List',
+                        'href'       => "/module/{$pg}/invoices-list",
+                        'permission' => "{$pg}.invoice.view",
+                    ],
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Reports
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Reports',
                 'items' => [
-                    ['title' => 'Booking',   'href' => "/module/{$pg}/report-bookings"],
-                    ['title' => 'Revenue',   'href' => "/module/{$pg}/report-revenue"],
-                    ['title' => 'Occupancy', 'href' => "/module/{$pg}/report-occupancy"],
-                ]
+                    [
+                        'title'      => 'Booking Report',
+                        'href'       => "/module/{$pg}/report-bookings",
+                        'permission' => "{$pg}.report.booking",
+                    ],
+                    [
+                        'title'      => 'Revenue Report',
+                        'href'       => "/module/{$pg}/report-revenue",
+                        'permission' => "{$pg}.report.revenue",
+                    ],
+                    [
+                        'title'      => 'Occupancy Report',
+                        'href'       => "/module/{$pg}/report-occupancy",
+                        'permission' => "{$pg}.report.occupancy",
+                    ],
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Settings
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Settings',
-                'href'  => "/module/{$pg}/settings",
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Plugins
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Plugins',
                 'items' => [
-                    ['title' => 'Integrations', 'href' => "/module/{$pg}/plugins"],
-                ]
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
             ],
         ],
     ],
 ],
+
 
 "booking.unit-types" => [
     "room"  => "Room",

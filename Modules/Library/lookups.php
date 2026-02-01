@@ -6,61 +6,174 @@ return [
 
 'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Entry
+             ========================= */
             [
                 'title' => 'Entry',
                 'items' => [
-                    ['title' => 'Book',      'href' => "/module/{$pg}/entry/book"],
-                    ['title' => 'Magazine',  'href' => "/module/{$pg}/entry/magazine"],
-                    ['title' => 'Journal',   'href' => "/module/{$pg}/entry/journal"],
-                    ['title' => 'Newspaper', 'href' => "/module/{$pg}/entry/newspaper"],
-                ]
+                    [
+                        'title'      => 'Book',
+                        'href'       => "/module/{$pg}/entry/book",
+                        'permission' => "{$pg}.entry.book",
+                    ],
+                    [
+                        'title'      => 'Magazine',
+                        'href'       => "/module/{$pg}/entry/magazine",
+                        'permission' => "{$pg}.entry.magazine",
+                    ],
+                    [
+                        'title'      => 'Journal',
+                        'href'       => "/module/{$pg}/entry/journal",
+                        'permission' => "{$pg}.entry.journal",
+                    ],
+                    [
+                        'title'      => 'Newspaper',
+                        'href'       => "/module/{$pg}/entry/newspaper",
+                        'permission' => "{$pg}.entry.newspaper",
+                    ],
+                ],
             ],
+
+            /* =========================
+             | List
+             ========================= */
             [
                 'title' => 'List',
                 'items' => [
-                    ['title' => 'Book',      'href' => "/module/{$pg}/list/book"],
-                    ['title' => 'Magazine',  'href' => "/module/{$pg}/list/magazine"],
-                    ['title' => 'Journal',   'href' => "/module/{$pg}/list/journal"],
-                    ['title' => 'Newspaper', 'href' => "/module/{$pg}/list/newspaper"],
-                ]
+                    [
+                        'title'      => 'Book',
+                        'href'       => "/module/{$pg}/list/book",
+                        'permission' => "{$pg}.list.book",
+                    ],
+                    [
+                        'title'      => 'Magazine',
+                        'href'       => "/module/{$pg}/list/magazine",
+                        'permission' => "{$pg}.list.magazine",
+                    ],
+                    [
+                        'title'      => 'Journal',
+                        'href'       => "/module/{$pg}/list/journal",
+                        'permission' => "{$pg}.list.journal",
+                    ],
+                    [
+                        'title'      => 'Newspaper',
+                        'href'       => "/module/{$pg}/list/newspaper",
+                        'permission' => "{$pg}.list.newspaper",
+                    ],
+                ],
             ],
+
+            /* =========================
+             | Allotment
+             ========================= */
             [
                 'title' => 'Allotment',
                 'items' => [
-                    ['title' => 'New Allotment',  'href' => "/module/{$pg}/allotment/create"],
-                    ['title' => 'Allotment List', 'href' => "/module/{$pg}/allotment/list"],
-                ]
+                    [
+                        'title'      => 'New Allotment',
+                        'href'       => "/module/{$pg}/allotment/create",
+                        'permission' => "{$pg}.allotment.create",
+                    ],
+                    [
+                        'title'      => 'Allotment List',
+                        'href'       => "/module/{$pg}/allotment/list",
+                        'permission' => "{$pg}.allotment.view",
+                    ],
+                ],
             ],
+
+            /* =========================
+             | Reports
+             ========================= */
             [
-                'title' => 'Report',
+                'title' => 'Reports',
                 'items' => [
-                    ['title' => 'Stock Report',     'href' => "/module/{$pg}/report/stock"],
-                    ['title' => 'Allotment Report', 'href' => "/module/{$pg}/report/allotment"],
-                ]
+                    [
+                        'title'      => 'Stock Report',
+                        'href'       => "/module/{$pg}/report/stock",
+                        'permission' => "{$pg}.report.stock",
+                    ],
+                    [
+                        'title'      => 'Allotment Report',
+                        'href'       => "/module/{$pg}/report/allotment",
+                        'permission' => "{$pg}.report.allotment",
+                    ],
+                ],
             ],
+
+            /* =========================
+             | Settings
+             ========================= */
             [
                 'title' => 'Settings',
                 'items' => [
-                    ['title' => 'Book Settings',       'href' => "/module/{$pg}/settings/book"],
-                    ['title' => 'Journal Settings',    'href' => "/module/{$pg}/settings/journal"],
-                    ['title' => 'Newspaper Settings',  'href' => "/module/{$pg}/settings/newspaper"],
-                    ['title' => 'Magazine Settings',   'href' => "/module/{$pg}/settings/magazine"],
-                    ['title' => 'Allotment Settings',  'href' => "/module/{$pg}/settings/allotment"],
-                    ['title' => 'Penalty Settings',    'href' => "/module/{$pg}/settings/penalty"],
-                ]
+                    [
+                        'title'      => 'Book Settings',
+                        'href'       => "/module/{$pg}/settings/book",
+                        'permission' => "{$pg}.settings.book",
+                    ],
+                    [
+                        'title'      => 'Journal Settings',
+                        'href'       => "/module/{$pg}/settings/journal",
+                        'permission' => "{$pg}.settings.journal",
+                    ],
+                    [
+                        'title'      => 'Newspaper Settings',
+                        'href'       => "/module/{$pg}/settings/newspaper",
+                        'permission' => "{$pg}.settings.newspaper",
+                    ],
+                    [
+                        'title'      => 'Magazine Settings',
+                        'href'       => "/module/{$pg}/settings/magazine",
+                        'permission' => "{$pg}.settings.magazine",
+                    ],
+                    [
+                        'title'      => 'Allotment Settings',
+                        'href'       => "/module/{$pg}/settings/allotment",
+                        'permission' => "{$pg}.settings.allotment",
+                    ],
+                    [
+                        'title'      => 'Penalty Settings',
+                        'href'       => "/module/{$pg}/settings/penalty",
+                        'permission' => "{$pg}.settings.penalty",
+                    ],
+                ],
             ],
+
+            /* =========================
+             | Plugins
+             ========================= */
             [
-                'title' => 'Plugin',
+                'title' => 'Plugins',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
+                    [
+                        'title'      => 'View Calendar',
+                        'href'       => "/plugin/calendar?module={$pg}",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
             ],
+
         ],
     ],
 ],
+
+
     'library.crons' => ['library-itemreturnnotification' => 'Library Item Return Notification'],
     'library.bulk-operations' => [
                         "send:email"		=>	"Send Email",

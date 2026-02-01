@@ -6,32 +6,105 @@ return [
 
 'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Product Management
+             ========================= */
+            [
+                'title' => 'Products',
+                'items' => [
+                    [
+                        'title'      => 'Add Product',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.product.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.product.view",
+                    ],
+                    [
+                        'title'      => 'Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.product",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Stock Management
+             ========================= */
             [
                 'title' => 'Stock',
                 'items' => [
-                    ['title' => 'Add New',   'href' => "/module/{$pg}/stock/create"],
-                    ['title' => 'View List', 'href' => "/module/{$pg}/stock/list"],
-                    ['title' => 'Report',    'href' => "/module/{$pg}/stock/report"],
-                    ['title' => 'Settings',  'href' => "/module/{$pg}/stock/settings"],
-                ]
+                    [
+                        'title'      => 'Add Stock',
+                        'href'       => "/module/{$pg}/stock/create",
+                        'permission' => "{$pg}.stock.create",
+                    ],
+                    [
+                        'title'      => 'Stock List',
+                        'href'       => "/module/{$pg}/stock/list",
+                        'permission' => "{$pg}.stock.view",
+                    ],
+                    [
+                        'title'      => 'Stock Report',
+                        'href'       => "/module/{$pg}/stock/report",
+                        'permission' => "{$pg}.report.stock",
+                    ],
+                    [
+                        'title'      => 'Stock Settings',
+                        'href'       => "/module/{$pg}/stock/settings",
+                        'permission' => "{$pg}.settings.stock",
+                    ],
+                ],
             ],
-            ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+
+            /* =========================
+             | Settings
+             ========================= */
             [
-                'title' => 'Plugin',
+                'title' => 'Settings',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
             ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'View Calendar',
+                        'href'       => "/plugin/calendar?module={$pg}",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
+            ],
+
         ],
     ],
 ],
+
     'product.list-filters' => [
                         "admin"	=>	[
                             'sort' => "Type/product_type/product_type-json",

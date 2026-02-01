@@ -6,23 +6,69 @@ return [
 
 'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* Dashboard */
             [
-                'title' => 'Plugin',
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* Subscription Management */
+            [
+                'title' => 'Subscriptions',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
+                    [
+                        'title'      => 'Add New',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.subscription.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.subscription.view",
+                    ],
+                ],
+            ],
+
+            /* Reports */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Subscription Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.subscription",
+                    ],
+                ],
+            ],
+
+            /* Settings */
+            [
+                'title'      => 'Settings',
+                'href'       => "/module/{$pg}/settings",
+                'permission' => "{$pg}.settings.manage",
+            ],
+
+            /* Plugins */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'View Calendar',
+                        'href'       => "/plugin/calendar?module={$pg}",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
             ],
         ],
     ],
 ],
+
     'subscription.list-filters' => [
                         "admin"	=>	[
                             'nextdate' 						=> "Next Date/range-next_date/filter_date_range-json",

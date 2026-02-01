@@ -6,24 +6,84 @@ return [
 
 'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',     'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',  'href' => "/module/{$pg}/new"],
-            ['title' => 'View List','href' => "/module/{$pg}/list"],
-            ['title' => 'Report',   'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
 
+            /* =========================
+             | Dashboard
+             ========================= */
             [
-                'title' => 'Plugin',
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Customer Management
+             ========================= */
+            [
+                'title' => 'Customers',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
+                    [
+                        'title'      => 'Add Customer',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.customer.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.customer.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Customer Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.customer",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
             ],
         ],
     ],
 ],
+
     "customer.crons" => [
 		                'customer-due_date' 	=> 'Customer Due Date',
                         'customer-birthday' 	=> 'Customer Birthday Message'

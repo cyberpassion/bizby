@@ -5,25 +5,64 @@ $commonSettingsRoute = '/settings';
 return [
 	
 
-'sidebar-menu' => [
-    [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-            [
-                'title' => 'Plugin',
-                'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
+'sidebar-menu' => /* =========================
+ | Visit Planner Module
+ ========================= */
+[
+    'title' => ucfirst($pg),
+    'href'  => "/{$pg}",
+    'permission' => "{$pg}.access",
+    'items' => [
+
+        /* =========================
+         | Visit Planner Management
+         ========================= */
+        [
+            'title' => 'Planner',
+            'items' => [
+                [
+                    'title'      => 'Add New',
+                    'href'       => "/module/{$pg}/new",
+                    'permission' => "{$pg}.create",
+                ],
+                [
+                    'title'      => 'View List',
+                    'href'       => "/module/{$pg}/list",
+                    'permission' => "{$pg}.view",
+                ],
+                [
+                    'title'      => 'View Report',
+                    'href'       => "/module/{$pg}/report",
+                    'permission' => "{$pg}.report",
+                ],
+            ],
+        ],
+
+        /* =========================
+         | Settings
+         ========================= */
+        [
+            'title'      => 'Settings',
+            'href'       => "/module/{$pg}/settings",
+            'permission' => "{$pg}.settings",
+        ],
+
+        /* =========================
+         | Plugins
+         ========================= */
+        [
+            'title' => 'Plugins',
+            'items' => [
+                [
+                    'title'      => 'View Calendar',
+                    'href'       => "/plugin/calendar?module={$pg}",
+                    'permission' => "{$pg}.plugin.calendar",
+                ],
             ],
         ],
     ],
 ],
+
 'visitplanner.visitactivity-generation-status' => [
                         'all'	=>	"All",
                         '1'		=>	"VAR Generated",

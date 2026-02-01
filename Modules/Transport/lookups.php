@@ -5,24 +5,63 @@ $commonSettingsRoute = '/settings';
 return [
 
 	'sidebar-menu' => [
-    	[
-	        'title' => ucfirst($pg),
-    	    'href'  => "/{$pg}",
-        	'items' => [
-            	['title' => 'Home',              'href' => "/module/{$pg}/home"],
-	            ['title' => 'New Vehicle Entry', 'href' => "/module/{$pg}/new"],
-    	        ['title' => 'View List',         'href' => "/module/{$pg}/list"],
-        	    ['title' => 'Stops',             'href' => "/module/{$pg}/stops"],
-            	['title' => 'Settings',          'href' => "/module/{$pg}/settings"],
-            	[
-	                'title' => 'Plugin',
-    	            'items' => [
-        	            ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-            	    ]
-            	],
-        	],
-    	],
-	],
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* Home */
+            [
+                'title'      => 'Home',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* New Vehicle Entry */
+            [
+                'title'      => 'New Vehicle Entry',
+                'href'       => "/module/{$pg}/new",
+                'permission' => "{$pg}.vehicle.create",
+            ],
+
+            /* View List */
+            [
+                'title'      => 'View List',
+                'href'       => "/module/{$pg}/list",
+                'permission' => "{$pg}.vehicle.view",
+            ],
+
+            /* Stops */
+            [
+                'title'      => 'Stops',
+                'href'       => "/module/{$pg}/stops",
+                'permission' => "{$pg}.stops.manage",
+            ],
+
+            /* Settings */
+            [
+                'title'      => 'Settings',
+                'href'       => "/module/{$pg}/settings",
+                'permission' => "{$pg}.settings.manage",
+            ],
+
+            /* Plugins */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'View Calendar',
+                        'href'       => "/plugin/calendar?module={$pg}",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
+            ],
+
+        ],
+    ],
+],
+
     'transport.list-filters' => [
                         "admin"	=>	[
                             'route_filter one'			=> 'Route/route_name/transport_route-list',

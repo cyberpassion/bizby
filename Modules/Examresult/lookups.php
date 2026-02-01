@@ -6,23 +6,84 @@ return [
 
 'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',      'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-            ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-            ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
             [
-                'title' => 'Plugin',
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Exam Result Management
+             ========================= */
+            [
+                'title' => 'Exam Results',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
-                ]
+                    [
+                        'title'      => 'Add Result',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.result.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.result.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Result Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.result",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Result Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.manage",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Calendar View',
+                        'href'       => "/module/{$pg}/plugin/calendar",
+                        'permission' => "{$pg}.plugin.calendar",
+                    ],
+                ],
             ],
         ],
     ],
 ],
+
     "examresult.list-filters" => [
                         "admin"	=>	[
                             'session' => "Session/exam_session/session-json",

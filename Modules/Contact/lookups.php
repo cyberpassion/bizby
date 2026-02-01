@@ -4,18 +4,85 @@ $commonSettingsRoute = '/settings';
 
 return [
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Contact Management
+             ========================= */
+            [
+                'title' => 'Contacts',
+                'items' => [
+                    [
+                        'title'      => 'Add Contact',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.contact.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.contact.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Contact Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.contact",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
             ],
         ],
     ],
+],
+
     'contact.contact-group-results-by' => [
                         'contact_type'						=>	'CUSTOMER TYPE',
                         'status'							=>	'STATUS'

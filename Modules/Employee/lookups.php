@@ -5,37 +5,109 @@ $commonSettingsRoute = '/settings';
 return [
 
 	'sidebar-menu' => [
-    	[
-	        'title' => ucfirst($pg),
-    	    'href'  => "/{$pg}",
-        	'items' => [
-            	['title' => 'Home',      'href' => "/module/{$pg}/home"],
-	            ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-    	        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-        	    ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-            	['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-	            [
-    	            'title' => 'Settings',
-        	        'items' => [
-            	        ['title' => 'Salary Settings', 'href' => "/module/{$pg}/settings/salary"],
-                	]
-	            ],
-    	        [
-        	        'title' => 'Report',
-            	    'items' => [
-                	    ['title' => 'Salary Report', 'href' => "/module/{$pg}/report/salary"],
-                	]
-	            ],
-    	        ['title' => 'Bulk Operation', 'href' => "/module/{$pg}/bulk"],
-        	    [
-            	    'title' => 'Plugin',
-                	'items' => [
-                    	['title' => 'View Calendar', 'href' => "/module/{$pg}/plugin/calendar"],
-                	]
-            	],
-        	],
-    	],
-	],
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Employee Management
+             ========================= */
+            [
+                'title' => 'Employees',
+                'items' => [
+                    [
+                        'title'      => 'Add Employee',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.employee.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.employee.view",
+                    ],
+                    [
+                        'title'      => 'Bulk Operation',
+                        'href'       => "/module/{$pg}/bulk",
+                        'permission' => "{$pg}.employee.bulk",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Salary Management
+             ========================= */
+            [
+                'title' => 'Salary',
+                'items' => [
+                    [
+                        'title'      => 'Salary Settings',
+                        'href'       => "/module/{$pg}/settings/salary",
+                        'permission' => "{$pg}.salary.settings",
+                    ],
+                    [
+                        'title'      => 'Salary Report',
+                        'href'       => "/module/{$pg}/report/salary",
+                        'permission' => "{$pg}.salary.report",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Employee Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.employee",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
+            ],
+        ],
+    ],
+],
+
 
 	'employee.statuses' => [
 		'1'		=>	'Active',

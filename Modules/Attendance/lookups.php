@@ -5,24 +5,85 @@ $commonSettingsRoute = '/settings';
 return [
 
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href'  => "/{$pg}",
-            'items' => [
-                ['title' => 'Home',     'href' => "/module/{$pg}/home"],
-                ['title' => 'Add New',  'href' => "/module/{$pg}/new"],
-                ['title' => 'View List','href' => "/module/{$pg}/list"],
-                ['title' => 'Report',   'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
-                [
-                    'title' => 'Plugin',
-                    'items' => [
-                        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                    ]
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Attendance Management
+             ========================= */
+            [
+                'title' => 'Attendance',
+                'items' => [
+                    [
+                        'title'      => 'Add Attendance',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.attendance.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.attendance.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Attendance Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.attendance",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
                 ],
             ],
         ],
     ],
+],
+
     "attendance.list-filters" => [
         "admin" => [
             'session_filter' => "Session/session/session-json",

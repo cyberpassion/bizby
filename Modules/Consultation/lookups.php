@@ -6,24 +6,84 @@ return [
 
 'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
-        'items' => [
-            ['title' => 'Home',     'href' => "/module/{$pg}/home"],
-            ['title' => 'Add New',  'href' => "/module/{$pg}/new"],
-            ['title' => 'View List','href' => "/module/{$pg}/list"],
-            ['title' => 'Report',   'href' => "/module/{$pg}/report"],
-            ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
 
+            /* =========================
+             | Dashboard
+             ========================= */
             [
-                'title' => 'Plugin',
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Consultation Management
+             ========================= */
+            [
+                'title' => 'Consultations',
                 'items' => [
-                    ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                ]
+                    [
+                        'title'      => 'Add Consultation',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.consultation.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.consultation.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Consultation Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.consultation",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
+                ],
             ],
         ],
     ],
 ],
+
 'consultation.consultation-default-intervals'	=>	[
 	'5'  => '5 Minutes',
     '10' => '10 Minutes',

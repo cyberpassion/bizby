@@ -5,43 +5,123 @@ $commonSettingsRoute = '/settings';
 return [
 
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href'  => "/{$pg}",
-            'items' => [
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
 
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
 
-                [
-                    'title' => 'Send',
-                    'items' => [
-                        ['title' => 'Send SMS',      'href' => "/module/{$pg}/new"],
-                        ['title' => 'Send Email',    'href' => "/module/{$pg}/new"],
-                        ['title' => 'Send Whatsapp', 'href' => "/module/{$pg}/new"],
-                    ]
+            /* =========================
+             | Communication
+             ========================= */
+            [
+                'title' => 'Send Communication',
+                'items' => [
+                    [
+                        'title'      => 'Send SMS',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.sms.send",
+                    ],
+                    [
+                        'title'      => 'Send Email',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.email.send",
+                    ],
+                    [
+                        'title'      => 'Send WhatsApp',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.whatsapp.send",
+                    ],
                 ],
+            ],
 
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report',    'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings',  'href' => "/module/{$pg}/settings"],
-
-                [
-                    'title' => 'Template',
-                    'items' => [
-                        ['title' => 'Add New',   'href' => "/module/{$pg}/new"],
-                        ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                    ]
+            /* =========================
+             | Logs / History
+             ========================= */
+            [
+                'title' => 'Communication Logs',
+                'items' => [
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.communication.view",
+                    ],
                 ],
+            ],
 
-                [
-                    'title' => 'Plugin',
-                    'items' => [
-                        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                    ]
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Communication Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.communication",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Templates
+             ========================= */
+            [
+                'title' => 'Templates',
+                'items' => [
+                    [
+                        'title'      => 'Add Template',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.template.create",
+                    ],
+                    [
+                        'title'      => 'View Template List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.template.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
                 ],
             ],
         ],
     ],
+],
+
 
      "communication.list-filters" => [
                         "admin"	=>	[

@@ -5,24 +5,85 @@ $commonSettingsRoute = '/settings';
 return [
     
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href' => "/{$pg}",
-            'items' => [
-                ['title' => 'Home', 'href' => "/module/{$pg}/home"],
-				['title' => 'Add New', 'href' => "/module/{$pg}/new"],
-                ['title' => 'View List', 'href' => "/module/{$pg}/list"],
-                ['title' => 'Report', 'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
-                [
-                    'title' => 'Plugin',
-                    'items' => [
-                        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                    ]
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Event Management
+             ========================= */
+            [
+                'title' => 'Events',
+                'items' => [
+                    [
+                        'title'      => 'Add Event',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.event.create",
+                    ],
+                    [
+                        'title'      => 'Event List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.event.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Event Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Event Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.manage",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Calendar View',
+                        'href'       => "/plugin/calendar?module={$pg}",
+                        'permission' => "{$pg}.plugin.calendar",
+                    ],
                 ],
             ],
         ],
     ],
+],
+
     "eventmanager.crons" => ['eventmanager-notification' => 'Event Notification'],
     "eventmanager.list-filters" => [
                         "admin"	=>	[

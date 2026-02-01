@@ -5,34 +5,105 @@ $commonSettingsRoute = '/settings';
 return [
 
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href'  => "/{$pg}",
-            'items' => [
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
 
-                ['title' => 'Home',     'href' => "/module/{$pg}/home"],
-                ['title' => 'Add New',  'href' => "/module/{$pg}/new"],
-                ['title' => 'View List','href' => "/module/{$pg}/list"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
-                ['title' => 'Report',   'href' => "/module/{$pg}/report"],
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
 
-                [
-                    'title' => 'Plans',
-                    'items' => [
-                        ['title' => 'Create New',     'href' => "/module/{$pg}/new"],
-                        ['title' => 'View Plan List', 'href' => "/module/{$pg}/list"],
-                    ]
+            /* =========================
+             | Checklist Management
+             ========================= */
+            [
+                'title' => 'Checklists',
+                'items' => [
+                    [
+                        'title'      => 'Add Checklist',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.checklist.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.checklist.view",
+                    ],
                 ],
+            ],
 
-                [
-                    'title' => 'Plugin',
-                    'items' => [
-                        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                    ]
+            /* =========================
+             | Plans Management
+             ========================= */
+            [
+                'title' => 'Plans',
+                'items' => [
+                    [
+                        'title'      => 'Create New',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.plan.create",
+                    ],
+                    [
+                        'title'      => 'View Plan List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.plan.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Checklist Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.checklist",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
                 ],
             ],
         ],
     ],
+],
+
+
     "checklist.list-filters" => [
                             "admin"	=>	[
                                 "checklist_listing"	=>	"Listing/listing_id/checklist_listing-json",

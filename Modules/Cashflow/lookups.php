@@ -5,41 +5,118 @@ $commonSettingsRoute = '/settings';
 return [
 
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href'  => "/{$pg}",
-            'items' => [
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
 
-                [
-                    'title' => 'Expense',
-                    'items' => [
-                        ['title' => 'Add New',   'href' => "/module/{$pg}/new-expense"],
-                        ['title' => 'View List', 'href' => "/module/{$pg}/expense-list"],
-                    ]
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Expense Management
+             ========================= */
+            [
+                'title' => 'Expenses',
+                'items' => [
+                    [
+                        'title'      => 'Add Expense',
+                        'href'       => "/module/{$pg}/new-expense",
+                        'permission' => "{$pg}.expense.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/expense-list",
+                        'permission' => "{$pg}.expense.view",
+                    ],
                 ],
+            ],
 
-                [
-                    'title' => 'Income',
-                    'items' => [
-                        ['title' => 'Add New',   'href' => "/module/{$pg}/new-income"],
-                        ['title' => 'View List', 'href' => "/module/{$pg}/income-list"],
-                    ]
+            /* =========================
+             | Income Management
+             ========================= */
+            [
+                'title' => 'Income',
+                'items' => [
+                    [
+                        'title'      => 'Add Income',
+                        'href'       => "/module/{$pg}/new-income",
+                        'permission' => "{$pg}.income.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/income-list",
+                        'permission' => "{$pg}.income.view",
+                    ],
                 ],
+            ],
 
-                ['title' => 'View Online Payments', 'href' => "/module/{$pg}/online-payment-list"],
+            /* =========================
+             | Payments
+             ========================= */
+            [
+                'title' => 'Payments',
+                'items' => [
+                    [
+                        'title'      => 'Online Payments',
+                        'href'       => "/module/{$pg}/online-payment-list",
+                        'permission' => "{$pg}.payment.online.view",
+                    ],
+                ],
+            ],
 
-				['title' => 'View Report',          'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Cashflow Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.cashflow",
+                    ],
+                ],
+            ],
 
-                [
-                    'title' => 'Plugin',
-                    'items' => [
-                        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                    ]
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
                 ],
             ],
         ],
     ],
+],
+
 
     "cashflow.crons" => ['cashflow-daycashreport' => 'Day Cash Report Message'],
     "cashflow.bulk-operations" => [

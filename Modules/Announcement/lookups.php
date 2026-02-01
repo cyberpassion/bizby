@@ -5,24 +5,85 @@ $commonSettingsRoute = '/settings';
 return [
 
     'sidebar-menu' => [
-        [
-            'title' => ucfirst($pg),
-            'href'  => "/{$pg}",
-            'items' => [
-                ['title' => 'Home',     'href' => "/module/{$pg}/home"],
-                ['title' => 'Add New',  'href' => "/module/{$pg}/new"],
-                ['title' => 'View List','href' => "/module/{$pg}/list"],
-                ['title' => 'Report',   'href' => "/module/{$pg}/report"],
-                ['title' => 'Settings', 'href' => "/module/{$pg}/settings"],
-                [
-                    'title' => 'Plugin',
-                    'items' => [
-                        ['title' => 'View Calendar', 'href' => "/plugin/calendar?module={$pg}"],
-                    ]
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
+
+            /* =========================
+             | Dashboard
+             ========================= */
+            [
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
+            ],
+
+            /* =========================
+             | Announcement Management
+             ========================= */
+            [
+                'title' => 'Announcements',
+                'items' => [
+                    [
+                        'title'      => 'Add Announcement',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.announcement.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.announcement.view",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Reports
+             ========================= */
+            [
+                'title' => 'Reports',
+                'items' => [
+                    [
+                        'title'      => 'Announcement Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report.announcement",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Settings
+             ========================= */
+            [
+                'title' => 'Settings',
+                'items' => [
+                    [
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
+                    ],
+                ],
+            ],
+
+            /* =========================
+             | Plugins
+             ========================= */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
+                    ],
                 ],
             ],
         ],
     ],
+],
+
     "announcement.crons" => [
         'announcement-notification' => 'Announcement Notification'
     ],
