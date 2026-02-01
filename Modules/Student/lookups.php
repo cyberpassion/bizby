@@ -5,152 +5,152 @@ $commonSettingsRoute = '/settings';
 return [
     'sidebar-menu' => [
     [
-        'title' => ucfirst($pg),
-        'href'  => "/{$pg}",
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
-        'items' => [
+        'items'      => [
 
-            /* -------------------------
+            /* =========================
              | Dashboard
-             |-------------------------*/
+             ========================= */
             [
-                'title' => 'Dashboard',
-                'href'  => "/module/{$pg}/home",
-                'permission' => "{$pg}.dashboard.view"
+                'title'      => 'Dashboard',
+                'href'       => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view",
             ],
 
-            /* -------------------------
+            /* =========================
              | Student Management
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Students',
                 'items' => [
                     [
-                        'title' => 'Add Student',
-                        'href'  => "/module/{$pg}/new",
-                        'permission' => "{$pg}.create"
+                        'title'      => 'Add Student',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.student.create",
                     ],
                     [
-                        'title' => 'View List',
-                        'href'  => "/module/{$pg}/list",
-                        'permission' => "{$pg}.view"
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.student.view",
                     ],
                     [
-                        'title' => 'Transfer',
-                        'href'  => "/module/{$pg}/transfer",
-                        'permission' => "{$pg}.transfer"
+                        'title'      => 'Transfer',
+                        'href'       => "/module/{$pg}/transfer",
+                        'permission' => "{$pg}.student.transfer",
                     ],
-                ]
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Academic Setup
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Academic Setup',
                 'items' => [
                     [
-                        'title' => 'Academic Years',
-                        'href'  => "/module/{$pg}/academic-years",
-                        'permission' => "{$pg}.academic-year.manage"
+                        'title'      => 'Academic Years',
+                        'href'       => "/module/{$pg}/academic-years",
+                        'permission' => "{$pg}.academic_year.manage",
                     ],
                     [
-                        'title' => 'Classes',
-                        'href'  => "/module/shared/terms/student/classes",
-                        'permission' => "{$pg}.class.manage"
+                        'title'      => 'Classes',
+                        'href'       => "/module/shared/terms/student/classes",
+                        'permission' => "{$pg}.class.manage",
                     ],
                     [
-                        'title' => 'Sections',
-                        'href'  => "/module/shared/terms/student/sections",
-                        'permission' => "{$pg}.section.manage"
+                        'title'      => 'Sections',
+                        'href'       => "/module/shared/terms/student/sections",
+                        'permission' => "{$pg}.section.manage",
                     ],
-                ]
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Fee Management
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Fee Management',
                 'items' => [
                     [
-                        'title' => 'Fee Heads',
-                        'href'  => "/module/shared/terms/student/fee-heads",
-                        'permission' => "{$pg}.fee-head.manage"
+                        'title'      => 'Fee Heads',
+                        'href'       => "/module/shared/terms/student/fee-heads",
+                        'permission' => "{$pg}.fee_head.manage",
                     ],
                     [
-                        'title' => 'Fee Structure',
-                        'href'  => "/module/{$pg}/fee-structure",
-                        'permission' => "{$pg}.fee-structure.manage"
-                    ]
-                ]
+                        'title'      => 'Fee Structure',
+                        'href'       => "/module/{$pg}/fee-structure",
+                        'permission' => "{$pg}.fee_structure.manage",
+                    ],
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Reports
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Reports',
                 'items' => [
                     [
-                        'title' => 'Student',
-                        'href'  => "/module/{$pg}/report-students",
-                        'permission' => "{$pg}.report.student"
+                        'title'      => 'Student Report',
+                        'href'       => "/module/{$pg}/report-students",
+                        'permission' => "{$pg}.report.student",
                     ],
                     [
-                        'title' => 'Fee Collection',
-                        'href'  => "/module/{$pg}/report-fees",
-                        'permission' => "{$pg}.report.fee"
+                        'title'      => 'Fee Collection',
+                        'href'       => "/module/{$pg}/report-fees",
+                        'permission' => "{$pg}.report.fee",
                     ],
                     [
-                        'title' => 'Dues',
-                        'href'  => "/module/{$pg}/report-dues",
-                        'permission' => "{$pg}.report.dues"
+                        'title'      => 'Dues',
+                        'href'       => "/module/{$pg}/report-dues",
+                        'permission' => "{$pg}.report.dues",
                     ],
-                ]
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Settings
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Settings',
                 'items' => [
                     [
-                        'title' => 'Basic',
-                        'href'  => "/module/{$pg}/settings",
-                        'permission' => "{$pg}.settings.basic"
+                        'title'      => 'Basic Settings',
+                        'href'       => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic",
                     ],
                     [
-                        'title' => 'Admission Rules',
-                        'href'  => "/module/{$pg}/admission-rules",
-                        'permission' => "{$pg}.settings.admission"
+                        'title'      => 'Admission Rules',
+                        'href'       => "/module/{$pg}/admission-rules",
+                        'permission' => "{$pg}.settings.admission",
                     ],
                     [
-                        'title' => 'Fee Rules',
-                        'href'  => "/module/{$pg}/fee-rules",
-                        'permission' => "{$pg}.settings.fee"
+                        'title'      => 'Fee Rules',
+                        'href'       => "/module/{$pg}/fee-rules",
+                        'permission' => "{$pg}.settings.fee",
                     ],
                     [
-                        'title' => 'Other',
-                        'href'  => "/module/{$pg}/other-section",
-                        'permission' => "{$pg}.settings.other"
+                        'title'      => 'Other Settings',
+                        'href'       => "/module/{$pg}/other-section",
+                        'permission' => "{$pg}.settings.other",
                     ],
-                ]
+                ],
             ],
 
-            /* -------------------------
+            /* =========================
              | Plugins
-             |-------------------------*/
+             ========================= */
             [
                 'title' => 'Plugins',
                 'items' => [
                     [
-                        'title' => 'Integrations',
-                        'href'  => "/module/{$pg}/plugins",
-                        'permission' => "{$pg}.plugin.manage"
+                        'title'      => 'Integrations',
+                        'href'       => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage",
                     ],
-                ]
+                ],
             ],
         ],
     ],
