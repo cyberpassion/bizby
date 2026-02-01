@@ -38,17 +38,6 @@ class SharedServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
 
-		// Register all scheduled jobs for module
-		//$this->registerScheduleJobs();
-
-		// Load notifications from config
-		$path = module_path($this->name, 'config/notifications.php');
-
-		if (file_exists($path)) {
-		    $this->mergeConfigFrom($path, 'notifications');
-		}
-
-
 		// Lookups
 		$this->loadPhpLookupsFromModules(); // Registers all lookup keys returning static values
 		$this->loadDynamicLookupsFromProviders(); // Register all lookup keys wherein we fetch dynamic values
@@ -64,22 +53,26 @@ class SharedServiceProvider extends ServiceProvider
 		$this->app->singleton(PayableResolver::class);
 
 		// Loading Plesk API to create/delete databases for tenants
-		$this->mergeConfigFrom(
-		    module_path('Shared', 'config/plesk.php'),
-    		'plesk'
-		);
+		$this->mergeConfigFrom( module_path('Shared', 'config/plesk.php'), 'plesk' );
 
 		// Loading Email templates
-		$this->loadViewsFrom(
-			module_path('Shared', 'resources/views'),
-        	'shared'
-    	);
+		$this->loadViewsFrom( module_path('Shared', 'resources/views'), 'shared' );
 
 		// Morph map registrations
 		$this->registerMorphMaps();
 
 		// Load global helpers
-		require_once module_path('Shared', 'app/Helpers/helpers.php');
+		$helpers = module_path('Shared', 'app/Helpers/helpers.php');
+		if (file_exists($helpers)) {
+    		require_once $helpers;
+		}
+
+		if ($this->app->runningInConsole()) {
+	    	$this->app->booted(function () {
+	    	    $this->registerAllModuleSchedules();
+    	    	$this->loadAllModuleNotifications();
+	    	});
+		}
 
     }
 
@@ -118,7 +111,15 @@ class SharedServiceProvider extends ServiceProvider
         	}
 
 	        // ✅ ALWAYS use container
-    	    $provider = app($providerClass);
+    	    try {
+    	        $provider = app($providerClass);
+    	    } catch (\Throwable $e) {
+    	        logger()->error('Lookup provider failed', [
+    	            'provider' => $providerClass,
+    	            'error' => $e->getMessage()
+    	        ]);
+    	        continue;
+    	    }
 
 	        // 1️⃣ Normal lookup registration
     	    if (method_exists($provider, 'getLookups')) {
@@ -142,9 +143,10 @@ class SharedServiceProvider extends ServiceProvider
 	    $modulePath = base_path('Modules');
 
 	    foreach (scandir($modulePath) as $module) {
-    	    if ($module === '.' || $module === '..') {
-        	    continue;
-        	}
+    	    if ($module === '.' || $module === '..') continue;
+			if (!is_dir($modulePath.'/'.$module)) {
+				continue;
+			}
 
 	        $barricadeFile = $modulePath . "/{$module}/barricade.php";
 
@@ -249,7 +251,12 @@ class SharedServiceProvider extends ServiceProvider
     protected function merge_config_from(string $path, string $key): void
     {
         $existing = config($key, []);
-        $module_config = require $path;
+        try {
+		    $module_config = require $path;
+		} catch (\Throwable $e) {
+		    logger()->error("Config load failed: {$path}", ['error' => $e->getMessage()]);
+    		return;
+		}
 
         config([$key => array_replace_recursive($existing, $module_config)]);
     }
@@ -339,6 +346,88 @@ class SharedServiceProvider extends ServiceProvider
             'consultation' => \Modules\Consultation\Models\Consultation::class,
             'patient'   	=> \Modules\Patient\Models\Patient::class,
 		]);
+	}
+
+	private function registerAllModuleSchedules(): void
+	{
+    	if (!class_exists(\Modules\Shared\Services\Schedules\ScheduleJobRegistry::class)) {
+        	logger()->warning('ScheduleJobRegistry missing, skipping schedule registration');
+        	return;
+	    }
+
+	    foreach (\Nwidart\Modules\Facades\Module::allEnabled() as $module) {
+
+	        $path = module_path($module->getName(), 'config/schedulable_jobs.php');
+
+	        if (!file_exists($path)) {
+    	        continue;
+        	}
+
+	        try {
+    	        $jobs = require $path;
+        	} catch (\Throwable $e) {
+            	logger()->error('Failed loading schedulable jobs', [
+                	'module' => $module->getName(),
+	                'error' => $e->getMessage(),
+    	        ]);
+        	    continue;
+        	}
+
+	        foreach ($jobs as $key => $job) {
+
+	            if (!isset($job['class']) || !class_exists($job['class'])) {
+    	            logger()->error('Scheduled job class missing', [
+        	            'module' => $module->getName(),
+            	        'class' => $job['class'] ?? null,
+                	]);
+	                continue;
+    	        }
+
+	            \Modules\Shared\Services\Schedules\ScheduleJobRegistry::register(
+	                key: strtolower($module->getName()) . '.' . $key,
+    	            handler: fn () => dispatch(app($job['class'])),
+        	        meta: array_merge($job, [
+            	        'module' => strtolower($module->getName()),
+                	])
+            	);
+        	}
+    	}
+	}
+
+	private function loadAllModuleNotifications(): void
+	{
+    	foreach (\Nwidart\Modules\Facades\Module::allEnabled() as $module) {
+
+	        $path = module_path($module->getName(), 'config/notifications.php');
+
+    	    if (!file_exists($path)) {
+        	    continue;
+        	}
+
+	        try {
+    	        $config = require $path;
+        	} catch (\Throwable $e) {
+            	logger()->error('Failed loading notifications config', [
+                	'module' => $module->getName(),
+                	'error' => $e->getMessage(),
+	            ]);
+    	        continue;
+        	}
+
+	        if (!is_array($config)) {
+    	        logger()->error('notifications.php must return array', [
+        	        'module' => $module->getName(),
+            	]);
+            	continue;
+	        }
+
+	        config([
+    	        'notifications' => array_replace_recursive(
+        	        config('notifications', []),
+            	    $config
+	            )
+    	    ]);
+    	}
 	}
 
 }

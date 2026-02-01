@@ -3,7 +3,7 @@ namespace Modules\Admin\Services\Tenants;
 
 use Modules\Admin\Models\Tenants\TenantInstallation;
 
-class InstallationRunner
+class TenantInstallationRunner
 {
     public function run(TenantInstallation $install, callable $callback)
     {

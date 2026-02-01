@@ -34,11 +34,11 @@ class StudentServiceProvider extends ServiceProvider
 		//$this->registerScheduleJobs();
 
 		// Load notifications from config
-		$path = module_path($this->name, 'config/notifications.php');
+		//$path = module_path($this->name, 'config/notifications.php');
 
-		if (file_exists($path)) {
+		/*if (file_exists($path)) {
 		    $this->mergeConfigFrom($path, 'notifications');
-		}
+		}*/
 
 
 		// 🚧 Barricade resources

@@ -7,6 +7,7 @@ return [
     [
         'title' => ucfirst($pg),
         'href'  => "/{$pg}",
+        'permission' => "{$pg}.access",
         'items' => [
 
             /* -------------------------
@@ -15,6 +16,7 @@ return [
             [
                 'title' => 'Dashboard',
                 'href'  => "/module/{$pg}/home",
+                'permission' => "{$pg}.dashboard.view"
             ],
 
             /* -------------------------
@@ -23,9 +25,21 @@ return [
             [
                 'title' => 'Students',
                 'items' => [
-                    ['title' => 'Add Student',   'href' => "/module/{$pg}/new"],
-                    ['title' => 'View List',  'href' => "/module/{$pg}/list"],
-                    ['title' => 'Transfer', 'href' => "/module/{$pg}/transfer"],
+                    [
+                        'title' => 'Add Student',
+                        'href'  => "/module/{$pg}/new",
+                        'permission' => "{$pg}.create"
+                    ],
+                    [
+                        'title' => 'View List',
+                        'href'  => "/module/{$pg}/list",
+                        'permission' => "{$pg}.view"
+                    ],
+                    [
+                        'title' => 'Transfer',
+                        'href'  => "/module/{$pg}/transfer",
+                        'permission' => "{$pg}.transfer"
+                    ],
                 ]
             ],
 
@@ -35,9 +49,21 @@ return [
             [
                 'title' => 'Academic Setup',
                 'items' => [
-                    ['title' => 'Academic Years', 'href' => "/module/{$pg}/academic-years"],
-                    ['title' => 'Classes',        'href' => "/module/shared/terms/student/classes"],
-                    ['title' => 'Sections',       'href' => "/module/shared/terms/student/sections"],
+                    [
+                        'title' => 'Academic Years',
+                        'href'  => "/module/{$pg}/academic-years",
+                        'permission' => "{$pg}.academic-year.manage"
+                    ],
+                    [
+                        'title' => 'Classes',
+                        'href'  => "/module/shared/terms/student/classes",
+                        'permission' => "{$pg}.class.manage"
+                    ],
+                    [
+                        'title' => 'Sections',
+                        'href'  => "/module/shared/terms/student/sections",
+                        'permission' => "{$pg}.section.manage"
+                    ],
                 ]
             ],
 
@@ -47,8 +73,16 @@ return [
             [
                 'title' => 'Fee Management',
                 'items' => [
-                    ['title' => 'Fee Heads',       'href' => "/module/shared/terms/student/fee-heads"],
-                    ['title' => 'Fee Structure',   'href' => "/module/{$pg}/fee-structure"]
+                    [
+                        'title' => 'Fee Heads',
+                        'href'  => "/module/shared/terms/student/fee-heads",
+                        'permission' => "{$pg}.fee-head.manage"
+                    ],
+                    [
+                        'title' => 'Fee Structure',
+                        'href'  => "/module/{$pg}/fee-structure",
+                        'permission' => "{$pg}.fee-structure.manage"
+                    ]
                 ]
             ],
 
@@ -58,9 +92,21 @@ return [
             [
                 'title' => 'Reports',
                 'items' => [
-                    ['title' => 'Student',        'href' => "/module/{$pg}/report-students"],
-                    ['title' => 'Fee Collection', 'href' => "/module/{$pg}/report-fees"],
-                    ['title' => 'Dues',           'href' => "/module/{$pg}/report-dues"],
+                    [
+                        'title' => 'Student',
+                        'href'  => "/module/{$pg}/report-students",
+                        'permission' => "{$pg}.report.student"
+                    ],
+                    [
+                        'title' => 'Fee Collection',
+                        'href'  => "/module/{$pg}/report-fees",
+                        'permission' => "{$pg}.report.fee"
+                    ],
+                    [
+                        'title' => 'Dues',
+                        'href'  => "/module/{$pg}/report-dues",
+                        'permission' => "{$pg}.report.dues"
+                    ],
                 ]
             ],
 
@@ -70,10 +116,26 @@ return [
             [
                 'title' => 'Settings',
                 'items' => [
-                    ['title' => 'Basic',            'href' => "/module/{$pg}/settings"],
-                    ['title' => 'Admission Rules',  'href' => "/module/{$pg}/admission-rules"],
-                    ['title' => 'Fee Rules',        'href' => "/module/{$pg}/fee-rules"],
-                    ['title' => 'Other',            'href' => "/module/{$pg}/other-section"],
+                    [
+                        'title' => 'Basic',
+                        'href'  => "/module/{$pg}/settings",
+                        'permission' => "{$pg}.settings.basic"
+                    ],
+                    [
+                        'title' => 'Admission Rules',
+                        'href'  => "/module/{$pg}/admission-rules",
+                        'permission' => "{$pg}.settings.admission"
+                    ],
+                    [
+                        'title' => 'Fee Rules',
+                        'href'  => "/module/{$pg}/fee-rules",
+                        'permission' => "{$pg}.settings.fee"
+                    ],
+                    [
+                        'title' => 'Other',
+                        'href'  => "/module/{$pg}/other-section",
+                        'permission' => "{$pg}.settings.other"
+                    ],
                 ]
             ],
 
@@ -83,7 +145,11 @@ return [
             [
                 'title' => 'Plugins',
                 'items' => [
-                    ['title' => 'Integrations', 'href' => "/module/{$pg}/plugins"],
+                    [
+                        'title' => 'Integrations',
+                        'href'  => "/module/{$pg}/plugins",
+                        'permission' => "{$pg}.plugin.manage"
+                    ],
                 ]
             ],
         ],

@@ -32,6 +32,9 @@ use Modules\Shared\Http\Controllers\Permissions\UserRoleApiController;
 use Modules\Shared\Http\Controllers\Permissions\UserPermissionApiController;
 use Modules\Shared\Http\Controllers\Permissions\PermissionTreeApiController;
 
+// Navigation
+use Modules\Shared\Http\Controllers\Navigations\NavigationApiController;
+
 /*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('shareds', SharedController::class)->names('shared');
 });*/
@@ -261,4 +264,18 @@ Route::prefix('v1')
     Route::get('/users/{user}/permissions', [UserPermissionApiController::class, 'index']);
     Route::put('/users/{user}/permissions', [UserPermissionApiController::class, 'sync']);
     Route::delete('/users/{user}/permissions/{permission}', [UserPermissionApiController::class, 'revoke']);
+});
+
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'identify.tenant'])
+    ->group(function () {
+
+        /* ============================
+         | Navigation (READ ONLY)
+         |============================ */
+        Route::get('/navigation/sidebar', [NavigationApiController::class, 'sidebar']);
+        Route::get('/navigation/header',  [NavigationApiController::class, 'header']);
+        Route::get('/navigation/module/{module}', [NavigationApiController::class, 'module']);
+        Route::get('/navigation/item/{module}/{id}', [NavigationApiController::class, 'item']);
+
 });

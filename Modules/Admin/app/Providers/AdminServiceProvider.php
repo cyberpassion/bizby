@@ -33,14 +33,14 @@ class AdminServiceProvider extends ServiceProvider
 
 		// Register all scheduled jobs for module
 		//$this->registerScheduleJobs();
-		$this->registerSchedulableJobs();
+		//$this->registerSchedulableJobs();
 
 		// Load notifications from config
-		$path = module_path($this->name, 'config/notifications.php');
+		//$path = module_path($this->name, 'config/notifications.php');
 
-		if (file_exists($path)) {
+		/*if (file_exists($path)) {
 		    $this->mergeConfigFrom($path, 'notifications');
-		}
+		}*/
 
 		// Load billing config
 		$this->mergeConfigFrom(module_path($this->name, 'config/billing.php'), 'billing');
@@ -170,7 +170,7 @@ class AdminServiceProvider extends ServiceProvider
         return $paths;
     }
 
-	private function registerSchedulableJobs(): void
+	/*private function registerSchedulableJobs(): void
 	{
     	$path = module_path($this->name, 'config/schedulable_jobs.php');
 
@@ -194,6 +194,6 @@ class AdminServiceProvider extends ServiceProvider
     			]
 			);
     	}
-	}
+	}*/
 
 }

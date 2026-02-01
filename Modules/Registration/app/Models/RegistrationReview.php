@@ -2,10 +2,10 @@
 
 namespace Modules\Registration\Models;
 
-use \App\Models\TenantModel;
+use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Registration extends TenantModel
+class RegistrationReview extends TenantModel
 {
 	use HasFactory;
     protected $fillable = [

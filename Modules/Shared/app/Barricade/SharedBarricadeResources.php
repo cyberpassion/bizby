@@ -25,7 +25,7 @@ use Modules\Contact\Models\Contact;
 use Modules\Customer\Models\Customer;
 use Modules\Employee\Models\Employee;
 use Modules\Eventmanager\Models\Eventmanager;
-use Modules\Examresult\Models\Examresult;
+//use Modules\Examresult\Models\Examresult;
 use Modules\Lead\Models\Lead;
 use Modules\Leaveapplication\Models\Leaveapplication;
 use Modules\Library\Models\Library;
@@ -73,7 +73,7 @@ class SharedBarricadeResources
         self::registerResource('customers', Customer::class);
         self::registerResource('employees', Employee::class);
         self::registerResource('eventmanagers', Eventmanager::class);
-        self::registerResource('examresults', Examresult::class);
+        //self::registerResource('examresults', Examresult::class);
         self::registerResource('leads', Lead::class);
         self::registerResource('leaveapplications', Leaveapplication::class);
         self::registerResource('libraries', Library::class);

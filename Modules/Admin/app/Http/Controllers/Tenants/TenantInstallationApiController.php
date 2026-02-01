@@ -7,11 +7,11 @@ use Illuminate\Routing\Controller;
 use Modules\Admin\Enums\Tenants\TargetType;
 use Modules\Admin\Enums\Tenants\OperationType;
 use Modules\Admin\Models\Tenants\TenantInstallation;
-use Modules\Admin\Services\Tenants\InstallationRunner;
+use Modules\Admin\Services\Tenants\TenantInstallationRunner;
 
 class TenantInstallationApiController extends Controller
 {
-    public function store(Request $request, InstallationRunner $runner)
+    public function store(Request $request, TenantInstallationRunner $runner)
     {
         $install = TenantInstallation::create([
             'tenant_id' => $request->tenant_id,

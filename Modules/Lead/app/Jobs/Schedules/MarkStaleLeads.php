@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Lead\Jobs;
+namespace Modules\Lead\Jobs\Schedules;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
