@@ -1,0 +1,137 @@
+<?php
+$pg = 'meetingmanager';
+
+return [
+
+    'meetingmanager.crons' => [
+        'meetingmanager-remindernotification' => 'Meeting Reminder'
+    ],
+
+    'meetingmanager.list-filters' => [
+        "admin" => [
+            'meeting_head_filter' => "Head/meeting_type/meeting_type-json",
+            'date_filter'         => "Date/meeting_date/meeting_date-json",
+            'meeting_with_filter' => "Meeting With/meeting_with/meeting_with-list",
+            'status_filter'       => "Status/status/status-json",
+        ],
+        "portal" => [
+            'meeting_head_filter' => "Head/meeting_type/meeting_type-json",
+            'date_filter'         => "Date/meeting_date/meeting_date-json",
+            'meeting_with_filter' => "Meeting With/meeting_with/meeting_with-list",
+            'status_filter'       => "Status/status/status-json",
+        ],
+    ],
+
+    'meeting.bulk-operations' => [
+        "view:detail"                  => "Print Detail",
+        "document:slip"                => "Print Slip",
+        "op:remove"                    => "Delete",
+        "op:restore"                   => "Restore",
+        "meetingmanager:reminder-sms"  => "Send Reminder SMS",
+    ],
+
+    'meetingmanager.default-columns' => [
+        'entry'  => ['meeting_id','requested_by_name','phone_number','meeting_with','meeting_date','meeting_time','meeting_exit_time','tags','status'],
+        'list'   => ['meeting_id','requested_by_name','phone_number','meeting_with','meeting_date','meeting_time','meeting_exit_time','tags','status'],
+        'detail' => ['meeting_id','requested_by_name','phone_number','meeting_with','meeting_date','meeting_time','meeting_exit_time','tags','status'],
+        'report' => ['meeting_id','requested_by_name','phone_number','meeting_with','meeting_date','meeting_time','meeting_exit_time','tags','status'],
+        'sample_export'   => ['sno','requested_by_name','phone_number','meeting_with','meeting_date','meeting_time','meeting_exit_time'],
+        'selected_columns'=> ['requested_by_name','phone_number','meeting_with','meeting_date','meeting_time','meeting_exit_time'],
+    ],
+
+    'meetingmanager.documents' => [
+        'meetingmanager-slip' => 'Meeting Slip'
+    ],
+
+    'meetingmanager.list-column' => [
+        'meeting_date',
+        'meeting_time',
+        'requested_by_name',
+        'meeting_with',
+        'meeting_type',
+        'priority',
+    ],
+
+    'meetingmanager.list-filters-ui' => [
+        'meeting_date',
+        'meeting_type',
+        'meeting_with_type',
+        'meeting_with_id',
+        'priority',
+        'status',
+        'meeting_group_id',
+        'created_at',
+    ],
+
+    'meetingmanager.report-columns' => [
+        'id',
+        'meeting_group_id',
+        'meeting_type',
+        'meeting_date',
+        'meeting_time',
+        'requested_by_name',
+        'phone_number',
+        'email',
+        'meeting_with',
+        'priority',
+        'status',
+        'meeting_exit_date',
+    ],
+
+    'meetingmanager.meeting-types' => [
+        'default' => 'Default',
+    ],
+
+    'communicationTemplate-meetingmanager' => [
+        "meetingmanager_entry_new_sms"       => "New Meetingmanager Entry SMS",
+        "meetingmanager_entry_new_whatsapp"  => "New Meetingmanager Entry Whatsapp",
+        "meetingmanager_entry_new_email"     => "New Meetingmanager Entry Email",
+    ],
+
+    'columnNameMapping-meetingmanager' => [
+        'meeting_id'        => 'ID',
+        'requested_by_name' => 'Name',
+        'meeting_with'      => 'Meeting With',
+        'meeting_date'      => 'M/Date',
+        'meeting_time'      => 'M/Time',
+        'meeting_exit_time' => 'Exit Time',
+    ],
+
+    'moduleTable-meetingmanager' => [
+        "cyp_term",
+        "cyp_activity",
+        "cyp_advancedinfo",
+        "cyp_allotment",
+        "cyp_cash",
+        "cyp_option",
+        "cyp_upload",
+        "cyp_notification",
+        "cyp_message",
+        "cyp_meeting",
+    ],
+
+    'mandatoryFields-meetingmanager-entry-update' => [
+        'requested_by_name'
+    ],
+
+    'dateFields-meetingmanager-entry-update' => [
+        'meeting_date',
+        'meeting_exit_date'
+    ],
+
+    'additionalFields-meetingmanager-entry-update' => [],
+
+    'formPrefills-meetingmanager-entry-new' => [
+        "columns" => [
+            'product'      => 'default_product',
+            'contact_mode' => 'default_contact_mode',
+            'state'        => 'default_indian_state',
+        ],
+        "groups" => [
+            'current_date' => ['contact_date'],
+        ],
+    ],
+
+    'meeting-priority' => [1,2,3,4,5],
+
+];
