@@ -43,9 +43,6 @@ use Modules\Shared\Http\Controllers\Navigations\NavigationApiController;
 Route::prefix('v1')->group(function () {
     Route::apiResource('shared', SharedApiController::class)->names('shared');
 
-	// Lookups for common static values like gender, list of countries
-	Route::get('/lookups/{key}', [LookupsApiController::class, 'get']);
-
 	Route::get('/form/{module}/{name}', [FormApiController::class, 'show']);
 
 	// Terms for dynamic values like student classes etc
@@ -269,6 +266,9 @@ Route::prefix('v1')
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'identify.tenant'])
     ->group(function () {
+
+		// Lookups for common static values like gender, list of countries
+		Route::get('/lookups/{key}', [LookupsApiController::class, 'get']);
 
         /* ============================
          | Navigation (READ ONLY)

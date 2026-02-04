@@ -38,7 +38,11 @@ class SharedServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
 
-		// Lookups
+		// Config-based lookups (NEW)
+		$this->loadConfigDataLookupsFromModules();
+		$this->loadConfigUiLookupsFromModules();
+
+		// Legacy lookups (fallback)
 		$this->loadPhpLookupsFromModules(); // Registers all lookup keys returning static values
 		$this->loadDynamicLookupsFromProviders(); // Register all lookup keys wherein we fetch dynamic values
 
@@ -75,6 +79,70 @@ class SharedServiceProvider extends ServiceProvider
 		}
 
     }
+
+	protected function loadConfigDataLookupsFromModules(): void
+	{
+    	$modulesPath = base_path('Modules');
+
+	    foreach (scandir($modulesPath) as $module) {
+    	    if ($module === '.' || $module === '..') continue;
+
+	        $file = "{$modulesPath}/{$module}/Config/data/".strtolower($module).".php";
+
+    	    if (!file_exists($file)) {
+        	    continue;
+        	}
+
+	        try {
+    	        $config = require $file;
+        	} catch (\Throwable $e) {
+            	logger()->error("Failed loading data config", [
+                	'module' => $module,
+                	'error'  => $e->getMessage()
+	            ]);
+    	        continue;
+        	}
+
+	        foreach ($config as $key => $value) {
+    	        LookupRegistry::register(
+        	        strtolower($module).'.'.$key,
+            	    $value
+	            );
+    	    }
+    	}
+	}
+
+	protected function loadConfigUiLookupsFromModules(): void
+	{
+	    $modulesPath = base_path('Modules');
+
+	    foreach (scandir($modulesPath) as $module) {
+    	    if ($module === '.' || $module === '..') continue;
+
+	        $file = "{$modulesPath}/{$module}/Config/ui/".strtolower($module).".php";
+
+    	    if (!file_exists($file)) {
+        	    continue;
+        	}
+
+	        try {
+    	        $config = require $file;
+        	} catch (\Throwable $e) {
+            	logger()->error("Failed loading ui config", [
+                	'module' => $module,
+                	'error'  => $e->getMessage()
+	            ]);
+    	        continue;
+        	}
+
+	        foreach ($config as $key => $value) {
+    	        LookupRegistry::register(
+        	        strtolower($module).'.ui.'.$key,
+            	    $value
+            	);
+        	}
+    	}
+	}
 
 	// Registers all lookup keys returning static values
 	protected function loadPhpLookupsFromModules()
