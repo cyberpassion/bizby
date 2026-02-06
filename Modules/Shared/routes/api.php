@@ -43,6 +43,8 @@ use Modules\Shared\Http\Controllers\Navigations\NavigationApiController;
 Route::prefix('v1')->group(function () {
     Route::apiResource('shared', SharedApiController::class)->names('shared');
 
+	Route::get('/lookups-x/{key}', [LookupsApiController::class, 'get']);
+
 	Route::get('/form/{module}/{name}', [FormApiController::class, 'show']);
 
 	// Terms for dynamic values like student classes etc
@@ -277,5 +279,8 @@ Route::prefix('v1')
         Route::get('/navigation/header',  [NavigationApiController::class, 'header']);
         Route::get('/navigation/module/{module}', [NavigationApiController::class, 'module']);
         Route::get('/navigation/item/{module}/{id}', [NavigationApiController::class, 'item']);
+
+	// Permissions
+	Route::get('/get-permissions/{id}', [PermissionApiController::class, 'get']);
 
 });

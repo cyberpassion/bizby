@@ -35,10 +35,11 @@ if (!function_exists('can')) {
      *
      * @return bool
      */
-    function can(string $slug, ?string $scope = null): bool
+    function can( string $slug, ?string $scope = null): bool
     {
         // Get currently authenticated user
         $user = auth()->user();
+		$tenant = app('resolvedTenant');;      // current tenant
 
         // If user is not logged in, deny access
         if (!$user) {
@@ -49,7 +50,7 @@ if (!function_exists('can')) {
         // This keeps helper thin and logic centralized
         return Permissions::can(
             $user->id,        // authenticated user id
-            tenant()->id,     // current tenant id (SaaS context)
+            $tenant->id,      // current tenant id (SaaS context)
             $slug,            // permission slug
             $scope            // optional scope
         );

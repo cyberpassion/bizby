@@ -73,6 +73,7 @@ class LookupsApiController extends Controller
                 return false;
             }
 
+			return can($item['permission'],'web');
             return $user->can($item['permission']);
         }));
     }
