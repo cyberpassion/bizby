@@ -1,45 +1,152 @@
 <?php
 return [
 
+	/* ======================================================
+     | MODULE GROUPS (used for UI, permissions, marketplace)
+     ====================================================== */
+
+    'modules' => [
+
+        /* ---------------- CORE (always enabled) ---------------- */
+        'core' => [
+            //'admin'        => 'Admin',
+            //'shared'       => 'Shared',
+            'signup'       => 'Signup',
+            'subscription' => 'Subscription',
+            'library'      => 'Library',
+        ],
+
+        /* ---------------- PEOPLE ---------------- */
+        'people' => [
+            'student'  => 'Student',
+            'employee' => 'Employee',
+            'customer' => 'Customer',
+            'patient'  => 'Patient',
+            'vendor'   => 'Vendor',
+            'lead'     => 'Lead',
+        ],
+
+        /* ---------------- ACTIVITY ---------------- */
+        'activity' => [
+            'attendance'      => 'Attendance',
+            'survey'          => 'Survey',
+            'checklist'       => 'Checklist',
+            'note'            => 'Notes',
+            'eventmanager'    => 'Events',
+            'meetingmanager'  => 'Meetings',
+            'visitactivity'   => 'Visits',
+            'taskplanner'     => 'Task Planner',
+        ],
+
+        /* ---------------- COMMUNICATION ---------------- */
+        'communication' => [
+            'communication' => 'Communication Hub',
+            'sms'           => 'SMS',
+            'whatsapp'      => 'WhatsApp',
+            'email'         => 'Email',
+            'notification'  => 'Notifications',
+        ],
+
+        /* ---------------- BUSINESS / OPERATIONS ---------------- */
+        'business' => [
+            'booking'     => 'Booking',
+            'billing'     => 'Billing',
+            'cashflow'    => 'Cashflow',
+            'listing'     => 'Listing',
+            'product'     => 'Product',
+            'saleservice' => 'Sales & Service',
+            'service'     => 'Service Management',
+            'transport'   => 'Transport',
+            'inventory'   => 'Inventory',
+        ],
+
+        /* ---------------- EDUCATION ---------------- */
+        'education' => [
+            'registration' => 'Registration',
+            'examresult'   => 'Exam Result',
+            'timetable'    => 'Timetable',
+            'attendance'   => 'Attendance',
+            'library'      => 'Library',
+        ],
+
+        /* ---------------- HEALTHCARE ---------------- */
+        'healthcare' => [
+            'treatment'    => 'Treatment',
+            'consultation' => 'Consultation',
+            'patient'      => 'Patient',
+        ],
+
+        /* ---------------- SYSTEM / PLUGINS ---------------- */
+        'system' => [
+            'scheduler'   => 'Scheduler',
+            'report'      => 'Reports',
+            'download'    => 'Download',
+            'integration' => 'Integrations',
+            'plugin'      => 'Plugins',
+        ],
+    ],
+
     /* =========================
      | Common Lookups
      ========================= */
-    'shared.bulk_upload_types' => [
+    'bulk-upload-types' => [
         'data'     => 'Bulk Data Import',
         'document' => 'Bulk Document Import',
     ],
 
-    'shared.yes_nos' => [
+    'yes-nos' => [
         'Y' => 'Yes',
         'N' => 'No',
     ],
 
-    'shared.genders' => [
+    'genders' => [
         'M' => 'Male',
         'F' => 'Female',
         'O' => 'Other',
     ],
 
-    'shared.blood-groups' => [
-        'A+' => 'A+','A-' => 'A-','B+' => 'B+','B-' => 'B-',
-        'O+' => 'O+','O-' => 'O-','AB+' => 'AB+','AB-' => 'AB-',
+	'marital-statuses' => [
+		'single'   => 'Single',
+		'married'  => 'Married',
+		'divorced' => 'Divorced',
+		'widowed'  => 'Widowed',
+	],
+
+    'blood-groups' => [
+        'A+' => 'A+',
+		'A-' => 'A-',
+		'B+' => 'B+',
+		'B-' => 'B-',
+        'O+' => 'O+',
+		'O-' => 'O-',
+		'AB+' => 'AB+',
+		'AB-' => 'AB-',
     ],
 
-    'shared.statuses' => [
+    'statuses' => [
         '1' => 'ACTIVE',
         '2' => 'DELETED',
     ],
 
+	'time-zones' => array_combine(
+    	\DateTimeZone::listIdentifiers(),
+    	\DateTimeZone::listIdentifiers()
+	),
+
     /* =========================
      | Date & Time
      ========================= */
-    'shared.weekdays' => [
-        'sun' => 'Sunday','mon' => 'Monday','tue' => 'Tuesday',
-        'wed' => 'Wednesday','thu' => 'Thursday',
-        'fri' => 'Friday','sat' => 'Saturday',
+    'weekdays' => [
+        'sun' => 'Sunday',
+		'mon' => 'Monday',
+		'tue' => 'Tuesday',
+        'wed' => 'Wednesday',
+		'thu' => 'Thursday',
+        'fri' => 'Friday',
+		'sat' => 'Saturday',
     ],
 
-    'shared.sort-orders' => [
+    'sort-orders' => [
         'asc'  => 'Ascending',
         'desc' => 'Descending',
     ],
@@ -47,55 +154,497 @@ return [
     /* =========================
      | Geography
      ========================= */
-    'shared.indian-states' => [
-        "UP" => "Uttar Pradesh",
-        "DL" => "Delhi",
-        "MH" => "Maharashtra",
-        "RJ" => "Rajasthan",
+    'indian-states' => [
+        "AP" => "Andhra Pradesh",
+        "AR" => "Arunachal Pradesh",
+        "AS" => "Assam",
+        "BR" => "Bihar",
+        "CG" => "Chhattisgarh",
+        "GA" => "Goa",
+        "GJ" => "Gujarat",
+        "HR" => "Haryana",
+        "HP" => "Himachal Pradesh",
+        "JK" => "Jammu and Kashmir",
+        "JH" => "Jharkhand",
+        "KA" => "Karnataka",
+        "KL" => "Kerala",
         "MP" => "Madhya Pradesh",
-        // (बाकी same as your file)
-    ],
+        "MH" => "Maharashtra",
+        "MN" => "Manipur",
+        "ML" => "Meghalaya",
+        "MZ" => "Mizoram",
+        "NL" => "Nagaland",
+        "OR" => "Odisha",
+        "PB" => "Punjab",
+        "RJ" => "Rajasthan",
+        "SK" => "Sikkim",
+        "TN" => "Tamil Nadu",
+        "TG" => "Telangana",
+        "TR" => "Tripura",
+        "UP" => "Uttar Pradesh",
+        "UK" => "Uttarakhand",
+        "WB" => "West Bengal",
+        "AN" => "Andaman and Nicobar Islands",
+        "CH" => "Chandigarh",
+        "DN" => "Dadra and Nagar Haveli",
+        "DD" => "Daman and Diu",
+        "LD" => "Lakshadweep",
+        "DL" => "National Capital Territory of Delhi",
+        "PY" => "Puducherry"
+	],
+	'countries' => [
+	    'AF' => 'Afghanistan',
+    	'AL' => 'Albania',
+	    'DZ' => 'Algeria',
+    	'AD' => 'Andorra',
+	    'AO' => 'Angola',
+    	'AG' => 'Antigua and Barbuda',
+    	'AR' => 'Argentina',
+    	'AM' => 'Armenia',
+	    'AU' => 'Australia',
+    	'AT' => 'Austria',
+	    'AZ' => 'Azerbaijan',
 
-    'shared.countries' => [
-        'IN' => 'India',
-        'US' => 'United States',
-        'GB' => 'United Kingdom',
-        // (rest same)
-    ],
+	    'BS' => 'Bahamas',
+    	'BH' => 'Bahrain',
+    	'BD' => 'Bangladesh',
+    	'BB' => 'Barbados',
+    	'BY' => 'Belarus',
+    	'BE' => 'Belgium',
+    	'BZ' => 'Belize',
+    	'BJ' => 'Benin',
+    	'BT' => 'Bhutan',
+    	'BO' => 'Bolivia',
+    	'BA' => 'Bosnia and Herzegovina',
+    	'BW' => 'Botswana',
+    	'BR' => 'Brazil',
+    	'BN' => 'Brunei',
+    	'BG' => 'Bulgaria',
+    	'BF' => 'Burkina Faso',
+    	'BI' => 'Burundi',
 
-    'shared.country-mobile-codes' => [
-        '91' => 'India (+91)',
-        '1'  => 'USA (+1)',
-        '44' => 'UK (+44)',
-        // (rest same)
-    ],
+    	'KH' => 'Cambodia',
+    	'CM' => 'Cameroon',
+    	'CA' => 'Canada',
+    	'CV' => 'Cape Verde',
+    	'CF' => 'Central African Republic',
+    	'TD' => 'Chad',
+    	'CL' => 'Chile',
+    	'CN' => 'China',
+    	'CO' => 'Colombia',
+    	'KM' => 'Comoros',
+    	'CG' => 'Congo',
+    	'CD' => 'Congo (Democratic Republic)',
+    	'CR' => 'Costa Rica',
+    	'CI' => 'Côte d’Ivoire',
+    	'HR' => 'Croatia',
+    	'CU' => 'Cuba',
+    	'CY' => 'Cyprus',
+    	'CZ' => 'Czech Republic',
+
+    	'DK' => 'Denmark',
+    	'DJ' => 'Djibouti',
+    	'DM' => 'Dominica',
+    	'DO' => 'Dominican Republic',
+
+    	'EC' => 'Ecuador',
+    	'EG' => 'Egypt',
+    	'SV' => 'El Salvador',
+    	'GQ' => 'Equatorial Guinea',
+    	'ER' => 'Eritrea',
+    	'EE' => 'Estonia',
+    	'SZ' => 'Eswatini',
+    	'ET' => 'Ethiopia',
+
+    	'FJ' => 'Fiji',
+    	'FI' => 'Finland',
+    	'FR' => 'France',
+
+    	'GA' => 'Gabon',
+    	'GM' => 'Gambia',
+    	'GE' => 'Georgia',
+    	'DE' => 'Germany',
+    	'GH' => 'Ghana',
+    	'GR' => 'Greece',
+    	'GD' => 'Grenada',
+    	'GT' => 'Guatemala',
+    	'GN' => 'Guinea',
+    	'GW' => 'Guinea-Bissau',
+    	'GY' => 'Guyana',
+
+    	'HT' => 'Haiti',
+    	'HN' => 'Honduras',
+    	'HU' => 'Hungary',
+
+    	'IS' => 'Iceland',
+    	'IN' => 'India',
+    	'ID' => 'Indonesia',
+    	'IR' => 'Iran',
+    	'IQ' => 'Iraq',
+    	'IE' => 'Ireland',
+    	'IL' => 'Israel',
+    	'IT' => 'Italy',
+
+    	'JM' => 'Jamaica',
+    	'JP' => 'Japan',
+    	'JO' => 'Jordan',
+
+    	'KZ' => 'Kazakhstan',
+    	'KE' => 'Kenya',
+    	'KI' => 'Kiribati',
+    	'KP' => 'North Korea',
+    	'KR' => 'South Korea',
+    	'KW' => 'Kuwait',
+    	'KG' => 'Kyrgyzstan',
+
+    	'LA' => 'Laos',
+    	'LV' => 'Latvia',
+    	'LB' => 'Lebanon',
+    	'LS' => 'Lesotho',
+    	'LR' => 'Liberia',
+    	'LY' => 'Libya',
+    	'LI' => 'Liechtenstein',
+    	'LT' => 'Lithuania',
+    	'LU' => 'Luxembourg',
+
+    	'MG' => 'Madagascar',
+    	'MW' => 'Malawi',
+    	'MY' => 'Malaysia',
+    	'MV' => 'Maldives',
+    	'ML' => 'Mali',
+    	'MT' => 'Malta',
+    	'MH' => 'Marshall Islands',
+    	'MR' => 'Mauritania',
+    	'MU' => 'Mauritius',
+    	'MX' => 'Mexico',
+    	'FM' => 'Micronesia',
+    	'MD' => 'Moldova',
+    	'MC' => 'Monaco',
+    	'MN' => 'Mongolia',
+    	'ME' => 'Montenegro',
+    	'MA' => 'Morocco',
+    	'MZ' => 'Mozambique',
+    	'MM' => 'Myanmar',
+
+    	'NA' => 'Namibia',
+    	'NR' => 'Nauru',
+    	'NP' => 'Nepal',
+    	'NL' => 'Netherlands',
+    	'NZ' => 'New Zealand',
+    	'NI' => 'Nicaragua',
+    	'NE' => 'Niger',
+    	'NG' => 'Nigeria',
+    	'MK' => 'North Macedonia',
+    	'NO' => 'Norway',
+
+    	'OM' => 'Oman',
+
+    	'PK' => 'Pakistan',
+    	'PW' => 'Palau',
+    	'PA' => 'Panama',
+    	'PG' => 'Papua New Guinea',
+    	'PY' => 'Paraguay',
+    	'PE' => 'Peru',
+    	'PH' => 'Philippines',
+    	'PL' => 'Poland',
+    	'PT' => 'Portugal',
+
+    	'QA' => 'Qatar',
+
+    	'RO' => 'Romania',
+    	'RU' => 'Russia',
+    	'RW' => 'Rwanda',
+
+    	'KN' => 'Saint Kitts and Nevis',
+    	'LC' => 'Saint Lucia',
+    	'VC' => 'Saint Vincent and the Grenadines',
+    	'WS' => 'Samoa',
+    	'SM' => 'San Marino',
+    	'ST' => 'Sao Tome and Principe',
+    	'SA' => 'Saudi Arabia',
+    	'SN' => 'Senegal',
+    	'RS' => 'Serbia',
+    	'SC' => 'Seychelles',
+    	'SL' => 'Sierra Leone',
+    	'SG' => 'Singapore',
+    	'SK' => 'Slovakia',
+    	'SI' => 'Slovenia',
+    	'SB' => 'Solomon Islands',
+    	'SO' => 'Somalia',
+    	'ZA' => 'South Africa',
+    	'SS' => 'South Sudan',
+    	'ES' => 'Spain',
+    	'LK' => 'Sri Lanka',
+    	'SD' => 'Sudan',
+    	'SR' => 'Suriname',
+    	'SE' => 'Sweden',
+    	'CH' => 'Switzerland',
+    	'SY' => 'Syria',
+
+    	'TW' => 'Taiwan',
+    	'TJ' => 'Tajikistan',
+    	'TZ' => 'Tanzania',
+    	'TH' => 'Thailand',
+    	'TL' => 'Timor-Leste',
+    	'TG' => 'Togo',
+    	'TO' => 'Tonga',
+    	'TT' => 'Trinidad and Tobago',
+    	'TN' => 'Tunisia',
+    	'TR' => 'Turkey',
+    	'TM' => 'Turkmenistan',
+    	'TV' => 'Tuvalu',
+
+    	'UG' => 'Uganda',
+    	'UA' => 'Ukraine',
+    	'AE' => 'United Arab Emirates',
+    	'GB' => 'United Kingdom',
+    	'US' => 'United States',
+    	'UY' => 'Uruguay',
+    	'UZ' => 'Uzbekistan',
+
+    	'VU' => 'Vanuatu',
+    	'VA' => 'Vatican City',
+    	'VE' => 'Venezuela',
+    	'VN' => 'Vietnam',
+
+    	'YE' => 'Yemen',
+    	'ZM' => 'Zambia',
+    	'ZW' => 'Zimbabwe',
+	],
+
+    'country-mobile-codes' => [
+
+		'91'   => 'India (+91)',
+		'44'   => 'UK (+44)',
+		'1'    => 'USA (+1)',
+		'213'  => 'Algeria (+213)',
+		'376'  => 'Andorra (+376)',
+		'244'  => 'Angola (+244)',
+		'1264' => 'Anguilla (+1264)',
+		'1268' => 'Antigua & Barbuda (+1268)',
+		'54'   => 'Argentina (+54)',
+		'374'  => 'Armenia (+374)',
+		'297'  => 'Aruba (+297)',
+		'61'   => 'Australia (+61)',
+		'43'   => 'Austria (+43)',
+		'994'  => 'Azerbaijan (+994)',
+
+		'1242' => 'Bahamas (+1242)',
+		'973'  => 'Bahrain (+973)',
+		'880'  => 'Bangladesh (+880)',
+		'1246' => 'Barbados (+1246)',
+		'375'  => 'Belarus (+375)',
+		'32'   => 'Belgium (+32)',
+		'501'  => 'Belize (+501)',
+		'229'  => 'Benin (+229)',
+		'1441' => 'Bermuda (+1441)',
+		'975'  => 'Bhutan (+975)',
+		'591'  => 'Bolivia (+591)',
+		'387'  => 'Bosnia Herzegovina (+387)',
+		'267'  => 'Botswana (+267)',
+		'55'   => 'Brazil (+55)',
+		'673'  => 'Brunei (+673)',
+		'359'  => 'Bulgaria (+359)',
+		'226'  => 'Burkina Faso (+226)',
+		'257'  => 'Burundi (+257)',
+
+		'855'  => 'Cambodia (+855)',
+		'237'  => 'Cameroon (+237)',
+		'238'  => 'Cape Verde Islands (+238)',
+		'1345' => 'Cayman Islands (+1345)',
+		'236'  => 'Central African Republic (+236)',
+		'56'   => 'Chile (+56)',
+		'86'   => 'China (+86)',
+		'57'   => 'Colombia (+57)',
+		'269'  => 'Comoros (+269)',
+		'242'  => 'Congo (+242)',
+		'682'  => 'Cook Islands (+682)',
+		'506'  => 'Costa Rica (+506)',
+		'385'  => 'Croatia (+385)',
+		'53'   => 'Cuba (+53)',
+		'90392'=> 'Cyprus North (+90392)',
+		'357'  => 'Cyprus South (+357)',
+		'42'   => 'Czech Republic (+42)',
+
+		'45'   => 'Denmark (+45)',
+		'253'  => 'Djibouti (+253)',
+		'1809' => 'Dominican Republic (+1809)',
+		'593'  => 'Ecuador (+593)',
+		'20'   => 'Egypt (+20)',
+		'503'  => 'El Salvador (+503)',
+		'240'  => 'Equatorial Guinea (+240)',
+		'291'  => 'Eritrea (+291)',
+		'372'  => 'Estonia (+372)',
+		'251'  => 'Ethiopia (+251)',
+
+		'679'  => 'Fiji (+679)',
+		'358'  => 'Finland (+358)',
+		'33'   => 'France (+33)',
+		'241'  => 'Gabon (+241)',
+		'220'  => 'Gambia (+220)',
+		'49'   => 'Germany (+49)',
+		'233'  => 'Ghana (+233)',
+		'30'   => 'Greece (+30)',
+
+		'62'   => 'Indonesia (+62)',
+		'98'   => 'Iran (+98)',
+		'964'  => 'Iraq (+964)',
+		'353'  => 'Ireland (+353)',
+		'972'  => 'Israel (+972)',
+		'39'   => 'Italy (+39)',
+		'81'   => 'Japan (+81)',
+		'962'  => 'Jordan (+962)',
+
+		'254'  => 'Kenya (+254)',
+		'965'  => 'Kuwait (+965)',
+		'961'  => 'Lebanon (+961)',
+		'60'   => 'Malaysia (+60)',
+		'960'  => 'Maldives (+960)',
+		'52'   => 'Mexico (+52)',
+		'212'  => 'Morocco (+212)',
+		'95'   => 'Myanmar (+95)',
+		'977'  => 'Nepal (+977)',
+		'31'   => 'Netherlands (+31)',
+		'64'   => 'New Zealand (+64)',
+		'234'  => 'Nigeria (+234)',
+		'47'   => 'Norway (+47)',
+
+		'968'  => 'Oman (+968)',
+		'92'   => 'Pakistan (+92)',
+		'63'   => 'Philippines (+63)',
+		'48'   => 'Poland (+48)',
+		'351'  => 'Portugal (+351)',
+		'974'  => 'Qatar (+974)',
+		'40'   => 'Romania (+40)',
+		'7'    => 'Russia (+7)',
+
+		'966'  => 'Saudi Arabia (+966)',
+		'65'   => 'Singapore (+65)',
+		'27'   => 'South Africa (+27)',
+		'34'   => 'Spain (+34)',
+		'94'   => 'Sri Lanka (+94)',
+		'46'   => 'Sweden (+46)',
+		'41'   => 'Switzerland (+41)',
+
+		'66'   => 'Thailand (+66)',
+		'90'   => 'Turkey (+90)',
+		'256'  => 'Uganda (+256)',
+		'971'  => 'United Arab Emirates (+971)',
+		'598'  => 'Uruguay (+598)',
+		'58'   => 'Venezuela (+58)',
+		'84'   => 'Vietnam (+84)',
+		'260'  => 'Zambia (+260)',
+		'263'  => 'Zimbabwe (+263)',
+	],
 
     /* =========================
      | Business Types
      ========================= */
-    'shared.business-types' => [
-        'individual' => 'Individual',
-        'school'     => 'School',
-        'hospital'   => 'Hospital',
-        'shop_owner' => 'Shop Owner',
-        'it_services'=> 'IT Services',
-        // (rest same)
+    "business-types" => [
+        "individual"               => "Individual",
+        "school"                   => "School",
+        "college"                  => "College",
+        "university"               => "University",
+        "petrol_pump"              => "Petrol Pump",
+        "hospital"                 => "Hospital",
+        "clinic"                   => "Clinic",
+        "shop_owner"               => "Shop Owner",
+        "retail_store"             => "Retail Store",
+        "restaurant"               => "Restaurant",
+        "cafe"                     => "Cafe",
+        "supermarket"              => "Supermarket",
+        "bank"                     => "Bank",
+        "financial_institution"    => "Financial Institution",
+        "insurance_company"        => "Insurance Company",
+        "real_estate_agency"       => "Real Estate Agency",
+        "construction_company"     => "Construction Company",
+        "it_services"              => "IT Services",
+        "software_development"     => "Software Development",
+        "consulting_firm"          => "Consulting Firm",
+        "legal_services"           => "Legal Services",
+        "accounting_firm"          => "Accounting Firm",
+        "marketing_agency"         => "Marketing Agency",
+        "advertising_agency"       => "Advertising Agency",
+        "travel_agency"            => "Travel Agency",
+        "hotel"                    => "Hotel",
+        "motel"                    => "Motel",
+        "resort"                   => "Resort",
+        "tour_operator"            => "Tour Operator",
+        "car_rental"               => "Car Rental",
+        "manufacturing"            => "Manufacturing",
+        "warehouse"                => "Warehouse",
+        "logistics"                => "Logistics",
+        "transportation"           => "Transportation",
+        "pharmaceutical_company"   => "Pharmaceutical Company",
+        "biotechnology"            => "Biotechnology",
+        "agriculture"              => "Agriculture",
+        "farm"                     => "Farm",
+        "food_processing"          => "Food Processing",
+        "textile_industry"         => "Textile Industry",
+        "apparel_industry"         => "Apparel Industry",
+        "automotive_industry"      => "Automotive Industry",
+        "electronics"              => "Electronics",
+        "telecommunications"       => "Telecommunications",
+        "media_entertainment"      => "Media and Entertainment",
+        "publishing"               => "Publishing",
+        "education_services"       => "Education Services",
+        "health_wellness"          => "Health and Wellness",
+        "fitness_center"           => "Fitness Center",
+        "beauty_salon"             => "Beauty Salon",
+        "barber_shop"              => "Barber Shop",
+        "dry_cleaning"             => "Dry Cleaning",
+        "laundry_services"         => "Laundry Services",
+        "furniture_store"          => "Furniture Store",
+        "home_improvement"         => "Home Improvement",
+        "garden_center"            => "Garden Center",
+        "pet_store"                => "Pet Store",
+        "veterinary_clinic"        => "Veterinary Clinic",
+        "non_profit_organization"  => "Non-Profit Organization",
+        "government_agency"        => "Government Agency"
     ],
 
     /* =========================
      | Academic Sessions
      ========================= */
-    'shared.sessions' => [
-        '2023-24' => '2023-24',
-        '2024-25' => '2024-25',
-        '2025-26' => '2025-26',
-        '2026-27' => '2026-27',
-    ],
+    'sessions' => [
+	    '2000-01' => '2000-01',
+    	'2001-02' => '2001-02',
+    	'2002-03' => '2002-03',
+    	'2003-04' => '2003-04',
+    	'2004-05' => '2004-05',
+    	'2005-06' => '2005-06',
+    	'2006-07' => '2006-07',
+    	'2007-08' => '2007-08',
+    	'2008-09' => '2008-09',
+    	'2009-10' => '2009-10',
+
+    	'2010-11' => '2010-11',
+    	'2011-12' => '2011-12',
+    	'2012-13' => '2012-13',
+    	'2013-14' => '2013-14',
+    	'2014-15' => '2014-15',
+    	'2015-16' => '2015-16',
+    	'2016-17' => '2016-17',
+    	'2017-18' => '2017-18',
+    	'2018-19' => '2018-19',
+    	'2019-20' => '2019-20',
+
+    	'2020-21' => '2020-21',
+    	'2021-22' => '2021-22',
+    	'2022-23' => '2022-23',
+    	'2023-24' => '2023-24',
+    	'2024-25' => '2024-25',
+    	'2025-26' => '2025-26',
+    	'2026-27' => '2026-27',
+    	'2027-28' => '2027-28',
+    	'2028-29' => '2028-29',
+	    '2029-30' => '2029-30',
+	],
 
     /* =========================
      | UI Helpers
      ========================= */
-    'shared.font-sizes' => [
+    'font-sizes' => [
         '0.75em' => 'Tiny',
         '0.85em' => 'Small',
         '1em'    => 'Default',
@@ -103,5 +652,102 @@ return [
         '1.25em' => 'Larger',
         '1.5em'  => 'Big',
     ],
+
+	'communication-modes' => [
+	    'call'        => 'Call',
+    	'sms'         => 'SMS',
+	    'whatsapp'    => 'WhatsApp',
+    	'email'       => 'Email',
+	    'video_call'  => 'Video Call',
+    	'in_person'   => 'In Person',
+	    'portal'      => 'Portal / App',
+    	'other'       => 'Other',
+	],
+
+	/* ---------------- Date / Time ---------------- */
+
+	'month-days' => [
+		'1'  => '1 d',  '2'  => '2 d',  '3'  => '3 d',  '4'  => '4 d',  '5'  => '5 d',
+		'6'  => '6 d',  '7'  => '7 d',  '8'  => '8 d',  '9'  => '9 d',  '10' => '10 d',
+		'11' => '11 d', '12' => '12 d', '13' => '13 d', '14' => '14 d', '15' => '15 d',
+		'16' => '16 d', '17' => '17 d', '18' => '18 d', '19' => '19 d', '20' => '20 d',
+		'21' => '21 d', '22' => '22 d', '23' => '23 d', '24' => '24 d', '25' => '25 d',
+		'26' => '26 d', '27' => '27 d', '28' => '28 d', '29' => '29 d', '30' => '30 d',
+		'31' => '31 d',
+	],
+
+	'hours' => [
+		'00' => '00 hr', '01' => '01 hr', '02' => '02 hr', '03' => '03 hr',
+		'04' => '04 hr', '05' => '05 hr', '06' => '06 hr', '07' => '07 hr',
+		'08' => '08 hr', '09' => '09 hr', '10' => '10 hr', '11' => '11 hr',
+		'12' => '12 hr', '13' => '13 hr', '14' => '14 hr', '15' => '15 hr',
+		'16' => '16 hr', '17' => '17 hr', '18' => '18 hr', '19' => '19 hr',
+		'20' => '20 hr', '21' => '21 hr', '22' => '22 hr', '23' => '23 hr',
+		'24' => '24 hr',
+	],
+
+	'minutes' => [
+		'01' => '01 min', '02' => '02 min', '03' => '03 min', '04' => '04 min',
+		'05' => '05 min', '06' => '06 min', '07' => '07 min', '08' => '08 min',
+		'09' => '09 min', '10' => '10 min', '11' => '11 min', '12' => '12 min',
+		'13' => '13 min', '14' => '14 min', '15' => '15 min', '16' => '16 min',
+		'17' => '17 min', '18' => '18 min', '19' => '19 min', '20' => '20 min',
+		'21' => '21 min', '22' => '22 min', '23' => '23 min', '24' => '24 min',
+		'25' => '25 min', '26' => '26 min', '27' => '27 min', '28' => '28 min',
+		'29' => '29 min', '30' => '30 min', '31' => '31 min', '32' => '32 min',
+		'33' => '33 min', '34' => '34 min', '35' => '35 min', '36' => '36 min',
+		'37' => '37 min', '38' => '38 min', '39' => '39 min', '40' => '40 min',
+		'41' => '41 min', '42' => '42 min', '43' => '43 min', '44' => '44 min',
+		'45' => '45 min', '46' => '46 min', '47' => '47 min', '48' => '48 min',
+		'49' => '49 min', '50' => '50 min', '51' => '51 min', '52' => '52 min',
+		'53' => '53 min', '54' => '54 min', '55' => '55 min', '56' => '56 min',
+		'57' => '57 min', '58' => '58 min', '59' => '59 min',
+	],
+
+	/* ---------------- Filters / Status ---------------- */
+
+	'day-filters' => [
+		'today'    => 'TODAY',
+		'tomorrow' => 'TOMORROW',
+		'-30 days'  => 'Past 30 DAYS',
+		'-15 days'  => 'Past 15 DAYS',
+		'-7 days'  => 'Past 7 DAYS',
+		'+7 days'  => 'Next 7 DAYS',
+		'+15 days'  => 'Next 15 DAYS',
+		'+30 days'  => 'Next 30 DAYS',
+	],
+
+	'qualification-levels' => [
+	    'none'        => 'No Formal Education',
+    	'primary'     => 'Primary School',
+	    'secondary'   => 'Secondary School',
+    	'higher_sec'  => 'Higher Secondary (12th)',
+	    'diploma'     => 'Diploma',
+    	'ug'          => 'Undergraduate (Bachelor’s)',
+	    'pg'          => 'Postgraduate (Master’s)',
+    	'phd'         => 'Doctorate (PhD)',
+	    'other'       => 'Other',
+	],
+
+	'permission.user_roles' => [
+		'1' => 'Owner',
+		'2' => 'Admin',
+		'3' => 'Staff'
+	],
+
+	'report-display-uis' => [
+		'tabled' => 'Tabled',
+		'chart'  => 'Chart',
+	],
+
+	'settings.options' => [
+		'subscription'  => 'Subscription',
+		'modules'  		=> 'Modules',
+		'addons'        => 'Addons',
+    	'security'      => 'Security',
+		'team'          => 'Team',
+	    'integrations'  => 'Integrations',
+		'billing'       => 'Billing',
+	],
 
 ];

@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Modules\Attendance\Http\Controllers\AttendanceSessionApiController;
 use Modules\Attendance\Http\Controllers\AttendanceApiController;
 use Modules\Attendance\Http\Controllers\AttendanceReportApiController;
+use \Modules\Attendance\Http\Controllers\AttendanceWeeklyOffApiController;
+use \Modules\Attendance\Http\Controllers\AttendanceHolidayApiController;
+use \Modules\Attendance\Http\Controllers\AttendanceCalendarDayApiController;
+use \Modules\Attendance\Http\Controllers\AttendanceScheduleApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +23,30 @@ use Modules\Attendance\Http\Controllers\AttendanceReportApiController;
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
+
+		Route::get('attendance/weekly-offs', [AttendanceWeeklyOffApiController::class, 'index']);
+    	Route::post('attendance/weekly-offs', [AttendanceWeeklyOffApiController::class, 'store']);
+    	Route::delete('attendance/weekly-offs/{id}', [AttendanceWeeklyOffApiController::class, 'destroy']);
+
+		Route::get('attendance/holidays', [AttendanceHolidayApiController::class, 'index']);
+	    Route::post('attendance/holidays', [AttendanceHolidayApiController::class, 'store']);
+    	Route::delete('attendance/holidays/{id}', [AttendanceHolidayApiController::class, 'destroy']);
+
+		Route::get('attendance/calendar-days', [AttendanceCalendarDayApiController::class, 'index']);
+	    Route::post('attendance/calendar-days', [AttendanceCalendarDayApiController::class, 'store']);
+    	Route::put('attendance/calendar-days/{id}', [AttendanceCalendarDayApiController::class, 'update']);
+    	Route::delete('attendance/calendar-days/{id}', [AttendanceCalendarDayApiController::class, 'destroy']);
+
+		Route::get('attendance/schedules', [AttendanceScheduleApiController::class, 'index']);
+	    Route::post('attendance/schedules', [AttendanceScheduleApiController::class, 'store']);
+    	Route::put('attendance/schedules/{id}', [AttendanceScheduleApiController::class, 'update']);
+    	Route::delete('attendance/schedules/{id}', [AttendanceScheduleApiController::class, 'destroy']);
+
+	    // One-click generation
+    	Route::post('attendance/schedules/{id}/generate', [AttendanceScheduleApiController::class, 'generate']);
+
+	    // Safe rebuild
+    	Route::post('attendance/schedules/{id}/rebuild', [AttendanceScheduleApiController::class, 'rebuild']);
 
         /*
         |--------------------------------------------------------------------------
@@ -98,6 +126,12 @@ Route::prefix('v1')
         |--------------------------------------------------------------------------
         */
 
+		// General Filters
+		Route::get(
+			'attendance/reports',
+			[AttendanceReportApiController::class, 'index']
+		);
+
         Route::prefix('attendance/reports')->group(function () {
 
             // Daily attendance report
@@ -120,5 +154,6 @@ Route::prefix('v1')
                 'entity/{type}/{id}',
                 [AttendanceReportApiController::class, 'entity']
             );
+
         });
     });

@@ -1,6 +1,11 @@
 <?php
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Student\Support\Res;
+use Modules\Student\Support\Actions;
+
 return [
-    'path.student.create' => [
+    Permission::make(Res::STUDENTS, Actions::CREATE) => [
         [
             'type'     => 'exists',
             'resource' => 'terms',
@@ -24,7 +29,7 @@ return [
         ],
     ],
 
-	'path.student.list' => [
+	Permission::make(Res::STUDENTS, Actions::LIST) => [
         [
             'type'     => 'exists',
             'resource' => 'terms',

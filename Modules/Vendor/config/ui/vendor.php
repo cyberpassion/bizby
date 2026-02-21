@@ -8,8 +8,7 @@ return [
 | UI : Sidebar Menu (Vendor)
 |--------------------------------------------------------------------------
 */
-'sidebar-menu' => [
-    [
+'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -103,6 +102,4 @@ return [
             ],
         ],
     ],
-],
-
 ];

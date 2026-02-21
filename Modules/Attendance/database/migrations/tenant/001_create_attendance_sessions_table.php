@@ -13,6 +13,8 @@ return new class extends Migration
 		    // SaaS common fields
     		$table->commonSaasFields();
 
+			$table->bigInteger('attendance_schedule_id')->nullable();
+
 		    // Session identity
     		$table->string('type');
 	    	/*

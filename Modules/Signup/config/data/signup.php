@@ -3,18 +3,14 @@ $pg = 'signup';
 
 return [
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
+    // Bulk Operations
     'signup.bulk-operations' => [
         "view:detail" => "View Detail",
         "op:remove"  => "Delete",
         "op:restore" => "Restore"
     ],
 
-    /* =========================
-     | Default Columns
-     ========================= */
+    // Default Columns
     'signup.default-columns' => [
         'entry'  => ['signup_id','name','phone_number','signup_label','signup_info','payment_status','tags','status'],
         'list'   => ['signup_id','name','phone_number','signup_label','signup_info','payment_status','tags','status'],

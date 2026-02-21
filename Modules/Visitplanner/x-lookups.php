@@ -1,218 +1,280 @@
 <?php
+
 $pg = 'visitplanner';
 $commonSettingsRoute = '/settings';
 
 return [
-	
 
-'sidebar-menu' => /* =========================
- | Visit Planner Module
- ========================= */
-[
-    'title' => ucfirst($pg),
-    'href'  => "/{$pg}",
-    'permission' => "{$pg}.access",
-    'items' => [
+    /* =====================================================
+     | Sidebar Menu
+     ===================================================== */
+    'sidebar-menu-x' => [[
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => "{$pg}.access",
+        'items'      => [
 
-        /* =========================
-         | Visit Planner Management
-         ========================= */
-        [
-            'title' => 'Planner',
-            'items' => [
-                [
-                    'title'      => 'Add New',
-                    'href'       => "/module/{$pg}/new",
-                    'permission' => "{$pg}.create",
+            /* Visit Planner Management */
+            [
+                'title' => 'Planner',
+                'items' => [
+                    [
+                        'title'      => 'Add New',
+                        'href'       => "/module/{$pg}/new",
+                        'permission' => "{$pg}.create",
+                    ],
+                    [
+                        'title'      => 'View List',
+                        'href'       => "/module/{$pg}/list",
+                        'permission' => "{$pg}.view",
+                    ],
+                    [
+                        'title'      => 'View Report',
+                        'href'       => "/module/{$pg}/report",
+                        'permission' => "{$pg}.report",
+                    ],
                 ],
-                [
-                    'title'      => 'View List',
-                    'href'       => "/module/{$pg}/list",
-                    'permission' => "{$pg}.view",
-                ],
-                [
-                    'title'      => 'View Report',
-                    'href'       => "/module/{$pg}/report",
-                    'permission' => "{$pg}.report",
+            ],
+
+            /* Settings */
+            [
+                'title'      => 'Settings',
+                'href'       => "/module/{$pg}/settings",
+                'permission' => "{$pg}.settings",
+            ],
+
+            /* Plugins */
+            [
+                'title' => 'Plugins',
+                'items' => [
+                    [
+                        'title'      => 'View Calendar',
+                        'href'       => "/plugin/calendar?module={$pg}",
+                        'permission' => "{$pg}.plugin.calendar",
+                    ],
                 ],
             ],
         ],
+    ]],
 
-        /* =========================
-         | Settings
-         ========================= */
-        [
-            'title'      => 'Settings',
-            'href'       => "/module/{$pg}/settings",
-            'permission' => "{$pg}.settings",
-        ],
+    /* =====================================================
+     | Lookups & Status
+     ===================================================== */
+    'visitplanner.visitactivity-generation-status' => [
+        'all' => 'All',
+        '1'   => 'VAR Generated',
+        '2'   => 'Pending VAR',
+    ],
 
-        /* =========================
-         | Plugins
-         ========================= */
-        [
-            'title' => 'Plugins',
-            'items' => [
-                [
-                    'title'      => 'View Calendar',
-                    'href'       => "/plugin/calendar?module={$pg}",
-                    'permission' => "{$pg}.plugin.calendar",
-                ],
-            ],
-        ],
+    'visitplanner.week-name' => [
+        'week-1',
+        'week-2',
+        'week-3',
+        'week-4',
+        'week-5',
     ],
-],
 
-'visitplanner.visitactivity-generation-status' => [
-                        'all'	=>	"All",
-                        '1'		=>	"VAR Generated",
-                        '2'		=>	"Pending VAR"
-    ],
-'visitplanner.week-name' => ["week-1","week-2","week-3","week-4","week-5"],
-'visitplanner.bulk-operations' => [
-                        "view:detail"		=>	"View Visit Planner Details",
-                        "send:email"		=>	"Send Email",
-                        "send:sms"			=>	"Send SMS",
-                        "op:remove"			=>	"Delete",
-                        "op:restore"		=>	"Restore"
-],
-'visitplanner.crons' => ['visitplanner-scheduledvisits' => 'Scheduled Visits'],
-'visitplanner.list-filters' => [
-                        "admin"	=>	[
-                            'visitplanner_session_filter' => "Session/session/session-json",
-                            'visitplanner_employee_filter' => "Employee/visit_by_id/employee_id-json",
-                            'visitplanner_month_filter' => "Month/month/month-json",
-                            'visitplanner_week_filter' => "Week/week/visitplanner_week-json",
-                            'visitplanner_status_filter' => "Status/status/status-json"
-                        ],
-                        "portal" => [
-                            'visitplanner_session_filter' => "Session/session/session-json",
-                            'visitplanner_employee_filter' => "Employee/visit_by_id/employee_id-json",
-                            'visitplanner_month_filter' => "Month/month/month-json",
-                            'visitplanner_week_filter' => "Week/week/visitplanner_week-json",
-                            'visitplanner_status_filter' => "Status/status/status-json"
-                        ]
-    ],
-    'visitplanner.default-columns' => [
-                        'entry'				=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'list'				=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'detail'			=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'report'			=>	['ID','visitplanner_id','visit_company','visit_by_name', 'month', 'week', 'created_by_name','tags', 'status'],
-                        'sample_export'		=>	['sno', 'visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
-                        'selected_columns'	=>	['visitplanner_id','visit_company','visit_by_name', 'session', 'month', 'week', 'created_by_name']
-    ],
-    'visitplanner.permission-allowed-filters-portal' => [
-                        "entry"  => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
-                        "list"   => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]],
-                        "report" => [[ "visit_by_type" => '{$login_type}', "visit_by_id" => '{$login_id}' ]]
-    ],
     'visitplanner.statuses' => [
-                        "1"		=>	"Active",
-                        "11"	=>	"Postponed",
-                        "2"		=>	"Deleted",
-                        "21"	=>	"Cancelled"
-    ],
-    'visitplanner.communication-notifications' => [
-                        "visitplanner_entry_new_sms"				=>	"New Visitplanner Entry SMS",
-                        "visitplanner_entry_new_whatsapp"			=>	"New Visitplanner Entry Whatsapp",
-                        "visitplanner_entry_new_email"				=>	"New Visitplanner Entry Email",
-                        "visitplanner_scheduledvisits_new_sms"		=>	"New Visitplanner Scheduled Visits SMS",
-                        "visitplanner_scheduledvisits_new_whatsapp"	=>	"New Visitplanner Scheduled Visits Whatsapp",
-                        "visitplanner_scheduledvisits_new_email"	=>	"New Visitplanner Scheduled Visits Email"
-    ],
-    'visitplanner.list-columns' => [
-                        'id',
-                        'visit_date',
-                        'visit_time',
-                        'visit_by',
-                        'visit_company',
-                        'state',
+        '1'  => 'Active',
+        '11' => 'Postponed',
+        '2'  => 'Deleted',
+        '21' => 'Cancelled',
     ],
 
+    /* =====================================================
+     | Bulk & Cron
+     ===================================================== */
+    'visitplanner.bulk-operations' => [
+        'view:detail' => 'View Visit Planner Details',
+        'send:email'  => 'Send Email',
+        'send:sms'    => 'Send SMS',
+        'op:remove'   => 'Delete',
+        'op:restore'  => 'Restore',
+    ],
+
+    'visitplanner.crons' => [
+        'visitplanner-scheduledvisits' => 'Scheduled Visits',
+    ],
+
+    /* =====================================================
+     | Filters
+     ===================================================== */
     'visitplanner.list-filters' => [
-                        'visit_date',
-                        'visit_by',
-                        'visit_company',
-                        'state',
-                        'district',
+        'admin' => [
+            'visitplanner_session_filter'  => 'Session/session/session-json',
+            'visitplanner_employee_filter' => 'Employee/visit_by_id/employee_id-json',
+            'visitplanner_month_filter'    => 'Month/month/month-json',
+            'visitplanner_week_filter'     => 'Week/week/visitplanner_week-json',
+            'visitplanner_status_filter'   => 'Status/status/status-json',
+        ],
+        'portal' => [
+            'visitplanner_session_filter'  => 'Session/session/session-json',
+            'visitplanner_employee_filter' => 'Employee/visit_by_id/employee_id-json',
+            'visitplanner_month_filter'    => 'Month/month/month-json',
+            'visitplanner_week_filter'     => 'Week/week/visitplanner_week-json',
+            'visitplanner_status_filter'   => 'Status/status/status-json',
+        ],
+    ],
+
+    /* =====================================================
+     | Columns
+     ===================================================== */
+    'visitplanner.default-columns' => [
+        'entry' => [
+            'ID','visitplanner_id','visit_company','visit_by_name',
+            'month','week','created_by_name','tags','status',
+        ],
+        'list' => [
+            'ID','visitplanner_id','visit_company','visit_by_name',
+            'month','week','created_by_name','tags','status',
+        ],
+        'detail' => [
+            'ID','visitplanner_id','visit_company','visit_by_name',
+            'month','week','created_by_name','tags','status',
+        ],
+        'report' => [
+            'ID','visitplanner_id','visit_company','visit_by_name',
+            'month','week','created_by_name','tags','status',
+        ],
+        'sample_export' => [
+            'sno','visit_company','visit_meetingwith',
+            'visit_mobile_number','visit_email',
+            'session','month','week',
+        ],
+        'selected_columns' => [
+            'visitplanner_id','visit_company','visit_by_name',
+            'session','month','week','created_by_name',
+        ],
+    ],
+
+    'visitplanner.permission-allowed-filters-portal' => [
+        'entry'  => [[ 'visit_by_type' => '{$login_type}', 'visit_by_id' => '{$login_id}' ]],
+        'list'   => [[ 'visit_by_type' => '{$login_type}', 'visit_by_id' => '{$login_id}' ]],
+        'report' => [[ 'visit_by_type' => '{$login_type}', 'visit_by_id' => '{$login_id}' ]],
+    ],
+
+    'visitplanner.list-columns' => [
+        'id',
+        'visit_date',
+        'visit_time',
+        'visit_by',
+        'visit_company',
+        'state',
+    ],
+
+    'visitplanner.list-filters-simple' => [
+        'visit_date',
+        'visit_by',
+        'visit_company',
+        'state',
+        'district',
     ],
 
     'visitplanner.report-columns' => [
-                        'id',
-                        'session',
-                        'month',
-                        'week',
-                        'visit_date',
-                        'visit_time',
-                        'visit_by',
-                        'visit_company',
-                        'visit_company_type',
-                        'state',
-                        'district',
-                        'visit_reason',
+        'id',
+        'session',
+        'month',
+        'week',
+        'visit_date',
+        'visit_time',
+        'visit_by',
+        'visit_company',
+        'visit_company_type',
+        'state',
+        'district',
+        'visit_reason',
     ],
 
+    /* =====================================================
+     | Communication & Mapping
+     ===================================================== */
+    'visitplanner.communication-notifications' => [
+        'visitplanner_entry_new_sms'               => 'New Visitplanner Entry SMS',
+        'visitplanner_entry_new_whatsapp'          => 'New Visitplanner Entry Whatsapp',
+        'visitplanner_entry_new_email'             => 'New Visitplanner Entry Email',
+        'visitplanner_scheduledvisits_new_sms'     => 'New Visitplanner Scheduled Visits SMS',
+        'visitplanner_scheduledvisits_new_whatsapp'=> 'New Visitplanner Scheduled Visits Whatsapp',
+        'visitplanner_scheduledvisits_new_email'   => 'New Visitplanner Scheduled Visits Email',
+    ],
 
-
-    
     'columnNameMapping-visitplanner' => [
-                        'visitplanner_id'	=>	'VID',
-                        'visit_by_name'		=>	'Name',
-                        'visit_date'		=>	'V/Date',
-                        'visit_time'		=>	'Time',
-                        'visit_company'		=>	'Company',
-                        'session'			=>	'Session',
-                        'month'				=>	'Month',
-                        'week'				=>	'Week',
-                        'created_by_name'	=>	'Created By',
-                        'visit_address'		=>	'Address',
-                        'visit_count'		=>	'V/Count',
-                        'visit_expectation'	=>	'Expectation',
-                        'visit_product'		=>	'Products'
+        'visitplanner_id'    => 'VID',
+        'visit_by_name'      => 'Name',
+        'visit_date'         => 'V/Date',
+        'visit_time'         => 'Time',
+        'visit_company'      => 'Company',
+        'session'            => 'Session',
+        'month'              => 'Month',
+        'week'               => 'Week',
+        'created_by_name'    => 'Created By',
+        'visit_address'      => 'Address',
+        'visit_count'        => 'V/Count',
+        'visit_expectation'  => 'Expectation',
+        'visit_product'      => 'Products',
     ],
+
+    /* =====================================================
+     | Forms & Validation
+     ===================================================== */
     'mandatoryOptionsBeforeUsing-visitplanner' => [
-                        'missing_option'	=>	[]
+        'missing_option' => [],
     ],
+
     'moduleTable-visitplanner' => [
-                        "cyp_term",
-                        "cyp_activity",
-                        "cyp_advancedinfo",
-                        "cyp_allotment",
-                        "cyp_cash",
-                        "cyp_option",
-                        "cyp_upload",
-                        "cyp_notification",
-                        "cyp_message",
-                        "cyp_visitplanner"
+        'cyp_term',
+        'cyp_activity',
+        'cyp_advancedinfo',
+        'cyp_allotment',
+        'cyp_cash',
+        'cyp_option',
+        'cyp_upload',
+        'cyp_notification',
+        'cyp_message',
+        'cyp_visitplanner',
     ],
 
-    'mandatoryFields-visitplanner-entry-update' => ['visit_company', 'visit_meetingwith', 'visit_mobile_number', 'visit_email', 'session', 'month', 'week'],
+    'mandatoryFields-visitplanner-entry-update' => [
+        'visit_company',
+        'visit_meetingwith',
+        'visit_mobile_number',
+        'visit_email',
+        'session',
+        'month',
+        'week',
+    ],
 
-    'dateFields-visitplanner-entry-update' => ['date','visit_date'],
+    'dateFields-visitplanner-entry-update' => [
+        'date',
+        'visit_date',
+    ],
 
     'additionalFields-visitplanner-entry-update' => [],
 
-    'jsonFields-visitplanner-entry-update' => ['visit_team_member_json','visit_product'],
+    'jsonFields-visitplanner-entry-update' => [
+        'visit_team_member_json',
+        'visit_product',
+    ],
 
     'formPrefills-visitplanner-entry-new' => [
-                        "columns"	=>	[
-                            'product'		=>	'default_product',
-                            'contact_mode'	=>	'default_contact_mode',
-                            'state'			=>	'default_indian_state'
-                        ],
-                        "groups"	=>	[
-                            'current_date'	=>	['contact_date']
-                        ]
+        'columns' => [
+            'product'       => 'default_product',
+            'contact_mode'  => 'default_contact_mode',
+            'state'         => 'default_indian_state',
+        ],
+        'groups' => [
+            'current_date' => ['contact_date'],
+        ],
     ],
+
     'visitplanner-expectation' => [
-                        "high"		=>	"High",
-                        "average"	=>	"Average",
-                        "low"		=>	"Low"
-    ],    
+        'high'    => 'High',
+        'average' => 'Average',
+        'low'     => 'Low',
+    ],
 
     'sort-visitplanner-results-by-list' => [
-                        'datetime'			=>	"Date & Time",
-                        'expectedexpense'	=>	"Expected Expense"
+        'datetime'        => 'Date & Time',
+        'expectedexpense'=> 'Expected Expense',
     ],
 
 ];

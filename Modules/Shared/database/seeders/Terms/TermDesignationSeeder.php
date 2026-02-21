@@ -33,7 +33,7 @@ class TermDesignationSeeder extends Seeder
                 'name'       => $label,
                 'slug'       => $slug,
                 'group'      => 'designations',
-                'module'     => 'shared',
+                'module'     => 'employee',
                 'sort_order' => $index + 1,
                 'created_at' => now(),
                 'updated_at' => now(),

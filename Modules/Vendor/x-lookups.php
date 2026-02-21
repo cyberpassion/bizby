@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-	'sidebar-menu' => [
-    [
+	'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -111,8 +110,6 @@ return [
             ],
         ],
     ],
-],
-
     'vendor.list-filters' => [
 		'admin'	=>	[
         	'vendor_status_filter one'		=> "Status/status/vendor_status-json"

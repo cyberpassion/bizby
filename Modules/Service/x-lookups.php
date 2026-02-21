@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
+'sidebar-menu-x' => [
         'title' => ucfirst($pg),
         'href'  => "/{$pg}",
         'items' => [
@@ -21,9 +20,7 @@ return [
                 ]
             ],
         ],
-    ],
-],
-    'service.list-filters' => [
+    ],    'service.list-filters' => [
                         "admin"	=>	[
                                'service_price_filter one' => "Price/service_price/service_price-json",
                             'service_type_filter one' => "Type/service_type/service_type-json"

@@ -1,6 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Employee\Support\Res;
+use Modules\Employee\Support\Actions;
+
 $pg = 'employee';
-$commonSettingsRoute = '/settings';
 
 return [
 
@@ -8,13 +13,14 @@ return [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
@@ -22,18 +28,28 @@ return [
                     'items' => [
                         [
                             'title'      => 'Add Employee',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.employee.create",
+                            'href'       => UrlPath::makeCreate($pg),
+                            'permission' => Permission::create(Res::EMPLOYEES),
                         ],
                         [
                             'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.employee.view",
+                            'href'       => UrlPath::makeList($pg),
+                            'permission' => Permission::list(Res::EMPLOYEES),
                         ],
                         [
                             'title'      => 'Bulk Operation',
-                            'href'       => "/module/{$pg}/bulk",
-                            'permission' => "{$pg}.employee.bulk",
+                            'href'       => UrlPath::makeBulk($pg),
+                            'permission' => Permission::bulk(Res::EMPLOYEES),
+                        ],
+						[
+                            'title'      => 'Report',
+                            'href'       => UrlPath::makeReport($pg),
+                            'permission' => Permission::view(Res::REPORTS),
+                        ],
+						[
+                            'title'      => 'Settings',
+                            'href'       => UrlPath::makeSettings($pg),
+                            'permission' => Permission::update(Res::SETTINGS),
                         ],
                     ],
                 ],
@@ -41,37 +57,15 @@ return [
                 [
                     'title' => 'Salary',
                     'items' => [
-                        [
-                            'title'      => 'Salary Settings',
-                            'href'       => "/module/{$pg}/settings/salary",
-                            'permission' => "{$pg}.salary.settings",
+						[
+                            'title'      => 'Report',
+                            'href'       => UrlPath::make($pg, 'report/salary'),
+                            'permission' => Permission::view(Res::SALARY),
                         ],
                         [
-                            'title'      => 'Salary Report',
-                            'href'       => "/module/{$pg}/report/salary",
-                            'permission' => "{$pg}.salary.report",
-                        ],
-                    ],
-                ],
-
-                [
-                    'title' => 'Reports',
-                    'items' => [
-                        [
-                            'title'      => 'Employee Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.employee",
-                        ],
-                    ],
-                ],
-
-                [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Basic Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.basic",
+                            'title'      => 'Settings',
+                            'href'       => UrlPath::make($pg, 'settings/salary'),
+                            'permission' => Permission::update(Res::SALARY),
                         ],
                     ],
                 ],
@@ -81,8 +75,8 @@ return [
                     'items' => [
                         [
                             'title'      => 'Integrations',
-                            'href'       => "/module/{$pg}/plugins",
-                            'permission' => "{$pg}.plugin.manage",
+                            'href'       => UrlPath::makePlugins($pg),
+                            'permission' => Permission::view(Res::PLUGINS),
                         ],
                     ],
                 ],
@@ -90,36 +84,89 @@ return [
         ],
     ],
 
-    'employee.list-columns' => [
-        'id',
-        'name',
-        'employee_type',
-        'designation',
-        'phone',
-        'status',
+    /*
+    |--------------------------------------------------------------------------
+    | Row Actions
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
+
+        Actions::LIST => [
+
+            [
+                'title'      => 'View Slip',
+                'href'       => UrlPath::make($pg, '{id}/document'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'document',
+            ],
+
+            [
+                'title'      => 'Edit',
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
+                'permission' => Permission::update(Res::EMPLOYEES),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Upload',
+                'href'       => UrlPath::makeUpload($pg, '{id}'),
+                'permission' => Permission::create(Res::UPLOADS),
+                'action'     => 'upload',
+            ],
+
+            [
+                'title'      => 'View Profile',
+                'href'       => UrlPath::makeView($pg),
+                'permission' => Permission::view(Res::EMPLOYEES),
+                'action'     => 'view',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'permission' => Permission::delete(Res::EMPLOYEES),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
+        ]
+
     ],
 
-    'employee.list-filters' => [
-        'name',
-        'employee_type',
-        'designation',
-        'phone',
-        'status',
-    ],
+    /*
+    |--------------------------------------------------------------------------
+    | List Filters (Frontend)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
 
-    'employee.report-columns' => [
-        'id',
-        'name',
-        'employee_type',
-        'designation',
-        'gender',
-        'age',
-        'phone',
-        'email',
-        'date_of_joining',
-        'job_location',
-        'current_salary',
-        'status',
+        Actions::LIST => [
+
+            [
+                'type'        => 'select',
+                'name'        => 'employee_type',
+                'placeholder' => 'Employee Type',
+                'col'         => 3,
+                'dataKey'     => 'employee.types',
+            ],
+
+            [
+                'type'        => 'select',
+                'name'        => 'designation',
+                'placeholder' => 'Designation',
+                'col'         => 3,
+                'dataKey'     => 'employee.designations',
+            ],
+
+            [
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'employee.statuses',
+            ],
+        ]
+
     ],
 
 ];

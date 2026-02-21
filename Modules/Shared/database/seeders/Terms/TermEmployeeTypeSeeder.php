@@ -33,7 +33,7 @@ class TermEmployeeTypeSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $type,
                 'slug'       => Str::slug($type),
-                'group'      => 'employee-types',
+                'group'      => 'types',
                 'module'     => 'employee',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

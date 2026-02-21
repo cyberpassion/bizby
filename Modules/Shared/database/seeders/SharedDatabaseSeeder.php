@@ -23,11 +23,9 @@ use Modules\Shared\Database\Seeders\Terms\TermReligionSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermCategorySeeder;
 use Modules\Shared\Database\Seeders\Terms\TermCasteSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermDesignationSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermGenderSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermBankSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermAcademicQualificationSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermPaymentModeSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermBloodGroupSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermCompanySizeSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermEmployeeTypeSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermHealthCardSeeder;
@@ -38,11 +36,14 @@ use Modules\Shared\Database\Seeders\Terms\TermCurrencySeeder;
 use Modules\Shared\Database\Seeders\Terms\TermDepartmentSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermLanguageSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermInstituteTypeSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermMaritalStatusSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermNationalitySeeder;
 use Modules\Shared\Database\Seeders\Terms\TermPrioritySeeder;
-use Modules\Shared\Database\Seeders\Terms\TermTimeZoneSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermUnitSeeder;
+
+// use Modules\Shared\Database\Seeders\Terms\TermTimeZoneSeeder;
+// use Modules\Shared\Database\Seeders\Terms\TermMaritalStatusSeeder;
+// use Modules\Shared\Database\Seeders\Terms\TermNationalitySeeder;
+// use Modules\Shared\Database\Seeders\Terms\TermGenderSeeder;
+// use Modules\Shared\Database\Seeders\Terms\TermBloodGroupSeeder;
 
 class SharedDatabaseSeeder extends Seeder
 {
@@ -86,10 +87,10 @@ class SharedDatabaseSeeder extends Seeder
             // Personal / Identity
             TermReligionSeeder::class,
             TermCasteSeeder::class,
-            TermGenderSeeder::class,
-            TermBloodGroupSeeder::class,
-            TermMaritalStatusSeeder::class,
-            TermNationalitySeeder::class,
+            // TermGenderSeeder::class,
+            // TermBloodGroupSeeder::class,
+            // TermMaritalStatusSeeder::class,
+            // TermNationalitySeeder::class,
             TermLanguageSeeder::class,
 
             // Organization / HR
@@ -114,7 +115,7 @@ class SharedDatabaseSeeder extends Seeder
             TermPrioritySeeder::class,
 
             // System / Global
-            TermTimeZoneSeeder::class,
+            // TermTimeZoneSeeder::class,
         ]);
     }
 }

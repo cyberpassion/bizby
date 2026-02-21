@@ -4,7 +4,6 @@ namespace Modules\Employee\Http\Controllers;
 
 use Modules\Employee\Models\Employee;
 use Modules\Shared\Http\Controllers\SharedApiController;
-use Illuminate\Http\Response;
 
 class EmployeeApiController extends SharedApiController
 {

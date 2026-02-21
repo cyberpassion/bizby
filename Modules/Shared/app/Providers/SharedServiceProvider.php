@@ -114,33 +114,36 @@ class SharedServiceProvider extends ServiceProvider
 
 	protected function loadConfigUiLookupsFromModules(): void
 	{
-	    $modulesPath = base_path('Modules');
+    	$modulesPath = base_path('Modules');
 
-	    foreach (scandir($modulesPath) as $module) {
-    	    if ($module === '.' || $module === '..') continue;
-
-	        $file = "{$modulesPath}/{$module}/Config/ui/".strtolower($module).".php";
-
-    	    if (!file_exists($file)) {
-        	    continue;
-        	}
+	    // 🔥 Scan: Modules/*/Config/ui/*.php
+    	foreach (glob($modulesPath . '/*/Config/ui/*.php') as $file) {
 
 	        try {
     	        $config = require $file;
         	} catch (\Throwable $e) {
-            	logger()->error("Failed loading ui config", [
-                	'module' => $module,
-                	'error'  => $e->getMessage()
+            	logger()->error('Failed loading ui config', [
+                	'file' => $file,
+                	'error' => $e->getMessage(),
 	            ]);
     	        continue;
         	}
 
+	        if (!is_array($config)) {
+    	        continue;
+        	}
+
+	        // Extract module name from path
+    	    // Example: Modules/Student/Config/ui/student.php → student
+        	$parts = explode(DIRECTORY_SEPARATOR, $file);
+        	$moduleName = strtolower($parts[count($parts) - 4]);
+
 	        foreach ($config as $key => $value) {
     	        LookupRegistry::register(
-        	        strtolower($module).'.ui.'.$key,
+        	        "{$moduleName}.ui.{$key}",
             	    $value
-            	);
-        	}
+	            );
+    	    }
     	}
 	}
 
@@ -150,9 +153,10 @@ class SharedServiceProvider extends ServiceProvider
     	$modulePath = base_path('Modules');
 
 	    foreach (scandir($modulePath) as $module) {
+			continue;
     	    if ($module === '.' || $module === '..') continue;
 
-        	$lookupFile = $modulePath . "/{$module}/lookups.php";
+        	$lookupFile = $modulePath . "/{$module}/x-lookups.php";
 
 	        if (file_exists($lookupFile)) {
     	        $lookups = require $lookupFile;

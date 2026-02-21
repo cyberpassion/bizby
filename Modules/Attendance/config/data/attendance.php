@@ -3,6 +3,23 @@
 $pg = 'attendance';
 
 return [
+	'weekdays' => [
+	    1 => 'Monday',
+    	2 => 'Tuesday',
+    	3 => 'Wednesday',
+    	4 => 'Thursday',
+    	5 => 'Friday',
+    	6 => 'Saturday',
+    	7 => 'Sunday',
+	],
+
+	'day-types' => [
+	    'working'          => 'Working Day',
+    	'holiday'          => 'Holiday',
+    	'weekend'          => 'Weekend',
+    	'blackout'         => 'Blackout',
+    	'special_working'  => 'Special Working Day',
+	],
 
     /*
     |----------------------------------------------------------------------
@@ -29,12 +46,12 @@ return [
         ],
     ],
 
-    /*
-    |----------------------------------------------------------------------
-    | Default Columns (Entry / List / Report)
-    |----------------------------------------------------------------------
-    */
-    'default_columns' => [
+    // Default Columns
+    'columns' => [
+		'weekly-off' => [
+			'list'	=>	['id','weekday','context']
+		],
+		'holiday.list'    => ['id','date','name','context'],
         'entry'  => ['attendance_id','date','absentee_name','absent_date','absent_type','tags','status'],
         'list'   => ['attendance_id','date','absentee_name','absent_date','absent_type','tags','status'],
         'detail' => ['attendance_id','date','absentee_name','absent_date','absent_type','tags','status'],
@@ -116,5 +133,32 @@ return [
         'cyp_message',
         'cyp_announcement',
     ],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Session Types
+	|--------------------------------------------------------------------------
+	*/
+	'session_types' => [
+    	'day'     => 'Day (School)',
+	    'lecture' => 'Lecture (College / Coaching)',
+    	'shift'   => 'Shift (Office / Factory)',
+    	'event'   => 'Event / Seminar',
+	],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Attendance Modes
+	|--------------------------------------------------------------------------
+	*/
+	'attendance_modes' => [
+	    'manual'    => 'Manual',
+    	'qr'        => 'QR Code',
+	    'biometric' => 'Biometric',
+    	'rfid'      => 'RFID',
+    	'geofence'  => 'Geo-fence',
+    	'self'      => 'Self Punch',
+    	'system'    => 'System',
+	],
 
 ];

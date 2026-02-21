@@ -62,7 +62,7 @@ class TermPaymentModeSeeder extends Seeder
             DB::table('terms')->updateOrInsert(
                 [
                     'slug'  => Str::slug($mode),
-                    'group' => 'payment_mode',
+                    'group' => 'payment_modes',
                 ],
                 [
                     'tenant_id'  => 1,

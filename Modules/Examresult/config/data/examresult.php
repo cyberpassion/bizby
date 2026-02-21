@@ -3,10 +3,8 @@ $pg = 'examresult';
 
 return [
 
-    /* =========================
-     | Filters (Admin / Portal)
-     ========================= */
-    "examresult.list-filters" => [
+    // Filters
+    "list-filters" => [
         "admin" => [
             'session' => "Session/exam_session/session-json",
             'class'   => "Class/exam_class/class-json",
@@ -19,20 +17,16 @@ return [
         ]
     ],
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
-    "examresult.bulk-operations" => [
+    // Bulk Operations
+    "bulk-operations" => [
         'examresult:single-report-card' => 'Print Report Card',
         'examresult:eoy-report-card'    => 'Print EOY Report Card',
         'op:delete'                     => 'Delete',
         'op:restore'                    => 'Restore'
     ],
 
-    /* =========================
-     | Default Columns
-     ========================= */
-    "examresult.default-columns" => [
+    // Default Columns
+    "default-columns" => [
         'entry'   => ['exam_id','exam_name','exam_class','exam_section','exam_session','tags','status'],
         'list'    => ['exam_id','exam_name','exam_class','exam_section','exam_session','tags','status'],
         'detail'  => ['exam_id','exam_name','exam_class','exam_section','exam_session','tags','status'],

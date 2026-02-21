@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Attendance\Services\AttendanceService;
 use Modules\Attendance\Models\AttendanceSession;
+use Illuminate\Http\Response;
 
 class AttendanceSessionApiController extends Controller
 {
@@ -13,11 +14,16 @@ class AttendanceSessionApiController extends Controller
 
     public function index(Request $request)
 	{
-	    return AttendanceSession::where('tenant_id', tenant()->id)
+	    $response = AttendanceSession::where('tenant_id', tenant()->id)
     	    ->when($request->date, fn($q) => $q->whereDate('session_date', $request->date))
         	->when($request->type, fn($q) => $q->where('type', $request->type))
         	->latest()
         	->paginate(50);
+		return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Fetched Successfully.',
+	        'data'    => $response
+    	], Response::HTTP_OK);
 	}
 
     public function store(Request $request)
@@ -34,7 +40,11 @@ class AttendanceSessionApiController extends Controller
 
         $session = $this->service->createSession($data, $request->user());
 
-        return response()->json($session, 201);
+		return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Records created successfully.',
+	        'data'    => $session
+    	], Response::HTTP_OK);
     }
 
     public function show($id)
@@ -43,7 +53,13 @@ class AttendanceSessionApiController extends Controller
     	    ->where('tenant_id', tenant()->id)
         	->firstOrFail();
 
-	    return $session->load('attendances');
+		$response = $session->load('attendances');
+		return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Fetched Successfully.',
+	        'data'    => $response
+    	], Response::HTTP_OK);
+
 	}
 
 }

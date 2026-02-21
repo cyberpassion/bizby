@@ -10,6 +10,11 @@ return new class extends Migration {
         Schema::create('student_academic_years', function (Blueprint $table) {
             $table->id();
 
+			$table->unsignedBigInteger('tenant_id')
+                ->nullable()
+                ->index()
+                ->comment('Tenant/Client owner ID');
+
             // Display name: 2025-26
             $table->string('name');
 
@@ -33,6 +38,7 @@ return new class extends Migration {
             // Optional but recommended indexes
             $table->index(['start_year', 'end_year']);
             $table->index('is_active');
+			$table->unique(['name']);
         });
     }
 

@@ -13,6 +13,7 @@ class AttendanceSession extends Model
 
     protected $fillable = [
 		'tenant_id',
+		'attendance_schedule_id',
         'type',
         'session_date',
         'start_time',
@@ -72,6 +73,11 @@ class AttendanceSession extends Model
             	'attendance_status' => $status,
 	        ], $extra)
     	);
+	}
+
+	public function schedule()
+	{
+    	return $this->belongsTo(AttendanceSchedule::class, 'attendance_schedule_id');
 	}
 
 }

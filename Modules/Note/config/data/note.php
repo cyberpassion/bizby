@@ -3,9 +3,7 @@ $pg = 'note';
 
 return [
 
-    /* =========================
-     | Status & Crons
-     ========================= */
+    // Statuses
     "note.statuses" => [
         "1"  => "All",
         "11" => "Pending Only",
@@ -37,9 +35,7 @@ return [
         ]
     ],
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
+    // Bulk Operations
     "note.bulk-operations" => [
         "view:detail" => "View Detail",
         "op:remove"   => "Delete",

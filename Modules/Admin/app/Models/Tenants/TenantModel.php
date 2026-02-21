@@ -16,10 +16,10 @@ abstract class TenantModel extends Model
 
         // Enforce tenant isolation on all queries
         static::addGlobalScope('tenant', function (Builder $builder) {
-            $builder->where(
+            /*$builder->where(
                 $builder->getModel()->getTable() . '.tenant_id',
                 tenant()->id
-            );
+            );*/
         });
 
         // Auto-fill tenant_id on create

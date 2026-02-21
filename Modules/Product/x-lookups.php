@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
+'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -103,8 +102,6 @@ return [
 
         ],
     ],
-],
-
     'product.list-filters' => [
                         "admin"	=>	[
                             'sort' => "Type/product_type/product_type-json",

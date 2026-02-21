@@ -3,8 +3,7 @@ $pg = 'survey';
 
 return [
 
-    'sidebar-menu' => [
-        [
+    'sidebar-menu-x' => [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
             'permission' => "{$pg}.access",
@@ -66,6 +65,5 @@ return [
                 ],
             ],
         ],
-    ],
 
 ];

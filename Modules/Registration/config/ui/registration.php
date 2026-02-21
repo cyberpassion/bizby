@@ -1,93 +1,141 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Registration\Support\Res;
+use Modules\Registration\Support\Actions;
+
 $pg = 'registration';
 
 return [
 
-    /* =========================
-     | SIDEBAR & UI ROUTES
-     ========================= */
-    'sidebar-menu' => [
+    /*
+    |--------------------------------------------------------------------------
+    | Sidebar Menu
+    |--------------------------------------------------------------------------
+    */
+    'x-sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
-                    'title' => 'Manage',
-                    'items' => [
-                        [
-                            'title'      => 'Add New',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.create",
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.view",
-                        ],
-                        [
-                            'title'      => 'Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.view",
-                        ],
-                        [
-                            'title'      => 'Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.manage",
-                        ],
-                    ],
+                    'title'      => 'New Registration',
+                    'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::REGISTRATIONS),
                 ],
 
                 [
-                    'title' => 'Plugins',
-                    'items' => [
-                        [
-                            'title'      => 'View Calendar',
-                            'href'       => "/plugin/calendar?module={$pg}",
-                            'permission' => "{$pg}.plugin.calendar",
-                        ],
-                    ],
+                    'title'      => 'View Registrations',
+                    'href'       => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::REGISTRATIONS),
                 ],
 
+                [
+                    'title'      => 'Bulk Operation',
+                    'href'       => UrlPath::makeBulk($pg),
+                    'permission' => Permission::bulk(Res::REGISTRATIONS),
+                ],
+
+                [
+                    'title'      => 'Reports',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
+
+                [
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
+                ],
             ],
         ],
     ],
 
-    /* =========================
-     | UI PAGE ACCESS CONTROL
-     ========================= */
-    "permissionAdmin-registration" => [
-        'restricted'=> [
-            '2' => [['pg' => $pg, 'sub_pg' => 'settings']],
-            '3' => [['pg' => $pg, 'sub_pg' => 'settings']],
+    /*
+    |--------------------------------------------------------------------------
+    | Row Actions (CRITICAL for Workflow Modules)
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
+
+        Actions::LIST => [
+
+            [
+                'title'      => 'Open Steps',
+                'href'       => UrlPath::make($pg, '{id}/steps'),
+                'permission' => Permission::view(Res::STEPS),
+                'action'     => 'redirect',
+            ],
+
+            [
+                'title'      => 'Documents',
+                'href'       => UrlPath::make($pg, '{id}/documents'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'redirect',
+            ],
+
+            [
+                'title'      => 'Payments',
+                'href'       => UrlPath::make($pg, '{id}/payments'),
+                'permission' => Permission::view(Res::PAYMENTS),
+                'action'     => 'redirect',
+            ],
+
+            [
+                'title'      => 'Update',
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
+                'permission' => Permission::update(Res::REGISTRATIONS),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'permission' => Permission::delete(Res::REGISTRATIONS),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
         ],
-        'allowed' => []
+
     ],
 
-    "permissionRestrictedAdmin-module" => [
-        ['pg' => $pg, 'sub_pg' => 'settings']
-    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Filters (List Screen)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
 
-    "permissionPortal-registration" => [
-        'restricted' => [],
-        'allowed'    => [
-            ['pg' => $pg, 'sub_pg' => 'home'],
-            ['pg' => $pg, 'sub_pg' => 'profile'],
-            ['pg' => $pg, 'sub_pg' => 'list'],
-            ['pg' => $pg, 'sub_pg' => 'detail'],
-            ['pg' => $pg, 'sub_pg' => 'document'],
-            ['pg' => $pg, 'sub_pg' => 'history'],
-            ['pg' => $pg, 'sub_pg' => 'upload'],
-            ['pg' => $pg, 'sub_pg' => 'report'],
-            ['pg' => $pg, 'sub_pg' => "{$pg}-report"],
-        ]
+        Actions::LIST => [
+
+            [
+                'type'        => 'select',
+                'name'        => 'type',
+                'placeholder' => 'Registration Type',
+                'col'         => 3,
+                'dataKey'     => 'registration.types',
+            ],
+
+            [
+                'type'        => 'select',
+                'name'        => 'registration_status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'registration.statuses',
+            ]
+        ],
+
     ],
 
 ];

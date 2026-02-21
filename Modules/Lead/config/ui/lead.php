@@ -1,61 +1,55 @@
 <?php
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Lead\Support\Res;
+use Modules\Lead\Support\Actions;
+
 $pg = 'lead';
-$commonSettingsRoute = '/settings';
 
 return [
 
-    /* =========================
-     | Sidebar Menu (UI)
-     ========================= */
-    'sidebar-menu' => [
+    'x-sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
-                    'title' => 'Leads',
-                    'items' => [
-                        [
-                            'title'      => 'Add Lead',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.lead.create",
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.lead.view",
-                        ],
-                    ],
+                    'title'      => 'Add Lead',
+                    'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::LEADS),
                 ],
 
                 [
-                    'title' => 'Reports',
-                    'items' => [
-                        [
-                            'title'      => 'Lead Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.lead",
-                        ],
-                    ],
+                    'title'      => 'View List',
+                    'href'       => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::LEADS),
                 ],
 
                 [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Basic Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.basic",
-                        ],
-                    ],
+                    'title'      => 'Bulk Operation',
+                    'href'       => UrlPath::makeBulk($pg),
+                    'permission' => Permission::bulk(Res::LEADS),
+                ],
+
+                [
+                    'title'      => 'Lead Report',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::report(Res::REPORTS),
+                ],
+
+                [
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
                 ],
 
                 [
@@ -63,8 +57,8 @@ return [
                     'items' => [
                         [
                             'title'      => 'View Calendar',
-                            'href'       => "/module/{$pg}/plugin/calendar",
-                            'permission' => "{$pg}.plugin.manage",
+                            'href'       => UrlPath::make($pg, 'plugin/calendar'),
+                            'permission' => Permission::view(Res::PLUGINS),
                         ],
                     ],
                 ],
@@ -72,40 +66,77 @@ return [
         ],
     ],
 
-    /* =========================
-     | UI Table Columns
-     ========================= */
-    'lead.list-columns' => [
-        'lead_code',
-        'name',
-        'contact_person',
-        'mobile',
-        'stage_id',
-        'next_followup_date',
-    ],
+	/*
+    |--------------------------------------------------------------------------
+    | Row Actions
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
 
-    'lead.list-filters-ui' => [
-        'stage_id',
-        'category_id',
-        'source_id',
-        'assigned_to_id',
-        'district',
-        'next_followup_date',
-    ],
+	    Actions::LIST	=>	[
+			[
+	    	    'title'      => 'Add Followup',
+    	    	'href'       => UrlPath::make($pg, '{id}/new-followup'),
+	    	    'permission' => Permission::create(Res::FOLLOWUPS),
+    	    	'action'     => 'sheet',
+		    ],
 
-    'lead.report-columns' => [
-        'lead_code',
-        'name',
-        'contact_person',
-        'mobile',
-        'email',
-        'district',
-        'state',
-        'category_id',
-        'source_id',
-        'stage_id',
-        'assigned_to_id',
-        'next_followup_date',
-    ],
+		    [
+    		    'title'      => 'Edit',
+        		'href'       => UrlPath::makeUpdate($pg, '{id}'),
+	        	'permission' => Permission::update(Res::LEADS),
+    	    	'action'     => 'update',
+		    ],
+
+		    [
+    		    'title'      => 'Delete',
+        		'href'       => UrlPath::makeDelete($pg, '{id}'),
+	        	'permission' => Permission::delete(Res::LEADS),
+    	    	'action'     => 'delete',
+	        	'method'     => 'DELETE',
+    	    	'variant'    => 'danger',
+    		],
+		]
+
+	],
+
+	/*
+	|--------------------------------------------------------------------------
+	| List Filters (FULL CONFIG – used by frontend)
+	|--------------------------------------------------------------------------
+	*/
+	'filters' => [
+
+    	Actions::LIST	=>	[
+			[
+		        'type'        => 'select',
+    		    'name'        => 'stage_id',
+        		'placeholder' => 'Stage',
+	        	'col'         => 3,
+    	    	'dataKey'     => 'lead.lead-stages',
+		    ],
+    		[
+	    	    'type'        => 'select',
+    	    	'name'        => 'category_id',
+	        	'placeholder' => 'Category',
+		        'col'         => 3,
+    		    'dataKey'     => 'lead.lead-categories',
+		    ],
+    		[
+	    	    'type'        => 'select',
+    	    	'name'        => 'source_id',
+	        	'placeholder' => 'Source',
+		        'col'         => 3,
+    		    'dataKey'     => 'lead.lead-sources',
+    		],
+		    [
+    		    'type'        => 'select',
+        		'name'        => 'assigned_to_id',
+	        	'placeholder' => 'Assigned User',
+    	    	'col'         => 3,
+        		'dataKey'     => 'users.list',
+	    	]
+		]
+	],
 
 ];

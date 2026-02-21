@@ -27,9 +27,7 @@ return [
         ]
     ],
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
+    // Bulk Operations
     "patient.bulk-operations" => [
         "document:registration-form"   => "Print Registration Form",
         "document:id-card"             => "ID Card",

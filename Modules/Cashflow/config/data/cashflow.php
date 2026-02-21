@@ -73,7 +73,7 @@ return [
     |------------------------------------------------------------------
     */
 
-    'bulk_operations' => [
+    'bulk-operations' => [
         'document:booking-confirmation-slip' => 'Booking Confirmation Slip',
         'document:booking-invoice'            => 'Booking Invoice',
         'document:gst-invoice-slip'            => 'GST Slip',

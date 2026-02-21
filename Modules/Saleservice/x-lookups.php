@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-	'sidebar-menu' => [
-    [
+	'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -67,8 +66,6 @@ return [
             ],
         ],
     ],
-],
-
 
     'saleservice.crons' => [
                         'saleservice-duedate' 	=> 'Sale/Service Due Date',

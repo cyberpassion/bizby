@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-    'sidebar-menu' => [
-    [
+    'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -115,7 +114,6 @@ return [
             ],
         ],
     ],
-],
 
 
     "cashflow.crons" => ['cashflow-daycashreport' => 'Day Cash Report Message'],

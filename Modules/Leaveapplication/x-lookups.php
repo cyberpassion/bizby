@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
+'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -83,8 +82,6 @@ return [
 
         ],
     ],
-],
-
 
     'leaveapplication.leave-type' => [
                         'casual-leave'		=>	'Casual Leave',

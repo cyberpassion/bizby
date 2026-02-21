@@ -10,7 +10,7 @@ return [
     | Sidebar Menu
     |--------------------------------------------------------------------------
     */
-    'sidebar_menu' => [
+    'sidebar-menu-x' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
@@ -70,7 +70,7 @@ return [
     | List Filters (Frontend – FULL CONFIG)
     |--------------------------------------------------------------------------
     */
-    'list_filters' => [
+    'list-filters' => [
         [
             'type'        => 'date',
             'name'        => 'date',

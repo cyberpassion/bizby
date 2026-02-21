@@ -10,7 +10,7 @@ return [
     |------------------------------------------------------------------
     */
 
-    'sidebar_menu' => [
+    'sidebar-menu-x' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
@@ -133,18 +133,18 @@ return [
     |------------------------------------------------------------------
     */
 
-    'list_filters' => [
+    'list-filters' => [
         [
             'type'        => 'select',
             'name'        => 'booking_type',
-            'placeholder' => 'Select Booking Type',
+            'placeholder' => 'Booking Type',
             'col'         => 3,
             'dataKey'     => 'booking.booking_types',
         ],
         [
             'type'        => 'select',
             'name'        => 'status',
-            'placeholder' => 'Select Status',
+            'placeholder' => 'Status',
             'col'         => 3,
             'dataKey'     => 'booking.statuses',
         ],

@@ -3,7 +3,7 @@ $pg = 'signup';
 
 return [
 
-    'sidebar-menu' => [
+    'sidebar-menu-x' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",

@@ -8,8 +8,7 @@ return [
 | UI : Sidebar Menu & Screens
 |--------------------------------------------------------------------------
 */
-'sidebar-menu' => [
-    [
+'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -52,6 +51,4 @@ return [
             ],
         ],
     ],
-],
-
 ];

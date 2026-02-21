@@ -3,8 +3,7 @@ $pg = 'contact';
 $commonSettingsRoute = '/settings';
 
 return [
-    'sidebar-menu' => [
-    [
+    'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -81,7 +80,6 @@ return [
             ],
         ],
     ],
-],
 
     'contact.contact-group-results-by' => [
                         'contact_type'						=>	'CUSTOMER TYPE',

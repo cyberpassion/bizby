@@ -24,14 +24,14 @@ class LookupsApiController extends Controller
         |--------------------------------------------------------------------------
         | Applies ONLY to keys like:
         |   student.ui.list_filters
-        |   student.ui.sidebar_menu
-        |   student.ui.single_actions
+        |   student.ui.sidebar-menu
+        |   student.ui.single-actions
         |
         | Registry remains raw & global.
         | Filtering is per-request, per-user.
         */
         if ($this->isUiKey($key) && is_array($data)) {
-            $data = $this->filterUiByPermission($data);
+            //$data = $this->filterUiByPermission($data);
         }
 
         return response()->json([
@@ -74,7 +74,7 @@ class LookupsApiController extends Controller
             }
 
 			return can($item['permission'],'web');
-            return $user->can($item['permission']);
+            //return $user->can($item['permission']);
         }));
     }
 }

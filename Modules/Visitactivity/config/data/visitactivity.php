@@ -19,9 +19,7 @@ return [
         ],
     ],
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
+    // Bulk Operations
     'visitactivity.bulk-operations' => [
         'view:detail' => 'View Visit Activity Details',
         'send:email'  => 'Send Notification Email',
@@ -29,9 +27,7 @@ return [
         'op:restore'  => 'Restore',
     ],
 
-    /* =========================
-     | Default Columns
-     ========================= */
+    // Default Columns
     'visitactivity.default-columns' => [
         'entry'   => ['visitactivity_id','visit_date','visit_by_name','visit_team_member_json','company_name','company_official_mobile_number','detailed_report','next_action_plan','visit_status','tags','status'],
         'list'    => ['visitactivity_id','visit_date','visit_by_name','visit_team_member_json','company_name','company_official_mobile_number','detailed_report','next_action_plan','visit_status','tags','status'],

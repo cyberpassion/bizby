@@ -19,18 +19,14 @@ return [
         ]
     ],
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
+    // Bulk Operations
     'product.bulk-operations' => [
         "view:detail" => "View Product Details",
         "op:remove"  => "Delete",
         "op:restore" => "Restore"
     ],
 
-    /* =========================
-     | Default Columns
-     ========================= */
+    // Default Columns
     'product.default-columns' => [
         'entry'  => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
         'list'   => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],

@@ -97,6 +97,17 @@ class LookupRegistry
      */
     public static function get(string $key)
     {
+
+		/**
+	     * 🔥 AGGREGATED UI LOOKUP
+    	 * Example:
+    	 *   get('.ui.sidebar-menu')
+    	 *   → merges student.ui.sidebar-menu, employee.ui.sidebar-menu
+    	 */
+	    if (str_starts_with($key, '.ui.')) {
+    	    return self::getBySuffix($key);
+    	}
+
         // 1️⃣ Explicit lookup
         if (self::has($key)) {
             $value = self::$items[$key];
@@ -105,6 +116,31 @@ class LookupRegistry
                 ? ($value() ?? [])
                 : $value;
         }
+
+		/*
+	    |--------------------------------------------------------------------------
+    	| 🔥 NEW: Dot path resolution
+    	|--------------------------------------------------------------------------
+	    */
+    	foreach (self::$items as $registeredKey => $value) {
+
+	        if (!str_starts_with($key, $registeredKey . '.')) {
+    	        continue;
+        	}
+
+	        $resolved = is_callable($value)
+    	        ? ($value() ?? [])
+        	    : $value;
+
+	        if (!is_array($resolved)) {
+    	        continue;
+        	}
+
+	        // Extract remaining path
+    	    $path = substr($key, strlen($registeredKey) + 1);
+
+	        return data_get($resolved, $path);
+    	}
 
         // 2️⃣ Fallback lookup
         if (self::$fallbackResolver) {
@@ -122,4 +158,56 @@ class LookupRegistry
     {
         return array_keys(self::$items);
     }
+
+	/**
+	 * Get merged lookup values by suffix
+	 * Example: ".ui.sidebar-menu"
+	 */
+	public static function getBySuffix(string $suffix): array
+	{
+    	$results = [];
+
+	    foreach (self::$items as $key => $value) {
+    	    if (!str_ends_with($key, $suffix)) {
+        	    continue;
+        	}
+
+	        $resolved = is_callable($value)
+    	        ? ($value() ?? [])
+        	    : $value;
+
+	        if (!is_array($resolved)) continue;
+
+	        foreach ($resolved as $item) {
+    	        $results[] = $item;
+        	}
+    	}
+
+	    return $results;
+	}
+
+	/**
+	 * Get merged lookup values by prefix
+	 */
+	public static function getByPrefix(string $prefix): array
+	{
+    	$results = [];
+
+	    foreach (self::$items as $key => $value) {
+    	    if (!str_starts_with($key, $prefix)) {
+        	    continue;
+        	}
+
+	        $resolved = is_callable($value)
+    	        ? ($value() ?? [])
+        	    : $value;
+
+	        if (is_array($resolved)) {
+    	        $results = array_merge($results, $resolved);
+        	}
+	    }
+
+    	return $results;
+	}
+
 }

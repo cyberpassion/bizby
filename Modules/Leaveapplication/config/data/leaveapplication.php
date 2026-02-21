@@ -21,16 +21,12 @@ return [
         '2'  => 'Canceled by Applicant'
     ],
 
-    /* =========================
-     | Crons
-     ========================= */
+    // Crons
     'leaveapplication.crons' => [
         'leaveapplication-notificationtohr' => 'Leave Application Notification to HR'
     ],
 
-    /* =========================
-     | Filters (Admin / Portal)
-     ========================= */
+    // Filters
     'leaveapplication.list-filters' => [
         "admin" => [
             'session_filter'      => 'Session/current_session/session-json',
@@ -48,18 +44,14 @@ return [
         ]
     ],
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
+    // Bulk Operations
     'leaveapplication.bulk-operations' => [
         "view:detail" => "View Detail",
         "op:remove"   => "Delete",
         "op:restore"  => "Restore"
     ],
 
-    /* =========================
-     | Default Columns
-     ========================= */
+    // Default Columns
     'leaveapplication.default-columns' => [
         'entry'  => ['leaveapplication_id','date','applicant_name','leave_all_dats','leave_type','tags','status'],
         'list'   => ['leaveapplication_id','date','applicant_name','leave_all_dats','leave_type','tags','status'],

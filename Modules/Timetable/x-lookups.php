@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
+'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -52,8 +51,6 @@ return [
             ],
         ],
     ],
-],
-
     'timetable.list-filters' => [
 					"admin"	=>	[
     					'current_session_filter' => "Session/session/session-json",

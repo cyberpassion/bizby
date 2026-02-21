@@ -29,21 +29,8 @@ class StudentServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-
-		// Register all scheduled jobs for module
-		//$this->registerScheduleJobs();
-
-		// Load notifications from config
-		//$path = module_path($this->name, 'config/notifications.php');
-
-		/*if (file_exists($path)) {
-		    $this->mergeConfigFrom($path, 'notifications');
-		}*/
-
-
 		// 🚧 Barricade resources
 	    StudentBarricadeResources::register();
-
     }
 
     /**

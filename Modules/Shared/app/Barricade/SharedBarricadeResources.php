@@ -102,34 +102,31 @@ class SharedBarricadeResources
      * Generic barricade resource registration
      */
     protected static function registerResource(string $resource, string $modelClass): void
-    {
-        BarricadeResourceRegistry::register(
-	        $resource,
-    	    function (array $filter) use ($modelClass): bool {
-				return true;
+	{
+    	BarricadeResourceRegistry::register(
+        	$resource,
+	        function (array $filter) use ($modelClass): bool {
 
-	            if (! tenant()) {
-    	            return false; // or true, depending on your policy
-        	    }
+    	        $tenant = tenant();
 
-	            return tenancy()->run(function () use ($modelClass, $filter) {
+        	    if (! $tenant) {
+            	    return false;
+            	}
 
-	                $model = new $modelClass();
+	            return $tenant->run(function () use ($modelClass, $filter) {
 
-    	            if (!Schema::hasTable($model->getTable())) {
-        	            return false;
-            	    }
+    	            $model = new $modelClass();
 
-	                $query = $modelClass::query();
+        	        if (! Schema::hasTable($model->getTable())) {
+            	        return false;
+                	}
 
-    	            foreach ($filter as $column => $value) {
-        	            $query->where($column, $value);
-            	    }
-
-	                return $query->exists(); // ✅ guaranteed tenant DB
-    	        });
+	                return $modelClass::query()
+    	                ->where($filter)
+        	            ->exists();
+            	});
         	}
     	);
-    }
+	}
 
 }

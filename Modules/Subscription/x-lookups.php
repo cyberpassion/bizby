@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-'sidebar-menu' => [
-    [
+'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -67,8 +66,6 @@ return [
             ],
         ],
     ],
-],
-
     'subscription.list-filters' => [
                         "admin"	=>	[
                             'nextdate' 						=> "Next Date/range-next_date/filter_date_range-json",

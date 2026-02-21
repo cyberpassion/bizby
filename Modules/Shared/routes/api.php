@@ -35,9 +35,13 @@ use Modules\Shared\Http\Controllers\Permissions\PermissionTreeApiController;
 // Navigation
 use Modules\Shared\Http\Controllers\Navigations\NavigationApiController;
 
-/*Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('shareds', SharedController::class)->names('shared');
-});*/
+// Exports
+use Modules\Shared\Http\Controllers\ExportApiController;
+
+Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
+    // Terms for dynamic values like student classes etc
+	Route::apiResource('terms', TermApiController::class)->names('term');
+});
 
 // Temporarily disable auth middleware
 Route::prefix('v1')->group(function () {
@@ -46,9 +50,6 @@ Route::prefix('v1')->group(function () {
 	Route::get('/lookups-x/{key}', [LookupsApiController::class, 'get']);
 
 	Route::get('/form/{module}/{name}', [FormApiController::class, 'show']);
-
-	// Terms for dynamic values like student classes etc
-	Route::apiResource('terms', TermApiController::class)->names('term');
 
 	// Uploads
 	Route::apiResource('uploads', UploadApiController::class)->names('upload');
@@ -196,8 +197,6 @@ Route::prefix('v1')->group(function () {
 	// Payment Webhooks
 	Route::post('webhooks/razorpay', [RazorpayWebhookController::class, 'handle']);
 
-	Route::get('/barricade/{key}', [BarricadeApiController::class, 'get']);
-
 	Route::get('/search/{module}', [SearchApiController::class, 'search']);
 
 	// History
@@ -208,6 +207,15 @@ Route::prefix('v1')->group(function () {
     Route::delete('/infra/databases/{name}', [DatabaseManagementApiController::class, 'destroy']);
 
 });
+
+// Barricades
+Route::middleware(['auth:sanctum','tenant'])
+    ->prefix('v1')
+    ->group(function () {
+
+        Route::get('/barricade/{key}', [BarricadeApiController::class, 'get']);
+
+    });
 
 // Schedules
 // ->middleware(['auth:sanctum'])
@@ -266,7 +274,7 @@ Route::prefix('v1')
 });
 
 Route::prefix('v1')
-    ->middleware(['auth:sanctum', 'identify.tenant'])
+    ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
 		// Lookups for common static values like gender, list of countries
@@ -278,9 +286,22 @@ Route::prefix('v1')
         Route::get('/navigation/sidebar', [NavigationApiController::class, 'sidebar']);
         Route::get('/navigation/header',  [NavigationApiController::class, 'header']);
         Route::get('/navigation/module/{module}', [NavigationApiController::class, 'module']);
-        Route::get('/navigation/item/{module}/{id}', [NavigationApiController::class, 'item']);
+		Route::get('/navigation/single-actions/{module}/{id?}', [NavigationApiController::class, 'item']);
 
-	// Permissions
-	Route::get('/get-permissions/{id}', [PermissionApiController::class, 'get']);
+		// Permissions
+		Route::get('/get-permissions/{id}', [PermissionApiController::class, 'get']);
+
+});
+
+// Export routes
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
+
+		Route::get('shared/export/csv/{module}', [ExportApiController::class, 'exportCsv'])
+            ->name('shared.export.csv');
+
+        Route::get('shared/export/pdf/{module}', [ExportApiController::class, 'exportPdf'])
+            ->name('shared.export.pdf');
 
 });

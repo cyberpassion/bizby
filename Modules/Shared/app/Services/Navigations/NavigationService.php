@@ -2,140 +2,162 @@
 
 namespace Modules\Shared\Services\Navigations;
 
-use Nwidart\Modules\Facades\Module;
 use Illuminate\Support\Facades\Cache;
+use Modules\Shared\Services\LookupRegistry;
 
 class NavigationService
 {
     /* ================= CONTEXT ================= */
+
     protected static function context(): array
     {
-        $user = auth()->user();
+        $user   = auth()->user();
+        $tenant = tenant();
 
         return [
-            'permissions' => $user->permissions->pluck('key')->toArray(),
+            'permissions' => $user?->permissions?->pluck('key')->toArray() ?? [],
             'modules'     => tenant()->purchased_modules ?? [],
             'addons'      => tenant()->purchased_addons ?? [],
-            'role_id'     => $user->role_id,
-            'tenant_id'   => tenant()->id,
+            'role_id'     => $user?->role_id,
+            'tenant_id'   => $tenant->id,
         ];
     }
 
-    /* ================= PERMISSION CHECK ================= */
+    /* ================= ACCESS CHECK ================= */
+
     protected static function allowed(array $menu, array $ctx): bool
     {
-        if (isset($menu['permission']) && !in_array($menu['permission'], $ctx['permissions'])) {
+        // Enable when ready
+        /*
+        if (!empty($menu['permission']) && !in_array($menu['permission'], $ctx['permissions'], true)) {
             return false;
         }
 
-        if (isset($menu['addon']) && !in_array($menu['addon'], $ctx['addons'])) {
+        if (!empty($menu['addon']) && !in_array($menu['addon'], $ctx['addons'], true)) {
             return false;
         }
+
+        if (!empty($menu['module']) && !in_array($menu['module'], $ctx['modules'], true)) {
+            return false;
+        }
+        */
 
         return true;
     }
 
+    /* ================= RECURSIVE FILTER ================= */
+
+    protected static function filterMenu(array $menus, array $ctx): array
+    {
+        $filtered = [];
+
+        foreach ($menus as $menu) {
+
+			// 🚑 HARD GUARD
+	        if (!is_array($menu)) {
+    	        continue;
+        	}
+
+            // Filter children first
+            if (!empty($menu['items']) && is_array($menu['items'])) {
+                $menu['items'] = self::filterMenu($menu['items'], $ctx);
+            }
+
+            // Keep if allowed or has visible children
+            if (self::allowed($menu, $ctx) || !empty($menu['items'])) {
+                $filtered[] = $menu;
+            }
+        }
+
+        return array_values($filtered);
+    }
+
     /* ================= SIDEBAR ================= */
+
     public static function sidebar(): array
     {
         $ctx = self::context();
 
-        $cacheKey = "nav_sidebar_{$ctx['tenant_id']}_{$ctx['role_id']}";
+        // Enable caching when stable
+        /*
+        $cacheKey = "nav.sidebar.{$ctx['tenant_id']}.{$ctx['role_id']}";
 
         return Cache::remember($cacheKey, 3600, function () use ($ctx) {
-
-            $menus = [];
-
-            foreach (Module::allEnabled() as $module) {
-
-                $moduleName = strtolower($module->getName());
-
-                if (!in_array($moduleName, $ctx['modules'])) {
-                    continue;
-                }
-
-                $path = $module->getPath() . '/Config/navigation.php';
-                if (!file_exists($path)) continue;
-
-                $config = require $path;
-
-                foreach ($config['sidebar'] ?? [] as $menu) {
-                    if (self::allowed($menu, $ctx)) {
-                        $menus[] = $menu;
-                    }
-                }
-            }
-
-            return $menus;
+            return self::buildSidebar($ctx);
         });
+        */
+
+        return self::buildSidebar($ctx);
+    }
+
+    protected static function buildSidebar(array $ctx): array
+    {
+        $menus = LookupRegistry::get('.ui.sidebar-menu');
+
+        if (!is_array($menus)) {
+	        return [];
+    	}
+
+	    return self::filterMenu(
+    	    collect($menus)
+        	    ->sortBy('order')
+            	->values()
+            	->toArray(),
+	        $ctx
+    	);
     }
 
     /* ================= HEADER ================= */
+
     public static function header(): array
     {
         $ctx = self::context();
-        $menus = [];
 
-        foreach (Module::allEnabled() as $module) {
-
-            $path = $module->getPath() . '/Config/navigation.php';
-            if (!file_exists($path)) continue;
-
-            $config = require $path;
-
-            foreach ($config['header'] ?? [] as $menu) {
-                if (self::allowed($menu, $ctx)) {
-                    $menus[] = $menu;
-                }
-            }
-        }
-
-        return $menus;
+        return self::filterMenu(
+            collect(
+                LookupRegistry::getBySuffix('.ui.header-menu')
+            )
+                ->unique('slug')
+                ->sortBy('order')
+                ->values()
+                ->toArray(),
+            $ctx
+        );
     }
 
     /* ================= MODULE ================= */
-    public static function module(string $moduleName): array
+
+    public static function module(string $module): array
     {
         $ctx = self::context();
+        $key = strtolower($module) . '.ui.sidebar-menu';
 
-        $module = Module::find($moduleName);
-        if (!$module) return [];
-
-        $path = $module->getPath() . '/Config/navigation.php';
-        if (!file_exists($path)) return [];
-
-        $config = require $path;
-
-        return collect($config['module'] ?? [])
-            ->filter(fn($m) => self::allowed($m, $ctx))
-            ->values()
-            ->toArray();
+        return self::filterMenu(
+            LookupRegistry::get($key) ?? [],
+            $ctx
+        );
     }
 
     /* ================= ITEM ================= */
-    public static function item(string $moduleName, int $id): array
-    {
-        $ctx = self::context();
 
-        $module = Module::find($moduleName);
-        if (!$module) return [];
+	public static function item(string $module, string|int|null $id = null): array
+	{
+	    $ctx = self::context();
+    	$key = strtolower($module) . '.ui.single-actions.list';
 
-        $path = $module->getPath() . '/Config/navigation.php';
-        if (!file_exists($path)) return [];
+	    return collect(
+    	    self::filterMenu(LookupRegistry::get($key) ?? [], $ctx)
+    	)->map(function ($menu) use ($id) {
 
-        $config = require $path;
+	        // Replace {id} only when ID is provided
+    	    if ($id !== null && isset($menu['href'])) {
+        	    $menu['href'] = str_replace('{id}', $id, $menu['href']);
+        	}
 
-        $menus = $config['item'][$moduleName] ?? [];
+	        return $menu;
+    	})
+	    ->values()
+    	->toArray();
+	}
 
-        $result = [];
-
-        foreach ($menus as $menu) {
-            if (self::allowed($menu, $ctx)) {
-                $menu['href'] = str_replace('{id}', $id, $menu['href']);
-                $result[] = $menu;
-            }
-        }
-
-        return $result;
-    }
 }

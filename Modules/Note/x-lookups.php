@@ -3,8 +3,7 @@ $pg = 'note';
 $commonSettingsRoute = '/settings';
 
 return [
-    'sidebar-menu' => [
-    [
+    'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -68,8 +67,6 @@ return [
 
         ],
     ],
-],
-
 
 	"note.statuses" => [
 		"1"		=>	"All",

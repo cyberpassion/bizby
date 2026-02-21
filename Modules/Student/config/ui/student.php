@@ -1,25 +1,26 @@
 <?php
 
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Student\Support\Res;
+use Modules\Student\Support\Actions;
+
 $pg = 'student';
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Sidebar Menu
-    |--------------------------------------------------------------------------
-    */
-    'sidebar_menu' => [
+    'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
@@ -27,18 +28,23 @@ return [
                     'items' => [
                         [
                             'title'      => 'Add Student',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.student.create",
+                            'href'       => UrlPath::makeCreate($pg),
+                            'permission' => Permission::create(Res::STUDENTS),
                         ],
                         [
                             'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.student.view",
+                            'href'       => UrlPath::makeList($pg),
+                            'permission' => Permission::list(Res::STUDENTS),
                         ],
                         [
                             'title'      => 'Transfer',
-                            'href'       => "/module/{$pg}/transfer",
-                            'permission' => "{$pg}.student.transfer",
+                            'href'       => UrlPath::make($pg, 'transfer'),
+                            'permission' => Permission::update(Res::STUDENTS),
+                        ],
+                        [
+                            'title'      => 'Bulk Operation',
+                            'href'       => UrlPath::makeBulk($pg),
+                            'permission' => Permission::bulk(Res::STUDENTS),
                         ],
                     ],
                 ],
@@ -48,18 +54,18 @@ return [
                     'items' => [
                         [
                             'title'      => 'Academic Years',
-                            'href'       => "/module/{$pg}/academic-years",
-                            'permission' => "{$pg}.academic_year.manage",
+                            'href'       => UrlPath::make($pg, 'academic-years'),
+                            'permission' => Permission::view(Res::ACADEMIC),
                         ],
                         [
                             'title'      => 'Classes',
-                            'href'       => "/module/shared/terms/student/classes",
-                            'permission' => "{$pg}.class.manage",
+                            'href'       => UrlPath::make('shared', 'terms/student/classes'),
+                            'permission' => Permission::view(Res::ACADEMIC),
                         ],
                         [
                             'title'      => 'Sections',
-                            'href'       => "/module/shared/terms/student/sections",
-                            'permission' => "{$pg}.section.manage",
+                            'href'       => UrlPath::make('shared', 'terms/student/sections'),
+                            'permission' => Permission::view(Res::ACADEMIC),
                         ],
                     ],
                 ],
@@ -69,13 +75,13 @@ return [
                     'items' => [
                         [
                             'title'      => 'Fee Heads',
-                            'href'       => "/module/shared/terms/student/fee-heads",
-                            'permission' => "{$pg}.fee_head.manage",
+                            'href'       => UrlPath::make('shared', 'terms/student/fee-heads'),
+                            'permission' => Permission::view(Res::FEES),
                         ],
                         [
                             'title'      => 'Fee Structure',
-                            'href'       => "/module/{$pg}/fee-structure",
-                            'permission' => "{$pg}.fee_structure.manage",
+                            'href'       => UrlPath::make($pg, 'fee-structure'),
+                            'permission' => Permission::update(Res::FEES),
                         ],
                     ],
                 ],
@@ -85,18 +91,18 @@ return [
                     'items' => [
                         [
                             'title'      => 'Student Report',
-                            'href'       => "/module/{$pg}/report-students",
-                            'permission' => "{$pg}.report.student",
+                            'href'       => UrlPath::make($pg, 'report-students'),
+                            'permission' => Permission::view(Res::REPORTS),
                         ],
                         [
                             'title'      => 'Fee Collection',
-                            'href'       => "/module/{$pg}/report-fees",
-                            'permission' => "{$pg}.report.fee",
+                            'href'       => UrlPath::make($pg, 'report-fees'),
+                            'permission' => Permission::view(Res::REPORTS),
                         ],
                         [
                             'title'      => 'Dues',
-                            'href'       => "/module/{$pg}/report-dues",
-                            'permission' => "{$pg}.report.dues",
+                            'href'       => UrlPath::make($pg, 'report-dues'),
+                            'permission' => Permission::view(Res::REPORTS),
                         ],
                     ],
                 ],
@@ -106,23 +112,23 @@ return [
                     'items' => [
                         [
                             'title'      => 'Basic Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.basic",
+                            'href'       => UrlPath::makeSettings($pg),
+                            'permission' => Permission::update(Res::SETTINGS),
                         ],
                         [
                             'title'      => 'Admission Rules',
-                            'href'       => "/module/{$pg}/admission-rules",
-                            'permission' => "{$pg}.settings.admission",
+                            'href'       => UrlPath::make($pg, 'admission-rules'),
+                            'permission' => Permission::update(Res::SETTINGS),
                         ],
                         [
                             'title'      => 'Fee Rules',
-                            'href'       => "/module/{$pg}/fee-rules",
-                            'permission' => "{$pg}.settings.fee",
+                            'href'       => UrlPath::make($pg, 'fee-rules'),
+                            'permission' => Permission::update(Res::SETTINGS),
                         ],
                         [
                             'title'      => 'Other Settings',
-                            'href'       => "/module/{$pg}/other-section",
-                            'permission' => "{$pg}.settings.other",
+                            'href'       => UrlPath::make($pg, 'other-section'),
+                            'permission' => Permission::update(Res::SETTINGS),
                         ],
                     ],
                 ],
@@ -132,8 +138,8 @@ return [
                     'items' => [
                         [
                             'title'      => 'Integrations',
-                            'href'       => "/module/{$pg}/plugins",
-                            'permission' => "{$pg}.plugin.manage",
+                            'href'       => UrlPath::makePlugins($pg),
+                            'permission' => Permission::view(Res::PLUGINS),
                         ],
                     ],
                 ],
@@ -143,78 +149,89 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Single Row Actions (per student)
+    | Row Actions
     |--------------------------------------------------------------------------
     */
-    'single_actions' => [
-        [
-            'title'      => 'View Slip',
-            'href'       => "/module/{$pg}/students/{id}/document",
-            'permission' => "{$pg}.student.document",
-            'action'     => 'document',
-        ],
-        [
-            'title'      => 'Edit',
-            'href'       => "/module/{$pg}/students/{id}/edit",
-            'permission' => "{$pg}.student.update",
-            'action'     => 'update',
-        ],
-        [
-            'title'      => 'Upload',
-            'href'       => "/module/{$pg}/students/{id}/upload",
-            'permission' => "{$pg}.student.upload",
-            'action'     => 'upload',
-        ],
-        [
-            'title'      => 'View Profile',
-            'href'       => "/module/{$pg}/students/{id}",
-            'permission' => "{$pg}.student.view",
-            'action'     => 'view',
-        ],
-        [
-            'title'      => 'Delete',
-            'href'       => "/module/{$pg}/students/{id}",
-            'permission' => "{$pg}.student.delete",
-            'action'     => 'delete',
-            'method'     => 'DELETE',
-            'variant'    => 'danger',
-        ],
+    'single-actions' => [
+
+        Actions::LIST => [
+            [
+                'title'      => 'View Documents',
+                'href'       => UrlPath::make($pg, 'students/{id}/document'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'document',
+            ],
+
+            [
+                'title'      => 'Edit',
+                'href'       => UrlPath::make($pg, 'students/{id}/edit'),
+                'permission' => Permission::update(Res::STUDENTS),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Upload',
+                'href'       => UrlPath::make($pg, 'students/{id}/upload'),
+                'permission' => Permission::create(Res::UPLOADS),
+                'action'     => 'upload',
+            ],
+
+            [
+                'title'      => 'View Profile',
+                'href'       => UrlPath::make($pg, 'students/{id}'),
+                'permission' => Permission::view(Res::STUDENTS),
+                'action'     => 'view',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::make($pg, 'students/{id}'),
+                'permission' => Permission::delete(Res::STUDENTS),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
+        ]
+
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | List Filters (FULL CONFIG – used by frontend)
+    | List Filters (Frontend)
     |--------------------------------------------------------------------------
     */
-    'list_filters' => [
-        [
-            'type'        => 'select',
-            'name'        => 'current_session',
-            'placeholder' => 'Select Student Session',
-            'col'         => 3,
-            'dataKey'     => 'student.academic-years',
-        ],
-        [
-            'type'        => 'select',
-            'name'        => 'current_class',
-            'placeholder' => 'Select Student Current Class',
-            'col'         => 3,
-            'dataKey'     => 'student.classes',
-        ],
-        [
-            'type'        => 'select',
-            'name'        => 'current_section',
-            'placeholder' => 'Select Student Current Section',
-            'col'         => 3,
-            'dataKey'     => 'student.sections',
-        ],
-        [
-            'type'        => 'select',
-            'name'        => 'status',
-            'placeholder' => 'Select Student Status',
-            'col'         => 3,
-            'dataKey'     => 'student.statuses',
-        ],
-    ],
+    'filters' => [
 
+        Actions::LIST => [
+            [
+                'type'        => 'select',
+                'name'        => 'current_session',
+                'placeholder' => 'Session',
+                'col'         => 3,
+                'dataKey'     => 'student.academic-years',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'current_class',
+                'placeholder' => 'Class',
+                'col'         => 3,
+                'dataKey'     => 'student.classes',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'current_section',
+                'placeholder' => 'Section',
+                'col'         => 3,
+                'dataKey'     => 'student.sections',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'student.statuses',
+            ],
+        ]
+
+    ],
 ];

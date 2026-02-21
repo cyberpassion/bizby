@@ -4,8 +4,7 @@ $commonSettingsRoute = '/settings';
 
 return [
 
-	'sidebar-menu' => [
-    [
+	'sidebar-menu-x' => [
         'title'      => ucfirst($pg),
         'href'       => "/{$pg}",
         'permission' => "{$pg}.access",
@@ -65,8 +64,6 @@ return [
 
         ],
     ],
-],
-
     "registration.crons" => ['registration-notification' => 'Registration Notification'],
     "registration.list-filters" => [
                         "admin"	=>	[

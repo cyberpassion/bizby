@@ -42,7 +42,7 @@ return [
     | Bulk Operations
     |--------------------------------------------------------------------------
     */
-    'bulk_operations' => [
+    'bulk-operations' => [
         'view:detail' => 'View Detail',
         'op:remove'   => 'Delete',
         'op:restore'  => 'Restore',

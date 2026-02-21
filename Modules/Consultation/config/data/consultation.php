@@ -1,88 +1,10 @@
 <?php
-
 $pg = 'consultation';
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | List UI (simple backend keys)
-    |--------------------------------------------------------------------------
-    */
-    'list' => [
-        'columns' => [
-            'id',
-            'consultation_date',
-            'consultation_time',
-            'name',
-            'phone',
-            'consultant_type',
-            'consultant_id',
-            'consultation_type',
-            'status',
-            'consultation_fee',
-            'next_date',
-        ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Statuses / Lookups
-    |--------------------------------------------------------------------------
-    */
-    'statuses' => [
-        '1'  => 'Active',
-        '2'  => 'Deleted',
-        '21' => 'Departed',
-        '22' => 'Cancelled',
-    ],
-
-    'consultation_modes' => [
-        'call'         => 'Call',
-        'direct-visit' => 'Direct Visit',
-    ],
-
-    'plan_tags' => [
-        'regular'   => 'Regular',
-        'urgent'    => 'Urgent',
-        'emergency' => 'Emergency',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Defaults / Options
-    |--------------------------------------------------------------------------
-    */
-    'default_intervals' => [
-        '5'  => '5 Minutes',
-        '10' => '10 Minutes',
-        '15' => '15 Minutes',
-        '20' => '20 Minutes',
-        '30' => '30 Minutes',
-    ],
-
-    'slip_copies' => [
-        '1' => '1 Copy',
-        '2' => '2 Copies',
-        '3' => '3 Copies',
-        '4' => '4 Copies',
-    ],
-
-    'next_days' => [
-        '3 d'  => '3 Days',
-        '5 d'  => '5 Days',
-        '7 d'  => '7 Days',
-        '10 d' => '10 Days',
-        '15 d' => '15 Days',
-        '30 d' => '30 Days',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Bulk Operations
-    |--------------------------------------------------------------------------
-    */
-    'bulk_operations' => [
+	// Bulk Operations
+    'bulk-operations' => [
         'document:consultation-slip' => 'Print Consultation Slip',
         'send:sms'                   => 'Send Consultation SMS',
         'send:email'                 => 'Send Consultation Email',
@@ -90,46 +12,160 @@ return [
         'op:restore'                 => 'Restore Consultation',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Columns
-    |--------------------------------------------------------------------------
-    */
-    'default_columns' => [
-        'list'   => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','status'],
-        'detail' => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','status'],
-        'report' => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','consultation_fee','status'],
-    ],
+	// Default Columns
+    'columns' => [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Reports
-    |--------------------------------------------------------------------------
-    */
-    'report_columns' => [
+    /* =========================================================
+     | LIST VIEW (Fast scanning, operational)
+     ========================================================= */
+
+    'list' => [
         'id',
         'consultation_date',
-        'consultation_time',
-        'consultation_type',
-        'consultant_type',
-        'consultant_id',
         'name',
-        'gender',
-        'age',
         'phone',
-        'consultation_fee',
-        'next_date',
+        'channel',
+        'consultant',
         'status',
-        'created_at',
+        'consultation_fee'
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Documents
-    |--------------------------------------------------------------------------
-    */
+    /* =========================================================
+     | REPORT VIEW (Business intelligence)
+     ========================================================= */
+
+    'report' => [
+        'consultation_date',
+        'name',
+        'phone',
+        'consultation_type',
+        'channel',
+        'consultant',
+        'referred_by',
+        'referred_to',
+        'consultation_fee',
+        'followup_interval_days',
+        'next_date',
+        'status',
+    ],
+
+    /* =========================================================
+     | DETAIL VIEW (Maximum context)
+     ========================================================= */
+
+    'detail' => [
+        'id',
+        'consultation_group_id',
+        'consultation_date',
+        'consultation_time',
+        'day_token_id',
+        'channel',
+        'consultant',
+        'reason',
+
+        // Person fields (useful in detail)
+        'name',
+        'phone',
+        'email',
+        'gender',
+        'dob',
+
+        'consultation_type',
+        'consultation_fee',
+        'referred_by',
+        'referred_to',
+        'followup_interval_days',
+        'next_date',
+        'thread_parent',
+        'status',
+    ],
+
+    /* =========================================================
+     | SAMPLE EXPORT (Excel / CSV safe)
+     ========================================================= */
+
+    'sample_export' => [
+        'consultation_date',
+        'consultation_time',
+        'name',
+        'phone',
+        'consultation_type',
+        'channel',
+        'consultant',
+        'consultation_fee',
+        'referred_by',
+        'referred_to',
+        'next_date',
+        'status',
+    ],
+
+    /* =========================================================
+     | USER SELECTABLE COLUMNS
+     ========================================================= */
+
+    'selectable' => [
+        'consultation_date',
+        'consultation_time',
+        'name',
+        'phone',
+        'consultation_type',
+        'channel',
+        'consultant',
+        'consultation_fee',
+        'referred_by',
+        'referred_to',
+        'next_date',
+        'status',
+    ],
+],
+
+    // Cron Jobs / Documents
+    'crons' => [
+        'consultation-visitreminder' => 'Consultation Visit Reminder',
+    ],
+
+	// Documents
     'documents' => [
-        'consultation-slip' => 'Consultation Slip',
+        'consultation-slip' => 'Consultation Slip'
+    ],
+
+	// Status
+    'statuses' => [
+        '1'  => 'Active',
+        '2'  => 'Deleted',
+        '21' => 'Departed',
+        '22' => 'Cancelled',
+    ],
+
+	// Uploads
+    'uploads' => [
+        'image' => 'Image',
+    ],
+
+	/* =========================
+     | CUSTOM SPECIFIC FOR MODULE
+     ========================= */
+
+	// Default Intervals
+	'default-intervals' => [
+        '5'  => '5 Minutes',
+        '10' => '10 Minutes',
+        '15' => '15 Minutes',
+        '20' => '20 Minutes',
+        '30' => '30 Minutes',
+    ],
+
+	// Next Days
+    'next-days' => [
+        '3 d'  => '3 Days',
+        '4 d'  => '4 Days',
+        '5 d'  => '5 Days',
+        '6 d'  => '6 Days',
+        '7 d'  => '7 Days',
+        '10 d' => '10 Days',
+        '12 d' => '12 Days',
+        '15 d' => '15 Days',
+        '30 d' => '30 Days',
     ],
 
 ];

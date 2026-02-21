@@ -1,109 +1,175 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Examresult\Support\Res;
+use Modules\Examresult\Support\Actions;
+
 $pg = 'examresult';
-$commonSettingsRoute = '/settings';
 
 return [
 
-    /* =========================
-     | Sidebar / UI Menu
-     ========================= */
     'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
+                ],
+
+                /*
+                |--------------------------------------------------------------------------
+                | Evaluations
+                |--------------------------------------------------------------------------
+                */
+                [
+                    'title'      => 'Create Evaluation',
+                    'href'       => UrlPath::makeCreate("{$pg}/evaluations"),
+                    'permission' => Permission::create(Res::EVALUATIONS),
                 ],
 
                 [
-                    'title' => 'Exam Results',
-                    'items' => [
-                        [
-                            'title'      => 'Add Result',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.result.create",
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.result.view",
-                        ],
-                    ],
+                    'title'      => 'View Evaluations',
+                    'href'       => UrlPath::makeList("{$pg}/evaluations"),
+                    'permission' => Permission::list(Res::EVALUATIONS),
+                ],
+
+                /*
+                |--------------------------------------------------------------------------
+                | Components
+                |--------------------------------------------------------------------------
+                */
+                [
+                    'title'      => 'Add Components',
+                    'href'       => UrlPath::makeCreate("{$pg}/components"),
+                    'permission' => Permission::create(Res::COMPONENTS),
                 ],
 
                 [
-                    'title' => 'Reports',
-                    'items' => [
-                        [
-                            'title'      => 'Result Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.result",
-                        ],
-                    ],
+                    'title'      => 'View Components',
+                    'href'       => UrlPath::makeList("{$pg}/components"),
+                    'permission' => Permission::list(Res::COMPONENTS),
+                ],
+
+                /*
+                |--------------------------------------------------------------------------
+                | Results
+                |--------------------------------------------------------------------------
+                */
+                [
+                    'title'      => 'Enter Results',
+                    'href'       => UrlPath::makeCreate("{$pg}/results"),
+                    'permission' => Permission::create(Res::RESULTS),
                 ],
 
                 [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Result Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.manage",
-                        ],
-                    ],
+                    'title'      => 'View Results',
+                    'href'       => UrlPath::makeList("{$pg}/results"),
+                    'permission' => Permission::list(Res::RESULTS),
                 ],
 
                 [
-                    'title' => 'Plugins',
-                    'items' => [
-                        [
-                            'title'      => 'Calendar View',
-                            'href'       => "/module/{$pg}/plugin/calendar",
-                            'permission' => "{$pg}.plugin.calendar",
-                        ],
-                    ],
+                    'title'      => 'Bulk Operation',
+                    'href'       => UrlPath::makeBulk($pg),
+                    'permission' => Permission::bulk(Res::RESULTS),
+                ],
+
+                [
+                    'title'      => 'Report',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
+
+                [
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
                 ],
             ],
         ],
     ],
 
-    /* =========================
-     | UI Tables / Columns
-     ========================= */
-    'examresult.list-columns' => [
-        'id',
-        'exam_session',
-        'exam_name',
-        'exam_class',
-        'exam_type',
-        'announcement_datetime',
+    /*
+    |--------------------------------------------------------------------------
+    | Row Actions
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
+
+        Actions::LIST => [
+
+            [
+                'title'      => 'Manage Components',
+                'href'       => UrlPath::make("{$pg}/evaluations", '{id}/components'),
+                'permission' => Permission::view(Res::COMPONENTS),
+                'action'     => 'redirect',
+            ],
+
+            [
+                'title'      => 'Enter Results',
+                'href'       => UrlPath::make("{$pg}/evaluations", '{id}/results'),
+                'permission' => Permission::create(Res::RESULTS),
+                'action'     => 'redirect',
+            ],
+
+            [
+                'title'      => 'Update',
+                'href'       => UrlPath::makeUpdate("{$pg}/evaluations", '{id}'),
+                'permission' => Permission::update(Res::EVALUATIONS),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete("{$pg}/evaluations", '{id}'),
+                'permission' => Permission::delete(Res::EVALUATIONS),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
+        ]
+
     ],
 
-    'examresult.list-filters-ui' => [
-        'exam_session',
-        'exam_class',
-        'exam_section',
-        'exam_type',
-        'announcement_datetime',
-    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Filters (Example)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
 
-    'examresult.report-columns' => [
-        'id',
-        'exam_session',
-        'exam_name',
-        'exam_class',
-        'exam_section',
-        'exam_type',
-        'examinee_id_type',
-        'announcement_datetime',
-        'exam_options',
-        'remark',
-        'status',
+        Actions::LIST => [
+
+            [
+                'type'        => 'select',
+                'name'        => 'type',
+                'placeholder' => 'Evaluation Type',
+                'col'         => 3,
+                'dataKey'     => 'examresult.types',
+            ],
+
+            [
+                'type'        => 'select',
+                'name'        => 'group_code',
+                'placeholder' => 'Group',
+                'col'         => 3,
+                'dataKey'     => 'examresult.groups',
+            ],
+
+            [
+                'type'        => 'date',
+                'name'        => 'evaluation_date',
+                'placeholder' => 'Date',
+                'col'         => 3,
+            ],
+        ]
+
     ],
 
 ];

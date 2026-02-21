@@ -1,64 +1,56 @@
 <?php
 
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Consultation\Support\Res;
+use Modules\Consultation\Support\Actions;
+
 $pg = 'consultation';
-$commonSettingsRoute = '/settings';
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Sidebar Menu
-    |--------------------------------------------------------------------------
-    */
-    'sidebar_menu' => [
+    'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
-                    'title' => 'Consultations',
-                    'items' => [
-                        [
-                            'title'      => 'Add Consultation',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.consultation.create",
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.consultation.view",
-                        ],
-                    ],
+                    'title'      => 'Add New',
+                    'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::CONSULTATIONS),
                 ],
 
                 [
-                    'title' => 'Reports',
-                    'items' => [
-                        [
-                            'title'      => 'Consultation Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.consultation",
-                        ],
-                    ],
+                    'title'      => 'View List',
+                    'href'       => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::CONSULTATIONS),
                 ],
 
                 [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Basic Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.basic",
-                        ],
-                    ],
+                    'title'      => 'Bulk Operation',
+                    'href'       => UrlPath::makeBulk($pg),
+                    'permission' => Permission::bulk(Res::CONSULTATIONS),
+                ],
+
+                [
+                    'title'      => 'Report',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
+
+                [
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
                 ],
             ],
         ],
@@ -69,27 +61,33 @@ return [
     | Row Actions
     |--------------------------------------------------------------------------
     */
-    'single_actions' => [
-        [
-            'title'      => 'Print Slip',
-            'href'       => "/module/{$pg}/{id}/document",
-            'permission' => "{$pg}.document",
-            'action'     => 'document',
-        ],
-        [
-            'title'      => 'View Detail',
-            'href'       => "/module/{$pg}/{id}/detail",
-            'permission' => "{$pg}.view",
-            'action'     => 'view',
-        ],
-        [
-            'title'      => 'Delete',
-            'href'       => "/module/{$pg}/{id}",
-            'permission' => "{$pg}.delete",
-            'action'     => 'delete',
-            'method'     => 'DELETE',
-            'variant'    => 'danger',
-        ],
+    'single-actions' => [
+
+		Actions::LIST => [
+			[
+                'title'      => 'View Slip',
+                'href'       => UrlPath::make($pg, '{id}/document'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'document',
+            ],
+
+	        [
+    	        'title'      => 'Update',
+        	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	'permission' => Permission::update(Res::CONSULTATIONS),
+            	'action'     => 'update',
+	        ],
+
+	        [
+    	        'title'      => 'Delete',
+        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
+            	'permission' => Permission::delete(Res::CONSULTATIONS),
+	            'action'     => 'delete',
+    	        'method'     => 'DELETE',
+        	    'variant'    => 'danger',
+        	]
+		]
+
     ],
 
     /*
@@ -97,40 +95,26 @@ return [
     | List Filters (Frontend)
     |--------------------------------------------------------------------------
     */
-    'list_filters' => [
-        [
-            'type'        => 'date',
-            'name'        => 'consultation_date',
-            'placeholder' => 'Consultation Date',
-            'col'         => 3,
-        ],
-        [
-            'type'        => 'select',
-            'name'        => 'status',
-            'placeholder' => 'Status',
-            'col'         => 3,
-            'dataKey'     => 'consultation.statuses',
-        ],
-    ],
+    'filters' => [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cron Jobs
-    |--------------------------------------------------------------------------
-    */
-    'crons' => [
-        'consultation-visitreminder' => 'Consultation Visit Reminder',
-    ],
+        Actions::LIST	=>	[
+            [
+                'type'        => 'select',
+                'name'        => 'channel',
+                'placeholder' => 'Modes',
+                'col'         => 3,
+                'dataKey'     => 'shared.communication-modes',
+            ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Permissions (Portal)
-    |--------------------------------------------------------------------------
-    */
-    'permission_portal' => [
-        'list'   => [['phone_number' => '{$phone_number}']],
-        'detail' => [['phone_number' => '{$phone_number}']],
-        'report' => [['phone_number' => '{$phone_number}']],
+            [
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'consultation.statuses',
+            ],
+        ]
+
     ],
 
 ];

@@ -20,9 +20,7 @@ return [
         'low'     => 'Low',
     ],
 
-    /* =========================
-     | Bulk Operations
-     ========================= */
+    // Bulk Operations
     'visitplanner.bulk-operations' => [
         'view:detail' => 'View Visit Planner Details',
         'send:email'  => 'Send Email',
@@ -58,9 +56,7 @@ return [
         ],
     ],
 
-    /* =========================
-     | Default Columns
-     ========================= */
+    // Default Columns
     'visitplanner.default-columns' => [
         'entry'   => ['ID','visitplanner_id','visit_company','visit_by_name','month','week','created_by_name','tags','status'],
         'list'    => ['ID','visitplanner_id','visit_company','visit_by_name','month','week','created_by_name','tags','status'],
