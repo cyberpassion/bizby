@@ -3,42 +3,28 @@
 namespace Modules\Shared\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Mpdf\Mpdf;
+use Modules\Shared\Services\ReportRegistry;
+use Modules\Shared\Services\LookupRegistry;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ExportApiController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | SIMPLE MODULE CONFIG (temporary – clean & clear)
+    | Column Resolver (centralized lookup)
     |--------------------------------------------------------------------------
     */
 
-    protected function moduleMap()
+    protected function resolveColumns(string $module): array
     {
-        return [
-            'employee' => \Modules\Employee\Models\Employee::class,
+        $columns = LookupRegistry::get("{$module}.columns.report");
 
-            // Add more modules later
-            // 'student' => \Modules\Student\Models\Student::class,
-        ];
-    }
+        abort_unless(!empty($columns), 404, "No export columns defined");
 
-    protected function resolveModel($module)
-    {
-        $map = $this->moduleMap();
-
-        if (!isset($map[$module])) {
-            abort(404, "Invalid export module");
-        }
-
-        return $map[$module];
-    }
-
-    protected function resolveColumns($module)
-    {
-        return \Modules\Shared\Services\LookupRegistry::get("{$module}.columns.report");
+        return $columns;
     }
 
     /*
@@ -47,28 +33,27 @@ class ExportApiController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function exportCsv($module)
+    public function exportCsv(string $module)
     {
-        $model   = $this->resolveModel($module);
-        $columns = $this->resolveColumns($module);
+        $modelClass = ReportRegistry::resolveModel($module);
+        $columns    = $this->resolveColumns($module);
 
         return Excel::download(
-            new class($model, $columns) implements
-                \Maatwebsite\Excel\Concerns\FromQuery,
-                \Maatwebsite\Excel\Concerns\WithHeadings
-            {
-                protected $model;
-                protected $columns;
+            new class($modelClass, $columns) implements FromQuery, WithHeadings {
 
-                public function __construct($model, $columns)
+                protected string $modelClass;
+                protected array  $columns;
+
+                public function __construct(string $modelClass, array $columns)
                 {
-                    $this->model   = $model;
-                    $this->columns = $columns;
+                    $this->modelClass = $modelClass;
+                    $this->columns    = $columns;
                 }
 
                 public function query()
                 {
-                    return $this->model::query()->select($this->columns);
+                    return $this->modelClass::query()
+                        ->select($this->columns);
                 }
 
                 public function headings(): array
@@ -76,7 +61,7 @@ class ExportApiController extends Controller
                     return $this->columns;
                 }
             },
-            "export.csv"
+            "{$module}.csv"
         );
     }
 
@@ -86,21 +71,21 @@ class ExportApiController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function exportPdf($module)
+    public function exportPdf(string $module)
     {
-        $model   = $this->resolveModel($module);
-        $columns = $this->resolveColumns($module);
+        $modelClass = ReportRegistry::resolveModel($module);
+        $columns    = $this->resolveColumns($module);
 
-        $reportData = $model::query()
+        $reportData = $modelClass::query()
             ->select($columns)
             ->get();
 
         $html = view('shared::pdf.report', [
-			'reportTitle'	=> ucfirst($module) . ' Report',
-			'tenantName'	=> '',
-			'tenantByline'	=> '',
-            'reportData'	=> $reportData,
-            'columns'		=> $columns
+            'reportTitle'  => ucfirst($module) . ' Report',
+            'tenantName'   => '',
+            'tenantByline' => '',
+            'reportData'   => $reportData,
+            'columns'      => $columns,
         ])->render();
 
         $mpdf = new Mpdf([
@@ -112,6 +97,6 @@ class ExportApiController extends Controller
 
         return response($mpdf->Output('', 'S'))
             ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="export.pdf"');
+            ->header('Content-Disposition', "attachment; filename=\"{$module}.pdf\"");
     }
 }

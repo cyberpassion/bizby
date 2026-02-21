@@ -38,6 +38,9 @@ use Modules\Shared\Http\Controllers\Navigations\NavigationApiController;
 // Exports
 use Modules\Shared\Http\Controllers\ExportApiController;
 
+// Public Reports
+use Modules\Shared\Http\Controllers\ReportPublicApiController;
+
 Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
     // Terms for dynamic values like student classes etc
 	Route::apiResource('terms', TermApiController::class)->names('term');
@@ -303,5 +306,22 @@ Route::prefix('v1')
 
         Route::get('shared/export/pdf/{module}', [ExportApiController::class, 'exportPdf'])
             ->name('shared.export.pdf');
+
+});
+
+// Public Reoutes
+Route::prefix('v1')->group(function () {
+
+    Route::get('/public/reports/{token}', [ReportPublicApiController::class, 'publicPreview'])
+        ->name('reports.public');
+
+});
+
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'identify.tenant'])
+    ->group(function () {
+
+        Route::post('/public/links/{module}', [ReportPublicApiController::class, 'generate'])
+            ->name('reports.public.generate');
 
 });
