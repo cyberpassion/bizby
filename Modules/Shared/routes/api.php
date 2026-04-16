@@ -41,9 +41,16 @@ use Modules\Shared\Http\Controllers\ExportApiController;
 // Public Reports
 use Modules\Shared\Http\Controllers\ReportPublicApiController;
 
+// Terms for dynamic values like student classes etc
+Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
+	Route::apiResource('terms', TermApiController::class)->names('term');
+});
+
+// Options
 Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
     // Terms for dynamic values like student classes etc
-	Route::apiResource('terms', TermApiController::class)->names('term');
+	Route::apiResource('options', OptionApiController::class)->names('option');
+	Route::get('/options/group/{key}', [OptionApiController::class, 'group']);
 });
 
 // Temporarily disable auth middleware
@@ -58,10 +65,6 @@ Route::prefix('v1')->group(function () {
 	Route::apiResource('uploads', UploadApiController::class)->names('upload');
 	Route::post('uploads/bulk-data', [UploadApiController::class, 'bulkData'])->name('uploads.bulkData');
 	Route::post('uploads/bulk-documents', [UploadApiController::class, 'bulkDocuments'])->name('uploads.bulkDocuments');
-
-	// Options
-	Route::apiResource('options', OptionApiController::class)->names('option');
-	Route::get('/options/group/{key}', [OptionApiController::class, 'group']);
 
 	// Activity Logs
 	Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
@@ -289,7 +292,7 @@ Route::prefix('v1')
         Route::get('/navigation/sidebar', [NavigationApiController::class, 'sidebar']);
         Route::get('/navigation/header',  [NavigationApiController::class, 'header']);
         Route::get('/navigation/module/{module}', [NavigationApiController::class, 'module']);
-		Route::get('/navigation/single-actions/{module}/{id?}', [NavigationApiController::class, 'item']);
+		Route::get('/navigation/single-actions/{module}/{action}/{id?}', [NavigationApiController::class, 'item']);
 
 		// Permissions
 		Route::get('/get-permissions/{id}', [PermissionApiController::class, 'get']);

@@ -24,7 +24,7 @@ class CustomerApiController extends SharedApiController
             'gender',               // Male / Female / Other
             'category',             // General / OBC / SC / ST
             'marital_status',       // Single / Married / Widowed / Divorced
-            'age_group',            // Age buckets (derived)
+            //'age_group',            // Age buckets (derived)
             'state',                // State-wise customers
             'district',             // District-wise distribution
             'entry_source',         // Web / Mobile / Employee / API

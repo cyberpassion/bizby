@@ -226,6 +226,12 @@ return [
 			base_path('Modules/Vendor/database/migrations/tenant'),
 			base_path('Modules/Visitactivity/database/migrations/tenant'),
 			base_path('Modules/Visitplanner/database/migrations/tenant'),
+			base_path('Modules/Incident/database/migrations/tenant'),
+			base_path('Modules/Maintenance/database/migrations/tenant'),
+			base_path('Modules/Center/database/migrations/tenant'),
+			base_path('Modules/ConsumptionManagement/database/migrations/tenant'),
+			base_path('Modules/Inventory/database/migrations/tenant'),
+			base_path('Modules/Asset/database/migrations/tenant'),
 			base_path('Modules/Shared/database/migrations'), // CORE MIGRATION ONLY
 		],
         '--realpath' => true,

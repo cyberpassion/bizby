@@ -9,6 +9,8 @@ class Res
     public const HOLIDAYS		= 'attendance.holidays';
     public const WEEKLY_OFFS	= 'attendance.weekly-offs';
     public const CALENDAR_DAYS	= 'attendance.calendar-days';
+	public const BATCHES		= 'attendance.batches';
+	public const BATCH_PARTICIPANTS	= 'attendance.batch-participants';
     public const SCHEDULES		= 'attendance.schedules';
     public const ATTENDANCES	= 'attendance.attendances';
     public const REPORTS		= 'attendance.reports';

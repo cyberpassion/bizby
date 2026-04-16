@@ -36,7 +36,7 @@ return [
                 ],
 
                 [
-                    'title'      => 'Bulk Operation',
+                    'title'      => 'Bulk-Ops',
                     'href'       => UrlPath::makeBulk($pg),
                     'permission' => Permission::bulk(Res::CONSULTATIONS),
                 ],
@@ -66,7 +66,7 @@ return [
 		Actions::LIST => [
 			[
                 'title'      => 'View Slip',
-                'href'       => UrlPath::make($pg, '{id}/document'),
+                'href'       => UrlPath::makeDocuments($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'document',
             ],

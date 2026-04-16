@@ -18,4 +18,5 @@ class Actions extends BaseActions
     public const MANAGE		= 'manage';
     public const BASIC		= 'basic';
     public const PERMISSIONS = 'permissions';
+	public const GENERATE	= 'generate';
 }

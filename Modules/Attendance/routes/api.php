@@ -9,6 +9,9 @@ use \Modules\Attendance\Http\Controllers\AttendanceHolidayApiController;
 use \Modules\Attendance\Http\Controllers\AttendanceCalendarDayApiController;
 use \Modules\Attendance\Http\Controllers\AttendanceScheduleApiController;
 
+use Modules\Attendance\Http\Controllers\AttendanceBatchApiController;
+use Modules\Attendance\Http\Controllers\AttendanceBatchParticipantApiController;
+
 /*
 |--------------------------------------------------------------------------
 | Attendance Module API Routes (SaaS / Multi-tenant)
@@ -24,29 +27,55 @@ Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
+		// Weekly offs
 		Route::get('attendance/weekly-offs', [AttendanceWeeklyOffApiController::class, 'index']);
     	Route::post('attendance/weekly-offs', [AttendanceWeeklyOffApiController::class, 'store']);
     	Route::delete('attendance/weekly-offs/{id}', [AttendanceWeeklyOffApiController::class, 'destroy']);
 
+		// Holidays
 		Route::get('attendance/holidays', [AttendanceHolidayApiController::class, 'index']);
 	    Route::post('attendance/holidays', [AttendanceHolidayApiController::class, 'store']);
     	Route::delete('attendance/holidays/{id}', [AttendanceHolidayApiController::class, 'destroy']);
 
+		// Calendar days (for exceptions, special days)
 		Route::get('attendance/calendar-days', [AttendanceCalendarDayApiController::class, 'index']);
 	    Route::post('attendance/calendar-days', [AttendanceCalendarDayApiController::class, 'store']);
     	Route::put('attendance/calendar-days/{id}', [AttendanceCalendarDayApiController::class, 'update']);
     	Route::delete('attendance/calendar-days/{id}', [AttendanceCalendarDayApiController::class, 'destroy']);
 
+		// Attendance schedules (shift patterns, class schedules)
 		Route::get('attendance/schedules', [AttendanceScheduleApiController::class, 'index']);
 	    Route::post('attendance/schedules', [AttendanceScheduleApiController::class, 'store']);
     	Route::put('attendance/schedules/{id}', [AttendanceScheduleApiController::class, 'update']);
     	Route::delete('attendance/schedules/{id}', [AttendanceScheduleApiController::class, 'destroy']);
+		Route::get(
+		    'attendance/schedules/{id}/batches',
+    		[AttendanceScheduleApiController::class, 'batches']
+		);
+		Route::get(
+		    'attendance/schedules/{id}/participants',
+			[AttendanceScheduleApiController::class, 'participants']
+		);
+
+		// Attendance batches (for grouping sessions, classes, events)
+	    Route::get('attendance/batches', [AttendanceBatchApiController::class,'index']);
+    	Route::post('attendance/batches', [AttendanceBatchApiController::class,'store']);
+	    Route::get('attendance/batches/{id}', [AttendanceBatchApiController::class,'show']);
+    	Route::put('attendance/batches/{id}', [AttendanceBatchApiController::class,'update']);
+    	Route::delete('attendance/batches/{id}', [AttendanceBatchApiController::class,'destroy']);
+
+		// Get participants of a batch
+		Route::get('attendance/batches/{batchId}/participants',[AttendanceBatchParticipantApiController::class, 'index']);
+		// Sync participants of a batch (add/update/remove)
+		Route::put('attendance/batches/{batchId}/participants',[AttendanceBatchParticipantApiController::class, 'sync']);
+		// Remove one participant
+		Route::delete('attendance/batches/{batchId}/participants/{participantId}',[AttendanceBatchParticipantApiController::class, 'destroy']);
 
 	    // One-click generation
-    	Route::post('attendance/schedules/{id}/generate', [AttendanceScheduleApiController::class, 'generate']);
+    	Route::post('attendance/schedules/{id}/generate-sessions', [AttendanceScheduleApiController::class, 'generate']);
 
 	    // Safe rebuild
-    	Route::post('attendance/schedules/{id}/rebuild', [AttendanceScheduleApiController::class, 'rebuild']);
+    	Route::post('attendance/schedules/{id}/rebuild-sessions', [AttendanceScheduleApiController::class, 'rebuild']);
 
         /*
         |--------------------------------------------------------------------------
@@ -77,6 +106,16 @@ Route::prefix('v1')
             'attendance/sessions/{sessionId}',
             [AttendanceSessionApiController::class, 'show']
         );
+
+		Route::get(
+		    'attendance/sessions/{sessionId}/batches',
+		    [AttendanceSessionApiController::class, 'batches']
+		);
+
+		Route::get(
+		    'attendance/sessions/{sessionId}/participants',
+		    [AttendanceSessionApiController::class, 'participants']
+		);
 
         /*
         |--------------------------------------------------------------------------

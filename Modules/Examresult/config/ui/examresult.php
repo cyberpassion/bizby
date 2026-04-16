@@ -75,7 +75,7 @@ return [
                 ],
 
                 [
-                    'title'      => 'Bulk Operation',
+                    'title'      => 'Bulk-Ops',
                     'href'       => UrlPath::makeBulk($pg),
                     'permission' => Permission::bulk(Res::RESULTS),
                 ],

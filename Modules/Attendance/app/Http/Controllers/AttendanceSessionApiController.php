@@ -36,6 +36,8 @@ class AttendanceSessionApiController extends Controller
             'end_time' => 'nullable',
             'context' => 'nullable|string',
             'reference' => 'nullable|string',
+			'batch_ids' => 'nullable|array',
+		    'batch_ids.*' => 'exists:attendance_batches,id'
         ]);
 
         $session = $this->service->createSession($data, $request->user());
@@ -60,6 +62,43 @@ class AttendanceSessionApiController extends Controller
 	        'data'    => $response
     	], Response::HTTP_OK);
 
+	}
+
+	public function batches($sessionId)
+	{
+    	$session = AttendanceSession::where('tenant_id', tenant()->id)
+	        ->with([
+    	        'batches' => function ($q) {
+        	        $q->select('attendance_batches.id', 'name', 'code');
+            	}
+	        ])
+    	    ->findOrFail($sessionId);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Batches fetched successfully.',
+	        'data'    => $session->batches
+    	], Response::HTTP_OK);
+	}
+
+	public function participants($sessionId)
+	{
+    	$session = AttendanceSession::where('tenant_id', tenant()->id)
+	        ->with([
+    	        'batches.participants'
+        	])
+	        ->findOrFail($sessionId);
+
+	    $participants = $session->batches
+    	    ->flatMap(fn ($batch) => $batch->participants)
+        	->unique('id') // important if same user in multiple batches
+        	->values();
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Participants fetched successfully.',
+        	'data'    => $participants
+    	]);
 	}
 
 }

@@ -1,5 +1,11 @@
 <?php
 
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Attendance\Support\Res;
+use Modules\Attendance\Support\Actions;
+
 $pg = 'attendance';
 
 return [
@@ -48,10 +54,35 @@ return [
 
     // Default Columns
     'columns' => [
-		'weekly-off' => [
+		KeyName::make(Res::WEEKLY_OFFS) => [
 			'list'	=>	['id','weekday','context']
 		],
-		'holiday.list'    => ['id','date','name','context'],
+		KeyName::make(Res::HOLIDAYS)    => [
+			'list'	=>	['id','date','name','context']
+		],
+		KeyName::make(Res::CALENDAR_DAYS)    => [
+			'list'	=>	['id','date','day_type','name']
+		],
+		KeyName::make(Res::SCHEDULES)    => [
+			'list'	=>	['id','name','session','start_time','end_time','context','attendance_mode']
+		],
+		KeyName::make(Res::BATCHES)    => [
+			'list'	=>	['id','name','start_date','end_date','participant_count']
+		],
+		KeyName::make(Res::SESSIONS)    => [
+			'list'	=> [
+			    'id',
+			    'session_date',
+    			'type',
+	    		'context',
+    			'reference',
+			    'start_time',
+			    'end_time',
+			    'mode',
+			    'taken_by'
+			]
+		],
+		KeyName::make(Res::ATTENDANCES)    => [],
         'entry'  => ['attendance_id','date','absentee_name','absent_date','absent_type','tags','status'],
         'list'   => ['attendance_id','date','absentee_name','absent_date','absent_type','tags','status'],
         'detail' => ['attendance_id','date','absentee_name','absent_date','absent_type','tags','status'],

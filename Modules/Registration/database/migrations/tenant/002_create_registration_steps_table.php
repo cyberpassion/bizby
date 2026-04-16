@@ -9,15 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('registration_steps', function (Blueprint $table) {
-		    $table->id();
+		    $table->commonSaasFields(); // includes id, tenant_id, timestamps, softDeletes
 		    $table->foreignId('registration_id')->constrained()->cascadeOnDelete();
 
-		    $table->string('step'); // profile, documents, payment
+		    $table->string('step'); // basic, academic, documents, review, payment
+			$table->integer('step_order')->nullable();
 		    $table->boolean('is_completed')->default(false);
 
 		    $table->json('data')->nullable(); // step form data
-
-		    $table->timestamps();
 		});
     }
 

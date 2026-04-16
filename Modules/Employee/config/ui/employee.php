@@ -37,7 +37,7 @@ return [
                             'permission' => Permission::list(Res::EMPLOYEES),
                         ],
                         [
-                            'title'      => 'Bulk Operation',
+                            'title'      => 'Bulk-Ops',
                             'href'       => UrlPath::makeBulk($pg),
                             'permission' => Permission::bulk(Res::EMPLOYEES),
                         ],
@@ -95,7 +95,7 @@ return [
 
             [
                 'title'      => 'View Slip',
-                'href'       => UrlPath::make($pg, '{id}/document'),
+                'href'       => UrlPath::makeDocuments($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'document',
             ],
@@ -109,7 +109,7 @@ return [
 
             [
                 'title'      => 'Upload',
-                'href'       => UrlPath::makeUpload($pg, '{id}'),
+                'href'       => UrlPath::makeUploads($pg, '{id}'),
                 'permission' => Permission::create(Res::UPLOADS),
                 'action'     => 'upload',
             ],

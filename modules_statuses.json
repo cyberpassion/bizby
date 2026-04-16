@@ -36,5 +36,11 @@
     "Vendor": true,
     "Visitactivity": true,
     "Visitplanner": true,
-    "Migration": true
+    "Migration": true,
+    "ConsumptionManagement": true,
+    "Incident": true,
+    "Center": true,
+    "Maintenance": true,
+    "Asset": true,
+    "Inventory": true
 }

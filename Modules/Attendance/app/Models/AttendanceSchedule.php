@@ -30,4 +30,15 @@ class AttendanceSchedule extends TenantModel
         'ends_on'     => 'date',
         'is_active'   => 'boolean',
     ];
+
+	public function batches()
+	{
+    	return $this->belongsToMany(
+	        AttendanceBatch::class,
+    	    'attendance_schedule_batches',
+        	'attendance_schedule_id',
+        	'batch_id'
+    	);
+	}
+
 }

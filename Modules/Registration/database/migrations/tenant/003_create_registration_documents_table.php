@@ -9,14 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('registration_documents', function (Blueprint $table) {
-		    $table->id();
+		    $table->commonSaasFields(); // includes id, tenant_id, timestamps, softDeletes
 		    $table->foreignId('registration_id')->constrained()->cascadeOnDelete();
 
 		    $table->string('name');
 		    $table->string('path');
+			$table->string('type'); // aadhaar, marksheet, photo
 
 		    $table->timestamp('verified_at')->nullable();
-		    $table->timestamps();
 		});
     }
 

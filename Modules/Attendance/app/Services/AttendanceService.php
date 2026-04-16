@@ -22,12 +22,21 @@ class AttendanceService
 
     public function createSession(array $data, $takenBy)
 	{
-    	return AttendanceSession::create([
+    	$batchIds = $data['batch_ids'] ?? [];
+	    unset($data['batch_ids']);
+
+	    $session = AttendanceSession::create([
     	    ...$data,
 	        'tenant_id' => tenant()->id,
-        	'taken_by_id' => $takenBy->id,
+    	    'taken_by_id' => $takenBy->id,
         	'taken_by_type' => get_class($takenBy),
 	    ]);
+
+	    if (!empty($batchIds)) {
+    	    $session->batches()->sync($batchIds);
+    	}
+
+	    return $session->load('batches');
 	}
 
     public function markAttendance(AttendanceSession $session, array $data)
@@ -169,7 +178,7 @@ class AttendanceService
 	    return $override->fresh();
 	}
 
-	public function generateSessions(AttendanceSchedule $schedule,$start = null,$end = null)
+	public function generateSessions(AttendanceSchedule $schedule, $start = null, $end = null)
 	{
     	$created = [];
 
@@ -177,41 +186,78 @@ class AttendanceService
 
 	    $endDate = $end ? Carbon::parse($end) : ($schedule->ends_on ?? today()->addMonths(6));
 
-	    // Clamp to schedule boundaries
-    	$startDate = $startDate->max($schedule->starts_from);
+	    /*
+    	|--------------------------------------------------------------------------
+	    | Clamp to schedule boundaries
+    	|--------------------------------------------------------------------------
+    	*/
+
+	    $startDate = $startDate->max($schedule->starts_from);
+
     	if ($schedule->ends_on) {
         	$endDate = $endDate->min($schedule->ends_on);
     	}
 
-	    for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+	    /*
+    	|--------------------------------------------------------------------------
+	    | Load schedule batches once (avoid N+1 queries)
+    	|--------------------------------------------------------------------------
+	    */
+
+	    $schedule->loadMissing('batches');
+    	$batchIds = $schedule->batches->pluck('id')->toArray();
+
+	    /*
+    	|--------------------------------------------------------------------------
+	    | Generate sessions
+    	|--------------------------------------------------------------------------
+    	*/
+
+	    for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
 
     	    if (!in_array($date->dayOfWeekIso, $schedule->weekdays)) {
         	    continue;
         	}
 
-	        if (!$this->workingDayService->isWorkingDay($schedule->tenant_id, $date, $schedule->context)) {
+	        if (!$this->workingDayService->isWorkingDay(
+    	        $schedule->tenant_id,
+        	    $date,
+            	$schedule->context
+	        )) {
     	        continue;
         	}
 
-	        $session = AttendanceSession::firstOrCreate([
-    	        'tenant_id'    => $schedule->tenant_id,
-        	    'attendance_schedule_id' => $schedule->id,
-            	'type'         => $schedule->type,
-	            'session_date' => $date->toDateString(),
-    	        'start_time'   => $schedule->start_time,
-        	    'end_time'     => $schedule->end_time,
-            	'context'      => $schedule->context,
-	        ], [
-    	        'mode'      => $schedule->mode ?? 'system',
-        	    'reference' => $schedule->reference,
-        	]);
+	        $session = AttendanceSession::firstOrCreate(
+    	        [
+        	        'tenant_id' => $schedule->tenant_id,
+            	    'attendance_schedule_id' => $schedule->id,
+                	'type' => $schedule->type,
+	                'session_date' => $date->toDateString(),
+    	            'start_time' => $schedule->start_time,
+        	        'end_time' => $schedule->end_time,
+            	    'context' => $schedule->context,
+            	],
+            	[
+                	'mode' => $schedule->mode ?? 'system',
+	                'reference' => $schedule->reference,
+    	        ]
+        	);
+
+	        /*
+    	    |--------------------------------------------------------------------------
+        	| Copy schedule batches → session batches
+        	|--------------------------------------------------------------------------
+        	*/
+
+	        if (!empty($batchIds)) {
+    	        $session->batches()->syncWithoutDetaching($batchIds);
+        	}
 
 	        $created[] = $session;
     	}
 
 	    return $created;
 	}
-
 
 	public function rebuildFutureSessions( AttendanceSchedule $schedule, $start = null, $end = null )
 	{
@@ -240,9 +286,13 @@ class AttendanceService
 
 	public function createSchedule(array $data)
 	{
+
+	    $batchIds = $data['batch_ids'] ?? [];
+    	unset($data['batch_ids']);
+
 	    /*
-    	|--------------------------------------------------------------------------
-	    | Validate Business Rules
+	    |--------------------------------------------------------------------------
+    	| Validate Business Rules
     	|--------------------------------------------------------------------------
 	    */
 
@@ -252,30 +302,18 @@ class AttendanceService
 	        'weekdays.*'  => 'integer|min:1|max:7',
     	    'start_time'  => 'required',
         	'end_time'    => 'required',
-        	'starts_from' => 'required|date',
-	        'ends_on'     => 'nullable|date|after_or_equal:starts_from',
-    	    'context'     => 'nullable|string',
+	        'starts_from' => 'required|date',
+    	    'ends_on'     => 'nullable|date|after_or_equal:starts_from',
+        	'context'     => 'nullable|string',
         	'reference'   => 'nullable|string',
         	'mode'        => 'nullable|string',
 	    ])->validate();
-
-	    /*
-    	|--------------------------------------------------------------------------
-	    | Prevent Time Logic Errors
-    	|--------------------------------------------------------------------------
-	    */
 
 	    if ($payload['start_time'] >= $payload['end_time']) {
     	    throw ValidationException::withMessages([
         	    'end_time' => 'End time must be after start time.'
 	        ]);
     	}
-
-	    /*
-	    |--------------------------------------------------------------------------
-    	| Prevent Duplicate Schedule Collisions
-    	|--------------------------------------------------------------------------
-    	*/
 
 	    $exists = AttendanceSchedule::where('tenant_id', tenant()->id)
     	    ->where('type', $payload['type'])
@@ -298,11 +336,24 @@ class AttendanceService
     	|--------------------------------------------------------------------------
     	*/
 
-	    return AttendanceSchedule::create([
+	    $schedule = AttendanceSchedule::create([
     	    ...$payload,
         	'tenant_id' => tenant()->id,
         	'is_active' => true,
-    	]);
+	    ]);
+
+	    /*
+    	|--------------------------------------------------------------------------
+	    | Attach Batches
+    	|--------------------------------------------------------------------------
+    	*/
+
+	    if (!empty($batchIds)) {
+    	    $schedule->batches()->sync($batchIds);
+    	}
+
+	    return $schedule->load('batches');
+
 	}
 
 }

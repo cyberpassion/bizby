@@ -4,9 +4,18 @@ namespace Modules\Shared\Providers;
 
 use Modules\Shared\Services\LookupRegistry;
 use Modules\Shared\Models\Term;
+use Illuminate\Support\Str;
+
+use Modules\Asset\Models\Asset;
+
+use Modules\Attendance\Models\AttendanceBatch;
 use Modules\Employee\Models\Employee;
 use Modules\Student\Models\Student;
-use Illuminate\Support\Str;
+
+use Modules\Center\Models\Center;
+use Modules\Consultation\Models\Consultation;
+
+use Modules\Lead\Models\Lead;
 use Modules\Booking\Models\BookableUnit;
 use Modules\Booking\Models\BookingVenue;
 
@@ -51,16 +60,35 @@ class SharedLookupProvider
      * Existing TERMS logic (UNCHANGED)
      */
     protected function resolveFromTerms(string $module, string $group): array
-    {
-        return Term::where('module', $module)
-            ->where('group', $group)
-            ->orderBy('sort_order')
-            ->get()
-            ->mapWithKeys(fn ($term) => [
-                $term->id => $term->name
-            ])
-            ->toArray();
-    }
+	{
+	    // Tenant terms (already scoped via TenantModel)
+    	$tenantTerms = Term::query()
+	        ->where('module', $module)
+    	    ->where('group', $group)
+        	->orderBy('sort_order')
+        	->get();
+
+	    // Core terms (force connection)
+    	$coreTerms = Term::on('central')
+    	    ->where('module', $module)
+	        ->where('group', $group)
+        	->orderBy('sort_order')
+        	->get();
+
+	    // Merge (tenant overrides core if same name)
+    	$merged = $tenantTerms
+        	->keyBy('name')
+        	->merge($coreTerms->keyBy('name'));
+
+	    // Return safe IDs (NO clash)
+    	return $merged->mapWithKeys(function ($term) {
+        	$prefix = $term->getConnectionName() === 'central' ? 'core_' : 'tenant_';
+
+	        return [
+    	        $prefix . $term->id => $term->name
+        	];
+	    })->toArray();
+	}
 
     /**
      * NEW: Table-backed lookups (plural only)
@@ -69,13 +97,44 @@ class SharedLookupProvider
     {
         return match ($namespace) {
 
-            'employees' => $this->employees($group),
-            'students'  => $this->students($group),
-			'bookings'  => $this->bookings($group),
+			'assets'		=> $this->assets($group),
+			'attendances'	=> $this->attendances($group),
+            'employees'		=> $this->employees($group),
+            'students'		=> $this->students($group),
+			'centers'		=> $this->centers($group),
+			'consultations' => $this->consultations($group),
+			'leads'			=> $this->leads($group),
+			'bookings'		=> $this->bookings($group),
 
             default => [],
         };
     }
+
+	protected function assets(string $group): array
+    {
+        return match ($group) {
+
+            'list' => Asset::where('status', true)
+                ->orderBy('name')
+                ->pluck('name', 'id')
+                ->toArray(),
+
+            default => [],
+        };
+    }
+
+	protected function attendances(string $group): array
+	{
+		return match ($group) {
+
+			'batches' => AttendanceBatch::where('status', true)
+				->orderBy('name')
+				->pluck('name', 'id')
+				->toArray(),
+
+			default => [],
+		};
+	}
 
     protected function employees(string $group): array
     {
@@ -126,6 +185,45 @@ class SharedLookupProvider
             default => [],
         };
     }
+
+	function consultations(string $group): array
+	{
+		return match ($group) {
+
+			'list' => Consultation::where('status', true)
+				->orderBy('name')
+				->pluck('name', 'id')
+				->toArray(),
+
+			default => [],
+		};
+	}
+
+	function centers(string $group): array
+	{
+		return match ($group) {
+
+			'list' => Center::where('status', true)
+				->orderBy('name')
+				->pluck('name', 'id')
+				->toArray(),
+
+			default => [],
+		};
+	}
+
+	function leads(string $group): array
+	{
+		return match ($group) {
+
+			'list' => Lead::where('status', true)
+				->orderBy('name')
+				->pluck('name', 'id')
+				->toArray(),
+
+			default => [],
+		};
+	}
 
 	public function getLookups()
     {

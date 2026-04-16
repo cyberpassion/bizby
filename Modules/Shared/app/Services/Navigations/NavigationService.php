@@ -140,10 +140,10 @@ class NavigationService
 
     /* ================= ITEM ================= */
 
-	public static function item(string $module, string|int|null $id = null): array
+	public static function item(string $module, string $action, string|int|null $id = null): array
 	{
 	    $ctx = self::context();
-    	$key = strtolower($module) . '.ui.single-actions.list';
+    	$key = strtolower($module) . ".ui.single-actions.{$action}";
 
 	    return collect(
     	    self::filterMenu(LookupRegistry::get($key) ?? [], $ctx)

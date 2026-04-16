@@ -11,7 +11,9 @@ return new class extends Migration
         Schema::create('registrations', function (Blueprint $table) {
 		    $table->commonSaasFields(); // includes id, tenant_id, timestamps, softDeletes
 
-		    //$table->foreignId('user_id')->constrained()->cascadeOnDelete();
+		    $table->foreignId('user_id');//->constrained()->cascadeOnDelete();
+
+			$table->string('current_step')->nullable();
 
 		    $table->string('type'); // admission, affiliation, exam, scholarship
 		    $table->string('registration_status')->default('draft');

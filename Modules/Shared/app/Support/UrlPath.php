@@ -9,7 +9,7 @@ class UrlPath
 
     public static function make(string $module, ?string $resource = null): string
     {
-        $path = '/' . self::$prefix . '/' . $module;
+        $path = '/' . self::$prefix . '/' . str_replace('.', '/', $module);
         if ($resource) {
             $path .= '/' . str_replace('.', '/', $resource);
         }
@@ -61,22 +61,27 @@ class UrlPath
 	// Singular Paths
 	public static function makeUpdate(string $module, $id): string
 	{
-		return self::make($module, $id . '/' . BaseActions::UPDATE);
+		return self::make($module, BaseActions::UPDATE . '/' . $id);
+	}
+
+	public static function makeProfile(string $module, $id): string
+	{
+		return self::make($module, BaseActions::PROFILE . '/' . $id);
 	}
 
 	public static function makeDelete(string $module, $id): string
 	{
-		return self::make($module, $id . '/' . BaseActions::DELETE);
+		return self::make($module, BaseActions::DELETE . '/' . $id);
 	}
 
 	public static function makeDocuments(string $module, $id): string
 	{
-		return self::make($module, $id . '/' . BaseActions::DOCUMENTS);
+		return self::make($module, BaseActions::DOCUMENTS . '/' . $id);
 	}
 
-	public static function makeUpload(string $module, $id): string
+	public static function makeUploads(string $module, $id): string
 	{
-		return self::make($module, $id . '/' . BaseActions::UPLOAD);
+		return self::make($module, BaseActions::UPLOAD . '/' . $id);
 	}
 
 }

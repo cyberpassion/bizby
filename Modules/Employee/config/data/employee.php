@@ -50,7 +50,18 @@ return [
 
 	// Uploads
 	'uploads' => [
-	    'image'              => 'Image',
+		'image' => 'Employee Image',
+		'resume' => 'Resume / CV',
+	    'aadhaar_card' => 'Aadhaar Card / ID Proof',
+    	'pan_card' => 'PAN Card',
+    	'address_proof' => 'Address Proof',
+	    'educational_certificates' => 'Educational Certificates',
+    	'experience_certificates' => 'Experience Certificates',
+    	'appointment_letter' => 'Appointment Letter',
+	    'salary_structure' => 'Salary Structure Document',
+    	'medical_fitness_certificate' => 'Medical Fitness Certificate',
+    	'police_verification' => 'Police Verification Document',
+    	'bank_details' => 'Bank Details (Cancelled Cheque)',
 	],
 
 	// Statuses

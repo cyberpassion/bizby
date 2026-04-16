@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
 
-            // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
+            // Common SaaS fields (id, tenant_id, status, timestamps, soft deletes, audit)
             $table->commonSaasFields();
 
             // Consultation-specific fields

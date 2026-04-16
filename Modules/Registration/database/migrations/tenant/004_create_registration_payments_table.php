@@ -9,14 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('registration_payments', function (Blueprint $table) {
-		    $table->id();
+		    $table->commonSaasFields(); // includes id, tenant_id, timestamps, softDeletes
 		    $table->foreignId('registration_id')->constrained()->cascadeOnDelete();
 
 		    $table->decimal('amount', 10, 2);
-		    $table->string('status')->default('pending'); // pending, paid, failed
 		    $table->string('gateway_ref')->nullable();
-
-		    $table->timestamps();
+			$table->string('method')->nullable(); // razorpay, stripe
+			$table->timestamp('paid_at')->nullable();
 		});
     }
 

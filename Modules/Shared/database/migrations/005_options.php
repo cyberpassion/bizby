@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('options', function (Blueprint $table) {
-            // Common SaaS fields (id, client_id, status, timestamps, soft deletes, audit)
+            // Common SaaS fields (id, tenant_id, status, timestamps, soft deletes, audit)
             $table->commonSaasFields();
 
             $table->longText('name');

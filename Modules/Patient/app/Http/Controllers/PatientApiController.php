@@ -23,7 +23,7 @@ class PatientApiController extends SharedApiController
             'patient_type',           // OPD / IPD / Emergency
             'category',               // General / OBC / SC / ST
             'marital_status',         // Single / Married etc.
-            'age_group',              // Age buckets (derived from age)
+            //'age_group',              // Age buckets (derived from age)
             'is_emergency_case',      // Emergency vs Normal
             'admitted_by_type',       // Doctor / Staff / Police etc.
             'treatment_under',        // Department / Unit wise

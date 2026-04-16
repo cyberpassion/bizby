@@ -65,13 +65,21 @@ return [
 
 	// Uploads
 	'uploads' => [
-	    'image'              => 'Image',
-    	'father'             => 'Father',
-	    'mother'             => 'Mother',
-    	'tc'                 => 'Transfer Certificate (T/C)',
-	    'birth_certificate'  => 'Birth Certificate',
-    	'aadhar'             => 'Aadhar',
-    	'header'             => 'Header',
+		'image' => 'Student Photograph',
+		'father_image' => 'Father Photograph',
+		'mother_image' => 'Mother Photograph',
+	    'aadhaar_card' => 'Aadhaar Card / ID Proof',
+    	'birth_certificate' => 'Birth Certificate',
+    	'address_proof' => 'Address Proof',
+	    'previous_marksheets' => 'Previous Class Mark Sheets',
+    	'transfer_certificate' => 'Transfer Certificate (TC)',
+    	'migration_certificate' => 'Migration Certificate',
+    	'character_certificate' => 'Character Certificate',
+    	'medical_certificate' => 'Medical Certificate',
+    	'caste_certificate' => 'Caste Certificate (if applicable)',
+    	'income_certificate' => 'Income Certificate (if applicable)',
+    	'passport_photo_parent' => 'Parent/Guardian Photograph',
+    	'parent_id_proof' => 'Parent/Guardian ID Proof',
 	],
 
 ];

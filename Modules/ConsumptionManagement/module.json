@@ -1,0 +1,11 @@
+{
+    "name": "ConsumptionManagement",
+    "alias": "consumptionmanagement",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ConsumptionManagement\\Providers\\ConsumptionManagementServiceProvider"
+    ],
+    "files": []
+}

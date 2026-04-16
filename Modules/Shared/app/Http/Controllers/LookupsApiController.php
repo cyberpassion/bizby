@@ -35,7 +35,7 @@ class LookupsApiController extends Controller
         }
 
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'key'    => $key,
             'data'   => $data,
         ]);

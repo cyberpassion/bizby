@@ -14,7 +14,7 @@ return [
     | Sidebar Menu
     |--------------------------------------------------------------------------
     */
-    'x-sidebar-menu' => [
+    'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
@@ -28,20 +28,20 @@ return [
                     'permission' => Permission::view(Res::HOME),
                 ],
 
-                [
-                    'title'      => 'New Registration',
+                /*[
+                    'title'      => '+ New',
                     'href'       => UrlPath::makeCreate($pg),
                     'permission' => Permission::create(Res::REGISTRATIONS),
-                ],
+                ],*/
 
                 [
-                    'title'      => 'View Registrations',
+                    'title'      => 'View List',
                     'href'       => UrlPath::makeList($pg),
                     'permission' => Permission::list(Res::REGISTRATIONS),
                 ],
 
                 [
-                    'title'      => 'Bulk Operation',
+                    'title'      => 'Bulk-Ops',
                     'href'       => UrlPath::makeBulk($pg),
                     'permission' => Permission::bulk(Res::REGISTRATIONS),
                 ],

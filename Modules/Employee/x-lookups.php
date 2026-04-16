@@ -36,7 +36,7 @@ return [
                         'permission' => "{$pg}.employee.view",
                     ],
                     [
-                        'title'      => 'Bulk Operation',
+                        'title'      => 'Bulk-Ops',
                         'href'       => "/module/{$pg}/bulk",
                         'permission' => "{$pg}.employee.bulk",
                     ],

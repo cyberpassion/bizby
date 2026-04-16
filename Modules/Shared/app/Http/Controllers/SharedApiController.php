@@ -272,6 +272,14 @@ public function stats(Request $request)
                     (clone $query)->where($field, $value)->count();
             }
         }
+		if ($fn === 'sum' && $expr) {
+		    $field = $expr;
+
+		    if ($field) {
+        		$metrics["sum_{$field}"] =
+            		(clone $query)->sum($field);
+    		}
+		}
     }
 
     /* ------------------------------------

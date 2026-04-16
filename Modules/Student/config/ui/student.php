@@ -42,7 +42,7 @@ return [
                             'permission' => Permission::update(Res::STUDENTS),
                         ],
                         [
-                            'title'      => 'Bulk Operation',
+                            'title'      => 'Bulk-Ops',
                             'href'       => UrlPath::makeBulk($pg),
                             'permission' => Permission::bulk(Res::STUDENTS),
                         ],
@@ -157,35 +157,35 @@ return [
         Actions::LIST => [
             [
                 'title'      => 'View Documents',
-                'href'       => UrlPath::make($pg, 'students/{id}/document'),
+                'href'       => UrlPath::makeDocuments($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'document',
             ],
 
             [
                 'title'      => 'Edit',
-                'href'       => UrlPath::make($pg, 'students/{id}/edit'),
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
                 'permission' => Permission::update(Res::STUDENTS),
                 'action'     => 'update',
             ],
 
             [
                 'title'      => 'Upload',
-                'href'       => UrlPath::make($pg, 'students/{id}/upload'),
+                'href'       => UrlPath::makeUploads($pg, '{id}'),
                 'permission' => Permission::create(Res::UPLOADS),
                 'action'     => 'upload',
             ],
 
             [
                 'title'      => 'View Profile',
-                'href'       => UrlPath::make($pg, 'students/{id}'),
+                'href'       => UrlPath::makeProfile($pg, '{id}'),
                 'permission' => Permission::view(Res::STUDENTS),
                 'action'     => 'view',
             ],
 
             [
                 'title'      => 'Delete',
-                'href'       => UrlPath::make($pg, 'students/{id}'),
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
                 'permission' => Permission::delete(Res::STUDENTS),
                 'action'     => 'delete',
                 'method'     => 'DELETE',

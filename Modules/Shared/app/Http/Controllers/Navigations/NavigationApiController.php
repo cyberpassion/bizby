@@ -33,12 +33,12 @@ class NavigationApiController
         ], Response::HTTP_OK);
     }
 
-    public function item(string $module, string|int|null $id = null)
+    public function item(string $module, string $action, string|int|null $id = null)
     {
         return response()->json([
             'status'  => 'success',
             'message' => 'Record fetched successfully.',
-            'data'    => NavigationService::item($module, $id),
+            'data'    => NavigationService::item($module, $action, $id),
         ], Response::HTTP_OK);
     }
 }

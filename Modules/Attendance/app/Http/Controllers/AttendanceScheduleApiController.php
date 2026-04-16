@@ -19,7 +19,7 @@ class AttendanceScheduleApiController extends Controller
 		return response()->json([
     	    'status'  => 'success',
         	'message' => 'Fetched Successfully.',
-	        'data'    => $response
+	        'data'    => ['data' => $response]
     	], Response::HTTP_OK);
     }
 
@@ -34,6 +34,8 @@ class AttendanceScheduleApiController extends Controller
             'ends_on' => 'nullable|date',
             'context' => 'nullable|string',
             'reference' => 'nullable|string',
+			'batch_ids' => 'nullable|array',
+		    'batch_ids.*' => 'exists:attendance_batches,id'
         ]);
 
         $data['tenant_id'] = tenant()->id;
@@ -174,6 +176,43 @@ class AttendanceScheduleApiController extends Controller
         	'message' => 'Rebuilt Successfully.',
         	'data'    => $response
 	    ]);
+	}
+
+	public function batches($id)
+	{
+    	$schedule = AttendanceSchedule::where('tenant_id', tenant()->id)
+	        ->with([
+    	        'batches' => function ($q) {
+        	        $q->select('attendance_batches.id', 'name', 'code');
+            	}
+	        ])
+    	    ->findOrFail($id);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Batches fetched successfully.',
+	        'data'    => $schedule->batches
+    	], Response::HTTP_OK);
+	}
+
+	public function participants($id)
+	{
+    	$schedule = AttendanceSchedule::where('tenant_id', tenant()->id)
+	        ->with([
+    	        'batches.participants'
+        	])
+	        ->findOrFail($id);
+
+	    $participants = $schedule->batches
+    	    ->flatMap(fn ($batch) => $batch->participants)
+        	->unique('id') // important if same user in multiple batches
+        	->values();
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Participants fetched successfully.',
+        	'data'    => $participants
+    	]);
 	}
 
 }

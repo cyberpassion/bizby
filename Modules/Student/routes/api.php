@@ -18,6 +18,11 @@ Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
+		Route::prefix('students')->name('students.')->group(function () {
+            Route::get('stats', [StudentApiController::class, 'stats'])->name('stats');
+            Route::get('graphs', [StudentApiController::class, 'graphs'])->name('graphs');
+        });
+
         // Academic Years
         Route::prefix('students')->group(function () {
             Route::apiResource('academic-years', StudentAcademicYearApiController::class)

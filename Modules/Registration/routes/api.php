@@ -6,15 +6,32 @@ use Modules\Registration\Http\Controllers\RegistrationStepApiController;
 use Modules\Registration\Http\Controllers\RegistrationDocumentApiController;
 use Modules\Registration\Http\Controllers\RegistrationPaymentApiController;
 
-Route::prefix('v1/registrations')
+Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
-        Route::post('/', [RegistrationApiController::class, 'create']);
-        Route::get('/my', [RegistrationApiController::class, 'my']);
-        Route::post('/{id}/submit', [RegistrationApiController::class, 'submit']);
+        Route::prefix('registrations')->name('registrations.')->group(function () {
+            Route::get('stats', [RegistrationApiController::class, 'stats'])->name('stats');
+            Route::get('graphs', [RegistrationApiController::class, 'graphs'])->name('graphs');
+        });
 
-        Route::post('/{id}/step', [RegistrationStepApiController::class, 'save']);
-        Route::post('/{id}/document', [RegistrationDocumentApiController::class, 'upload']);
-        Route::post('/{id}/pay', [RegistrationPaymentApiController::class, 'pay']);
+        // Standard CRUD
+        Route::apiResource(
+            'registrations',
+            RegistrationApiController::class
+        )->names('registrations');
+
+        // Custom Actions
+        Route::get('registrations/my', [RegistrationApiController::class, 'my'])->name('registrations.my');
+        Route::post('registrations/{id}/submit', [RegistrationApiController::class, 'submit'])->name('registrations.submit');
+
+        // Step handling
+        Route::post('registrations/{id}/step', [RegistrationStepApiController::class, 'save'])->name('registrations.step');
+
+        // Document upload
+        Route::post('registrations/{id}/document', [RegistrationDocumentApiController::class, 'upload'])->name('registrations.document');
+
+        // Payment
+        Route::post('registrations/{id}/pay', [RegistrationPaymentApiController::class, 'pay'])->name('registrations.pay');
+
     });

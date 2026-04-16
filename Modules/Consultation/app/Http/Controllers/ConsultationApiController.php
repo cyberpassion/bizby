@@ -29,7 +29,7 @@ class ConsultationApiController extends SharedApiController
            'marital_status',      // Single / Married / Widowed / Divorced
            'consultation_date',   // Date-wise trend
            'consultant_id',       // Consultant-wise load
-           'age_group'            // Age range graph (logic based)
+           //'age_group'            // Age range graph (logic based)
         ];
     }
 
@@ -50,9 +50,7 @@ class ConsultationApiController extends SharedApiController
         return [
            'count:gender=M',                 // Male count
            'count:gender=F',                 // Female count
-           'count:consultation_type',        // Type-wise count
            'sum:consultation_fee',           // Total revenue
-           'count:channel'                   // Channel-wise count
         ];
     }
 

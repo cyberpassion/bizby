@@ -80,4 +80,14 @@ class AttendanceSession extends Model
     	return $this->belongsTo(AttendanceSchedule::class, 'attendance_schedule_id');
 	}
 
+	public function batches()
+	{
+    	return $this->belongsToMany(
+	        AttendanceBatch::class,
+    	    'attendance_session_batches',
+        	'attendance_session_id',
+        	'batch_id'
+    	);
+	}
+
 }
