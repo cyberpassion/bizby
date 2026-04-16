@@ -87,7 +87,7 @@ class SharedServiceProvider extends ServiceProvider
 	    foreach (scandir($modulesPath) as $module) {
     	    if ($module === '.' || $module === '..') continue;
 
-	        $file = "{$modulesPath}/{$module}/Config/data/".strtolower($module).".php";
+	        $file = "{$modulesPath}/{$module}/config/data/".strtolower($module).".php";
 
     	    if (!file_exists($file)) {
         	    continue;
@@ -116,8 +116,8 @@ class SharedServiceProvider extends ServiceProvider
 	{
     	$modulesPath = base_path('Modules');
 
-	    // 🔥 Scan: Modules/*/Config/ui/*.php
-    	foreach (glob($modulesPath . '/*/Config/ui/*.php') as $file) {
+	    // 🔥 Scan: Modules/*/config/ui/*.php
+    	foreach (glob($modulesPath . '/*/config/ui/*.php') as $file) {
 
 	        try {
     	        $config = require $file;
@@ -134,7 +134,7 @@ class SharedServiceProvider extends ServiceProvider
         	}
 
 	        // Extract module name from path
-    	    // Example: Modules/Student/Config/ui/student.php → student
+    	    // Example: Modules/Student/config/ui/student.php → student
         	$parts = explode(DIRECTORY_SEPARATOR, $file);
         	$moduleName = strtolower($parts[count($parts) - 4]);
 

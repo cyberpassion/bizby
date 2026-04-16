@@ -162,17 +162,12 @@ return [
         '30' => '30 Minutes',
     ],
 
-	// Next Days
-    'next-days' => [
-        '3 d'  => '3 Days',
-        '4 d'  => '4 Days',
-        '5 d'  => '5 Days',
-        '6 d'  => '6 Days',
-        '7 d'  => '7 Days',
-        '10 d' => '10 Days',
-        '12 d' => '12 Days',
-        '15 d' => '15 Days',
-        '30 d' => '30 Days',
+	// Severities
+    'severities' => [
+        'low'       => 'Low',
+	    'medium'    => 'Medium',
+    	'high'      => 'High',
+    	'critical'  => 'Critical',
     ],
 
 ];

@@ -103,7 +103,7 @@ return [
                 'name'        => 'type',
                 'placeholder' => 'Types',
                 'col'         => 3,
-                'dataKey'     => 'incident.incident-types',
+                'dataKey'     => 'incident.types',
             ],
 
 			[
@@ -111,7 +111,7 @@ return [
                 'name'        => 'severity',
                 'placeholder' => 'Severity',
                 'col'         => 3,
-                'dataKey'     => 'incident.incident-severities',
+                'dataKey'     => 'incident.severities',
             ],
 
             [
