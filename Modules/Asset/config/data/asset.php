@@ -119,6 +119,7 @@ return [
 
 	// Documents
     'documents' => [
+        'detail' => 'Asset Detail',
         'asset-slip' => 'Asset Slip'
     ],
 

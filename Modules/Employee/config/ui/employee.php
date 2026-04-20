@@ -94,7 +94,7 @@ return [
         Actions::LIST => [
 
             [
-                'title'      => 'View Slip',
+                'title'      => 'View Documents',
                 'href'       => UrlPath::makeDocuments($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'document',

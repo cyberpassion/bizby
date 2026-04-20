@@ -39,6 +39,8 @@ return new class extends Migration
 
 			$table->index('role_id');
 
+			$table->string('type')->default('portal');
+
             // 🚨 One user per tenant
             $table->unique(['tenant_id', 'user_id'], 'tenant_user_unique');
         });

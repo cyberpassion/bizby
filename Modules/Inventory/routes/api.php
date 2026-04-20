@@ -1,36 +1,45 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Inventory\Http\Controllers\InventoryApiController;
-use Modules\Inventory\Http\Controllers\InventoryTransactionApiController;
+use Modules\Listing\Http\Controllers\ListingApiController;
+use Modules\Listing\Http\Controllers\ListingTrackingApiController;
 
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
-        Route::prefix('inventory')->name('inventory.')->group(function () {
+        Route::prefix('listings')->name('listings.')->group(function () {
 
-            // Dashboard
-            Route::get('stats', [InventoryApiController::class, 'stats'])->name('stats');
-            Route::get('graphs', [InventoryApiController::class, 'graphs'])->name('graphs');
+            /* ======================================================
+             | DASHBOARD
+             ====================================================== */
+            Route::get('stats', [ListingApiController::class, 'stats'])->name('stats');
+            Route::get('graphs', [ListingApiController::class, 'graphs'])->name('graphs');
 
-            // Alerts
-            Route::get('alerts/low-stock', [InventoryApiController::class, 'lowStock'])->name('low-stock');
+            /* ======================================================
+             | TRACKING
+             ====================================================== */
+            Route::post('{listing}/track', [ListingTrackingApiController::class, 'track'])->name('track');
 
-            // Transactions (CORE)
-            Route::post('{item}/in', [InventoryTransactionApiController::class, 'stockIn'])->name('in');
-            Route::post('{item}/out', [InventoryTransactionApiController::class, 'stockOut'])->name('out');
-            Route::post('{item}/adjust', [InventoryTransactionApiController::class, 'adjust'])->name('adjust');
+            /* ======================================================
+             | QUICK ACTION TRACKING
+             ====================================================== */
+            Route::post('{listing}/contact-click', [ListingTrackingApiController::class, 'contactClick'])->name('contact-click');
+            Route::post('{listing}/website-click', [ListingTrackingApiController::class, 'websiteClick'])->name('website-click');
+            Route::post('{listing}/whatsapp-click', [ListingTrackingApiController::class, 'whatsappClick'])->name('whatsapp-click');
 
-            // Transfer (future-ready)
-            Route::post('{item}/transfer', [InventoryTransactionApiController::class, 'transfer'])->name('transfer');
-
-            // History
-            Route::get('{item}/transactions', [InventoryTransactionApiController::class, 'index'])->name('transactions');
+            /* ======================================================
+             | OPTIONAL (FUTURE)
+             ====================================================== */
+            // Route::get('{listing}/events', [ListingTrackingApiController::class, 'events'])->name('events');
+            // Route::get('{listing}/stats', [ListingTrackingApiController::class, 'stats'])->name('listing-stats');
         });
 
+        /* ======================================================
+         | CRUD (KEEP SEPARATE LIKE INVENTORY)
+         ====================================================== */
         Route::apiResource(
-            'inventory',
-            InventoryApiController::class
-        )->names('inventory');
+            'listings',
+            ListingApiController::class
+        )->names('listings');
     });

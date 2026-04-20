@@ -6,7 +6,7 @@ return [
     /* ===============================
      | Sidebar Menu
      =============================== */
-    'sidebar-menu-x' => [
+    'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",

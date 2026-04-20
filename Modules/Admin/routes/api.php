@@ -147,7 +147,7 @@ Route::prefix('v1')->group(function () {
     | - Billing handled via PaymentPayable + OnlinePayment
     |--------------------------------------------------------------------------
     */
-    Route::prefix('tenants/{tenantId}/modules')->group(function () {
+	Route::prefix('tenants/{tenantId}/modules')->group(function () {
 
         Route::get('/', [TenantModuleApiController::class, 'index1'])
             ->name('tenantModule.index1');

@@ -181,7 +181,7 @@ return [
                        'next_followup_date',
     ],
 
-	'lead.lead-categories' => [
+	'lead.categories' => [
 		'default' => 'Default',
 	],
 

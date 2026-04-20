@@ -78,6 +78,13 @@ return [
             	'action'     => 'update',
 	        ],
 
+			[
+                'title'      => 'Upload',
+                'href'       => UrlPath::makeUploads($pg, '{id}'),
+                'permission' => Permission::create(Res::UPLOADS),
+                'action'     => 'upload',
+            ],
+
 	        [
     	        'title'      => 'Delete',
         	    'href'       => UrlPath::makeDelete($pg, '{id}'),

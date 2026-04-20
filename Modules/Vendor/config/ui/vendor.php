@@ -1,105 +1,143 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Vendor\Support\Res;
+use Modules\Vendor\Support\Actions;
+
 $pg = 'vendor';
 
 return [
 
-/*
-|--------------------------------------------------------------------------
-| UI : Sidebar Menu (Vendor)
-|--------------------------------------------------------------------------
-*/
-'sidebar-menu-x' => [
-        'title'      => ucfirst($pg),
-        'href'       => "/{$pg}",
-        'permission' => "{$pg}.access",
-        'items'      => [
+    /* ===============================
+     | Sidebar Menu
+     =============================== */
+    'sidebar-menu' => [
+        [
+            'title'      => ucfirst($pg),
+            'href'       => "/{$pg}",
+            'permission' => Permission::access($pg),
 
-            /* Dashboard */
-            [
-                'title'      => 'Dashboard',
-                'href'       => "/module/{$pg}/home",
-                'permission' => "{$pg}.dashboard.view",
-            ],
+            'items' => [
 
-            /* Vendor Management */
-            [
-                'title' => 'Vendors',
-                'items' => [
-                    [
-                        'title'      => 'Add Vendor',
-                        'href'       => "/module/{$pg}/new",
-                        'permission' => "{$pg}.vendor.create",
-                    ],
-                    [
-                        'title'      => 'View List',
-                        'href'       => "/module/{$pg}/list",
-                        'permission' => "{$pg}.vendor.view",
-                    ],
+                [
+                    'title'      => 'Dashboard',
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
-            ],
 
-            /* Contracts / Documents */
-            [
-                'title' => 'Contracts',
-                'items' => [
-                    [
-                        'title'      => 'Agreements',
-                        'href'       => "/module/{$pg}/agreements",
-                        'permission' => "{$pg}.contract.manage",
-                    ],
-                    [
-                        'title'      => 'Invoices',
-                        'href'       => "/module/{$pg}/invoices",
-                        'permission' => "{$pg}.invoice.manage",
-                    ],
+                [
+                    'title'      => 'Add Vendor',
+                    'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::VENDORS),
                 ],
-            ],
 
-            /* Reports */
-            [
-                'title' => 'Reports',
-                'items' => [
-                    [
-                        'title'      => 'Vendor Report',
-                        'href'       => "/module/{$pg}/report-vendors",
-                        'permission' => "{$pg}.report.vendor",
-                    ],
-                    [
-                        'title'      => 'Payment Report',
-                        'href'       => "/module/{$pg}/report-payments",
-                        'permission' => "{$pg}.report.payment",
-                    ],
+                [
+                    'title'      => 'View List',
+                    'href'       => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::VENDORS),
                 ],
-            ],
 
-            /* Settings */
-            [
-                'title' => 'Settings',
-                'items' => [
-                    [
-                        'title'      => 'Basic Settings',
-                        'href'       => "/module/{$pg}/settings",
-                        'permission' => "{$pg}.settings.basic",
-                    ],
-                    [
-                        'title'      => 'Payment Rules',
-                        'href'       => "/module/{$pg}/payment-rules",
-                        'permission' => "{$pg}.settings.payment",
-                    ],
+                [
+                    'title'      => 'Bulk-Ops',
+                    'href'       => UrlPath::makeBulk($pg),
+                    'permission' => Permission::bulk(Res::VENDORS),
                 ],
-            ],
 
-            /* Plugins */
-            [
-                'title' => 'Plugins',
-                'items' => [
-                    [
-                        'title'      => 'Integrations',
-                        'href'       => "/module/{$pg}/plugins",
-                        'permission' => "{$pg}.plugin.manage",
-                    ],
+                [
+                    'title'      => 'Documents',
+                    'href'       => UrlPath::makeDocuments($pg, '{id}'),
+                    'permission' => Permission::view(Res::DOCUMENTS),
+                ],
+
+                [
+                    'title'      => 'Report',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
+
+                [
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
                 ],
             ],
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Row Actions
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
+
+        Actions::LIST => [
+
+            [
+                'title'      => 'View Detail',
+                'href'       => UrlPath::makeDocuments($pg, '{id}'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'document',
+            ],
+
+            [
+                'title'      => 'Update',
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
+                'permission' => Permission::update(Res::VENDORS),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Upload',
+                'href'       => UrlPath::makeUploads($pg, '{id}'),
+                'permission' => Permission::create(Res::DOCUMENTS),
+                'action'     => 'upload',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'permission' => Permission::delete(Res::VENDORS),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
+        ]
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | List Filters (Frontend)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
+
+        Actions::LIST => [
+            [
+                'type'        => 'select',
+                'name'        => 'state',
+                'placeholder' => 'State',
+                'col'         => 3,
+                'dataKey'     => 'shared.indian-states',
+            ],
+			[
+                'type'        => 'select',
+                'name'        => 'vendor_type',
+                'placeholder' => 'Vendor Type',
+                'col'         => 3,
+                'dataKey'     => 'shared.business-types',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'vendor.statuses',
+            ],
+        ]
+
+    ],
+
 ];

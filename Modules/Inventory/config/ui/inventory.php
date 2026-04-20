@@ -65,7 +65,7 @@ return [
 
 		Actions::LIST => [
 			[
-                'title'      => 'View Slip',
+                'title'      => 'View Detail',
                 'href'       => UrlPath::makeDocuments($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'document',

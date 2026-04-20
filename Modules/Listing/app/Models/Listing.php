@@ -2,59 +2,80 @@
 
 namespace Modules\Listing\Models;
 
-use Modules\Admin\Models\Tenants\TenantModel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
-class Listing extends TenantModel
+class Listing extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+	protected $connection = 'central';
 
-    /**
-     * Attribute casting.
-     */
+    protected $fillable = [
+        'business_name',
+        'owner_name',
+        'phone',
+        'email',
+        'website',
+        'category_id',
+
+        'address',
+        'city',
+        'district',
+        'state',
+        'pincode',
+        'map_link',
+
+        'facebook',
+        'instagram',
+        'linkedin',
+        'youtube',
+        'twitter',
+        'other_links',
+
+        'about',
+        'services',
+        'additional_info',
+
+        'is_verified',
+        'is_featured',
+        'valid_till',
+
+        'slug',
+        'meta_title',
+        'meta_description',
+
+        'created_by',
+        'updated_by',
+    ];
+
     protected $casts = [
-		'datetime'			=> 'datetime',
-        'listing_date' => 'date', // Laravel will cast it to Carbon
+        'is_verified' => 'boolean',
+        'is_featured' => 'boolean',
+        'valid_till'  => 'date',
     ];
 
-    /**
-     * Default attribute values
-     */
-    protected $attributes = [];
+    /* ================= RELATIONS ================= */
 
-    /**
-     * Appended attributes (computed, not in DB)
-     */
-    protected $appends = [
-        'doctor_namee'
-    ];
-
-	// Example for doctor_name
-    public function getDoctorNameeAttribute()
+    public function events()
     {
-        return $this->employee?->name ?? '-123';
-    }
-    // Factory (if you use factories)
-    // protected static function newFactory(): ListingFactory
-    // {
-    //     return ListingFactory::new();
-    // }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->hasMany(ListingEvent::class);
     }
 
-    public function getFillable()
+    public function stats()
     {
-        return $this->dynamicFillable();
+        return $this->hasMany(ListingStat::class);
     }
 
+    /* ================= SCOPES ================= */
+
+    public function scopeVerified($q)
+    {
+        return $q->where('is_verified', 1);
+    }
+
+    public function scopeFeatured($q)
+    {
+        return $q->where('is_featured', 1);
+    }
 }

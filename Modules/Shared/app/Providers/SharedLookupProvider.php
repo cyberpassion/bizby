@@ -15,9 +15,13 @@ use Modules\Student\Models\Student;
 use Modules\Center\Models\Center;
 use Modules\Consultation\Models\Consultation;
 
+use Modules\Vendor\Models\Vendor;
+
 use Modules\Lead\Models\Lead;
 use Modules\Booking\Models\BookableUnit;
 use Modules\Booking\Models\BookingVenue;
+
+use Modules\Shared\Models\Permissions\PermissionRole;
 
 class SharedLookupProvider
 {
@@ -105,6 +109,9 @@ class SharedLookupProvider
 			'consultations' => $this->consultations($group),
 			'leads'			=> $this->leads($group),
 			'bookings'		=> $this->bookings($group),
+			'vendors'		=> $this->vendors($group),
+
+			'permissions'	=> $this->permissions($group),
 
             default => [],
         };
@@ -168,6 +175,19 @@ class SharedLookupProvider
         };
     }
 
+	protected function vendors(string $group): array
+	{
+		return match ($group) {
+
+			'list' => Vendor::where('status', true)
+				->orderBy('name')
+				->pluck('name', 'id')
+				->toArray(),
+
+			default => [],
+		};
+	}
+
 	protected function bookings(string $group): array
     {
         return match ($group) {
@@ -224,6 +244,19 @@ class SharedLookupProvider
 			default => [],
 		};
 	}
+
+	protected function permissions(string $group): array
+    {
+        return match ($group) {
+
+            'roles-list' => PermissionRole::where('tenant_id', tenant()->id) // or your helper
+            ->orderBy('name')
+            ->pluck('name', 'id')
+            ->toArray(),
+
+            default => [],
+        };
+    }
 
 	public function getLookups()
     {

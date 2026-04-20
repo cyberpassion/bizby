@@ -1,77 +1,126 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Listing\Support\Res;
+use Modules\Listing\Support\Actions;
+
 $pg = 'listing';
 
 return [
 
-    'sidebar-menu-x' => [
+    'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
 
-                /* Dashboard */
+            'items' => [
+
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
 
-                /* Listing Management */
                 [
-                    'title' => 'Listings',
-                    'items' => [
-                        [
-                            'title'      => 'Add Listing',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.listing.create",
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.listing.view",
-                        ],
-                    ],
+                    'title'      => 'Add New',
+                    'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::LISTINGS),
                 ],
 
-                /* Reports */
                 [
-                    'title' => 'Reports',
-                    'items' => [
-                        [
-                            'title'      => 'Listing Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.listing",
-                        ],
-                    ],
+                    'title'      => 'View List',
+                    'href'       => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::LISTINGS),
                 ],
 
-                /* Settings */
                 [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Basic Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.basic",
-                        ],
-                    ],
+                    'title'      => 'Bulk-Ops',
+                    'href'       => UrlPath::makeBulk($pg),
+                    'permission' => Permission::bulk(Res::LISTINGS),
                 ],
 
-                /* Plugins */
                 [
-                    'title' => 'Plugins',
-                    'items' => [
-                        [
-                            'title'      => 'View Calendar',
-                            'href'       => "/plugin/calendar?module={$pg}",
-                            'permission' => "{$pg}.plugin.manage",
-                        ],
-                    ],
+                    'title'      => 'Report',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
                 ],
 
+                [
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
+                ],
             ],
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Row Actions
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
+
+		Actions::LIST => [
+			[
+                'title'      => 'View Portal',
+                'href'       => UrlPath::makeDocuments($pg, '{id}'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'document',
+            ],
+
+	        [
+    	        'title'      => 'Update',
+        	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	'permission' => Permission::update(Res::LISTINGS),
+            	'action'     => 'update',
+	        ],
+
+			[
+                'title'      => 'Upload',
+                'href'       => UrlPath::makeUploads($pg, '{id}'),
+                'permission' => Permission::create(Res::UPLOADS),
+                'action'     => 'upload',
+            ],
+
+	        [
+    	        'title'      => 'Delete',
+        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
+            	'permission' => Permission::delete(Res::LISTINGS),
+	            'action'     => 'delete',
+    	        'method'     => 'DELETE',
+        	    'variant'    => 'danger',
+        	]
+		]
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | List Filters (Frontend)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
+
+        Actions::LIST	=>	[
+            [
+                'type'        => 'select',
+                'name'        => 'state',
+                'placeholder' => 'State',
+                'col'         => 3,
+                'dataKey'     => 'shared.indian-states',
+            ],
+			[
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'listing.statuses',
+            ],
+        ]
+
     ],
 
 ];

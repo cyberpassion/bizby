@@ -46,7 +46,7 @@ return new class extends Migration
 		    // Lead metadata (terms)
     		$table->unsignedBigInteger('category_id')->nullable();
     		$table->unsignedBigInteger('source_id')->nullable();
-	    	$table->unsignedBigInteger('stage_id')->nullable();
+	    	$table->string('stage_id')->nullable();
 
 		    $table->boolean('is_existing_client')->default(false);
     		$table->string('place')->nullable();

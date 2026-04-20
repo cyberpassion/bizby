@@ -3,24 +3,15 @@ $pg = 'listing';
 
 return [
 
-    'listing.list-filters' => [
-        "admin" => [
-            'listing_category_filter' => "Catgory/category/listing_category-json",
-            'listing_status_filter'   => "Status/status/status-json",
-        ],
-        "portal" => [
-            'listing_category_filter' => "Catgory/category/listing_category-json",
-            'listing_status_filter'   => "Status/status/status-json",
-        ],
+	// Bulk Operations
+    "bulk-operations" => [
+        "view:detail" => "View Listing Details",
+        "op:remove"   => "Delete Listing",
+        "op:restore"  => "Restore Listing",
     ],
 
-    'listing.bulk-operations' => [
-        "view:detail" => "View Detail",
-        "op:remove"   => "Delete",
-        "op:restore"  => "Restore",
-    ],
-
-    'listing.default-columns' => [
+	// Default Columns
+    "columns" => [
         'entry'  => ['date','listing_id','listing_name','category','phone_number','email','locality','place','state','info','tags','status'],
         'list'   => ['date','listing_id','listing_name','category','phone_number','email','locality','place','state','info','tags','status'],
         'detail' => ['date','listing_id','listing_name','category','phone_number','email','locality','place','state','info','tags','status'],
@@ -29,34 +20,18 @@ return [
         'selected_columns'=> [],
     ],
 
-    'communicationTemplate-listing' => [
-        "listing_entry_new_sms"       => "New Listing Entry SMS",
-        "listing_entry_new_whatsapp"  => "New Listing Entry Whatsapp",
-        "listing_entry_new_email"     => "New Listing Entry Email",
+	// Crons
+	"crons" => [
+        'listing-followupreminders' => 'Listing Upcoming Followups'
     ],
 
-    'columnNameMapping-listing' => [
-        'ptr'      => 'SNo',
-        'added_by'=> 'Added By',
-    ],
-
-    'mandatoryOptionsBeforeUsing-listing' => [
-        'missing_option' => [
-            'Listing Category' => 'listing_category-json',
-        ],
-    ],
-
-    'moduleTable-listing' => [
-        "cyp_term",
-        "cyp_activity",
-        "cyp_advancedinfo",
-        "cyp_allotment",
-        "cyp_cash",
-        "cyp_option",
-        "cyp_upload",
-        "cyp_notification",
-        "cyp_message",
-        "cyp_listing",
-    ],
+	// Statuses
+    "statuses" => [
+	    "1"  => "ACTIVE",
+    	"2"  => "INACTIVE",
+    	"3"  => "PENDING",
+    	"4"  => "REJECTED",
+    	"5"  => "DELETED",
+	],
 
 ];

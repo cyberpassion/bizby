@@ -8,7 +8,7 @@ $pg = 'lead';
 
 return [
 
-    'x-sidebar-menu' => [
+    'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
@@ -23,7 +23,7 @@ return [
                 ],
 
                 [
-                    'title'      => 'Add Lead',
+                    'title'      => 'Add New',
                     'href'       => UrlPath::makeCreate($pg),
                     'permission' => Permission::create(Res::LEADS),
                 ],
@@ -41,7 +41,7 @@ return [
                 ],
 
                 [
-                    'title'      => 'Lead Report',
+                    'title'      => 'Report',
                     'href'       => UrlPath::makeReport($pg),
                     'permission' => Permission::report(Res::REPORTS),
                 ],
@@ -76,9 +76,12 @@ return [
 	    Actions::LIST	=>	[
 			[
 	    	    'title'      => 'Add Followup',
-    	    	'href'       => UrlPath::make($pg, '{id}/new-followup'),
+    	    	'href'       => UrlPath::make($pg, 'new-followup'),
 	    	    'permission' => Permission::create(Res::FOLLOWUPS),
     	    	'action'     => 'sheet',
+				'params'	 => [
+					'id'	 => ':id'
+				]
 		    ],
 
 		    [
@@ -109,6 +112,13 @@ return [
 
     	Actions::LIST	=>	[
 			[
+    		    'type'        => 'select',
+        		'name'        => 'assigned_to_id',
+	        	'placeholder' => 'Assigned To',
+    	    	'col'         => 3,
+        		'dataKey'     => 'employees.list',
+	    	],
+			[
 		        'type'        => 'select',
     		    'name'        => 'stage_id',
         		'placeholder' => 'Stage',
@@ -120,7 +130,7 @@ return [
     	    	'name'        => 'category_id',
 	        	'placeholder' => 'Category',
 		        'col'         => 3,
-    		    'dataKey'     => 'lead.lead-categories',
+    		    'dataKey'     => 'lead.categories',
 		    ],
     		[
 	    	    'type'        => 'select',
@@ -128,14 +138,7 @@ return [
 	        	'placeholder' => 'Source',
 		        'col'         => 3,
     		    'dataKey'     => 'lead.lead-sources',
-    		],
-		    [
-    		    'type'        => 'select',
-        		'name'        => 'assigned_to_id',
-	        	'placeholder' => 'Assigned User',
-    	    	'col'         => 3,
-        		'dataKey'     => 'users.list',
-	    	]
+    		]
 		]
 	],
 
