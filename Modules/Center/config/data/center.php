@@ -116,7 +116,7 @@ return [
 
 	// Documents
     'documents' => [
-        'center-slip' => 'Center Slip'
+        'detail' => 'Detail'
     ],
 
 	// Status
