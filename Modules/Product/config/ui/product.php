@@ -1,95 +1,136 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Product\Support\Res;
+use Modules\Product\Support\Actions;
+
 $pg = 'product';
 
 return [
 
-    /* =========================
-     | Sidebar & Navigation (UI)
-     ========================= */
+    /* ===============================
+     | Sidebar Menu
+     =============================== */
     'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
+                ],
+
+                /*
+                |--------------------------------------------------------------------------
+                | Product
+                |--------------------------------------------------------------------------
+                */
+                [
+                    'title'      => 'Add Product',
+                    'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::PRODUCTS),
                 ],
 
                 [
-                    'title' => 'Products',
-                    'items' => [
-                        [
-                            'title'      => 'Add Product',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.product.create",
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.product.view",
-                        ],
-                        [
-                            'title'      => 'Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.product",
-                        ],
-                    ],
+                    'title'      => 'View List',
+                    'href'       => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::PRODUCTS),
                 ],
 
                 [
-                    'title' => 'Stock',
-                    'items' => [
-                        [
-                            'title'      => 'Add Stock',
-                            'href'       => "/module/{$pg}/stock/create",
-                            'permission' => "{$pg}.stock.create",
-                        ],
-                        [
-                            'title'      => 'Stock List',
-                            'href'       => "/module/{$pg}/stock/list",
-                            'permission' => "{$pg}.stock.view",
-                        ],
-                        [
-                            'title'      => 'Stock Report',
-                            'href'       => "/module/{$pg}/stock/report",
-                            'permission' => "{$pg}.report.stock",
-                        ],
-                        [
-                            'title'      => 'Stock Settings',
-                            'href'       => "/module/{$pg}/stock/settings",
-                            'permission' => "{$pg}.settings.stock",
-                        ],
-                    ],
+                    'title'      => 'Report',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
                 ],
 
+                /*
+                |--------------------------------------------------------------------------
+                | Settings
+                |--------------------------------------------------------------------------
+                */
                 [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Basic Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.basic",
-                        ],
-                    ],
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
                 ],
 
+                /*
+                |--------------------------------------------------------------------------
+                | Plugins
+                |--------------------------------------------------------------------------
+                */
                 [
-                    'title' => 'Plugins',
-                    'items' => [
-                        [
-                            'title'      => 'View Calendar',
-                            'href'       => "/plugin/calendar?module={$pg}",
-                            'permission' => "{$pg}.plugin.manage",
-                        ],
-                    ],
+                    'title'      => 'Calendar',
+                    'href'       => "/plugin/calendar?module={$pg}",
+                    'permission' => Permission::access("{$pg}.plugin"),
                 ],
 
             ],
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Row Actions
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
+
+        Actions::LIST => [
+
+            [
+                'title'      => 'Update',
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
+                'permission' => Permission::update(Res::PRODUCTS),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'permission' => Permission::delete(Res::PRODUCTS),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
+
+        ]
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | List Filters (Frontend)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
+
+        Actions::LIST => [
+
+            [
+                'type'        => 'select',
+                'name'        => 'category',
+                'placeholder' => 'Category',
+                'col'         => 3,
+                'dataKey'     => 'product.categories',
+            ],
+
+            [
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'product.statuses',
+            ],
+
+        ]
+
     ],
 
 ];

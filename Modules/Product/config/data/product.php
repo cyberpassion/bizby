@@ -6,7 +6,7 @@ return [
     /* =========================
      | Filters
      ========================= */
-    'product.list-filters' => [
+    'list-filters' => [
         "admin" => [
             'sort'        => "Type/product_type/product_type-json",
             'status'      => "Avlb. Status/availability/product_availability_status-json",
@@ -20,14 +20,14 @@ return [
     ],
 
     // Bulk Operations
-    'product.bulk-operations' => [
+    'bulk-operations' => [
         "view:detail" => "View Product Details",
         "op:remove"  => "Delete",
         "op:restore" => "Restore"
     ],
 
     // Default Columns
-    'product.default-columns' => [
+    'default-columns' => [
         'entry'  => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
         'list'   => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
         'detail' => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
@@ -46,11 +46,11 @@ return [
     /* =========================
      | List & Report Columns
      ========================= */
-    'product.list-columns' => [
+    'list-columns' => [
         'id','product_name','brand_name','product_type','sale_price','available_stock'
     ],
 
-    'product.report-columns' => [
+    'report-columns' => [
         'id','product_type','brand_name','product_name','unit',
         'retail_price','sale_price','total_quantity',
         'sold_quantity','available_stock','availability','created_at'
@@ -59,7 +59,7 @@ return [
     /* =========================
      | Documents
      ========================= */
-    'product.documents' => [
+    'documents' => [
         'product-brochure' => 'Product Brochure'
     ],
 
