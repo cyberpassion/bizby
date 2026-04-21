@@ -1,84 +1,103 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
+use Modules\Note\Support\Res;
+use Modules\Note\Support\Actions;
+
 $pg = 'note';
 
 return [
 
     /* =========================
-     | Sidebar & UI Navigation
+     | Sidebar Menu
      ========================= */
-    'sidebar-menu-x' => [
+    'sidebar-menu' => [
         [
             'title'      => ucfirst($pg),
             'href'       => "/{$pg}",
-            'permission' => "{$pg}.access",
-            'items'      => [
+            'permission' => Permission::access($pg),
+
+            'items' => [
 
                 [
                     'title'      => 'Dashboard',
-                    'href'       => "/module/{$pg}/home",
-                    'permission' => "{$pg}.dashboard.view",
+                    'href'       => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
-                    'title' => 'Notes',
-                    'items' => [
-                        [
-                            'title'      => 'Add Note',
-                            'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.note.create",
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.note.view",
-                        ],
-                    ],
+                    'title'      => 'Add Note',
+                    'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::NOTES),
                 ],
 
                 [
-                    'title' => 'Reports',
-                    'items' => [
-                        [
-                            'title'      => 'Note Report',
-                            'href'       => "/module/{$pg}/report",
-                            'permission' => "{$pg}.report.note",
-                        ],
-                    ],
+                    'title'      => 'View List',
+                    'href'       => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::NOTES),
                 ],
 
                 [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Basic Settings',
-                            'href'       => "/module/{$pg}/settings",
-                            'permission' => "{$pg}.settings.basic",
-                        ],
-                    ],
+                    'title'      => 'Report',
+                    'href'       => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
+
+                [
+                    'title'      => 'Settings',
+                    'href'       => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
                 ],
             ],
         ],
     ],
 
-    /* =========================
-     | Portal / Admin Permissions
-     ========================= */
-    "permissionPortal-note" => [
-        'restricted' => [],
-        'allowed'    => [
-            ['pg' => $pg, 'sub_pg' => 'home'],
-            ['pg' => $pg, 'sub_pg' => 'list'],
-            ['pg' => $pg, 'sub_pg' => 'report'],
-            ['pg' => $pg, 'sub_pg' => 'note-report'],
+    /*
+    |--------------------------------------------------------------------------
+    | Row Actions
+    |--------------------------------------------------------------------------
+    */
+    'single-actions' => [
+
+        Actions::LIST => [
+
+            [
+                'title'      => 'Edit',
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
+                'permission' => Permission::update(Res::NOTES),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'permission' => Permission::delete(Res::NOTES),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
         ]
+
     ],
 
-    "permissionAdmin-note" => [
-        'restricted'=> [
-            '2' => [['pg' => $pg, 'sub_pg' => 'settings']],
-            '3' => [['pg' => $pg, 'sub_pg' => 'settings']]
-        ],
-        'allowed' => []
+    /*
+    |--------------------------------------------------------------------------
+    | List Filters (Frontend)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
+
+        Actions::LIST => [
+            [
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'note.statuses',
+            ],
+        ]
+
     ],
 
 ];

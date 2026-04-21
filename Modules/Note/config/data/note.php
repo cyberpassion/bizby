@@ -4,21 +4,21 @@ $pg = 'note';
 return [
 
     // Statuses
-    "note.statuses" => [
+    "statuses" => [
         "1"  => "All",
         "11" => "Pending Only",
         "12" => "Resolved Only",
         "2"  => "Deleted"
     ],
 
-    "note.crons" => [
+    "crons" => [
         'note-timeboundnotification' => 'Note Reminders'
     ],
 
     /* =========================
      | Filters
      ========================= */
-    "note.list-filters" => [
+    "list-filters" => [
         "admin" => [
             'date_filter'      => "date/date/note_date-json",
             'session_filter'   => "Session/session/session-json",
@@ -36,7 +36,7 @@ return [
     ],
 
     // Bulk Operations
-    "note.bulk-operations" => [
+    "bulk-operations" => [
         "view:detail" => "View Detail",
         "op:remove"   => "Delete",
         "op:restore"  => "Restore"
@@ -45,14 +45,14 @@ return [
     /* =========================
      | Columns
      ========================= */
-    "note.default-columns" => [
+    "default-columns" => [
         'entry'   => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
         'list'    => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
         'detail'  => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
         'report'  => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
     ],
 
-    "note.report-columns" => [
+    "report-columns" => [
         'id','subject','note_type','context','added_for','added_by',
         'note_end_date','note_end_time','created_at'
     ],

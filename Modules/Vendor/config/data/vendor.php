@@ -1,5 +1,6 @@
 <?php
-$pg = 'vendor';
+
+$pg = 'note';
 
 return [
 
@@ -7,149 +8,182 @@ return [
      | BULK OPERATIONS
      ========================= */
     'bulk-operations' => [
-        'document:vendor-slip' => 'Print Vendor Slip',
-        'send:sms'             => 'Send SMS',
-        'send:email'           => 'Send Email',
-        'op:remove'            => 'Delete Vendor',
-        'op:restore'           => 'Restore Vendor',
+        'view:detail' => 'View Detail',
+        'op:remove'   => 'Delete',
+        'op:restore'  => 'Restore',
     ],
 
     /* =========================
-     | DEFAULT COLUMNS
+     | COLUMNS
      ========================= */
     'columns' => [
 
         /* LIST VIEW */
         'list' => [
-            'id',
-            'vendor_code',
-            'name',
-            'vendor_type',
-            'phone',
-            'state',
+            'note_id',
+            'added_by',
+            'subject',
+            'note_type',
+            'added_for',
+            'response_status',
+            'tags',
             'status',
         ],
 
         /* REPORT VIEW */
         'report' => [
             'id',
-            'vendor_code',
-            'name',
-            'vendor_type',
-            'vendor_gstin',
-            'vendor_pan',
-            'phone',
-            'email',
-            'vendor_person',
-            'vendor_person_phone',
-            'state',
-            'district',
-            'incentive_percentage',
-            'status',
+            'subject',
+            'note_type',
+            'context',
+            'added_for',
+            'added_by',
+            'note_end_date',
+            'note_end_time',
+            'created_at',
         ],
 
         /* DETAIL VIEW */
         'detail' => [
-            'id',
-            'vendor_code',
-            'vendor_type',
-
-            // person
-            'name',
-            'phone',
-            'email',
-
-            'vendor_gstin',
-            'vendor_pan',
-
-            'vendor_info',
-            'vendor_bank_info',
-            'vendor_terms_and_condition',
-
-            'state',
-            'district',
-
-            'vendor_person',
-            'vendor_person_designation',
-            'vendor_person_phone',
-            'vendor_person_email',
-
-            'incentive_percentage',
-            'thread_parent',
+            'note_id',
+            'added_by',
+            'subject',
+            'note_type',
+            'added_for',
+            'response_status',
+            'tags',
             'status',
         ],
 
         /* SAMPLE EXPORT */
         'sample_export' => [
-            'name',
-            'phone',
-            'email',
-            'vendor_type',
-            'vendor_gstin',
-            'vendor_pan',
-            'vendor_person',
-            'vendor_person_phone',
-            'state',
-            'district',
+            'subject',
+            'note_type',
+            'added_for',
+            'added_by',
+            'note_end_date',
+            'note_end_time',
             'status',
         ],
 
         /* USER SELECTABLE */
         'selectable' => [
-            'name',
-            'phone',
-            'vendor_type',
-            'vendor_person',
-            'vendor_person_phone',
-            'state',
+            'subject',
+            'note_type',
+            'added_for',
+            'added_by',
             'status',
         ],
-    ],
-
-    /* =========================
-     | DOCUMENTS
-     ========================= */
-    'documents' => [
-        'vendor-slip'    => 'Vendor Slip',
-        'agreement'      => 'Agreement',
-        'certificate'    => 'Certificate',
-        'vendor-id-card' => 'ID Card',
     ],
 
     /* =========================
      | STATUSES
      ========================= */
     'statuses' => [
-        '1'  => 'Active',
-        '11' => 'Awaiting Approval',
-        '2'  => 'Inactive',
-        '6'  => 'Deleted',
-    ],
-
-    /* =========================
-     | UPLOADS
-     ========================= */
-    'uploads' => [
-        'image' => 'Image',
-        'document' => 'Document',
+        '1'  => 'All',
+        '11' => 'Pending Only',
+        '12' => 'Resolved Only',
+        '2'  => 'Deleted',
     ],
 
     /* =========================
      | CRONS
      ========================= */
     'crons' => [
-        'vendor-followup-reminder' => 'Vendor Follow-up Reminder',
+        'note-timeboundnotification' => 'Note Reminders',
     ],
 
     /* =========================
-     | CUSTOM MODULE DATA
+     | DOCUMENTS (optional future)
      ========================= */
-
-    'vendor-level' => [
-        'Silver',
-        'Gold',
-        'Platinum',
+    'documents' => [
+        'detail' => 'Note Detail',
     ],
 
-    'interactive-entity' => ['vendor'],
+    /* =========================
+     | UPLOADS (optional)
+     ========================= */
+    'uploads' => [
+        'document' => 'Document',
+    ],
+
+    /* =========================
+     | FILTERS (converted)
+     ========================= */
+    'filters' => [
+
+        'list' => [
+            [
+                'type'        => 'date',
+                'name'        => 'date',
+                'placeholder' => 'Date',
+                'dataKey'     => 'note.note_date',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'session',
+                'placeholder' => 'Session',
+                'dataKey'     => 'session.session',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'added_by_type',
+                'placeholder' => 'Added By',
+                'dataKey'     => 'added_by_type.list',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'note_type',
+                'placeholder' => 'Note Type',
+                'dataKey'     => 'student_note_type',
+            ],
+            [
+                'type'        => 'select',
+                'name'        => 'status',
+                'placeholder' => 'Status',
+                'dataKey'     => 'note.statuses',
+            ],
+        ],
+
+    ],
+
+    /* =========================
+     | COMMUNICATION TEMPLATES
+     ========================= */
+    'communication-templates' => [
+        'note_entry_new_sms'    => 'New Note Entry SMS',
+        'note_entry_new_email'  => 'New Note Entry Email',
+        'note_comment_new_sms'  => 'New Note Comment SMS',
+    ],
+
+    /* =========================
+     | COLUMN LABELS
+     ========================= */
+    'column-mapping' => [
+        'note_id'         => 'ID',
+        'added_by'        => 'Name',
+        'note_type'       => 'Type',
+        'added_for'       => 'For',
+        'response_status' => 'R/Status',
+    ],
+
+    /* =========================
+     | MODULE TABLES
+     ========================= */
+    'tables' => [
+        'terms',
+        'cyp_activity',
+        'cyp_notification',
+        'cyp_message',
+        'cyp_note',
+    ],
+
+    /* =========================
+     | VALIDATION META
+     ========================= */
+    'validation' => [
+        'mandatory' => ['information'],
+        'date'      => ['date', 'note_end_date'],
+    ],
+
 ];
