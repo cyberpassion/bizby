@@ -4,50 +4,93 @@ namespace Modules\Product\Models;
 
 use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class Product extends TenantModel
 {
     use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
+     * Mass Assignable Fields (SAFE)
      */
-    protected $fillable = [];
-
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-		'datetime'			=> 'datetime',
-        'product_date' => 'date', // Laravel will cast it to Carbon
+    protected $fillable = [
+        'product_type',
+        'brand_name',
+        'name',
+        'sku',
+        'retail_price',
+        'sale_price',
+        'unit',
+        'availability',
+        'product_description',
+        'tags',
+        'additional_features',
+        'status'
     ];
 
     /**
-     * Default attribute values
+     * Attribute Casting
      */
-    protected $attributes = [];
+    protected $casts = [
+        'retail_price' => 'decimal:2',
+        'sale_price'   => 'decimal:2',
+        'tags'         => 'array',
+        'created_at'   => 'datetime',
+        'updated_at'   => 'datetime',
+    ];
 
     /**
-     * Appended attributes (computed, not in DB)
+     * Default Values
      */
-    protected $appends = [];
+    protected $attributes = [
+        'product_type' => 'physical',
+        'status'       => 1
+    ];
 
-    // Factory (if you use factories)
-    // protected static function newFactory(): ProductFactory
-    // {
-    //     return ProductFactory::new();
-    // }
+    /**
+     * Appended Attributes
+     */
+    protected $appends = [
+        'final_price'
+    ];
 
-	protected function dynamicFillable()
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
+    public function inventoryItems()
     {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->hasMany(
+            \Modules\Inventory\Models\InventoryItem::class,
+            'product_id'
+        );
     }
 
-    public function getFillable()
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------
+    */
+
+    public function getFinalPriceAttribute()
     {
-        return $this->dynamicFillable();
+        return $this->sale_price ?? $this->retail_price;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+
+    public function isPhysical()
+    {
+        return $this->product_type === 'physical';
+    }
+
+    public function isService()
+    {
+        return $this->product_type === 'service';
+    }
 }

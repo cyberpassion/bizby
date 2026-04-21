@@ -75,6 +75,22 @@ abstract class SharedApiController extends Controller
     	    'limit'          => $request->get('limit', 20),
 	    ]);
 
+		/*
+	    |--------------------------------------------------------------------------
+    	| ADD STATUS LABEL FROM CONFIG
+    	|--------------------------------------------------------------------------
+	    */
+    	/*$statuses = config('lead.statuses', []);
+
+	    if (!empty($result['data'])) {
+    	    $result['data'] = collect($result['data'])->map(function ($row) use ($statuses) {
+
+        	    $row['status_label'] = $statuses[$row['status']] ?? $row['status'];
+
+	            return $row;
+    	    })->toArray();
+    	}*/
+
 	    return response()->json([
     	    'status'  => 'success',
         	'message' => 'Records fetched successfully.',

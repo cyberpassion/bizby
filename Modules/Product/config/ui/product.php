@@ -84,6 +84,13 @@ return [
 
         Actions::LIST => [
 
+			[
+                'title'      => 'View Detail',
+                'href'       => UrlPath::makeDocuments($pg, '{id}'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'document',
+            ],
+
             [
                 'title'      => 'Update',
                 'href'       => UrlPath::makeUpdate($pg, '{id}'),
@@ -115,18 +122,18 @@ return [
 
             [
                 'type'        => 'select',
-                'name'        => 'category',
-                'placeholder' => 'Category',
+                'name'        => 'brand_name',
+                'placeholder' => 'Brand',
                 'col'         => 3,
-                'dataKey'     => 'product.categories',
+                'dataKey'     => 'product.brand-names',
             ],
 
             [
                 'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
+                'name'        => 'availability',
+                'placeholder' => 'Availability',
                 'col'         => 3,
-                'dataKey'     => 'product.statuses',
+                'dataKey'     => 'product.availability-statuses',
             ],
 
         ]

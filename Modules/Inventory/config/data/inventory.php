@@ -21,11 +21,12 @@ return [
 
     'list' => [
         'id',
-        'inventory',
-		'issue_type',
-		'inventory_date',
-		'inventory_time',
-		'cost',
+        'name',
+		'code',
+		'minimum_threshold',
+		'maximum_threshold',
+		'current_stock',
+		'stock_status',
 		'status'
     ],
 
@@ -35,11 +36,12 @@ return [
 
     'report' => [
         'id',
-        'inventory',
-		'issue_type',
-		'inventory_date',
-		'inventory_time',
-		'cost',
+        'name',
+		'code',
+		'minimum_threshold',
+		'maximum_threshold',
+		'current_stock',
+		'stock_status',
 		'status'
     ],
 
@@ -49,13 +51,12 @@ return [
 
     'detail' => [
         'id',
+		'name',
+		'code',
         'inventory_group_id',
-        'inventory_date',
-        'inventory_time',
-        'day_token_id',
-        'channel',
-        'consultant',
-        'reason',
+        'maximum_threshold',
+        'current_stock',
+        'stock_status',
 
         // Person fields (useful in detail)
         'name',
@@ -79,7 +80,7 @@ return [
      ========================================================= */
 
     'sample_export' => [
-        'inventory_date',
+        'maximum_threshold',
         'inventory_time',
         'name',
         'phone',
@@ -98,7 +99,7 @@ return [
      ========================================================= */
 
     'selectable' => [
-        'inventory_date',
+        'maximum_threshold',
         'inventory_time',
         'name',
         'phone',
@@ -138,30 +139,19 @@ return [
         'image' => 'Image',
     ],
 
-	/* =========================
-     | CUSTOM SPECIFIC FOR MODULE
-     ========================= */
+	"transaction-types" => [
+	    "in"         => "Stock In",
+    	"out"        => "Stock Out",
+    	"adjustment" => "Adjustment",
+    	"transfer"   => "Transfer"
+	],
 
-	// Default Intervals
-	'default-intervals' => [
-        '5'  => '5 Minutes',
-        '10' => '10 Minutes',
-        '15' => '15 Minutes',
-        '20' => '20 Minutes',
-        '30' => '30 Minutes',
-    ],
-
-	// Next Days
-    'next-days' => [
-        '3 d'  => '3 Days',
-        '4 d'  => '4 Days',
-        '5 d'  => '5 Days',
-        '6 d'  => '6 Days',
-        '7 d'  => '7 Days',
-        '10 d' => '10 Days',
-        '12 d' => '12 Days',
-        '15 d' => '15 Days',
-        '30 d' => '30 Days',
-    ],
+	"reference-types" => [
+	    "purchase" => "Purchase",
+    	"sale"     => "Sale",
+	    "opening"  => "Opening Stock",
+    	"manual"   => "Manual Entry",
+    	"damage"   => "Damage / Loss"
+	],
 
 ];

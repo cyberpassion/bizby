@@ -60,4 +60,10 @@ class InventoryItem extends TenantModel
     {
         return $this->hasMany(InventoryTransaction::class, 'inventory_item_id');
     }
+
+	public function product()
+	{
+    	return $this->belongsTo(\Modules\Product\Models\Product::class, 'product_id');
+	}
+
 }

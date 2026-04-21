@@ -8,29 +8,33 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('inventory_items', function (Blueprint $table) {
-		   // Common SaaS fields (id, tenant_id, status, timestamps, soft deletes, audit)
-            $table->commonSaasFields();
 
-		    // Link to product (optional but recommended)
-		    $table->unsignedBigInteger('product_id')->nullable()->index();
+		    $table->commonSaasFields();
 
-		    // Basic Info
-		    $table->string('name');
-		    $table->string('code')->unique(); // INV-001
-    		$table->string('unit'); // Liters, Units, etc.
+		    // Required relationship
+		    $table->unsignedBigInteger('product_id');
+		    $table->unsignedBigInteger('center_id')->nullable();
 
-		    // Stock Rules
+		    // Unique inventory code per tenant
+		    $table->string('code');
+
+		    // Stock rules
 		    $table->decimal('minimum_threshold', 12, 2)->default(0);
 		    $table->decimal('maximum_threshold', 12, 2)->nullable();
 
-		    // Current Stock (cached, NOT source of truth)
+		    // Cached stock
 		    $table->decimal('current_stock', 14, 2)->default(0);
 
-		    // Location
-		    $table->unsignedBigInteger('center_id')->nullable()->index();
+		    // Constraints
+		    $table->unique(['tenant_id', 'code']);
+		    $table->unique(['tenant_id', 'product_id', 'center_id']);
 
-		    // Status
-    		// $table->enum('status', ['active', 'inactive'])->default('active');
+		    // Foreign keys
+		    $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+    		$table->foreign('center_id')->references('id')->on('centers')->nullOnDelete();
+
+		    // Indexes
+    		$table->index(['product_id', 'center_id']);
 		});
     }
 

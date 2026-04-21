@@ -16,6 +16,9 @@ use Modules\Center\Models\Center;
 use Modules\Consultation\Models\Consultation;
 
 use Modules\Vendor\Models\Vendor;
+use Modules\Product\Models\Product;
+
+use Modules\Inventory\Models\InventoryItem;
 
 use Modules\Lead\Models\Lead;
 use Modules\Booking\Models\BookableUnit;
@@ -110,6 +113,8 @@ class SharedLookupProvider
 			'leads'			=> $this->leads($group),
 			'bookings'		=> $this->bookings($group),
 			'vendors'		=> $this->vendors($group),
+			'products'		=> $this->products($group),
+			'inventories'	=> $this->inventories($group),
 
 			'permissions'	=> $this->permissions($group),
 
@@ -174,6 +179,33 @@ class SharedLookupProvider
             default => [],
         };
     }
+
+	protected function products(string $group): array
+	{
+		return match ($group) {
+
+			'list' => Product::where('status', true)
+				->orderBy('name')
+				->pluck('name', 'id')
+				->toArray(),
+
+			default => [],
+		};
+	}
+
+	protected function inventories(string $group): array
+	{
+    	return match ($group) {
+
+	        'items-list' => InventoryItem::with('product')
+    	        ->where('status', true)
+        	    ->get()
+            	->pluck('product.name', 'id')
+            	->toArray(),
+
+	        default => [],
+    	};
+	}
 
 	protected function vendors(string $group): array
 	{

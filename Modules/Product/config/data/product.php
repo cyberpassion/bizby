@@ -4,169 +4,150 @@ $pg = 'product';
 return [
 
     /* =========================
-     | Filters
+     | Bulk Operations
      ========================= */
-    'list-filters' => [
-        "admin" => [
-            'sort'        => "Type/product_type/product_type-json",
-            'status'      => "Avlb. Status/availability/product_availability_status-json",
-            'sort status' => "Status/status/product_status-json"
+    "bulk-operations" => [
+        "view:detail" => "View Product Details",
+        "op:remove"   => "Delete Product",
+        "op:restore"  => "Restore Product"
+    ],
+
+    /* =========================
+     | Default Columns
+     ========================= */
+    "columns" => [
+        'entry'  => [
+            'product_id','name','product_type','brand_name',
+            'sku','retail_price','sale_price','unit','availability','tags','status'
         ],
-        "portal" => [
-            'sort'        => "Type/product_type/product_type-json",
-            'status'      => "Avlb. Status/availability/product_availability_status-json",
-            'sort status' => "Entry Status/status/product_status-json"
+        'list'   => [
+            'product_id','name','product_type','brand_name',
+            'sale_price','availability','status'
+        ],
+        'detail' => [
+            'product_id','name','product_type','brand_name',
+            'sku','retail_price','sale_price','unit','availability',
+            'product_description','tags','status'
+        ],
+        'report' => [
+            'product_id','name','product_type','brand_name',
+            'sku','retail_price','sale_price','unit','availability','status'
+        ],
+        'sample_export' => [
+            'sno','name','product_type','brand_name','sku',
+            'retail_price','sale_price','unit','availability','product_description'
+        ],
+        'selected_columns' => [
+            'name','product_type','brand_name','sku',
+            'retail_price','sale_price','unit','availability','product_description'
         ]
     ],
 
-    // Bulk Operations
-    'bulk-operations' => [
-        "view:detail" => "View Product Details",
-        "op:remove"  => "Delete",
-        "op:restore" => "Restore"
+    /* =========================
+     | Statuses
+     ========================= */
+    "statuses" => [
+        "1"  => "ACTIVE",
+        "2"  => "INACTIVE",
+        "3"  => "DELETED"
     ],
 
-    // Default Columns
-    'default-columns' => [
-        'entry'  => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
-        'list'   => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
-        'detail' => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
-        'report' => ['product_id','product_name','product_type','brand_name','total_quantity','sold_quantity','available_quantity','availability','tags','status'],
-    ],
+	/* =========================
+	 | Availability Statuses
+	 ========================= */
+	"availability-statuses" => [
+    	"in_stock"        => "In Stock",
+    	"out_of_stock"    => "Out of Stock",
+    	"low_stock"       => "Low Stock",
+    	"preorder"        => "Pre Order",
+    	"discontinued"    => "Discontinued"
+	],
 
     /* =========================
-     | Stock Status
+     | Custom Fields
      ========================= */
-    'stock.statuses' => [
-        'in-stock'      => 'IN STOCK',
-        'low-stock'     => 'LOW STOCK',
-        'out-of-stock'  => 'OUT OF STOCK'
+
+    // Product Types
+    "types" => [
+        "physical" => "Physical",
+        "service"  => "Service"
     ],
+
+    // Availability (UI purpose only)
+    "availability" => [
+        "in_stock"     => "In Stock",
+        "out_of_stock" => "Out of Stock",
+        "preorder"     => "Pre Order"
+    ],
+
+    // Units
+    "units" => [
 
     /* =========================
-     | List & Report Columns
+     | Quantity / Count
      ========================= */
-    'list-columns' => [
-        'id','product_name','brand_name','product_type','sale_price','available_stock'
-    ],
-
-    'report-columns' => [
-        'id','product_type','brand_name','product_name','unit',
-        'retail_price','sale_price','total_quantity',
-        'sold_quantity','available_stock','availability','created_at'
-    ],
+    "pcs"      => "Pieces",
+    "unit"     => "Unit",
+    "pair"     => "Pair",
+    "set"      => "Set",
+    "box"      => "Box",
+    "pack"     => "Pack",
+    "dozen"    => "Dozen",
 
     /* =========================
-     | Documents
+     | Weight
      ========================= */
-    'documents' => [
-        'product-brochure' => 'Product Brochure'
-    ],
+    "mg"       => "Milligram",
+    "g"        => "Gram",
+    "kg"       => "Kilogram",
+    "ton"      => "Ton",
 
     /* =========================
-     | Communication Templates
+     | Volume
      ========================= */
-    'communicationTemplate-product' => [
-        "product_entry_new_sms"      => "New Product Entry SMS",
-        "product_entry_new_whatsapp" => "New Product Entry Whatsapp",
-        "product_entry_new_email"    => "New Product Entry Email",
-    ],
+    "ml"       => "Millilitre",
+    "litre"    => "Litre",
+    "kl"       => "Kilolitre",
 
     /* =========================
-     | Column Mapping
+     | Length
      ========================= */
-    'columnNameMapping-product' => [
-        'product_id'          => 'ID',
-        'product_name'        => 'Name',
-        'product_type'        => 'Type',
-        'brand_name'          => 'Brand',
-        'total_quantity'      => 'Total Qty',
-        'available_quantity'  => 'Available',
-        'sold_quantity'       => 'Sold'
-    ],
-
-    'columnNames-product' => [
-        'unit_price' => 'sale_price',
-        'size'       => 'product_size',
-        'unit'       => 'product_size_unit'
-    ],
+    "mm"       => "Millimeter",
+    "cm"       => "Centimeter",
+    "m"        => "Meter",
+    "km"       => "Kilometer",
+    "inch"     => "Inch",
+    "ft"       => "Feet",
 
     /* =========================
-     | Database Tables
+     | Area
      ========================= */
-    'moduleTable-product' => [
-        "cyp_term",
-        "cyp_activity",
-        "cyp_advancedinfo",
-        "cyp_allotment",
-        "cyp_cash",
-        "cyp_option",
-        "cyp_upload",
-        "cyp_notification",
-        "cyp_message",
-        "cyp_stock",
-        "cyp_product"
-    ],
+    "sqft"     => "Square Feet",
+    "sqm"      => "Square Meter",
+    "acre"     => "Acre",
+
+    /* =========================
+     | Time (for services)
+     ========================= */
+    "minute"   => "Minute",
+    "hour"     => "Hour",
+    "day"      => "Day",
+    "month"    => "Month",
+    "year"     => "Year"
+
+],
 
     /* =========================
      | Validation & Rules
      ========================= */
-    'mandatoryFields-product-entry-update' => ['product_name','sale_price'],
-    'dateFields-product-entry-update'      => [],
-    'additionalFields-product-entry-update'=> [],
-
-    /* =========================
-     | Form Prefill
-     ========================= */
-    'formPrefills-product-entry-new' => [
-        "columns" => [
-            'product'      => 'default_product',
-            'contact_mode' => 'default_contact_mode',
-            'state'        => 'default_indian_state'
-        ],
-        "groups" => [
-            'current_date' => ['contact_date']
-        ]
+    "mandatoryFields-product-entry-update" => [
+        'name',
+        'product_type',
+        'retail_price'
     ],
 
-    /* =========================
-     | Misc
-     ========================= */
-    'product-cancel-reason' => [
-        1  => 'For Customer Satisfaction',
-        11 => 'Faulty/Defective',
-        19 => 'Poor Quality'
-    ],
+    "dateFields-product-entry-update" => [],
 
-    'product-group-results-by' => [
-        'product_type'     => 'PRODUCT TYPE',
-        'brand_name'       => 'BRAND NAME',
-        'total_quantity'   => 'TOTAL STOCK',
-        'available_stock'  => 'AVAILABLE STOCK',
-        'sold_stock'       => 'SOLD STOCK',
-        'status'           => 'STATUS'
-    ],
-
-    'product-sort-results-by' => [
-        'product_name'     => 'PRODUCT NAME',
-        'brand_name'       => 'BRAND NAME',
-        'total_quantity'   => 'TOTAL STOCK',
-        'available_stock'  => 'AVAILABLE STOCK',
-        'sold_stock'       => 'SOLD STOCK'
-    ],
-
-    'product-group-results-display-type' => [
-        'complete_list' => 'COMPLETE LIST'
-    ],
-
-    'stock-price-type' => [
-        'total'    => 'Total',
-        'per-unit' => 'Per Unit'
-    ],
-
-    'product-unit' => [
-        'qty' => 'QTY',
-        'kg'  => 'KG'
-    ],
+    "additionalFields-product-entry-update" => [],
 
 ];

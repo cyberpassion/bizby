@@ -23,31 +23,27 @@ return [
                     'permission' => Permission::view(Res::HOME),
                 ],
 
-                [
-                    'title'      => 'Add New',
+				[
+                	'title'      => 'Add Item',
                     'href'       => UrlPath::makeCreate($pg),
                     'permission' => Permission::create(Res::INVENTORIES),
                 ],
-
-                [
+				[
+                    'title'      => 'Add Transaction',
+                    'href'       => UrlPath::make($pg, 'transactions/create'),
+                    'permission' => Permission::create(Res::INVENTORIES),
+                ],
+				[
                     'title'      => 'View List',
                     'href'       => UrlPath::makeList($pg),
                     'permission' => Permission::list(Res::INVENTORIES),
                 ],
-
-                [
-                    'title'      => 'Bulk-Ops',
-                    'href'       => UrlPath::makeBulk($pg),
-                    'permission' => Permission::bulk(Res::INVENTORIES),
-                ],
-
-                [
+				[
                     'title'      => 'Report',
                     'href'       => UrlPath::makeReport($pg),
                     'permission' => Permission::view(Res::REPORTS),
                 ],
-
-                [
+				[
                     'title'      => 'Settings',
                     'href'       => UrlPath::makeSettings($pg),
                     'permission' => Permission::update(Res::SETTINGS),
@@ -63,42 +59,57 @@ return [
     */
     'single-actions' => [
 
-		Actions::LIST => [
-			[
+        Actions::LIST => [
+
+            [
                 'title'      => 'View Detail',
                 'href'       => UrlPath::makeDocuments($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'document',
             ],
 
-	        [
-    	        'title'      => 'Update',
-        	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            	'permission' => Permission::update(Res::INVENTORIES),
-            	'action'     => 'update',
-	        ],
+            [
+                'title'      => 'Add Stock',
+                'href'       => UrlPath::make($pg, 'create-transactions/?product_id={id}'),
+                'permission' => Permission::create(Res::INVENTORIES),
+                'variant'    => 'success'
+            ],
 
-	        [
-    	        'title'      => 'Delete',
-        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
-            	'permission' => Permission::delete(Res::INVENTORIES),
-	            'action'     => 'delete',
-    	        'method'     => 'DELETE',
-        	    'variant'    => 'danger',
-        	]
-		]
+            [
+                'title'      => 'Update',
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
+                'permission' => Permission::update(Res::INVENTORIES),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'permission' => Permission::delete(Res::INVENTORIES),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
+        ]
 
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | List Filters (Frontend)
+    | Filters
     |--------------------------------------------------------------------------
     */
     'filters' => [
 
-        Actions::LIST	=>	[
+        Actions::LIST => [
             [
+                'type'        => 'select',
+                'name'        => 'product_id',
+                'placeholder' => 'Product',
+                'col'         => 3,
+                'dataKey'     => 'products.list',
+            ],
+			[
                 'type'        => 'select',
                 'name'        => 'status',
                 'placeholder' => 'Status',
