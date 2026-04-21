@@ -80,10 +80,9 @@ return [
      | STATUSES
      ========================= */
     'statuses' => [
-        '1'  => 'All',
-        '11' => 'Pending Only',
-        '12' => 'Resolved Only',
+        '1'  => 'Active',
         '2'  => 'Deleted',
+		'21' => 'Inactive',
     ],
 
     /* =========================

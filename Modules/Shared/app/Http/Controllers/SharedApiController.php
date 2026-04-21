@@ -50,9 +50,14 @@ abstract class SharedApiController extends Controller
     	$table = (new $model)->getTable();
 
 	    // Convert GET params automatically into exact match filters
-    	$whereFilters = $request->only(
+    	/*$whereFilters = $request->only(
         	(new $model)->getFillable()   // apply only valid DB columns
-    	);
+    	);*/
+		$whereFilters = collect(
+		    $request->only((new $model)->getFillable())
+		)->filter(function ($value) {
+    		return $value !== 'all' && $value !== null && $value !== '';
+		})->toArray();
 
 	    // Search param if exists
     	$search = $request->get('search', null);
