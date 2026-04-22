@@ -51,29 +51,13 @@ return [
 
     'detail' => [
         'id',
-        'incident_group_id',
+        'center_id',
+		'incident_code',
+        'location',
+        'severity',
         'incident_date',
-        'incident_time',
-        'day_token_id',
-        'channel',
-        'consultant',
-        'reason',
-
-        // Person fields (useful in detail)
-        'name',
-        'phone',
-        'email',
-        'gender',
-        'dob',
-
-        'incident_type',
-        'incident_fee',
-        'referred_by',
-        'referred_to',
-        'followup_interval_days',
-        'next_date',
-        'thread_parent',
-        'status',
+		'incident_time',
+        'status'
     ],
 
     /* =========================================================

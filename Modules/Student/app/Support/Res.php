@@ -5,6 +5,7 @@ namespace Modules\Student\Support;
 class Res
 {
     public const HOME            = 'student.home';
+	public const PROFILE	 	 = 'student.profile';
     public const STUDENTS        = 'student.students';
     public const ACADEMIC        = 'student.academic';
     public const FEES            = 'student.fees';

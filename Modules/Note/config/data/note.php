@@ -96,21 +96,9 @@ return [
             'subject',
             'type',
             'priority',
-            'is_internal',
-
-            // Assignment
             'assigned_to',
-
-            // Communication
             'last_message',
             'last_message_at',
-            'unread_count',
-
-            // Timeline
-            'created_at',
-            'updated_at',
-
-            // Status
             'status',
         ],
 

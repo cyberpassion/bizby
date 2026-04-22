@@ -34,11 +34,10 @@ return [
 
     'report' => [
         'id',
-        'asset',
-		'issue_type',
-		'asset_date',
-		'asset_time',
-		'cost',
+        'asset_code',
+		'name',
+		'serial_number',
+		'purchase_date',
 		'status'
     ],
 
@@ -48,29 +47,11 @@ return [
 
     'detail' => [
         'id',
-        'asset_group_id',
-        'asset_date',
-        'asset_time',
-        'day_token_id',
-        'channel',
-        'consultant',
-        'reason',
-
-        // Person fields (useful in detail)
-        'name',
-        'phone',
-        'email',
-        'gender',
-        'dob',
-
-        'asset_type',
-        'asset_fee',
-        'referred_by',
-        'referred_to',
-        'followup_interval_days',
-        'next_date',
-        'thread_parent',
-        'status',
+        'asset_code',
+		'name',
+		'serial_number',
+		'purchase_date',
+		'status'
     ],
 
     /* =========================================================

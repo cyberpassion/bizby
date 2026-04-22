@@ -5,7 +5,7 @@ namespace Modules\Registration\Support;
 class Res
 {
     public const HOME          = 'registration.home';
-
+	public const PROFILE	 	= 'registration.profile';
     public const REGISTRATIONS = 'registration.registrations';
     public const STEPS         = 'registration.steps';
     public const DOCUMENTS     = 'registration.documents';

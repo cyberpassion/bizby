@@ -39,12 +39,6 @@ return [
                 ],
 
                 [
-                    'title'      => 'Bulk-Ops',
-                    'href'       => UrlPath::makeBulk($pg),
-                    'permission' => Permission::bulk(Res::VENDORS),
-                ],
-
-                [
                     'title'      => 'Documents',
                     'href'       => UrlPath::makeDocuments($pg, '{id}'),
                     'permission' => Permission::view(Res::DOCUMENTS),
@@ -74,11 +68,18 @@ return [
 
         Actions::LIST => [
 
-            [
-                'title'      => 'View Detail',
-                'href'       => UrlPath::makeDocuments($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
+			[
+                'title'      => 'View Profile',
+                'href'       => UrlPath::makeProfile($pg, '{id}'),
+                'permission' => Permission::view(Res::PROFILE),
                 'action'     => 'document',
+            ],
+
+            [
+                'title'      => 'View Details',
+                'href'       => UrlPath::makeDetail($pg, '{id}'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'detail',
             ],
 
             [

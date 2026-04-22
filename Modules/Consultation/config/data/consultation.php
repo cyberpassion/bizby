@@ -54,29 +54,17 @@ return [
      ========================================================= */
 
     'detail' => [
-        'id',
-        'consultation_group_id',
         'consultation_date',
-        'consultation_time',
-        'day_token_id',
-        'channel',
-        'consultant',
-        'reason',
-
-        // Person fields (useful in detail)
         'name',
         'phone',
-        'email',
-        'gender',
-        'dob',
-
         'consultation_type',
-        'consultation_fee',
+        'channel',
+        'consultant',
         'referred_by',
         'referred_to',
+        'consultation_fee',
         'followup_interval_days',
         'next_date',
-        'thread_parent',
         'status',
     ],
 

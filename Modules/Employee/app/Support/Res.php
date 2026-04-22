@@ -5,6 +5,7 @@ namespace Modules\Employee\Support;
 class Res
 {
     public const HOME        = 'employee.home';
+	public const PROFILE	 = 'employee.profile';
     public const EMPLOYEES   = 'employee.employees';
     public const DOCUMENTS   = 'employee.documents';
     public const UPLOADS     = 'employee.uploads';

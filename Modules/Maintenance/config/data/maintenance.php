@@ -49,29 +49,12 @@ return [
 
     'detail' => [
         'id',
-        'maintenance_group_id',
-        'maintenance_date',
-        'maintenance_time',
-        'day_token_id',
-        'channel',
-        'consultant',
-        'reason',
-
-        // Person fields (useful in detail)
-        'name',
-        'phone',
-        'email',
-        'gender',
-        'dob',
-
-        'maintenance_type',
-        'maintenance_fee',
-        'referred_by',
-        'referred_to',
-        'followup_interval_days',
-        'next_date',
-        'thread_parent',
-        'status',
+        'asset',
+		'issue_type',
+		'maintenance_date',
+		'maintenance_time',
+		'cost',
+		'status'
     ],
 
     /* =========================================================

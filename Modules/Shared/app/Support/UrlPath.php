@@ -69,6 +69,11 @@ class UrlPath
 		return self::make($module, BaseActions::PROFILE . '/' . $id);
 	}
 
+	public static function makeDetail(string $module, $id): string
+	{
+		return self::make($module, BaseActions::DETAIL . '/' . $id);
+	}
+
 	public static function makeDelete(string $module, $id): string
 	{
 		return self::make($module, BaseActions::DELETE . '/' . $id);

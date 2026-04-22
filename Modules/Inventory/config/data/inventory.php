@@ -51,28 +51,13 @@ return [
 
     'detail' => [
         'id',
-		'name',
-		'code',
-        'inventory_group_id',
-        'maximum_threshold',
-        'current_stock',
-        'stock_status',
-
-        // Person fields (useful in detail)
         'name',
-        'phone',
-        'email',
-        'gender',
-        'dob',
-
-        'inventory_type',
-        'inventory_fee',
-        'referred_by',
-        'referred_to',
-        'followup_interval_days',
-        'next_date',
-        'thread_parent',
-        'status',
+		'code',
+		'minimum_threshold',
+		'maximum_threshold',
+		'current_stock',
+		'stock_status',
+		'status'
     ],
 
     /* =========================================================

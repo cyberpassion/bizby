@@ -45,29 +45,10 @@ return [
 
     'detail' => [
         'id',
-        'center_group_id',
-        'center_date',
-        'center_time',
-        'day_token_id',
-        'channel',
-        'consultant',
-        'reason',
-
-        // Person fields (useful in detail)
         'name',
-        'phone',
-        'email',
-        'gender',
-        'dob',
-
-        'center_type',
-        'center_fee',
-        'referred_by',
-        'referred_to',
-        'followup_interval_days',
-        'next_date',
-        'thread_parent',
-        'status',
+        'location',
+		'contact',
+        'status'
     ],
 
     /* =========================================================

@@ -5,6 +5,7 @@ namespace Modules\Vendor\Support;
 class Res
 {
     public const HOME        = 'vendor.home';
+	public const PROFILE	 = 'vendor.profile';
     public const VENDORS     = 'vendor.vendors';
     public const DOCUMENTS   = 'vendor.documents';
     public const UPLOADS     = 'vendor.uploads';

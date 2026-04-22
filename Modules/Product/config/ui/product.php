@@ -85,10 +85,10 @@ return [
         Actions::LIST => [
 
 			[
-                'title'      => 'View Detail',
-                'href'       => UrlPath::makeDocuments($pg, '{id}'),
+                'title'      => 'View Details',
+                'href'       => UrlPath::makeDetail($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'document',
+                'action'     => 'detail',
             ],
 
             [
