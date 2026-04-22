@@ -21,7 +21,7 @@ return [
             'items' => [
 
                 [
-                    'title'      => 'Dashboard',
+                    'title'      => 'Home',
                     'href'       => UrlPath::makeHome($pg),
                     'permission' => Permission::view(Res::HOME),
                 ],

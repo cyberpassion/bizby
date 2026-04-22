@@ -18,7 +18,7 @@ return [
             'items'      => [
 
                 [
-                    'title'      => 'Dashboard',
+                    'title'      => 'Home',
                     'href'       => "/module/{$pg}",
                     'permission' => "{$pg}.dashboard.view",
                 ],

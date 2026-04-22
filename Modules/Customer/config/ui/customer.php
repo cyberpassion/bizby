@@ -12,7 +12,7 @@ return [
             'items'      => [
 
                 [
-                    'title'      => 'Dashboard',
+                    'title'      => 'Home',
                     'href'       => "/module/{$pg}/home",
                     'permission' => "{$pg}.dashboard.view",
                 ],
