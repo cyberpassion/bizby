@@ -66,14 +66,14 @@ return [
             ],
 
 			[
-                'title'      => 'View Details',
+                'title'      => 'Details',
                 'href'       => UrlPath::makeDetail($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'detail',
             ],
 
 			[
-                'title'      => 'View Profile',
+                'title'      => 'Profile',
                 'href'       => UrlPath::makeProfile($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'profile',
