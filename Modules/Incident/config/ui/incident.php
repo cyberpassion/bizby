@@ -65,6 +65,13 @@ return [
                 'action'     => 'document',
             ],
 
+			[
+                'title'      => 'View Details',
+                'href'       => UrlPath::makeDetail($pg, '{id}'),
+                'permission' => Permission::view(Res::DETAILS),
+                'action'     => 'detail',
+            ],
+
 	        [
     	        'title'      => 'Update',
         	    'href'       => UrlPath::makeUpdate($pg, '{id}'),

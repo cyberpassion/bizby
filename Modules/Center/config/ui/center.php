@@ -35,7 +35,7 @@ return [
                     'permission' => Permission::list(Res::CENTERS),
                 ],
 
-                [
+                /*[
                     'title'      => 'Report',
                     'href'       => UrlPath::makeReport($pg),
                     'permission' => Permission::view(Res::REPORTS),
@@ -45,7 +45,7 @@ return [
                     'title'      => 'Settings',
                     'href'       => UrlPath::makeSettings($pg),
                     'permission' => Permission::update(Res::SETTINGS),
-                ],
+                ],*/
             ],
         ],
     ],

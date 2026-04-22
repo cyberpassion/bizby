@@ -5,6 +5,7 @@ namespace Modules\Incident\Support;
 class Res
 {
     public const HOME           = 'incident.home';
+	public const DETAILS        = 'incident.details';
     public const INCIDENTS 		= 'incident.incidents';
 	public const DOCUMENTS   	= 'incident.documents';
     public const FOLLOWUPS      = 'incident.followups';
