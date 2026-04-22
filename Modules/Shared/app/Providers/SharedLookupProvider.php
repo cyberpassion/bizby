@@ -20,6 +20,8 @@ use Modules\Product\Models\Product;
 
 use Modules\Inventory\Models\InventoryItem;
 
+use Modules\Note\Models\Note;
+
 use Modules\Lead\Models\Lead;
 use Modules\Booking\Models\BookableUnit;
 use Modules\Booking\Models\BookingVenue;
@@ -115,6 +117,7 @@ class SharedLookupProvider
 			'vendors'		=> $this->vendors($group),
 			'products'		=> $this->products($group),
 			'inventories'	=> $this->inventories($group),
+			'notes'			=> $this->notes($group),
 
 			'permissions'	=> $this->permissions($group),
 
@@ -202,6 +205,20 @@ class SharedLookupProvider
         	    ->get()
             	->pluck('product.name', 'id')
             	->toArray(),
+
+	        default => [],
+    	};
+	}
+
+	protected function notes(string $group): array
+	{
+    	return match ($group) {
+
+	        'recipients-list' => array(
+				'employee_1' => 'Employee 1',
+				'employee_2' => 'Employee 2',
+				'employee_3' => 'Employee 3',
+			),
 
 	        default => [],
     	};

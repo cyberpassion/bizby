@@ -80,9 +80,9 @@ abstract class SharedApiController extends Controller
     	| ADD STATUS LABEL FROM CONFIG
     	|--------------------------------------------------------------------------
 	    */
-    	/*$statuses = config('lead.statuses', []);
+    	//$statuses = app(LookupsApiController::class)->get('inventory')['statuses'];print_r($statuses);exit;
 
-	    if (!empty($result['data'])) {
+	    /*if (!empty($result['data'])) {
     	    $result['data'] = collect($result['data'])->map(function ($row) use ($statuses) {
 
         	    $row['status_label'] = $statuses[$row['status']] ?? $row['status'];

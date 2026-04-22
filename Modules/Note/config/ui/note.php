@@ -60,26 +60,107 @@ return [
     */
     'single-actions' => [
 
-        Actions::LIST => [
+    Actions::LIST => [
 
-            [
-                'title'      => 'Edit',
-                'href'       => UrlPath::makeUpdate($pg, '{id}'),
-                'permission' => Permission::update(Res::NOTES),
-                'action'     => 'update',
-            ],
+        /*
+        |--------------------------------------------------------------------------
+        | PRIMARY ACTION (Open Chat)
+        |--------------------------------------------------------------------------
+        */
+        [
+            'title'      => 'Open',
+            'href'       => "{id}/conversation", // chat screen
+            'permission' => Permission::view(Res::NOTES),
+            'action'     => 'view',
+            'variant'    => 'primary',
+        ],
 
-            [
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($pg, '{id}'),
-                'permission' => Permission::delete(Res::NOTES),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
-        ]
+        /*
+        |--------------------------------------------------------------------------
+        | Thread Management
+        |--------------------------------------------------------------------------
+        */
+        [
+            'title'      => 'Edit Details',
+            'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            'permission' => Permission::update(Res::NOTES),
+            'action'     => 'update',
+        ],
 
-    ],
+        [
+            'title'      => 'Assign',
+            'href'       => "{$pg}/note/{id}/assign",
+            'permission' => Permission::update(Res::NOTES),
+            'action'     => 'assign',
+            'type'       => 'modal', // optional (for popup)
+        ],
+
+        [
+            'title'      => 'Participants',
+            'href'       => "{$pg}/note/{id}/participants",
+            'permission' => Permission::update(Res::NOTES),
+            'action'     => 'participants',
+            'type'       => 'modal',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Status Actions
+        |--------------------------------------------------------------------------
+        */
+        [
+            'title'      => 'Mark In Progress',
+            'href'       => "{$pg}/note/{id}/status/in_progress",
+            'permission' => Permission::update(Res::NOTES),
+            'action'     => 'status',
+            'method'     => 'PATCH',
+        ],
+
+        [
+            'title'      => 'Mark Resolved',
+            'href'       => "{$pg}/note/{id}/status/resolved",
+            'permission' => Permission::update(Res::NOTES),
+            'action'     => 'status',
+            'method'     => 'PATCH',
+        ],
+
+        [
+            'title'      => 'Mark Closed',
+            'href'       => "{$pg}/note/{id}/status/closed",
+            'permission' => Permission::update(Res::NOTES),
+            'action'     => 'status',
+            'method'     => 'PATCH',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Utility
+        |--------------------------------------------------------------------------
+        */
+        [
+            'title'      => 'Set Reminder',
+            'href'       => "{$pg}/note/{id}/reminder",
+            'permission' => Permission::update(Res::NOTES),
+            'action'     => 'reminder',
+            'type'       => 'modal',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dangerous
+        |--------------------------------------------------------------------------
+        */
+        [
+            'title'      => 'Delete',
+            'href'       => UrlPath::makeDelete($pg, '{id}'),
+            'permission' => Permission::delete(Res::NOTES),
+            'action'     => 'delete',
+            'method'     => 'DELETE',
+            'variant'    => 'danger',
+        ],
+    ]
+
+],
 
     /*
     |--------------------------------------------------------------------------
@@ -89,6 +170,16 @@ return [
     'filters' => [
 
         Actions::LIST => [
+            [
+                'type'        => 'select',
+                'name'        => 'type',
+                'placeholder' => 'Type',
+                'col'         => 3,
+                'dataKey'     => 'note.thread-types',
+            ],
+        ],
+
+		Actions::LIST => [
             [
                 'type'        => 'select',
                 'name'        => 'status',

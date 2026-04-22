@@ -3,95 +3,182 @@ $pg = 'note';
 
 return [
 
-    // Statuses
+    /*
+    |--------------------------------------------------------------------------
+    | Thread Types (Conversation category)
+    |--------------------------------------------------------------------------
+    */
+    "thread-types" => [
+        "support"   => "Support",
+        "complaint" => "Complaint",
+        "internal"  => "Internal",
+        "follow_up" => "Follow Up",
+        "sales"     => "Sales",
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Thread Priorities
+    |--------------------------------------------------------------------------
+    */
+    "priorities" => [
+        "low"    => "Low",
+        "medium" => "Medium",
+        "high"   => "High",
+        "urgent" => "Urgent",
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Thread Status (Better normalize this later)
+    |--------------------------------------------------------------------------
+    */
     "statuses" => [
-        "1"  => "All",
-        "11" => "Pending Only",
-        "12" => "Resolved Only",
-        "2"  => "Deleted"
+        "open"        => "Open",
+        "in_progress" => "In Progress",
+        "resolved"    => "Resolved",
+        "closed"      => "Closed",
     ],
 
-    "crons" => [
-        'note-timeboundnotification' => 'Note Reminders'
+    /*
+    |--------------------------------------------------------------------------
+    | Bulk Operations
+    |--------------------------------------------------------------------------
+    */
+    'bulk-operations' => [
+        'view:detail' => 'View Conversation',
+        'send:sms'    => 'Send SMS',
+        'send:email'  => 'Send Email',
+        'op:remove'   => 'Delete Thread',
+        'op:restore'  => 'Restore Thread',
     ],
 
-    /* =========================
-     | Filters
-     ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Columns (Unified Structure)
+    |--------------------------------------------------------------------------
+    */
+    'columns' => [
+
+        /* =========================================================
+         | LIST VIEW (Fast scanning)
+         ========================================================= */
+        'list' => [
+            'id',
+            'subject',
+            'type',
+            'priority',
+            'assigned_to',
+            'last_message',
+            'last_message_at',
+            'status',
+        ],
+
+        /* =========================================================
+         | REPORT VIEW (Analytics / BI)
+         ========================================================= */
+        'report' => [
+            'id',
+            'subject',
+            'type',
+            'priority',
+            'assigned_to',
+            'created_at',
+            'last_message_at',
+            'status',
+        ],
+
+        /* =========================================================
+         | DETAIL VIEW (Full context)
+         ========================================================= */
+        'detail' => [
+            'id',
+            'subject',
+            'type',
+            'priority',
+            'is_internal',
+
+            // Assignment
+            'assigned_to',
+
+            // Communication
+            'last_message',
+            'last_message_at',
+            'unread_count',
+
+            // Timeline
+            'created_at',
+            'updated_at',
+
+            // Status
+            'status',
+        ],
+
+        /* =========================================================
+         | SAMPLE EXPORT
+         ========================================================= */
+        'sample_export' => [
+            'subject',
+            'type',
+            'priority',
+            'assigned_to',
+            'created_at',
+            'status',
+        ],
+
+        /* =========================================================
+         | USER SELECTABLE COLUMNS
+         ========================================================= */
+        'selectable' => [
+            'subject',
+            'type',
+            'priority',
+            'assigned_to',
+            'last_message_at',
+            'status',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Filters (Update for thread-based system)
+    |--------------------------------------------------------------------------
+    */
     "list-filters" => [
         "admin" => [
-            'date_filter'      => "date/date/note_date-json",
-            'session_filter'   => "Session/session/session-json",
-            'added_by_filter'  => "added by/added_by_type/added_by_type-list",
-            'note_type'        => "note type/note_type/student_note_type-json",
-            'status'           => "status/status/status-json"
+            'date'        => "date/created_at/date-range",
+            'type'        => "type/type/thread-types",
+            'priority'    => "priority/priority/priorities",
+            'status'      => "status/status/statuses",
+            'assigned_to' => "assigned to/assigned_to/recipients-search",
         ],
         "portal" => [
-            'date_filter'      => "date/date/note_date-json",
-            'session_filter'   => "Session/session/session-json",
-            'added_by_filter'  => "added by/added_by_type/added_by_type-list",
-            'note_type'        => "note type/note_type/student_note_type-json",
-            'status'           => "status/status/status-json"
+            'date'     => "date/created_at/date-range",
+            'type'     => "type/type/thread-types",
+            'priority' => "priority/priority/priorities",
+            'status'   => "status/status/statuses",
         ]
     ],
 
-    // Bulk Operations
-    "bulk-operations" => [
-        "view:detail" => "View Detail",
-        "op:remove"   => "Delete",
-        "op:restore"  => "Restore"
+    /*
+    |--------------------------------------------------------------------------
+    | Cron Jobs
+    |--------------------------------------------------------------------------
+    */
+    "crons" => [
+        'note-reminder' => 'Note Reminder Notifications',
     ],
 
-    /* =========================
-     | Columns
-     ========================= */
-    "default-columns" => [
-        'entry'   => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
-        'list'    => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
-        'detail'  => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
-        'report'  => ['note_id','added_by','subject','note_type','added_for','response_status','tags','status'],
+    /*
+    |--------------------------------------------------------------------------
+    | Communication Templates
+    |--------------------------------------------------------------------------
+    */
+    "communication-templates" => [
+        "thread_created_sms"   => "Thread Created SMS",
+        "thread_created_email" => "Thread Created Email",
+        "message_added_sms"    => "New Message SMS",
+        "message_added_email"  => "New Message Email",
     ],
-
-    "report-columns" => [
-        'id','subject','note_type','context','added_for','added_by',
-        'note_end_date','note_end_time','created_at'
-    ],
-
-    /* =========================
-     | Communication Templates
-     ========================= */
-    "communicationTemplate-note" => [
-        "note_entry_new_sms"   => "New Note Entry SMS",
-        "note_entry_new_email" => "New Note Entry Email",
-        "note_comment_new_sms"=> "New Note Comment SMS",
-    ],
-
-    /* =========================
-     | Column Mapping
-     ========================= */
-    "columnNameMapping-note" => [
-        'note_id'         => 'ID',
-        'added_by'        => 'Name',
-        'note_type'       => 'Type',
-        'added_for'       => 'For',
-        'response_status' => 'R/Status'
-    ],
-
-    /* =========================
-     | DB Tables
-     ========================= */
-    "moduleTable-note" => [
-        "terms",
-        "cyp_activity",
-        "cyp_notification",
-        "cyp_message",
-        "cyp_note"
-    ],
-
-    /* =========================
-     | Validation
-     ========================= */
-    "mandatoryFields-note-entry-update" => ['information'],
-    "dateFields-note-entry-update"      => ['date','note_end_date'],
 
 ];

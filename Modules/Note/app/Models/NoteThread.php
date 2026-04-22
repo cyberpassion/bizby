@@ -10,47 +10,36 @@ class NoteThread extends TenantModel
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'note_threads';
-
     protected $fillable = [
         'type',
         'subject',
-        'participant_one_id',
-        'participant_one_type',
-        'participant_two_id',
-        'participant_two_type',
+        'status',
+        'priority',
+        'is_internal',
+        'last_message',
         'last_message_at',
+        'unread_count',
+        'assigned_to_id',
+        'assigned_to_type'
     ];
 
     protected $casts = [
+        'is_internal'     => 'boolean',
         'last_message_at' => 'datetime',
     ];
 
-    /* =========================
-     | Relationships
-     |=========================*/
-
-    public function messages()
+    public function notes()
     {
-        return $this->hasMany(Note::class, 'note_thread_id')
-                    ->orderBy('created_at');
+        return $this->hasMany(Note::class, 'note_thread_id');
     }
 
-    public function participantOne()
+    public function participants()
     {
-        return $this->morphTo(
-            __FUNCTION__,
-            'participant_one_type',
-            'participant_one_id'
-        );
+        return $this->hasMany(NoteThreadParticipant::class, 'note_thread_id');
     }
 
-    public function participantTwo()
+    public function assignedTo()
     {
-        return $this->morphTo(
-            __FUNCTION__,
-            'participant_two_type',
-            'participant_two_id'
-        );
+        return $this->morphTo();
     }
 }

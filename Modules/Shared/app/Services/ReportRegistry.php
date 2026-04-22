@@ -29,7 +29,7 @@ class ReportRegistry
             'attendance'     => \Modules\Attendance\Models\Attendance::class,
             'survey'         => \Modules\Survey\Models\Survey::class,
             'checklist'      => \Modules\Checklist\Models\Checklist::class,
-            //'note'           => \Modules\Notes\Models\Note::class,
+            //'note'           => \Modules\Note\Models\Note::class,
             //'event'          => \Modules\Events\Models\Event::class,
             //'meeting'        => \Modules\Meetings\Models\Meeting::class,
             //'visit'          => \Modules\Visits\Models\Visit::class,

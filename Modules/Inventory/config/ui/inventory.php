@@ -70,7 +70,7 @@ return [
 
             [
                 'title'      => 'Add Stock',
-                'href'       => UrlPath::make($pg, 'create-transactions/?product_id={id}'),
+                'href'       => UrlPath::make($pg, 'create-transactions/?inventory_item_id={id}'),
                 'permission' => Permission::create(Res::INVENTORIES),
                 'variant'    => 'success'
             ],

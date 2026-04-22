@@ -2,74 +2,130 @@
 
 namespace Modules\Note\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Modules\Note\Models\NoteThread;
+use Modules\Shared\Http\Controllers\SharedApiController;
 
-class NoteThreadApiController extends Controller
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+class NoteThreadApiController extends SharedApiController
 {
-    /**
-     * List threads for a participant
-     */
-    public function index(Request $request)
+    protected $searchable = ['subject', 'type', 'status'];
+
+    protected function model()
     {
-        $request->validate([
-            'participant_id'   => 'required',
-            'participant_type' => 'required|string',
-        ]);
-
-        $threads = NoteThread::where(function ($q) use ($request) {
-                $q->where('participant_one_id', $request->participant_id)
-                  ->where('participant_one_type', $request->participant_type);
-            })
-            ->orWhere(function ($q) use ($request) {
-                $q->where('participant_two_id', $request->participant_id)
-                  ->where('participant_two_type', $request->participant_type);
-            })
-            ->orderByDesc('last_message_at')
-            ->get();
-
-        return response()->json([
-            'status' => 'success',
-            'data'   => $threads,
-        ]);
+        return NoteThread::class;
     }
 
-    /**
-     * Create a new thread (or reuse existing)
-     */
-    public function store(Request $request)
+	/*
+    |--------------------------------------------------------------------------
+    | Store override (IMPORTANT)
+    |--------------------------------------------------------------------------
+    */
+	public function store(Request $request)
+	{
+    	$data = $request->validate([
+	        'type'        => 'nullable|string',
+    	    'subject'     => 'nullable|string',
+        	'status'      => 'nullable|in:open,in_progress,resolved,closed',
+        	'priority'    => 'nullable|in:low,medium,high',
+        	'is_internal' => 'boolean',
+
+	        'participants' => 'required|array|min:1',
+    	    'participants.*' => 'required|string',
+    	]);
+
+	    return DB::transaction(function () use ($data) {
+
+	        // ✅ extract participants
+    	    $rawParticipants = $data['participants'];
+        	unset($data['participants']);
+
+	        // ✅ create thread
+    	    $thread = NoteThread::create($data);
+
+	        foreach ($rawParticipants as $p) {
+
+	            if (!str_contains($p, '_')) {
+    	            continue;
+        	    }
+
+	            [$type, $id] = explode('_', $p);
+
+	            $thread->participants()->create([
+    	            'participant_id'   => (int) $id,
+        	        'participant_type' => $type, // ✅ JUST STRING (morphMap handles it)
+            	]);
+        	}
+
+	        return response()->json([
+    	        'status' => 'success',
+        	    'message' => 'Thread created successfully.',
+            	'data' => $thread->load('participants')
+	        ], 201);
+    	});
+	}
+
+    protected function validationRules($id = null)
     {
-        $data = $request->validate([
-            'participant_one_id'   => 'required',
-            'participant_one_type' => 'required|string',
-            'participant_two_id'   => 'required',
-            'participant_two_type' => 'required|string',
-            'type'                 => 'nullable|string',
-            'subject'              => 'nullable|string',
-        ]);
-
-        $thread = NoteThread::firstOrCreate([
-            'participant_one_id'   => $data['participant_one_id'],
-            'participant_one_type' => $data['participant_one_type'],
-            'participant_two_id'   => $data['participant_two_id'],
-            'participant_two_type' => $data['participant_two_type'],
-        ], $data);
-
-        return response()->json([
-            'status' => 'success',
-            'data'   => $thread,
-        ], 201);
+        return [
+            'type'        => 'nullable|string',
+            'subject'     => 'nullable|string',
+            'status'      => 'nullable|in:open,in_progress,resolved,closed',
+            'priority'    => 'nullable|in:low,medium,high',
+            'is_internal' => 'boolean',
+        ];
     }
 
-    /**
-     * Show thread with messages
-     */
-    public function show(NoteThread $noteThread)
+    protected function allowedCharts(): array
     {
-        return response()->json([
-            'status' => 'success',
-            'data'   => $noteThread->load('messages'),
-        ]);
+        return [
+            'type',
+            'status',
+            'priority',
+            'is_internal',
+            'created_at',
+        ];
+    }
+
+    protected function defaultMetrics(): array
+    {
+        return ['total_records'];
+    }
+
+    protected function defaultAggregates(): array
+    {
+        return [
+            'count:status=open',
+            'count:status=resolved',
+        ];
+    }
+
+    protected function defaultGroups(): array
+    {
+        return [
+            'status',
+            'priority',
+            'is_internal',
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Extra filters
+    |--------------------------------------------------------------------------
+    */
+
+    public function internal(\Illuminate\Http\Request $request)
+    {
+        $request->merge(['is_internal' => true]);
+        return $this->index($request);
+    }
+
+    public function external(\Illuminate\Http\Request $request)
+    {
+        $request->merge(['is_internal' => false]);
+        return $this->index($request);
     }
 }

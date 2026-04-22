@@ -8,30 +8,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Note extends TenantModel
 {
-    use HasFactory, SoftDeletes;
 
-    protected $table = 'notes';
+	use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'note_thread_id',
-        'sender_id',
-        'sender_type',
-        'receiver_id',
-        'receiver_type',
         'message',
         'message_type',
-        'read_at',
-        'meta',
+        'sender_id',
+        'sender_type',
+        'attachments',
+        'read_at'
     ];
 
     protected $casts = [
-        'read_at' => 'datetime',
-        'meta'    => 'array',
+        'attachments' => 'array',
+        'read_at'     => 'datetime',
     ];
-
-    /* =========================
-     | Relationships
-     |=========================*/
 
     public function thread()
     {
@@ -40,19 +33,6 @@ class Note extends TenantModel
 
     public function sender()
     {
-        return $this->morphTo(
-            __FUNCTION__,
-            'sender_type',
-            'sender_id'
-        );
-    }
-
-    public function receiver()
-    {
-        return $this->morphTo(
-            __FUNCTION__,
-            'receiver_type',
-            'receiver_id'
-        );
+        return $this->morphTo();
     }
 }

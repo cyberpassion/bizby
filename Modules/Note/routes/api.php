@@ -8,16 +8,14 @@ Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
-        Route::apiResource('note-threads', NoteThreadApiController::class)
-            ->only(['index', 'store', 'show']);
+        // Threads
+        Route::apiResource('note-threads', NoteThreadApiController::class);
 
-        Route::post(
-            'note-threads/{noteThread}/messages',
-            [NoteApiController::class, 'store']
-        );
+        Route::get('note-threads/internal', [NoteThreadApiController::class, 'internal']);
+        Route::get('note-threads/external', [NoteThreadApiController::class, 'external']);
 
-        Route::patch(
-            'notes/{note}/read',
-            [NoteApiController::class, 'markRead']
-        );
+        // Messages
+        Route::apiResource('notes', NoteApiController::class)->only(['store']);
+
+        Route::get('note-threads/{id}/messages', [NoteApiController::class, 'byThread']);
     });

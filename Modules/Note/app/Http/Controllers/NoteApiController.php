@@ -3,51 +3,63 @@
 namespace Modules\Note\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Modules\Note\Models\Note;
 use Modules\Note\Models\NoteThread;
+use Modules\Shared\Http\Controllers\SharedApiController;
 
-class NoteApiController extends Controller
+class NoteApiController extends SharedApiController
 {
-    /**
-     * Send a message
-     */
-    public function store(Request $request, NoteThread $noteThread)
+    protected function model()
     {
-        $data = $request->validate([
-            'sender_id'     => 'required',
-            'sender_type'   => 'required|string',
-            'receiver_id'   => 'required',
-            'receiver_type' => 'required|string',
-            'message'       => 'nullable|string',
-            'message_type'  => 'nullable|string',
-            'meta'          => 'nullable|array',
+        return Note::class;
+    }
+
+	/*
+    |--------------------------------------------------------------------------
+    | Store override (IMPORTANT)
+    |--------------------------------------------------------------------------
+    */
+    public function store(Request $request)
+    {
+        $data = $request->all();
+
+        $note = Note::create([
+            ...$data,
+            'sender_id'   => auth()->id(),
+            'sender_type' => get_class(auth()->user()),
         ]);
 
-        $note = $noteThread->messages()->create($data);
-
-        $noteThread->update([
+        // Update thread metadata
+        NoteThread::where('id', $note->note_thread_id)->update([
+            'last_message'    => $note->message,
             'last_message_at' => now(),
         ]);
 
         return response()->json([
-            'status' => 'success',
-            'data'   => $note,
-        ], 201);
+            'status'  => 'success',
+            'message' => 'Message sent successfully.',
+            'data'    => $note
+        ]);
     }
 
-    /**
-     * Mark message as read
-     */
-    public function markRead(Note $note)
+    protected function validationRules($id = null)
     {
-        $note->update([
-            'read_at' => now(),
-        ]);
+        return [
+            'note_thread_id' => 'required|exists:note_threads,id',
+            'message'        => 'nullable|string',
+            'message_type'   => 'nullable|in:text,system,attachment',
+        ];
+    }
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Message marked as read',
-        ]);
+    /*
+    |--------------------------------------------------------------------------
+    | Get messages by thread
+    |--------------------------------------------------------------------------
+    */
+    public function byThread($threadId, Request $request)
+    {
+        return Note::where('note_thread_id', $threadId)
+            ->latest()
+            ->paginate(20);
     }
 }
