@@ -72,6 +72,13 @@ return [
                 'action'     => 'detail',
             ],
 
+			[
+                'title'      => 'View Profile',
+                'href'       => UrlPath::makeProfile($pg, '{id}'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'profile',
+            ],
+
 	        [
     	        'title'      => 'Update',
         	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
