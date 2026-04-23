@@ -18,63 +18,106 @@ return [
      ========================= */
     'columns' => [
 
-        /* LIST VIEW */
-        'list' => [
-            'note_id',
-            'added_by',
-            'subject',
-            'note_type',
-            'added_for',
-            'response_status',
-            'tags',
-            'status',
-        ],
-
-        /* REPORT VIEW */
-        'report' => [
-            'id',
-            'subject',
-            'note_type',
-            'context',
-            'added_for',
-            'added_by',
-            'note_end_date',
-            'note_end_time',
-            'created_at',
-        ],
-
-        /* DETAIL VIEW */
-        'detail' => [
-            'note_id',
-            'added_by',
-            'subject',
-            'note_type',
-            'added_for',
-            'response_status',
-            'tags',
-            'status',
-        ],
-
-        /* SAMPLE EXPORT */
-        'sample_export' => [
-            'subject',
-            'note_type',
-            'added_for',
-            'added_by',
-            'note_end_date',
-            'note_end_time',
-            'status',
-        ],
-
-        /* USER SELECTABLE */
-        'selectable' => [
-            'subject',
-            'note_type',
-            'added_for',
-            'added_by',
-            'status',
-        ],
+    /* LIST VIEW */
+    'list' => [
+        'id',
+        'vendor_code',
+        'vendor_type',
+        'name', // from commonPersonFields()
+        'vendor_gstin',
+        'vendor_pan',
+        'vendor_person',
+        'vendor_person_phone',
+        'state',
+        'district',
+        'status',
     ],
+
+    /* DETAIL VIEW */
+    'detail' => [
+        'id',
+        'vendor_code',
+        'vendor_type',
+        'vendor_parent_id',
+
+        // Person Fields
+        'name',
+        'phone',
+        'email',
+        'address',
+
+        // Business Info
+        'vendor_gstin',
+        'vendor_pan',
+        'vendor_info',
+        'vendor_bank_info',
+        'vendor_terms_and_condition',
+
+        // Contact Person
+        'vendor_person',
+        'vendor_person_designation',
+        'vendor_person_phone',
+        'vendor_person_email',
+
+        // Location & Meta
+        'state',
+        'district',
+        'region',
+        'sales',
+        'thread_parent',
+        'incentive_percentage',
+
+        // System
+        'status',
+        'created_at',
+        'updated_at',
+    ],
+
+    /* REPORT / EXPORT / OTHER */
+    'other' => [
+        'id',
+        'vendor_code',
+        'vendor_type',
+        'name',
+        'vendor_gstin',
+        'vendor_pan',
+        'state',
+        'district',
+        'vendor_person',
+        'vendor_person_phone',
+        'incentive_percentage',
+        'status',
+        'created_at',
+    ],
+
+    /* SAMPLE EXPORT */
+    'sample_export' => [
+        'vendor_code',
+        'vendor_type',
+        'name',
+        'phone',
+        'email',
+        'vendor_gstin',
+        'vendor_pan',
+        'state',
+        'district',
+        'vendor_person',
+        'vendor_person_phone',
+        'incentive_percentage',
+        'status',
+    ],
+
+    /* USER SELECTABLE */
+    'selectable' => [
+        'vendor_code',
+        'vendor_type',
+        'name',
+        'vendor_gstin',
+        'state',
+        'district',
+        'status',
+    ],
+],
 
     /* =========================
      | STATUSES

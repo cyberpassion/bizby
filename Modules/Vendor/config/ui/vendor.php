@@ -39,12 +39,6 @@ return [
                 ],
 
                 [
-                    'title'      => 'Documents',
-                    'href'       => UrlPath::makeDocuments($pg, '{id}'),
-                    'permission' => Permission::view(Res::DOCUMENTS),
-                ],
-
-                [
                     'title'      => 'Report',
                     'href'       => UrlPath::makeReport($pg),
                     'permission' => Permission::view(Res::REPORTS),
