@@ -182,6 +182,16 @@ return [
 		Actions::LIST => [
             [
                 'type'        => 'select',
+                'name'        => 'priority',
+                'placeholder' => 'Priority',
+                'col'         => 3,
+                'dataKey'     => 'note.priorities',
+            ],
+        ],
+
+		Actions::LIST => [
+            [
+                'type'        => 'select',
                 'name'        => 'status',
                 'placeholder' => 'Status',
                 'col'         => 3,
