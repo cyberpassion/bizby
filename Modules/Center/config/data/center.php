@@ -24,7 +24,7 @@ return [
         'name',
         'location',
 		'contact',
-        'status'
+        'status_label'
     ],
 
     /* =========================================================
@@ -36,7 +36,7 @@ return [
         'name',
         'location',
 		'contact',
-        'status'
+        'status_label'
     ],
 
     /* =========================================================
@@ -44,30 +44,47 @@ return [
      ========================================================= */
 
     'detail' => [
-        'id',
-        'name',
-        'location',
-		'contact',
-        'status'
-    ],
+
+    /* =========================
+     | CORE
+     ========================= */
+    'id',
+    'code',
+    'name',
+
+    /* =========================
+     | LOCATION & CONTACT
+     ========================= */
+    'location',
+    'contact',
+
+    /* =========================
+     | CAPACITY
+     ========================= */
+    'capacity',
+
+    /* =========================
+     | STATUS
+     ========================= */
+    'status_label',
+
+    /* =========================
+     | SYSTEM (optional)
+     ========================= */
+    'created_at',
+    'updated_at',
+],
 
     /* =========================================================
      | SAMPLE EXPORT (Excel / CSV safe)
      ========================================================= */
 
     'sample_export' => [
-        'center_date',
-        'center_time',
+        'id',
         'name',
-        'phone',
-        'center_type',
-        'channel',
-        'consultant',
-        'center_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'location',
+		'contact',
+        'status_label'
     ],
 
     /* =========================================================
@@ -75,18 +92,11 @@ return [
      ========================================================= */
 
     'selectable' => [
-        'center_date',
-        'center_time',
+        'id',
         'name',
-        'phone',
-        'center_type',
-        'channel',
-        'consultant',
-        'center_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'location',
+		'contact',
+        'status_label'
     ],
 ],
 

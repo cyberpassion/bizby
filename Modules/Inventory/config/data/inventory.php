@@ -16,86 +16,89 @@ return [
     'columns' => [
 
     /* =========================================================
-     | LIST VIEW (Fast scanning, operational)
+     | LIST VIEW
      ========================================================= */
-
     'list' => [
-        'id',
-        'name',
-		'code',
-		'minimum_threshold',
-		'maximum_threshold',
-		'current_stock',
-		'stock_status',
-		'status'
+        'code',
+        'product_id_label',
+        'center_id_label',
+        'minimum_threshold',
+        'maximum_threshold',
+        'current_stock',
+        'stock_status', // computed
+        'status_label'
     ],
 
     /* =========================================================
-     | REPORT VIEW (Business intelligence)
+     | REPORT VIEW
      ========================================================= */
-
     'report' => [
-        'id',
-        'name',
-		'code',
-		'minimum_threshold',
-		'maximum_threshold',
-		'current_stock',
-		'stock_status',
-		'status'
+        'code',
+        'product_id_label',
+        'center_id_label',
+        'minimum_threshold',
+        'maximum_threshold',
+        'current_stock',
+        'stock_status',
+        'status_label'
     ],
 
     /* =========================================================
-     | DETAIL VIEW (Maximum context)
+     | DETAIL VIEW
      ========================================================= */
-
     'detail' => [
+
+        /* CORE */
         'id',
-        'name',
-		'code',
-		'minimum_threshold',
-		'maximum_threshold',
-		'current_stock',
-		'stock_status',
-		'status'
+        'code',
+
+        /* RELATION */
+        'product_id',
+        'product_id_label',
+        'center_id',
+        'center_id_label',
+
+        /* STOCK RULES */
+        'minimum_threshold',
+        'maximum_threshold',
+
+        /* STOCK */
+        'current_stock',
+        'stock_status',
+
+        /* STATUS */
+        'status',
+        'status_label',
+
+        /* SYSTEM */
+        'created_at',
+        'updated_at',
     ],
 
     /* =========================================================
-     | SAMPLE EXPORT (Excel / CSV safe)
+     | EXPORT
      ========================================================= */
-
     'sample_export' => [
+        'code',
+        'product_id_label',
+        'center_id_label',
+        'minimum_threshold',
         'maximum_threshold',
-        'inventory_time',
-        'name',
-        'phone',
-        'inventory_type',
-        'channel',
-        'consultant',
-        'inventory_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'current_stock',
+        'stock_status',
+        'status_label'
     ],
 
     /* =========================================================
-     | USER SELECTABLE COLUMNS
+     | SELECTABLE
      ========================================================= */
-
     'selectable' => [
-        'maximum_threshold',
-        'inventory_time',
-        'name',
-        'phone',
-        'inventory_type',
-        'channel',
-        'consultant',
-        'inventory_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'code',
+        'product_id_label',
+        'center_id_label',
+        'current_stock',
+        'stock_status',
+        'status_label'
     ],
 ],
 

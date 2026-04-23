@@ -21,11 +21,12 @@ return [
 
     'list' => [
         'id',
+		'center_id_label',
         'asset_code',
 		'name',
 		'serial_number',
 		'purchase_date',
-		'status'
+		'status_label'
     ],
 
     /* =========================================================
@@ -34,11 +35,12 @@ return [
 
     'report' => [
         'id',
+		'center_id_label',
         'asset_code',
 		'name',
 		'serial_number',
 		'purchase_date',
-		'status'
+		'status_label'
     ],
 
     /* =========================================================
@@ -46,31 +48,77 @@ return [
      ========================================================= */
 
     'detail' => [
-        'id',
-        'asset_code',
-		'name',
-		'serial_number',
-		'purchase_date',
-		'status'
-    ],
+
+    /* =========================
+     | CORE
+     ========================= */
+    'id',
+	'center_id_label',
+    'asset_code',
+    'name',
+    'type',
+
+    /* =========================
+     | IDENTIFICATION
+     ========================= */
+    'serial_number',
+
+    /* =========================
+     | PURCHASE
+     ========================= */
+    'purchase_date',
+    'purchase_cost',
+    'vendor',
+    'vendor_label',
+
+    /* =========================
+     | ASSIGNMENT
+     ========================= */
+    'center_id',
+    'center_id_label',
+    'assigned_to',
+    'assigned_to_label',
+
+    /* =========================
+     | SERVICE / MAINTENANCE
+     ========================= */
+    'last_service_date',
+    'next_service_date',
+
+    /* =========================
+     | LIFECYCLE
+     ========================= */
+    'warranty_expiry',
+    'useful_life_months',
+
+    /* =========================
+     | STATUS
+     ========================= */
+    'status_label',
+
+    /* =========================
+     | EXTRA
+     ========================= */
+    'notes',
+
+    /* =========================
+     | SYSTEM (optional)
+     ========================= */
+    'created_at',
+    'updated_at',
+],
 
     /* =========================================================
      | SAMPLE EXPORT (Excel / CSV safe)
      ========================================================= */
 
     'sample_export' => [
-        'asset_date',
-        'asset_time',
-        'name',
-        'phone',
-        'asset_type',
-        'channel',
-        'consultant',
-        'asset_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'id',
+        'asset_code',
+		'name',
+		'serial_number',
+		'purchase_date',
+		'status_label'
     ],
 
     /* =========================================================
@@ -78,18 +126,12 @@ return [
      ========================================================= */
 
     'selectable' => [
-        'asset_date',
-        'asset_time',
-        'name',
-        'phone',
-        'asset_type',
-        'channel',
-        'consultant',
-        'asset_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'id',
+        'asset_code',
+		'name',
+		'serial_number',
+		'purchase_date',
+		'status_label'
     ],
 ],
 

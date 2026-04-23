@@ -13,89 +13,95 @@ return [
     ],
 
 	// Default Columns
-    'columns' => [
+'columns' => [
 
     /* =========================================================
-     | LIST VIEW (Fast scanning, operational)
+     | LIST VIEW
      ========================================================= */
-
     'list' => [
-        'id',
-        'center_id',
-		'incident_code',
+        'incident_code',
+        'center_id_label',
+        'type',
         'location',
-        'severity',
+        'severity_label',
         'incident_date',
-		'incident_time',
-        'status'
+        'incident_time',
+        'status_label'
     ],
 
     /* =========================================================
-     | REPORT VIEW (Business intelligence)
+     | REPORT VIEW
      ========================================================= */
-
     'report' => [
-        'id',
-        'center_id',
-		'incident_code',
+        'incident_code',
+        'center_id_label',
+        'type',
         'location',
-        'severity',
+        'severity_label',
         'incident_date',
-		'incident_time',
-        'status'
+        'incident_time',
+        'status_label'
     ],
 
     /* =========================================================
-     | DETAIL VIEW (Maximum context)
+     | DETAIL VIEW
      ========================================================= */
-
     'detail' => [
+
+        /* CORE */
         'id',
+        'incident_code',
+
+        /* RELATION */
         'center_id',
-		'incident_code',
+        'center_id_label',
+
+        /* INCIDENT INFO */
+        'type',
         'location',
         'severity',
+        'severity_label',
+
+        /* TIMING */
         'incident_date',
-		'incident_time',
-        'status'
+        'incident_time',
+
+        /* REPORTING */
+        'reporter',
+
+        /* STATUS */
+        'status',
+        'status_label',
+
+        /* SYSTEM */
+        'created_at',
+        'updated_at',
     ],
 
     /* =========================================================
-     | SAMPLE EXPORT (Excel / CSV safe)
+     | EXPORT
      ========================================================= */
-
     'sample_export' => [
+        'incident_code',
+        'center_id_label',
+        'type',
+        'location',
+        'severity_label',
         'incident_date',
         'incident_time',
-        'name',
-        'phone',
-        'incident_type',
-        'channel',
-        'consultant',
-        'incident_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'status_label'
     ],
 
     /* =========================================================
-     | USER SELECTABLE COLUMNS
+     | SELECTABLE
      ========================================================= */
-
     'selectable' => [
+        'incident_code',
+        'center_id_label',
+        'type',
+        'severity_label',
         'incident_date',
-        'incident_time',
-        'name',
-        'phone',
-        'incident_type',
-        'channel',
-        'consultant',
-        'incident_fee',
-        'referred_by',
-        'referred_to',
-        'next_date',
-        'status',
+        'status_label'
     ],
 ],
 

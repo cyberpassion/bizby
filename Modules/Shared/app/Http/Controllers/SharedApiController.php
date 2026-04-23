@@ -12,6 +12,8 @@ use Illuminate\Http\Response;
 use Modules\Shared\Services\ListService;
 use Modules\Shared\Services\TermResolverService;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 use Illuminate\Support\Str;
 
 abstract class SharedApiController extends Controller
@@ -122,6 +124,8 @@ abstract class SharedApiController extends Controller
                 		$row->status_label = $statuses[$row->status] ?? $row->status;
             		}
 
+					$row = $this->mergePolymorphicFields($row);
+
 		            return $row;
         		})
     		);
@@ -137,24 +141,58 @@ abstract class SharedApiController extends Controller
     /**
      * Show single resource
      */
-    public function show($id)
-    {
-        $model = $this->model()::find($id);
 
-        if (!$model) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Resource not found.',
-                'data' => null
-            ], Response::HTTP_NOT_FOUND);
-        }
+	public function show($id)
+	{
+    	$module = Str::of(static::class)
+	        ->after('Modules\\')
+    	    ->before('\\')
+        	->lower()
+        	->toString();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Record fetched successfully.',
-            'data' => $model
-        ], Response::HTTP_OK);
-    }
+	    $model = $this->model()::find($id);
+
+	    if (!$model) {
+    	    return response()->json([
+        	    'status' => 'error',
+            	'message' => 'Resource not found.',
+            	'data' => null
+	        ], Response::HTTP_NOT_FOUND);
+    	}
+
+	    // 🔥 Get statuses dynamically
+    	$lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
+    	$statuses = $lookupResponse->getData(true)['data'] ?? [];
+
+	    // 🔥 Convert model to object (safe handling)
+    	$row = (object) $model->toArray();
+
+	    // 🔥 Resolve term values
+    	foreach ($row as $key => $value) {
+
+	        if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
+
+	            $resolved = TermResolverService::resolve($value);
+
+	            if ($resolved !== $value) {
+    	            $row->{$key . '_label'} = $resolved;
+        	    }
+        	}
+    	}
+
+	    // 🔥 Status label
+    	if (isset($row->status)) {
+        	$row->status_label = $statuses[$row->status] ?? $row->status;
+    	}
+
+		$row = $this->mergePolymorphicFields($row);
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'message' => 'Record fetched successfully.',
+        	'data' => $row
+	    ], Response::HTTP_OK);
+	}
 
     /**
      * Store resource
@@ -170,7 +208,8 @@ abstract class SharedApiController extends Controller
 		]);*/
 
         //$validated = $request->validate($this->validationRules());
-		$validated = $request->all();
+		//$validated = $request->all();
+		$validated = $this->parsePolymorphicFields($request->all());
         $model = $this->model();
         $resource = $model::create($validated);
 
@@ -198,7 +237,8 @@ abstract class SharedApiController extends Controller
 
         // Only update fillable fields
         //$data = $request->only($modelInstance->getFillable());
-		$data = $request->all();
+		//$data = $request->all();
+		$data = $this->parsePolymorphicFields($request->all());
 
         // Validate update rules
         $validator = Validator::make($data, $this->validationRules($id));
@@ -467,6 +507,76 @@ public function graphs(Request $request)
 	protected function defaultGroups(): array
 	{
     	return [];
+	}
+
+	protected function parsePolymorphicFields(array $data): array
+	{
+    	foreach ($data as $key => $value) {
+
+	        if (is_string($value) && str_contains($value, ':')) {
+
+	            [$type, $id] = explode(':', $value, 2);
+
+	            // ✅ Only if valid id
+    	        if (is_numeric($id)) {
+        	        $data[$key . '_type'] = $type;
+            	    $data[$key . '_id']   = (int) $id;
+
+	                unset($data[$key]); // remove original
+    	        }
+        	}
+    	}
+
+	    return $data;
+	}
+
+	protected function mergePolymorphicFields($row)
+	{
+    	foreach ($row as $key => $value) {
+
+	        if (str_ends_with($key, '_type')) {
+
+	            $base = str_replace('_type', '', $key);
+    	        $idKey = $base . '_id';
+
+	            if (isset($row->$idKey)) {
+
+	                $type = $row->$key;
+    	            $id   = $row->$idKey;
+
+	                if ($type && $id) {
+
+	                    // ✅ value (employee:3)
+    	                $row->$base = "{$type}:{$id}";
+
+	                    // 🔥 ADD THIS (label from morphMap)
+     	               $label = $this->resolvePolymorphicLabel($type, $id);
+
+        	            if ($label) {
+            	            $row->{$base . '_label'} = $label;
+                	    }
+
+	                    // optional cleanup (recommended)
+    	                unset($row->$key, $row->$idKey);
+        	        }
+            	}
+        	}
+    	}
+
+	    return $row;
+	}
+
+	protected function resolvePolymorphicLabel($type, $id)
+	{
+    	$map = Relation::morphMap();
+
+	    if (!isset($map[$type])) {
+    	    return null;
+    	}
+
+	    $modelClass = $map[$type];
+
+	    return $modelClass::find($id)?->name ?? null;
 	}
 
 }
