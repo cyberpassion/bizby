@@ -20,24 +20,24 @@ return [
      ========================================================= */
 
     'list' => [
-        'id',
-        'name',
-        'location',
-		'contact',
-        'status_label'
-    ],
+    'id'           => 'ID',
+    'name'         => 'Name',
+    'location'     => 'Location',
+    'contact'      => 'Contact',
+    'status_label' => 'Status',
+],
 
     /* =========================================================
      | REPORT VIEW (Business intelligence)
      ========================================================= */
 
     'report' => [
-        'id',
-        'name',
-        'location',
-		'contact',
-        'status_label'
-    ],
+    'id'           => 'ID',
+    'name'         => 'Name',
+    'location'     => 'Location',
+    'contact'      => 'Contact',
+    'status_label' => 'Status',
+],
 
     /* =========================================================
      | DETAIL VIEW (Maximum context)
@@ -48,31 +48,31 @@ return [
     /* =========================
      | CORE
      ========================= */
-    'id',
-    'code',
-    'name',
+    'id'   => 'ID',
+    'code' => 'Code',
+    'name' => 'Name',
 
     /* =========================
      | LOCATION & CONTACT
      ========================= */
-    'location',
-    'contact',
+    'location' => 'Location',
+    'contact'  => 'Contact',
 
     /* =========================
      | CAPACITY
      ========================= */
-    'capacity',
+    'capacity' => 'Capacity',
 
     /* =========================
      | STATUS
      ========================= */
-    'status_label',
+    'status_label' => 'Status',
 
     /* =========================
-     | SYSTEM (optional)
+     | SYSTEM
      ========================= */
-    'created_at',
-    'updated_at',
+    'created_at' => 'Created At',
+    'updated_at' => 'Updated At',
 ],
 
     /* =========================================================

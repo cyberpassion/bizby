@@ -20,28 +20,28 @@ return [
      ========================================================= */
 
     'list' => [
-        'id',
-		'center_id_label',
-        'asset_code',
-		'name',
-		'serial_number',
-		'purchase_date',
-		'status_label'
-    ],
+    'id'               => 'ID',
+    'center_id_label'  => 'Center',
+    'asset_code'       => 'Asset Code',
+    'name'             => 'Name',
+    'serial_number'    => 'Serial Number',
+    'purchase_date'    => 'Purchase Date',
+    'status_label'     => 'Status',
+],
 
     /* =========================================================
      | REPORT VIEW (Business intelligence)
      ========================================================= */
 
     'report' => [
-        'id',
-		'center_id_label',
-        'asset_code',
-		'name',
-		'serial_number',
-		'purchase_date',
-		'status_label'
-    ],
+    'id'               => 'ID',
+    'center_id_label'  => 'Center',
+    'asset_code'       => 'Asset Code',
+    'name'             => 'Name',
+    'serial_number'    => 'Serial Number',
+    'purchase_date'    => 'Purchase Date',
+    'status_label'     => 'Status',
+],
 
     /* =========================================================
      | DETAIL VIEW (Maximum context)
@@ -52,60 +52,60 @@ return [
     /* =========================
      | CORE
      ========================= */
-    'id',
-	'center_id_label',
-    'asset_code',
-    'name',
-    'type',
+    'id'               => 'ID',
+    'center_id_label'  => 'Center',
+    'asset_code'       => 'Asset Code',
+    'name'             => 'Name',
+    'type'             => 'Type',
 
     /* =========================
      | IDENTIFICATION
      ========================= */
-    'serial_number',
+    'serial_number'    => 'Serial Number',
 
     /* =========================
      | PURCHASE
      ========================= */
-    'purchase_date',
-    'purchase_cost',
-    'vendor',
-    'vendor_label',
+    'purchase_date'    => 'Purchase Date',
+    'purchase_cost'    => 'Purchase Cost',
+    'vendor'           => 'Vendor',
+    'vendor_label'     => 'Vendor Name',
 
     /* =========================
      | ASSIGNMENT
      ========================= */
-    'center_id',
-    'center_id_label',
-    'assigned_to',
-    'assigned_to_label',
+    'center_id'        => 'Center ID',
+    'center_id_label'  => 'Center',
+    'assigned_to'      => 'Assigned To',
+    'assigned_to_label'=> 'Assigned To Name',
 
     /* =========================
      | SERVICE / MAINTENANCE
      ========================= */
-    'last_service_date',
-    'next_service_date',
+    'last_service_date'=> 'Last Service Date',
+    'next_service_date'=> 'Next Service Date',
 
     /* =========================
      | LIFECYCLE
      ========================= */
-    'warranty_expiry',
-    'useful_life_months',
+    'warranty_expiry'  => 'Warranty Expiry',
+    'useful_life_months'=> 'Useful Life (Months)',
 
     /* =========================
      | STATUS
      ========================= */
-    'status_label',
+    'status_label'     => 'Status',
 
     /* =========================
      | EXTRA
      ========================= */
-    'notes',
+    'notes'            => 'Notes',
 
     /* =========================
-     | SYSTEM (optional)
+     | SYSTEM
      ========================= */
-    'created_at',
-    'updated_at',
+    'created_at'       => 'Created At',
+    'updated_at'       => 'Updated At',
 ],
 
     /* =========================================================

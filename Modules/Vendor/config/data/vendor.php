@@ -20,75 +20,75 @@ return [
 
     /* LIST VIEW */
     'list' => [
-        'id',
-        'vendor_code',
-        'vendor_type',
-        'name', // from commonPersonFields()
-        'vendor_gstin',
-        'vendor_pan',
-        'vendor_person',
-        'vendor_person_phone',
-        'state',
-        'district',
-        'status',
-    ],
+    'id'                    => 'ID',
+    'vendor_code'           => 'Vendor Code',
+    'vendor_type'           => 'Vendor Type',
+    'name'                  => 'Name',
+    'vendor_gstin'          => 'GSTIN',
+    'vendor_pan'            => 'PAN',
+    'vendor_person'         => 'Contact Person',
+    'vendor_person_phone'   => 'Contact Phone',
+    'state'                 => 'State',
+    'district'              => 'District',
+    'status_label'          => 'Status',
+],
 
     /* DETAIL VIEW */
     'detail' => [
-        'id',
-        'vendor_code',
-        'vendor_type',
-        'vendor_parent_id',
+    'id'                          => 'ID',
+    'vendor_code'                 => 'Vendor Code',
+    'vendor_type'                 => 'Vendor Type',
+    'vendor_parent_id'            => 'Parent Vendor',
 
-        // Person Fields
-        'name',
-        'phone',
-        'email',
-        'address',
+    /* Person */
+    'name'                        => 'Name',
+    'phone'                       => 'Phone',
+    'email'                       => 'Email',
+    'address'                     => 'Address',
 
-        // Business Info
-        'vendor_gstin',
-        'vendor_pan',
-        'vendor_info',
-        'vendor_bank_info',
-        'vendor_terms_and_condition',
+    /* Business */
+    'vendor_gstin'                => 'GSTIN',
+    'vendor_pan'                  => 'PAN',
+    'vendor_info'                 => 'Vendor Info',
+    'vendor_bank_info'            => 'Bank Info',
+    'vendor_terms_and_condition'  => 'Terms & Conditions',
 
-        // Contact Person
-        'vendor_person',
-        'vendor_person_designation',
-        'vendor_person_phone',
-        'vendor_person_email',
+    /* Contact Person */
+    'vendor_person'               => 'Contact Person',
+    'vendor_person_designation'   => 'Designation',
+    'vendor_person_phone'         => 'Contact Phone',
+    'vendor_person_email'         => 'Contact Email',
 
-        // Location & Meta
-        'state',
-        'district',
-        'region',
-        'sales',
-        'thread_parent',
-        'incentive_percentage',
+    /* Location */
+    'state'                       => 'State',
+    'district'                    => 'District',
+    'region'                      => 'Region',
+    'sales'                       => 'Sales',
+    'thread_parent'               => 'Thread Parent',
+    'incentive_percentage'        => 'Incentive (%)',
 
-        // System
-        'status',
-        'created_at',
-        'updated_at',
-    ],
+    /* System */
+    'status_label'            	  => 'Status',
+    'created_at'                  => 'Created At',
+    'updated_at'                  => 'Updated At',
+],
 
     /* REPORT / EXPORT / OTHER */
-    'other' => [
-        'id',
-        'vendor_code',
-        'vendor_type',
-        'name',
-        'vendor_gstin',
-        'vendor_pan',
-        'state',
-        'district',
-        'vendor_person',
-        'vendor_person_phone',
-        'incentive_percentage',
-        'status',
-        'created_at',
-    ],
+    'report' => [
+    'id'                      => 'ID',
+    'vendor_code'             => 'Vendor Code',
+    'vendor_type'             => 'Vendor Type',
+    'name'                    => 'Name',
+    'vendor_gstin'            => 'GSTIN',
+    'vendor_pan'              => 'PAN',
+    'state'                   => 'State',
+    'district'                => 'District',
+    'vendor_person'           => 'Contact Person',
+    'vendor_person_phone'     => 'Contact Phone',
+    'incentive_percentage'    => 'Incentive (%)',
+    'status_label'            => 'Status',
+    'created_at'              => 'Created At',
+],
 
     /* SAMPLE EXPORT */
     'sample_export' => [

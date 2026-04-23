@@ -16,23 +16,41 @@ return [
      | Default Columns
      ========================= */
     "columns" => [
-        'entry'  => [
-            'product_id','name','product_type','brand_name',
-            'sku','retail_price','sale_price','unit','availability','tags','status'
-        ],
-        'list'   => [
-            'product_id','name','product_type','brand_name',
-            'sale_price','availability','status'
-        ],
+        'list' => [
+    'product_id'   => 'Product ID',
+    'name'         => 'Name',
+    'product_type' => 'Product Type',
+    'brand_name'   => 'Brand',
+    'sale_price'   => 'Sale Price',
+    'availability' => 'Availability',
+    'status_label'       => 'Status',
+],
         'detail' => [
-            'product_id','name','product_type','brand_name',
-            'sku','retail_price','sale_price','unit','availability',
-            'product_description','tags','status'
-        ],
+    'product_id'          => 'Product ID',
+    'name'                => 'Name',
+    'product_type'        => 'Product Type',
+    'brand_name'          => 'Brand',
+    'sku'                 => 'SKU',
+    'retail_price'        => 'Retail Price',
+    'sale_price'          => 'Sale Price',
+    'unit'                => 'Unit',
+    'availability'        => 'Availability',
+    'product_description' => 'Description',
+    'tags'                => 'Tags',
+    'status_label'              => 'Status',
+],
         'report' => [
-            'product_id','name','product_type','brand_name',
-            'sku','retail_price','sale_price','unit','availability','status'
-        ],
+    'product_id'   => 'Product ID',
+    'name'         => 'Name',
+    'product_type' => 'Product Type',
+    'brand_name'   => 'Brand',
+    'sku'          => 'SKU',
+    'retail_price' => 'Retail Price',
+    'sale_price'   => 'Sale Price',
+    'unit'         => 'Unit',
+    'availability' => 'Availability',
+    'status_label'       => 'Status',
+],
         'sample_export' => [
             'sno','name','product_type','brand_name','sku',
             'retail_price','sale_price','unit','availability','product_description'

@@ -14,10 +14,35 @@ return [
 
 	// Default Columns
     "columns" => [
-        'entry'  => ['lead_id','date','potential_client_name','potential_client_mobile_number','expectation','next_date','contact_response','tags','status'],
-        'list'   => ['lead_code','name','contact_person','mobile','stage_id','next_followup_date','status'],
-        'detail' => ['lead_id','date','potential_client_name','potential_client_mobile_number','expectation','next_date','contact_response','tags','status'],
-        'report' => ['lead_code','name','contact_person','mobile','stage_id','next_followup_date','status'],
+       'list' => [
+    'lead_code'            => 'Lead Code',
+    'name'                 => 'Name',
+    'contact_person'       => 'Contact Person',
+    'mobile'               => 'Mobile',
+    'stage_id'             => 'Stage',
+    'next_followup_date'   => 'Next Follow-up',
+    'status_label'       => 'Status',
+],
+        'detail' => [
+    'lead_id'                          => 'Lead ID',
+    'date'                             => 'Date',
+    'potential_client_name'            => 'Client Name',
+    'potential_client_mobile_number'   => 'Mobile Number',
+    'expectation'                      => 'Expectation',
+    'next_date'                        => 'Next Follow-up Date',
+    'contact_response'                 => 'Contact Response',
+    'tags'                             => 'Tags',
+    'status_label'                           => 'Status',
+],
+        'report' => [
+    'lead_code'          => 'Lead Code',
+    'name'               => 'Name',
+    'contact_person'     => 'Contact Person',
+    'mobile'             => 'Mobile',
+    'stage_id'           => 'Stage',
+    'next_followup_date' => 'Next Follow-up',
+    'status_label'             => 'Status',
+],
         'sample_export' => ['sno','potential_client_name','potential_client_mobile_number','potential_client_email','contact_by','expectation','next_date','contact_response','state','district','potential_client_address'],
         'selected_columns' => ['potential_client_name','potential_client_mobile_number','potential_client_email','contact_by','expectation','next_date','contact_response','state','district','potential_client_address']
     ],

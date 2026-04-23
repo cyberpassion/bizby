@@ -64,43 +64,43 @@ return [
          | LIST VIEW (Fast scanning)
          ========================================================= */
         'list' => [
-            'id',
-            'subject',
-            'type',
-            'priority',
-            'assigned_to',
-            'last_message',
-            'last_message_at',
-            'status',
-        ],
+    'id'              => 'ID',
+    'subject'         => 'Subject',
+    'type'            => 'Type',
+    'priority'        => 'Priority',
+    'assigned_to'     => 'Assigned To',
+    'last_message'    => 'Last Message',
+    'last_message_at' => 'Last Message At',
+    'status_label'            => 'Status',
+],
 
         /* =========================================================
          | REPORT VIEW (Analytics / BI)
          ========================================================= */
         'report' => [
-            'id',
-            'subject',
-            'type',
-            'priority',
-            'assigned_to',
-            'created_at',
-            'last_message_at',
-            'status',
-        ],
+    'id'              => 'ID',
+    'subject'         => 'Subject',
+    'type'            => 'Type',
+    'priority'        => 'Priority',
+    'assigned_to'     => 'Assigned To',
+    'created_at'      => 'Created At',
+    'last_message_at' => 'Last Message At',
+    'status_label'          => 'Status',
+],
 
         /* =========================================================
          | DETAIL VIEW (Full context)
          ========================================================= */
         'detail' => [
-            'id',
-            'subject',
-            'type',
-            'priority',
-            'assigned_to',
-            'last_message',
-            'last_message_at',
-            'status',
-        ],
+    'id'              => 'ID',
+    'subject'         => 'Subject',
+    'type'            => 'Type',
+    'priority'        => 'Priority',
+    'assigned_to'     => 'Assigned To',
+    'last_message'    => 'Last Message',
+    'last_message_at' => 'Last Message At',
+    'status_label'          => 'Status',
+],
 
         /* =========================================================
          | SAMPLE EXPORT

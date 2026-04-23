@@ -40,13 +40,58 @@ return [
 
 	// Default Columns
 	"columns" => [
-        'entry'   => ['id','name','employee_type','designation','address','dob','status'],
-        'list'    => ['id','name','employee_type','designation','address','dob','status'],
-        'detail'  => ['id','name','employee_type','designation','address','dob','status'],
-        'report'  => ['id','name','employee_type','designation','address','dob','status'],
-        'sample_export' => ['sno','name','employee_type','designation','address','dob','phone','email'],
-        'selected_columns' => ['name','employee_type','designation','address','dob','phone','email']
+
+    'list' => [
+        'id'              => 'ID',
+        'name'            => 'Name',
+        'employee_type'   => 'Employee Type',
+        'designation'     => 'Designation',
+        'address'         => 'Address',
+        'dob'             => 'Date of Birth',
+        'status_label'          => 'Status',
     ],
+
+    'detail' => [
+        'id'              => 'ID',
+        'name'            => 'Name',
+        'employee_type'   => 'Employee Type',
+        'designation'     => 'Designation',
+        'address'         => 'Address',
+        'dob'             => 'Date of Birth',
+        'status_label'          => 'Status',
+    ],
+
+    'report' => [
+        'id'              => 'ID',
+        'name'            => 'Name',
+        'employee_type'   => 'Employee Type',
+        'designation'     => 'Designation',
+        'address'         => 'Address',
+        'dob'             => 'Date of Birth',
+        'status_label'          => 'Status',
+    ],
+
+    'sample_export' => [
+        'sno',
+        'name',
+        'employee_type',
+        'designation',
+        'address',
+        'dob',
+        'phone',
+        'email',
+    ],
+
+    'selected_columns' => [
+        'name',
+        'employee_type',
+        'designation',
+        'address',
+        'dob',
+        'phone',
+        'email',
+    ],
+],
 
 	// Uploads
 	'uploads' => [

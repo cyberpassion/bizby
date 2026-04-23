@@ -13,10 +13,36 @@ return [
 
 	// Default Columns
     "columns" => [
-        'entry'   => ['date','name','phone_number','email_id','permanent_address','registration_type','tags','status'],
-        'list'    => ['date','name','phone_number','email_id','permanent_address','registration_type','tags','status'],
-        'detail'  => ['date','name','phone_number','email_id','permanent_address','registration_type','tags','status'],
-        'report'  => ['date','name','phone_number','email_id','permanent_address','registration_type','tags','status'],
+       'list' => [
+    'date'                => 'Date',
+    'name'                => 'Name',
+    'phone_number'        => 'Phone Number',
+    'email_id'            => 'Email',
+    'permanent_address'   => 'Address',
+    'registration_type'   => 'Registration Type',
+    'tags'                => 'Tags',
+    'status_label'        => 'Status',
+],
+'detail' => [
+    'date'                => 'Date',
+    'name'                => 'Name',
+    'phone_number'        => 'Phone Number',
+    'email_id'            => 'Email',
+    'permanent_address'   => 'Address',
+    'registration_type'   => 'Registration Type',
+    'tags'                => 'Tags',
+    'status_label'        => 'Status',
+],
+'report' => [
+    'date'                => 'Date',
+    'name'                => 'Name',
+    'phone_number'        => 'Phone Number',
+    'email_id'            => 'Email',
+    'permanent_address'   => 'Address',
+    'registration_type'   => 'Registration Type',
+    'tags'                => 'Tags',
+    'status_label'        => 'Status',
+],
         'sample_export' => ['sno','date','name','phone_number','email_id','permanent_address'],
         'selected_columns' => ['date','name','phone_number','email_id','permanent_address','registration_type']
     ],

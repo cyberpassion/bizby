@@ -20,14 +20,14 @@ return [
      ========================================================= */
 
     'list' => [
-        'id',
-        'consultation_date',
-        'name',
-        'phone',
-        'channel',
-        'consultant_label',
-        'status_label',
-        'consultation_fee'
+        'id'	=> 'ID',
+        'consultation_date'	=> 'Date',
+        'name'	=> 'Name',
+        'phone'	=> 'Phone',
+        'channel'	=> 'Channel',
+        'consultant_label'	=> 'Consultant',
+        'status_label'	=> 'Status',
+        'consultation_fee'	=> 'Fee'
     ],
 
     /* =========================================================
@@ -35,38 +35,38 @@ return [
      ========================================================= */
 
     'report' => [
-        'consultation_date',
-        'name',
-        'phone',
-        'consultation_type',
-        'channel',
-        'consultant_label',
-        'referred_by',
-        'referred_to',
-        'consultation_fee',
-        'followup_interval_days',
-        'next_date',
-        'status_label',
-    ],
+    'consultation_date'      => 'Date',
+    'name'                   => 'Name',
+    'phone'                  => 'Phone',
+    'consultation_type'      => 'Type',
+    'channel'                => 'Channel',
+    'consultant_label'       => 'Consultant',
+    'referred_by'            => 'Referred By',
+    'referred_to'            => 'Referred To',
+    'consultation_fee'       => 'Fee',
+    'followup_interval_days' => 'Follow-up Interval',
+    'next_date'              => 'Next Date',
+    'status_label'           => 'Status',
+],
 
     /* =========================================================
      | DETAIL VIEW (Maximum context)
      ========================================================= */
 
     'detail' => [
-        'consultation_date',
-        'name',
-        'phone',
-        'consultation_type',
-        'channel',
-        'consultant_label',
-        'referred_by',
-        'referred_to',
-        'consultation_fee',
-        'followup_interval_days',
-        'next_date',
-        'status_label',
-    ],
+    'consultation_date'      => 'Date',
+    'name'                   => 'Name',
+    'phone'                  => 'Phone',
+    'consultation_type'      => 'Type',
+    'channel'                => 'Channel',
+    'consultant_label'       => 'Consultant',
+    'referred_by'            => 'Referred By',
+    'referred_to'            => 'Referred To',
+    'consultation_fee'       => 'Fee',
+    'followup_interval_days' => 'Follow-up Interval',
+    'next_date'              => 'Next Date',
+    'status_label'           => 'Status',
+],
 
     /* =========================================================
      | SAMPLE EXPORT (Excel / CSV safe)

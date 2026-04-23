@@ -19,64 +19,64 @@ return [
      | LIST VIEW
      ========================================================= */
     'list' => [
-        'incident_code',
-        'center_id_label',
-        'type',
-        'location',
-        'severity_label',
-        'incident_date',
-        'incident_time',
-        'status_label'
-    ],
+    'incident_code'    => 'Incident Code',
+    'center_id_label'  => 'Center',
+    'type'             => 'Type',
+    'location'         => 'Location',
+    'severity_label'   => 'Severity',
+    'incident_date'    => 'Incident Date',
+    'incident_time'    => 'Incident Time',
+    'status_label'     => 'Status',
+],
 
     /* =========================================================
      | REPORT VIEW
      ========================================================= */
     'report' => [
-        'incident_code',
-        'center_id_label',
-        'type',
-        'location',
-        'severity_label',
-        'incident_date',
-        'incident_time',
-        'status_label'
-    ],
+    'incident_code'    => 'Incident Code',
+    'center_id_label'  => 'Center',
+    'type'             => 'Type',
+    'location'         => 'Location',
+    'severity_label'   => 'Severity',
+    'incident_date'    => 'Incident Date',
+    'incident_time'    => 'Incident Time',
+    'status_label'     => 'Status',
+],
 
     /* =========================================================
      | DETAIL VIEW
      ========================================================= */
     'detail' => [
 
-        /* CORE */
-        'id',
-        'incident_code',
+    /* CORE */
+    'id'               => 'ID',
+    'incident_code'    => 'Incident Code',
 
-        /* RELATION */
-        'center_id',
-        'center_id_label',
+    /* RELATION */
+    'center_id'        => 'Center ID',
+    'center_id_label'  => 'Center',
 
-        /* INCIDENT INFO */
-        'type',
-        'location',
-        'severity',
-        'severity_label',
+    /* INCIDENT INFO */
+    'type'             => 'Type',
+    'location'         => 'Location',
+    'severity'         => 'Severity Code',
+    'severity_label'   => 'Severity',
 
-        /* TIMING */
-        'incident_date',
-        'incident_time',
+    /* TIMING */
+    'incident_date'    => 'Incident Date',
+    'incident_time'    => 'Incident Time',
 
-        /* REPORTING */
-        'reporter',
+    /* REPORTING */
+    'reporter'         => 'Reported By',
 
-        /* STATUS */
-        'status',
-        'status_label',
+    /* STATUS */
+    'status_label'           => 'Status',
+    'status_label'     => 'Status',
 
-        /* SYSTEM */
-        'created_at',
-        'updated_at',
-    ],
+    /* SYSTEM */
+    'created_at'       => 'Created At',
+    'updated_at'       => 'Updated At',
+],
 
     /* =========================================================
      | EXPORT
