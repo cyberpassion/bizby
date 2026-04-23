@@ -6,7 +6,7 @@ return [
             'resource' => 'employees',
             'filter'   => ['status'=>true],
             'message'  => 'Please add employee before adding proceeding.',
-            'action'   => '/module/employee/new',
+            'action'   => '/module/employee/create',
         ]
 	],
 	'path.patient.read' => [],

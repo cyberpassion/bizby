@@ -14,7 +14,7 @@ return [
             'items' => [
                 [
                     'title' => 'Add Student',
-                    'href'  => '/module/student/new',
+                    'href'  => '/module/student/create',
                     'permission' => 'student.student.create',
                 ],
                 [

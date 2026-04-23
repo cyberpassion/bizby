@@ -8,26 +8,33 @@ use Illuminate\Support\Facades\Log;
 class BarricadeService
 {
     public static function evaluate(string $key): array
-    {
-		// BarricadeService::evaluate
-        $rules = BarricadeRegistry::get($key);
+{
+    $rules = BarricadeRegistry::get($key);
 
-        foreach ($rules as $rule) {
-            if ($rule['type'] === 'exists') {
-                if (!BarricadeResourceRegistry::exists(
-                    $rule['resource'],
-                    $rule['filter'] ?? []
-                )) {
-                    return [
-                        'allowed'    	=> false,
-                        'restricted'	=> true,
-                        'message'  		=> $rule['message'],
-                        'action'   		=> $rule['action'] ?? null,
-                    ];
-                }
+    $results = [];
+
+    foreach ($rules as $rule) {
+        if ($rule['type'] === 'exists') {
+            if (!BarricadeResourceRegistry::exists(
+                $rule['resource'],
+                $rule['filter'] ?? []
+            )) {
+                $results[] = [
+                    'allowed'    => false,
+                    'restricted' => true,
+                    'message'    => $rule['message'],
+                    'action'     => $rule['action'] ?? null,
+                ];
             }
         }
-
-        return ['allowed' => true];
     }
+
+    // If any failures → return array
+    if (!empty($results)) {
+        return $results;
+    }
+
+    // If all passed → keep single structure
+    return ['allowed' => true];
+}
 }

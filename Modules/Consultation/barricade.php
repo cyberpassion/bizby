@@ -1,5 +1,4 @@
 <?php
-use Modules\Shared\Support\UrlPath;
 use Modules\Shared\Support\Permission;
 use Modules\Consultation\Support\Res;
 use Modules\Consultation\Support\Actions;

@@ -26,7 +26,7 @@ return [
         'phone',
         'channel',
         'consultant',
-        'status',
+        'status_label',
         'consultation_fee'
     ],
 
@@ -46,7 +46,7 @@ return [
         'consultation_fee',
         'followup_interval_days',
         'next_date',
-        'status',
+        'status_label',
     ],
 
     /* =========================================================
@@ -65,7 +65,7 @@ return [
         'consultation_fee',
         'followup_interval_days',
         'next_date',
-        'status',
+        'status_label',
     ],
 
     /* =========================================================

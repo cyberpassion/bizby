@@ -8,7 +8,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
+
 use Modules\Shared\Services\ListService;
+use Modules\Shared\Services\TermResolverService;
+
+use Illuminate\Support\Str;
 
 abstract class SharedApiController extends Controller
 {
@@ -46,6 +50,7 @@ abstract class SharedApiController extends Controller
 
 	public function index(Request $request)
 	{
+		$module = Str::of(static::class)->after('Modules\\')->before('\\')->lower()->toString();
     	$model = $this->model();
     	$table = (new $model)->getTable();
 
@@ -90,6 +95,37 @@ abstract class SharedApiController extends Controller
 	            return $row;
     	    })->toArray();
     	}*/
+
+		$lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
+		$statuses = $lookupResponse->getData(true)['data'] ?? [];
+
+		if ($result instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+
+		    $result->setCollection(
+        		$result->getCollection()->map(function ($row) use ($statuses) {
+
+		            foreach ($row as $key => $value) {
+
+        		        // ✅ Only process values like core_123 / tenant_456
+                		if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
+
+		                    $resolved = \Modules\Shared\Services\TermResolverService::resolve($value);
+
+        		            if ($resolved !== $value) {
+                		        $row->{$key . '_label'} = $resolved;
+                    		}
+                		}
+            		}
+
+		            // ✅ Handle status separately
+        		    if (isset($row->status)) {
+                		$row->status_label = $statuses[$row->status] ?? $row->status;
+            		}
+
+		            return $row;
+        		})
+    		);
+		}
 
 	    return response()->json([
     	    'status'  => 'success',

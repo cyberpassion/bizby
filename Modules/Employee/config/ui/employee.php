@@ -100,6 +100,13 @@ return [
                 'action'     => 'document',
             ],
 
+			[
+                'title'      => 'View Profile',
+                'href'       => UrlPath::makeProfile($pg, '{id}'),
+                'permission' => Permission::view(Res::EMPLOYEES),
+                'action'     => 'view',
+            ],
+
             [
                 'title'      => 'Edit',
                 'href'       => UrlPath::makeUpdate($pg, '{id}'),
@@ -112,13 +119,6 @@ return [
                 'href'       => UrlPath::makeUploads($pg, '{id}'),
                 'permission' => Permission::create(Res::UPLOADS),
                 'action'     => 'upload',
-            ],
-
-            [
-                'title'      => 'View Profile',
-                'href'       => UrlPath::makeView($pg),
-                'permission' => Permission::view(Res::EMPLOYEES),
-                'action'     => 'view',
             ],
 
             [

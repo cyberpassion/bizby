@@ -17,6 +17,7 @@ use Modules\Booking\Models\BookingVenue;
 use Modules\Booking\Models\BookableUnit;
 use Modules\Booking\Models\Booking;
 use Modules\Booking\Models\BookingUnitPricing;
+use Modules\Center\Models\Center;
 use Modules\Cashflow\Models\Cashflow;
 use Modules\Checklist\Models\Checklist;
 use Modules\Communication\Models\Communication;
@@ -66,7 +67,8 @@ class SharedBarricadeResources
 		self::registerResource('bookings-pricing', BookingUnitPricing::class);
 
         self::registerResource('cashflows', Cashflow::class);
-        self::registerResource('checklists', Checklist::class);
+        self::registerResource('centers', Center::class);
+		self::registerResource('checklists', Checklist::class);
         self::registerResource('communications', Communication::class);
         self::registerResource('consultations', Consultation::class);
         self::registerResource('contacts', Contact::class);
