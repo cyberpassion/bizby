@@ -417,6 +417,8 @@ class SharedServiceProvider extends ServiceProvider
             'treatment'    => \Modules\Treatment\Models\Treatment::class,
             'consultation' => \Modules\Consultation\Models\Consultation::class,
             'patient'   	=> \Modules\Patient\Models\Patient::class,
+
+			'center'   	=> \Modules\Center\Models\Center::class,
 		]);
 	}
 

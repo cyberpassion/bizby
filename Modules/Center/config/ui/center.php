@@ -101,6 +101,15 @@ return [
         Actions::LIST	=>	[
             [
                 'type'        => 'select',
+                'name'        => 'state',
+                'placeholder' => 'State',
+                'col'         => 3,
+                'dataKey'     => 'shared.indian-states',
+            ],
+        ],
+		Actions::LIST	=>	[
+            [
+                'type'        => 'select',
                 'name'        => 'status',
                 'placeholder' => 'Status',
                 'col'         => 3,

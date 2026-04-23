@@ -36,12 +36,6 @@ return [
                 ],
 
                 [
-                    'title'      => 'Bulk-Ops',
-                    'href'       => UrlPath::makeBulk($pg),
-                    'permission' => Permission::bulk(Res::MAINTENANCES),
-                ],
-
-                [
                     'title'      => 'Report',
                     'href'       => UrlPath::makeReport($pg),
                     'permission' => Permission::view(Res::REPORTS),

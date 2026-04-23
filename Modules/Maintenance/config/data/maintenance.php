@@ -20,42 +20,42 @@ return [
      ========================================================= */
 
     'list' => [
-        'id',
-        'asset',
-		'issue_type',
-		'maintenance_date',
-		'maintenance_time',
-		'cost',
-		'status'
-    ],
+    'id'               => 'ID',
+    'asset'            => 'Asset',
+    'issue_type'       => 'Issue Type',
+    'maintenance_date' => 'Maintenance Date',
+    'maintenance_time' => 'Maintenance Time',
+    'cost'             => 'Cost',
+    'status_label'           => 'Status',
+],
 
     /* =========================================================
      | REPORT VIEW (Business intelligence)
      ========================================================= */
 
     'report' => [
-        'id',
-        'asset',
-		'issue_type',
-		'maintenance_date',
-		'maintenance_time',
-		'cost',
-		'status'
-    ],
+    'id'               => 'ID',
+    'asset'            => 'Asset',
+    'issue_type'       => 'Issue Type',
+    'maintenance_date' => 'Maintenance Date',
+    'maintenance_time' => 'Maintenance Time',
+    'cost'             => 'Cost',
+    'status_label'           => 'Status',
+],
 
     /* =========================================================
      | DETAIL VIEW (Maximum context)
      ========================================================= */
 
     'detail' => [
-        'id',
-        'asset',
-		'issue_type',
-		'maintenance_date',
-		'maintenance_time',
-		'cost',
-		'status'
-    ],
+    'id'               => 'ID',
+    'asset'            => 'Asset',
+    'issue_type'       => 'Issue Type',
+    'maintenance_date' => 'Maintenance Date',
+    'maintenance_time' => 'Maintenance Time',
+    'cost'             => 'Cost',
+    'status_label'           => 'Status',
+],
 
     /* =========================================================
      | SAMPLE EXPORT (Excel / CSV safe)

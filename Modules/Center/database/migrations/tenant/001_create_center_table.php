@@ -12,6 +12,8 @@ return new class extends Migration {
             $table->commonSaasFields();
             $table->string('code')->unique(); // CTR-001
             $table->string('name');
+	    	$table->string('state')->nullable();
+			$table->string('place')->nullable();
             $table->text('location');
             $table->string('contact');
             $table->integer('capacity')->nullable();

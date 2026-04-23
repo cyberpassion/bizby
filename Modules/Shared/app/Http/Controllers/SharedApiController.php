@@ -511,16 +511,31 @@ public function graphs(Request $request)
 
 	protected function parsePolymorphicFields(array $data): array
 	{
-    	foreach ($data as $key => $value) {
+    	$allowedTypes = array_keys(Relation::morphMap());
 
-	        if (is_string($value) && str_contains($value, ':')) {
+	    foreach ($data as $key => $value) {
 
-	            [$type, $id] = explode(':', $value, 2);
+	        if (
+    	        is_string($value) &&
+        	    preg_match('/^([a-zA-Z_]+):(\d+)$/', $value, $matches)
+	        ) {
+    	        $type = $matches[1];
+        	    $id   = (int) $matches[2];
 
-	            // ✅ Only if valid id
-    	        if (is_numeric($id)) {
+	            // ✅ Only allow known morph types
+    	        if (!in_array($type, $allowedTypes, true)) {
+        	        continue;
+            	}
+
+	            // 🔹 Case 1: key already ends with _id
+    	        if (str_ends_with($key, '_id')) {
+        	        $data[$key] = $id;
+            	}
+
+	            // 🔹 Case 2: normal field → convert to polymorphic
+    	        else {
         	        $data[$key . '_type'] = $type;
-            	    $data[$key . '_id']   = (int) $id;
+            	    $data[$key . '_id']   = $id;
 
 	                unset($data[$key]); // remove original
     	        }

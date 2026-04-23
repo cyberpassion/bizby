@@ -15,6 +15,8 @@ class Center extends TenantModel
         'location',
         'contact',
         'capacity',
+		'state',
+		'place',
         'status',
     ];
 

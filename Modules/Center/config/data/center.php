@@ -22,6 +22,8 @@ return [
     'list' => [
     'id'           => 'ID',
     'name'         => 'Name',
+	'state'        => 'State',
+	'place'        => 'Place',
     'location'     => 'Location',
     'contact'      => 'Contact',
     'status_label' => 'Status',
@@ -34,6 +36,8 @@ return [
     'report' => [
     'id'           => 'ID',
     'name'         => 'Name',
+	'state'        => 'State',
+	'place'        => 'Place',
     'location'     => 'Location',
     'contact'      => 'Contact',
     'status_label' => 'Status',
@@ -55,6 +59,8 @@ return [
     /* =========================
      | LOCATION & CONTACT
      ========================= */
+	'state'        => 'State',
+	'place'        => 'Place',
     'location' => 'Location',
     'contact'  => 'Contact',
 
