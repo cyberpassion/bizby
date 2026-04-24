@@ -22,6 +22,15 @@ class Maintenance extends TenantModel
         'status',
     ];
 
+	 /**
+     * Attribute casting.
+     */
+    protected $casts = [
+		'datetime'			=> 'datetime',
+        'reported_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
+		'next_service_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
+    ];
+
     public function center()
     {
         return $this->belongsTo(\Modules\Center\Models\Center::class);
