@@ -48,11 +48,10 @@ class Asset extends TenantModel
     ];
 
     protected $casts = [
-        'purchase_date' => 'date',
-        'last_service_date' => 'date',
-        'next_service_date' => 'date',
-        'warranty_expiry' => 'date',
-
+        'purchase_date' => 'date:Y-m-d',
+        'last_service_date' => 'date:Y-m-d',
+        'next_service_date' => 'date:Y-m-d',
+        'warranty_expiry' => 'date:Y-m-d',
         'purchase_cost' => 'float',
         'useful_life_months' => 'integer',
     ];

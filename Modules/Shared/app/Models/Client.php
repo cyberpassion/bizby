@@ -20,7 +20,7 @@ class Client extends Model
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'booking_date' => 'date', // Laravel will cast it to Carbon
+        'booking_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

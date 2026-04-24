@@ -20,7 +20,7 @@ class Signup extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'signup_date' => 'date', // Laravel will cast it to Carbon
+        'signup_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

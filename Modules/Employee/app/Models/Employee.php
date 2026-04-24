@@ -33,7 +33,7 @@ class Employee extends TenantModel
      */
     protected $casts = [
         'datetime'          => 'datetime',
-        'employee_date' => 'date',
+        'employee_date' => 'date:Y-m-d',
     ];
 
     /**

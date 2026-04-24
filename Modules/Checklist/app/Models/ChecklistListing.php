@@ -25,7 +25,7 @@ class ChecklistListing extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'checklist_date' => 'date', // Laravel will cast it to Carbon
+        'checklist_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

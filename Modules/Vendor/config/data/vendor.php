@@ -21,15 +21,15 @@ return [
     /* LIST VIEW */
     'list' => [
     'id'                    => 'ID',
-    'vendor_code'           => 'Vendor Code',
-    'vendor_type'           => 'Vendor Type',
     'name'                  => 'Name',
+	'vendor_code'           => 'Vendor Code',
+    'vendor_type'           => 'Vendor Type',
     'vendor_gstin'          => 'GSTIN',
     'vendor_pan'            => 'PAN',
     'vendor_person'         => 'Contact Person',
     'vendor_person_phone'   => 'Contact Phone',
     'state'                 => 'State',
-    'district'              => 'District',
+    'place'              => 'Place',
     'status_label'          => 'Status',
 ],
 
@@ -61,7 +61,7 @@ return [
 
     /* Location */
     'state'                       => 'State',
-    'district'                    => 'District',
+    'place'                    => 'Place',
     'region'                      => 'Region',
     'sales'                       => 'Sales',
     'thread_parent'               => 'Thread Parent',
@@ -76,13 +76,13 @@ return [
     /* REPORT / EXPORT / OTHER */
     'report' => [
     'id'                      => 'ID',
-    'vendor_code'             => 'Vendor Code',
-    'vendor_type'             => 'Vendor Type',
     'name'                    => 'Name',
+	'vendor_code'             => 'Vendor Code',
+    'vendor_type'             => 'Vendor Type',
     'vendor_gstin'            => 'GSTIN',
     'vendor_pan'              => 'PAN',
     'state'                   => 'State',
-    'district'                => 'District',
+    'place'                => 'Place',
     'vendor_person'           => 'Contact Person',
     'vendor_person_phone'     => 'Contact Phone',
     'incentive_percentage'    => 'Incentive (%)',
@@ -100,7 +100,7 @@ return [
         'vendor_gstin',
         'vendor_pan',
         'state',
-        'district',
+        'place',
         'vendor_person',
         'vendor_person_phone',
         'incentive_percentage',
@@ -114,7 +114,7 @@ return [
         'name',
         'vendor_gstin',
         'state',
-        'district',
+        'place',
         'status',
     ],
 ],
@@ -156,8 +156,8 @@ return [
 
         'list' => [
             [
-                'type'        => 'date',
-                'name'        => 'date',
+                'type'        => 'date:Y-m-d',
+                'name'        => 'date:Y-m-d',
                 'placeholder' => 'Date',
                 'dataKey'     => 'note.note_date',
             ],

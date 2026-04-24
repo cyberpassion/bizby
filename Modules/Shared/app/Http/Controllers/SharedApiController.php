@@ -246,7 +246,7 @@ abstract class SharedApiController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Validation failed.',
+                'message' => 'Validation failed.'.json_encode($validator->errors()),
                 'errors' => $validator->errors(),
                 'data' => null
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -515,29 +515,57 @@ public function graphs(Request $request)
 
 	    foreach ($data as $key => $value) {
 
-	        if (
-    	        is_string($value) &&
-        	    preg_match('/^([a-zA-Z_]+):(\d+)$/', $value, $matches)
+	        /*
+    	    |--------------------------------------------------------------------------
+        	| ✅ NEW: Handle _id + _type (your current frontend)
+        	|--------------------------------------------------------------------------
+	        */
+     		if (str_ends_with($key, '_type')) {
+
+	            $base = str_replace('_type', '', $key);
+    	        $idKey = $base . '_id';
+
+	            if (isset($data[$idKey])) {
+
+	                $type = $value;
+    	            $id   = (int) $data[$idKey];
+
+	                // validate type
+     	           if (!in_array($type, $allowedTypes, true)) {
+        	            continue;
+            	    }
+
+	                // ensure correct casting
+    	            $data[$idKey] = $id;
+
+	                // nothing else to do (already correct format)
+     	           continue;
+        	    }
+        	}
+
+	        /*
+    	    |--------------------------------------------------------------------------
+        	| 🔁 OLD: Handle "employee:1"
+        	|--------------------------------------------------------------------------
+	        */
+    	    if (
+        	    is_string($value) &&
+            	preg_match('/^([a-zA-Z_]+):(\d+)$/', $value, $matches)
 	        ) {
     	        $type = $matches[1];
         	    $id   = (int) $matches[2];
 
-	            // ✅ Only allow known morph types
-    	        if (!in_array($type, $allowedTypes, true)) {
-        	        continue;
-            	}
+	            if (!in_array($type, $allowedTypes, true)) {
+    	            continue;
+        	    }
 
-	            // 🔹 Case 1: key already ends with _id
-    	        if (str_ends_with($key, '_id')) {
-        	        $data[$key] = $id;
-            	}
+	            if (str_ends_with($key, '_id')) {
+    	            $data[$key] = $id;
+        	    } else {
+            	    $data[$key . '_type'] = $type;
+                	$data[$key . '_id']   = $id;
 
-	            // 🔹 Case 2: normal field → convert to polymorphic
-    	        else {
-        	        $data[$key . '_type'] = $type;
-            	    $data[$key . '_id']   = $id;
-
-	                unset($data[$key]); // remove original
+	                unset($data[$key]);
     	        }
         	}
     	}
@@ -556,24 +584,20 @@ public function graphs(Request $request)
 
 	            if (isset($row->$idKey)) {
 
-	                $type = $row->$key;
-    	            $id   = $row->$idKey;
+    	            $type = $row->$key;
+        	        $id   = $row->$idKey;
 
 	                if ($type && $id) {
 
-	                    // ✅ value (employee:3)
-    	                $row->$base = "{$type}:{$id}";
+    	                // ✅ keep original fields (DO NOTHING)
 
-	                    // 🔥 ADD THIS (label from morphMap)
-     	               $label = $this->resolvePolymorphicLabel($type, $id);
+        	            // ✅ just add label
+            	        $label = $this->resolvePolymorphicLabel($type, $id);
 
-        	            if ($label) {
-            	            $row->{$base . '_label'} = $label;
-                	    }
-
-	                    // optional cleanup (recommended)
-    	                unset($row->$key, $row->$idKey);
-        	        }
+	                    if ($label) {
+    	                    $row->{$base . '_label'} = $label;
+        	            }
+            	    }
             	}
         	}
     	}

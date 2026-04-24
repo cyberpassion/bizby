@@ -26,8 +26,8 @@ class AttendanceSchedule extends TenantModel
 
     protected $casts = [
         'weekdays'    => 'array',
-        'starts_from' => 'date',
-        'ends_on'     => 'date',
+        'starts_from' => 'date:Y-m-d',
+        'ends_on'     => 'date:Y-m-d',
         'is_active'   => 'boolean',
     ];
 

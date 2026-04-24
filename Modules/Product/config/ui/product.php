@@ -122,7 +122,7 @@ return [
 
             [
                 'type'        => 'select',
-                'name'        => 'brand_name',
+                'name'        => 'brand',
                 'placeholder' => 'Brand',
                 'col'         => 3,
                 'dataKey'     => 'product.brand-names',

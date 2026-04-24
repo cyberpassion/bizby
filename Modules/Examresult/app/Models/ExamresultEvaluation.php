@@ -23,7 +23,7 @@ class ExamresultEvaluation extends TenantModel
 
     protected $casts = [
         'meta' => 'array',
-        'evaluation_date' => 'date',
+        'evaluation_date' => 'date:Y-m-d',
     ];
 
     public function components()

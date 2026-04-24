@@ -20,7 +20,7 @@ class Timetable extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'timetable_date' => 'date', // Laravel will cast it to Carbon
+        'timetable_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

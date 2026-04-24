@@ -20,7 +20,7 @@ class MessageTemplateOld extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'communication_date' => 'date', // Laravel will cast it to Carbon
+        'communication_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

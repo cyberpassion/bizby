@@ -20,8 +20,37 @@ class Vendor extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'vendor_date' => 'date', // Laravel will cast it to Carbon
+        'vendor_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
+
+	/* ======================================================
+	 | AUTO GENERATE VENDOR CODE
+	 ====================================================== */
+	protected static function boot()
+	{
+    	parent::boot();
+
+	    static::creating(function ($vendor) {
+
+	        if (!$vendor->vendor_code) {
+
+	            $year = date('Y');
+
+    	        $last = self::whereYear('created_at', $year)
+        	        ->orderBy('id', 'desc')
+            	    ->first();
+
+	            $next = 1;
+
+	            if ($last && $last->vendor_code) {
+     	           preg_match('/\d+$/', $last->vendor_code, $matches);
+        	        $next = isset($matches[0]) ? (int)$matches[0] + 1 : 1;
+            	}
+
+	            $vendor->vendor_code = 'VND-' . $year . '-' . str_pad($next, 4, '0', STR_PAD_LEFT);
+    	    }
+    	});
+	}
 
     /**
      * Default attribute values

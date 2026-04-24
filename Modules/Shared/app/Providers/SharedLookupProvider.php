@@ -104,34 +104,31 @@ class SharedLookupProvider
      */
     protected function resolveFromTables(string $namespace, string $group): array
 	{
-    	$data = match ($namespace) {
+		return match ($namespace) {
 
-	        'assets'        => $this->assets($group),
-    	    'attendances'   => $this->attendances($group),
-        	'employees'     => $this->employees($group),
-	        'students'      => $this->students($group),
-    	    'centers'       => $this->centers($group),
-        	'consultations' => $this->consultations($group),
-        	'leads'         => $this->leads($group),
-	        'bookings'      => $this->bookings($group),
-    	    'vendors'       => $this->vendors($group),
-        	'products'      => $this->products($group),
-	        'inventories'   => $this->inventories($group),
-    	    'notes'         => $this->notes($group),
-        	'permissions'   => $this->permissions($group),
+			'assets'        => $this->assets($group),
+			'attendances'   => $this->attendances($group),
+			'employees'     => $this->employees($group),
+			'students'      => $this->students($group),
+			'centers'       => $this->centers($group),
+			'consultations' => $this->consultations($group),
+			'leads'         => $this->leads($group),
+			'bookings'      => $this->bookings($group),
+			'vendors'       => $this->vendors($group),
+			'products'      => $this->products($group),
+			'inventories'   => $this->inventories($group),
+			'notes'         => $this->notes($group),
+			'permissions'   => $this->permissions($group),
 
-	        default => [],
-    	};
-
-	    // 🔥 Append type automatically
-    	return $this->appendType($data, Str::singular($namespace));
+			default => [],
+		};
 	}
 
 	protected function appendType(array $data, string $type): array
 	{
     	return collect($data)->mapWithKeys(function ($label, $id) use ($type) {
 	        return [
-    	        "{$type}:{$id}" => $label
+    	        $id => $label
         	];
 	    })->toArray();
 	}

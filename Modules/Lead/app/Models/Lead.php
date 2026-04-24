@@ -37,7 +37,7 @@ class Lead extends TenantModel
 
     protected $casts = [
         'is_existing_client' => 'boolean',
-        'next_followup_date' => 'date',
+        'next_followup_date' => 'date:Y-m-d',
     ];
 
     /* =========================

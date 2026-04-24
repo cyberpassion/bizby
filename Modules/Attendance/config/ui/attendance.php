@@ -366,7 +366,7 @@ return [
                 'dataKey'     => 'attendance.paid_unpaid',
             ],
             [
-                'type'        => 'date',
+                'type'        => 'date:Y-m-d',
                 'name'        => 'absent_date',
                 'placeholder' => 'Absent Date',
                 'col'         => 3,

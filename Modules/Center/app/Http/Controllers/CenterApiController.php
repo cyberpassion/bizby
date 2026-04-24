@@ -15,7 +15,6 @@ class CenterApiController extends SharedApiController
     protected function validationRules($id = null)
     {
         return [
-            'code' => 'required|unique:centers,code,' . $id,
             'name' => 'required|string',
             'location' => 'required|string',
             'contact' => 'required|string',

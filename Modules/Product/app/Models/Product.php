@@ -14,7 +14,7 @@ class Product extends TenantModel
      */
     protected $fillable = [
         'product_type',
-        'brand_name',
+        'brand',
         'name',
         'sku',
         'retail_price',

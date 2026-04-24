@@ -72,12 +72,6 @@ return [
     */
     'list-filters' => [
         [
-            'type'        => 'date',
-            'name'        => 'date',
-            'placeholder' => 'Announcement Date',
-            'col'         => 3,
-        ],
-        [
             'type'        => 'select',
             'name'        => 'category',
             'placeholder' => 'Category',

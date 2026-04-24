@@ -19,7 +19,7 @@ class Student extends Model implements Payable, FinalizePayment
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
 	protected $casts = [
-        'admission_date' => 'date',
+        'admission_date' => 'date:Y-m-d',
     ];
 
     public function academicHistories()

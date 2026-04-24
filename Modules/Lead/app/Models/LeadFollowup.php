@@ -30,7 +30,7 @@ class LeadFollowup extends TenantModel
 
     protected $casts = [
         'contact_date' => 'datetime',
-        'next_followup_date' => 'date',
+        'next_followup_date' => 'date:Y-m-d',
     ];
 
     /* =========================

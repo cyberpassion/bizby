@@ -17,19 +17,21 @@ return [
      ========================= */
     "columns" => [
         'list' => [
+			'id'	=>	'ID',
     'product_id'   => 'Product ID',
     'name'         => 'Name',
     'product_type' => 'Product Type',
-    'brand_name'   => 'Brand',
+    'brand_label'   => 'Brand',
     'sale_price'   => 'Sale Price',
     'availability' => 'Availability',
     'status_label'       => 'Status',
 ],
         'detail' => [
+			'id'	=>	'ID',
     'product_id'          => 'Product ID',
     'name'                => 'Name',
     'product_type'        => 'Product Type',
-    'brand_name'          => 'Brand',
+    'brand_label'          => 'Brand',
     'sku'                 => 'SKU',
     'retail_price'        => 'Retail Price',
     'sale_price'          => 'Sale Price',
@@ -40,10 +42,11 @@ return [
     'status_label'              => 'Status',
 ],
         'report' => [
+			'id'	=>	'ID',
     'product_id'   => 'Product ID',
     'name'         => 'Name',
     'product_type' => 'Product Type',
-    'brand_name'   => 'Brand',
+    'brand_label'   => 'Brand',
     'sku'          => 'SKU',
     'retail_price' => 'Retail Price',
     'sale_price'   => 'Sale Price',
@@ -52,11 +55,11 @@ return [
     'status_label'       => 'Status',
 ],
         'sample_export' => [
-            'sno','name','product_type','brand_name','sku',
+            'sno','name','product_type','brand_label','sku',
             'retail_price','sale_price','unit','availability','product_description'
         ],
         'selected_columns' => [
-            'name','product_type','brand_name','sku',
+            'name','product_type','brand_label','sku',
             'retail_price','sale_price','unit','availability','product_description'
         ]
     ],

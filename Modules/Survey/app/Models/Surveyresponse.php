@@ -20,7 +20,7 @@ class Surveyresponse extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'survey_date' => 'date', // Laravel will cast it to Carbon
+        'survey_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

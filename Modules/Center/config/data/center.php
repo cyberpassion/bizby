@@ -79,6 +79,8 @@ return [
      ========================= */
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
+
+	'remark'	=> 'Remark'
 ],
 
     /* =========================================================
@@ -88,6 +90,8 @@ return [
     'sample_export' => [
         'id',
         'name',
+		'state',
+		'place',
         'location',
 		'contact',
         'status_label'
@@ -118,10 +122,10 @@ return [
 
 	// Status
     'statuses' => [
-        '1'  => 'Active',
-        '2'  => 'Deleted',
-        '21' => 'Departed',
-        '22' => 'Cancelled',
+	    '1' => 'Active',
+    	'2' => 'Inactive',
+    	'3' => 'Closed',
+    	'4' => 'Under Maintenance',
     ],
 
 	// Uploads

@@ -33,7 +33,7 @@ class Consultation extends TenantModel
      */
     protected $casts = [
         'datetime'          => 'datetime',
-        'consultation_date' => 'date',
+        'consultation_date' => 'date:Y-m-d',
     ];
 
     /**

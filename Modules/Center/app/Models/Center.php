@@ -17,6 +17,7 @@ class Center extends TenantModel
         'capacity',
 		'state',
 		'place',
+		'remark',
         'status',
     ];
 

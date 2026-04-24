@@ -20,7 +20,7 @@ class Coupon extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'subscription_date' => 'date', // Laravel will cast it to Carbon
+        'subscription_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

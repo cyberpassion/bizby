@@ -18,7 +18,8 @@ class Incident extends TenantModel
         'severity',
         'incident_date',
         'incident_time',
-        'reporter',
+        'reporter_name',
+		'reporter_contact',
         'status',
     ];
 

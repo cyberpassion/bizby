@@ -30,7 +30,7 @@ return [
                 ],
 				[
                     'title'      => 'Add Transaction',
-                    'href'       => UrlPath::make($pg, 'transactions/create'),
+                    'href'       => UrlPath::make($pg, 'create-transactions'),
                     'permission' => Permission::create(Res::INVENTORIES),
                 ],
 				[

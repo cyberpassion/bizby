@@ -20,7 +20,7 @@ class Eventmanager extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'eventmanager_date' => 'date', // Laravel will cast it to Carbon
+        'eventmanager_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

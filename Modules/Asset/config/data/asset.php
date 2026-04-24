@@ -26,6 +26,7 @@ return [
     'name'             => 'Name',
     'serial_number'    => 'Serial Number',
     'purchase_date'    => 'Purchase Date',
+	'purchase_cost'    => 'Purchase Cost',
     'status_label'     => 'Status',
 ],
 

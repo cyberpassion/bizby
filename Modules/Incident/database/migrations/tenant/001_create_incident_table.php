@@ -21,7 +21,8 @@ return new class extends Migration {
             $table->date('incident_date');
             $table->time('incident_time');
 
-            $table->string('reporter')->nullable();
+            $table->string('reporter_name')->nullable();
+			$table->string('reporter_contact', 20)->nullable();
         });
     }
 

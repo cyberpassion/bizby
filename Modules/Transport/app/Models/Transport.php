@@ -20,7 +20,7 @@ class Transport extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'transport_date' => 'date', // Laravel will cast it to Carbon
+        'transport_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

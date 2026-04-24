@@ -20,7 +20,7 @@ class TestResult extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'test_date' => 'date', // Laravel will cast it to Carbon
+        'test_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

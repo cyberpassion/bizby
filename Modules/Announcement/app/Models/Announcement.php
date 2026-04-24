@@ -20,7 +20,7 @@ class Announcement extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'announcement_date' => 'date', // Laravel will cast it to Carbon
+        'announcement_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

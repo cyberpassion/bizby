@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
                 ]),
 
                 'product_type'          => 'Medicine',
-                'brand_name'            => 'HealthCare',
+                'brand'            => 'HealthCare',
                 'name'          => 'Paracetamol 500mg',
 
                 'retail_price'          => 50.00,
@@ -68,7 +68,7 @@ class ProductSeeder extends Seeder
                 ]),
 
                 'product_type'          => 'Surgical',
-                'brand_name'            => 'MediCare',
+                'brand'            => 'MediCare',
                 'name'          => 'Surgical Gloves',
 
                 'retail_price'          => 120.00,

@@ -20,7 +20,7 @@ class Service extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'service_date' => 'date', // Laravel will cast it to Carbon
+        'service_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

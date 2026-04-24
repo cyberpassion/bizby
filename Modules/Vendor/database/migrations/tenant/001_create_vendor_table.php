@@ -35,7 +35,7 @@ return new class extends Migration
             $table->text('vendor_person_email')->nullable();
 
             $table->string('state', 64)->nullable();
-            $table->string('district', 255)->nullable();
+            $table->string('place', 255)->nullable();
             $table->text('sales')->nullable();
             $table->bigInteger('thread_parent')->nullable();
 

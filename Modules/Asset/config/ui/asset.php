@@ -101,6 +101,20 @@ return [
         Actions::LIST	=>	[
             [
                 'type'        => 'select',
+                'name'        => 'center_id',
+                'placeholder' => 'Center',
+                'col'         => 3,
+                'dataKey'     => 'centers.list',
+            ],
+			[
+                'type'        => 'select',
+                'name'        => 'assigned_to',
+                'placeholder' => 'Assigned To',
+                'col'         => 3,
+                'dataKey'     => 'employees.list',
+            ],
+			[
+                'type'        => 'select',
                 'name'        => 'type',
                 'placeholder' => 'Type',
                 'col'         => 3,

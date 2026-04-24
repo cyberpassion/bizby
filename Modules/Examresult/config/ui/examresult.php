@@ -161,13 +161,6 @@ return [
                 'col'         => 3,
                 'dataKey'     => 'examresult.groups',
             ],
-
-            [
-                'type'        => 'date',
-                'name'        => 'evaluation_date',
-                'placeholder' => 'Date',
-                'col'         => 3,
-            ],
         ]
 
     ],

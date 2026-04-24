@@ -18,6 +18,6 @@ class AttendanceHoliday extends TenantModel
     ];
 
     protected $casts = [
-        'date' => 'date',
+        'date' => 'date:Y-m-d',
     ];
 }

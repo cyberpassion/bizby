@@ -20,7 +20,7 @@ class Admin extends Model
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'admin_date' => 'date', // Laravel will cast it to Carbon
+        'admin_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

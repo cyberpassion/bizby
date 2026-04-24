@@ -15,7 +15,7 @@ return new class extends Migration
 
             // Product Info
             $table->string('product_type'); // physical | service
-            $table->string('brand_name')->nullable();
+            $table->string('brand')->nullable();
             $table->string('name');
 
             // Unique identity

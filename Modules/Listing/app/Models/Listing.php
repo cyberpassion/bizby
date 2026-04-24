@@ -52,7 +52,7 @@ class Listing extends Model
     protected $casts = [
         'is_verified' => 'boolean',
         'is_featured' => 'boolean',
-        'valid_till'  => 'date',
+        'valid_till'  => 'date:Y-m-d',
     ];
 
     /* ================= RELATIONS ================= */

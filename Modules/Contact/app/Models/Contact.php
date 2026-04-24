@@ -20,7 +20,7 @@ class Contact extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'contact_date' => 'date', // Laravel will cast it to Carbon
+        'contact_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

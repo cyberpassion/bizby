@@ -21,7 +21,7 @@ return [
     'list' => [
     'incident_code'    => 'Incident Code',
     'center_id_label'  => 'Center',
-    'type'             => 'Type',
+    'type_label'       => 'Type',
     'location'         => 'Location',
     'severity_label'   => 'Severity',
     'incident_date'    => 'Incident Date',
@@ -35,7 +35,7 @@ return [
     'report' => [
     'incident_code'    => 'Incident Code',
     'center_id_label'  => 'Center',
-    'type'             => 'Type',
+    'type_label'       => 'Type',
     'location'         => 'Location',
     'severity_label'   => 'Severity',
     'incident_date'    => 'Incident Date',
@@ -57,7 +57,7 @@ return [
     'center_id_label'  => 'Center',
 
     /* INCIDENT INFO */
-    'type'             => 'Type',
+    'type_label'       => 'Type',
     'location'         => 'Location',
     'severity'         => 'Severity Code',
     'severity_label'   => 'Severity',
@@ -67,7 +67,7 @@ return [
     'incident_time'    => 'Incident Time',
 
     /* REPORTING */
-    'reporter'         => 'Reported By',
+    'reporter_name'         => 'Reported By',
 
     /* STATUS */
     'status_label'           => 'Status',

@@ -20,7 +20,7 @@ class Visitplanner extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'visitplanner_date' => 'date', // Laravel will cast it to Carbon
+        'visitplanner_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

@@ -20,7 +20,7 @@ class Library extends TenantModel
      */
     protected $casts = [
 		'datetime'			=> 'datetime',
-        'library_date' => 'date', // Laravel will cast it to Carbon
+        'library_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
     /**

@@ -28,7 +28,7 @@ class VendorApiController extends SharedApiController
             'vendor_pan' => 'nullable|string|max:255',
 
             'state' => 'nullable|string|max:64',
-            'district' => 'nullable|string|max:255',
+            'place' => 'nullable|string|max:255',
 
             'incentive_percentage' => 'nullable|numeric',
         ];

@@ -26,7 +26,7 @@ class AttendanceSession extends Model
     ];
 
     protected $casts = [
-	    'session_date' => 'date',
+	    'session_date' => 'date:Y-m-d',
     	'start_time'   => 'string',
     	'end_time'     => 'string',
 	];

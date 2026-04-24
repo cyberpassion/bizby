@@ -120,12 +120,12 @@ return [
                         "op:restore"			=>	"Restore"
     ],
     'product.default-columns' => [
-                        'entry'				=>	['product_id', 'name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'list'				=>	['product_id', 'name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'detail'			=>	['product_id', 'name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'report'			=>	['product_id', 'name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'sample_export'		=>	['sno', 'name', 'brand_name','sale_price'],
-                        'selected_columns'	=>	['product_id', 'name', 'product_type', 'brand_name', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability', 'status']
+                        'entry'				=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'list'				=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'detail'			=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'report'			=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
+                        'sample_export'		=>	['sno', 'name', 'brand','sale_price'],
+                        'selected_columns'	=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability', 'status']
     ],
     'stock.statuses' => [
                         'in-stock'			=>	'IN STOCK',
@@ -139,7 +139,7 @@ return [
     'product.list-columns' => [
                         'id',
                         'name',
-                        'brand_name',
+                        'brand',
                         'product_type',
                         'sale_price',
                         'available_stock',
@@ -147,7 +147,7 @@ return [
 
     'product.list-filters' => [
                         'product_type',
-                        'brand_name',
+                        'brand',
                         'availability',
                         'sale_price',
                         'status',
@@ -156,7 +156,7 @@ return [
     'product.report-columns' => [
                         'id',
                         'product_type',
-                        'brand_name',
+                        'brand',
                         'name',
                         'unit',
                         'retail_price',
@@ -182,7 +182,7 @@ return [
                         'product_id'		=>	'ID',
                         'name'		=>	'Name',
                         'product_type'		=>	'Type',
-                        'brand_name'		=>	'Brand',
+                        'brand'		=>	'Brand',
                         'total_quantity'	=>	'Total Qty',
                         'available_quantity' =>	'Available',
                         'sold_quantity'		=>	'Sold'
@@ -228,7 +228,7 @@ return [
     ],
     'product-group-results-by' => [
                         'product_type'						=>	'PRODUCT TYPE',
-                        'brand_name'						=>	'BRAND NAME',
+                        'brand'						=>	'BRAND NAME',
                         'total_quantity'					=>	'TOTAL STOCK',
                         'available_stock'					=>	'AVAILABLE STOCK',
                         'sold_stock'						=>	'SOLD STOCK',
@@ -236,7 +236,7 @@ return [
     ],
     'product-sort-results-by' => [
                         'name'						=>	'PRODUCT NAME',
-                        'brand_name'						=>	'BRAND NAME',
+                        'brand'						=>	'BRAND NAME',
                         'total_quantity'					=>	'TOTAL STOCK',
                         'available_stock'					=>	'AVAILABLE STOCK',
                         'sold_stock'						=>	'SOLD STOCK',
