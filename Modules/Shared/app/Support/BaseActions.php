@@ -18,5 +18,6 @@ class BaseActions
 	public const SETTINGS   = 'settings';
     public const PLUGINS    = 'plugins';
 
+	public const LISTING    = 'listing';
 	public const BASIC   	= 'basic';
 }

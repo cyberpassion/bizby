@@ -106,31 +106,38 @@ return [
 
     	Actions::LIST	=>	[
 			[
+	    	    'type'        => 'select',
+    	    	'name'        => 'business_type',
+	        	'placeholder' => 'Business Type',
+		        'col'         => 2,
+    		    'dataKey'     => 'shared.business-types',
+		    ],
+			[
     		    'type'        => 'select',
         		'name'        => 'assigned_to_id',
 	        	'placeholder' => 'Assigned To',
-    	    	'col'         => 3,
+    	    	'col'         => 2,
         		'dataKey'     => 'employees.list',
 	    	],
 			[
 		        'type'        => 'select',
     		    'name'        => 'stage_id',
         		'placeholder' => 'Stage',
-	        	'col'         => 3,
+	        	'col'         => 2,
     	    	'dataKey'     => 'lead.lead-stages',
 		    ],
     		[
 	    	    'type'        => 'select',
     	    	'name'        => 'category_id',
 	        	'placeholder' => 'Category',
-		        'col'         => 3,
+		        'col'         => 2,
     		    'dataKey'     => 'lead.categories',
 		    ],
     		[
 	    	    'type'        => 'select',
     	    	'name'        => 'source_id',
 	        	'placeholder' => 'Source',
-		        'col'         => 3,
+		        'col'         => 2,
     		    'dataKey'     => 'lead.lead-sources',
     		]
 		]

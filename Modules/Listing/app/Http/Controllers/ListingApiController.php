@@ -8,7 +8,7 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 class ListingApiController extends SharedApiController
 {
     protected $searchable = [
-        'business_name',
+        'name',
         'phone',
         'email',
         'city',
@@ -23,7 +23,7 @@ class ListingApiController extends SharedApiController
     protected function validationRules($id = null)
     {
         return [
-            'business_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'email' => 'nullable|email|max:255',
 

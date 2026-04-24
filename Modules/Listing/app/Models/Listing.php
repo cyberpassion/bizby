@@ -12,7 +12,7 @@ class Listing extends Model
 	protected $connection = 'central';
 
     protected $fillable = [
-        'business_name',
+        'name',
         'owner_name',
         'phone',
         'email',

@@ -13,7 +13,7 @@ return new class extends Migration
     		$table->commonSaasFields();
 
             /* ---------------- Basic Info ---------------- */
-            $table->string('business_name');
+            $table->string('name');
             $table->string('owner_name')->nullable();
 
             $table->string('phone');
@@ -56,7 +56,7 @@ return new class extends Migration
             $table->text('meta_description')->nullable();
 
             /* ---------------- Indexes ---------------- */
-            $table->index(['business_name']);
+            $table->index(['name']);
             $table->index(['phone']);
             $table->index(['category_id']);
             $table->index(['city', 'state']);

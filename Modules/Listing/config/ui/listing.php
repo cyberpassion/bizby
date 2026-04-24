@@ -36,12 +36,6 @@ return [
                 ],
 
                 [
-                    'title'      => 'Bulk-Ops',
-                    'href'       => UrlPath::makeBulk($pg),
-                    'permission' => Permission::bulk(Res::LISTINGS),
-                ],
-
-                [
                     'title'      => 'Report',
                     'href'       => UrlPath::makeReport($pg),
                     'permission' => Permission::view(Res::REPORTS),
@@ -66,9 +60,9 @@ return [
 		Actions::LIST => [
 			[
                 'title'      => 'View Portal',
-                'href'       => UrlPath::makeDocuments($pg, '{id}'),
+                'href'       => UrlPath::makePortal($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'document',
+                'action'     => 'portal-link',
             ],
 
 	        [
@@ -106,6 +100,13 @@ return [
 
         Actions::LIST	=>	[
             [
+	    	    'type'        => 'select',
+    	    	'name'        => 'business_type',
+	        	'placeholder' => 'Business Type',
+		        'col'         => 3,
+    		    'dataKey'     => 'shared.business-types',
+		    ],
+			[
                 'type'        => 'select',
                 'name'        => 'state',
                 'placeholder' => 'State',

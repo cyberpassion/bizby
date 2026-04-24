@@ -89,4 +89,9 @@ class UrlPath
 		return self::make($module, BaseActions::UPLOAD . '/' . $id);
 	}
 
+	public static function makePortal(string $module, $id): string
+	{
+		return self::make($module, $id);
+	}
+
 }
