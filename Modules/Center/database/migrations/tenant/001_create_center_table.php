@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->text('location');
             $table->string('contact');
             $table->integer('capacity')->nullable();
-			$table->text('remark')->nullable();
         });
     }
 
