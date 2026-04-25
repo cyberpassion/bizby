@@ -39,7 +39,8 @@ class TenantUserApiController extends SharedChildApiController
             'name'     => 'required|string|max:255',
             'email'    => 'required|email',
             'password' => 'required|string|min:6',
-            'role_id'  => 'required|integer'
+            'role_id'  => 'required|integer',
+			'type'     => 'sometimes|string|in:portal,api'
         ]);
 
         $tenant = app('resolvedTenant');
@@ -81,6 +82,7 @@ class TenantUserApiController extends SharedChildApiController
                 ],
                 [
                     'role_id'    => $role->id,
+					'type'       => $data['type'] ?? 'portal',
                     'is_active'  => true,
                     'updated_at' => now(),
                     'created_at' => now(),

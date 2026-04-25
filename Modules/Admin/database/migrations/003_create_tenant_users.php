@@ -30,6 +30,7 @@ return new class extends Migration
 
             // Status
             $table->boolean('is_active')->default(true);
+			$table->boolean('tfa_enabled')->default(false);
 
             // Optional tenant-specific settings
             $table->json('meta')->nullable();

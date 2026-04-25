@@ -13,7 +13,13 @@ class ListService
      */
     public function get(string $table, array $options = [])
 	{
-    	$query = DB::table($table);
+    	// $query = DB::table($table);
+
+		$connection = $options['connection'] ?? null;
+
+	    $query = $connection
+    	    ? DB::connection($connection)->table($table)
+        	: DB::table($table);
 
 	    // (KEEP ALL YOUR LOGIC EXACTLY AS IT IS)
 
@@ -90,7 +96,13 @@ class ListService
      */
     public function count(string $table, array $options = [])
     {
-        $query = DB::table($table);
+        // $query = DB::table($table);
+
+		$connection = $options['connection'] ?? null;
+
+	    $query = $connection
+    	    ? DB::connection($connection)->table($table)
+        	: DB::table($table);
 
         // apply same filters (except pagination)
         if (!empty($options['where'])) {

@@ -145,7 +145,7 @@ return [
             [
                 'type'        => 'select',
                 'name'        => 'employee_type',
-                'placeholder' => 'Employee Type',
+                'placeholder' => 'Type',
                 'col'         => 3,
                 'dataKey'     => 'employee.types',
             ],

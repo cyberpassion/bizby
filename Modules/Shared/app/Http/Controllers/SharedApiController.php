@@ -54,7 +54,8 @@ abstract class SharedApiController extends Controller
 	{
 		$module = Str::of(static::class)->after('Modules\\')->before('\\')->lower()->toString();
     	$model = $this->model();
-    	$table = (new $model)->getTable();
+		$modelInstance = new $model; // ✅ ADD THIS LINE
+		$table = $modelInstance->getTable();
 
 	    // Convert GET params automatically into exact match filters
     	/*$whereFilters = $request->only(
@@ -73,6 +74,7 @@ abstract class SharedApiController extends Controller
 
 	    // Pass to ListService
     	$result = $this->listService->get($table, [
+			'connection'     => $modelInstance->getConnectionName(),
         	'where'          => $whereFilters,
         	'search'         => $search,
 	        'searchColumns'  => $searchable,
