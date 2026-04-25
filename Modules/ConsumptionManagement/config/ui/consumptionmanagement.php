@@ -24,8 +24,13 @@ return [
                 ],
 
                 [
-                    'title'      => 'Add New',
+                	'title'      => 'Add Item',
                     'href'       => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::CONSUMPTIONS),
+                ],
+				[
+                    'title'      => 'Add Transaction',
+                    'href'       => UrlPath::make($pg, 'create-transactions'),
                     'permission' => Permission::create(Res::CONSUMPTIONS),
                 ],
 
@@ -100,10 +105,18 @@ return [
         Actions::LIST	=>	[
             [
                 'type'        => 'select',
-                'name'        => 'channel',
+                'name'        => 'mode',
                 'placeholder' => 'Modes',
                 'col'         => 3,
-                'dataKey'     => 'shared.communication-modes',
+                'dataKey'     => 'consumption.modes',
+            ],
+
+			[
+                'type'        => 'select',
+                'name'        => 'type',
+                'placeholder' => 'Types',
+                'col'         => 3,
+                'dataKey'     => 'consumption.types',
             ],
 
             [

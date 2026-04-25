@@ -115,12 +115,18 @@ return [
         Actions::LIST	=>	[
             [
                 'type'        => 'select',
+                'name'        => 'consultant_id',
+                'placeholder' => 'Consultant',
+                'col'         => 3,
+                'dataKey'     => 'employees.list',
+            ],
+			[
+                'type'        => 'select',
                 'name'        => 'channel',
                 'placeholder' => 'Modes',
                 'col'         => 3,
                 'dataKey'     => 'shared.communication-modes',
             ],
-
             [
                 'type'        => 'select',
                 'name'        => 'status',
