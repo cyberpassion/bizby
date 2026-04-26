@@ -23,10 +23,12 @@ return new class extends Migration {
 		    $table->decimal('stock_after', 14, 2);
 
 		    // Reference (VERY IMPORTANT)
-		    $table->string('reference_type')->nullable(); 
+		    $table->string('reason_type')->nullable(); 
     		// purchase, sale, manual, incident, etc.
 
-		    $table->unsignedBigInteger('reference_id')->nullable();
+		    $table->nullableMorphs('context');
+
+			$table->text('reason')->nullable(); 
 
 		    // Location
     		$table->unsignedBigInteger('center_id')->nullable();

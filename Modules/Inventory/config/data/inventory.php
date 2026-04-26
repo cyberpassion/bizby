@@ -134,7 +134,7 @@ return [
     	"transfer"   => "Transfer"
 	],
 
-	"reference-types" => [
+	"reason-types" => [
 	    "purchase" => "Purchase",
     	"sale"     => "Sale",
 	    "opening"  => "Opening Stock",

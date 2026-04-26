@@ -16,9 +16,11 @@ class InventoryTransaction extends TenantModel
         'quantity',
         'stock_before',
         'stock_after',
-        'reference_type',
-        'reference_id',
+        'reason_type',
+        'context_id',
+		'context_type',
         'center_id',
+		'reason',
         'created_by',
         'remarks',
     ];
@@ -33,4 +35,10 @@ class InventoryTransaction extends TenantModel
     {
         return $this->belongsTo(InventoryItem::class, 'inventory_item_id');
     }
+
+	public function context()
+	{
+    	return $this->morphTo();
+	}
+
 }

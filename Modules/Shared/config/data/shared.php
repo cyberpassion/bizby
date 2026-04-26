@@ -750,4 +750,14 @@ return [
 		'billing'       => 'Billing',
 	],
 
+	'linkable-entities' => [
+		'incident' 		=> 'Incident',
+		'consultation'	=> 'Consultation'
+	],
+
+	'peples' => [
+		'employee'	=> 'Employee',
+		'student'	=> 'Student'
+	]
+
 ];

@@ -55,8 +55,4 @@ class Incident extends TenantModel
         return $this->belongsTo(\Modules\Center\Models\Center::class);
     }
 
-    public function consumptions()
-    {
-        return $this->hasMany(\Modules\ConsumptionManagement\Models\ConsumableTransaction::class, 'incident_id', 'incident_code');
-    }
 }
