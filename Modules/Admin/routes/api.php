@@ -272,12 +272,11 @@ Route::prefix('v1/auth/password')->group(function () {
 | Public Auth (Portal)
 |--------------------------------------------------------------------------
 */
-Route::prefix('v1/auth')
+Route::prefix('v1/public-auth')
     ->middleware('identify.tenant')
     ->group(function () {
 
         Route::post('register', [AuthApiController::class, 'register']);
-        Route::post('login', [AuthApiController::class, 'login']);
     });
 
 /*
