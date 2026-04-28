@@ -51,4 +51,42 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
         ];
     }
+
+	public function roles()
+	{
+    	return $this->belongsToMany(
+	        \Modules\Shared\Models\Permissions\PermissionRole::class,
+    	    'permission_user_roles',
+        	'user_id',
+        	'role_id'
+	    );
+	}
+
+	public function directPermissions()
+	{
+    	return $this->belongsToMany(
+	        \Modules\Shared\Models\Permissions\PermissionPermission::class,
+    	    'permission_user_permissions',
+        	'user_id',
+        	'permission_id'
+	    );
+	}
+
+	public function getPermissionsAttribute()
+	{
+		//print_r( $this->roles()->pluck('name'));die();
+    	$direct = $this->directPermissions ?? collect();
+
+	    $rolePermissions = $this->roles()
+    	    ->with('permissions')
+        	->get()
+	        ->pluck('permissions')
+    	    ->flatten();
+
+	    return $direct
+    	    ->merge($rolePermissions)
+        	->unique('id')
+        	->values();
+	}
+
 }

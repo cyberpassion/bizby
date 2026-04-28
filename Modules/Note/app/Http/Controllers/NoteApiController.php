@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Note\Models\Note;
 use Modules\Note\Models\NoteThread;
 use Modules\Shared\Http\Controllers\SharedApiController;
+use Illuminate\Support\Facades\DB;
 
 class NoteApiController extends SharedApiController
 {
@@ -20,27 +21,53 @@ class NoteApiController extends SharedApiController
     |--------------------------------------------------------------------------
     */
     public function store(Request $request)
-    {
-        $data = $request->all();
+	{
+    	$data = $request->validate([
+	        'note_thread_id' => 'required|exists:note_threads,id',
+    	    'message'        => 'required|string',
+        	'message_type'   => 'nullable|in:text,system,attachment',
+	    ]);
 
-        $note = Note::create([
-            ...$data,
-            'sender_id'   => auth()->id(),
-            'sender_type' => get_class(auth()->user()),
-        ]);
+	    return DB::transaction(function () use ($data) {
 
-        // Update thread metadata
-        NoteThread::where('id', $note->note_thread_id)->update([
-            'last_message'    => $note->message,
-            'last_message_at' => now(),
-        ]);
+	        // ✅ ensure user is part of thread
+    	    $thread = NoteThread::findOrFail($data['note_thread_id']);
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Message sent successfully.',
-            'data'    => $note
-        ]);
-    }
+	        $isParticipant = $thread->participants()
+    	        ->where('participant_id', auth()->id())
+        	    ->where('participant_type', get_class(auth()->user()))
+            	->exists();
+
+	        if (!$isParticipant) {
+    	        abort(403, 'Not allowed to post in this thread');
+        	}
+
+	        // ✅ create note
+    	    $note = Note::create([
+        	    ...$data,
+            	'sender_id'   => auth()->id(),
+            	'sender_type' => get_class(auth()->user()),
+	        ]);
+
+	        // ✅ update thread meta
+    	    $thread->update([
+        	    'last_message'    => $note->message,
+            	'last_message_at' => now(),
+	        ]);
+
+	        // ✅ mark sender as read
+    	    $thread->participants()
+        	    ->where('participant_id', auth()->id())
+            	->where('participant_type', get_class(auth()->user()))
+            	->update(['last_read_at' => now()]);
+
+	        return response()->json([
+    	        'status'  => 'success',
+        	    'message' => 'Message sent successfully.',
+            	'data'    => $note->load('sender')
+	        ]);
+    	});
+	}
 
     protected function validationRules($id = null)
     {
@@ -57,9 +84,24 @@ class NoteApiController extends SharedApiController
     |--------------------------------------------------------------------------
     */
     public function byThread($threadId, Request $request)
-    {
-        return Note::where('note_thread_id', $threadId)
-            ->latest()
-            ->paginate(20);
-    }
+	{
+    	$thread = NoteThread::findOrFail($threadId);
+
+	    // ✅ authorization
+    	$thread->participants()
+	        ->where('participant_id', auth()->id())
+    	    ->where('participant_type', get_class(auth()->user()))
+        	->exists() || abort(403);
+
+	    // ✅ mark as read
+    	$thread->participants()
+        	->where('participant_id', auth()->id())
+	        ->where('participant_type', get_class(auth()->user()))
+    	    ->update(['last_read_at' => now()]);
+
+	    return $thread->notes()
+    	    ->with('sender')
+        	->latest()
+        	->paginate(20);
+	}
 }

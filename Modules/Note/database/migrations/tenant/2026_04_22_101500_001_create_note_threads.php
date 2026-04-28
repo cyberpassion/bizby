@@ -13,30 +13,20 @@ return new class extends Migration
 		    $table->commonSaasFields();
 
 		    // Thread info
-		    $table->string('type')->nullable(); // support, internal
-
-			// Internal / External (IMPORTANT)
-		    $table->boolean('is_internal')->default(false);
-		    /*
-        		false → public / grievance / customer-facing
-		        true  → internal communication
-		    */
+		    $table->string('type')->nullable();
+    		$table->boolean('is_internal')->default(false);
 
 		    $table->string('subject')->nullable();
+		    $table->string('priority')->nullable();
 
-		    // Priority (for grievance)
-		    $table->string('priority')->nullable(); // low, medium, high
-
-		    // Assignment
-		    $table->nullableMorphs('assigned_to');
+		    // 🔥 CONTEXT (what this is about)
+		    $table->nullableMorphs('context');
 
 		    // Metadata
 		    $table->timestamp('last_message_at')->nullable();
 		    $table->text('last_message')->nullable();
 
-		    // Performance
-		    $table->unsignedInteger('unread_count')->default(0);
-
+		    $table->index(['status', 'priority']);
 		});
     }
 

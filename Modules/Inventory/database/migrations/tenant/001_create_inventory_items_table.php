@@ -30,8 +30,8 @@ return new class extends Migration {
 		    $table->unique(['tenant_id', 'product_id', 'center_id']);
 
 		    // Foreign keys
-		    $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
-    		$table->foreign('center_id')->references('id')->on('centers')->nullOnDelete();
+		    //$table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+    		//$table->foreign('center_id')->references('id')->on('centers')->nullOnDelete();
 
 		    // Indexes
     		$table->index(['product_id', 'center_id']);

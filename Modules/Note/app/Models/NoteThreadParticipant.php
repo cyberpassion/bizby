@@ -14,6 +14,7 @@ class NoteThreadParticipant extends TenantModel
         'note_thread_id',
         'participant_id',
         'participant_type',
+		'role',
         'last_read_at',
         'is_admin',
     ];
@@ -29,19 +30,13 @@ class NoteThreadParticipant extends TenantModel
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Thread this participant belongs to
-     */
     public function thread()
-    {
-        return $this->belongsTo(NoteThread::class, 'note_thread_id');
-    }
+{
+    return $this->belongsTo(NoteThread::class);
+}
 
-    /**
-     * Polymorphic participant (User, Admin, etc.)
-     */
-    public function participant()
-    {
-        return $this->morphTo();
-    }
+public function participant()
+{
+    return $this->morphTo();
+}
 }

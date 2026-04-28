@@ -3,9 +3,12 @@
 namespace Modules\Shared\Models\Permissions;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PermissionRole extends Model
 {
+    use HasFactory;
+
     protected $table = 'permission_roles';
 	protected $connection = 'central';
 
@@ -15,25 +18,24 @@ class PermissionRole extends Model
         'guard',
     ];
 
-    // 🔹 Permissions assigned to role
-    public function permissions()
-    {
-        return $this->belongsToMany(
-            PermissionPermission::class,
-            'permission_role_permissions',
-            'role_id',
-            'permission_id'
-        );
-    }
-
-    // 🔹 Users having this role
+    /**
+     * Relationship: Users (many-to-many via pivot)
+     */
     public function users()
     {
-        return $this->belongsToMany(
-            \App\Models\User::class,
+        /*return $this->belongsToMany(
+            User::class,
             'permission_user_roles',
             'role_id',
             'user_id'
-        );
+        );*/
+    }
+
+    /**
+     * Optional: Tenant relationship (if you have Tenant model)
+     */
+    public function tenant()
+    {
+        //return $this->belongsTo(Tenant::class);
     }
 }

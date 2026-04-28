@@ -11,13 +11,14 @@ class NavigationService
 
     protected static function context(): array
     {
+		//return ['status'=>'success','data'=>auth()->user()?->permissions?->pluck('slug')->toArray()];
         $user   = auth()->user();
         $tenant = tenant();
 
         return [
-            'permissions' => $user?->permissions?->pluck('key')->toArray() ?? [],
-            'modules'     => tenant()->purchased_modules ?? [],
-            'addons'      => tenant()->purchased_addons ?? [],
+            'permissions' => $user?->permissions?->pluck('slug')->toArray() ?? [],
+            'modules'     => tenant()->modules()->get() ?? [],
+            'addons'      => tenant()->addons()->get() ?? [],
             'role_id'     => $user?->role_id,
             'tenant_id'   => $tenant->id,
         ];
@@ -27,8 +28,8 @@ class NavigationService
 
     protected static function allowed(array $menu, array $ctx): bool
     {
+		//return true; // 🚑 TEMPORARY BYPASS
         // Enable when ready
-        /*
         if (!empty($menu['permission']) && !in_array($menu['permission'], $ctx['permissions'], true)) {
             return false;
         }
@@ -40,7 +41,6 @@ class NavigationService
         if (!empty($menu['module']) && !in_array($menu['module'], $ctx['modules'], true)) {
             return false;
         }
-        */
 
         return true;
     }
@@ -48,29 +48,38 @@ class NavigationService
     /* ================= RECURSIVE FILTER ================= */
 
     protected static function filterMenu(array $menus, array $ctx): array
-    {
-        $filtered = [];
+	{
+    	$filtered = [];
 
-        foreach ($menus as $menu) {
+	    foreach ($menus as $menu) {
 
-			// 🚑 HARD GUARD
 	        if (!is_array($menu)) {
     	        continue;
         	}
 
-            // Filter children first
-            if (!empty($menu['items']) && is_array($menu['items'])) {
-                $menu['items'] = self::filterMenu($menu['items'], $ctx);
-            }
+	        // 🔁 filter children first
+    	    if (!empty($menu['items']) && is_array($menu['items'])) {
+        	    $menu['items'] = self::filterMenu($menu['items'], $ctx);
+        	}
 
-            // Keep if allowed or has visible children
-            if (self::allowed($menu, $ctx) || !empty($menu['items'])) {
-                $filtered[] = $menu;
-            }
-        }
+	        $isAllowed   = self::allowed($menu, $ctx);
+    	    $hasChildren = !empty($menu['items']);
 
-        return array_values($filtered);
-    }
+	        // ❌ remove if not allowed AND no children
+    	    if (!$isAllowed && !$hasChildren) {
+        	    continue;
+        	}
+
+	        // ❌ remove empty groups like Reports, Settings
+    	    if (isset($menu['items']) && empty($menu['items'])) {
+        	    continue;
+        	}
+
+	        $filtered[] = $menu;
+    	}
+
+	    return $filtered;
+	}
 
     /* ================= SIDEBAR ================= */
 

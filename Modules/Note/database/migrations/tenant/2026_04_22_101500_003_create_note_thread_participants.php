@@ -10,16 +10,36 @@ return new class extends Migration
     {
         Schema::create('note_thread_participants', function (Blueprint $table) {
 
-		$table->commonSaasFields();
+		    $table->commonSaasFields();
 
-	    $table->foreignId('note_thread_id')->constrained()->cascadeOnDelete();
+		    $table->foreignId('note_thread_id')
+	          ->constrained()
+    	      ->cascadeOnDelete();
 
-	    $table->nullableMorphs('participant');
+		    // polymorphic participant
+		    $table->morphs('participant');
 
-	    $table->timestamp('last_read_at')->nullable();
+		    // 🔥 STRICT ROLES
+		    $table->enum('role', [
+        		'initiator',
+		        'assignee',
+        		'watcher',
+		        'previous_assignee',
+        		'escalated_to'
+		    ]);
 
-	    $table->boolean('is_admin')->default(false);
+		    // read tracking (per user)
+    		$table->timestamp('last_read_at')->nullable();
 
+		    // 🔥 performance indexes
+		    $table->index(['note_thread_id', 'role']);
+    		$table->index(['participant_id', 'participant_type']);
+
+		    // prevent duplicates
+		    $table->unique(
+			    ['note_thread_id', 'participant_id', 'participant_type', 'role'],
+    			'ntp_unique_participant_role'
+			);
 		});
     }
 

@@ -3,51 +3,68 @@
 namespace Modules\Shared\Database\Seeders\Permissions;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Modules\Shared\Models\Permissions\PermissionPermission;
 
 class PermissionPermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        $modules = [
-            'users' => ['view','create','update','delete','export'],
-            'roles' => ['view','create','update','delete'],
-            'permissions' => ['view','create','update','delete'],
-            'orders' => ['view','create','update','delete','export','approve'],
-            'invoices' => ['view','create','update','delete','approve','export'],
-            'payments' => ['view','refund'],
-            'products' => ['view','create','update','delete'],
-            'customers' => ['view','create','update','delete'],
-            'reports' => ['view','export'],
-            'settings' => ['view','update'],
-            'audit_logs' => ['view'],
-            'plans' => ['view','update'],
-            'subscriptions' => ['view','update','cancel'],
-        ];
+        $modulesPath = base_path('Modules');
+        $permissions = [];
 
-        foreach ($modules as $module => $operations) {
+        foreach (File::directories($modulesPath) as $modulePath) {
 
-            // Parent: module.*
-            $parentId = DB::table('permission_permissions')->insertGetId([
-                'module' => $module,
-                'operation' => '*',
-                'slug' => "$module.*",
-                'scope' => 'global',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+			$moduleName = basename($modulePath);
+            $configPath = $modulePath . '/config/ui/'.$moduleName.'.php';
 
-            foreach ($operations as $op) {
-                DB::table('permission_permissions')->insert([
+            if (!file_exists($configPath)) continue;
+
+            $config = require $configPath;
+
+            $this->extractPermissions($config, $permissions);
+        }
+
+        $permissions = array_unique(array_filter($permissions));
+
+        foreach ($permissions as $slug) {
+
+            [$module, $operation] = $this->parseSlug($slug);
+
+            PermissionPermission::updateOrCreate(
+                ['slug' => $slug],
+                [
                     'module' => $module,
-                    'operation' => $op,
-                    'slug' => "$module.$op",
-                    'parent_id' => $parentId,
+                    'operation' => $operation,
                     'scope' => 'global',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                    'guard' => 'api',
+                ]
+            );
+        }
+    }
+
+    private function extractPermissions(array $data, array &$permissions)
+    {
+        foreach ($data as $item) {
+
+            if (is_array($item)) {
+
+                if (isset($item['permission'])) {
+                    $permissions[] = $item['permission'];
+                }
+
+                $this->extractPermissions($item, $permissions);
             }
         }
+    }
+
+    private function parseSlug($slug)
+    {
+        $parts = explode('.', $slug);
+
+        return [
+            $parts[0] ?? 'general',
+            end($parts) ?? 'view'
+        ];
     }
 }

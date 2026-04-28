@@ -24,48 +24,101 @@ class NoteThreadApiController extends SharedApiController
     |--------------------------------------------------------------------------
     */
 	public function store(Request $request)
-	{
-    	$data = $request->validate([
-	        'type'        => 'nullable|string',
-    	    'subject'     => 'nullable|string',
-        	'status'      => 'nullable|in:open,in_progress,resolved,closed',
-        	'priority'    => 'nullable|in:low,medium,high',
-        	'is_internal' => 'boolean',
+{
+    $data = $request->validate([
+        'type'        => 'nullable|string',
+        'subject'     => 'nullable|string',
+		'message' 	  => 'required|string',
+        'status'      => 'nullable|in:open,in_progress,resolved,closed',
+        'priority'    => 'nullable|in:low,medium,high',
+        'is_internal' => 'boolean',
 
-	        'participants' => 'required|array|min:1',
-    	    'participants.*' => 'required|string',
-    	]);
+        // context
+        'context_type' => 'nullable|string',
+        'context_id'   => 'nullable|integer',
 
-	    return DB::transaction(function () use ($data) {
+        // assignee
+        'assignee_type' => 'required|string',
+        'assignee_id'   => 'required|integer',
 
-	        // ✅ extract participants
-    	    $rawParticipants = $data['participants'];
-        	unset($data['participants']);
+        // watchers
+        'watchers'   => 'nullable|array',
+        'watchers.*' => 'string',
+    ]);
 
-	        // ✅ create thread
-    	    $thread = NoteThread::create($data);
+    return DB::transaction(function () use ($request, $data) {
 
-	        foreach ($rawParticipants as $p) {
+        // ✅ let base controller handle polymorphic parsing
+        $data = $this->parsePolymorphicFields($data);
 
-	            if (!str_contains($p, '_')) {
-    	            continue;
-        	    }
+        // ✅ create thread
+        $thread = NoteThread::create($data);
 
-	            [$type, $id] = explode('_', $p);
+		// 👉 ADD HERE (right after thread is created)
 
-	            $thread->participants()->create([
-    	            'participant_id'   => (int) $id,
-        	        'participant_type' => $type, // ✅ JUST STRING (morphMap handles it)
-            	]);
-        	}
+	    // 1) dedupe watchers
+    	$watchers = collect($request->watchers ?? [])->unique();
 
-	        return response()->json([
-    	        'status' => 'success',
-        	    'message' => 'Thread created successfully.',
-            	'data' => $thread->load('participants')
-	        ], 201);
-    	});
-	}
+	    // 2) enforce single assignee (safety; mostly relevant on update/reassign)
+    	$thread->participants()
+        	->where('role', 'assignee')
+        	->delete();
+
+        // 🔥 BUILD PARTICIPANTS HERE
+        $participants = [];
+
+        // initiator
+        $participants[] = [
+            'role' => 'initiator',
+            'participant_id' => auth()->id(),
+            'participant_type' => get_class(auth()->user()),
+        ];
+
+        // assignee
+        $participants[] = [
+            'role' => 'assignee',
+            'participant_id' => $data['assignee_id'],
+            'participant_type' => $data['assignee_type'],
+        ];
+
+        // watchers
+        foreach ($request->watchers ?? [] as $w) {
+            [$type, $id] = explode('_', $w);
+
+            $participants[] = [
+                'role' => 'watcher',
+                'participant_id' => (int) $id,
+                'participant_type' => $type,
+            ];
+        }
+
+        // ✅ save participants
+        foreach ($participants as $p) {
+            $thread->participants()->create($p);
+        }
+
+        // ✅ create first message (VERY IMPORTANT – you missed this)
+        $note = \Modules\Note\Models\Note::create([
+            'note_thread_id' => $thread->id,
+            'message'        => $request->message,
+            'message_type'   => 'text',
+            'sender_id'      => auth()->id(),
+            'sender_type'    => get_class(auth()->user()),
+        ]);
+
+        // ✅ update thread meta
+        $thread->update([
+            'last_message'    => $note->message,
+            'last_message_at' => now(),
+        ]);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Thread created successfully.',
+            'data'    => $thread->load('participants', 'notes')
+        ], 201);
+    });
+}
 
     protected function validationRules($id = null)
     {
@@ -128,4 +181,21 @@ class NoteThreadApiController extends SharedApiController
         $request->merge(['is_internal' => false]);
         return $this->index($request);
     }
+
+	public function assignedToMe()
+{
+    return NoteThread::assignedToMe()
+        ->with(['assignee.participant','context'])
+        ->latest()
+        ->paginate(20);
+}
+
+public function myInbox()
+{
+    return NoteThread::involvingMe()
+        ->with(['assignee.participant','context'])
+        ->latest()
+        ->paginate(20);
+}
+
 }

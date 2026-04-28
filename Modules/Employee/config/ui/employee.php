@@ -20,7 +20,7 @@ return [
                 [
                     'title'      => 'Home',
                     'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
+                    'permission' => 'employee.access',
                 ],
 
                 [

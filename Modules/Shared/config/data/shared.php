@@ -755,7 +755,12 @@ return [
 		'consultation'	=> 'Consultation'
 	],
 
-	'peples' => [
+	'assignee-types' => [
+		'center'		=> 'Center',
+		'employee'		=> 'Employee'
+	],
+
+	'people' => [
 		'employee'	=> 'Employee',
 		'student'	=> 'Student'
 	]

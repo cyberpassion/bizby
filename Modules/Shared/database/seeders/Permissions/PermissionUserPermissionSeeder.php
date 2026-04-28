@@ -9,14 +9,19 @@ class PermissionUserPermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('permission_user_permissions')->insert([
-            'user_id' => 1,
-            'permission_id' => DB::table('permission_permissions')
-                ->where('slug', 'users.delete')
-                ->value('id'),
-            'tenant_id' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $permissionId = DB::table('permission_permissions')
+            ->where('slug', 'employee.employees.create')
+            ->value('id');
+
+        if ($permissionId) {
+            DB::table('permission_user_permissions')->updateOrInsert([
+                'user_id' => 1,
+                'permission_id' => $permissionId,
+                'tenant_id' => 1,
+            ], [
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

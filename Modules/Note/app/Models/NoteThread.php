@@ -28,18 +28,63 @@ class NoteThread extends TenantModel
         'last_message_at' => 'datetime',
     ];
 
-    public function notes()
+    public function context()
+{
+    return $this->morphTo();
+}
+
+public function notes()
+{
+    return $this->hasMany(Note::class);
+}
+
+public function participants()
+{
+    return $this->hasMany(NoteThreadParticipant::class);
+}
+
+public function assignee()
+{
+    return $this->hasOne(NoteThreadParticipant::class)
+        ->where('role', 'assignee')
+        ->with('participant');
+}
+
+public function watchers()
+{
+    return $this->hasMany(NoteThreadParticipant::class)
+        ->where('role', 'watcher')
+        ->with('participant');
+}
+
+public function initiator()
+{
+    return $this->hasOne(NoteThreadParticipant::class)
+        ->where('role', 'initiator')
+        ->with('participant');
+}
+
+	/*
+    |--------------------------------------------------------------------------
+    | Scopes (ADD THESE 👇)
+    |--------------------------------------------------------------------------
+    */
+
+    public function scopeAssignedToMe($query)
     {
-        return $this->hasMany(Note::class, 'note_thread_id');
+        return $query->whereHas('participants', function ($q) {
+            $q->where('role', 'assignee')
+              ->where('participant_id', auth()->id())
+              ->where('participant_type', get_class(auth()->user()));
+        });
     }
 
-    public function participants()
+    public function scopeInvolvingMe($query)
     {
-        return $this->hasMany(NoteThreadParticipant::class, 'note_thread_id');
+        return $query->whereHas('participants', function ($q) {
+            $q->where('participant_id', auth()->id())
+              ->where('participant_type', get_class(auth()->user()));
+        });
     }
 
-    public function assignedTo()
-    {
-        return $this->morphTo();
-    }
 }

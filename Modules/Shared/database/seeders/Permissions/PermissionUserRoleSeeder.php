@@ -9,13 +9,11 @@ class PermissionUserRoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $role = DB::table('permission_roles')->first();
+        $role = DB::table('permission_roles')
+            ->where('name', 'Owner')
+            ->first();
 
-        if (!$role) {
-            throw new \Exception('No roles found. PermissionRoleSeeder did not run.');
-        }
-
-        DB::table('permission_user_roles')->insert([
+        DB::table('permission_user_roles')->updateOrInsert([
             'user_id' => 1,
             'role_id' => $role->id,
         ]);

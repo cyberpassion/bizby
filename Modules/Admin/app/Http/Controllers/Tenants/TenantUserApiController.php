@@ -7,10 +7,9 @@ use Modules\Admin\Models\Tenants\TenantUser;
 use Modules\Shared\Http\Controllers\SharedChildApiController;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
-use App\Models\User;
+use Modules\Admin\Services\UserProvisionService;
+
 
 class TenantUserApiController extends SharedChildApiController
 {
@@ -34,131 +33,95 @@ class TenantUserApiController extends SharedChildApiController
      * Create (provision) user in tenant
      */
     public function provisionUser(Request $request, int $tenantId)
-    {
-        $data = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email',
-            'password' => 'required|string|min:6',
-            'role_id'  => 'required|integer',
-			'type'     => 'sometimes|string|in:portal,api'
-        ]);
+	{
+    	$data = $request->validate([
+	        'name'     => 'required|string|max:255',
+    	    'email'    => 'required|email',
+        	'password' => 'required|string|min:6',
+        	'role_id'  => 'required|integer',
+	    ]);
 
-        $tenant = app('resolvedTenant');
-        if (!$tenant || $tenant->id != $tenantId) {
-            return response()->json(['message' => 'Tenant mismatch'], 403);
-        }
+	    $tenant = app('resolvedTenant');
 
-        /** ----------------------------
-         * 1. Global user (NO transaction)
-         * ---------------------------- */
-        $user = User::firstOrCreate(
-            ['email' => $data['email']],
-            [
-                'name'     => $data['name'],
-                'password' => Hash::make($data['password']),
-            ]
-        );
+	    if (!$tenant || $tenant->id != $tenantId) {
+    	    return response()->json(['message' => 'Tenant mismatch'], 403);
+    	}
 
-        /** ----------------------------
-         * 2. Validate role
-         * ---------------------------- */
-        $role = DB::table('permission_roles')
-            ->where('id', $data['role_id'])
-            ->where('tenant_id', $tenant->id)
-            ->first();
+	    $service = app(UserProvisionService::class);
 
-        if (!$role) {
-            abort(422, 'Invalid role');
-        }
+	    // 🔥 1. global user
+    	$user = $service->createOrGetUser($data);
 
-        /** ----------------------------
-         * 3. Tenant user (FAST transaction)
-         * ---------------------------- */
-        $tenantUser = DB::transaction(function () use ($tenant, $user, $role) {
-            DB::table('tenant_users')->updateOrInsert(
-                [
-                    'tenant_id' => $tenant->id,
-                    'user_id'   => $user->id,
-                ],
-                [
-                    'role_id'    => $role->id,
-					'type'       => $data['type'] ?? 'portal',
-                    'is_active'  => true,
-                    'updated_at' => now(),
-                    'created_at' => now(),
-                ]
-            );
+	    // 🔥 2. tenant user
+    	$tenantUser = $service->createTenantUser(
+	        $user,
+    	    $tenant->id,
+        	$data['role_id']
+	    );
 
-            return TenantUser::where('tenant_id', $tenant->id)
-                ->where('user_id', $user->id)
-                ->first();
-        });
-
-        return response()->json([
-            'status' => 'success',
-            'data'   => $tenantUser
-        ], 201);
-    }
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'User Created Successfully',
+	        'data'    => $tenantUser
+    	], 201);
+	}
 
     /**
      * PUT /tenants/{tenantId}/users/{id}
      * Update tenant user (role / status)
      */
     public function updateUser(Request $request, int $tenantId, int $id)
-    {
-        $data = $request->validate([
-            'role_id'   => 'sometimes|integer',
-            'is_active' => 'sometimes|boolean'
-        ]);
+	{
+    	$data = $request->validate([
+        	'role_id'   => 'sometimes|integer',
+	        'is_active' => 'sometimes|boolean'
+    	]);
 
-        $tenant = app('resolvedTenant');
-        if (!$tenant || $tenant->id != $tenantId) {
-            return response()->json(['message' => 'Tenant mismatch'], 403);
-        }
+	    $tenant = app('resolvedTenant');
 
-        $tenantUser = TenantUser::where('tenant_id', $tenant->id)
-            ->where('id', $id)
-            ->firstOrFail();
+	    if (!$tenant || $tenant->id != $tenantId) {
+    	    return response()->json(['message' => 'Tenant mismatch'], 403);
+    	}
 
-        if (isset($data['role_id'])) {
-            $role = DB::table('permission_roles')
-                ->where('id', $data['role_id'])
-                ->where('tenant_id', $tenant->id)
-                ->first();
+	    $tenantUser = TenantUser::where('tenant_id', $tenant->id)
+    	    ->where('id', $id)
+        	->firstOrFail();
 
-            if (!$role) {
-                abort(422, 'Invalid role');
-            }
-        }
+	    $service = app(UserProvisionService::class);
 
-        $tenantUser->update($data);
+	    $tenantUser = $service->updateTenantUser($tenantUser, $data);
 
-        return response()->json([
-            'status' => 'success',
-            'data'   => $tenantUser
-        ]);
-    }
+	    return response()->json([
+    	    'status' => 'success',
+        	'data'   => $tenantUser
+	    ]);
+	}
 
     /**
      * DELETE /tenants/{tenantId}/users/{id}
      * Deactivate tenant user (safe delete)
      */
     public function destroyUser(int $tenantId, int $id)
-    {
-        $tenant = app('resolvedTenant');
-        if (!$tenant || $tenant->id != $tenantId) {
-            return response()->json(['message' => 'Tenant mismatch'], 403);
-        }
+	{
+    	$tenant = app('resolvedTenant');
 
-        $tenantUser = TenantUser::where('tenant_id', $tenant->id)
-            ->where('id', $id)
-            ->firstOrFail();
+	    if (!$tenant || $tenant->id != $tenantId) {
+    	    return response()->json(['message' => 'Tenant mismatch'], 403);
+    	}
 
-        $tenantUser->update(['is_active' => false]);
+	    $tenantUser = TenantUser::where('tenant_id', $tenant->id)
+    	    ->where('id', $id)
+        	->firstOrFail();
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'User deactivated'
-        ]);
-    }
+	    $service = app(UserProvisionService::class);
+
+	    $service->deactivateTenantUser($tenantUser);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'User deactivated'
+	    ]);
+	}
+
+
 }

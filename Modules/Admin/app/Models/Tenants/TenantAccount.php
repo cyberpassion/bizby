@@ -50,4 +50,25 @@ class TenantAccount extends Model implements Payable, FinalizePayment
     	return $this->hasMany(TenantModule::class, 'tenant_id');
 	}
 
+	public function addons()
+	{
+    	return $this->hasMany(TenantAddon::class, 'tenant_id');
+	}
+
+	public function getPurchasedModulesAttribute(): array
+	{
+    	return $this->modules()
+	        ->where('is_active', true)
+    	    ->pluck('module_key')
+        	->toArray();
+	}
+
+	public function getPurchasedAddonsAttribute(): array
+	{
+    	return $this->addons()
+	        ->where('is_active', true)
+    	    ->pluck('addon_key')
+        	->toArray();
+	}
+
 }

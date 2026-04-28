@@ -6,14 +6,13 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Stancl\Tenancy\Database\Models\Tenant;
-use Modules\Admin\Models\Tenants\TenantUser;
 
 class IdentifyTenantByHeader
 {
     public function handle(Request $request, Closure $next): Response
     {
         /**
-         * 1️⃣ Read tenant id from header (INTENT)
+         * 1️⃣ Read tenant id from header
          */
         $tenantId = $request->header('X-Tenant-ID');
 
@@ -25,8 +24,7 @@ class IdentifyTenantByHeader
         }
 
         /**
-         * 2️⃣ Resolve tenant from CENTRAL database
-         * ❗ Identity only — NO tenancy initialization
+         * 2️⃣ Resolve tenant (central DB)
          */
         $tenant = Tenant::query()->find($tenantId);
 
@@ -38,38 +36,7 @@ class IdentifyTenantByHeader
         }
 
         /**
-         * 3️⃣ Resolve authenticated user (ACTOR)
-         */
-        $user = $request->user();
-
-        if (! $user) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Unauthenticated',
-            ], 401);
-        }
-
-        /**
-         * 4️⃣ Authorize ACTOR inside tenant
-         * Only OWNER / ADMIN can manage tenant users
-         */
-        $canManageUsers = true;/*TenantUser::query()
-            ->where('tenant_id', $tenant->id)
-            ->where('user_id', $user->id)
-            ->where('is_active', true)
-            ->whereIn('role_id', ['owner', 'admin'])
-            ->exists();*/
-
-        if (! $canManageUsers) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Unauthorized tenant access',
-            ], 403);
-        }
-
-        /**
-         * 5️⃣ Store resolved tenant identity (SAFE)
-         * No DB switch, no side effects
+         * 3️⃣ Store tenant in container + request
          */
         app()->instance('resolvedTenant', $tenant);
         $request->attributes->set('resolvedTenant', $tenant);

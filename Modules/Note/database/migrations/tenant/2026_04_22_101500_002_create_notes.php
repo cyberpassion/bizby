@@ -16,24 +16,15 @@ return new class extends Migration
 		          ->constrained()
         		  ->cascadeOnDelete();
 
-		    // Sender only (receiver not needed)
+		    // sender
 		    $table->nullableMorphs('sender');
 
-		    // Message
 		    $table->text('message')->nullable();
 
 		    $table->string('message_type')->default('text');
-		    /*
-        		text
-		        system
-        		attachment
-		    */
+		    // text, system, attachment
 
-		    // Attachments (optional JSON or separate table)
-    		$table->json('attachments')->nullable();
-
-		    // Read tracking (optional per user handled in participants)
-		    $table->timestamp('read_at')->nullable();
+		    $table->json('attachments')->nullable();
 
 		    $table->index('note_thread_id');
 		});

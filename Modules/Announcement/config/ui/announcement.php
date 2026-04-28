@@ -29,12 +29,12 @@ return [
                         [
                             'title'      => 'Add Announcement',
                             'href'       => "/module/{$pg}/new",
-                            'permission' => "{$pg}.announcement.create",
+                            'permission' => "announcement.create",
                         ],
                         [
                             'title'      => 'View List',
                             'href'       => "/module/{$pg}/list",
-                            'permission' => "{$pg}.announcement.view",
+                            'permission' => "announcement.list",
                         ],
                     ],
                 ],

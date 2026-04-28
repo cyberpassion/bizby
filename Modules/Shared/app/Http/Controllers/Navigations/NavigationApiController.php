@@ -10,7 +10,7 @@ class NavigationApiController
     {
 		return response()->json([
             'status' => 'success',
-            'message' => 'Record fetched successfully.',
+            'message' => 'Sidebar fetched successfully.',
             'data' => NavigationService::sidebar()
         ], Response::HTTP_OK);
     }
@@ -19,7 +19,7 @@ class NavigationApiController
     {
 		return response()->json([
             'status' => 'success',
-            'message' => 'Record fetched successfully.',
+            'message' => 'Header fetched successfully.',
             'data' => NavigationService::header()
         ], Response::HTTP_OK);
     }
@@ -28,7 +28,7 @@ class NavigationApiController
     {
 		return response()->json([
             'status' => 'success',
-            'message' => 'Record fetched successfully.',
+            'message' => 'Module fetched successfully.',
             'data' => NavigationService::module($module)
         ], Response::HTTP_OK);
     }
@@ -37,7 +37,7 @@ class NavigationApiController
     {
         return response()->json([
             'status'  => 'success',
-            'message' => 'Record fetched successfully.',
+            'message' => 'Item fetched successfully.',
             'data'    => NavigationService::item($module, $action, $id),
         ], Response::HTTP_OK);
     }

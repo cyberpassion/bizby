@@ -11,6 +11,10 @@ use Modules\Admin\Models\Tenants\TenantUser;
 use Illuminate\Support\Facades\Cache;
 use Modules\Admin\Models\Tenants\TenantAccount;
 
+use Illuminate\Support\Facades\DB;
+
+use Modules\Admin\Services\UserProvisionService;
+
 class AuthApiController extends Controller
 {
     /* ---------------------------
@@ -119,6 +123,62 @@ class AuthApiController extends Controller
         	'step' => 'done',
         	'redirect' => '/module/dashboard'
 	    ]);
+	}
+
+	public function register(Request $request)
+	{
+    	$tenant = app('resolvedTenant');
+
+	    if (!$tenant) {
+    	    return response()->json([
+        	    'status' => 'error',
+            	'message' => 'Tenant not resolved'
+	        ], 422);
+    	}
+
+	    $data = $request->validate([
+    	    'name' => 'required|string',
+        	'email' => 'required|email|unique:users,email',
+    	    'password' => 'required|confirmed|min:6',
+    	]);
+
+	    $service = app(UserProvisionService::class);
+
+	    // 🔥 1. Create portal user
+    	$user = $service->registerPortalUser($data);
+
+	    // 🔥 2. Get default role (IMPORTANT)
+    	$roleId = $this->getDefaultPortalRole($tenant);
+
+	    // 🔥 3. Attach to tenant
+    	$tenantUser = $service->createTenantUser(
+        	$user,
+        	$tenant->id,
+        	$roleId
+    	);
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'data'   => [
+            	'user' => $user,
+				'message' => 'Registration Done Successfully',
+            	'tenant_user' => $tenantUser
+        	]
+	    ], 201);
+	}
+
+	protected function getDefaultPortalRole($tenant)
+	{
+    	$role = DB::table('permission_roles')
+	        ->where('tenant_id', $tenant->id)
+    	    ->where('slug', 'portal_user') // 🔥 define this
+        	->first();
+
+	    if (!$role) {
+    	    abort(500, 'Default portal role not configured');
+    	}
+
+	    return $role->id;
 	}
 
 }

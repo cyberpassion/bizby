@@ -14,6 +14,9 @@ Route::prefix('v1')
         Route::get('note-threads/internal', [NoteThreadApiController::class, 'internal']);
         Route::get('note-threads/external', [NoteThreadApiController::class, 'external']);
 
+		Route::get('note-threads/assigned-to-me', [NoteThreadApiController::class, 'assignedToMe']);
+        Route::get('note-threads/my-inbox', [NoteThreadApiController::class, 'myInbox']);
+
         // Messages
         Route::apiResource('notes', NoteApiController::class)->only(['store']);
 

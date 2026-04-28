@@ -27,12 +27,12 @@ class Note extends TenantModel
     ];
 
     public function thread()
-    {
-        return $this->belongsTo(NoteThread::class, 'note_thread_id');
-    }
+{
+    return $this->belongsTo(NoteThread::class);
+}
 
-    public function sender()
-    {
-        return $this->morphTo();
-    }
+public function sender()
+{
+    return $this->morphTo();
+}
 }
