@@ -20,8 +20,22 @@ class Incident extends TenantModel
         'incident_time',
         'reporter_name',
 		'reporter_contact',
+		'actions_taken',
+	    'resolution_notes',
+    	'resolved_at',
+    	'acknowledged_at',
+    	'closed_at',
         'status',
     ];
+
+	protected $casts = [
+    	'incident_date' => 'date:Y-m-d',
+    	'incident_time' => 'datetime:H:i',
+
+	    'resolved_at' => 'datetime',
+    	'acknowledged_at' => 'datetime',
+    	'closed_at' => 'datetime',
+	];
 
 	protected static function boot()
     {

@@ -9,14 +9,18 @@ class PermissionRolePermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        $roles = DB::table('permission_roles')->pluck('id', 'name');
-        $permissions = DB::table('permission_permissions')->pluck('id', 'slug');
+        $roles = DB::table('permission_roles')->get()->keyBy('slug');
+		$permissions = DB::table('permission_permissions')->get();
 
-        foreach ($permissions as $slug => $pid) {
+		foreach ($permissions as $permission) {
+
+		    $pid = $permission->id;
+		    $slug = $permission->slug;
+    		$moduleName = $permission->module;
 
             // 🔥 OWNER → everything
             DB::table('permission_role_permissions')->updateOrInsert([
-                'role_id' => $roles['Owner'],
+                'role_id' => $roles['owner']->id,
                 'permission_id' => $pid,
             ], [
                 'created_at' => now(),
@@ -28,7 +32,7 @@ class PermissionRolePermissionsSeeder extends Seeder
                 !str_contains($slug, 'subscriptions')) {
 
                 DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['Admin'],
+                    'role_id' => $roles['admin']->id,
                     'permission_id' => $pid,
                 ], [
                     'created_at' => now(),
@@ -40,7 +44,7 @@ class PermissionRolePermissionsSeeder extends Seeder
             if (preg_match('/\.(view|create|update)$/', $slug)) {
 
                 DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['Manager'],
+                    'role_id' => $roles['manager']->id,
                     'permission_id' => $pid,
                 ], [
                     'created_at' => now(),
@@ -52,7 +56,7 @@ class PermissionRolePermissionsSeeder extends Seeder
             if (preg_match('/\.(view|create)$/', $slug)) {
 
                 DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['Staff'],
+                    'role_id' => $roles['staff']->id,
                     'permission_id' => $pid,
                 ], [
                     'created_at' => now(),
@@ -64,13 +68,48 @@ class PermissionRolePermissionsSeeder extends Seeder
             if (str_ends_with($slug, '.view')) {
 
                 DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['Viewer'],
+                    'role_id' => $roles['viewer']->id,
                     'permission_id' => $pid,
                 ], [
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
+
+		    // 🔥 MODULE USER ROLES (META-DRIVEN)
+			foreach ($roles as $role) {
+
+			    if (!$role->meta) continue;
+
+			    $meta = json_decode($role->meta, true);
+
+			    if (!$meta) continue;
+
+			    $modules = $meta['modules'] ?? [];
+			    $extraModules = $meta['extra_modules'] ?? [];
+
+			    $allowedModules = array_merge($modules, $extraModules);
+
+			    // skip if no module defined
+			    if (empty($allowedModules)) continue;
+
+			    // check if permission belongs to allowed module
+			    if (in_array($moduleName, $allowedModules, true)) {
+
+			        // 🔥 OPTIONAL: restrict portal users
+			        if ($role->type === 'portal') {
+            			if (!str_ends_with($slug, '.view')) continue;
+        			}
+
+		        	DB::table('permission_role_permissions')->updateOrInsert([
+        		    	'role_id' => $role->id,
+	            		'permission_id' => $pid,
+			        ], [
+        			    'created_at' => now(),
+            			'updated_at' => now(),
+        			]);
+    			}
+			}
 
             // ❌ CUSTOM → no auto permissions
         }

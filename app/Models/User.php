@@ -74,7 +74,7 @@ class User extends Authenticatable
 
 	public function getPermissionsAttribute()
 	{
-		//print_r( $this->roles()->pluck('name'));die();
+		//print_r( $this->roles()->pluck('slug'));die();
     	$direct = $this->directPermissions ?? collect();
 
 	    $rolePermissions = $this->roles()

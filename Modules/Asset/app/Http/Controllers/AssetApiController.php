@@ -8,6 +8,7 @@ use Modules\Shared\Http\Controllers\SharedApiController;
 class AssetApiController extends SharedApiController
 {
     protected $searchable = ['name', 'asset_code', 'type', 'status'];
+	protected $with = ['center'];
 
     /**
      * Model binding

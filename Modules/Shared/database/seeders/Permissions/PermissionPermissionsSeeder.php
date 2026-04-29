@@ -16,6 +16,21 @@ class PermissionPermissionsSeeder extends Seeder
         foreach (File::directories($modulesPath) as $modulePath) {
 
 			$moduleName = basename($modulePath);
+
+			$currentlyAllowed = [
+				'Asset',
+				'Incident',
+				'Center',
+				'Maintenance',
+				'Product',
+				'Inventory',
+				'Vendor',
+				'Employee',
+				'Note'
+			];
+			if( !in_array($moduleName,$currentlyAllowed) ) {
+				continue;
+			}
             $configPath = $modulePath . '/config/ui/'.$moduleName.'.php';
 
             if (!file_exists($configPath)) continue;

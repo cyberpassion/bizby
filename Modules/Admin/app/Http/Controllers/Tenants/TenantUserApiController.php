@@ -123,5 +123,43 @@ class TenantUserApiController extends SharedChildApiController
 	    ]);
 	}
 
+	public function index_custom(Request $request, int $tenantId)
+	{
+    	$tenant = app('resolvedTenant');
+
+	    if (!$tenant || $tenant->id != $tenantId) {
+    	    return response()->json(['message' => 'Tenant mismatch'], 403);
+    	}
+
+	    $users = TenantUser::with(['role', 'user']) // 👈 ADD user
+		    ->where('tenant_id', $tenant->id)
+    		->latest()
+    		->paginate(20);
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'message' => 'Tenant users fetched successfully.',
+        	'data' => $users
+	    ]);
+	}
+
+	public function show_custom(int $tenantId, int $id)
+	{
+    	$tenant = app('resolvedTenant');
+
+	    if (!$tenant || $tenant->id != $tenantId) {
+    	    return response()->json(['message' => 'Tenant mismatch'], 403);
+    	}
+
+	    $user = TenantUser::with(['role', 'user'])
+    	    ->where('tenant_id', $tenant->id)
+        	->where('id', $id)
+        	->firstOrFail();
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'data' => $user
+	    ]);
+	}
 
 }

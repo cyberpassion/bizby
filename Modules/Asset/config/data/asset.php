@@ -21,12 +21,10 @@ return [
 
     'list' => [
     'id'               => 'ID',
-    'center_id_label'  => 'Center',
-    'asset_code'       => 'Asset Code',
-    'name'             => 'Name',
-    'serial_number'    => 'Serial Number',
-    'purchase_date'    => 'Purchase Date',
-	'purchase_cost'    => 'Purchase Cost',
+    'asset_code'       => 'Code',
+	'name'             => 'Name',
+	'type_label'	   => 'Type',
+	'center_name'  	   => 'Center',
     'status_label'     => 'Status',
 ],
 
@@ -36,11 +34,13 @@ return [
 
     'report' => [
     'id'               => 'ID',
-    'center_id_label'  => 'Center',
-    'asset_code'       => 'Asset Code',
+    'asset_code'       => 'Code',
+	'center_name'  	   => 'Center',
+	'type_label'	   => 'Type',
     'name'             => 'Name',
     'serial_number'    => 'Serial Number',
     'purchase_date'    => 'Purchase Date',
+	'purchase_cost'    => 'Purchase Cost',
     'status_label'     => 'Status',
 ],
 
@@ -54,8 +54,8 @@ return [
      | CORE
      ========================= */
     'id'               => 'ID',
-    'center_id_label'  => 'Center',
-    'asset_code'       => 'Asset Code',
+    'center_name'  => 'Center',
+    'asset_code'       => 'Code',
     'name'             => 'Name',
     'type'             => 'Type',
 
@@ -76,7 +76,7 @@ return [
      | ASSIGNMENT
      ========================= */
     'center_id'        => 'Center ID',
-    'center_id_label'  => 'Center',
+    'center_name'  => 'Center',
     'assigned_to'      => 'Assigned To',
     'assigned_to_label'=> 'Assigned To Name',
 

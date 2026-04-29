@@ -18,6 +18,8 @@ use Illuminate\Support\Str;
 
 abstract class SharedApiController extends Controller
 {
+	protected $with = [];
+
 	protected $listService;
 
     public function __construct(ListService $listService)
@@ -106,31 +108,72 @@ abstract class SharedApiController extends Controller
 		if ($result instanceof \Illuminate\Pagination\LengthAwarePaginator) {
 
 		    $result->setCollection(
-        		$result->getCollection()->map(function ($row) use ($statuses) {
+			    $result->getCollection()->map(function ($row) use ($statuses) {
 
-		            foreach ($row as $key => $value) {
+			        foreach ($row as $key => $value) {
 
-        		        // ✅ Only process values like core_123 / tenant_456
-                		if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
+			            if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
 
-		                    $resolved = \Modules\Shared\Services\TermResolverService::resolve($value);
+        			        $resolved = \Modules\Shared\Services\TermResolverService::resolve($value);
 
-        		            if ($resolved !== $value) {
-                		        $row->{$key . '_label'} = $resolved;
-                    		}
-                		}
-            		}
+            	    		if ($resolved !== $value) {
+		        	            $row->{$key . '_label'} = $resolved;
+        		    	    }
+            			}
+        			}
 
-		            // ✅ Handle status separately
-        		    if (isset($row->status)) {
-                		$row->status_label = $statuses[$row->status] ?? $row->status;
-            		}
+			        if (isset($row->status)) {
+    	    		    $row->status_label = $statuses[$row->status] ?? $row->status;
+        			}
 
-					$row = $this->mergePolymorphicFields($row);
+			        $row = $this->mergePolymorphicFields($row);
 
-		            return $row;
-        		})
-    		);
+    		    	return $row;
+    			})
+			);
+
+			// ✅ Inject relations + accessors (LIKE show())
+			if (!empty($this->with) && $result instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+
+			    $ids = collect($result->items())->pluck('id')->filter();
+
+			    $models = ($this->model())::with($this->with)
+			        ->whereIn('id', $ids)
+        			->get()
+			        ->keyBy('id');
+
+			    $result->setCollection(
+			        $result->getCollection()->map(function ($row) use ($models) {
+
+			            $full = $models[$row->id] ?? null;
+
+			            if ($full) {
+            			    // ✅ merge relations
+			                foreach ($full->getRelations() as $key => $relation) {
+            			        $row->$key = $relation;
+                			}
+
+			                // ✅ merge accessors (like center_name)
+            		    	foreach ($full->getAttributes() as $key => $value) {
+                    			// skip base fields
+                			}
+
+		                	// easiest way → just use toArray diff
+	        		        $extra = collect($full->toArray())
+    	            		    ->except(array_keys((array) $row))
+        	            		->toArray();
+
+			                foreach ($extra as $key => $value) {
+    	    		            $row->$key = $value;
+        	        		}
+            			}
+
+            			return $row;
+        			})
+    			);
+			}
+
+
 		}
 
 	    return response()->json([
@@ -152,7 +195,17 @@ abstract class SharedApiController extends Controller
         	->lower()
         	->toString();
 
-	    $model = $this->model()::find($id);
+	    //$model = $this->model()::find($id);
+		$modelClass = $this->model();
+
+		$query = $modelClass::query();
+
+		// ✅ Apply relations from child controller
+		if (!empty($this->with)) {
+    		$query->with($this->with);
+		}
+
+		$model = $query->find($id);
 
 	    if (!$model) {
     	    return response()->json([

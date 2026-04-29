@@ -112,7 +112,8 @@ return [
 
 	// Documents
     'documents' => [
-        'incident-slip' => 'Incident Slip'
+        'incident-slip'		=> 'Incident Slip',
+		'incident-report'	=> 'Incident Report'
     ],
 
 	// Status

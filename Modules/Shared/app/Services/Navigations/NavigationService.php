@@ -5,13 +5,19 @@ namespace Modules\Shared\Services\Navigations;
 use Illuminate\Support\Facades\Cache;
 use Modules\Shared\Services\LookupRegistry;
 
+use Illuminate\Support\Facades\DB;
+
 class NavigationService
 {
     /* ================= CONTEXT ================= */
 
     protected static function context(): array
     {
-		//return ['status'=>'success','data'=>auth()->user()?->permissions?->pluck('slug')->toArray()];
+
+		//print_r(auth()->id());print_r(tenant()->id);die();
+		//print_r(\DB::table('permission_users')->where('user_id', 1)->get());die();
+		//print_r(auth()->user()?->roles);die();
+		//print_r(['status'=>'success','data'=>auth()->user()?->permissions?->pluck('slug')->toArray()]);die();
         $user   = auth()->user();
         $tenant = tenant();
 

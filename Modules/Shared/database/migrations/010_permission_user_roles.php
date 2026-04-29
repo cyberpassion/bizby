@@ -13,6 +13,8 @@ return new class extends Migration
 
 		    $table->unsignedBigInteger('user_id');
 		    $table->unsignedBigInteger('role_id');
+			$table->string('type');
+			$table->json('meta')->nullable();
 
 		    $table->timestamps();
 

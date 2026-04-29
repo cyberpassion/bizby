@@ -250,6 +250,9 @@ Route::middleware(['auth:sanctum','identify.tenant'])
     ->prefix('v1/tenants/{tenantId}')
     ->group(function () {
 
+		Route::get('/users', [TenantUserApiController::class, 'index_custom']); // ✅ ADD
+        Route::get('/users/{id}', [TenantUserApiController::class, 'show_custom']); // optional
+
         Route::post('/users', [TenantUserApiController::class, 'provisionUser']);
         Route::put('/users/{id}', [TenantUserApiController::class, 'updateUser']);
         Route::delete('/users/{id}', [TenantUserApiController::class, 'destroyUser']);

@@ -23,6 +23,13 @@ return new class extends Migration {
 
             $table->string('reporter_name')->nullable();
 			$table->string('reporter_contact', 20)->nullable();
+			$table->text('actions_taken')->nullable();
+			$table->text('resolution_notes')->nullable();
+			$table->timestamp('resolved_at')->nullable();
+			$table->timestamp('acknowledged_at')->nullable();
+			$table->timestamp('closed_at')->nullable();
+			//$table->boolean('is_escalated')->default(false);
+			//$table->timestamp('escalated_at')->nullable();
         });
     }
 

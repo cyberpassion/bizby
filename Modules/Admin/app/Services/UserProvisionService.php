@@ -4,6 +4,7 @@ namespace Modules\Admin\Services;
 
 use App\Models\User;
 use Modules\Admin\Models\Tenants\TenantUser;
+use Modules\Shared\Models\Permissions\PermissionUserRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -49,12 +50,19 @@ class UserProvisionService
                     'user_id'   => $user->id,
                 ],
                 [
-                    'role_id'    => $roleId,
-                    'type'       => 'module', // 🔒 enforced
                     'is_active'  => true,
                     'updated_at' => now(),
                 ]
             );
+
+			PermissionUserRole::updateOrCreate(
+    	        [
+        	        'user_id' => $user->id,
+            	],
+            	[
+                	'role_id' => $roleId,
+            	]
+	        );
 
             return TenantUser::where('tenant_id', $tenantId)
                 ->where('user_id', $user->id)
@@ -85,6 +93,14 @@ class UserProvisionService
     public function updateTenantUser(TenantUser $tenantUser, array $data)
     {
         $tenantUser->update($data);
+		PermissionUserRole::updateOrCreate(
+    		[
+        		'user_id' => $tenantUser->user_id,
+    		],
+    		[
+        		'role_id' => $data['role_id'] ?? $tenantUser->role_id,
+    		]
+		);
         return $tenantUser;
     }
 

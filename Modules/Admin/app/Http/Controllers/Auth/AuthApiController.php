@@ -13,6 +13,8 @@ use Modules\Admin\Models\Tenants\TenantAccount;
 
 use Illuminate\Support\Facades\DB;
 
+use Modules\Shared\Models\Permissions\PermissionUserRole;
+
 use Modules\Admin\Services\UserProvisionService;
 
 class AuthApiController extends Controller

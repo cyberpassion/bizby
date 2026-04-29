@@ -84,6 +84,10 @@ class Asset extends TenantModel
         });
     }
 
+	protected $with = ['center']; // ✅ auto eager load
+
+    protected $appends = ['center_name']; // ✅ add computed field
+
     /* ======================================================
      | RELATIONSHIPS (OPTIONAL BUT RECOMMENDED)
      ====================================================== */
@@ -93,6 +97,11 @@ class Asset extends TenantModel
     {
         return $this->belongsTo(\Modules\Center\Models\Center::class, 'center_id');
     }
+
+	public function getCenterNameAttribute()
+	{
+    	return $this->center?->name;
+	}
 
     // Assigned User / Employee
     public function assignedUser()

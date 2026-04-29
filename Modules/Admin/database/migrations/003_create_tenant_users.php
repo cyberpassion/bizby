@@ -25,9 +25,6 @@ return new class extends Migration
                 ->on('users')
                 ->cascadeOnDelete();
 
-            // ✅ Correct role reference (RBAC)
-            $table->unsignedBigInteger('role_id');
-
             // Status
             $table->boolean('is_active')->default(true);
 			$table->boolean('tfa_enabled')->default(false);
@@ -37,10 +34,6 @@ return new class extends Migration
 
             $table->timestamps();
             $table->softDeletes();
-
-			$table->index('role_id');
-
-			$table->string('type')->default('portal');
 
             // 🚨 One user per tenant
             $table->unique(['tenant_id', 'user_id'], 'tenant_user_unique');

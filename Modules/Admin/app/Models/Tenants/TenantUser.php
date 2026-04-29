@@ -15,7 +15,7 @@ class TenantUser extends Authenticatable
 	protected $connection = 'central';
 
     protected $fillable = [
-        'user_id', 'name', 'email', 'password', 'tenant_id', 'role_id', 'type', 'tfa_enabled'
+        'user_id', 'name', 'email', 'password', 'tenant_id', 'tfa_enabled'
     ];
 
     protected $hidden = [
@@ -42,5 +42,10 @@ class TenantUser extends Authenticatable
     {
         return $this->belongsTo(PermissionRole::class, 'role_id');
     }
+
+	public function user()
+	{
+    	return $this->belongsTo(\App\Models\User::class, 'user_id');
+	}
 
 }

@@ -9,15 +9,29 @@ class PermissionRoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $roles = ['Owner' => 'owner', 'Admin' => 'admin', 'Manager' => 'manager', 'Staff' => 'staff', 'Viewer' => 'viewer', 'Custom' => 'custom', 'Portal User' => 'portal_user'];
+        $roles = [
+            'Owner'                 => 'owner',
+            'Admin'                 => 'admin',
+            'Manager'               => 'manager',
+            'Staff'                 => 'staff',
+            'Viewer'                => 'viewer',
+            'Custom'                => 'custom',
+            'Portal User'           => 'portal_user',
+            'Admin Incident User'   => 'admin_incident_user',
+            'Portal Registration User' => 'portal_registration_user'
+        ];
 
-        foreach ($roles as $role => $slug) {
+        foreach ($roles as $name => $slug) {
             DB::table('permission_roles')->updateOrInsert(
-                ['name' => $role, 'slug' => $slug, 'tenant_id' => 1],
                 [
+                    'name' => $name,
+                    'tenant_id' => 1,
+                ],
+                [
+                    'slug' => $slug,
                     'guard' => 'api',
-                    'created_at' => now(),
                     'updated_at' => now(),
+                    'created_at' => now(),
                 ]
             );
         }
