@@ -35,18 +35,18 @@ class NoteApiController extends SharedApiController
 
 	        $isParticipant = $thread->participants()
     	        ->where('participant_id', auth()->id())
-        	    ->where('participant_type', get_class(auth()->user()))
+        	    ->where('participant_type', auth()->user()->getMorphClass())
             	->exists();
 
 	        if (!$isParticipant) {
-    	        abort(403, 'Not allowed to post in this thread');
+    	        //abort(403, 'Not allowed to post in this thread');
         	}
 
 	        // ✅ create note
     	    $note = Note::create([
         	    ...$data,
             	'sender_id'   => auth()->id(),
-            	'sender_type' => get_class(auth()->user()),
+            	'sender_type' => auth()->user()->getMorphClass(),
 	        ]);
 
 	        // ✅ update thread meta
@@ -58,7 +58,7 @@ class NoteApiController extends SharedApiController
 	        // ✅ mark sender as read
     	    $thread->participants()
         	    ->where('participant_id', auth()->id())
-            	->where('participant_type', get_class(auth()->user()))
+            	->where('participant_type', auth()->user()->getMorphClass())
             	->update(['last_read_at' => now()]);
 
 	        return response()->json([
@@ -90,13 +90,13 @@ class NoteApiController extends SharedApiController
 	    // ✅ authorization
     	$thread->participants()
 	        ->where('participant_id', auth()->id())
-    	    ->where('participant_type', get_class(auth()->user()))
+    	    ->where('participant_type', auth()->user()->getMorphClass())
         	->exists() || abort(403);
 
 	    // ✅ mark as read
     	$thread->participants()
         	->where('participant_id', auth()->id())
-	        ->where('participant_type', get_class(auth()->user()))
+	        ->where('participant_type', auth()->user()->getMorphClass())
     	    ->update(['last_read_at' => now()]);
 
 	    return $thread->notes()

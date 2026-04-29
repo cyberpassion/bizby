@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 class NoteThreadApiController extends SharedApiController
 {
     protected $searchable = ['subject', 'type', 'status'];
@@ -114,7 +116,7 @@ class NoteThreadApiController extends SharedApiController
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Thread created successfully.',
+            'message' => 'Discussion initiated successfully.',
             'data'    => $thread->load('participants', 'notes')
         ], 201);
     });
@@ -183,19 +185,19 @@ class NoteThreadApiController extends SharedApiController
     }
 
 	public function assignedToMe()
-{
-    return NoteThread::assignedToMe()
-        ->with(['assignee.participant','context'])
-        ->latest()
-        ->paginate(20);
-}
+	{
+    	return NoteThread::assignedToMe()
+	        ->with(['assignee.participant','context'])
+    	    ->latest()
+        	->paginate(20);
+	}
 
-public function myInbox()
-{
-    return NoteThread::involvingMe()
-        ->with(['assignee.participant','context'])
-        ->latest()
-        ->paginate(20);
-}
+	public function myInbox()
+	{
+    	return NoteThread::involvingMe()
+	        ->with(['assignee.participant','context'])
+    	    ->latest()
+        	->paginate(20);
+	}
 
 }

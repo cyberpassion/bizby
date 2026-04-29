@@ -75,7 +75,7 @@ public function initiator()
         return $query->whereHas('participants', function ($q) {
             $q->where('role', 'assignee')
               ->where('participant_id', auth()->id())
-              ->where('participant_type', get_class(auth()->user()));
+              ->where('participant_type', auth()->user()->getMorphClass());
         });
     }
 
@@ -83,7 +83,7 @@ public function initiator()
     {
         return $query->whereHas('participants', function ($q) {
             $q->where('participant_id', auth()->id())
-              ->where('participant_type', get_class(auth()->user()));
+              ->where('participant_type', auth()->user()->getMorphClass());
         });
     }
 

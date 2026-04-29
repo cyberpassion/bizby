@@ -122,7 +122,7 @@ class SharedLookupProvider
 			'notes'         => $this->notes($group),
 			'permissions'   => $this->permissions($group),
 
-			'tenant-users'        => $this->tenantUsers($group),
+			'users'         => $this->tenantUsers($group),
 
 			default => [],
 		};

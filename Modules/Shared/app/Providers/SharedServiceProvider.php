@@ -371,6 +371,8 @@ class SharedServiceProvider extends ServiceProvider
 	private function registerMorphMaps(): void
 	{
 		Relation::morphMap([
+			'user'   	=> \App\Models\User::class,
+
 			'tenant-user'   	=> \Modules\Admin\Models\Tenants\TenantUser::class,
 			/* ================= CORE ================= */
             'signup'       => \Modules\Signup\Models\Signup::class,
@@ -411,13 +413,11 @@ class SharedServiceProvider extends ServiceProvider
             'registration' => \Modules\Registration\Models\Registration::class,
             //'examresult'   => \Modules\ExamResult\Models\ExamResult::class,
             'timetable'    => \Modules\Timetable\Models\Timetable::class,
-            'attendance' => \Modules\Attendance\Models\Attendance::class,
             'library'    => \Modules\Library\Models\Library::class,
 
             /* ================= HEALTHCARE ================= */
             'treatment'    => \Modules\Treatment\Models\Treatment::class,
             'consultation' => \Modules\Consultation\Models\Consultation::class,
-            'patient'   	=> \Modules\Patient\Models\Patient::class,
 
 			'center'   	=> \Modules\Center\Models\Center::class,
 		]);

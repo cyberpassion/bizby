@@ -15,6 +15,8 @@ class User extends Authenticatable
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
 	use HasApiTokens, Notifiable;
 
+	protected $connection = 'central';
+
     /**
      * The attributes that are mass assignable.
      *
