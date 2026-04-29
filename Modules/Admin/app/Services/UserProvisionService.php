@@ -7,6 +7,7 @@ use Modules\Admin\Models\Tenants\TenantUser;
 use Modules\Shared\Models\Permissions\PermissionUserRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class UserProvisionService
 {
@@ -40,9 +41,9 @@ class UserProvisionService
     | Create Tenant User (module)
     |--------------------------------------------------------------------------
     */
-    public function createTenantUser(User $user, int $tenantId, int $roleId): TenantUser
+    public function createTenantUser(User $user, int $tenantId, int $roleId, ?string $profileType = null, ?int $profileId = null): TenantUser
     {
-        return DB::transaction(function () use ($user, $tenantId, $roleId) {
+        return DB::transaction(function () use ($user, $tenantId, $roleId, $profileType, $profileId) {
 
             TenantUser::updateOrCreate(
                 [
@@ -51,6 +52,8 @@ class UserProvisionService
                 ],
                 [
                     'is_active'  => true,
+					'profile_type' => $profileType, // 🔥 store alias
+			        'profile_id'   => $profileId,
                     'updated_at' => now(),
                 ]
             );

@@ -39,6 +39,8 @@ class TenantUserApiController extends SharedChildApiController
     	    'email'    => 'required|email',
         	'password' => 'required|string|min:6',
         	'role_id'  => 'required|integer',
+			'profile_type' => 'nullable|string',
+		    'profile_id'   => 'nullable|integer',
 	    ]);
 
 	    $tenant = app('resolvedTenant');
@@ -56,7 +58,9 @@ class TenantUserApiController extends SharedChildApiController
     	$tenantUser = $service->createTenantUser(
 	        $user,
     	    $tenant->id,
-        	$data['role_id']
+        	$data['role_id'],
+			$data['profile_type'] ?? null,
+		    $data['profile_id'] ?? null
 	    );
 
 	    return response()->json([

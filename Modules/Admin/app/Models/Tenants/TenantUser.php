@@ -15,7 +15,7 @@ class TenantUser extends Authenticatable
 	protected $connection = 'central';
 
     protected $fillable = [
-        'user_id', 'name', 'email', 'password', 'tenant_id', 'tfa_enabled'
+        'user_id', 'name', 'email', 'password', 'tenant_id', 'profile_type', 'profile_id', 'tfa_enabled'
     ];
 
     protected $hidden = [
@@ -46,6 +46,11 @@ class TenantUser extends Authenticatable
 	public function user()
 	{
     	return $this->belongsTo(\App\Models\User::class, 'user_id');
+	}
+
+	public function profile()
+	{
+    	return $this->morphTo();
 	}
 
 }

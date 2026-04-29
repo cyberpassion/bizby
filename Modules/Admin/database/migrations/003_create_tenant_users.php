@@ -29,11 +29,15 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
 			$table->boolean('tfa_enabled')->default(false);
 
+			$table->nullableMorphs('profile');
+
             // Optional tenant-specific settings
             $table->json('meta')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
+
+			$table->index(['profile_id', 'profile_type']);
 
             // 🚨 One user per tenant
             $table->unique(['tenant_id', 'user_id'], 'tenant_user_unique');
