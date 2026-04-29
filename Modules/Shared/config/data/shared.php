@@ -757,7 +757,8 @@ return [
 
 	'assignee-types' => [
 		'center'		=> 'Center',
-		'employee'		=> 'Employee'
+		'employee'		=> 'Employee',
+		'tenant-user'	=>	'Tenant User'
 	],
 
 	'people' => [

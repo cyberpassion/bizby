@@ -371,6 +371,7 @@ class SharedServiceProvider extends ServiceProvider
 	private function registerMorphMaps(): void
 	{
 		Relation::morphMap([
+			'tenant-user'   	=> \Modules\Admin\Models\Tenants\TenantUser::class,
 			/* ================= CORE ================= */
             'signup'       => \Modules\Signup\Models\Signup::class,
             'subscription' => \Modules\Subscription\Models\Subscription::class,

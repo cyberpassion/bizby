@@ -28,6 +28,8 @@ use Modules\Booking\Models\BookingVenue;
 
 use Modules\Shared\Models\Permissions\PermissionRole;
 
+use \Modules\Admin\Models\Tenants\TenantUser;
+
 class SharedLookupProvider
 {
     public function register()
@@ -119,6 +121,8 @@ class SharedLookupProvider
 			'inventories'   => $this->inventories($group),
 			'notes'         => $this->notes($group),
 			'permissions'   => $this->permissions($group),
+
+			'tenant-users'        => $this->tenantUsers($group),
 
 			default => [],
 		};
@@ -310,6 +314,24 @@ class SharedLookupProvider
             ->orderBy('name')
             ->pluck('name', 'id')
             ->toArray(),
+
+            default => [],
+        };
+    }
+
+	protected function tenantUsers(string $group): array
+    {
+		//return $tenantId = app('resolvedTenant')->id;
+		$tenantId = 1;
+
+        return match ($group) {
+
+            'list' => TenantUser::with('user')
+			    ->where('tenant_id', $tenantId)   // 🔥 scope to tenant
+			    ->where('is_active', true)
+			    ->get()
+			    ->pluck('user.name', 'id')
+    			->toArray(),
 
             default => [],
         };
