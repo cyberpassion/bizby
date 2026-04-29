@@ -34,7 +34,7 @@ class InventoryApiController extends SharedApiController
             'center_id' => 'nullable|integer',
             'product_id' => 'nullable|integer',
 
-            'status' => 'nullable|in:active,inactive',
+            'status' => 'nullable|boolean',
 
             'notes' => 'nullable|string',
         ];

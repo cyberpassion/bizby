@@ -37,7 +37,7 @@ class AssetApiController extends SharedApiController
             'center_id' => 'nullable|integer',
             'assigned_to' => 'nullable|integer',
 
-            'status' => 'nullable|in:active,repair,not_working,disposed',
+            'status' => 'nullable|boolean',
 
             'last_service_date' => 'nullable|date',
             'next_service_date' => 'nullable|date',

@@ -19,30 +19,35 @@ return [
 
                 [
                     'title'      => 'Home',
+					'description'=>	'Incident Home with Stats',
                     'href'       => UrlPath::makeHome($pg),
                     'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
                     'title'      => 'Add New',
+					'description'=>	'Add a New Incident',
                     'href'       => UrlPath::makeCreate($pg),
                     'permission' => Permission::create(Res::INCIDENTS),
                 ],
 
                 [
                     'title'      => 'View List',
+					'description'=>	'View List of Incidents',
                     'href'       => UrlPath::makeList($pg),
                     'permission' => Permission::list(Res::INCIDENTS),
                 ],
 
                 [
                     'title'      => 'Report',
+					'description'=>	'View Incident Reports',
                     'href'       => UrlPath::makeReport($pg),
                     'permission' => Permission::view(Res::REPORTS),
                 ],
 
                 [
                     'title'      => 'Settings',
+					'description'=>	'Incident Settings',
                     'href'       => UrlPath::makeSettings($pg),
                     'permission' => Permission::update(Res::SETTINGS),
                 ],
