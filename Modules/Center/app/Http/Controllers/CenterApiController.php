@@ -17,7 +17,8 @@ class CenterApiController extends SharedApiController
         return [
             'name' => 'required|string',
             'location' => 'required|string',
-            'contact' => 'required|string',
+            'phone' => 'required|string',
+			'email' => 'required|string',
         ];
     }
 
@@ -25,7 +26,7 @@ class CenterApiController extends SharedApiController
     {
         return [
             'status',
-            'capacity',
+            'staff_capacity',
         ];
     }
 

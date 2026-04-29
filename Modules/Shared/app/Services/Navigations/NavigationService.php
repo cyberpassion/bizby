@@ -34,7 +34,7 @@ class NavigationService
 
     protected static function allowed(array $menu, array $ctx): bool
     {
-		//return true; // 🚑 TEMPORARY BYPASS
+		// return true; // 🚑 TEMPORARY BYPASS
         // Enable when ready
         if (!empty($menu['permission']) && !in_array($menu['permission'], $ctx['permissions'], true)) {
             return false;
@@ -80,6 +80,9 @@ class NavigationService
     	    if (isset($menu['items']) && empty($menu['items'])) {
         	    continue;
         	}
+
+			// ✅ APPLY LABELS HERE
+		    $menu = self::applyLabels($menu);
 
 	        $filtered[] = $menu;
     	}
@@ -173,6 +176,63 @@ class NavigationService
     	})
 	    ->values()
     	->toArray();
+	}
+
+	// Menu Labels
+	protected static function labels(): array
+	{
+    	static $labels = null;
+
+	    if ($labels !== null) {
+    	    return $labels;
+    	}
+
+	    $rows = DB::table('options')
+    	    ->where('name', 'like', '%_singular')
+        	->orWhere('name', 'like', '%_plural')
+	        ->pluck('value', 'name')
+    	    ->toArray();
+
+	    $labels = [];
+
+	    foreach ($rows as $key => $value) {
+    	    // asset_singular → [asset][singular]
+        	if (preg_match('/(.*)_(singular|plural)/', $key, $matches)) {
+            	$module = $matches[1];
+            	$type   = $matches[2];
+
+	            $labels[$module][$type] = $value;
+    	    }
+    	}
+
+	    return $labels;
+	}
+
+	protected static function applyLabels(array $menu): array
+	{
+    	$labels = self::labels();
+
+	    $replacements = [];
+
+	    foreach ($labels as $module => $forms) {
+    	    $singular = $forms['singular'] ?? ucfirst($module);
+        	$plural   = $forms['plural'] ?? $singular . 's';
+
+	        $replacements[ucfirst($module)] = $singular;
+    	    $replacements[ucfirst($module) . 's'] = $plural;
+    	}
+
+	    foreach (['title', 'description'] as $key) {
+    	    if (!empty($menu[$key])) {
+        	    $menu["{$key}_custom"] = str_replace(
+            	    array_keys($replacements),
+                	array_values($replacements),
+                	$menu[$key]
+	            );
+    	    }
+    	}
+
+	    return $menu;
 	}
 
 }

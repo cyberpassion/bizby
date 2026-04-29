@@ -25,7 +25,8 @@ return [
 	'state'        => 'State',
 	'place'        => 'Place',
     'location'     => 'Location',
-    'contact'      => 'Contact',
+    'phone'        => 'Contact',
+	'email'		   => 'Email',
     'status_label' => 'Status',
 ],
 
@@ -39,7 +40,8 @@ return [
 	'state'        => 'State',
 	'place'        => 'Place',
     'location'     => 'Location',
-    'contact'      => 'Contact',
+    'phone'        => 'Contact',
+	'email'		   => 'Email',
     'status_label' => 'Status',
 ],
 
@@ -61,13 +63,14 @@ return [
      ========================= */
 	'state'        => 'State',
 	'place'        => 'Place',
-    'location' => 'Location',
-    'contact'  => 'Contact',
+    'location'	   => 'Location',
+    'phone'		   => 'Phone',
+	'email'		   => 'Email',
 
     /* =========================
      | CAPACITY
      ========================= */
-    'capacity' => 'Capacity',
+    'staff_capacity' => 'Staff',
 
     /* =========================
      | STATUS
@@ -93,7 +96,8 @@ return [
 		'state',
 		'place',
         'location',
-		'contact',
+		'phone',
+		'email',
         'status_label'
     ],
 
@@ -105,7 +109,8 @@ return [
         'id',
         'name',
         'location',
-		'contact',
+		'phone',
+		'email',
         'status_label'
     ],
 ],

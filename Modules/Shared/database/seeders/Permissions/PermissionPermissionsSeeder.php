@@ -73,7 +73,7 @@ class PermissionPermissionsSeeder extends Seeder
         }
     }
 
-    private function parseSlug($slug)
+    private function parseSlug(string $slug)
     {
         $parts = explode('.', $slug);
 

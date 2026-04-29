@@ -15,8 +15,9 @@ return new class extends Migration {
 	    	$table->string('state')->nullable();
 			$table->string('place')->nullable();
             $table->text('location');
-            $table->string('contact');
-            $table->integer('capacity')->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->string('email', 255)->nullable();
+            $table->integer('staff_capacity')->nullable();
         });
     }
 
