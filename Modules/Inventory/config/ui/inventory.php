@@ -10,47 +10,57 @@ $pg = 'inventory';
 return [
 
     'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
+            [
+                'title'       => 'Home',
+                'description' => 'Inventory Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => Permission::view(Res::HOME),
+            ],
 
-				[
-                	'title'      => 'Add Item',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::INVENTORIES),
-                ],
-				[
-                    'title'      => 'Add Transaction',
-                    'href'       => UrlPath::make($pg, 'create-transactions'),
-                    'permission' => Permission::create(Res::INVENTORIES),
-                ],
-				[
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::INVENTORIES),
-                ],
-				[
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
-				[
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],
+            [
+                'title'       => 'Add Item',
+                'description' => 'Create a New Inventory Item',
+                'href'        => UrlPath::makeCreate($pg),
+                'permission'  => Permission::create(Res::INVENTORIES),
+            ],
+
+            [
+                'title'       => 'Add Transaction',
+                'description' => 'Record Stock In/Out Transaction',
+                'href'        => UrlPath::make($pg, 'create-transactions'),
+                'permission'  => Permission::create(Res::INVENTORIES),
+            ],
+
+            [
+                'title'       => 'View List',
+                'description' => 'Browse All Inventory Items',
+                'href'        => UrlPath::makeList($pg),
+                'permission'  => Permission::list(Res::INVENTORIES),
+            ],
+
+            [
+                'title'       => 'Report',
+                'description' => 'View Inventory Reports',
+                'href'        => UrlPath::makeReport($pg),
+                'permission'  => Permission::view(Res::REPORTS),
+            ],
+
+            [
+                'title'       => 'Settings',
+                'description' => 'Manage Inventory Settings',
+                'href'        => UrlPath::makeSettings($pg),
+                'permission'  => Permission::update(Res::SETTINGS),
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------

@@ -9,46 +9,51 @@ $pg = 'maintenance';
 
 return [
 
-    'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+'sidebar-menu' => [
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
+            [
+                'title'       => 'Home',
+                'description' => 'Maintenance Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => Permission::view(Res::HOME),
+            ],
 
-                [
-                    'title'      => 'Add New',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::MAINTENANCES),
-                ],
+            [
+                'title'       => 'Add New',
+                'description' => 'Create a New Maintenance Request',
+                'href'        => UrlPath::makeCreate($pg),
+                'permission'  => Permission::create(Res::MAINTENANCES),
+            ],
 
-                [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::MAINTENANCES),
-                ],
+            [
+                'title'       => 'View List',
+                'description' => 'Browse All Maintenance Records',
+                'href'        => UrlPath::makeList($pg),
+                'permission'  => Permission::list(Res::MAINTENANCES),
+            ],
 
-                [
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
+            [
+                'title'       => 'Report',
+                'description' => 'View Maintenance Reports',
+                'href'        => UrlPath::makeReport($pg),
+                'permission'  => Permission::view(Res::REPORTS),
+            ],
 
-                [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],
+            [
+                'title'       => 'Settings',
+                'description' => 'Manage Maintenance Settings',
+                'href'        => UrlPath::makeSettings($pg),
+                'permission'  => Permission::update(Res::SETTINGS),
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------

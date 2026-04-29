@@ -10,79 +10,91 @@ $pg = 'employee';
 return [
 
     'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => 'employee.access',
-                ],
+            [
+                'title'       => 'Home',
+                'description' => 'Employee Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => 'employee.access',
+            ],
 
-                [
-                    'title' => 'Employees',
-                    'items' => [
-                        [
-                            'title'      => 'Add Employee',
-                            'href'       => UrlPath::makeCreate($pg),
-                            'permission' => Permission::create(Res::EMPLOYEES),
-                        ],
-                        [
-                            'title'      => 'View List',
-                            'href'       => UrlPath::makeList($pg),
-                            'permission' => Permission::list(Res::EMPLOYEES),
-                        ],
-                        [
-                            'title'      => 'Bulk-Ops',
-                            'href'       => UrlPath::makeBulk($pg),
-                            'permission' => Permission::bulk(Res::EMPLOYEES),
-                        ],
-						[
-                            'title'      => 'Report',
-                            'href'       => UrlPath::makeReport($pg),
-                            'permission' => Permission::view(Res::REPORTS),
-                        ],
-						[
-                            'title'      => 'Settings',
-                            'href'       => UrlPath::makeSettings($pg),
-                            'permission' => Permission::update(Res::SETTINGS),
-                        ],
+            [
+                'title' => 'Employees',
+                'description' => 'Manage Employee Records & Operations',
+                'items' => [
+                    [
+                        'title'       => 'Add Employee',
+                        'description' => 'Create a New Employee Profile',
+                        'href'        => UrlPath::makeCreate($pg),
+                        'permission'  => Permission::create(Res::EMPLOYEES),
+                    ],
+                    [
+                        'title'       => 'View List',
+                        'description' => 'Browse All Employees',
+                        'href'        => UrlPath::makeList($pg),
+                        'permission'  => Permission::list(Res::EMPLOYEES),
+                    ],
+                    [
+                        'title'       => 'Bulk-Ops',
+                        'description' => 'Perform Bulk Employee Actions',
+                        'href'        => UrlPath::makeBulk($pg),
+                        'permission'  => Permission::bulk(Res::EMPLOYEES),
+                    ],
+                    [
+                        'title'       => 'Report',
+                        'description' => 'View Employee Reports',
+                        'href'        => UrlPath::makeReport($pg),
+                        'permission'  => Permission::view(Res::REPORTS),
+                    ],
+                    [
+                        'title'       => 'Settings',
+                        'description' => 'Manage Employee Settings',
+                        'href'        => UrlPath::makeSettings($pg),
+                        'permission'  => Permission::update(Res::SETTINGS),
                     ],
                 ],
+            ],
 
-                [
-                    'title' => 'Salary',
-                    'items' => [
-						[
-                            'title'      => 'Report',
-                            'href'       => UrlPath::make($pg, 'report/salary'),
-                            'permission' => Permission::view(Res::SALARY),
-                        ],
-                        [
-                            'title'      => 'Settings',
-                            'href'       => UrlPath::make($pg, 'settings/salary'),
-                            'permission' => Permission::update(Res::SALARY),
-                        ],
+            /*[
+                'title' => 'Salary',
+                'description' => 'Manage Salary & Payroll Settings',
+                'items' => [
+                    [
+                        'title'       => 'Report',
+                        'description' => 'View Salary Reports',
+                        'href'        => UrlPath::make($pg, 'report/salary'),
+                        'permission'  => Permission::view(Res::SALARY),
+                    ],
+                    [
+                        'title'       => 'Settings',
+                        'description' => 'Configure Salary Settings',
+                        'href'        => UrlPath::make($pg, 'settings/salary'),
+                        'permission'  => Permission::update(Res::SALARY),
                     ],
                 ],
+            ],*/
 
-                [
-                    'title' => 'Plugins',
-                    'items' => [
-                        [
-                            'title'      => 'Integrations',
-                            'href'       => UrlPath::makePlugins($pg),
-                            'permission' => Permission::view(Res::PLUGINS),
-                        ],
+            [
+                'title' => 'Plugins',
+                'description' => 'Extend Employee Module with Integrations',
+                'items' => [
+                    [
+                        'title'       => 'Integrations',
+                        'description' => 'Manage External Integrations',
+                        'href'        => UrlPath::makePlugins($pg),
+                        'permission'  => Permission::view(Res::PLUGINS),
                     ],
                 ],
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------

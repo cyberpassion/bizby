@@ -13,45 +13,50 @@ return [
      | Sidebar Menu
      =============================== */
     'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
+            [
+                'title'       => 'Home',
+                'description' => 'Vendor Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => Permission::view(Res::HOME),
+            ],
 
-                [
-                    'title'      => 'Add Vendor',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::VENDORS),
-                ],
+            [
+                'title'       => 'Add Vendor',
+                'description' => 'Create a New Vendor Profile',
+                'href'        => UrlPath::makeCreate($pg),
+                'permission'  => Permission::create(Res::VENDORS),
+            ],
 
-                [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::VENDORS),
-                ],
+            [
+                'title'       => 'View List',
+                'description' => 'Browse All Vendors',
+                'href'        => UrlPath::makeList($pg),
+                'permission'  => Permission::list(Res::VENDORS),
+            ],
 
-                [
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
+            [
+                'title'       => 'Report',
+                'description' => 'View Vendor Reports & Analytics',
+                'href'        => UrlPath::makeReport($pg),
+                'permission'  => Permission::view(Res::REPORTS),
+            ],
 
-                [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],
+            [
+                'title'       => 'Settings',
+                'description' => 'Manage Vendor Settings',
+                'href'        => UrlPath::makeSettings($pg),
+                'permission'  => Permission::update(Res::SETTINGS),
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------

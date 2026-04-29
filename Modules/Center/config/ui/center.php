@@ -9,46 +9,51 @@ $pg = 'center';
 
 return [
 
-    'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+'sidebar-menu' => [
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
+            [
+                'title'       => 'Home',
+                'description' => 'Center Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => Permission::view(Res::HOME),
+            ],
 
-                [
-                    'title'      => 'Add New',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::CENTERS),
-                ],
+            [
+                'title'       => 'Add New',
+                'description' => 'Create a New Center',
+                'href'        => UrlPath::makeCreate($pg),
+                'permission'  => Permission::create(Res::CENTERS),
+            ],
 
-                [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::CENTERS),
-                ],
+            [
+                'title'       => 'View List',
+                'description' => 'Browse All Centers',
+                'href'        => UrlPath::makeList($pg),
+                'permission'  => Permission::list(Res::CENTERS),
+            ],
 
-                /*[
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
+            [
+                'title'       => 'Report',
+                'description' => 'View Center Reports',
+                'href'        => UrlPath::makeReport($pg),
+                'permission'  => Permission::view(Res::REPORTS),
+            ],
 
-                [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],*/
+            [
+                'title'       => 'Settings',
+                'description' => 'Manage Center Settings',
+                'href'        => UrlPath::makeSettings($pg),
+                'permission'  => Permission::update(Res::SETTINGS),
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------

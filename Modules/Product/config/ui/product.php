@@ -13,67 +13,73 @@ return [
      | Sidebar Menu
      =============================== */
     'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
-
-                /*
-                |--------------------------------------------------------------------------
-                | Product
-                |--------------------------------------------------------------------------
-                */
-                [
-                    'title'      => 'Add Product',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::PRODUCTS),
-                ],
-
-                [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::PRODUCTS),
-                ],
-
-                [
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
-
-                /*
-                |--------------------------------------------------------------------------
-                | Settings
-                |--------------------------------------------------------------------------
-                */
-                [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],
-
-                /*
-                |--------------------------------------------------------------------------
-                | Plugins
-                |--------------------------------------------------------------------------
-                */
-                [
-                    'title'      => 'Calendar',
-                    'href'       => "/plugin/calendar?module={$pg}",
-                    'permission' => Permission::access("{$pg}.plugin"),
-                ],
-
+            [
+                'title'       => 'Home',
+                'description' => 'Product Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => Permission::view(Res::HOME),
             ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Product
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'       => 'Add Product',
+                'description' => 'Create a New Product',
+                'href'        => UrlPath::makeCreate($pg),
+                'permission'  => Permission::create(Res::PRODUCTS),
+            ],
+
+            [
+                'title'       => 'View List',
+                'description' => 'Browse All Products',
+                'href'        => UrlPath::makeList($pg),
+                'permission'  => Permission::list(Res::PRODUCTS),
+            ],
+
+            [
+                'title'       => 'Report',
+                'description' => 'View Product Reports',
+                'href'        => UrlPath::makeReport($pg),
+                'permission'  => Permission::view(Res::REPORTS),
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Settings
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'       => 'Settings',
+                'description' => 'Manage Product Settings',
+                'href'        => UrlPath::makeSettings($pg),
+                'permission'  => Permission::update(Res::SETTINGS),
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Plugins
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'       => 'Calendar',
+                'description' => 'View Product Calendar & Schedules',
+                'href'        => "/plugin/calendar?module={$pg}",
+                'permission'  => Permission::access("{$pg}.plugin"),
+            ],
+
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------

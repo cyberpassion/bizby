@@ -13,45 +13,50 @@ return [
      | Sidebar Menu
      ========================= */
     'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
+            [
+                'title'       => 'Home',
+                'description' => 'Notes Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => Permission::view(Res::HOME),
+            ],
 
-                [
-                    'title'      => 'Add Note',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::NOTES),
-                ],
+            [
+                'title'       => 'Add Note',
+                'description' => 'Create a New Note or Conversation',
+                'href'        => UrlPath::makeCreate($pg),
+                'permission'  => Permission::create(Res::NOTES),
+            ],
 
-                [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::NOTES),
-                ],
+            [
+                'title'       => 'View List',
+                'description' => 'Browse All Notes & Threads',
+                'href'        => UrlPath::makeList($pg),
+                'permission'  => Permission::list(Res::NOTES),
+            ],
 
-                [
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
+            [
+                'title'       => 'Report',
+                'description' => 'View Notes Activity Reports',
+                'href'        => UrlPath::makeReport($pg),
+                'permission'  => Permission::view(Res::REPORTS),
+            ],
 
-                [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],
+            [
+                'title'       => 'Settings',
+                'description' => 'Manage Notes Settings',
+                'href'        => UrlPath::makeSettings($pg),
+                'permission'  => Permission::update(Res::SETTINGS),
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------

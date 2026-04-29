@@ -10,45 +10,50 @@ $pg = 'asset';
 return [
 
     'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
+            [
+                'title'       => 'Home',
+                'description' => 'Asset Dashboard & Overview',
+                'href'        => UrlPath::makeHome($pg),
+                'permission'  => Permission::view(Res::HOME),
+            ],
 
-                [
-                    'title'      => 'Add New',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::ASSETS),
-                ],
+            [
+                'title'       => 'Add New',
+                'description' => 'Create a New Asset',
+                'href'        => UrlPath::makeCreate($pg),
+                'permission'  => Permission::create(Res::ASSETS),
+            ],
 
-                [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::ASSETS),
-                ],
+            [
+                'title'       => 'View List',
+                'description' => 'Browse All Assets',
+                'href'        => UrlPath::makeList($pg),
+                'permission'  => Permission::list(Res::ASSETS),
+            ],
 
-                /*[
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
+            [
+                'title'       => 'Report',
+                'description' => 'View Asset Reports',
+                'href'        => UrlPath::makeReport($pg),
+                'permission'  => Permission::view(Res::REPORTS),
+            ],
 
-                [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],*/
+            [
+                'title'       => 'Settings',
+                'description' => 'Manage Asset Settings',
+                'href'        => UrlPath::makeSettings($pg),
+                'permission'  => Permission::update(Res::SETTINGS),
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------
