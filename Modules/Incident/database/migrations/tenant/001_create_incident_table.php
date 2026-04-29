@@ -10,7 +10,10 @@ return new class extends Migration {
         Schema::create('incidents', function (Blueprint $table) {
             // Common SaaS fields (id, tenant_id, status, timestamps, soft deletes, audit)
             $table->commonSaasFields();
-            $table->string('incident_code')->unique(); // INC-2026-xxxx
+
+            // Unique per tenant
+            $table->string('incident_code');
+            $table->unique(['tenant_id', 'incident_code']);
 
             $table->foreignId('center_id')->constrained()->cascadeOnDelete();
 
@@ -22,14 +25,16 @@ return new class extends Migration {
             $table->time('incident_time');
 
             $table->string('reporter_name')->nullable();
-			$table->string('reporter_contact', 20)->nullable();
-			$table->text('actions_taken')->nullable();
-			$table->text('resolution_notes')->nullable();
-			$table->timestamp('resolved_at')->nullable();
-			$table->timestamp('acknowledged_at')->nullable();
-			$table->timestamp('closed_at')->nullable();
-			//$table->boolean('is_escalated')->default(false);
-			//$table->timestamp('escalated_at')->nullable();
+            $table->string('reporter_contact', 20)->nullable();
+
+            // Lifecycle timestamps (current state snapshot)
+            $table->timestamp('acknowledged_at')->nullable();
+            $table->timestamp('resolved_at')->nullable();
+            $table->timestamp('closed_at')->nullable();
+
+            // Indexes for performance
+            $table->index(['tenant_id', 'status']);
+            $table->index('center_id');
         });
     }
 

@@ -20,8 +20,6 @@ class Incident extends TenantModel
         'incident_time',
         'reporter_name',
 		'reporter_contact',
-		'actions_taken',
-	    'resolution_notes',
     	'resolved_at',
     	'acknowledged_at',
     	'closed_at',
@@ -68,5 +66,15 @@ class Incident extends TenantModel
     {
         return $this->belongsTo(\Modules\Center\Models\Center::class);
     }
+
+	public function logs()
+	{
+    	return $this->hasMany(IncidentLog::class);
+	}
+
+	public function closure()
+	{
+    	return $this->hasOne(IncidentClosure::class);
+	}
 
 }

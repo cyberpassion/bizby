@@ -161,4 +161,16 @@ return [
     	'critical'  => 'Critical',
     ],
 
+	'log_events' => [
+    	'acknowledged' => 'Acknowledged',
+    	'assigned'     => 'Assigned',
+    	'reassigned'   => 'Reassigned',
+    	'updated'      => 'Updated',
+    	'comment'      => 'Comment',
+    	'escalated'    => 'Escalated',
+    	'deescalated'  => 'De-escalated',
+    	'resolved'     => 'Resolved',
+    	'reopened'     => 'Reopened',
+	]
+
 ];

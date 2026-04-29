@@ -64,6 +64,36 @@ return [
 
 		Actions::LIST => [
 			[
+                'title'      => 'Add Update',
+                'href'       => UrlPath::make($pg, 'create-log'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'sheet',
+				'params'	 => [
+					'incident_id'	 => ':id'
+				]
+            ],
+
+			[
+                'title'      => 'Add Resolve Update',
+                'href'       => UrlPath::make($pg, 'create-resolve'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'sheet',
+				'params'	 => [
+					'incident_id'	 => ':id'
+				]
+            ],
+
+			[
+                'title'      => 'Close Incident',
+                'href'       => UrlPath::make($pg, 'create-closure'),
+                'permission' => Permission::view(Res::DOCUMENTS),
+                'action'     => 'sheet',
+				'params'	 => [
+					'incident_id'	 => ':id'
+				]
+            ],
+
+			[
                 'title'      => 'View Docs',
                 'href'       => UrlPath::makeDocuments($pg, '{id}'),
                 'permission' => Permission::view(Res::DOCUMENTS),
