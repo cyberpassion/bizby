@@ -35,34 +35,39 @@ class ExportApiController extends Controller
 
     public function exportCsv(string $module)
     {
-        $modelClass = ReportRegistry::resolveModel($module);
-        $columns    = $this->resolveColumns($module);
+		$modelClass = ReportRegistry::resolveModel($module);
+        $columns = $this->resolveColumns($module);
+
+		$dbColumns = array_keys($columns);   // DB fields
+		$headings  = array_values($columns); // Labels
 
         return Excel::download(
-            new class($modelClass, $columns) implements FromQuery, WithHeadings {
+		    new class($modelClass, $dbColumns, $headings) implements FromQuery, WithHeadings {
 
-                protected string $modelClass;
-                protected array  $columns;
+		        protected string $modelClass;
+        		protected array  $dbColumns;
+		        protected array  $headings;
 
-                public function __construct(string $modelClass, array $columns)
-                {
-                    $this->modelClass = $modelClass;
-                    $this->columns    = $columns;
-                }
+		        public function __construct(string $modelClass, array $dbColumns, array $headings)
+        		{
+		            $this->modelClass = $modelClass;
+        		    $this->dbColumns  = $dbColumns;
+            		$this->headings   = $headings;
+        		}
 
-                public function query()
-                {
-                    return $this->modelClass::query()
-                        ->select($this->columns);
-                }
+		        public function query()
+        		{
+		            return $this->modelClass::query()
+        		        ->select($this->dbColumns); // ✅ correct
+        		}
 
-                public function headings(): array
-                {
-                    return $this->columns;
-                }
-            },
-            "{$module}.csv"
-        );
+		        public function headings(): array
+        		{
+		            return $this->headings; // ✅ correct
+        		}
+    		},
+	    	"{$module}.csv"
+		);
     }
 
     /*
@@ -73,19 +78,22 @@ class ExportApiController extends Controller
 
     public function exportPdf(string $module)
     {
-        $modelClass = ReportRegistry::resolveModel($module);
-        $columns    = $this->resolveColumns($module);
+		$modelClass = ReportRegistry::resolveModel($module);
+        $columns = $this->resolveColumns($module);
 
-        $reportData = $modelClass::query()
-            ->select($columns)
-            ->get();
+		$dbColumns = array_keys($columns);
+		$headings  = array_values($columns);
+
+		$reportData = $modelClass::query()
+		    ->select($dbColumns) // ✅ correct
+    		->get();
 
         $html = view('shared::pdf.report', [
             'reportTitle'  => ucfirst($module) . ' Report',
             'tenantName'   => '',
             'tenantByline' => '',
             'reportData'   => $reportData,
-            'columns'      => $columns,
+            'columns'      => $headings,
         ])->render();
 
         $mpdf = new Mpdf([

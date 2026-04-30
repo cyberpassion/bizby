@@ -20,31 +20,31 @@ return [
 
     /* LIST VIEW */
     'list' => [
-    'id'                    => 'ID',
-    'name'                  => 'Name',
-	'vendor_code'           => 'Vendor Code',
-    'vendor_type'           => 'Vendor Type',
-    'vendor_gstin'          => 'GSTIN',
-    'vendor_pan'            => 'PAN',
-    'vendor_person'         => 'Contact Person',
-    'vendor_person_phone'   => 'Contact Phone',
-    'state'                 => 'State',
-    'place'              => 'Place',
-    'status_label'          => 'Status',
-],
+	    'id'                    => 'ID',
+    	'name'                  => 'Name',
+		'vendor_code'           => 'Vendor Code',
+    	'vendor_type'           => 'Vendor Type',
+    	'vendor_gstin'          => 'GSTIN',
+    	'vendor_pan'            => 'PAN',
+    	'vendor_person'         => 'Contact Person',
+    	'vendor_person_phone'   => 'Contact Phone',
+    	'state'                 => 'State',
+    	'place'              => 'Place',
+    	'status_label'          => 'Status',
+	],
 
     /* DETAIL VIEW */
     'detail' => [
-    'id'                          => 'ID',
-    'vendor_code'                 => 'Vendor Code',
-    'vendor_type'                 => 'Vendor Type',
-    'vendor_parent_id'            => 'Parent Vendor',
+    	'id'                          => 'ID',
+	    'vendor_code'                 => 'Vendor Code',
+    	'vendor_type'                 => 'Vendor Type',
+    	'vendor_parent_id'            => 'Parent Vendor',
 
-    /* Person */
-    'name'                        => 'Name',
-    'phone'                       => 'Phone',
-    'email'                       => 'Email',
-    'address'                     => 'Address',
+	    /* Person */
+    	'name'                        => 'Name',
+	    'phone'                       => 'Phone',
+    	'email'                       => 'Email',
+    	'address'                     => 'Address',
 
     /* Business */
     'vendor_gstin'                => 'GSTIN',

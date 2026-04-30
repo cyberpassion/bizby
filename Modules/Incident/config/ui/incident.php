@@ -74,7 +74,7 @@ return [
             ],
 
 			[
-                'title'      => 'Add Resolve Update',
+                'title'      => 'Resolve Update',
                 'href'       => UrlPath::make($pg, 'create-resolve'),
                 'permission' => Permission::view(Res::DOCUMENTS),
                 'action'     => 'sheet',
