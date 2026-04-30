@@ -19,28 +19,28 @@ return [
      | LIST VIEW
      ========================================================= */
     'list' => [
-        'code',
-        'product_id_label',
-        'center_id_label',
-        'minimum_threshold',
-        'maximum_threshold',
-        'current_stock',
-        'stock_status', // computed
-        'status_label'
+        'code'                => 'Code',
+        'product_id_label'    => 'Product',
+        'center_id_label'     => 'Center',
+        'minimum_threshold'   => 'Min Threshold',
+        'maximum_threshold'   => 'Max Threshold',
+        'current_stock'       => 'Current Stock',
+        'stock_status'        => 'Stock Status',
+        'status_label'        => 'Status',
     ],
 
     /* =========================================================
      | REPORT VIEW
      ========================================================= */
     'report' => [
-        'code',
-        'product_id_label',
-        'center_id_label',
-        'minimum_threshold',
-        'maximum_threshold',
-        'current_stock',
-        'stock_status',
-        'status_label'
+        'code'                => 'Code',
+        'product_id_label'    => 'Product',
+        'center_id_label'     => 'Center',
+        'minimum_threshold'   => 'Min Threshold',
+        'maximum_threshold'   => 'Max Threshold',
+        'current_stock'       => 'Current Stock',
+        'stock_status'        => 'Stock Status',
+        'status_label'        => 'Status',
     ],
 
     /* =========================================================
@@ -49,30 +49,30 @@ return [
     'detail' => [
 
         /* CORE */
-        'id',
-        'code',
+        'id'                  => 'ID',
+        'code'                => 'Code',
 
         /* RELATION */
-        'product_id',
-        'product_id_label',
-        'center_id',
-        'center_id_label',
+        'product_id'          => 'Product ID',
+        'product_id_label'    => 'Product',
+        'center_id'           => 'Center ID',
+        'center_id_label'     => 'Center',
 
         /* STOCK RULES */
-        'minimum_threshold',
-        'maximum_threshold',
+        'minimum_threshold'   => 'Min Threshold',
+        'maximum_threshold'   => 'Max Threshold',
 
         /* STOCK */
-        'current_stock',
-        'stock_status',
+        'current_stock'       => 'Current Stock',
+        'stock_status'        => 'Stock Status',
 
         /* STATUS */
-        'status',
-        'status_label',
+        'status'              => 'Status Value',
+        'status_label'        => 'Status',
 
         /* SYSTEM */
-        'created_at',
-        'updated_at',
+        'created_at'          => 'Created At',
+        'updated_at'          => 'Updated At',
     ],
 
     /* =========================================================

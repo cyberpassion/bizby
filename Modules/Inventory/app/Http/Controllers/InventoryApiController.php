@@ -58,7 +58,7 @@ class InventoryApiController extends SharedApiController
     	    ->leftJoin('products', 'products.id', '=', 'inventory_items.product_id')
         	->select(
             	'inventory_items.*',
-            	'products.name as name'
+            	'products.name as product_id_label'
 	        );
 
 	    /*
