@@ -19,35 +19,35 @@ return [
 
             [
                 'title'       => 'Home',
-                'description' => 'Center Dashboard & Overview',
+                'description' => 'Station Dashboard & Overview',
                 'href'        => UrlPath::makeHome($pg),
                 'permission'  => Permission::view(Res::HOME),
             ],
 
             [
                 'title'       => 'Add New',
-                'description' => 'Create a New Center',
+                'description' => 'Create a New Station',
                 'href'        => UrlPath::makeCreate($pg),
                 'permission'  => Permission::create(Res::CENTERS),
             ],
 
             [
                 'title'       => 'View List',
-                'description' => 'Browse All Centers',
+                'description' => 'Browse All Stations',
                 'href'        => UrlPath::makeList($pg),
                 'permission'  => Permission::list(Res::CENTERS),
             ],
 
             [
                 'title'       => 'Report',
-                'description' => 'View Center Reports',
+                'description' => 'View Station Reports',
                 'href'        => UrlPath::makeReport($pg),
                 'permission'  => Permission::view(Res::REPORTS),
             ],
 
             [
                 'title'       => 'Settings',
-                'description' => 'Manage Center Settings',
+                'description' => 'Manage Station Settings',
                 'href'        => UrlPath::makeSettings($pg),
                 'permission'  => Permission::update(Res::SETTINGS),
             ],

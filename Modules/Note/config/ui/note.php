@@ -28,7 +28,7 @@ return [
             ],
 
             [
-                'title'       => 'Add Note',
+                'title'       => 'Add New',
                 'description' => 'Create a New Note or Conversation',
                 'href'        => UrlPath::makeCreate($pg),
                 'permission'  => Permission::create(Res::NOTES),
