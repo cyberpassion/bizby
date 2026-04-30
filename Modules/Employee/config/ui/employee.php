@@ -40,12 +40,12 @@ return [
                         'href'        => UrlPath::makeList($pg),
                         'permission'  => Permission::list(Res::EMPLOYEES),
                     ],
-                    [
+                    /*[
                         'title'       => 'Bulk-Ops',
                         'description' => 'Perform Bulk Employee Actions',
                         'href'        => UrlPath::makeBulk($pg),
                         'permission'  => Permission::bulk(Res::EMPLOYEES),
-                    ],
+                    ],*/
                     [
                         'title'       => 'Report',
                         'description' => 'View Employee Reports',

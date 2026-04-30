@@ -44,8 +44,8 @@ return [
     'list' => [
         'id'              => 'ID',
         'name'            => 'Name',
-        'employee_type'   => 'Type',
-        'designation'     => 'Designation',
+        'employee_type_label'   => 'Type',
+        'designation_label'     => 'Designation',
         'address'         => 'Address',
         'dob'             => 'Date of Birth',
         'status_label'          => 'Status',
@@ -54,8 +54,8 @@ return [
     'detail' => [
         'id'              => 'ID',
         'name'            => 'Name',
-        'employee_type'   => 'Type',
-        'designation'     => 'Designation',
+        'employee_type_label'   => 'Type',
+        'designation_label'     => 'Designation',
         'address'         => 'Address',
         'dob'             => 'Date of Birth',
         'status_label'          => 'Status',
@@ -64,8 +64,8 @@ return [
     'report' => [
         'id'              => 'ID',
         'name'            => 'Name',
-        'employee_type'   => 'Type',
-        'designation'     => 'Designation',
+        'employee_type_label'   => 'Type',
+        'designation_label'     => 'Designation',
         'address'         => 'Address',
         'dob'             => 'Date of Birth',
         'status_label'          => 'Status',
