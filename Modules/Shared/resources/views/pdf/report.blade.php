@@ -32,14 +32,12 @@
 @php
     $firstRow = $reportData->first();
 
-    $allColumns = $firstRow
-        ? array_keys($firstRow->getAttributes())
-        : [];
+    $allColumns = $firstRow ? array_keys($firstRow) : [];
 
     // Use provided columns if available, else fallback
     $visibleColumns = !empty($columns ?? null)
-        ? $columns
-        : $allColumns;
+	    ? $columns   // key => label
+    	: array_combine($allColumns, $allColumns);
 @endphp
 
 <div style="width: 100%; margin-bottom: 10px;">
@@ -65,20 +63,18 @@
 <table width="100%" border="1" cellspacing="0" cellpadding="6">
     <thead>
         <tr>
-            @foreach($visibleColumns as $column)
-                <th style="border: 0.5px solid #000;">
-                    {{ ucfirst(str_replace('_', ' ', $column)) }}
-                </th>
-            @endforeach
+            @foreach($visibleColumns as $key => $label)
+			    <th>{{ $label }}</th>
+			@endforeach
         </tr>
     </thead>
 
     <tbody>
         @forelse($reportData as $row)
             <tr>
-                @foreach($visibleColumns as $column)
+                @foreach($visibleColumns as $key => $label)
                     <td style="border: 0.5px solid #000;">
-                        {{ $row->{$column} ?? '' }}
+                        {{ $row[$key] ?? '' }}
                     </td>
                 @endforeach
             </tr>

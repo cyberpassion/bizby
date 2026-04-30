@@ -187,7 +187,7 @@ abstract class SharedApiController extends Controller
      * Show single resource
      */
 
-	public function show($id)
+	public function show(int $id)
 	{
     	$module = Str::of(static::class)
 	        ->after('Modules\\')
@@ -672,5 +672,51 @@ public function graphs(Request $request)
 
 	    return $modelClass::find($id)?->name ?? null;
 	}
+
+	public function transformCollection($rows, string $module)
+{
+    $lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
+    $statuses = $lookupResponse->getData(true)['data'] ?? [];
+
+    return collect($rows)->map(function ($row) use ($statuses) {
+
+        // convert to object if array
+        $row = is_array($row) ? (object) $row : $row;
+
+        /*
+        |--------------------------------------------------------------------------
+        | TERM RESOLUTION (_label fields)
+        |--------------------------------------------------------------------------
+        */
+        foreach ($row as $key => $value) {
+            if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
+
+                $resolved = \Modules\Shared\Services\TermResolverService::resolve($value);
+
+                if ($resolved !== $value) {
+                    $row->{$key . '_label'} = $resolved;
+                }
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | STATUS LABEL
+        |--------------------------------------------------------------------------
+        */
+        if (isset($row->status)) {
+            $row->status_label = $statuses[$row->status] ?? $row->status;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | POLYMORPHIC LABELS
+        |--------------------------------------------------------------------------
+        */
+        $row = $this->mergePolymorphicFields($row);
+
+        return $row;
+    });
+}
 
 }

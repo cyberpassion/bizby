@@ -9,7 +9,7 @@ class ReportRegistry
     /**
      * Central module → model mapping
      */
-    public static function moduleMap(): array
+    public static function deletemoduleMap(): array
     {
         return [
             /* ================= CORE ================= */

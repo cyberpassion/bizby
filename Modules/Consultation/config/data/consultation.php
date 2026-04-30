@@ -35,19 +35,15 @@ return [
      ========================================================= */
 
     'report' => [
-    'consultation_date'      => 'Date',
-    'name'                   => 'Name',
-    'phone'                  => 'Phone',
-    'consultation_type'      => 'Type',
-    'channel'                => 'Channel',
-    'consultant_label'       => 'Consultant',
-    'referred_by'            => 'Referred By',
-    'referred_to'            => 'Referred To',
-    'consultation_fee'       => 'Fee',
-    'followup_interval_days' => 'Follow-up Interval',
-    'next_date'              => 'Next Date',
-    'status_label'           => 'Status',
-],
+	    'id'	=> 'ID',
+        'consultation_date'	=> 'Date',
+        'name'	=> 'Name',
+        'phone'	=> 'Phone',
+        'channel'	=> 'Channel',
+        'consultant_label'	=> 'Consultant',
+        'status_label'	=> 'Status',
+        'consultation_fee'	=> 'Fee'
+	],
 
     /* =========================================================
      | DETAIL VIEW (Maximum context)

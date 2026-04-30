@@ -20,30 +20,30 @@ return [
      ========================================================= */
 
     'list' => [
-    'id'           => 'ID',
-    'name'         => 'Name',
-	'state'        => 'State',
-	'place'        => 'Place',
-    'location'     => 'Location',
-    'phone'        => 'Contact',
-	'email'		   => 'Email',
-    'status_label' => 'Status',
-],
+    	'id'           => 'ID',
+    	'name'         => 'Name',
+		'state'        => 'State',
+		'place'        => 'Place',
+    	'location'     => 'Location',
+    	'phone'        => 'Contact',
+		'email'		   => 'Email',
+    	'status_label' => 'Status',
+	],
 
     /* =========================================================
      | REPORT VIEW (Business intelligence)
      ========================================================= */
 
     'report' => [
-    'id'           => 'ID',
-    'name'         => 'Name',
-	'state'        => 'State',
-	'place'        => 'Place',
-    'location'     => 'Location',
-    'phone'        => 'Contact',
-	'email'		   => 'Email',
-    'status_label' => 'Status',
-],
+		'id'           => 'ID',
+    	'name'         => 'Name',
+		'state'        => 'State',
+		'place'        => 'Place',
+    	'location'     => 'Location',
+    	'phone'        => 'Contact',
+		'email'		   => 'Email',
+    	'status_label' => 'Status',
+	],
 
     /* =========================================================
      | DETAIL VIEW (Maximum context)

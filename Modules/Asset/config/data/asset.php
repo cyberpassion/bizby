@@ -20,13 +20,13 @@ return [
      ========================================================= */
 
     'list' => [
-    'id'               => 'ID',
+		'id'               => 'ID',
     'asset_code'       => 'Code',
 	'name'             => 'Name',
 	'type_label'	   => 'Type',
 	'center_name'  	   => 'Center',
     'status_label'     => 'Status',
-],
+	],
 
     /* =========================================================
      | REPORT VIEW (Business intelligence)
