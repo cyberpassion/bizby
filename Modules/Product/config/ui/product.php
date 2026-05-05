@@ -33,7 +33,7 @@ return [
             |--------------------------------------------------------------------------
             */
             [
-                'title'       => 'Add Product',
+                'title'       => 'Add New',
                 'description' => 'Create a New Product',
                 'href'        => UrlPath::makeCreate($pg),
                 'permission'  => Permission::create(Res::PRODUCTS),

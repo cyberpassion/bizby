@@ -12,8 +12,10 @@ class LeadFollowupApiController extends Controller
     /**
      * List followups for a lead
      */
-    public function index(Lead $lead)
+    public function index(int $id)
     {
+        $lead = Lead::findOrFail($id);
+
         return response()->json([
             'status' => 'success',
             'data' => $lead->followups,
@@ -23,8 +25,10 @@ class LeadFollowupApiController extends Controller
     /**
      * Store new followup
      */
-    public function store(Request $request, Lead $lead)
+    public function store(Request $request, int $id)
     {
+        $lead = Lead::findOrFail($id);
+
         $data = $request->validate([
             'contact_date' => 'required|date',
             'mode' => 'nullable|string',
@@ -43,10 +47,12 @@ class LeadFollowupApiController extends Controller
     }
 
     /**
-     * Update followup
+     * Update followup (shallow)
      */
-    public function update(Request $request, LeadFollowup $followup)
+    public function update(Request $request, int $id)
     {
+        $followup = LeadFollowup::findOrFail($id);
+
         $followup->update($request->all());
 
         return response()->json([
@@ -57,10 +63,12 @@ class LeadFollowupApiController extends Controller
     }
 
     /**
-     * Delete followup
+     * Delete followup (shallow)
      */
-    public function destroy(LeadFollowup $followup)
+    public function destroy(int $id)
     {
+        $followup = LeadFollowup::findOrFail($id);
+
         $followup->delete();
 
         return response()->json([

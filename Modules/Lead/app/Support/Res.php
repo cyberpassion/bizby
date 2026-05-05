@@ -6,6 +6,7 @@ class Res
 {
     public const HOME        = 'lead.home';
     public const LEADS       = 'lead.leads';
+	public const DETAILS     = 'lead.details';
     public const FOLLOWUPS   = 'lead.followups';
     public const REPORTS     = 'lead.reports';
     public const SETTINGS    = 'lead.settings';

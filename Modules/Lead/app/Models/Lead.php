@@ -14,6 +14,7 @@ class Lead extends TenantModel
 
     protected $fillable = [
         'lead_code',
+		'lead_date',
         'name',
         'contact_person',
         'mobile',
@@ -22,6 +23,8 @@ class Lead extends TenantModel
         'state',
         'pincode',
         'website',
+		'mode',
+		'business_type',
         'generated_by_id',
         'generated_by_type',
         'assigned_to_id',
@@ -31,13 +34,13 @@ class Lead extends TenantModel
         'stage_id',
         'is_existing_client',
         'place',
-        'next_followup_date',
-        'thread_parent_id',
+        'next_followup_date'
     ];
 
     protected $casts = [
         'is_existing_client' => 'boolean',
         'next_followup_date' => 'date:Y-m-d',
+		'lead_date'			 => 'date:Y-m-d'
     ];
 
     /* =========================
@@ -67,22 +70,6 @@ class Lead extends TenantModel
             __FUNCTION__,
             'assigned_to_type',
             'assigned_to_id'
-        );
-    }
-
-    public function parent()
-    {
-        return $this->belongsTo(
-            self::class,
-            'thread_parent_id'
-        );
-    }
-
-    public function children()
-    {
-        return $this->hasMany(
-            self::class,
-            'thread_parent_id'
         );
     }
 }

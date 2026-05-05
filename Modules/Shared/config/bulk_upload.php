@@ -213,8 +213,7 @@ return [
                 'stage_id',
                 'is_existing_client',
                 'place',
-                'next_followup_date',
-                'thread_parent_id',
+                'next_followup_date'
             ],
             'required' => [
                 'name',

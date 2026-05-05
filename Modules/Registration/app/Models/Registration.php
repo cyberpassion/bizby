@@ -15,14 +15,37 @@ class Registration extends TenantModel implements Payable, FinalizePayment
 {
 	use HasFactory;
 	use RegistrationPayable; // Payable implementation trait
+
+	protected $with = ['steps'];
+
     protected $fillable = [
-        'user_id', 'type', 'status', 'submitted_at', 'meta'
+        'user_id',
+        'registration_cycle_id',
+        'registration_status',
+        'submitted_at',
     ];
 
-    protected $casts = [
+	protected $casts = [
         'meta' => 'array',
         'submitted_at' => 'datetime',
     ];
+
+    public function cycle()
+    {
+        return $this->belongsTo(RegistrationCycle::class, 'registration_cycle_id');
+    }
+
+    public function type()
+    {
+        return $this->hasOneThrough(
+            RegistrationType::class,
+            RegistrationCycle::class,
+            'id',
+            'id',
+            'registration_cycle_id',
+            'registration_type_id'
+        );
+    }
 
     public function steps()
     {
@@ -38,4 +61,5 @@ class Registration extends TenantModel implements Payable, FinalizePayment
     {
         return $this->hasMany(RegistrationPayment::class);
     }
+
 }

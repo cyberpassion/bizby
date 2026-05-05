@@ -9,54 +9,70 @@ use Modules\Shared\Models\Permissions\PermissionPermission;
 class PermissionPermissionsSeeder extends Seeder
 {
     public function run(): void
-    {
-        $modulesPath = base_path('Modules');
-        $permissions = [];
+	{
+    	$modulesPath = base_path('Modules');
+	    $permissions = [];
 
-        foreach (File::directories($modulesPath) as $modulePath) {
+	    foreach (File::directories($modulesPath) as $modulePath) {
 
-			$moduleName = basename($modulePath);
+	        $moduleName = basename($modulePath);
 
-			$currentlyAllowed = [
-				'Asset',
-				'Incident',
-				'Center',
-				'Maintenance',
-				'Product',
-				'Inventory',
-				'Vendor',
-				'Employee',
-				'Note'
-			];
-			if( !in_array($moduleName,$currentlyAllowed) ) {
-				continue;
-			}
-            $configPath = $modulePath . '/config/ui/'.$moduleName.'.php';
+	        $currentlyAllowed = [
+    	        'Asset',
+        	    'Incident',
+            	'Center',
+	            'Maintenance',
+    	        'Product',
+        	    'Inventory',
+            	'Vendor',
+	            'Employee',
+    	        'Note',
+        	    'Consultation',
+            	'Registration',
+	            'Listing',
+    	        'Attendance',
+        	    'Lead'
+        	];
 
-            if (!file_exists($configPath)) continue;
+	        if (!in_array($moduleName, $currentlyAllowed)) {
+    	        continue;
+        	}
 
-            $config = require $configPath;
+	        $configPath = $modulePath . '/config/ui/' . $moduleName . '.php';
 
-            $this->extractPermissions($config, $permissions);
-        }
+	        if (!file_exists($configPath)) continue;
 
-        $permissions = array_unique(array_filter($permissions));
+	        $config = require $configPath;
 
-        foreach ($permissions as $slug) {
+	        $this->extractPermissions($config, $permissions);
+    	}
 
-            [$module, $operation] = $this->parseSlug($slug);
+	    // ✅ ADD SYSTEM PERMISSIONS HERE
+    	$systemPermissions = [
+        	'access.admin',
+	        'access.portal',
+    	];
 
-            PermissionPermission::updateOrCreate(
-                ['slug' => $slug],
-                [
-                    'module' => $module,
-                    'operation' => $operation,
-                    'scope' => 'global',
-                    'guard' => 'api',
-                ]
-            );
-        }
-    }
+	    $permissions = array_merge($permissions, $systemPermissions);
+
+	    // cleanup
+    	$permissions = array_unique(array_filter($permissions));
+
+	    foreach ($permissions as $slug) {
+
+	        [$module, $operation] = $this->parseSlug($slug);
+
+	        PermissionPermission::updateOrCreate(
+    	        ['slug' => $slug],
+        	    [
+            	    'module' => $module,
+                	'operation' => $operation,
+	                'scope' => 'global',
+    	            'guard' => 'api',
+        	    ]
+        	);
+    	}
+	}
 
     private function extractPermissions(array $data, array &$permissions)
     {

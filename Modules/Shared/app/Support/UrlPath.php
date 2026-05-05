@@ -27,11 +27,6 @@ class UrlPath
 		return self::make($module, BaseActions::LIST);
 	}
 
-	public static function makeView(string $module): string
-	{
-		return self::make($module, BaseActions::VIEW);
-	}
-
 	public static function makeCreate(string $module): string
 	{
 		return self::make($module, BaseActions::CREATE);
@@ -77,6 +72,11 @@ class UrlPath
 	public static function makeDelete(string $module, $id): string
 	{
 		return self::make($module, BaseActions::DELETE . '/' . $id);
+	}
+
+	public static function makeView(string $module, $id): string
+	{
+		return self::make($module, BaseActions::VIEW . '/' . $id);
 	}
 
 	public static function makeDocuments(string $module, $id): string

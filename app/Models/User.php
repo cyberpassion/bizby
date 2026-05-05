@@ -54,6 +54,24 @@ class User extends Authenticatable
         ];
     }
 
+	public function tenantAccounts()
+	{
+    	return $this->hasMany(
+	        \Modules\Admin\Models\Tenants\TenantAccount::class,
+    	    'id',
+        	'id'
+    	);
+	}
+
+	public function tenantUser()
+	{
+    	return $this->hasMany(
+	        \Modules\Admin\Models\Tenants\TenantUser::class,
+    	    'user_id',
+        	'id'
+    	);
+	}
+
 	public function roles()
 	{
     	return $this->belongsToMany(

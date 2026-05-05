@@ -34,7 +34,7 @@ class NavigationService
 
     protected static function allowed(array $menu, array $ctx): bool
     {
-		// return true; // 🚑 TEMPORARY BYPASS
+		return true; // 🚑 TEMPORARY BYPASS
         // Enable when ready
         if (!empty($menu['permission']) && !in_array($menu['permission'], $ctx['permissions'], true)) {
             return false;

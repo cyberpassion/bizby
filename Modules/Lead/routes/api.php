@@ -26,7 +26,7 @@ Route::prefix('v1')
              | FOLLOWUPS (NESTED)
              ====================================================== */
             Route::apiResource(
-                '{lead}/followups',
+                '{id}/followups',
                 LeadFollowupApiController::class
             )->shallow()->names('followups');
         });

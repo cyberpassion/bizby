@@ -8,11 +8,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class RegistrationStep extends TenantModel
 {
 	use HasFactory;
-    protected $fillable = [
-        'registration_id', 'step', 'is_completed', 'data'
+   protected $fillable = [
+        'registration_id',
+        'registration_type_step_id',
+        'status',
+        'data'
     ];
 
     protected $casts = [
         'data' => 'array'
     ];
+
+	public function typeStep()
+    {
+        return $this->belongsTo(RegistrationTypeStep::class, 'registration_type_step_id');
+    }
+
 }

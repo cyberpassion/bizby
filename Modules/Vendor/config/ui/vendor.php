@@ -28,7 +28,7 @@ return [
             ],
 
             [
-                'title'       => 'Add Vendor',
+                'title'       => 'Add New',
                 'description' => 'Create a New Vendor Profile',
                 'href'        => UrlPath::makeCreate($pg),
                 'permission'  => Permission::create(Res::VENDORS),

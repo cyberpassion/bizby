@@ -16,6 +16,8 @@ return new class extends Migration
 		    // Lead basic properties
 		    $table->string('lead_code')->nullable()->unique();
 
+			$table->date('lead_date')->nullable();
+
     		$table->string('name');
 		    $table->string('contact_person')->nullable();
     		$table->string('mobile', 20)->nullable();
@@ -23,10 +25,13 @@ return new class extends Migration
 			$table->string('business_type')->nullable();
 
 		    // Address
+			$table->string('place')->nullable();
     		$table->string('district')->nullable();
 	    	$table->string('state')->nullable();
 	    	$table->string('pincode', 20)->nullable();
     		$table->string('website')->nullable();
+
+			$table->string('mode', 50)->nullable(); // call / visit / whatsapp / email / sms
 
 		    // USING MORPHS — generated_by (who added the lead)
 	    	$table->nullableMorphs('generated_by'); 
@@ -50,13 +55,9 @@ return new class extends Migration
 	    	$table->string('stage_id')->nullable();
 
 		    $table->boolean('is_existing_client')->default(false);
-    		$table->string('place')->nullable();
 
 		    // Next follow-up
     		$table->date('next_followup_date')->nullable();
-
-		    // Optional thread (self-referencing)
-    		$table->unsignedBigInteger('thread_parent_id')->nullable()->index();
 
 		    // Useful indexes
     		$table->index(['mobile', 'email']);

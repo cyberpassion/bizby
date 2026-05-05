@@ -74,9 +74,16 @@ return [
 	    	    'permission' => Permission::create(Res::FOLLOWUPS),
     	    	'action'     => 'sheet',
 				'params'	 => [
-					'id'	 => ':id'
+					'lead_id'	 => ':id'
 				]
 		    ],
+
+			[
+                'title'      => 'View Details',
+                'href'       => UrlPath::makeDetail($pg, '{id}'),
+                'permission' => Permission::view(Res::DETAILS),
+                'action'     => 'detail',
+            ],
 
 		    [
     		    'title'      => 'Edit',

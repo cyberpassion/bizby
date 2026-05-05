@@ -5,9 +5,35 @@ use Modules\Shared\Support\Permission;
 use Modules\Registration\Support\Res;
 use Modules\Registration\Support\Actions;
 
+use Modules\Shared\Support\KeyName;
+
 $pg = 'registration';
 
 return [
+
+	'sidebar-menu.portal' => [
+
+		'items' => [
+
+            [
+                'title'      => 'Home',
+                'href'       => UrlPath::makeHome($pg),
+                'permission' => Permission::view(Res::HOME),
+            ],
+			[
+                'title'      => 'My Applications',
+                'href'       => UrlPath::make($pg, 'my'),
+                'permission' => Permission::view(Res::HOME),
+            ],
+			[
+                'title'      => 'Available Applications',
+                'href'       => UrlPath::make($pg, 'list'),
+                'permission' => Permission::view(Res::HOME),
+            ]
+
+		]
+
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -15,51 +41,77 @@ return [
     |--------------------------------------------------------------------------
     */
     'sidebar-menu' => [
-        [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
-            'permission' => Permission::access($pg),
+    [
+        'title'      => ucfirst($pg),
+        'href'       => "/{$pg}",
+        'permission' => Permission::access($pg),
 
-            'items' => [
+        'items' => [
 
-                [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
-                    'permission' => Permission::view(Res::HOME),
-                ],
+            [
+                'title'      => 'Home',
+                'href'       => UrlPath::makeHome($pg),
+                'permission' => Permission::view(Res::HOME),
+            ],
 
-                /*[
-                    'title'      => '+ New',
-                    'href'       => UrlPath::makeCreate($pg),
-                    'permission' => Permission::create(Res::REGISTRATIONS),
-                ],*/
+            /*
+            |--------------------------------------------------------------------------
+            | CREATE REGISTRATION TYPE (NOT USER REGISTRATION)
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'      => '+ New Type',
+                'href'       => UrlPath::make($pg, 'create-type'),
+                'permission' => Permission::create(Res::TYPES),
+            ],
 
-                [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
-                    'permission' => Permission::list(Res::REGISTRATIONS),
-                ],
+            /*
+            |--------------------------------------------------------------------------
+            | LIST REGISTRATION TYPES
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'      => 'Types',
+                'href'       => UrlPath::make($pg, 'types'),
+                'permission' => Permission::list(Res::TYPES),
+            ],
 
-                [
-                    'title'      => 'Bulk-Ops',
-                    'href'       => UrlPath::makeBulk($pg),
-                    'permission' => Permission::bulk(Res::REGISTRATIONS),
-                ],
+            /*
+            |--------------------------------------------------------------------------
+            | LIST REGISTRATION CYCLES
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'      => 'Cycles',
+                'href'       => UrlPath::make($pg, 'cycles'),
+                'permission' => Permission::list(Res::CYCLES),
+            ],
 
-                [
-                    'title'      => 'Reports',
-                    'href'       => UrlPath::makeReport($pg),
-                    'permission' => Permission::view(Res::REPORTS),
-                ],
+            /*
+            |--------------------------------------------------------------------------
+            | USER REGISTRATIONS (ACTUAL DATA)
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'      => 'Registrations',
+                'href'       => UrlPath::makeList($pg),
+                'permission' => Permission::list(Res::REGISTRATIONS),
+            ],
 
-                [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
-                    'permission' => Permission::update(Res::SETTINGS),
-                ],
+            [
+                'title'      => 'Reports',
+                'href'       => UrlPath::makeReport($pg),
+                'permission' => Permission::view(Res::REPORTS),
+            ],
+
+            [
+                'title'      => 'Settings',
+                'href'       => UrlPath::makeSettings($pg),
+                'permission' => Permission::update(Res::SETTINGS),
             ],
         ],
     ],
+],
 
     /*
     |--------------------------------------------------------------------------
@@ -68,26 +120,11 @@ return [
     */
     'single-actions' => [
 
-        Actions::LIST => [
-
-            [
-                'title'      => 'Open Steps',
+		KeyName::make(Res::TYPES)	=> [
+			[
+                'title'      => 'Add/Update Steps',
                 'href'       => UrlPath::make($pg, '{id}/steps'),
                 'permission' => Permission::view(Res::STEPS),
-                'action'     => 'redirect',
-            ],
-
-            [
-                'title'      => 'Documents',
-                'href'       => UrlPath::make($pg, '{id}/documents'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'redirect',
-            ],
-
-            [
-                'title'      => 'Payments',
-                'href'       => UrlPath::make($pg, '{id}/payments'),
-                'permission' => Permission::view(Res::PAYMENTS),
                 'action'     => 'redirect',
             ],
 
@@ -106,7 +143,34 @@ return [
                 'method'     => 'DELETE',
                 'variant'    => 'danger',
             ],
-        ],
+		],
+
+		KeyName::make(Res::CYCLES)	=> [
+            [
+                'title'      => 'Update',
+                'href'       => UrlPath::makeUpdate($pg, '{id}'),
+                'permission' => Permission::update(Res::CYCLES),
+                'action'     => 'update',
+            ],
+
+            [
+                'title'      => 'Delete',
+                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'permission' => Permission::delete(Res::CYCLES),
+                'action'     => 'delete',
+                'method'     => 'DELETE',
+                'variant'    => 'danger',
+            ],
+		],
+
+		KeyName::make(Res::REGISTRATIONS)	=> [
+			[
+                'title'      => 'View',
+                'href'       => UrlPath::makeView($pg, '{id}'),
+                'permission' => Permission::view(Res::REGISTRATIONS),
+                'action'     => 'detail',
+            ]
+		],
 
     ],
 
@@ -117,16 +181,27 @@ return [
     */
     'filters' => [
 
-        Actions::LIST => [
-
+        KeyName::make(Res::TYPES) => [
             [
                 'type'        => 'select',
-                'name'        => 'type',
-                'placeholder' => 'Registration Type',
+                'name'        => 'registration_status',
+                'placeholder' => 'Status',
                 'col'         => 3,
-                'dataKey'     => 'registration.types',
-            ],
+                'dataKey'     => 'registration.statuses',
+            ]
+        ],
 
+		KeyName::make(Res::CYCLES) => [
+            [
+                'type'        => 'select',
+                'name'        => 'registration_status',
+                'placeholder' => 'Status',
+                'col'         => 3,
+                'dataKey'     => 'registration.statuses',
+            ]
+        ],
+
+		KeyName::make(Res::REGISTRATIONS) => [
             [
                 'type'        => 'select',
                 'name'        => 'registration_status',

@@ -276,7 +276,7 @@ Route::prefix('v1/auth/password')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('v1/public-auth')
-    ->middleware('identify.tenant')
+    //->middleware('identify.tenant')
     ->group(function () {
 
         Route::post('register', [AuthApiController::class, 'register']);

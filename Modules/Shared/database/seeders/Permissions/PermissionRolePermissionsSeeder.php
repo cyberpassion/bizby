@@ -18,6 +18,8 @@ class PermissionRolePermissionsSeeder extends Seeder
 		    $slug = $permission->slug;
     		$moduleName = $permission->module;
 
+			if (!isset($roles['owner'])) return;
+
             // 🔥 OWNER → everything
             DB::table('permission_role_permissions')->updateOrInsert([
                 'role_id' => $roles['owner']->id,
@@ -79,6 +81,20 @@ class PermissionRolePermissionsSeeder extends Seeder
 		    // 🔥 MODULE USER ROLES (META-DRIVEN)
 			foreach ($roles as $role) {
 
+				// ✅ FORCE: portal roles always get access.portal
+			    if ($role->type === 'portal' && $slug === 'access.portal') {
+
+			        DB::table('permission_role_permissions')->updateOrInsert([
+			            'role_id' => $role->id,
+        			    'permission_id' => $pid,
+		    	    ], [
+        			    'created_at' => now(),
+            			'updated_at' => now(),
+	        		]);
+
+		        	continue; // skip further checks for this permission
+    			}
+
 			    if (!$role->meta) continue;
 
 			    $meta = json_decode($role->meta, true);
@@ -98,8 +114,10 @@ class PermissionRolePermissionsSeeder extends Seeder
 
 			        // 🔥 OPTIONAL: restrict portal users
 			        if ($role->type === 'portal') {
-            			if (!str_ends_with($slug, '.view')) continue;
-        			}
+					    if (!str_ends_with($slug, '.view') && $slug !== 'access.portal') {
+					        continue;
+    					}
+					}
 
 		        	DB::table('permission_role_permissions')->updateOrInsert([
         		    	'role_id' => $role->id,

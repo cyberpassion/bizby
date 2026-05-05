@@ -30,6 +30,8 @@ use Modules\Shared\Models\Permissions\PermissionRole;
 
 use \Modules\Admin\Models\Tenants\TenantUser;
 
+use Modules\Registration\Models\RegistrationType;
+
 class SharedLookupProvider
 {
     public function register()
@@ -121,6 +123,7 @@ class SharedLookupProvider
 			'inventories'   => $this->inventories($group),
 			'notes'         => $this->notes($group),
 			'permissions'   => $this->permissions($group),
+			'registrations' => $this->registrations($group),
 
 			'users'         => $this->tenantUsers($group),
 
@@ -231,6 +234,19 @@ class SharedLookupProvider
 				'employee_2' => 'Employee 2',
 				'employee_3' => 'Employee 3',
 			),
+
+	        default => [],
+    	};
+	}
+
+	protected function registrations(string $group): array
+	{
+    	return match ($group) {
+
+	        'types-list' => RegistrationType::where('is_active', true)
+				->orderBy('name')
+				->pluck('name', 'id')
+				->toArray(),
 
 	        default => [],
     	};

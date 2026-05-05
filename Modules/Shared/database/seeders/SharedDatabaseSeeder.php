@@ -31,6 +31,7 @@ use Modules\Shared\Database\Seeders\Terms\TermEmployeeTypeSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermHealthCardSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermLeadSourceSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermLeadStageSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermLeadFollowupStageSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermRelationTypeSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermCurrencySeeder;
 use Modules\Shared\Database\Seeders\Terms\TermDepartmentSeeder;
@@ -111,6 +112,7 @@ class SharedDatabaseSeeder extends Seeder
             TermCategorySeeder::class,
             TermLeadSourceSeeder::class,
 			TermLeadStageSeeder::class,
+			TermLeadFollowupStageSeeder::class,
             TermRelationTypeSeeder::class,
             TermPrioritySeeder::class,
 

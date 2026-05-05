@@ -43,7 +43,7 @@ class PermissionRoleSeeder extends Seeder
             [
                 'name' => 'Portal User',
                 'slug' => 'portal_user',
-                'type' => 'module',
+                'type' => 'portal',
             ],
             [
                 'name' => 'Admin Incident User',
@@ -57,7 +57,7 @@ class PermissionRoleSeeder extends Seeder
             [
                 'name' => 'Portal Registration User',
                 'slug' => 'portal_registration_user',
-                'type' => 'module',
+                'type' => 'portal',
             ],
         ];
 
@@ -70,7 +70,6 @@ class PermissionRoleSeeder extends Seeder
                 ],
                 [
                     'slug' => $role['slug'],
-                    'type' => $role['type'] ?? 'module', // 🔥 added
                     'guard' => 'api',
                     'meta' => isset($role['meta']) ? json_encode($role['meta']) : null,
                     'updated_at' => now(),

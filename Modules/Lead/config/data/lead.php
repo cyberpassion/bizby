@@ -15,27 +15,28 @@ return [
 	// Default Columns
     "columns" => [
        'list' => [
-    'lead_code'            => 'Lead Code',
+    'lead_code'            => 'Code',
     'name'                 => 'Name',
     'contact_person'       => 'Person',
     'mobile'               => 'Mobile',
-	'business_type'       => 'Business Type',
+	'business_type'       => 'Business',
     'stage_id_label'       => 'Stage',
     'next_followup_date'   => 'Next Follow-up',
     'status_label'       => 'Status',
 ],
         'detail' => [
-    'lead_code'            => 'Lead Code',
+    'lead_code'            => 'Code',
     'name'                 => 'Name',
     'contact_person'       => 'Person',
     'mobile'               => 'Mobile',
-	'business_type'       => 'Business Type',
+	'business_type'       => 'Business',
     'stage_id_label'       => 'Stage',
     'next_followup_date'   => 'Next Follow-up',
+	'followups'				=> 'Followups',
     'status_label'       => 'Status',
 ],
         'report' => [
-    'lead_code'          => 'Lead Code',
+    'lead_code'          => 'Code',
     'name'               => 'Name',
     'contact_person'     => 'Person',
     'mobile'             => 'Mobile',

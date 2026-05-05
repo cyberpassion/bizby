@@ -39,6 +39,11 @@ class AuthApiController extends Controller
 
         $token = $user->createToken('admin-api')->plainTextToken;
 
+		// 🔥 GET ALL PERMISSIONS
+	    $permissions = $user->permissions
+    	    ->pluck('slug')
+        	->values();
+
         return response()->json([
             'status' 	=> 'success',
 			'message'	=> 'Authentical Successful',
@@ -47,7 +52,8 @@ class AuthApiController extends Controller
             	'id'    => $user->id,
                 'name'  => $user->name,
                 'email' => $user->email,
-				'token'	=> $token
+				'token'	=> $token,
+				'permissions' => $permissions
             ],
         ]);
     }
@@ -96,40 +102,65 @@ class AuthApiController extends Controller
      |---------------------------*/
 	public function loginFlow(Request $request)
 	{
-
-    	$tenant = app('resolvedTenant'); // from middleware
-		$user = $request->user()->id;
+    	$tenant = app('resolvedTenant');
+	    $user = $request->user();
 
 	    // 1️⃣ No tenant selected
     	if (!$tenant) {
         	return response()->json([
             	'step' => 'tenant_select',
-				'redirect' => '/auth/login/tenant-selector'
+            	'redirect' => '/auth/login/tenant-selector'
 	        ]);
     	}
 
-		$tenantAccountInfo = TenantAccount::find($tenant->id);
+	    $tenantAccountInfo = TenantAccount::find($tenant->id);
 
-	    // 2️⃣ Tenant-level TFA (and not verified yet)
-		$verified = Cache::get("tfa_verified:{$user}:{$tenant->id}");
-		Cache::forget("tfa_verified:{$user}:{$tenant->id}");
+	    // 2️⃣ Tenant-level TFA
+    	$verified = Cache::get("tfa_verified:{$user->id}:{$tenant->id}");
+	    Cache::forget("tfa_verified:{$user->id}:{$tenant->id}");
 
-		if ($tenantAccountInfo->tfa_enabled && ! $verified) {
-		    return response()->json([
-        		'step' => 'tenant_tfa'
-		    ]);
-		}
+	    if ($tenantAccountInfo->tfa_enabled && ! $verified) {
+    	    return response()->json([
+        	    'step' => 'tenant_tfa'
+        	]);
+    	}
 
-	    // 3️⃣ All good → dashboard
+	    // 3️⃣ Resolve permissions
+    	// $permissions = $user->getPermissions($tenant->id);
+		$permissions = auth()->user()?->permissions->pluck('slug');
+
+	    // (optional but recommended)
+    	/*session([
+        	'permissions' => $permissions
+	    ]);*/
+
+	    // 4️⃣ Decide redirect
+    	$redirect = null;
+
+	    if ($permissions->contains('access.admin')) {
+    	    $redirect = '/module/dashboard';
+    	} elseif ($permissions->contains('access.portal')) {
+        	$redirect = '/portal/dashboard';
+    	}
+
+	    if (!$redirect) {
+    	    return response()->json([
+        	    'step' => 'no_access'
+	        ], 403);
+    	}
+
+	    // 5️⃣ Final response
     	return response()->json([
         	'step' => 'done',
-        	'redirect' => '/module/dashboard'
+        	'redirect' => $redirect
 	    ]);
 	}
 
 	public function register(Request $request)
 	{
-    	$tenant = app('resolvedTenant');
+    	$tenantId = $request->tenant_id; // app('resolvedTenant');
+
+		$tenant = TenantAccount::find($tenantId);
 
 	    if (!$tenant) {
     	    return response()->json([
@@ -161,9 +192,9 @@ class AuthApiController extends Controller
 
 	    return response()->json([
     	    'status' => 'success',
+			'message' => 'Registration Done Successfully',
         	'data'   => [
             	'user' => $user,
-				'message' => 'Registration Done Successfully',
             	'tenant_user' => $tenantUser
         	]
 	    ], 201);

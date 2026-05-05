@@ -5,6 +5,7 @@ namespace Modules\Lead\Http\Controllers;
 use Modules\Lead\Models\Lead;
 use Modules\Shared\Http\Controllers\SharedApiController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class LeadApiController extends SharedApiController
 {
@@ -26,45 +27,64 @@ class LeadApiController extends SharedApiController
      * Validation rules
      */
     protected function validationRules($id = null)
-    {
-        return [
-            'name'   => 'required|string|max:255',
-            'mobile' => 'nullable|string|max:20',
-            'email'  => 'nullable|email|max:255',
+	{
+    	return [
+	        'name'   => 'required|string|max:255',
+    	    'mobile' => 'nullable|string|max:20',
+        	'email'  => 'nullable|email|max:255',
 
-            'stage_id'  => 'nullable|string|max:255',
-            'source_id' => 'nullable|integer',
-        ];
-    }
+	        'contact_person' => 'nullable|string|max:255',
+    	    'district' => 'nullable|string|max:255',
+	        'state' => 'nullable|string|max:255',
+    	    'pincode' => 'nullable|string|max:20',
+        	'website' => 'nullable|string|max:255',
+        	'business_type' => 'nullable|string|max:255',
+
+	        'category_id' => 'nullable|integer',
+    	    'source_id' => 'nullable',
+        	'stage_id' => 'nullable|string|max:255',
+
+    	    'assigned_to_id' => 'nullable|integer',
+	        'assigned_to_type' => 'nullable|string',
+
+	        'generated_by_id' => 'nullable|integer',
+    	    'generated_by_type' => 'nullable|string',
+
+	        'is_existing_client' => 'nullable|boolean',
+    	    'place' => 'nullable|string|max:255',
+        	'next_followup_date' => 'nullable|date',
+    	];
+	}
 
     /* ======================================================
      | STORE (custom logic: lead_code)
      ====================================================== */
-    public function store(\Illuminate\Http\Request $request)
-    {
-        $validated = $request->validate($this->validationRules());
+    public function store(Request $request)
+	{
+    	$validated = $request->validate($this->validationRules());
 
-        $lead = DB::transaction(function () use ($validated) {
-            $lead = Lead::create($validated);
+	    $lead = DB::transaction(function () use ($validated) {
 
-            $lead->update([
-                'lead_code' => 'LEAD-' . str_pad($lead->id, 5, '0', STR_PAD_LEFT),
-            ]);
+	        $lead = Lead::create($validated);
 
-            return $lead;
-        });
+	        $lead->update([
+    	        'lead_code' => 'LEAD-' . str_pad($lead->id, 3, '0', STR_PAD_LEFT),
+        	]);
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Lead created successfully',
-            'data'    => $lead,
-        ], 201);
-    }
+	        return $lead;
+    	});
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Lead created successfully',
+        	'data'    => $lead,
+	    ], 201);
+	}
 
     /* ======================================================
      | SHOW (with followups)
      ====================================================== */
-    public function show($id)
+    public function show(int $id)
     {
         $lead = Lead::with('followups')->find($id);
 

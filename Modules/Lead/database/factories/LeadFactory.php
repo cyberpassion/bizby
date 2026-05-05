@@ -39,8 +39,6 @@ class LeadFactory extends Factory
             'place' => $this->faker->city(),
 
             'next_followup_date' => $this->faker->optional()->date(),
-
-            'thread_parent_id' => null,
         ];
     }
 }

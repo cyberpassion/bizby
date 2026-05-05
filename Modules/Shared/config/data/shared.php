@@ -99,6 +99,11 @@ return [
         'N' => 'No',
     ],
 
+	'boolean-yes-nos' => [
+        '1' => 'Yes',
+        '0' => 'No',
+    ],
+
     'genders' => [
         'M' => 'Male',
         'F' => 'Female',

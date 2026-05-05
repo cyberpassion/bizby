@@ -12,9 +12,11 @@ return new class extends Migration
 		    $table->commonSaasFields(); // includes id, tenant_id, timestamps, softDeletes
 		    $table->foreignId('registration_id')->constrained()->cascadeOnDelete();
 
-		    $table->string('name');
+		    $table->string('name')->nullable();
 		    $table->string('path');
-			$table->string('type'); // aadhaar, marksheet, photo
+			$table->string('type')->nullable(); // aadhaar, marksheet, photo
+			$table->integer('upload_id')->nullable();
+			$table->foreignId('registration_type_document_id')->nullable();
 
 		    $table->timestamp('verified_at')->nullable();
 		});
