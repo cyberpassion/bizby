@@ -54,48 +54,60 @@ return [
                 'permission' => Permission::view(Res::HOME),
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | CREATE REGISTRATION TYPE (NOT USER REGISTRATION)
-            |--------------------------------------------------------------------------
-            */
-            [
-                'title'      => '+ New Type',
-                'href'       => UrlPath::make($pg, 'create-type'),
-                'permission' => Permission::create(Res::TYPES),
+			[
+                'title' => 'Types',
+                'description' => 'Manage Types',
+                'items' => [
+                    /*
+		            |--------------------------------------------------------------------------
+        		    | CREATE REGISTRATION TYPE (NOT USER REGISTRATION)
+            		|--------------------------------------------------------------------------
+		            */
+        		    [
+                		'title'      => '+ New',
+		                'href'       => UrlPath::make($pg, 'create-type'),
+        		        'permission' => Permission::create(Res::TYPES),
+            		],
+
+		            /*
+        		    |--------------------------------------------------------------------------
+		            | LIST REGISTRATION TYPES
+        		    |--------------------------------------------------------------------------
+            		*/
+    		        [
+	        	        'title'      => 'View List',
+                		'href'       => UrlPath::make($pg, 'types'),
+		                'permission' => Permission::list(Res::TYPES),
+        		    ],
+                ],
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | LIST REGISTRATION TYPES
-            |--------------------------------------------------------------------------
-            */
-            [
-                'title'      => 'Types',
-                'href'       => UrlPath::make($pg, 'types'),
-                'permission' => Permission::list(Res::TYPES),
-            ],
+			[
+                'title' => 'Cycles',
+                'description' => 'Manage Cycles',
+                'items' => [
+                    /*
+		            |--------------------------------------------------------------------------
+        		    | CREATE REGISTRATION CYCLE (NOT USER REGISTRATION)
+            		|--------------------------------------------------------------------------
+		            */
+        		    [
+                		'title'      => '+ New',
+		                'href'       => UrlPath::make($pg, 'create-cycle'),
+        		        'permission' => Permission::create(Res::CYCLES),
+            		],
 
-			/*
-            |--------------------------------------------------------------------------
-            | CREATE REGISTRATION CYCLE (NOT USER REGISTRATION)
-            |--------------------------------------------------------------------------
-            */
-            [
-                'title'      => '+ New Cycle',
-                'href'       => UrlPath::make($pg, 'create-cycle'),
-                'permission' => Permission::create(Res::CYCLES),
-            ],
-
-            /*
-            |--------------------------------------------------------------------------
-            | LIST REGISTRATION CYCLES
-            |--------------------------------------------------------------------------
-            */
-            [
-                'title'      => 'Cycles',
-                'href'       => UrlPath::make($pg, 'cycles'),
-                'permission' => Permission::list(Res::CYCLES),
+		            /*
+		            |--------------------------------------------------------------------------
+        		    | LIST REGISTRATION CYCLES
+		            |--------------------------------------------------------------------------
+        		    */
+            		[
+		                'title'      => 'View List',
+        		        'href'       => UrlPath::make($pg, 'cycles'),
+                		'permission' => Permission::list(Res::CYCLES),
+		            ],
+                ],
             ],
 
             /*

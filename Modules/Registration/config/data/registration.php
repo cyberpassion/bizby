@@ -103,40 +103,43 @@ return [
 		],
 		KeyName::make(Res::REGISTRATIONS) => [
 		    'list' => [
-        		'user_id'             => 'User',
-		        'registration_cycle_id'=> 'Cycle',
-        		'current_step'        => 'Current Step',
+				'id'				  => 'ID',
+        		'user_name'           => 'User',
+				'user_email'		  => 'Email',
+		        'cycle_name'		  => 'Cycle',
 		        'registration_status' => 'Status',
         		'submitted_at'        => 'Submitted At',
 		    ],
 
 		    'detail' => [
-		        'user_id'             => 'User',
-        		'registration_cycle_id'=> 'Cycle',
-		        'current_step'        => 'Current Step',
+				'id'				  => 'ID',
+		        'user_name'           => 'User',
+				'user_email'		  => 'Email',
+        		'cycle_name'		  => 'Cycle',
         		'registration_status' => 'Status',
 		        'submitted_at'        => 'Submitted At',
     		],
 
 		    'report' => [
-		        'user_id'             => 'User',
-        		'registration_cycle_id'=> 'Cycle',
-		        'current_step'        => 'Current Step',
+				'id'				  => 'ID',
+		        'user_name'           => 'User',
+				'user_email'		  => 'Email',
+        		'cycle_name'		  => 'Cycle',
         		'registration_status' => 'Status',
 		        'submitted_at'        => 'Submitted At',
     		],
 
 		    'sample_export' => [
-		        'user_id',
-        		'registration_cycle_id',
+		        'user_name',
+        		'cycle_name',
 		        'current_step',
         		'registration_status',
 		        'submitted_at'
     		],
 
 		    'selected_columns' => [
-		        'user_id',
-		        'registration_cycle_id',
+		        'user_name',
+		        'cycle_name',
         		'current_step',
 		        'registration_status',
         		'submitted_at'

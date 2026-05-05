@@ -10,7 +10,7 @@ use Modules\Registration\Models\RegistrationCycle;
 
 class RegistrationApiController extends SharedApiController
 {
-	protected $with = ['steps','documents','payments'];
+	protected $with = ['cycle','steps','documents','payments','user'];
 
     protected function model()
     {

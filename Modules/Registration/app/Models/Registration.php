@@ -2,9 +2,9 @@
 
 namespace Modules\Registration\Models;
 
+use App\Models\User;
 use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Modules\Registration\Models\Traits\RegistrationPayable;
 
 // Online Payments Specific
@@ -16,7 +16,8 @@ class Registration extends TenantModel implements Payable, FinalizePayment
 	use HasFactory;
 	use RegistrationPayable; // Payable implementation trait
 
-	protected $with = ['steps'];
+	protected $with = ['steps','documents','payments','user'];
+	protected $appends = ['cycle_name','user_name','user_email'];
 
     protected $fillable = [
         'user_id',
@@ -34,6 +35,25 @@ class Registration extends TenantModel implements Payable, FinalizePayment
     {
         return $this->belongsTo(RegistrationCycle::class, 'registration_cycle_id');
     }
+
+	public function getCycleNameAttribute()
+	{
+    	return $this->cycle?->name;
+	}
+
+	public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+	public function getUserNameAttribute()
+	{
+    	return $this->user?->name;
+	}
+	public function getUserEmailAttribute()
+	{
+    	return $this->user?->email;
+	}
 
     public function type()
     {
