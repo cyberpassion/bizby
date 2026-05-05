@@ -76,6 +76,17 @@ return [
                 'permission' => Permission::list(Res::TYPES),
             ],
 
+			/*
+            |--------------------------------------------------------------------------
+            | CREATE REGISTRATION CYCLE (NOT USER REGISTRATION)
+            |--------------------------------------------------------------------------
+            */
+            [
+                'title'      => '+ New Cycle',
+                'href'       => UrlPath::make($pg, 'create-cycle'),
+                'permission' => Permission::create(Res::CYCLES),
+            ],
+
             /*
             |--------------------------------------------------------------------------
             | LIST REGISTRATION CYCLES

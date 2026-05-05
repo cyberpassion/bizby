@@ -146,7 +146,7 @@ class AuthApiController extends Controller
 	    if (!$redirect) {
     	    return response()->json([
         	    'step' => 'no_access'
-	        ], 403);
+	        ]);
     	}
 
 	    // 5️⃣ Final response

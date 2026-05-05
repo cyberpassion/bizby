@@ -191,8 +191,7 @@ class RegistrationApiController extends SharedApiController
             	  ->orWhere('end_date', '>=', $today);
 	        })
     	    ->whereDoesntHave('registrations', function ($q) use ($userId) {
-        	    $q->where('user_id', $userId)
-            	  ->where('status', 'submitted'); // or completed
+        	    $q->where('user_id', $userId); // or completed
 	        })
     	    ->with('type:id,name,code')
         	->get();
