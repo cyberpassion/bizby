@@ -15,6 +15,7 @@ class AttendanceSessionApiController extends Controller
     public function index(Request $request)
 	{
 	    $response = AttendanceSession::where('tenant_id', tenant()->id)
+			->with(['batches'])
     	    ->when($request->date, fn($q) => $q->whereDate('session_date', $request->date))
         	->when($request->type, fn($q) => $q->where('type', $request->type))
         	->latest()
@@ -22,6 +23,44 @@ class AttendanceSessionApiController extends Controller
 		return response()->json([
     	    'status'  => 'success',
         	'message' => 'Fetched Successfully.',
+	        'data'    => $response
+    	], Response::HTTP_OK);
+	}
+
+	public function today(Request $request)
+	{
+    	$response = AttendanceSession::query()
+	        ->where('tenant_id', tenant()->id)
+    	    ->whereDate('session_date', today())
+
+	        /*
+    	    |--------------------------------------------------------------------------
+        	| Optional filters
+        	|--------------------------------------------------------------------------
+	        */
+
+	        ->when(
+    	        $request->type,
+        	    fn ($q) => $q->where('type', $request->type)
+        	)
+
+	        ->when(
+    	        $request->mode,
+        	    fn ($q) => $q->where('mode', $request->mode)
+        	)
+
+	        /*
+    	    |--------------------------------------------------------------------------
+	        | Ordering
+    	    |--------------------------------------------------------------------------
+        	*/
+
+	        ->orderBy('start_time')
+    	    ->paginate(50);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Today sessions fetched successfully.',
 	        'data'    => $response
     	], Response::HTTP_OK);
 	}
@@ -49,10 +88,11 @@ class AttendanceSessionApiController extends Controller
     	], Response::HTTP_OK);
     }
 
-    public function show($id)
+    public function show(int $id)
 	{
 	    $session = AttendanceSession::where('id', $id)
     	    ->where('tenant_id', tenant()->id)
+			->with(['batches'])
         	->firstOrFail();
 
 		$response = $session->load('attendances');
@@ -81,11 +121,11 @@ class AttendanceSessionApiController extends Controller
     	], Response::HTTP_OK);
 	}
 
-	public function participants($sessionId)
+	public function participants(int $sessionId)
 	{
     	$session = AttendanceSession::where('tenant_id', tenant()->id)
 	        ->with([
-    	        'batches.participants'
+    	        'participants'
         	])
 	        ->findOrFail($sessionId);
 

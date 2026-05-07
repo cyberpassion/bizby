@@ -671,6 +671,25 @@ return [
 
 	/* ---------------- Date / Time ---------------- */
 
+	'years' => [
+		'2026' => '2026',
+	],
+
+	'months' => [
+		'01'  => 'January',
+		'02'  => 'February',
+		'03'  => 'March',
+		'04'  => 'April',
+		'05'  => 'May',
+		'06'  => 'June',
+		'07'  => 'July',
+		'08'  => 'August',
+		'09'  => 'September',
+		'10' => 'October',
+		'11' => 'November',
+		'12' => 'December',
+	],
+
 	'month-days' => [
 		'1'  => '1 d',  '2'  => '2 d',  '3'  => '3 d',  '4'  => '4 d',  '5'  => '5 d',
 		'6'  => '6 d',  '7'  => '7 d',  '8'  => '8 d',  '9'  => '9 d',  '10' => '10 d',
@@ -755,20 +774,31 @@ return [
 		'billing'       => 'Billing',
 	],
 
-	'linkable-entities' => [
+	'linkable-resources' => [
 		'incident' 		=> 'Incident',
 		'consultation'	=> 'Consultation'
 	],
 
-	'assignee-types' => [
+	'assignable-types' => [
 		'center'		=> 'Center',
 		'employee'		=> 'Employee',
 		'user'			=> 'User'
 	],
 
-	'people' => [
+	'person-types' => [
 		'employee'	=> 'Employee',
 		'student'	=> 'Student'
+	],
+
+	'person-types-1' => [
+		'employee'	=> [
+			'label'=> 'Employee',
+			'plural'=>'employees'
+		],
+		'student'	=> [
+			'label'=> 'Student',
+			'plural'=>'students'
+		]
 	]
 
 ];

@@ -27,8 +27,8 @@ class AttendanceSession extends Model
 
     protected $casts = [
 	    'session_date' => 'date:Y-m-d',
-    	'start_time'   => 'string',
-    	'end_time'     => 'string',
+    	'start_time'   => 'datetime:H:i:s',
+    	'end_time'     => 'datetime:H:i:s',
 	];
 
     /* =========================
@@ -89,5 +89,10 @@ class AttendanceSession extends Model
         	'batch_id'
     	);
 	}
+
+	public function participants()
+    {
+        return $this->morphTo();
+    }
 
 }

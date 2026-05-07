@@ -9,6 +9,13 @@ class Actions extends BaseActions
     public const CORRECT	= 'correct';
     public const DAILY		= 'daily';
     public const MONTHLY	= 'monthly';
+	public const PERCENTAGE	= 'percentage';
+	public const BATCH		= 'batch';
+	public const SESSION	= 'session';
+	public const ABSENT		= 'absent';
+	public const LATE		= 'late';
+	public const DEFAULTER	= 'defaulter';
+	public const TRENDS		= 'trends';
     public const ENTITY		= 'entity';
     public const ANALYSIS	= 'analysis';
     public const QR			= 'qr';

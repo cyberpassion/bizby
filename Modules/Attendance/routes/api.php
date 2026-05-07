@@ -93,6 +93,11 @@ Route::prefix('v1')
             [AttendanceSessionApiController::class, 'index']
         );
 
+		Route::get(
+            'attendance/sessions/today',
+            [AttendanceSessionApiController::class, 'today']
+        );
+
         // Create a new attendance session
         // Used by admin/HR to create shifts or classes
         Route::post(
@@ -157,42 +162,131 @@ Route::prefix('v1')
             );
         });
 
-        /*
+		        /*
         |--------------------------------------------------------------------------
         | Attendance Reports
         |--------------------------------------------------------------------------
-        | Reporting APIs for HR, admin, payroll, analytics
+        | Reporting APIs for HR, admin, analytics
         |--------------------------------------------------------------------------
         */
 
-		// General Filters
-		Route::get(
-			'attendance/reports',
-			[AttendanceReportApiController::class, 'index']
-		);
-
         Route::prefix('attendance/reports')->group(function () {
 
-            // Daily attendance report
-            // Shows present/absent/late users for a date
+            /*
+            |--------------------------------------------------------------------------
+            | Generic Report Listing / Filters
+            |--------------------------------------------------------------------------
+            */
+
+            Route::get(
+                '/',
+                [AttendanceReportApiController::class, 'index']
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Daily Reports
+            |--------------------------------------------------------------------------
+            */
+
+            // Daily attendance summary
             Route::get(
                 'daily',
                 [AttendanceReportApiController::class, 'daily']
             );
 
+            // Today's attendance snapshot
+            Route::get(
+                'today',
+                [AttendanceReportApiController::class, 'today']
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Monthly Reports
+            |--------------------------------------------------------------------------
+            */
+
             // Monthly attendance summary
-            // Used for payroll and performance tracking
             Route::get(
                 'monthly',
                 [AttendanceReportApiController::class, 'monthly']
             );
 
-            // Entity-based attendance report
-            // Example: department, branch, class, team, project
+            /*
+            |--------------------------------------------------------------------------
+            | Entity Reports
+            |--------------------------------------------------------------------------
+            */
+
+            // Single entity attendance history
+            // Example:
+            // /attendance/reports/entity/student/1
+            // /attendance/reports/entity/employee/5
             Route::get(
                 'entity/{type}/{id}',
                 [AttendanceReportApiController::class, 'entity']
             );
 
+            /*
+            |--------------------------------------------------------------------------
+            | Batch Reports
+            |--------------------------------------------------------------------------
+            */
+
+            // Batch/Class/Team attendance report
+            Route::get(
+                'batch/{batchId}',
+                [AttendanceReportApiController::class, 'batch']
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Session Reports
+            |--------------------------------------------------------------------------
+            */
+
+            // Single session attendance report
+            Route::get(
+                'session/{sessionId}',
+                [AttendanceReportApiController::class, 'session']
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Absent Reports
+            |--------------------------------------------------------------------------
+            */
+
+            // Absent-only report
+            Route::get(
+                'absent',
+                [AttendanceReportApiController::class, 'absent']
+            );
+
+            // Late attendance report
+            Route::get(
+                'late',
+                [AttendanceReportApiController::class, 'late']
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Analysis / Analytics
+            |--------------------------------------------------------------------------
+            */
+
+            // Attendance trends & analytics
+            Route::get(
+                'analysis',
+                [AttendanceReportApiController::class, 'analysis']
+            );
+
+            // Attendance percentage analysis
+            Route::get(
+                'percentage',
+                [AttendanceReportApiController::class, 'percentage']
+            );
         });
+        
     });

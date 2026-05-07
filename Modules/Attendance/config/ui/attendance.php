@@ -34,17 +34,17 @@ return [
                     'items' => [
                         [
                             'title'      => 'Weekly Offs',
-                            'href'       => UrlPath::make($module, 'config/weekly-offs'),
+                            'href'       => UrlPath::make($module, 'weekly-offs'),
                             'permission' => Permission::list(Res::WEEKLY_OFFS),
                         ],
                         [
                             'title'      => 'Holidays',
-                            'href'       => UrlPath::make($module, 'config/holidays'),
+                            'href'       => UrlPath::make($module, 'holidays'),
                             'permission' => Permission::list(Res::HOLIDAYS),
                         ],
                         [
                             'title'      => 'Cal. Overrides',
-                            'href'       => UrlPath::make($module, 'config/calendar-days'),
+                            'href'       => UrlPath::make($module, 'calendar-days'),
                             'permission' => Permission::list(Res::CALENDAR_DAYS),
                         ],
                     ],
@@ -95,11 +95,11 @@ return [
                 [
                     'title' => 'Attendance',
                     'items' => [
-                        [
+                        /*[
                             'title'      => 'Mark Attendance',
                             'href'       => UrlPath::make($module, 'mark'),
                             'permission' => Permission::make(Res::ATTENDANCES, Actions::MARK),
-                        ],
+                        ],*/
                         [
                             'title'      => 'Attendance List',
                             'href'       => UrlPath::make($module, 'list'),
@@ -114,30 +114,250 @@ return [
                 ],
 
                 [
-                    'title' => 'Reports',
-                    'items' => [
-                        [
-                            'title'      => 'Daily',
-                            'href'       => UrlPath::make($module, 'reports/daily'),
-                            'permission' => Permission::make(Res::REPORTS, Actions::DAILY),
-                        ],
-                        [
-                            'title'      => 'Monthly',
-                            'href'       => UrlPath::make($module, 'reports/monthly'),
-                            'permission' => Permission::make(Res::REPORTS, Actions::MONTHLY),
-                        ],
-                        [
-                            'title'      => 'Entity-wise',
-                            'href'       => UrlPath::make($module, 'reports/entity'),
-                            'permission' => Permission::make(Res::REPORTS, Actions::ENTITY),
-                        ],
-                        [
-                            'title'      => 'Analysis',
-                            'href'       => UrlPath::make($module, 'reports/analysis'),
-                            'permission' => Permission::make(Res::REPORTS, Actions::ANALYSIS),
-                        ],
-                    ],
-                ],
+    'title' => 'Reports',
+
+    'items' => [
+
+        /*
+        |--------------------------------------------------------------------------
+        | Generic
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Report',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report'
+            ),
+
+            'permission' => Permission::view(
+                Res::REPORTS
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Daily
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Daily',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/daily'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::DAILY
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Monthly
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Monthly',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/monthly'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::MONTHLY
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Percentage-wise
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Percentage-wise',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/percentage'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::PERCENTAGE
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Entity-wise
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Entity-wise',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/entity'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::ENTITY
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Batch-wise
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Batch-wise',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/batch'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::BATCH
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Session-wise
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Session-wise',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/session'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::SESSION
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Absent
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Absent',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/absent'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::ABSENT
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Late
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Late',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/late'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::LATE
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Defaulter
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Defaulter',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/defaulter'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::DEFAULTER
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Trends
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Trends',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/trends'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::TRENDS
+            ),
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Analysis
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'title'      => 'Analysis',
+
+            'href'       => UrlPath::make(
+                $module,
+                'report/analysis'
+            ),
+
+            'permission' => Permission::make(
+                Res::REPORTS,
+                Actions::ANALYSIS
+            ),
+        ],
+    ],
+],
 
                 [
                     'title' => 'Devices & Modes',
@@ -165,42 +385,32 @@ return [
                     ],
                 ],
 
-                [
+                /*[
                     'title' => 'Configuration',
                     'items' => [
                         [
                             'title'      => 'Session Types',
-                            'href'       => UrlPath::make($module, 'config/session-types'),
+                            'href'       => UrlPath::make($module, 'session-types'),
                             'permission' => Permission::update(Res::SESSION_TYPES),
                         ],
                         [
                             'title'      => 'Rules',
-                            'href'       => UrlPath::make($module, 'config/rules'),
+                            'href'       => UrlPath::make($module, 'rules'),
                             'permission' => Permission::update(Res::RULES),
                         ],
                         [
                             'title'      => 'Statuses-Codes',
-                            'href'       => UrlPath::make($module, 'config/statuses'),
+                            'href'       => UrlPath::make($module, 'statuses'),
                             'permission' => Permission::update(Res::STATUSES),
                         ],
                     ],
-                ],
+                ],*/
 
                 [
-                    'title' => 'Settings',
-                    'items' => [
-                        [
-                            'title'      => 'Basic Settings',
+                            'title'      => 'Settings',
                             'href'       => UrlPath::makeSettings($module),
                             'permission' => Permission::update(Res::SETTINGS),
                         ],
-                        [
-                            'title'      => 'Permissions',
-                            'href'       => UrlPath::make($module, 'settings/permissions'),
-                            'permission' => Permission::update(Res::SETTINGS),
-                        ],
-                    ],
-                ],
             ],
         ],
     ],
@@ -300,7 +510,7 @@ return [
 		KeyName::make(Res::SESSIONS)			=> [
 			[
 				'title'      => 'Mark Attendance',
-				'href'       => UrlPath::make($module, 'mark?session={id}'),
+				'href'       => UrlPath::make($module, 'mark/session/{id}'),
 				'permission' => Permission::make(Res::ATTENDANCES, Actions::MARK),
 			],
 			[
@@ -324,6 +534,7 @@ return [
 				'variant'    => 'danger',
 			]
 		],
+		KeyName::make(Res::ATTENDANCES) => [],
 		KeyName::make(Actions::LIST) 			=> []
 
     ],

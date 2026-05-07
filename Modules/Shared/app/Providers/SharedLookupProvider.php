@@ -181,6 +181,13 @@ class SharedLookupProvider
                 ->pluck('name', 'id')
                 ->toArray(),
 
+			'group-types' => Term::query()
+			    ->where('module', 'employee')
+			    ->where('group', 'types')
+			    ->orderBy('sort_order')
+			    ->pluck('name', 'id')
+			    ->toArray(),
+
             default => [],
         };
     }
@@ -193,6 +200,13 @@ class SharedLookupProvider
                 ->orderBy('name')
                 ->pluck('name', 'id')
                 ->toArray(),
+
+			'group-types' => Term::query()
+			    ->where('module', 'student')
+			    ->where('group', 'classess')
+			    ->orderBy('sort_order')
+			    ->pluck('name', 'id')
+			    ->toArray(),
 
             default => [],
         };

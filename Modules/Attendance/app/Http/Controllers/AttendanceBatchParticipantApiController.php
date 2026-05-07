@@ -15,7 +15,7 @@ class AttendanceBatchParticipantApiController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function index($batchId)
+    public function index(int $batchId)
     {
         $participants = AttendanceBatchParticipant::with('participant')
             ->where('batch_id', $batchId)
@@ -55,7 +55,7 @@ class AttendanceBatchParticipantApiController extends Controller
 	            ],
     	        [
         	        'tenant_id' => $tenantId,
-            	    'role' => $item['role'] ?? 'student'
+            	    'role' => $item['role'] ?? ''
             	]
     	    );
 	    }
