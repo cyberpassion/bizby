@@ -12,7 +12,8 @@ return new class extends Migration
             // Common SaaS fields (id, tenant_id, status, timestamps, soft deletes, audit)
             $table->commonSaasFields();
 
-            $table->string('name');
+            $table->string('tid')->nullable()->unique();
+			$table->string('name');
             $table->string('slug');
             $table->string('group');
             $table->string('module')->nullable();

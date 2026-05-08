@@ -18,7 +18,7 @@ class StudentFeeSubmissionApiController extends Controller
      *
      * POST /students/{id}/fee-submissions
      */
-    public function store($id, Request $request)
+    public function store(int $id, Request $request)
     {
         $student = Student::with('currentAcademicHistory')->findOrFail($id);
 

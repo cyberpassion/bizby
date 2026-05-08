@@ -169,6 +169,13 @@ return [
                 'action'     => 'update',
             ],
 
+			[
+                'title'      => 'Submit Fee',
+                'href'       => UrlPath::make($pg, '/fee-submission/{id}'),
+                'permission' => Permission::update(Res::STUDENTS),
+                'action'     => 'update',
+            ],
+
             [
                 'title'      => 'Upload',
                 'href'       => UrlPath::makeUploads($pg, '{id}'),

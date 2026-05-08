@@ -38,7 +38,7 @@ class RegistrationTypeStepApiController extends SharedApiController
     	            'registration_type_id' => $step['registration_type_id'],
         	        'step_key' => $step['step_key'],
             	    'title' => $step['title'],
-	                'step_order' => $index + 1,
+	                'step_order' => $step['step_order'],
     	            'config' => $step['config'],
         	        'is_required' => true,
             	]

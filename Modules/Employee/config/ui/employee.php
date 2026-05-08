@@ -29,7 +29,7 @@ return [
                 'description' => 'Manage Employee Records & Operations',
                 'items' => [
                     [
-                        'title'       => 'Add Employee',
+                        'title'       => 'Add New',
                         'description' => 'Create a New Employee Profile',
                         'href'        => UrlPath::makeCreate($pg),
                         'permission'  => Permission::create(Res::EMPLOYEES),

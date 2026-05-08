@@ -201,6 +201,13 @@ class SharedLookupProvider
                 ->pluck('name', 'id')
                 ->toArray(),
 
+			'dues-upto-periods' => [
+				'april'	=>	'April',
+				'may'	=>	'May',
+				'june'	=>	'June',
+				'july'	=>	'July'
+			],
+
 			'group-types' => Term::query()
 			    ->where('module', 'student')
 			    ->where('group', 'classess')

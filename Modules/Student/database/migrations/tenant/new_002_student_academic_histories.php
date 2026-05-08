@@ -14,11 +14,8 @@ return new class extends Migration {
 		    $table->foreignId('year_id')->constrained('student_academic_years')->cascadeOnDelete();
 
 		    // These reference terms table
-		    // $table->foreignId('class_term_id')->constrained('terms');   // group = class
-    		// $table->foreignId('section_term_id')->constrained('terms'); // group = section
-
-			$table->string('class_term_id');   // group = class
-    		$table->string('section_term_id'); // group = section
+		    $table->foreignId('class_term_id')->constrained('terms');   // group = class
+    		$table->foreignId('section_term_id')->constrained('terms'); // group = section
 
 		    $table->boolean('is_current')->default(false);
 

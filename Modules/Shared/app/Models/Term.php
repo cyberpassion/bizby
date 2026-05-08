@@ -30,5 +30,12 @@ class Term extends TenantModel
                 $term->slug = Str::slug($term->name);
             }
         });
+		// After create
+        static::created(function ($term) {
+            if (empty($term->tid)) {
+                $term->tid = 'tenant_' . $term->id;
+                $term->saveQuietly();
+            }
+        });
     }
 }

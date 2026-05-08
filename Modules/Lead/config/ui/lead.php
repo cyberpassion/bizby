@@ -131,7 +131,7 @@ return [
     		    'name'        => 'stage_id',
         		'placeholder' => 'Stage',
 	        	'col'         => 2,
-    	    	'dataKey'     => 'lead.lead-stages',
+    	    	'dataKey'     => 'lead.stages',
 		    ],
     		[
 	    	    'type'        => 'select',
@@ -140,12 +140,19 @@ return [
 		        'col'         => 2,
     		    'dataKey'     => 'lead.categories',
 		    ],
+			[
+	    	    'type'        => 'select',
+    	    	'name'        => 'is_existing_client',
+	        	'placeholder' => 'Existing Client',
+		        'col'         => 2,
+    		    'dataKey'     => 'shared.boolean-options',
+		    ],
     		[
 	    	    'type'        => 'select',
     	    	'name'        => 'source_id',
 	        	'placeholder' => 'Source',
 		        'col'         => 2,
-    		    'dataKey'     => 'lead.lead-sources',
+    		    'dataKey'     => 'lead.sources',
     		]
 		]
 	],

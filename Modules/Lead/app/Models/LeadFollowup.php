@@ -33,6 +33,12 @@ class LeadFollowup extends TenantModel
         'next_followup_date' => 'date:Y-m-d',
     ];
 
+	// Factory (if you use factories)
+    protected static function newFactory()
+	{
+    	return \Modules\Lead\Database\Factories\LeadFollowupFactory::new();
+	}
+
     /* =========================
      | Relationships
      |=========================*/

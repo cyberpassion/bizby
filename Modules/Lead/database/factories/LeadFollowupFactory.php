@@ -1,37 +1,61 @@
 <?php
 
-namespace Database\Factories;
+namespace Modules\Lead\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use Modules\Lead\Models\LeadFollowup;
+
 class LeadFollowupFactory extends Factory
 {
+    protected $model =
+        LeadFollowup::class;
+
     public function definition(): array
     {
         return [
-            'contact_date' => $this->faker->dateTimeBetween('-30 days', 'now'),
 
-            'mode' => $this->faker->randomElement([
-                'call',
-                'visit',
-                'whatsapp',
-                'email',
-                'sms'
-            ]),
+            'contact_date' =>
+                $this->faker
+                    ->dateTimeBetween(
+                        '-30 days',
+                        'now'
+                    ),
 
-            'reference_no' => $this->faker->optional()->uuid(),
+            'mode' =>
+                $this->faker
+                    ->randomElement([
+                        'call',
+                        'visit',
+                        'whatsapp',
+                        'email',
+                        'sms'
+                    ]),
 
-            'response' => $this->faker->sentence(),
-            'remark' => $this->faker->optional()->paragraph(),
+            'reference_no' =>
+                $this->faker
+                    ->optional()
+                    ->uuid(),
 
-            'next_followup_date' => $this->faker->optional()->date(),
+            'response' =>
+                $this->faker
+                    ->sentence(),
 
-            // Morphs
+            'remark' =>
+                $this->faker
+                    ->optional()
+                    ->paragraph(),
+
+            'next_followup_date' =>
+                $this->faker
+                    ->optional()
+                    ->date(),
+
             'contact_by_id' => null,
             'contact_by_type' => null,
 
-            // SaaS audit
-            'tenant_id' => null,
+            'tenant_id' => 1,
+
             'created_by' => null,
             'updated_by' => null,
             'deleted_by' => null,

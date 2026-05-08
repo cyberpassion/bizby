@@ -3,8 +3,9 @@
 namespace Modules\Lead\Models;
 
 use Modules\Admin\Models\Tenants\TenantModel;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lead extends TenantModel
 {
@@ -42,6 +43,12 @@ class Lead extends TenantModel
         'next_followup_date' => 'date:Y-m-d',
 		'lead_date'			 => 'date:Y-m-d'
     ];
+
+	// Factory (if you use factories)
+    protected static function newFactory()
+	{
+    	return \Modules\Lead\Database\Factories\LeadFactory::new();
+	}
 
     /* =========================
      | Relationships

@@ -99,7 +99,7 @@ return [
         'N' => 'No',
     ],
 
-	'boolean-yes-nos' => [
+	'boolean-options' => [
         '1' => 'Yes',
         '0' => 'No',
     ],

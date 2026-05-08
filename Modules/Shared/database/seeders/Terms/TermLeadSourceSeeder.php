@@ -39,7 +39,7 @@ class TermLeadSourceSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $source,
                 'slug'       => Str::slug($source),
-                'group'      => 'lead-sources',
+                'group'      => 'sources',
                 'module'     => 'lead',
                 'sort_order' => $index + 1,
                 'created_at' => now(),
