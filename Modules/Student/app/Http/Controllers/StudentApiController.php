@@ -16,16 +16,100 @@ class StudentApiController extends Controller
     /**
      * List all students with current academic history
      */
-    public function index()
-    {
-        $result = Student::get();
+    /**
+ * List Students
+ */
+public function index(Request $request)
+{
+    $query = Student::query()
+        ->with([
+            'currentAcademicHistory.academicYear:id,name',
+            'currentAcademicHistory.classTerm:id,name',
+            'currentAcademicHistory.sectionTerm:id,name',
+        ]);
 
-		return response()->json([
-    	    'status'  => 'success',
-        	'message' => 'Records fetched successfully.',
-	        'data'    => ['data'=>$result]
-    	], Response::HTTP_OK);
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Lightweight Academic Filters
+    |--------------------------------------------------------------------------
+    */
+
+	$query->when(
+	    $request->filled('year_id') &&
+    	$request->year_id !== 'all',
+
+	    fn ($q) =>
+    	$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
+        	$sub->where('year_id', $request->year_id);
+    	})
+	);
+
+    $query->when(
+	    $request->filled('class_term_id') &&
+    	$request->class_term_id !== 'all',
+
+	    fn ($q) =>
+    	$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
+        	$sub->where('class_term_id', $request->class_term_id);
+    	})
+	);
+
+	$query->when(
+    	$request->filled('section_term_id') &&
+	    $request->section_term_id !== 'all',
+
+	    fn ($q) =>
+    	$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
+        	$sub->where('section_term_id', $request->section_term_id);
+    	})
+	);
+
+	$query->when(
+    	$request->filled('status') &&
+	    $request->status !== 'all',
+
+	    fn ($q) =>
+    	$q->where('status', $request->status)
+	);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lightweight Student Filters
+    |--------------------------------------------------------------------------
+    */
+
+    $query->when(
+	    $request->filled('status') &&
+    	$request->status !== 'all',
+
+	    fn ($q) =>
+    	$q->where('status', $request->status)
+	);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sorting
+    |--------------------------------------------------------------------------
+    */
+
+    $query->latest();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Result
+    |--------------------------------------------------------------------------
+    */
+
+    $result = $query->paginate(
+        $request->get('per_page', 20)
+    );
+
+    return response()->json([
+        'status'  => 'success',
+        'message' => 'Records fetched successfully.',
+        'data'    => $result
+    ], Response::HTTP_OK);
+}
 
     /**
      * Store a new student with academic history
@@ -44,8 +128,8 @@ class StudentApiController extends Controller
             StudentAcademicHistory::create([
                 'student_id'       => $student->id,
                 'year_id'          => $request->year,
-                'class_term_id'    => $request->class,
-                'section_term_id'  => $request->section,
+                'class_term_id'    => explode('_', $request->class)[1] ?? null,
+                'section_term_id'  => explode('_', $request->section)[1] ?? null,
                 'is_current'       => true,
             ]);
 
@@ -70,7 +154,7 @@ class StudentApiController extends Controller
     /**
      * Show a single student
      */
-    public function show($id)
+    public function show(int $id)
     {
         $student = Student::with(['currentAcademicHistory','currentAcademicHistory.classTerm','currentAcademicHistory.sectionTerm'])->find($id);
 
@@ -90,7 +174,7 @@ class StudentApiController extends Controller
     /**
      * Update student basic info
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         DB::beginTransaction();
 
@@ -130,7 +214,7 @@ class StudentApiController extends Controller
     /**
      * Change student academic placement (promote / transfer)
      */
-    public function changeAcademic(Request $request, $id)
+    public function changeAcademic(Request $request, int $id)
     {
         DB::beginTransaction();
 
@@ -171,7 +255,7 @@ class StudentApiController extends Controller
     /**
      * Delete student (soft delete recommended)
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         DB::beginTransaction();
 

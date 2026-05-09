@@ -22,6 +22,14 @@ class Student extends Model implements Payable, FinalizePayment
         'admission_date' => 'date:Y-m-d',
     ];
 
+	protected $appends = [
+    	'academic_year_name',
+		'class_term_id',
+		'section_term_id',
+    	'class_name',
+    	'section_name',
+	];
+
     public function academicHistories()
 	{
     	return $this->hasMany(StudentAcademicHistory::class);
@@ -30,6 +38,31 @@ class Student extends Model implements Payable, FinalizePayment
 	public function currentAcademicHistory()
 	{
     	return $this->hasOne(StudentAcademicHistory::class)->where('is_current', true);
+	}
+
+	public function getAcademicYearNameAttribute()
+	{
+    	return $this->currentAcademicHistory?->academicYear?->name;
+	}
+
+	public function getClassNameAttribute()
+	{
+    	return $this->currentAcademicHistory?->classTerm?->name;
+	}
+
+	public function getSectionNameAttribute()
+	{
+    	return $this->currentAcademicHistory?->sectionTerm?->name;
+	}
+
+	public function getClassTermIdAttribute()
+	{
+    	return $this->currentAcademicHistory?->classTerm?->id;
+	}
+
+	public function getSectionTermIdAttribute()
+	{
+    	return $this->currentAcademicHistory?->sectionTerm?->id;
 	}
 
 }

@@ -33,4 +33,12 @@ class StudentFeeStructure extends TenantModel
         return $this->dynamicFillable();
     }
 
+	public function headTerm()
+	{
+    	return $this->belongsTo(
+	        \Modules\Shared\Models\Term::class,
+    	    'head_term_id'
+    	);
+	}
+
 }

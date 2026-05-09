@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Student\Support\Res;
 use Modules\Student\Support\Actions;
@@ -38,7 +39,7 @@ return [
                         ],
                         [
                             'title'      => 'Transfer',
-                            'href'       => UrlPath::make($pg, 'transfer'),
+                            'href'       => UrlPath::make($pg, 'transition'),
                             'permission' => Permission::update(Res::STUDENTS),
                         ],
                         [
@@ -100,8 +101,18 @@ return [
                             'permission' => Permission::view(Res::REPORTS),
                         ],
                         [
-                            'title'      => 'Dues',
+                            'title'      => 'Fee Due',
                             'href'       => UrlPath::make($pg, 'report-dues'),
+                            'permission' => Permission::view(Res::REPORTS),
+                        ],
+						[
+                            'title'      => 'Fee Discount',
+                            'href'       => UrlPath::make($pg, 'report-fee-discounts'),
+                            'permission' => Permission::view(Res::REPORTS),
+                        ],
+						[
+                            'title'      => 'Fee Defaulter',
+                            'href'       => UrlPath::make($pg, 'report-fee-defaulters'),
                             'permission' => Permission::view(Res::REPORTS),
                         ],
                     ],
@@ -154,7 +165,7 @@ return [
     */
     'single-actions' => [
 
-        Actions::LIST => [
+        KeyName::make(Res::STUDENTS) => [
             [
                 'title'      => 'View Documents',
                 'href'       => UrlPath::makeDocuments($pg, '{id}'),
@@ -198,7 +209,8 @@ return [
                 'method'     => 'DELETE',
                 'variant'    => 'danger',
             ],
-        ]
+        ],
+		KeyName::make(Res::ACADEMIC_YEARS) => []
 
     ],
 
@@ -209,24 +221,24 @@ return [
     */
     'filters' => [
 
-        Actions::LIST => [
+        KeyName::make(Res::STUDENTS) => [
             [
                 'type'        => 'select',
-                'name'        => 'current_session',
+                'name'        => 'year_id',
                 'placeholder' => 'Session',
                 'col'         => 3,
                 'dataKey'     => 'student.academic-years',
             ],
             [
                 'type'        => 'select',
-                'name'        => 'current_class',
+                'name'        => 'class_term_id',
                 'placeholder' => 'Class',
                 'col'         => 3,
                 'dataKey'     => 'student.classes',
             ],
             [
                 'type'        => 'select',
-                'name'        => 'current_section',
+                'name'        => 'section_term_id',
                 'placeholder' => 'Section',
                 'col'         => 3,
                 'dataKey'     => 'student.sections',

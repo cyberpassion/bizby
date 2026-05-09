@@ -30,6 +30,97 @@ class StudentFeeStructureApiController extends SharedApiController
     	];
 	}
 
+	public function index(Request $request)
+{
+    $validated = $request->validate([
+        'year_id' => [
+            'required',
+            'exists:student_academic_years,id'
+        ],
+
+        'class_term_id' => [
+            'required',
+            'exists:terms,id'
+        ],
+
+        'section_term_id' => [
+            'required',
+            'exists:terms,id'
+        ],
+    ]);
+
+    $data = StudentFeeStructure::query()
+
+        ->with([
+            'headTerm:id,name'
+        ])
+
+        ->where(
+            'year_id',
+            $validated['year_id']
+        )
+
+        ->where(
+            'class_term_id',
+            $validated['class_term_id']
+        )
+
+        ->where(
+            'section_term_id',
+            $validated['section_term_id']
+        )
+
+        ->get()
+
+        ->map(function ($item) {
+
+            return [
+
+                'id' => $item->id,
+
+                'year_id' =>
+                    $item->year_id,
+
+                'class_term_id' =>
+                    $item->class_term_id,
+
+                'section_term_id' =>
+                    $item->section_term_id,
+
+                'head_term_id' =>
+                    $item->head_term_id,
+
+                'head_term_name' =>
+                    $item->headTerm?->name,
+
+                'frequency' =>
+                    $item->frequency,
+
+                'amount' =>
+                    $item->amount,
+
+                'selected_periods' =>
+                    is_array(
+                        $item->selected_periods
+                    )
+
+                        ? $item->selected_periods
+
+                        : json_decode(
+                            $item->selected_periods,
+                            true
+                        ),
+            ];
+        });
+
+    return response()->json([
+        'status' => 'success',
+        'data' => [
+            'data' => $data
+        ]
+    ], Response::HTTP_OK);
+}
+
 	public function store(Request $request)
 	{
     	$validated = $request->validate($this->validationRules());

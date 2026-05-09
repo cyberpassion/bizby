@@ -12,7 +12,7 @@ use Modules\Student\Http\Controllers\StudentFeeSubmissionApiController;
 use Modules\Student\Http\Controllers\StudentFeeDuesApiController;
 use Modules\Student\Http\Controllers\StudentFeeCollectionApiController;
 
-use Modules\Student\Http\Controllers\StudentPromotionApiController;
+use Modules\Student\Http\Controllers\StudentTransitionApiController;
 
 Route::prefix('v1')->group(function () {
 
@@ -52,9 +52,9 @@ Route::prefix('v1')->group(function () {
 	});
 
 	Route::prefix('students')->group(function () {
-	    Route::get('promotions', [StudentPromotionApiController::class, 'index']);
-    	Route::post('promotions', [StudentPromotionApiController::class, 'store']);
-    	Route::get('promotions/{id}', [StudentPromotionApiController::class, 'show']);
+	    Route::get('promotions', [StudentTransitionApiController::class, 'index']);
+    	Route::post('promotions', [StudentTransitionApiController::class, 'store']);
+    	Route::get('promotions/{id}', [StudentTransitionApiController::class, 'show']);
 	});
 
 	// ------------------------------------
