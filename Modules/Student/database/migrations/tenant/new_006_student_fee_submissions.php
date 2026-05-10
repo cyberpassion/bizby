@@ -8,7 +8,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_fee_submissions', function (Blueprint $table) {
-		    $table->id();
+		    // Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
 		    $table->foreignId('student_id')->constrained()->cascadeOnDelete();
 			$table->foreignId('year_id')->constrained('student_academic_years')->cascadeOnDelete();
@@ -20,7 +22,21 @@ return new class extends Migration
     		$table->decimal('amount_received', 10, 2)->default(0);
 
 		    $table->text('remarks')->nullable();
-    		$table->timestamps();
+
+			$table->enum('fee_status', [
+			    'completed',
+			    'reversed',
+			    'cancelled',
+			])->default('completed');
+
+			$table->timestamp('reversed_at')
+    			->nullable();
+
+			$table->foreignId('reversed_by')
+			    ->nullable();
+
+			$table->text('reversal_reason')
+			    ->nullable();
 		});
 
     }

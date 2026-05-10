@@ -9,6 +9,8 @@ use Modules\Student\Http\Controllers\StudentFeeStructureOverrideApiController;
 use Modules\Student\Http\Controllers\StudentFeeSummaryApiController;
 use Modules\Student\Http\Controllers\StudentFeeSubmissionApiController;
 use Modules\Student\Http\Controllers\StudentTransitionApiController;
+use Modules\Student\Http\Controllers\StudentFeeDiscountApiController;
+use Modules\Student\Http\Controllers\StudentFeeDueApiController1;
 
 // Reports
 use Modules\Student\Http\Controllers\Reports\StudentReportApiController;
@@ -44,11 +46,20 @@ Route::prefix('v1')
                 ->name('graphs');
         });
 
+		Route::prefix('students/{id}/transitions')->group(function () {
+		    Route::get('/', [StudentTransitionApiController::class, 'studentHistory']);
+		});
+
 		/*
         |--------------------------------------------------------------------------
         | ACADEMIC YEARS
         |--------------------------------------------------------------------------
         */
+
+		Route::get(
+		    'students/{id}/academic-years',
+    		[StudentAcademicYearApiController::class, 'studentYears']
+		);
 
         Route::apiResource(
             'students/academic-years',
@@ -72,19 +83,84 @@ Route::prefix('v1')
         |--------------------------------------------------------------------------
         */
 
+		Route::get(
+		    'students/{studentId}/fee-structure-overrides/{yearId}',
+    		[StudentFeeStructureOverrideApiController::class, 'showCustom']
+		)->name('students.feeStructureOverrides.showCustom');
+
+		Route::post(
+		    'students/{studentId}/fee-structure-overrides/{yearId}',
+    		[StudentFeeStructureOverrideApiController::class, 'storeCustom']
+		)->name('students.feeStructureOverrides.storeCustom');
+
         Route::apiResource(
             'students/{id}/fee-structure-overrides',
             StudentFeeStructureOverrideApiController::class
         )->names('students.feeStructureOverrides');
 
+		/*
+		|--------------------------------------------------------------------------
+		| FEE DISCOUNTS
+		|--------------------------------------------------------------------------
+		*/
+
+		Route::get(
+		    'students/{studentId}/fee-discounts/{yearId}',
+    		[StudentFeeDiscountApiController::class, 'showCustom']
+		)->name('students.feeDiscounts.showCustom');
+
+		Route::post(
+		    'students/{studentId}/fee-discounts/{yearId}',
+    		[StudentFeeDiscountApiController::class, 'storeCustom']
+		)->name('students.feeDiscounts.storeCustom');
+
+		Route::apiResource(
+		    'students/{id}/fee-discounts',
+    		StudentFeeDiscountApiController::class
+		)->names('students.feeDiscounts');
+
+		/*
+|--------------------------------------------------------------------------
+| STUDENT FEE DUES
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('students/fee-dues')
+    ->group(function () {
+
         /*
         |--------------------------------------------------------------------------
-        | STUDENTS CRUD
+        | Create Due
         |--------------------------------------------------------------------------
         */
 
-        Route::apiResource('students', StudentApiController::class)
-            ->names('students');
+        Route::post(
+            '/',
+            [StudentFeeDueApiController1::class, 'store']
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Student Dues
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '{studentId}',
+            [StudentFeeDueApiController1::class, 'studentDues']
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Carry Forward
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '{studentId}/carry-forward',
+            [StudentFeeDueApiController1::class, 'carryForward']
+        );
+    });
 
         /*
 |--------------------------------------------------------------------------
@@ -320,10 +396,58 @@ Route::prefix('students/transitions')
         |--------------------------------------------------------------------------
         */
 
+		Route::post(
+		    'students/fee-submissions/{id}/reverse',
+    		[StudentFeeSubmissionApiController::class, 'reverse']
+		);
+
         Route::post(
             'students/{id}/fee-submissions',
             [StudentFeeSubmissionApiController::class, 'store']
         );
+
+		/*
+|--------------------------------------------------------------------------
+| Fee Submission Detail
+|--------------------------------------------------------------------------
+|
+| Used For:
+| - Receipt Print
+| - Payment Detail View
+| - Single Collection Lookup
+|
+*/
+
+Route::get(
+    'students/fee-collections/{id}',
+    [StudentFeeSubmissionApiController::class, 'show']
+);
+
+/*
+|--------------------------------------------------------------------------
+| Fee Submission Receipt
+|--------------------------------------------------------------------------
+|
+| Used For:
+| - Printable Receipt
+| - PDF Export
+| - Thermal Print
+|
+*/
+
+Route::get(
+    'students/fee-collections/{id}/receipt',
+    [StudentFeeSubmissionApiController::class, 'receipt']
+);
+
+		/*
+        |--------------------------------------------------------------------------
+        | STUDENTS CRUD
+        |--------------------------------------------------------------------------
+        */
+
+        Route::apiResource('students', StudentApiController::class)
+            ->names('students');
 
         /*
         |--------------------------------------------------------------------------

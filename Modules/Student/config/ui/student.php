@@ -28,7 +28,7 @@ return [
                     'title' => 'Students',
                     'items' => [
                         [
-                            'title'      => 'Add Student',
+                            'title'      => 'Add New',
                             'href'       => UrlPath::makeCreate($pg),
                             'permission' => Permission::create(Res::STUDENTS),
                         ],
@@ -181,11 +181,37 @@ return [
             ],
 
 			[
-                'title'      => 'Submit Fee',
-                'href'       => UrlPath::make($pg, '/fee-submission/{id}'),
+				'title'      => 'Fee',
+                'href'       => '#',
                 'permission' => Permission::update(Res::STUDENTS),
                 'action'     => 'update',
-            ],
+				'items'		=>	[
+					[
+		                'title'      => 'Submit Fee',
+        		        'href'       => UrlPath::make($pg, '/fee-submission/{id}'),
+                		'permission' => Permission::update(Res::STUDENTS),
+    		            'action'     => 'update',
+	        	    ],
+					[
+		                'title'      => 'Fee History',
+        		        'href'       => UrlPath::make($pg, '/fee-history/{id}'),
+                		'permission' => Permission::update(Res::STUDENTS),
+    		            'action'     => 'update',
+	        	    ],
+					[
+		                'title'      => 'Add Fee Discount',
+        		        'href'       => UrlPath::make($pg, '/fee-discount/{id}'),
+                		'permission' => Permission::update(Res::STUDENTS),
+    		            'action'     => 'update',
+	        	    ],
+					[
+		                'title'      => 'Custom Fee Structure',
+        		        'href'       => UrlPath::make($pg, '/fee-structure?student_id={id}'),
+                		'permission' => Permission::update(Res::STUDENTS),
+    		            'action'     => 'update',
+	        	    ],
+				]
+			],
 
             [
                 'title'      => 'Upload',

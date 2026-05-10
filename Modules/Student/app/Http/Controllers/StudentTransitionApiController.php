@@ -279,13 +279,90 @@ class StudentTransitionApiController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $alreadyExists = StudentAcademicHistory::query()
-                ->where('student_id', $studentId)
-                ->where('year_id', $data['target_year_id'])
-                ->where('class_term_id', $data['target_class_term_id'])
-                ->where('section_term_id', $data['target_section_term_id'])
-                ->where('is_current', true)
-                ->exists();
+            /*
+|--------------------------------------------------------------------------
+| Prevent Mid Session Transition
+|--------------------------------------------------------------------------
+|
+| Rule:
+| Mid-session transition is blocked if:
+| - source_year == target_year
+| - AND active fee payments exist
+|
+| Admin must reverse payments first.
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Prevent Transition If Fee Payments Exist
+|--------------------------------------------------------------------------
+|
+| Rule:
+| Any student transition is blocked if fee payments
+| exist in the current/source academic year.
+|
+*/
+
+$hasFeePayments =
+    \Modules\Student\Models\StudentFeeSubmission::query()
+
+        ->where('student_id', $studentId)
+
+        ->where(
+            'year_id',
+            $data['source_year_id']
+        )
+
+        ->where(
+            'fee_status',
+            'completed'
+        )
+
+        ->exists();
+
+if ($hasFeePayments) {
+
+    DB::rollBack();
+
+    return response()->json([
+
+        'transition_status' => 'error',
+
+        'message' =>
+            'Student transition blocked because fee payments exist for current academic year.',
+
+        'student_id' =>
+            $studentId,
+
+    ], Response::HTTP_UNPROCESSABLE_ENTITY);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Prevent Duplicate Active History
+|--------------------------------------------------------------------------
+*/
+
+$alreadyExists = StudentAcademicHistory::query()
+
+    ->where('student_id', $studentId)
+
+    ->where('year_id', $data['target_year_id'])
+
+    ->where(
+        'class_term_id',
+        $data['target_class_term_id']
+    )
+
+    ->where(
+        'section_term_id',
+        $data['target_section_term_id']
+    )
+
+    ->where('is_current', true)
+
+    ->exists();
 
             if ($alreadyExists) {
                 continue;
@@ -317,7 +394,7 @@ class StudentTransitionApiController extends Controller
 
                 'processed_by'            => auth()->id(),
 
-                'status'                  => 'completed',
+                'transition_status'       => 'completed',
             ]);
 
             /*
@@ -405,4 +482,33 @@ class StudentTransitionApiController extends Controller
             'data'   => $transition,
         ], Response::HTTP_OK);
     }
+
+	// Student Transition History
+	public function studentHistory(int $id)
+	{
+    	$data = StudentTransition::query()
+
+	        ->with([
+    	        'sourceAcademicYear:id,name',
+        	    'targetAcademicYear:id,name',
+
+	            'sourceClass:id,name',
+    	        'targetClass:id,name',
+
+	            'sourceSection:id,name',
+    	        'targetSection:id,name',
+        	])
+
+	        ->where('student_id', $id)
+
+	        ->latest()
+
+	        ->get();
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'data' => $data,
+	    ]);
+	}
+
 }

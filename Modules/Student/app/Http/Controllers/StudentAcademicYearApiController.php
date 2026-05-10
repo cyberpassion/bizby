@@ -19,4 +19,31 @@ class StudentAcademicYearApiController extends SharedApiController
     {
         return [];
     }
+
+	public function studentYears(int $id)
+	{
+    	$years = \Modules\Student\Models\StudentAcademicHistory::query()
+
+	        ->with([
+     	       'academicYear:id,name,start_year,end_year'
+        	])
+
+	        ->where('student_id', $id)
+
+	        ->latest()
+
+	        ->get()
+
+	        ->pluck('academicYear')
+
+	        ->unique('id')
+
+	        ->values();
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'data' => $years,
+   		]);
+	}
+
 }

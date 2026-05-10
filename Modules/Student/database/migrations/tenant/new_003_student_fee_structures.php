@@ -8,7 +8,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_fee_structures', function (Blueprint $table) {
-		    $table->id();
+		    // Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
 		    // Context
 		    $table->foreignId('year_id')
@@ -41,8 +43,6 @@ return new class extends Migration
 
 		    // Period selection (months / terms)
 		    $table->json('selected_periods')->nullable();
-
-		    $table->timestamps();
 
 		    // Business-level uniqueness
 		    $table->unique([

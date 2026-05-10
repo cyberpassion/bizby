@@ -8,12 +8,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('student_academic_years', function (Blueprint $table) {
-            $table->id();
-
-			$table->unsignedBigInteger('tenant_id')
-                ->nullable()
-                ->index()
-                ->comment('Tenant/Client owner ID');
+            // Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
             // Display name: 2025-26
             $table->string('name');
@@ -32,8 +29,6 @@ return new class extends Migration {
 
             // Optional description / note
             $table->string('description')->nullable();
-
-            $table->timestamps();
 
             // Optional but recommended indexes
             $table->index(['start_year', 'end_year']);

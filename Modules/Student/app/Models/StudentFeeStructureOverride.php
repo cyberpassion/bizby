@@ -26,4 +26,13 @@ class StudentFeeStructureOverride extends TenantModel
     {
         return $this->dynamicFillable();
     }
+
+	public function feeStructure()
+{
+    return $this->belongsTo(
+        StudentFeeStructure::class,
+        'fee_structure_id'
+    );
+}
+
 }

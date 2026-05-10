@@ -19,7 +19,7 @@ class StudentFeeSummaryApiController extends Controller
      *
      * GET /students/{id}/fee-summary?year_id=1
      */
-    public function show($id, Request $request)
+    public function show(int $id, Request $request)
     {
         $yearId = $request->query('year_id');
 

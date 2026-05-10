@@ -43,6 +43,10 @@ use Modules\Shared\Http\Controllers\ReportPublicApiController;
 
 // Terms for dynamic values like student classes etc
 Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
+	Route::get(
+	    'terms/navigation',
+    	[TermApiController::class, 'navigation']
+	);
 	Route::apiResource('terms', TermApiController::class)->names('term');
 });
 

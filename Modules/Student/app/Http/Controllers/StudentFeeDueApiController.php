@@ -10,7 +10,7 @@ use Modules\Student\Models\StudentFeeStructure;
 use Modules\Student\Models\StudentFeeSubmissionItem;
 use Illuminate\Support\Facades\DB;
 
-class StudentFeeDuesApiController extends Controller
+class StudentFeeDueApiController extends Controller
 {
     /**
      * -----------------------------------------
@@ -18,7 +18,7 @@ class StudentFeeDuesApiController extends Controller
      * GET /students/{id}/fee-dues
      * -----------------------------------------
      */
-    public function show($id, Request $request)
+    public function show(int $id, Request $request)
     {
         $data = $request->only([
 		    'year_id',

@@ -9,7 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_fee_structure_overrides', function (Blueprint $table) {
-            $table->id();
+            // Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
             // Student for whom the override applies
             $table->foreignId('student_id')
@@ -40,8 +42,6 @@ return new class extends Migration
             // Reason for audit / reporting
             $table->string('reason')->nullable(); 
             // e.g. "Scholarship", "Staff Ward", "Special Case"
-
-            $table->timestamps();
 
             // One override per student per fee head
             $table->unique(

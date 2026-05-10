@@ -8,7 +8,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_fee_discounts', function (Blueprint $table) {
-            $table->id();
+
+			// Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
             // Optional: link to student if discount is individual
             $table->foreignId('student_id')->nullable()->constrained()->cascadeOnDelete();
@@ -24,7 +27,6 @@ return new class extends Migration
 
             $table->json('applicable_periods')->nullable(); // override periods if discount only for specific months/semesters
 
-            $table->timestamps();
         });
     }
 

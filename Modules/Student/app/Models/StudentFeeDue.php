@@ -4,28 +4,40 @@ namespace Modules\Student\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StudentFeeDiscount extends Model
+class StudentFeeDue extends Model
 {
     protected $fillable = [
 
         'student_id',
 
-        'student_fee_structure_id',
-
         'year_id',
 
-        'name',
+        'class_term_id',
 
-        'amount',
+        'section_term_id',
 
-        'percentage',
+        'fee_structure_id',
 
-        'applicable_periods',
+        'due_type',
+
+        'period',
+
+        'total_amount',
+
+        'discount_amount',
+
+        'paid_amount',
+
+        'due_amount',
+
+        'source_year_id',
+
+        'meta',
     ];
 
     protected $casts = [
 
-        'applicable_periods' => 'array',
+        'meta' => 'array',
     ];
 
     /*
@@ -65,7 +77,7 @@ class StudentFeeDiscount extends Model
     {
         return $this->belongsTo(
             StudentFeeStructure::class,
-            'student_fee_structure_id'
+            'fee_structure_id'
         );
     }
 }

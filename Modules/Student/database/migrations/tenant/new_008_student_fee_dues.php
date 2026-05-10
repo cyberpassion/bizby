@@ -4,15 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-
+return new class extends Migration
+{
     public function up(): void
     {
-        Schema::create('student_transitions', function (Blueprint $table) {
+        Schema::create('student_fee_dues', function (Blueprint $table) {
 
-            // Common SaaS Fields
             $table->commonSaasFields();
-            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
             /*
             |--------------------------------------------------------------------------
@@ -26,76 +24,83 @@ return new class extends Migration {
 
             /*
             |--------------------------------------------------------------------------
-            | Transition Type
+            | Academic Context
             |--------------------------------------------------------------------------
             */
 
-            $table->enum('transition_type', [
-                'promotion',
-                'demotion',
-                'transfer',
-                'retain',
-                'graduate',
-            ]);
+            $table->foreignId('year_id')
+                ->constrained('student_academic_years');
+
+            $table->foreignId('class_term_id')
+                ->constrained('terms');
+
+            $table->foreignId('section_term_id')
+                ->constrained('terms');
 
             /*
             |--------------------------------------------------------------------------
-            | Source Academic Structure
+            | Fee Structure
+            |--------------------------------------------------------------------------
+            */
+
+            $table->foreignId('fee_structure_id')
+                ->nullable()
+                ->constrained('student_fee_structures');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Due Type
+            |--------------------------------------------------------------------------
+            */
+
+            $table->enum('due_type', [
+
+                'fee',
+                'carry_forward',
+                'adjustment',
+
+            ])->default('fee');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Fee Context
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('period')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Amounts
+            |--------------------------------------------------------------------------
+            */
+
+            $table->decimal('total_amount', 10, 2);
+
+            $table->decimal('discount_amount', 10, 2)
+                ->default(0);
+
+            $table->decimal('paid_amount', 10, 2)
+                ->default(0);
+
+            $table->decimal('due_amount', 10, 2)
+                ->default(0);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Carry Forward
             |--------------------------------------------------------------------------
             */
 
             $table->foreignId('source_year_id')
+                ->nullable()
                 ->constrained('student_academic_years');
-
-            $table->foreignId('source_class_term_id')
-                ->constrained('terms');
-
-            $table->foreignId('source_section_term_id')
-                ->constrained('terms');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Target Academic Structure
-            |--------------------------------------------------------------------------
-            */
-
-            $table->foreignId('target_year_id')
-                ->constrained('student_academic_years');
-
-            $table->foreignId('target_class_term_id')
-                ->constrained('terms');
-
-            $table->foreignId('target_section_term_id')
-                ->constrained('terms');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Transition Info
-            |--------------------------------------------------------------------------
-            */
-
-            $table->date('effective_from')
-                ->nullable();
-
-            $table->string('transition_status')
-                ->default('completed');
-
-            $table->text('remarks')
-                ->nullable();
-
-            /*
-            |--------------------------------------------------------------------------
-            | Audit
-            |--------------------------------------------------------------------------
-            */
-
-            $table->foreignId('processed_by')
-                ->nullable();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('student_transitions');
+        Schema::dropIfExists('student_fee_dues');
     }
 };

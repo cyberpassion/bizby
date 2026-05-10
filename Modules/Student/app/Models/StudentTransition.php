@@ -64,7 +64,7 @@ class StudentTransition extends Model
         */
 
         'effective_from',
-        'status',
+        'transition_status',
         'remarks',
 
         /*

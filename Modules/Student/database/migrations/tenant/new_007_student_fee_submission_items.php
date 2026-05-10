@@ -8,7 +8,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_fee_submission_items', function (Blueprint $table) {
-            $table->id();
+            // Common SaaS Fields
+            $table->commonSaasFields();
+            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
             $table->foreignId('fee_submission_id')->constrained('student_fee_submissions')->cascadeOnDelete();
             $table->foreignId('fee_structure_id')->constrained('student_fee_structures')->cascadeOnDelete();
@@ -18,8 +20,6 @@ return new class extends Migration
             $table->decimal('paid_amount', 10, 2)->default(0); // final paid amount
 
             $table->json('selected_periods')->nullable(); // months/quarters/semesters actually paid
-
-            $table->timestamps();
         });
     }
 
