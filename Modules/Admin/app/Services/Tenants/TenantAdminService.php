@@ -17,6 +17,8 @@ class TenantAdminService
 
         $central = config('tenancy.database.central_connection');
 
+		logger()->info('Creating Central Admin', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+
         DB::connection($central)->transaction(function () use ($tenant, $central) {
 
             // 1️⃣ Create / Update central user

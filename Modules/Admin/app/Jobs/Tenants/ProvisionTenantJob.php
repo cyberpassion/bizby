@@ -52,8 +52,12 @@ class ProvisionTenantJob implements ShouldQueue
         // Delegate ALL logic to service
         $provisioningService->provision($tenant, $install, $dbService);
 
+		logger()->info('Fire Success Event', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+
         // Fire event AFTER successful provisioning
         event(new \Modules\Admin\Events\TenantActivated($tenant->id));
+
+		logger()->info('After Event Completion', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
     }
 
     public function failed(Throwable $e): void

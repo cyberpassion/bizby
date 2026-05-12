@@ -799,6 +799,18 @@ return [
 			'label'=> 'Student',
 			'plural'=>'students'
 		]
-	]
+	],
+
+	/* ======================================================
+     | WORSPACE (used for UI, permissions, marketplace)
+     ====================================================== */
+	// Uploads
+	'workspace.uploads' => [
+		'logo' 				=> 'Logo',
+		'login-background' 	=> 'Login Background Image',
+		'report-header'		=> 'Report Header',
+		'watermark' 		=> 'Watermark',
+		'official-signature'=> 'Signature'
+	],
 
 ];
