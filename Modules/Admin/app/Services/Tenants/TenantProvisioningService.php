@@ -41,7 +41,7 @@ class TenantProvisioningService
 
             try {
 
-				logger('Provisioning: create_database', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+				logger()->info('Provisioning: create_database', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 
                 // -------- PHASE 1: CENTRAL --------
                 $this->state->running($install, 'create_database', 10);
@@ -51,13 +51,13 @@ class TenantProvisioningService
                 // $this->state->running($install, 'migrate', 40);
                 // $this->runTenantMigrations($tenant);
 
-				logger('Provisioning: seeding started', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+				logger()->info('Provisioning: seeding started', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 
 				// -------- PHASE 2: TENANT SEEDING --------
                 $this->state->running($install, 'seed', 60);
                 $this->seedDefaults($tenant);
 
-				logger('Provisioning: subscription creation', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+				logger()->info('Provisioning: subscription creation', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 
                 // -------- PHASE 3: CENTRAL --------
                 $this->state->running($install, 'subscription', 80);
@@ -69,7 +69,7 @@ class TenantProvisioningService
                     'provisioned_at' => now(),
                 ]);
 
-				logger('Provisioning: completion', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+				logger()->info('Provisioning: completion', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 
                 $this->state->completed($install);
 

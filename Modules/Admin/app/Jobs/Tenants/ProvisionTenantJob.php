@@ -33,7 +33,7 @@ class ProvisionTenantJob implements ShouldQueue
         // 🔒 Always force central context in queue jobs
         Tenancy::end();
 
-		logger('Pre Provisioning', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+		logger()->info('Pre Provisioning', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 
         // Load installation & tenant
         $install = TenantInstallation::findOrFail($this->installationId);
