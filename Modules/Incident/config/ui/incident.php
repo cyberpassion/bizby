@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Incident\Support\Res;
 use Modules\Incident\Support\Actions;
@@ -62,76 +63,78 @@ return [
     */
     'single-actions' => [
 
-		Actions::LIST => [
-			[
-                'title'      => 'Add Update',
-                'href'       => UrlPath::make($pg, 'create-log'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'sheet',
-				'params'	 => [
-					'incident_id'	 => ':id'
-				]
-            ],
+		KeyName::make(Res::INCIDENTS) => [
+			Actions::LIST => [
+				[
+        	        'title'      => 'Add Update',
+            	    'href'       => UrlPath::make($pg, 'create-log'),
+                	'permission' => Permission::view(Res::DOCUMENTS),
+	                'action'     => 'sheet',
+					'params'	 => [
+						'incident_id'	 => ':id'
+					]
+            	],
 
-			[
-                'title'      => 'Resolve Update',
-                'href'       => UrlPath::make($pg, 'create-resolve'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'sheet',
-				'params'	 => [
-					'incident_id'	 => ':id'
-				]
-            ],
+				[
+    	            'title'      => 'Resolve Update',
+        	        'href'       => UrlPath::make($pg, 'create-resolve'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'sheet',
+					'params'	 => [
+						'incident_id'	 => ':id'
+					]
+            	],
 
-			[
-                'title'      => 'Close Incident',
-                'href'       => UrlPath::make($pg, 'create-closure'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'sheet',
-				'params'	 => [
-					'incident_id'	 => ':id'
-				]
-            ],
+				[
+    	            'title'      => 'Close Incident',
+        	        'href'       => UrlPath::make($pg, 'create-closure'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'sheet',
+					'params'	 => [
+						'incident_id'	 => ':id'
+					]
+	            ],
 
-			[
-                'title'      => 'View Docs',
-                'href'       => UrlPath::makeDocuments($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'document',
-            ],
+				[
+    	            'title'      => 'View Docs',
+        	        'href'       => UrlPath::makeDocuments($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'document',
+            	],
 
-			[
-                'title'      => 'View Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DETAILS),
-                'action'     => 'detail',
-            ],
+				[
+    	            'title'      => 'View Details',
+        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DETAILS),
+                	'action'     => 'detail',
+	            ],
 
-	        [
-    	        'title'      => 'Update',
-        	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            	'permission' => Permission::update(Res::INCIDENTS),
-            	'action'     => 'update',
-	        ],
+		        [
+    		        'title'      => 'Update',
+        		    'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            		'permission' => Permission::update(Res::INCIDENTS),
+            		'action'     => 'update',
+		        ],
 
-			[
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::DOCUMENTS),
-                'action'     => 'upload',
-            ],
+				[
+    	            'title'      => 'Upload',
+        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
+            	    'permission' => Permission::create(Res::DOCUMENTS),
+                	'action'     => 'upload',
+	            ],
 
-	        [
-    	        'title'      => 'Delete',
-        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
-            	'permission' => Permission::delete(Res::INCIDENTS),
-	            'action'     => 'delete',
-    	        'method'     => 'DELETE',
-        	    'variant'    => 'danger',
-        	]
-		]
+		        [
+    		        'title'      => 'Delete',
+        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+            		'permission' => Permission::delete(Res::INCIDENTS),
+	            	'action'     => 'delete',
+	    	        'method'     => 'DELETE',
+    	    	    'variant'    => 'danger',
+        		]
+			]
 
-    ],
+    	],
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -140,31 +143,33 @@ return [
     */
     'filters' => [
 
-        Actions::LIST	=>	[
-            [
-                'type'        => 'select',
-                'name'        => 'type',
-                'placeholder' => 'Types',
-                'col'         => 3,
-                'dataKey'     => 'incident.types',
-            ],
+		KeyName::make(Res::INCIDENTS) => [
+	        Actions::LIST	=>	[
+    	        [
+        	        'type'        => 'select',
+            	    'name'        => 'type',
+	                'placeholder' => 'Types',
+    	            'col'         => 3,
+        	        'dataKey'     => 'incident.types',
+            	],
 
-			[
-                'type'        => 'select',
-                'name'        => 'severity',
-                'placeholder' => 'Severity',
-                'col'         => 3,
-                'dataKey'     => 'incident.severities',
-            ],
+				[
+    	            'type'        => 'select',
+        	        'name'        => 'severity',
+            	    'placeholder' => 'Severity',
+                	'col'         => 3,
+                	'dataKey'     => 'incident.severities',
+	            ],
 
-            [
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'incident.statuses',
-            ],
-        ]
+	            [
+    	            'type'        => 'select',
+        	        'name'        => 'status',
+            	    'placeholder' => 'Status',
+                	'col'         => 3,
+                	'dataKey'     => 'incident.statuses',
+	            ],
+    	    ]
+		]
 
     ],
 

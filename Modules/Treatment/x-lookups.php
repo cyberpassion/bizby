@@ -108,12 +108,12 @@ return [
             'observedby', 'observation', 'treatment_given',
             'treatment_remark', 'tags', 'status',
         ],
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'sno', 'treatment_date', 'treatment_time',
             'observedby', 'observation',
             'treatment_given', 'treatment_remark',
         ],
-        'selected_columns' => [
+        Actions::SELECTABLE => [
             'treatment_date', 'treatment_time',
             'observedby', 'observation',
             'treatment_given', 'treatment_remark',

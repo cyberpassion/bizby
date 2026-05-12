@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'treatment';
 
 return [
@@ -64,12 +71,12 @@ return [
             'observedby','observation','treatment_given',
             'treatment_remark','tags','status',
         ],
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'sno','treatment_date','treatment_time',
             'observedby','observation',
             'treatment_given','treatment_remark',
         ],
-        'selected_columns' => [
+        Actions::SELECTABLE => [
             'treatment_date','treatment_time',
             'observedby','observation',
             'treatment_given','treatment_remark',

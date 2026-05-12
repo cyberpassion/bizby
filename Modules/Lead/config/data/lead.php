@@ -1,119 +1,187 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Lead\Support\Res;
+use Modules\Lead\Support\Actions;
+
 $pg = 'lead';
 
 return [
 
-	// Bulk Operations
+    /*
+    |--------------------------------------------------------------------------
+    | Bulk Operations
+    |--------------------------------------------------------------------------
+    */
     "bulk-operations" => [
         "view:detail" => "View Lead Details",
-        "send:email"  => "Send Email",
-        "send:sms"    => "Send SMS",
-        "op:remove"   => "Delete Lead",
-        "op:restore"  => "Restore Lead"
+        "send:email" => "Send Email",
+        "send:sms" => "Send SMS",
+        "op:remove" => "Delete Lead",
+        "op:restore" => "Restore Lead",
     ],
 
-	// Default Columns
+    /*
+    |--------------------------------------------------------------------------
+    | Default Columns
+    |--------------------------------------------------------------------------
+    */
     "columns" => [
-       'list' => [
-    'lead_code'            => 'Code',
-    'name'                 => 'Name',
-    'contact_person'       => 'Person',
-    'mobile'               => 'Mobile',
-	'business_type'       => 'Business',
-    'stage_id_label'       => 'Stage',
-    'next_followup_date'   => 'Next Follow-up',
-    'status_label'       => 'Status',
-],
-        'detail' => [
-    'lead_code'            => 'Code',
-    'name'                 => 'Name',
-    'contact_person'       => 'Person',
-    'mobile'               => 'Mobile',
-	'business_type'       => 'Business',
-    'stage_id_label'       => 'Stage',
-    'next_followup_date'   => 'Next Follow-up',
-	'followups'				=> 'Followups',
-    'status_label'       => 'Status',
-],
-        'report' => [
-    'lead_code'          => 'Code',
-    'name'               => 'Name',
-    'contact_person'     => 'Person',
-    'mobile'             => 'Mobile',
-	'business_type'       => 'Business Type',
-    'stage_id_label'           => 'Stage',
-    'next_followup_date' => 'Next Follow-up',
-    'status_label'             => 'Status',
-],
-        'sample_export' => ['sno','potential_client_name','potential_client_mobile_number','potential_client_email','contact_by','expectation','next_date','contact_response','state','district','potential_client_address'],
-        'selected_columns' => ['potential_client_name','potential_client_mobile_number','potential_client_email','contact_by','expectation','next_date','contact_response','state','district','potential_client_address']
+
+        KeyName::make(Res::LEADS) => [
+
+            Actions::LIST => [
+                'lead_code' => 'Code',
+                'name' => 'Name',
+                'contact_person' => 'Person',
+                'mobile' => 'Mobile',
+                'business_type' => 'Business',
+                'stage_id_label' => 'Stage',
+                'next_followup_date' => 'Next Follow-up',
+                'status_label' => 'Status',
+            ],
+
+            Actions::DETAIL => [
+                'lead_code' => 'Code',
+                'name' => 'Name',
+                'contact_person' => 'Person',
+                'mobile' => 'Mobile',
+                'business_type' => 'Business',
+                'stage_id_label' => 'Stage',
+                'next_followup_date' => 'Next Follow-up',
+                'followups' => 'Followups',
+                'status_label' => 'Status',
+            ],
+
+            Actions::REPORT => [
+                'lead_code' => 'Code',
+                'name' => 'Name',
+                'contact_person' => 'Person',
+                'mobile' => 'Mobile',
+                'business_type' => 'Business Type',
+                'stage_id_label' => 'Stage',
+                'next_followup_date' => 'Next Follow-up',
+                'status_label' => 'Status',
+            ],
+
+            Actions::SAMPLE_EXPORT => [
+                'sno',
+                'potential_client_name',
+                'potential_client_mobile_number',
+                'potential_client_email',
+                'contact_by',
+                'expectation',
+                'next_date',
+                'contact_response',
+                'state',
+                'district',
+                'potential_client_address',
+            ],
+
+            Actions::SELECTABLE => [
+                'potential_client_name',
+                'potential_client_mobile_number',
+                'potential_client_email',
+                'contact_by',
+                'expectation',
+                'next_date',
+                'contact_response',
+                'state',
+                'district',
+                'potential_client_address',
+            ],
+
+        ],
+
     ],
 
-	// Crons
-	"crons" => [
-        'lead-followupreminders' => 'Lead Upcoming Followups'
+    /*
+    |--------------------------------------------------------------------------
+    | Crons
+    |--------------------------------------------------------------------------
+    */
+    "crons" => [
+        'lead-followupreminders' => 'Lead Upcoming Followups',
     ],
 
-	// Statuses
+    /*
+    |--------------------------------------------------------------------------
+    | Statuses
+    |--------------------------------------------------------------------------
+    */
     "statuses" => [
-        "1"  => "PROGRESS",
+        "1" => "PROGRESS",
         "12" => "CLOSED",
         "19" => "LOST",
-        "2"  => "DELETED",
-        "11" => "NC"
+        "2" => "DELETED",
+        "11" => "NC",
     ],
 
-	/* =========================
-     | CUSTOM SPECIFIC FOR MODULE
-     ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Module Configurations
+    |--------------------------------------------------------------------------
+    */
 
-	// Lead contact after
+    // Lead contact intervals
     "lead-contact-after" => [
-        "1 days"=>"1 Day",
-        "4 days"=>"4 Days",
-        "7 days"=>"7 Days",
-        "15 days"=>"15 Days",
-        "30 days"=>"1 Month",
-        "60 days"=>"2 Months",
-        "90 days"=>"3 Months",
-        "180 days"=>"6 Months",
-        "365 days"=>"1 Year"
+        "1 days" => "1 Day",
+        "4 days" => "4 Days",
+        "7 days" => "7 Days",
+        "15 days" => "15 Days",
+        "30 days" => "1 Month",
+        "60 days" => "2 Months",
+        "90 days" => "3 Months",
+        "180 days" => "6 Months",
+        "365 days" => "1 Year",
     ],
 
-	'report-types' => [
-		'general' 				=> 'General',
-		'daily' 				=> 'Daily',
-		'weekly' 				=> 'Weekly',
-		'monthly' 				=> 'Monthly',
-		'followups' 			=> 'Follow-ups',
-		'overdue-followups' 	=> 'Overdue Follow-ups',
-		'no-followup' 			=> 'No Follow-up',
-		'stage-wise' 			=> 'Stage-wise',
-		'conversion' 			=> 'Conversion',
-		'performance' 			=> 'Performance',
-		'assigned' 				=> 'Assigned Leads',
-		'sources' 				=> 'Lead Sources',
-		'business-types' 		=> 'Business Types',
-		'location-wise' 		=> 'Location-wise',
-		'aging' 				=> 'Lead Aging',
-		'funnel' 				=> 'Lead Funnel',
-		'trends' 				=> 'Trends',
-		'analysis' 				=> 'Analysis',
-	],
+    /*
+    |--------------------------------------------------------------------------
+    | Report Types
+    |--------------------------------------------------------------------------
+    */
+    'report-types' => [
+        'general' => 'General',
+        'daily' => 'Daily',
+        'weekly' => 'Weekly',
+        'monthly' => 'Monthly',
+        'followups' => 'Follow-ups',
+        'overdue-followups' => 'Overdue Follow-ups',
+        'no-followup' => 'No Follow-up',
+        'stage-wise' => 'Stage-wise',
+        'conversion' => 'Conversion',
+        'performance' => 'Performance',
+        'assigned' => 'Assigned Leads',
+        'sources' => 'Lead Sources',
+        'business-types' => 'Business Types',
+        'location-wise' => 'Location-wise',
+        'aging' => 'Lead Aging',
+        'funnel' => 'Lead Funnel',
+        'trends' => 'Trends',
+        'analysis' => 'Analysis',
+    ],
 
-	'analysis-group-by' => [
-		'state' 				=> 'State',
-		'district' 				=> 'District',
-		'business_type' 		=> 'Business Type',
-		'source_id' 			=> 'Lead Source',
-		'stage_id' 				=> 'Lead Stage',
-		'assigned_to' 			=> 'Assigned To',
-		'generated_by' 			=> 'Generated By',
-		'mode' 					=> 'Lead Mode',
-		'status' 				=> 'Status',
-		'lead_date' 			=> 'Lead Date',
-		'next_followup_date' 	=> 'Next Follow-up Date',
-		'is_existing_client' 	=> 'Existing Client',
-	]
+    /*
+    |--------------------------------------------------------------------------
+    | Analysis Group By
+    |--------------------------------------------------------------------------
+    */
+    'analysis-group-by' => [
+        'state' => 'State',
+        'district' => 'District',
+        'business_type' => 'Business Type',
+        'source_id' => 'Lead Source',
+        'stage_id' => 'Lead Stage',
+        'assigned_to' => 'Assigned To',
+        'generated_by' => 'Generated By',
+        'mode' => 'Lead Mode',
+        'status' => 'Status',
+        'lead_date' => 'Lead Date',
+        'next_followup_date' => 'Next Follow-up Date',
+        'is_existing_client' => 'Existing Client',
+    ],
 
 ];

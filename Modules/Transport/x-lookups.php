@@ -81,8 +81,8 @@ return [
                         'list'				=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
                         'detail'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
                         'report'			=>	['transport_vehicle_id', 'route_name', 'registration_number', 'driver_name', 'remark','tags', 'status'],
-                        'sample_export'		=>	['sno', 'route_name', 'registration_number', 'driver_name', 'remark'],
-                        'selected_columns'	=>	['route_name', 'registration_number', 'driver_name', 'remark']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'route_name', 'registration_number', 'driver_name', 'remark'],
+                        Actions::SELECTABLE	=>	['route_name', 'registration_number', 'driver_name', 'remark']
     ],
     'transport.list-columns' => [
                         'route_name',

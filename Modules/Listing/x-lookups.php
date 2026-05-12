@@ -102,8 +102,8 @@ return [
 					'list'				=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
 					'detail'			=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
 					'report'			=>	['date', 'listing_id', 'listing_name', 'category', 'phone_number', 'email', 'locality', 'place', 'state', 'info','tags', 'status'],
-					'sample_export'		=>	[],
-					'selected_columns'	=>	[]
+					Actions::SAMPLE_EXPORT		=>	[],
+					Actions::SELECTABLE	=>	[]
     ],
 
 

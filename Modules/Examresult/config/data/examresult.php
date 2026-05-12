@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'examresult';
 
 return [
@@ -31,8 +38,8 @@ return [
         'list'    => ['exam_id','exam_name','exam_class','exam_section','exam_session','tags','status'],
         'detail'  => ['exam_id','exam_name','exam_class','exam_section','exam_session','tags','status'],
         'report'  => ['exam_id','exam_name','exam_class','exam_section','exam_session','tags','status'],
-        'sample_export' => ['sno','exam_name','exam_class','exam_section','exam_session'],
-        'selected_columns' => ['exam_name','exam_class','exam_section','exam_session']
+        Actions::SAMPLE_EXPORT => ['sno','exam_name','exam_class','exam_section','exam_session'],
+        Actions::SELECTABLE => ['exam_name','exam_class','exam_section','exam_session']
     ],
 
     /* =========================

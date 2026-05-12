@@ -128,8 +128,8 @@ return [
                         'list'					=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
                         'detail'				=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
                         'report'				=>	['cash_id', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info','tags', 'status'],
-                        'sample_export'			=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
-                        'selected_columns'		=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
+                        Actions::SAMPLE_EXPORT			=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
+                        Actions::SELECTABLE		=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
                         'online-payment-list'	=>	['cash_id', 'date', 'online_payee_name', 'paid', 'payment_transaction_id', 'payment_confirmation', 'verified_by', 'status'],
     ],
     "cashflow.permission-allowed-filters-portal" => [

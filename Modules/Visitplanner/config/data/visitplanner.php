@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'visitplanner';
 
 return [
@@ -62,8 +69,8 @@ return [
         'list'    => ['ID','visitplanner_id','visit_company','visit_by_name','month','week','created_by_name','tags','status'],
         'detail'  => ['ID','visitplanner_id','visit_company','visit_by_name','month','week','created_by_name','tags','status'],
         'report'  => ['ID','visitplanner_id','visit_company','visit_by_name','month','week','created_by_name','tags','status'],
-        'sample_export' => ['sno','visit_company','visit_meetingwith','visit_mobile_number','visit_email','session','month','week'],
-        'selected_columns' => ['visitplanner_id','visit_company','visit_by_name','session','month','week','created_by_name'],
+        Actions::SAMPLE_EXPORT => ['sno','visit_company','visit_meetingwith','visit_mobile_number','visit_email','session','month','week'],
+        Actions::SELECTABLE => ['visitplanner_id','visit_company','visit_by_name','session','month','week','created_by_name'],
     ],
 
     /* =========================

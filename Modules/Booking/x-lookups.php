@@ -235,8 +235,8 @@ return [
                         'list'				=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
                         'detail'			=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
                         'report'			=>	['booking_id', 'occupant_name', 'booking_type', 'slot_type', 'slot_name', 'checkin_datetime', 'expected_checkout_datetime', 'checkout_datetime'],
-                        'sample_export'		=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
-                        'selected_columns'	=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'date', 'payee_name', 'paid', 'cash_type', 'additional_info', 'status'],
+                        Actions::SELECTABLE	=>	['date', 'payee_name', 'paid', 'cash_type', 'cash_type_remark', 'additional_info'],
                         'building-entry'	=>	['building_id', 'building_name', 'building_incharge', 'building_incharge_phone', 'building_description', 'building_employees', 'options'],
     ],
     "booking.permission-allowed-filters-portal" => [

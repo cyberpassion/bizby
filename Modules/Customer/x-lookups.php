@@ -96,8 +96,8 @@ return [
                         'list'				=>	['customer_id', 'customer_name', 'phone_number', 'remark', 'additional_information', 'additional_contacts', 'next_date','status'],
                         'detail'				=>	['customer_id', 'customer_name', 'phone_number', 'remark', 'additional_information', 'additional_contacts', 'next_date','status'],
                         'report'				=>	['customer_id', 'customer_name', 'phone_number', 'remark', 'additional_information', 'additional_contacts', 'next_date','status'],
-                        'sample_export'		=>	['sno', 'customer_name', 'phone_number', 'email_id', 'remark', 'next_date'],
-                        'selected_columns'	=>	['customer_name', 'phone_number','email_id', 'remark', 'additional_information', 'additional_contacts', 'next_date']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'customer_name', 'phone_number', 'email_id', 'remark', 'next_date'],
+                        Actions::SELECTABLE	=>	['customer_name', 'phone_number','email_id', 'remark', 'additional_information', 'additional_contacts', 'next_date']
 	],
     "customer.permission-allowed-filters-portal" => [
                         "profile"	=>	[[ "customer_id"	=>	'{$login_id}' ]],

@@ -109,8 +109,8 @@ return [
                         'list'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
                         'detail'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
                         'report'				=>	['meeting_id', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time'],
-                        'selected_columns'	=>	['requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time'],
+                        Actions::SELECTABLE	=>	['requested_by_name', 'phone_number', 'meeting_with', 'meeting_date', 'meeting_time', 'meeting_exit_time']
      ],
      'meetingmanager.documents' => [
                         'meetingmanager-slip'		=>	'Meeting Slip'

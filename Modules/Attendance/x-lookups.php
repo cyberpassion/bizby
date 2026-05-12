@@ -97,8 +97,8 @@ return [
         'list'             => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
         'detail'           => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
         'report'           => ['attendance_id', 'date','absentee_name','absent_date','absent_type','tags', 'status'],
-        'sample_export'    => ['sno', 'absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status'],
-        'selected_columns' => ['absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status']
+        Actions::SAMPLE_EXPORT    => ['sno', 'absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status'],
+        Actions::SELECTABLE => ['absentee_name', 'absentee_type', 'absent_all_dates', 'absentee_duration', 'absentee_reason', 'status']
     ],
     "attendance.permission-allowed-filters-portal" => [
         "entry" => [[

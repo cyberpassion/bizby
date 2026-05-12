@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'leaveapplication';
 
 return [
@@ -57,8 +64,8 @@ return [
         'list'   => ['leaveapplication_id','date','applicant_name','leave_all_dats','leave_type','tags','status'],
         'detail' => ['leaveapplication_id','date','applicant_name','leave_all_dats','leave_type','tags','status'],
         'report' => ['leaveapplication_id','date','applicant_name','leave_all_dats','leave_type','tags','status'],
-        'sample_export' => ['sno','applicant_name','applicant_type','leave_all_dats','leave_duration','leave_reason','status'],
-        'selected_columns' => ['applicant_name','applicant_type','leave_all_dats','leave_duration','leave_reason','status']
+        Actions::SAMPLE_EXPORT => ['sno','applicant_name','applicant_type','leave_all_dats','leave_duration','leave_reason','status'],
+        Actions::SELECTABLE => ['applicant_name','applicant_type','leave_all_dats','leave_duration','leave_reason','status']
     ],
 
     /* =========================

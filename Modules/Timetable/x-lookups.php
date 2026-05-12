@@ -75,8 +75,8 @@ return [
 					'list'				=>	['timetable_id', 'session', 'recipient', 'months', 'subjects_duration','tags', 'status'],
 					'detail'			=>	['timetable_id', 'session', 'recipient', 'months', 'subjects_duration','tags', 'status'],
 					'report'			=>	['timetable_id', 'session', 'recipient', 'months', 'subjects_duration','tags', 'status'],
-					'sample_export'		=>	['sno', 'timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status'],
-					'selected_columns'	=>	['timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status']
+					Actions::SAMPLE_EXPORT		=>	['sno', 'timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status'],
+					Actions::SELECTABLE	=>	['timetable_id', 'recipient', 'session', 'months', 'subjects_duration', 'status']
      ],
 
 

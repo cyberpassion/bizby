@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Product\Support\Res;
 use Modules\Product\Support\Actions;
@@ -88,32 +89,34 @@ return [
     */
     'single-actions' => [
 
-        Actions::LIST => [
+		KeyName::make(Res::PRODUCTS) => [
+	        Actions::LIST => [
 
-			[
-                'title'      => 'View Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'detail',
-            ],
+				[
+    	            'title'      => 'View Details',
+        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'detail',
+	            ],
 
-            [
-                'title'      => 'Update',
-                'href'       => UrlPath::makeUpdate($pg, '{id}'),
-                'permission' => Permission::update(Res::PRODUCTS),
-                'action'     => 'update',
-            ],
+	            [
+    	            'title'      => 'Update',
+        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	    'permission' => Permission::update(Res::PRODUCTS),
+                	'action'     => 'update',
+	            ],
 
-            [
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($pg, '{id}'),
-                'permission' => Permission::delete(Res::PRODUCTS),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
+	            [
+    	            'title'      => 'Delete',
+        	        'href'       => UrlPath::makeDelete($pg, '{id}'),
+            	    'permission' => Permission::delete(Res::PRODUCTS),
+                	'action'     => 'delete',
+	                'method'     => 'DELETE',
+    	            'variant'    => 'danger',
+        	    ],
 
-        ]
+        	]
+		]
 
     ],
 
@@ -124,25 +127,27 @@ return [
     */
     'filters' => [
 
-        Actions::LIST => [
+		KeyName::make(Res::PRODUCTS) => [
+	        Actions::LIST => [
 
-            [
-                'type'        => 'select',
-                'name'        => 'brand',
-                'placeholder' => 'Brand',
-                'col'         => 3,
-                'dataKey'     => 'product.brand-names',
-            ],
+	            [
+    	            'type'        => 'select',
+        	        'name'        => 'brand',
+            	    'placeholder' => 'Brand',
+                	'col'         => 3,
+	                'dataKey'     => 'product.brand-names',
+    	        ],
 
-            [
-                'type'        => 'select',
-                'name'        => 'availability',
-                'placeholder' => 'Availability',
-                'col'         => 3,
-                'dataKey'     => 'product.availability-statuses',
-            ],
+	            [
+     	           'type'        => 'select',
+        	        'name'        => 'availability',
+            	    'placeholder' => 'Availability',
+                	'col'         => 3,
+	                'dataKey'     => 'product.availability-statuses',
+    	        ],
 
-        ]
+        	]
+		]
 
     ],
 

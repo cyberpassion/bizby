@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Inventory\Support\Res;
 use Modules\Inventory\Support\Actions;
@@ -69,6 +70,7 @@ return [
     */
     'single-actions' => [
 
+		KeyName::make(Res::INVENTORIES) => [
         Actions::LIST => [
 
             [
@@ -101,6 +103,7 @@ return [
                 'variant'    => 'danger',
             ],
         ]
+		]
 
     ],
 
@@ -111,22 +114,24 @@ return [
     */
     'filters' => [
 
-        Actions::LIST => [
-            [
-                'type'        => 'select',
-                'name'        => 'product_id',
-                'placeholder' => 'Product',
-                'col'         => 3,
-                'dataKey'     => 'products.list',
-            ],
-			[
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'inventory.statuses',
-            ],
-        ]
+		KeyName::make(Res::INVENTORIES) => [
+	        Actions::LIST => [
+    	        [
+        	        'type'        => 'select',
+            	    'name'        => 'product_id',
+	                'placeholder' => 'Product',
+    	            'col'         => 3,
+        	        'dataKey'     => 'products.list',
+            	],
+				[
+    	            'type'        => 'select',
+        	        'name'        => 'status',
+            	    'placeholder' => 'Status',
+                	'col'         => 3,
+                	'dataKey'     => 'inventory.statuses',
+            	],
+        	]
+		]
 
     ],
 

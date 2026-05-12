@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'service';
 
 return [

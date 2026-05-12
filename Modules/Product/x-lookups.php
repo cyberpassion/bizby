@@ -124,8 +124,8 @@ return [
                         'list'				=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
                         'detail'			=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
                         'report'			=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability','tags', 'status'],
-                        'sample_export'		=>	['sno', 'name', 'brand','sale_price'],
-                        'selected_columns'	=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability', 'status']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'name', 'brand','sale_price'],
+                        Actions::SELECTABLE	=>	['product_id', 'name', 'product_type', 'brand', 'total_quantity', 'sold_quantity', 'available_quantity', 'availability', 'status']
     ],
     'stock.statuses' => [
                         'in-stock'			=>	'IN STOCK',

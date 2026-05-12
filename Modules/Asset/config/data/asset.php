@@ -1,194 +1,263 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Asset\Support\Res;
+use Modules\Asset\Support\Actions;
+
 $pg = 'asset';
 
 return [
 
-	// Bulk Operations
+    /*
+    |--------------------------------------------------------------------------
+    | Bulk Operations
+    |--------------------------------------------------------------------------
+    */
     'bulk-operations' => [
         'document:asset-slip' => 'Print Asset Slip',
-        'send:sms'                   => 'Send Asset SMS',
-        'send:email'                 => 'Send Asset Email',
-        'op:remove'                  => 'Delete Asset',
-        'op:restore'                 => 'Restore Asset',
+        'send:sms' => 'Send Asset SMS',
+        'send:email' => 'Send Asset Email',
+        'op:remove' => 'Delete Asset',
+        'op:restore' => 'Restore Asset',
     ],
 
-	// Default Columns
+    /*
+    |--------------------------------------------------------------------------
+    | Default Columns
+    |--------------------------------------------------------------------------
+    */
     'columns' => [
 
-    /* =========================================================
-     | LIST VIEW (Fast scanning, operational)
-     ========================================================= */
+        KeyName::make(Res::ASSETS) => [
 
-    'list' => [
-		'id'               => 'ID',
-    'asset_code'       => 'Code',
-	'name'             => 'Name',
-	'type_label'	   => 'Type',
-	'center_name'  	   => 'Center',
-    'status_label'     => 'Status',
-	],
+            /*
+            |--------------------------------------------------------------------------
+            | List View
+            |--------------------------------------------------------------------------
+            */
+            Actions::LIST => [
+                'id' => 'ID',
+                'asset_code' => 'Code',
+                'name' => 'Name',
+                'type_label' => 'Type',
+                'center_name' => 'Center',
+                'status_label' => 'Status',
+            ],
 
-    /* =========================================================
-     | REPORT VIEW (Business intelligence)
-     ========================================================= */
+            /*
+            |--------------------------------------------------------------------------
+            | Report View
+            |--------------------------------------------------------------------------
+            */
+            Actions::REPORT => [
+                'id' => 'ID',
+                'asset_code' => 'Code',
+                'center_name' => 'Center',
+                'type_label' => 'Type',
+                'name' => 'Name',
+                'serial_number' => 'Serial Number',
+                'purchase_date' => 'Purchase Date',
+                'purchase_cost' => 'Purchase Cost',
+                'status_label' => 'Status',
+            ],
 
-    'report' => [
-    'id'               => 'ID',
-    'asset_code'       => 'Code',
-	'center_name'  	   => 'Center',
-	'type_label'	   => 'Type',
-    'name'             => 'Name',
-    'serial_number'    => 'Serial Number',
-    'purchase_date'    => 'Purchase Date',
-	'purchase_cost'    => 'Purchase Cost',
-    'status_label'     => 'Status',
-],
+            /*
+            |--------------------------------------------------------------------------
+            | Detail View
+            |--------------------------------------------------------------------------
+            */
+            Actions::DETAIL => [
 
-    /* =========================================================
-     | DETAIL VIEW (Maximum context)
-     ========================================================= */
+                /*
+                |--------------------------------------------------------------------------
+                | Core
+                |--------------------------------------------------------------------------
+                */
+                'id' => 'ID',
+                'center_name' => 'Center',
+                'asset_code' => 'Code',
+                'name' => 'Name',
+                'type' => 'Type',
 
-    'detail' => [
+                /*
+                |--------------------------------------------------------------------------
+                | Identification
+                |--------------------------------------------------------------------------
+                */
+                'serial_number' => 'Serial Number',
 
-    /* =========================
-     | CORE
-     ========================= */
-    'id'               => 'ID',
-    'center_name'  => 'Center',
-    'asset_code'       => 'Code',
-    'name'             => 'Name',
-    'type'             => 'Type',
+                /*
+                |--------------------------------------------------------------------------
+                | Purchase
+                |--------------------------------------------------------------------------
+                */
+                'purchase_date' => 'Purchase Date',
+                'purchase_cost' => 'Purchase Cost',
+                'vendor' => 'Vendor',
+                'vendor_label' => 'Vendor Name',
 
-    /* =========================
-     | IDENTIFICATION
-     ========================= */
-    'serial_number'    => 'Serial Number',
+                /*
+                |--------------------------------------------------------------------------
+                | Assignment
+                |--------------------------------------------------------------------------
+                */
+                'center_id' => 'Center ID',
+                'center_name' => 'Center',
+                'assigned_to' => 'Assigned To',
+                'assigned_to_label' => 'Assigned To Name',
 
-    /* =========================
-     | PURCHASE
-     ========================= */
-    'purchase_date'    => 'Purchase Date',
-    'purchase_cost'    => 'Purchase Cost',
-    'vendor'           => 'Vendor',
-    'vendor_label'     => 'Vendor Name',
+                /*
+                |--------------------------------------------------------------------------
+                | Service / Maintenance
+                |--------------------------------------------------------------------------
+                */
+                'last_service_date' => 'Last Service Date',
+                'next_service_date' => 'Next Service Date',
 
-    /* =========================
-     | ASSIGNMENT
-     ========================= */
-    'center_id'        => 'Center ID',
-    'center_name'  => 'Center',
-    'assigned_to'      => 'Assigned To',
-    'assigned_to_label'=> 'Assigned To Name',
+                /*
+                |--------------------------------------------------------------------------
+                | Lifecycle
+                |--------------------------------------------------------------------------
+                */
+                'warranty_expiry' => 'Warranty Expiry',
+                'useful_life_months' => 'Useful Life (Months)',
 
-    /* =========================
-     | SERVICE / MAINTENANCE
-     ========================= */
-    'last_service_date'=> 'Last Service Date',
-    'next_service_date'=> 'Next Service Date',
+                /*
+                |--------------------------------------------------------------------------
+                | Status
+                |--------------------------------------------------------------------------
+                */
+                'status_label' => 'Status',
 
-    /* =========================
-     | LIFECYCLE
-     ========================= */
-    'warranty_expiry'  => 'Warranty Expiry',
-    'useful_life_months'=> 'Useful Life (Months)',
+                /*
+                |--------------------------------------------------------------------------
+                | Extra
+                |--------------------------------------------------------------------------
+                */
+                'notes' => 'Notes',
 
-    /* =========================
-     | STATUS
-     ========================= */
-    'status_label'     => 'Status',
+                /*
+                |--------------------------------------------------------------------------
+                | System
+                |--------------------------------------------------------------------------
+                */
+                'created_at' => 'Created At',
+                'updated_at' => 'Updated At',
+            ],
 
-    /* =========================
-     | EXTRA
-     ========================= */
-    'notes'            => 'Notes',
+            /*
+            |--------------------------------------------------------------------------
+            | Sample Export
+            |--------------------------------------------------------------------------
+            */
+            Actions::SAMPLE_EXPORT => [
+                'id',
+                'asset_code',
+                'name',
+                'serial_number',
+                'purchase_date',
+                'status_label',
+            ],
 
-    /* =========================
-     | SYSTEM
-     ========================= */
-    'created_at'       => 'Created At',
-    'updated_at'       => 'Updated At',
-],
+            /*
+            |--------------------------------------------------------------------------
+            | User Selectable Columns
+            |--------------------------------------------------------------------------
+            */
+            Actions::SELECTABLE => [
+                'id',
+                'asset_code',
+                'name',
+                'serial_number',
+                'purchase_date',
+                'status_label',
+            ],
 
-    /* =========================================================
-     | SAMPLE EXPORT (Excel / CSV safe)
-     ========================================================= */
+        ],
 
-    'sample_export' => [
-        'id',
-        'asset_code',
-		'name',
-		'serial_number',
-		'purchase_date',
-		'status_label'
     ],
 
-    /* =========================================================
-     | USER SELECTABLE COLUMNS
-     ========================================================= */
-
-    'selectable' => [
-        'id',
-        'asset_code',
-		'name',
-		'serial_number',
-		'purchase_date',
-		'status_label'
-    ],
-],
-
-    // Cron Jobs / Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Cron Jobs
+    |--------------------------------------------------------------------------
+    */
     'crons' => [
         'asset-visitreminder' => 'Asset Visit Reminder',
     ],
 
-	// Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Documents
+    |--------------------------------------------------------------------------
+    */
     'documents' => [
         'detail' => 'Asset Detail',
-        'asset-slip' => 'Asset Slip'
+        'asset-slip' => 'Asset Slip',
     ],
 
-	// Status
+    /*
+    |--------------------------------------------------------------------------
+    | Statuses
+    |--------------------------------------------------------------------------
+    */
     'statuses' => [
-	    '1' => 'Active',
-    	'2' => 'In Maintenance',
-    	'3' => 'Inactive',
-    	'4' => 'Disposed',
-    	'5' => 'Deleted'
-	],
+        '1' => 'Active',
+        '2' => 'In Maintenance',
+        '3' => 'Inactive',
+        '4' => 'Disposed',
+        '5' => 'Deleted',
+    ],
 
-	// Uploads
+    /*
+    |--------------------------------------------------------------------------
+    | Uploads
+    |--------------------------------------------------------------------------
+    */
     'uploads' => [
-		'image' => 'Asset Image',
-	    'purchase_invoice' => 'Purchase Invoice',
-    	'warranty_certificate' => 'Warranty Certificate',
-    	'asset_registration_document' => 'Asset Registration Document',
-	    'insurance_papers' => 'Insurance Papers',
-    	'maintenance_records' => 'Maintenance Records',
-    	'service_reports' => 'Service Reports',
-    	'calibration_certificate' => 'Calibration Certificate (for equipment)',
-    	'qr_barcode_document' => 'QR Code / Barcode Document',
-	],
+        'image' => 'Asset Image',
+        'purchase_invoice' => 'Purchase Invoice',
+        'warranty_certificate' => 'Warranty Certificate',
+        'asset_registration_document' => 'Asset Registration Document',
+        'insurance_papers' => 'Insurance Papers',
+        'maintenance_records' => 'Maintenance Records',
+        'service_reports' => 'Service Reports',
+        'calibration_certificate' => 'Calibration Certificate (for equipment)',
+        'qr_barcode_document' => 'QR Code / Barcode Document',
+    ],
 
-	/* =========================
-     | CUSTOM SPECIFIC FOR MODULE
-     ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Specific For Module
+    |--------------------------------------------------------------------------
+    */
 
-	// Default Intervals
-	'default-intervals' => [
-        '5'  => '5 Minutes',
+    /*
+    |--------------------------------------------------------------------------
+    | Default Intervals
+    |--------------------------------------------------------------------------
+    */
+    'default-intervals' => [
+        '5' => '5 Minutes',
         '10' => '10 Minutes',
         '15' => '15 Minutes',
         '20' => '20 Minutes',
         '30' => '30 Minutes',
     ],
 
-	// Next Days
+    /*
+    |--------------------------------------------------------------------------
+    | Next Days
+    |--------------------------------------------------------------------------
+    */
     'next-days' => [
-        '3 d'  => '3 Days',
-        '4 d'  => '4 Days',
-        '5 d'  => '5 Days',
-        '6 d'  => '6 Days',
-        '7 d'  => '7 Days',
+        '3 d' => '3 Days',
+        '4 d' => '4 Days',
+        '5 d' => '5 Days',
+        '6 d' => '6 Days',
+        '7 d' => '7 Days',
         '10 d' => '10 Days',
         '12 d' => '12 Days',
         '15 d' => '15 Days',

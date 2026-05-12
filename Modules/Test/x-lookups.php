@@ -109,8 +109,8 @@ return [
                         'list'				=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
                         'detail'			=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
                         'report'			=>	['test_id', 'package_name', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status', 'all_recipients', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status'],
-                        'selected_columns'	=>	['test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status'],
+                        Actions::SELECTABLE	=>	['test_name', 'test_date', 'start_time', 'end_time', 'total_time', 'question_count', 'language_question_status']
     ],
     'test.documents' => ['question-paper'	=> 'Question Paper'],
     'test.list-columns' => [

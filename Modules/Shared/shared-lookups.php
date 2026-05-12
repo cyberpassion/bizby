@@ -300,8 +300,8 @@ return [
         'list'          => ['user_id', 'username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'tags', 'status'],
         'detail'        => ['user_id', 'username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'tags', 'status'],
         'report'        => ['user_id', 'username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'tags', 'status'],
-        'sample_export' => ['sno', 'username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status'],
-        'selected_columns' => ['username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status']
+        Actions::SAMPLE_EXPORT => ['sno', 'username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status'],
+        Actions::SELECTABLE => ['username', 'email_id', 'phone_number', 'auth_level', 'privileges', 'status']
     ],
 
      // ===================================================================
@@ -358,8 +358,8 @@ return [
         'list'          => ['term_id', 'term_name', 'type', 'tags'],
         'detail'        => ['term_id', 'term_name', 'type', 'tags'],
         'report'        => ['term_id', 'term_name', 'type', 'tags'],
-        'sample_export' => ['term_name', 'type', 'status'],
-        'selected_columns' => ['date', 'term_name', 'type']
+        Actions::SAMPLE_EXPORT => ['term_name', 'type', 'status'],
+        Actions::SELECTABLE => ['date', 'term_name', 'type']
     ],
 
     // ===================================================================

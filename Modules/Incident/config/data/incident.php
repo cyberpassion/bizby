@@ -1,176 +1,264 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Incident\Support\Res;
+use Modules\Incident\Support\Actions;
+
 $pg = 'incident';
 
 return [
 
-	// Bulk Operations
+    /*
+    |--------------------------------------------------------------------------
+    | Bulk Operations
+    |--------------------------------------------------------------------------
+    */
     'bulk-operations' => [
-        'document:incident-slip' 	 => 'Print Incident Slip',
-        'send:sms'                   => 'Send Incident SMS',
-        'send:email'                 => 'Send Incident Email',
-        'op:remove'                  => 'Delete Incident',
-        'op:restore'                 => 'Restore Incident',
+        'document:incident-slip' => 'Print Incident Slip',
+        'send:sms' => 'Send Incident SMS',
+        'send:email' => 'Send Incident Email',
+        'op:remove' => 'Delete Incident',
+        'op:restore' => 'Restore Incident',
     ],
 
-	// Default Columns
-'columns' => [
+    /*
+    |--------------------------------------------------------------------------
+    | Default Columns
+    |--------------------------------------------------------------------------
+    */
+    'columns' => [
 
-    /* =========================================================
-     | LIST VIEW
-     ========================================================= */
-    'list' => [
-    'incident_code'    => 'Incident Code',
-    'center_id_label'  => 'Center',
-    'type_label'       => 'Type',
-    'location'         => 'Location',
-    'severity_label'   => 'Severity',
-    'incident_date'    => 'Incident Date',
-    'incident_time'    => 'Incident Time',
-    'status_label'     => 'Status',
-],
+        KeyName::make(Res::INCIDENTS) => [
 
-    /* =========================================================
-     | REPORT VIEW
-     ========================================================= */
-    'report' => [
-    'incident_code'    => 'Incident Code',
-    'center_id_label'  => 'Center',
-    'type_label'       => 'Type',
-    'location'         => 'Location',
-    'severity_label'   => 'Severity',
-    'incident_date'    => 'Incident Date',
-    'incident_time'    => 'Incident Time',
-    'status_label'     => 'Status',
-],
+            /*
+            |--------------------------------------------------------------------------
+            | List View
+            |--------------------------------------------------------------------------
+            */
+            Actions::LIST => [
+                'incident_code' => 'Incident Code',
+                'center_id_label' => 'Center',
+                'type_label' => 'Type',
+                'location' => 'Location',
+                'severity_label' => 'Severity',
+                'incident_date' => 'Incident Date',
+                'incident_time' => 'Incident Time',
+                'status_label' => 'Status',
+            ],
 
-    /* =========================================================
-     | DETAIL VIEW
-     ========================================================= */
-    'detail' => [
+            /*
+            |--------------------------------------------------------------------------
+            | Report View
+            |--------------------------------------------------------------------------
+            */
+            Actions::REPORT => [
+                'incident_code' => 'Incident Code',
+                'center_id_label' => 'Center',
+                'type_label' => 'Type',
+                'location' => 'Location',
+                'severity_label' => 'Severity',
+                'incident_date' => 'Incident Date',
+                'incident_time' => 'Incident Time',
+                'status_label' => 'Status',
+            ],
 
-    /* CORE */
-    'id'               => 'ID',
-    'incident_code'    => 'Incident Code',
+            /*
+            |--------------------------------------------------------------------------
+            | Detail View
+            |--------------------------------------------------------------------------
+            */
+            Actions::DETAIL => [
 
-    /* RELATION */
-    'center_id'        => 'Center ID',
-    'center_id_label'  => 'Center',
+                /*
+                |--------------------------------------------------------------------------
+                | Core
+                |--------------------------------------------------------------------------
+                */
+                'id' => 'ID',
+                'incident_code' => 'Incident Code',
 
-    /* INCIDENT INFO */
-    'type_label'       => 'Type',
-    'location'         => 'Location',
-    'severity'         => 'Severity Code',
-    'severity_label'   => 'Severity',
+                /*
+                |--------------------------------------------------------------------------
+                | Relation
+                |--------------------------------------------------------------------------
+                */
+                'center_id' => 'Center ID',
+                'center_id_label' => 'Center',
 
-    /* TIMING */
-    'incident_date'    => 'Incident Date',
-    'incident_time'    => 'Incident Time',
+                /*
+                |--------------------------------------------------------------------------
+                | Incident Info
+                |--------------------------------------------------------------------------
+                */
+                'type_label' => 'Type',
+                'location' => 'Location',
+                'severity' => 'Severity Code',
+                'severity_label' => 'Severity',
 
-    /* REPORTING */
-    'reporter_name'         => 'Reported By',
+                /*
+                |--------------------------------------------------------------------------
+                | Timing
+                |--------------------------------------------------------------------------
+                */
+                'incident_date' => 'Incident Date',
+                'incident_time' => 'Incident Time',
 
-    /* STATUS */
-    'status_label'           => 'Status',
-    'status_label'     => 'Status',
+                /*
+                |--------------------------------------------------------------------------
+                | Reporting
+                |--------------------------------------------------------------------------
+                */
+                'reporter_name' => 'Reported By',
 
-    /* SYSTEM */
-    'created_at'       => 'Created At',
-    'updated_at'       => 'Updated At',
-],
+                /*
+                |--------------------------------------------------------------------------
+                | Status
+                |--------------------------------------------------------------------------
+                */
+                'status_label' => 'Status',
 
-    /* =========================================================
-     | EXPORT
-     ========================================================= */
-    'sample_export' => [
-        'incident_code',
-        'center_id_label',
-        'type',
-        'location',
-        'severity_label',
-        'incident_date',
-        'incident_time',
-        'status_label'
+                /*
+                |--------------------------------------------------------------------------
+                | System
+                |--------------------------------------------------------------------------
+                */
+                'created_at' => 'Created At',
+                'updated_at' => 'Updated At',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Sample Export
+            |--------------------------------------------------------------------------
+            */
+            Actions::SAMPLE_EXPORT => [
+                'incident_code',
+                'center_id_label',
+                'type',
+                'location',
+                'severity_label',
+                'incident_date',
+                'incident_time',
+                'status_label',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | User Selectable Columns
+            |--------------------------------------------------------------------------
+            */
+            Actions::SELECTABLE => [
+                'incident_code',
+                'center_id_label',
+                'type',
+                'severity_label',
+                'incident_date',
+                'status_label',
+            ],
+
+        ],
+
     ],
 
-    /* =========================================================
-     | SELECTABLE
-     ========================================================= */
-    'selectable' => [
-        'incident_code',
-        'center_id_label',
-        'type',
-        'severity_label',
-        'incident_date',
-        'status_label'
-    ],
-],
-
-    // Cron Jobs / Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Cron Jobs
+    |--------------------------------------------------------------------------
+    */
     'crons' => [
         'incident-visitreminder' => 'Incident Visit Reminder',
     ],
 
-	// Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Documents
+    |--------------------------------------------------------------------------
+    */
     'documents' => [
-        'incident-slip'		=> 'Incident Slip',
-		'incident-report'	=> 'Incident Report'
+        'incident-slip' => 'Incident Slip',
+        'incident-report' => 'Incident Report',
     ],
 
-	// Status
+    /*
+    |--------------------------------------------------------------------------
+    | Statuses
+    |--------------------------------------------------------------------------
+    */
     'statuses' => [
-	    '1' => 'Reported',
-    	'2' => 'Under Review',
-	    '3' => 'In Progress',
-    	'4' => 'Resolved',
-    	'5' => 'Closed',
-    	'6' => 'Rejected'
-	],
+        '1' => 'Reported',
+        '2' => 'Under Review',
+        '3' => 'In Progress',
+        '4' => 'Resolved',
+        '5' => 'Closed',
+        '6' => 'Rejected',
+    ],
 
-	// Uploads
+    /*
+    |--------------------------------------------------------------------------
+    | Uploads
+    |--------------------------------------------------------------------------
+    */
     'uploads' => [
-		'image' => 'Incident Image',
-	    'incident_report_form' => 'Incident Report Form',
-    	'fir_copy' => 'FIR Copy (if applicable)',
-    	'incident_media' => 'Photos / Videos of Incident',
-	    'damage_assessment_report' => 'Damage Assessment Report',
-    	'response_team_report' => 'Response Team Report',
-    	'insurance_claim_documents' => 'Insurance Claim Documents',
-	    'witness_statements' => 'Witness Statements',
-    	'investigation_report' => 'Investigation Report',
-    	'final_closure_report' => 'Final Closure Report',
-	],
+        'image' => 'Incident Image',
+        'incident_report_form' => 'Incident Report Form',
+        'fir_copy' => 'FIR Copy (if applicable)',
+        'incident_media' => 'Photos / Videos of Incident',
+        'damage_assessment_report' => 'Damage Assessment Report',
+        'response_team_report' => 'Response Team Report',
+        'insurance_claim_documents' => 'Insurance Claim Documents',
+        'witness_statements' => 'Witness Statements',
+        'investigation_report' => 'Investigation Report',
+        'final_closure_report' => 'Final Closure Report',
+    ],
 
-	/* =========================
-     | CUSTOM SPECIFIC FOR MODULE
-     ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Specific For Module
+    |--------------------------------------------------------------------------
+    */
 
-	// Default Intervals
-	'default-intervals' => [
-        '5'  => '5 Minutes',
+    /*
+    |--------------------------------------------------------------------------
+    | Default Intervals
+    |--------------------------------------------------------------------------
+    */
+    'default-intervals' => [
+        '5' => '5 Minutes',
         '10' => '10 Minutes',
         '15' => '15 Minutes',
         '20' => '20 Minutes',
         '30' => '30 Minutes',
     ],
 
-	// Severities
+    /*
+    |--------------------------------------------------------------------------
+    | Severities
+    |--------------------------------------------------------------------------
+    */
     'severities' => [
-        'low'       => 'Low',
-	    'medium'    => 'Medium',
-    	'high'      => 'High',
-    	'critical'  => 'Critical',
+        'low' => 'Low',
+        'medium' => 'Medium',
+        'high' => 'High',
+        'critical' => 'Critical',
     ],
 
-	'log_events' => [
-    	'acknowledged' => 'Acknowledged',
-    	'assigned'     => 'Assigned',
-    	'reassigned'   => 'Reassigned',
-    	'updated'      => 'Updated',
-    	'comment'      => 'Comment',
-    	'escalated'    => 'Escalated',
-    	'deescalated'  => 'De-escalated',
-    	'resolved'     => 'Resolved',
-    	'reopened'     => 'Reopened',
-	]
+    /*
+    |--------------------------------------------------------------------------
+    | Log Events
+    |--------------------------------------------------------------------------
+    */
+    'log_events' => [
+        'acknowledged' => 'Acknowledged',
+        'assigned' => 'Assigned',
+        'reassigned' => 'Reassigned',
+        'updated' => 'Updated',
+        'comment' => 'Comment',
+        'escalated' => 'Escalated',
+        'deescalated' => 'De-escalated',
+        'resolved' => 'Resolved',
+        'reopened' => 'Reopened',
+    ],
 
 ];

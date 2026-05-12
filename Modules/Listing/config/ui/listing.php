@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Listing\Support\Res;
 use Modules\Listing\Support\Actions;
@@ -57,36 +58,38 @@ return [
     */
     'single-actions' => [
 
-		Actions::LIST => [
-			[
-                'title'      => 'View Portal',
-                'href'       => UrlPath::makePortal($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'portal-link',
-            ],
+		KeyName::make(Res::LISTINGS) => [
+			Actions::LIST => [
+				[
+        	        'title'      => 'View Portal',
+            	    'href'       => UrlPath::makePortal($pg, '{id}'),
+                	'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'portal-link',
+	            ],
 
-	        [
-    	        'title'      => 'Update',
-        	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            	'permission' => Permission::update(Res::LISTINGS),
-            	'action'     => 'update',
-	        ],
+		        [
+    		        'title'      => 'Update',
+        		    'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            		'permission' => Permission::update(Res::LISTINGS),
+            		'action'     => 'update',
+		        ],
 
-			[
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::UPLOADS),
-                'action'     => 'upload',
-            ],
+				[
+    	            'title'      => 'Upload',
+        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
+            	    'permission' => Permission::create(Res::UPLOADS),
+                	'action'     => 'upload',
+	            ],
 
-	        [
-    	        'title'      => 'Delete',
-        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
-            	'permission' => Permission::delete(Res::LISTINGS),
-	            'action'     => 'delete',
-    	        'method'     => 'DELETE',
-        	    'variant'    => 'danger',
-        	]
+		        [
+    		        'title'      => 'Delete',
+        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+            		'permission' => Permission::delete(Res::LISTINGS),
+	            	'action'     => 'delete',
+    	        	'method'     => 'DELETE',
+        	    	'variant'    => 'danger',
+        		]
+			]
 		]
 
     ],
@@ -98,29 +101,31 @@ return [
     */
     'filters' => [
 
-        Actions::LIST	=>	[
-            [
-	    	    'type'        => 'select',
-    	    	'name'        => 'business_type',
-	        	'placeholder' => 'Business Type',
-		        'col'         => 3,
-    		    'dataKey'     => 'shared.business-types',
-		    ],
-			[
-                'type'        => 'select',
-                'name'        => 'state',
-                'placeholder' => 'State',
-                'col'         => 3,
-                'dataKey'     => 'shared.indian-states',
-            ],
-			[
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'listing.statuses',
-            ],
-        ]
+		KeyName::make(Res::LISTINGS) => [
+	        Actions::LIST	=>	[
+    	        [
+	    		    'type'        => 'select',
+    	    		'name'        => 'business_type',
+	        		'placeholder' => 'Business Type',
+			        'col'         => 3,
+    			    'dataKey'     => 'shared.business-types',
+			    ],
+				[
+            	    'type'        => 'select',
+                	'name'        => 'state',
+	                'placeholder' => 'State',
+    	            'col'         => 3,
+        	        'dataKey'     => 'shared.indian-states',
+            	],
+				[
+    	            'type'        => 'select',
+        	        'name'        => 'status',
+            	    'placeholder' => 'Status',
+                	'col'         => 3,
+                	'dataKey'     => 'listing.statuses',
+            	],
+        	]
+		]
 
     ],
 

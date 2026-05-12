@@ -91,8 +91,8 @@ return [
                         'list'				=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
                         'detail'			=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
                         'report'			=>	['survey_id', 'date', 'category', 'question', 'all_recipients', 'responses', 'added_by','tags', 'status'],
-                        'sample_export'		=>	['sno', 'category', 'question', 'recipient', 'responses', 'added_by'],
-                        'selected_columns'	=>	['category', 'question', 'recipient', 'responses', 'added_by']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'category', 'question', 'recipient', 'responses', 'added_by'],
+                        Actions::SELECTABLE	=>	['category', 'question', 'recipient', 'responses', 'added_by']
     ],
     'survey.permission-allowed-filters-portal' => [
                         "entry"		=>	[["recipient"	=>	'{$login_type}-{$byline}']],

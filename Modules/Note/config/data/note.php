@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Note\Support\Res;
+use Modules\Note\Support\Actions;
+
 $pg = 'note';
 
 return [
@@ -105,7 +112,7 @@ return [
         /* =========================================================
          | SAMPLE EXPORT
          ========================================================= */
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'subject',
             'type',
             'priority',
@@ -117,7 +124,7 @@ return [
         /* =========================================================
          | USER SELECTABLE COLUMNS
          ========================================================= */
-        'selectable' => [
+        Actions::SELECTABLE => [
             'subject',
             'type',
             'priority',

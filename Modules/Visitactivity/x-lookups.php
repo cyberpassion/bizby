@@ -108,13 +108,13 @@ return [
             'company_official_mobile_number','detailed_report',
             'next_action_plan','visit_status','tags','status',
         ],
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'sno','visit_date','visit_by_name',
             'visit_team_member_json','company_name',
             'company_official_mobile_number',
             'detailed_report','next_action_plan','visit_status',
         ],
-        'selected_columns' => [
+        Actions::SELECTABLE => [
             'visit_date','visit_by_name','visit_team_member_json',
             'company_name','company_official_mobile_number',
             'detailed_report','next_action_plan','visit_status',

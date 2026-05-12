@@ -107,8 +107,8 @@ return [
                         'list'				=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
                         'detail'			=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
                         'report'			=>	['event_id', 'event_name', 'event_description', 'event_on', 'event_participants','tags', 'status'],
-                        'sample_export'		=>	['sno', 'event_name', 'event_description', 'event_on', 'event_participants'],
-                        'selected_columns'	=>	['event_name', 'event_description', 'event_on', 'event_participants']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'event_name', 'event_description', 'event_on', 'event_participants'],
+                        Actions::SELECTABLE	=>	['event_name', 'event_description', 'event_on', 'event_participants']
     ],
     "eventmanager.permission-allowed-filters-portal" => [
                         "entry"		=>	[["participant"	=>	'{$login_type}-{$byline}']],

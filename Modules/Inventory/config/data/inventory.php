@@ -1,145 +1,225 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Inventory\Support\Res;
+use Modules\Inventory\Support\Actions;
+
 $pg = 'inventory';
 
 return [
 
-	// Bulk Operations
+    /*
+    |--------------------------------------------------------------------------
+    | Bulk Operations
+    |--------------------------------------------------------------------------
+    */
     'bulk-operations' => [
         'document:inventory-slip' => 'Print Inventory Slip',
-        'send:sms'                   => 'Send Inventory SMS',
-        'send:email'                 => 'Send Inventory Email',
-        'op:remove'                  => 'Delete Inventory',
-        'op:restore'                 => 'Restore Inventory',
+        'send:sms' => 'Send Inventory SMS',
+        'send:email' => 'Send Inventory Email',
+        'op:remove' => 'Delete Inventory',
+        'op:restore' => 'Restore Inventory',
     ],
 
-	// Default Columns
+    /*
+    |--------------------------------------------------------------------------
+    | Default Columns
+    |--------------------------------------------------------------------------
+    */
     'columns' => [
 
-    /* =========================================================
-     | LIST VIEW
-     ========================================================= */
-    'list' => [
-        'code'                => 'Code',
-        'product_id_label'    => 'Product',
-        'center_id_label'     => 'Center',
-        'minimum_threshold'   => 'Min Threshold',
-        'maximum_threshold'   => 'Max Threshold',
-        'current_stock'       => 'Current Stock',
-        'stock_status'        => 'Stock Status',
-        'status_label'        => 'Status',
+        KeyName::make(Res::INVENTORIES) => [
+
+            /*
+            |--------------------------------------------------------------------------
+            | List View
+            |--------------------------------------------------------------------------
+            */
+            Actions::LIST => [
+                'code' => 'Code',
+                'product_id_label' => 'Product',
+                'center_id_label' => 'Center',
+                'minimum_threshold' => 'Min Threshold',
+                'maximum_threshold' => 'Max Threshold',
+                'current_stock' => 'Current Stock',
+                'stock_status' => 'Stock Status',
+                'status_label' => 'Status',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Report View
+            |--------------------------------------------------------------------------
+            */
+            Actions::REPORT => [
+                'code' => 'Code',
+                'product_id_label' => 'Product',
+                'center_id_label' => 'Center',
+                'minimum_threshold' => 'Min Threshold',
+                'maximum_threshold' => 'Max Threshold',
+                'current_stock' => 'Current Stock',
+                'stock_status' => 'Stock Status',
+                'status_label' => 'Status',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Detail View
+            |--------------------------------------------------------------------------
+            */
+            Actions::DETAIL => [
+
+                /*
+                |--------------------------------------------------------------------------
+                | Core
+                |--------------------------------------------------------------------------
+                */
+                'id' => 'ID',
+                'code' => 'Code',
+
+                /*
+                |--------------------------------------------------------------------------
+                | Relation
+                |--------------------------------------------------------------------------
+                */
+                'product_id' => 'Product ID',
+                'product_id_label' => 'Product',
+                'center_id' => 'Center ID',
+                'center_id_label' => 'Center',
+
+                /*
+                |--------------------------------------------------------------------------
+                | Stock Rules
+                |--------------------------------------------------------------------------
+                */
+                'minimum_threshold' => 'Min Threshold',
+                'maximum_threshold' => 'Max Threshold',
+
+                /*
+                |--------------------------------------------------------------------------
+                | Stock
+                |--------------------------------------------------------------------------
+                */
+                'current_stock' => 'Current Stock',
+                'stock_status' => 'Stock Status',
+
+                /*
+                |--------------------------------------------------------------------------
+                | Status
+                |--------------------------------------------------------------------------
+                */
+                'status' => 'Status Value',
+                'status_label' => 'Status',
+
+                /*
+                |--------------------------------------------------------------------------
+                | System
+                |--------------------------------------------------------------------------
+                */
+                'created_at' => 'Created At',
+                'updated_at' => 'Updated At',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Sample Export
+            |--------------------------------------------------------------------------
+            */
+            Actions::SAMPLE_EXPORT => [
+                'code',
+                'product_id_label',
+                'center_id_label',
+                'minimum_threshold',
+                'maximum_threshold',
+                'current_stock',
+                'stock_status',
+                'status_label',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | User Selectable Columns
+            |--------------------------------------------------------------------------
+            */
+            Actions::SELECTABLE => [
+                'code',
+                'product_id_label',
+                'center_id_label',
+                'current_stock',
+                'stock_status',
+                'status_label',
+            ],
+
+        ],
+
     ],
 
-    /* =========================================================
-     | REPORT VIEW
-     ========================================================= */
-    'report' => [
-        'code'                => 'Code',
-        'product_id_label'    => 'Product',
-        'center_id_label'     => 'Center',
-        'minimum_threshold'   => 'Min Threshold',
-        'maximum_threshold'   => 'Max Threshold',
-        'current_stock'       => 'Current Stock',
-        'stock_status'        => 'Stock Status',
-        'status_label'        => 'Status',
-    ],
-
-    /* =========================================================
-     | DETAIL VIEW
-     ========================================================= */
-    'detail' => [
-
-        /* CORE */
-        'id'                  => 'ID',
-        'code'                => 'Code',
-
-        /* RELATION */
-        'product_id'          => 'Product ID',
-        'product_id_label'    => 'Product',
-        'center_id'           => 'Center ID',
-        'center_id_label'     => 'Center',
-
-        /* STOCK RULES */
-        'minimum_threshold'   => 'Min Threshold',
-        'maximum_threshold'   => 'Max Threshold',
-
-        /* STOCK */
-        'current_stock'       => 'Current Stock',
-        'stock_status'        => 'Stock Status',
-
-        /* STATUS */
-        'status'              => 'Status Value',
-        'status_label'        => 'Status',
-
-        /* SYSTEM */
-        'created_at'          => 'Created At',
-        'updated_at'          => 'Updated At',
-    ],
-
-    /* =========================================================
-     | EXPORT
-     ========================================================= */
-    'sample_export' => [
-        'code',
-        'product_id_label',
-        'center_id_label',
-        'minimum_threshold',
-        'maximum_threshold',
-        'current_stock',
-        'stock_status',
-        'status_label'
-    ],
-
-    /* =========================================================
-     | SELECTABLE
-     ========================================================= */
-    'selectable' => [
-        'code',
-        'product_id_label',
-        'center_id_label',
-        'current_stock',
-        'stock_status',
-        'status_label'
-    ],
-],
-
-    // Cron Jobs / Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Cron Jobs
+    |--------------------------------------------------------------------------
+    */
     'crons' => [
         'inventory-visitreminder' => 'Inventory Visit Reminder',
     ],
 
-	// Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Documents
+    |--------------------------------------------------------------------------
+    */
     'documents' => [
-        'inventory-slip' => 'Inventory Slip'
+        'inventory-slip' => 'Inventory Slip',
     ],
 
-	// Status
+    /*
+    |--------------------------------------------------------------------------
+    | Statuses
+    |--------------------------------------------------------------------------
+    */
     'statuses' => [
-	    '1' => 'Available',
-    	'2' => 'Reserved',
-	    '3' => 'Out of Stock',
-    	'4' => 'Damaged',
-    	'5' => 'Expired',
-    	'6' => 'Deleted'
-	],
+        '1' => 'Available',
+        '2' => 'Reserved',
+        '3' => 'Out of Stock',
+        '4' => 'Damaged',
+        '5' => 'Expired',
+        '6' => 'Deleted',
+    ],
 
-	// Uploads
+    /*
+    |--------------------------------------------------------------------------
+    | Uploads
+    |--------------------------------------------------------------------------
+    */
     'uploads' => [
         'image' => 'Image',
     ],
 
-	"transaction-types" => [
-	    "in"         => "Stock In",
-    	"out"        => "Stock Out",
-    	"adjustment" => "Adjustment",
-    	"transfer"   => "Transfer"
-	],
+    /*
+    |--------------------------------------------------------------------------
+    | Transaction Types
+    |--------------------------------------------------------------------------
+    */
+    'transaction-types' => [
+        'in' => 'Stock In',
+        'out' => 'Stock Out',
+        'adjustment' => 'Adjustment',
+        'transfer' => 'Transfer',
+    ],
 
-	"reason-types" => [
-	    "purchase" => "Purchase",
-    	"sale"     => "Sale",
-	    "opening"  => "Opening Stock",
-    	"manual"   => "Manual Entry",
-    	"damage"   => "Damage / Loss"
-	],
+    /*
+    |--------------------------------------------------------------------------
+    | Reason Types
+    |--------------------------------------------------------------------------
+    */
+    'reason-types' => [
+        'purchase' => 'Purchase',
+        'sale' => 'Sale',
+        'opening' => 'Opening Stock',
+        'manual' => 'Manual Entry',
+        'damage' => 'Damage / Loss',
+    ],
 
 ];

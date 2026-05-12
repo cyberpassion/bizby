@@ -141,8 +141,8 @@ return [
                         'list'				=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
                         'detail'			=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
                         'report'			=>	['batch_id', 'datetime', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
-                        'sample_export'		=>	['sno', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
-                        'selected_columns'	=>	['message', 'mode', 'recipient_type', 'recipients', 'messages_count']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'message', 'mode', 'recipient_type', 'recipients', 'messages_count'],
+                        Actions::SELECTABLE	=>	['message', 'mode', 'recipient_type', 'recipients', 'messages_count']
     ],
     "communication.permission-allowed-filters-portal" => [
                         "entry"	=>	[

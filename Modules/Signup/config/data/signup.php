@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'signup';
 
 return [
@@ -16,8 +23,8 @@ return [
         'list'   => ['signup_id','name','phone_number','signup_label','signup_info','payment_status','tags','status'],
         'detail' => ['signup_id','name','phone_number','signup_label','signup_info','payment_status','tags','status'],
         'report' => ['signup_id','name','phone_number','signup_label','signup_info','payment_status','tags','status'],
-        'sample_export' => ['sno','name','phone_number','signup_label','signup_info','payment_status'],
-        'selected_columns' => ['name','phone_number','signup_label','signup_info','payment_status']
+        Actions::SAMPLE_EXPORT => ['sno','name','phone_number','signup_label','signup_info','payment_status'],
+        Actions::SELECTABLE => ['name','phone_number','signup_label','signup_info','payment_status']
     ],
 
     /* =========================

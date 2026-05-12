@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Asset\Support\Res;
 use Modules\Asset\Support\Actions;
@@ -62,6 +63,7 @@ return [
     */
     'single-actions' => [
 
+		KeyName::make(Res::ASSETS) => [
 		Actions::LIST => [
 			[
                 'title'      => 'View Details',
@@ -93,6 +95,7 @@ return [
         	    'variant'    => 'danger',
         	]
 		]
+		]
 
     ],
 
@@ -103,36 +106,38 @@ return [
     */
     'filters' => [
 
-        Actions::LIST	=>	[
-            [
-                'type'        => 'select',
-                'name'        => 'center_id',
-                'placeholder' => 'Center',
-                'col'         => 3,
-                'dataKey'     => 'centers.list',
-            ],
-			[
-                'type'        => 'select',
-                'name'        => 'assigned_to',
-                'placeholder' => 'Assigned To',
-                'col'         => 3,
-                'dataKey'     => 'employees.list',
-            ],
-			[
-                'type'        => 'select',
-                'name'        => 'type',
-                'placeholder' => 'Type',
-                'col'         => 3,
-                'dataKey'     => 'asset.types',
-            ],
-			[
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'asset.statuses',
-            ],
-        ]
+		KeyName::make(Res::ASSETS) => [
+	        Actions::LIST	=>	[
+    	        [
+        	        'type'        => 'select',
+            	    'name'        => 'center_id',
+                	'placeholder' => 'Center',
+ 	                'col'         => 3,
+	                'dataKey'     => 'centers.list',
+    	        ],
+				[
+            	    'type'        => 'select',
+                	'name'        => 'assigned_to',
+	                'placeholder' => 'Assigned To',
+    	            'col'         => 3,
+        	        'dataKey'     => 'employees.list',
+            	],
+				[
+    	            'type'        => 'select',
+        	        'name'        => 'type',
+            	    'placeholder' => 'Type',
+                	'col'         => 3,
+                	'dataKey'     => 'asset.types',
+            	],
+				[
+    	            'type'        => 'select',
+        	        'name'        => 'status',
+            	    'placeholder' => 'Status',
+                	'col'         => 3,
+                	'dataKey'     => 'asset.statuses',
+            	],
+        	]
+		]
 
     ],
 

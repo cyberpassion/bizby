@@ -1,11 +1,10 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Registration\Support\Res;
 use Modules\Registration\Support\Actions;
-
-use Modules\Shared\Support\KeyName;
 
 $pg = 'registration';
 
@@ -144,6 +143,7 @@ return [
     'single-actions' => [
 
 		KeyName::make(Res::TYPES)	=> [
+			Actions::LIST => [
 			[
                 'title'      => 'Add/Update Steps',
                 'href'       => UrlPath::make($pg, '{id}/steps'),
@@ -166,9 +166,11 @@ return [
                 'method'     => 'DELETE',
                 'variant'    => 'danger',
             ],
+			]
 		],
 
 		KeyName::make(Res::CYCLES)	=> [
+			Actions::LIST => [
             [
                 'title'      => 'Update',
                 'href'       => UrlPath::makeUpdate($pg, '{id}'),
@@ -184,15 +186,18 @@ return [
                 'method'     => 'DELETE',
                 'variant'    => 'danger',
             ],
+			]
 		],
 
 		KeyName::make(Res::REGISTRATIONS)	=> [
+			Actions::LIST => [
 			[
                 'title'      => 'View',
                 'href'       => UrlPath::makeView($pg, '{id}'),
                 'permission' => Permission::view(Res::REGISTRATIONS),
                 'action'     => 'detail',
             ]
+			]
 		],
 
     ],
@@ -205,6 +210,7 @@ return [
     'filters' => [
 
         KeyName::make(Res::TYPES) => [
+			Actions::LIST => [
             [
                 'type'        => 'select',
                 'name'        => 'registration_status',
@@ -212,9 +218,11 @@ return [
                 'col'         => 3,
                 'dataKey'     => 'registration.statuses',
             ]
+			]
         ],
 
 		KeyName::make(Res::CYCLES) => [
+			Actions::LIST => [
             [
                 'type'        => 'select',
                 'name'        => 'registration_status',
@@ -222,9 +230,11 @@ return [
                 'col'         => 3,
                 'dataKey'     => 'registration.statuses',
             ]
+			]
         ],
 
 		KeyName::make(Res::REGISTRATIONS) => [
+			Actions::LIST => [
             [
                 'type'        => 'select',
                 'name'        => 'registration_status',
@@ -232,6 +242,7 @@ return [
                 'col'         => 3,
                 'dataKey'     => 'registration.statuses',
             ]
+			]
         ],
 
     ],

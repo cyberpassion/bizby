@@ -107,8 +107,8 @@ return [
         'list'           => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
         'detail'         => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
         'report'         => ['date', 'announcement_id', 'announcement', 'category', 'all_recipients', 'added_by','tags', 'status'],
-        'sample_export'  => ['sno', 'announcement_id', 'announcement', 'category', 'recipient', 'added_by'],
-        'selected_columns'=> ['announcement_id', 'announcement', 'category', 'recipient', 'added_by']
+        Actions::SAMPLE_EXPORT  => ['sno', 'announcement_id', 'announcement', 'category', 'recipient', 'added_by'],
+        Actions::SELECTABLE=> ['announcement_id', 'announcement', 'category', 'recipient', 'added_by']
     ],
     "announcement.permission-allowed-filters-portal" => [
         "entry"  => [["recipient" => '{$login_type}-{$byline}']],

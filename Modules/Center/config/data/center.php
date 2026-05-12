@@ -1,170 +1,236 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Center\Support\Res;
+use Modules\Center\Support\Actions;
+
 $pg = 'center';
 
 return [
 
-	// Bulk Operations
+    /*
+    |--------------------------------------------------------------------------
+    | Bulk Operations
+    |--------------------------------------------------------------------------
+    */
     'bulk-operations' => [
         'document:center-slip' => 'Print Center Slip',
-        'send:sms'                   => 'Send Center SMS',
-        'send:email'                 => 'Send Center Email',
-        'op:remove'                  => 'Delete Center',
-        'op:restore'                 => 'Restore Center',
+        'send:sms' => 'Send Center SMS',
+        'send:email' => 'Send Center Email',
+        'op:remove' => 'Delete Center',
+        'op:restore' => 'Restore Center',
     ],
 
-	// Default Columns
+    /*
+    |--------------------------------------------------------------------------
+    | Default Columns
+    |--------------------------------------------------------------------------
+    */
     'columns' => [
 
-    /* =========================================================
-     | LIST VIEW (Fast scanning, operational)
-     ========================================================= */
+        KeyName::make(Res::CENTERS) => [
 
-    'list' => [
-    	'id'           => 'ID',
-    	'name'         => 'Name',
-		'state'        => 'State',
-		'place'        => 'Place',
-    	'location'     => 'Location',
-    	'phone'        => 'Contact',
-		'email'		   => 'Email',
-    	'status_label' => 'Status',
-	],
+            /*
+            |--------------------------------------------------------------------------
+            | List View
+            |--------------------------------------------------------------------------
+            */
+            Actions::LIST => [
+                'id' => 'ID',
+                'name' => 'Name',
+                'state' => 'State',
+                'place' => 'Place',
+                'location' => 'Location',
+                'phone' => 'Contact',
+                'email' => 'Email',
+                'status_label' => 'Status',
+            ],
 
-    /* =========================================================
-     | REPORT VIEW (Business intelligence)
-     ========================================================= */
+            /*
+            |--------------------------------------------------------------------------
+            | Report View
+            |--------------------------------------------------------------------------
+            */
+            Actions::REPORT => [
+                'id' => 'ID',
+                'name' => 'Name',
+                'state' => 'State',
+                'place' => 'Place',
+                'location' => 'Location',
+                'phone' => 'Contact',
+                'email' => 'Email',
+                'status_label' => 'Status',
+            ],
 
-    'report' => [
-		'id'           => 'ID',
-    	'name'         => 'Name',
-		'state'        => 'State',
-		'place'        => 'Place',
-    	'location'     => 'Location',
-    	'phone'        => 'Contact',
-		'email'		   => 'Email',
-    	'status_label' => 'Status',
-	],
+            /*
+            |--------------------------------------------------------------------------
+            | Detail View
+            |--------------------------------------------------------------------------
+            */
+            Actions::DETAIL => [
 
-    /* =========================================================
-     | DETAIL VIEW (Maximum context)
-     ========================================================= */
+                /*
+                |--------------------------------------------------------------------------
+                | Core
+                |--------------------------------------------------------------------------
+                */
+                'id' => 'ID',
+                'code' => 'Code',
+                'name' => 'Name',
 
-    'detail' => [
+                /*
+                |--------------------------------------------------------------------------
+                | Location & Contact
+                |--------------------------------------------------------------------------
+                */
+                'state' => 'State',
+                'place' => 'Place',
+                'location' => 'Location',
+                'phone' => 'Phone',
+                'email' => 'Email',
 
-    /* =========================
-     | CORE
-     ========================= */
-    'id'   => 'ID',
-    'code' => 'Code',
-    'name' => 'Name',
+                /*
+                |--------------------------------------------------------------------------
+                | Capacity
+                |--------------------------------------------------------------------------
+                */
+                'staff_capacity' => 'Staff',
 
-    /* =========================
-     | LOCATION & CONTACT
-     ========================= */
-	'state'        => 'State',
-	'place'        => 'Place',
-    'location'	   => 'Location',
-    'phone'		   => 'Phone',
-	'email'		   => 'Email',
+                /*
+                |--------------------------------------------------------------------------
+                | Status
+                |--------------------------------------------------------------------------
+                */
+                'status_label' => 'Status',
 
-    /* =========================
-     | CAPACITY
-     ========================= */
-    'staff_capacity' => 'Staff',
+                /*
+                |--------------------------------------------------------------------------
+                | System
+                |--------------------------------------------------------------------------
+                */
+                'created_at' => 'Created At',
+                'updated_at' => 'Updated At',
 
-    /* =========================
-     | STATUS
-     ========================= */
-    'status_label' => 'Status',
+                /*
+                |--------------------------------------------------------------------------
+                | Extra
+                |--------------------------------------------------------------------------
+                */
+                'remark' => 'Remark',
+            ],
 
-    /* =========================
-     | SYSTEM
-     ========================= */
-    'created_at' => 'Created At',
-    'updated_at' => 'Updated At',
+            /*
+            |--------------------------------------------------------------------------
+            | Sample Export
+            |--------------------------------------------------------------------------
+            */
+            Actions::SAMPLE_EXPORT => [
+                'id',
+                'name',
+                'state',
+                'place',
+                'location',
+                'phone',
+                'email',
+                'status_label',
+            ],
 
-	'remark'	=> 'Remark'
-],
+            /*
+            |--------------------------------------------------------------------------
+            | User Selectable Columns
+            |--------------------------------------------------------------------------
+            */
+            Actions::SELECTABLE => [
+                'id',
+                'name',
+                'location',
+                'phone',
+                'email',
+                'status_label',
+            ],
 
-    /* =========================================================
-     | SAMPLE EXPORT (Excel / CSV safe)
-     ========================================================= */
+        ],
 
-    'sample_export' => [
-        'id',
-        'name',
-		'state',
-		'place',
-        'location',
-		'phone',
-		'email',
-        'status_label'
     ],
 
-    /* =========================================================
-     | USER SELECTABLE COLUMNS
-     ========================================================= */
-
-    'selectable' => [
-        'id',
-        'name',
-        'location',
-		'phone',
-		'email',
-        'status_label'
-    ],
-],
-
-    // Cron Jobs / Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Cron Jobs
+    |--------------------------------------------------------------------------
+    */
     'crons' => [
         'center-visitreminder' => 'Center Visit Reminder',
     ],
 
-	// Documents
+    /*
+    |--------------------------------------------------------------------------
+    | Documents
+    |--------------------------------------------------------------------------
+    */
     'documents' => [
-        'detail' => 'Detail'
+        Actions::DETAIL => 'Detail',
     ],
 
-	// Status
+    /*
+    |--------------------------------------------------------------------------
+    | Statuses
+    |--------------------------------------------------------------------------
+    */
     'statuses' => [
-	    '1' => 'Active',
-    	'2' => 'Inactive',
-    	'3' => 'Closed',
-    	'4' => 'Under Maintenance',
+        '1' => 'Active',
+        '2' => 'Inactive',
+        '3' => 'Closed',
+        '4' => 'Under Maintenance',
     ],
 
-	// Uploads
+    /*
+    |--------------------------------------------------------------------------
+    | Uploads
+    |--------------------------------------------------------------------------
+    */
     'uploads' => [
-		'image' => 'Center Images',
-	    'center_registration_certificate' => 'Center Registration Certificate',
-    	'government_approval_license' => 'Government Approval / License',
-    	'building_safety_certificate' => 'Building Safety Certificate',
-	    'fire_noc_certificate' => 'Fire NOC Certificate',
-    	'utility_bills' => 'Electricity & Water Bills',
-    	'layout_building_map' => 'Layout / Building Map',
-    	'insurance_documents' => 'Insurance Documents',
-	],
+        'image' => 'Center Images',
+        'center_registration_certificate' => 'Center Registration Certificate',
+        'government_approval_license' => 'Government Approval / License',
+        'building_safety_certificate' => 'Building Safety Certificate',
+        'fire_noc_certificate' => 'Fire NOC Certificate',
+        'utility_bills' => 'Electricity & Water Bills',
+        'layout_building_map' => 'Layout / Building Map',
+        'insurance_documents' => 'Insurance Documents',
+    ],
 
-	/* =========================
-     | CUSTOM SPECIFIC FOR MODULE
-     ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Specific For Module
+    |--------------------------------------------------------------------------
+    */
 
-	// Default Intervals
-	'default-intervals' => [
-        '5'  => '5 Minutes',
+    /*
+    |--------------------------------------------------------------------------
+    | Default Intervals
+    |--------------------------------------------------------------------------
+    */
+    'default-intervals' => [
+        '5' => '5 Minutes',
         '10' => '10 Minutes',
         '15' => '15 Minutes',
         '20' => '20 Minutes',
         '30' => '30 Minutes',
     ],
 
-	// Next Days
+    /*
+    |--------------------------------------------------------------------------
+    | Next Days
+    |--------------------------------------------------------------------------
+    */
     'next-days' => [
-        '3 d'  => '3 Days',
-        '4 d'  => '4 Days',
-        '5 d'  => '5 Days',
-        '6 d'  => '6 Days',
-        '7 d'  => '7 Days',
+        '3 d' => '3 Days',
+        '4 d' => '4 Days',
+        '5 d' => '5 Days',
+        '6 d' => '6 Days',
+        '7 d' => '7 Days',
         '10 d' => '10 Days',
         '12 d' => '12 Days',
         '15 d' => '15 Days',

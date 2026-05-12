@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'visitactivity';
 
 return [
@@ -33,8 +40,8 @@ return [
         'list'    => ['visitactivity_id','visit_date','visit_by_name','visit_team_member_json','company_name','company_official_mobile_number','detailed_report','next_action_plan','visit_status','tags','status'],
         'detail'  => ['visitactivity_id','visit_date','visit_by_name','visit_team_member_json','company_name','company_official_mobile_number','detailed_report','next_action_plan','visit_status','tags','status'],
         'report'  => ['visitactivity_id','visit_date','visit_by_name','visit_team_member_json','company_name','company_official_mobile_number','detailed_report','next_action_plan','visit_status','tags','status'],
-        'sample_export' => ['sno','visit_date','visit_by_name','visit_team_member_json','company_name','company_official_mobile_number','detailed_report','next_action_plan','visit_status'],
-        'selected_columns' => ['visit_date','visit_by_name','company_name','visit_status'],
+        Actions::SAMPLE_EXPORT => ['sno','visit_date','visit_by_name','visit_team_member_json','company_name','company_official_mobile_number','detailed_report','next_action_plan','visit_status'],
+        Actions::SELECTABLE => ['visit_date','visit_by_name','company_name','visit_status'],
     ],
 
     /* =========================

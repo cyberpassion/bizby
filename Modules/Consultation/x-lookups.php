@@ -137,8 +137,8 @@ return [
         'list'    => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
         'detail'  => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
          'report'  => ['consultation_id','consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee','tags','status'],
-         'sample_export' => ['sno','consultation_date','patient_name','phone_number','age','next_date','consultation_fee'],
-         'selected_columns' => ['consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee']
+         Actions::SAMPLE_EXPORT => ['sno','consultation_date','patient_name','phone_number','age','next_date','consultation_fee'],
+         Actions::SELECTABLE => ['consultation_date','patient_name','phone_number','consultation_with','day_token_id','next_date','consultation_fee']
 ],
 'consultation.permission-allowed-filters-portal' => [
         "profile"  => [["phone_number" => '{$phone_number}']],

@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'test';
 
 return [
@@ -50,11 +57,11 @@ return [
             'start_time','end_time','total_time','question_count',
             'language_question_status','all_recipients','tags','status'
         ],
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'sno','test_name','test_date','start_time',
             'end_time','total_time','question_count','language_question_status'
         ],
-        'selected_columns' => [
+        Actions::SELECTABLE => [
             'test_name','test_date','start_time',
             'end_time','total_time','question_count','language_question_status'
         ]

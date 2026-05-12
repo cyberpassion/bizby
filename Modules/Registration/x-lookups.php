@@ -88,8 +88,8 @@ return [
                         'list'				=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
                         'detail'			=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
                         'report'			=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type','tags', 'status'],
-                        'sample_export'		=>	['sno', 'date', 'name', 'phone_number', 'email_id', 'permanent_address'],
-                        'selected_columns'	=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'date', 'name', 'phone_number', 'email_id', 'permanent_address'],
+                        Actions::SELECTABLE	=>	['date', 'name', 'phone_number', 'email_id', 'permanent_address', 'registration_type']
 	],
     "registration.permission-allowed-filters-portal" => [
                         "profile"=>	[[ "phone_number" => '{$phone_number}' ]],

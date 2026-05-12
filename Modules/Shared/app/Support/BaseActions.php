@@ -17,6 +17,8 @@ class BaseActions
     public const REPORT     = 'report';
 	public const SETTINGS   = 'settings';
     public const PLUGINS    = 'plugins';
+	public const SAMPLE_EXPORT = 'sample_export';
+	public const SELECTABLE = 'selectable';
 
 	public const LISTING    = 'listing';
 	public const BASIC   	= 'basic';

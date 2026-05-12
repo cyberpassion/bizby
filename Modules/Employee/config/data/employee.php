@@ -1,6 +1,9 @@
 <?php
 
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\Permission;
 use Modules\Employee\Support\Res;
+use Modules\Employee\Support\Actions;
 use Modules\Shared\Support\KeyName;
 
 $pg = 'employee';
@@ -46,7 +49,7 @@ return [
 	"columns" => [
 
 		KeyName::make(Res::EMPLOYEES) => [
-		    'list' => [
+		    Actions::LIST => [
     		    'id'              => 'ID',
         		'name'            => 'Name',
 	        	'employee_type_label'   => 'Type',
@@ -56,7 +59,7 @@ return [
         		'status_label'          => 'Status',
 		    ],
 
-		    'detail' => [
+		    Actions::DETAIL => [
     		    'id'              => 'ID',
         		'name'            => 'Name',
 	        	'employee_type_label'   => 'Type',
@@ -66,7 +69,7 @@ return [
         		'status_label'          => 'Status',
 		    ],
 
-		    'report' => [
+		    Actions::REPORT => [
     		    'id'              => 'ID',
         		'name'            => 'Name',
 	        	'employee_type_label'   => 'Type',
@@ -76,7 +79,7 @@ return [
     	    	'status_label'          => 'Status',
 		    ],
 
-		    'sample_export' => [
+		    Actions::SAMPLE_EXPORT => [
     		    'sno',
         		'name',
 	        	'employee_type',
@@ -87,7 +90,7 @@ return [
         		'email',
 		    ],
 
-		    'selected_columns' => [
+		    Actions::SELECTABLE => [
     		    'name',
         		'employee_type',
 	        	'designation',

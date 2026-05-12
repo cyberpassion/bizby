@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Consultation\Support\Res;
 use Modules\Consultation\Support\Actions;
@@ -57,53 +58,55 @@ return [
     */
     'single-actions' => [
 
-		Actions::LIST => [
-			[
-                'title'      => 'View Slip',
-                'href'       => UrlPath::makeDocuments($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'document',
-            ],
+		KeyName::make(Res::CONSULTATIONS) => [
+			Actions::LIST => [
+				[
+        	        'title'      => 'View Slip',
+            	    'href'       => UrlPath::makeDocuments($pg, '{id}'),
+	                'permission' => Permission::view(Res::DOCUMENTS),
+    	            'action'     => 'document',
+        	    ],
 
-			[
-                'title'      => 'Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'detail',
-            ],
+				[
+    	            'title'      => 'Details',
+        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'detail',
+	            ],
 
-			[
-                'title'      => 'Profile',
-                'href'       => UrlPath::makeProfile($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'profile',
-            ],
+				[
+    	            'title'      => 'Profile',
+        	        'href'       => UrlPath::makeProfile($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'profile',
+	            ],
 
-	        [
-    	        'title'      => 'Update',
-        	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            	'permission' => Permission::update(Res::CONSULTATIONS),
-            	'action'     => 'update',
-	        ],
+		        [
+    		        'title'      => 'Update',
+        		    'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            		'permission' => Permission::update(Res::CONSULTATIONS),
+            		'action'     => 'update',
+		        ],
 
-			[
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::UPLOADS),
-                'action'     => 'upload',
-            ],
+				[
+     	           'title'      => 'Upload',
+        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
+            	    'permission' => Permission::create(Res::UPLOADS),
+                	'action'     => 'upload',
+	            ],
 
-	        [
-    	        'title'      => 'Delete',
-        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
-            	'permission' => Permission::delete(Res::CONSULTATIONS),
-	            'action'     => 'delete',
-    	        'method'     => 'DELETE',
-        	    'variant'    => 'danger',
-        	]
-		]
+		        [
+    		        'title'      => 'Delete',
+        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+            		'permission' => Permission::delete(Res::CONSULTATIONS),
+	            	'action'     => 'delete',
+    	        	'method'     => 'DELETE',
+        	    	'variant'    => 'danger',
+        		]
+			]
 
-    ],
+    	],
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -112,30 +115,32 @@ return [
     */
     'filters' => [
 
-        Actions::LIST	=>	[
-            [
-                'type'        => 'select',
-                'name'        => 'consultant_id',
-                'placeholder' => 'Consultant',
-                'col'         => 3,
-                'dataKey'     => 'employees.list',
-            ],
-			[
-                'type'        => 'select',
-                'name'        => 'channel',
-                'placeholder' => 'Modes',
-                'col'         => 3,
-                'dataKey'     => 'shared.communication-modes',
-            ],
-            [
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'consultation.statuses',
-            ],
-        ]
+		KeyName::make(Res::CONSULTATIONS) => [
+	        Actions::LIST	=>	[
+     	       [
+        	        'type'        => 'select',
+            	    'name'        => 'consultant_id',
+                	'placeholder' => 'Consultant',
+	                'col'         => 3,
+    	            'dataKey'     => 'employees.list',
+        	    ],
+				[
+	                'type'        => 'select',
+    	            'name'        => 'channel',
+        	        'placeholder' => 'Modes',
+            	    'col'         => 3,
+                	'dataKey'     => 'shared.communication-modes',
+	            ],
+    	        [
+        	        'type'        => 'select',
+            	    'name'        => 'status',
+                	'placeholder' => 'Status',
+	                'col'         => 3,
+    	            'dataKey'     => 'consultation.statuses',
+        	    ],
+        	]
 
-    ],
+    	]
+	]
 
 ];

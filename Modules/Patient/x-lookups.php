@@ -116,8 +116,8 @@ return [
                         'list'				=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
                         'detail'			=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
                         'report'			=>	['patient_id', 'patient_name', 'phone_number', 'age','tags', 'status'],
-                        'sample_export'		=>	['sno', 'patient_name', 'phone_number', 'age'],
-                        'selected_columns'	=>	['patient_name', 'phone_number', 'age']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'patient_name', 'phone_number', 'age'],
+                        Actions::SELECTABLE	=>	['patient_name', 'phone_number', 'age']
     ],
     "patient.permission-allowed-filters-portal" => [
                         "profile"	=>	[[ "patient_id"	=>	'{$login_id}' ]],

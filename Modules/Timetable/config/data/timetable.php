@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'timetable';
 
 return [
@@ -41,11 +48,11 @@ return [
             'timetable_id','session','recipient','months',
             'subjects_duration','tags','status'
         ],
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'sno','timetable_id','recipient','session',
             'months','subjects_duration','status'
         ],
-        'selected_columns' => [
+        Actions::SELECTABLE => [
             'timetable_id','recipient','session',
             'months','subjects_duration','status'
         ]

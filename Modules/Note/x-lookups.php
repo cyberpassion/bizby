@@ -101,8 +101,8 @@ return [
                         'list'				=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
                         'detail'			=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
                         'report'			=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'response_status','tags', 'status'],
-                        'sample_export'		=>	['sno', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status'],
-                        'selected_columns'	=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status'],
+                        Actions::SELECTABLE	=>	['note_id', 'added_by', 'subject', 'note_type', 'added_for', 'added_by', 'context', 'response_status']
 	],
     "note.permission-allowed-filters-portal" => [
                         "entry"				=>	[[ "added_by"	=>	'{$login_type}-{$login_id}' ]],

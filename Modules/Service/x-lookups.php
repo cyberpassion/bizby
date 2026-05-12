@@ -42,8 +42,8 @@ return [
                         'list'				=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
                         'detail'			=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
                         'report'			=>	['request_id', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
-                        'sample_export'		=>	['sno', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
-                        'selected_columns'	=>	['date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description'],
+                        Actions::SELECTABLE	=>	['date', 'service_type', 'provided_by', 'service_name', 'requested_by_info', 'request_size', 'request_price', 'request_description']
     ],
     'service.statuses' => [
                         1	=>	'Active',

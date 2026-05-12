@@ -1,5 +1,7 @@
 <?php
+
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Lead\Support\Res;
 use Modules\Lead\Support\Actions;
@@ -67,39 +69,41 @@ return [
     */
     'single-actions' => [
 
-	    Actions::LIST	=>	[
-			[
-	    	    'title'      => 'Add Followup',
-    	    	'href'       => UrlPath::make($pg, 'new-followup'),
-	    	    'permission' => Permission::create(Res::FOLLOWUPS),
-    	    	'action'     => 'sheet',
-				'params'	 => [
-					'lead_id'	 => ':id'
-				]
-		    ],
+		KeyName::make(Res::LEADS) => [
+		    Actions::LIST	=>	[
+				[
+	    		    'title'      => 'Add Followup',
+    	    		'href'       => UrlPath::make($pg, 'new-followup'),
+	    	    	'permission' => Permission::create(Res::FOLLOWUPS),
+	    	    	'action'     => 'sheet',
+					'params'	 => [
+						'lead_id'	 => ':id'
+					]
+		    	],
 
-			[
-                'title'      => 'View Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DETAILS),
-                'action'     => 'detail',
-            ],
+				[
+    	            'title'      => 'View Details',
+        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DETAILS),
+                	'action'     => 'detail',
+	            ],
 
-		    [
-    		    'title'      => 'Edit',
-        		'href'       => UrlPath::makeUpdate($pg, '{id}'),
-	        	'permission' => Permission::update(Res::LEADS),
-    	    	'action'     => 'update',
-		    ],
+			    [
+    			    'title'      => 'Edit',
+        			'href'       => UrlPath::makeUpdate($pg, '{id}'),
+	        		'permission' => Permission::update(Res::LEADS),
+    	    		'action'     => 'update',
+			    ],
 
-		    [
-    		    'title'      => 'Delete',
-        		'href'       => UrlPath::makeDelete($pg, '{id}'),
-	        	'permission' => Permission::delete(Res::LEADS),
-    	    	'action'     => 'delete',
-	        	'method'     => 'DELETE',
-    	    	'variant'    => 'danger',
-    		],
+			    [
+    			    'title'      => 'Delete',
+        			'href'       => UrlPath::makeDelete($pg, '{id}'),
+	        		'permission' => Permission::delete(Res::LEADS),
+    	    		'action'     => 'delete',
+		        	'method'     => 'DELETE',
+    		    	'variant'    => 'danger',
+    			],
+			]
 		]
 
 	],
@@ -111,49 +115,51 @@ return [
 	*/
 	'filters' => [
 
-    	Actions::LIST	=>	[
-			[
-	    	    'type'        => 'select',
-    	    	'name'        => 'business_type',
-	        	'placeholder' => 'Business Type',
-		        'col'         => 2,
-    		    'dataKey'     => 'shared.business-types',
-		    ],
-			[
-    		    'type'        => 'select',
-        		'name'        => 'assigned_to_id',
-	        	'placeholder' => 'Assigned To',
-    	    	'col'         => 2,
-        		'dataKey'     => 'employees.list',
-	    	],
-			[
-		        'type'        => 'select',
-    		    'name'        => 'stage_id',
-        		'placeholder' => 'Stage',
-	        	'col'         => 2,
-    	    	'dataKey'     => 'lead.stages',
-		    ],
-    		[
-	    	    'type'        => 'select',
-    	    	'name'        => 'category_id',
-	        	'placeholder' => 'Category',
-		        'col'         => 2,
-    		    'dataKey'     => 'lead.categories',
-		    ],
-			[
-	    	    'type'        => 'select',
-    	    	'name'        => 'is_existing_client',
-	        	'placeholder' => 'Existing Client',
-		        'col'         => 2,
-    		    'dataKey'     => 'shared.boolean-options',
-		    ],
-    		[
-	    	    'type'        => 'select',
-    	    	'name'        => 'source_id',
-	        	'placeholder' => 'Source',
-		        'col'         => 2,
-    		    'dataKey'     => 'lead.sources',
-    		]
+		KeyName::make(Res::LEADS) => [
+	    	Actions::LIST	=>	[
+				[
+	    		    'type'        => 'select',
+    	    		'name'        => 'business_type',
+	        		'placeholder' => 'Business Type',
+		        	'col'         => 2,
+	    		    'dataKey'     => 'shared.business-types',
+			    ],
+				[
+	    		    'type'        => 'select',
+    	    		'name'        => 'assigned_to_id',
+	    	    	'placeholder' => 'Assigned To',
+    	    		'col'         => 2,
+        			'dataKey'     => 'employees.list',
+		    	],
+				[
+		    	    'type'        => 'select',
+    		    	'name'        => 'stage_id',
+	        		'placeholder' => 'Stage',
+		        	'col'         => 2,
+    		    	'dataKey'     => 'lead.stages',
+		    	],
+	    		[
+		    	    'type'        => 'select',
+    		    	'name'        => 'category_id',
+	        		'placeholder' => 'Category',
+		        	'col'         => 2,
+    		    	'dataKey'     => 'lead.categories',
+			    ],
+				[
+		    	    'type'        => 'select',
+    		    	'name'        => 'is_existing_client',
+	    	    	'placeholder' => 'Existing Client',
+		    	    'col'         => 2,
+    		    	'dataKey'     => 'shared.boolean-options',
+			    ],
+    			[
+	    		    'type'        => 'select',
+    	    		'name'        => 'source_id',
+	        		'placeholder' => 'Source',
+			        'col'         => 2,
+    			    'dataKey'     => 'lead.sources',
+    			]
+			]
 		]
 	],
 

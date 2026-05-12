@@ -113,8 +113,8 @@ return [
                         'list'				=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
                         'detail'			=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
                         'report'			=>	['contact_id', 'contact_name', 'phone_number', 'group_name', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'contact_name', 'phone_number', 'email_id', 'next_date'],
-                        'selected_columns'	=>	['contact_name', 'phone_number','email_id']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'contact_name', 'phone_number', 'email_id', 'next_date'],
+                        Actions::SELECTABLE	=>	['contact_name', 'phone_number','email_id']
     ],
     "contact.permission-allowed-filters-portal" => [
                         "profile"	=>	[[ "contact_id"	=>	'{$login_id}' ]],

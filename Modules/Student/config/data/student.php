@@ -73,7 +73,7 @@ return [
 			'status'				=> 'Status',
 		],
 
-		'sample_export' => [
+		Actions::SAMPLE_EXPORT => [
 			'name',
 			'admission_no',
 			'roll_no',
@@ -85,7 +85,7 @@ return [
 			'status',
 		],
 
-		'selected_columns' => [
+		Actions::SELECTABLE => [
 			'name',
 			'admission_no',
 			'roll_no',
@@ -139,7 +139,7 @@ return [
 			'paid_at'			=> 'Payment Date',
 		],
 
-		'sample_export' => [
+		Actions::SAMPLE_EXPORT => [
 			'id',
 			'student_name',
 			'class_name',
@@ -148,7 +148,7 @@ return [
 			'paid_at',
 		],
 
-		'selected_columns' => [
+		Actions::SELECTABLE => [
 			'id',
 			'student_name',
 			'class_name',
@@ -195,7 +195,7 @@ return [
 			'due_date'				=> 'Due Date',
 		],
 
-		'sample_export' => [
+		Actions::SAMPLE_EXPORT => [
 			'name',
 			'class_name',
 			'total_amount',
@@ -204,7 +204,7 @@ return [
 			'due_date',
 		],
 
-		'selected_columns' => [
+		Actions::SELECTABLE => [
 			'name',
 			'class_name',
 			'total_amount',
@@ -250,7 +250,7 @@ return [
 			'due_date'				=> 'Due Date',
 		],
 
-		'sample_export' => [
+		Actions::SAMPLE_EXPORT => [
 			'name',
 			'class_name',
 			'installment_label',
@@ -259,7 +259,7 @@ return [
 			'due_date',
 		],
 
-		'selected_columns' => [
+		Actions::SELECTABLE => [
 			'name',
 			'class_name',
 			'installment_label',
@@ -303,14 +303,14 @@ return [
 			'discount_amount'		=> 'Discount Amount',
 		],
 
-		'sample_export' => [
+		Actions::SAMPLE_EXPORT => [
 			'name',
 			'class_name',
 			'discount_type_label',
 			'discount_amount',
 		],
 
-		'selected_columns' => [
+		Actions::SELECTABLE => [
 			'name',
 			'class_name',
 			'discount_type_label',
@@ -355,7 +355,7 @@ return [
 		'is_locked'			=> 'Locked',
 	],
 
-	'sample_export' => [
+	Actions::SAMPLE_EXPORT => [
 		'name',
 		'start_year',
 		'end_year',
@@ -365,7 +365,7 @@ return [
 		'is_locked',
 	],
 
-	'selected_columns' => [
+	Actions::SELECTABLE => [
 		'name',
 		'start_year',
 		'end_year',

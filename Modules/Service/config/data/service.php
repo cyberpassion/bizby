@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'service';
 
 return [
@@ -36,8 +43,8 @@ return [
         'list'   => ['request_id','date','service_type','provided_by','service_name','requested_by_info','request_size','request_price','request_description'],
         'detail' => ['request_id','date','service_type','provided_by','service_name','requested_by_info','request_size','request_price','request_description'],
         'report' => ['request_id','date','service_type','provided_by','service_name','requested_by_info','request_size','request_price','request_description'],
-        'sample_export' => ['sno','date','service_type','provided_by','service_name','requested_by_info','request_size','request_price'],
-        'selected_columns' => ['date','service_type','provided_by','service_name','request_size','request_price']
+        Actions::SAMPLE_EXPORT => ['sno','date','service_type','provided_by','service_name','requested_by_info','request_size','request_price'],
+        Actions::SELECTABLE => ['date','service_type','provided_by','service_name','request_size','request_price']
     ],
 
     /* =========================

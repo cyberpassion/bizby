@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Vendor\Support\Res;
 use Modules\Vendor\Support\Actions;
@@ -65,45 +66,47 @@ return [
     */
     'single-actions' => [
 
-        Actions::LIST => [
+		KeyName::make(Res::VENDORS) => [
+	        Actions::LIST => [
 
-			[
-                'title'      => 'View Profile',
-                'href'       => UrlPath::makeProfile($pg, '{id}'),
-                'permission' => Permission::view(Res::PROFILE),
-                'action'     => 'document',
-            ],
+				[
+    	            'title'      => 'View Profile',
+        	        'href'       => UrlPath::makeProfile($pg, '{id}'),
+            	    'permission' => Permission::view(Res::PROFILE),
+                	'action'     => 'document',
+	            ],
 
-            [
-                'title'      => 'View Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'detail',
-            ],
+	            [
+    	            'title'      => 'View Details',
+        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'detail',
+	            ],
 
-            [
-                'title'      => 'Update',
-                'href'       => UrlPath::makeUpdate($pg, '{id}'),
-                'permission' => Permission::update(Res::VENDORS),
-                'action'     => 'update',
-            ],
+	            [
+    	            'title'      => 'Update',
+        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	    'permission' => Permission::update(Res::VENDORS),
+                	'action'     => 'update',
+	            ],
 
-            [
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::DOCUMENTS),
-                'action'     => 'upload',
-            ],
+	            [
+    	            'title'      => 'Upload',
+        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
+            	    'permission' => Permission::create(Res::DOCUMENTS),
+                	'action'     => 'upload',
+	            ],
 
-            [
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($pg, '{id}'),
-                'permission' => Permission::delete(Res::VENDORS),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
-        ]
+	            [
+    	            'title'      => 'Delete',
+        	        'href'       => UrlPath::makeDelete($pg, '{id}'),
+            	    'permission' => Permission::delete(Res::VENDORS),
+                	'action'     => 'delete',
+	                'method'     => 'DELETE',
+    	            'variant'    => 'danger',
+        	    ]
+        	]
+		]
 
     ],
 
@@ -114,29 +117,31 @@ return [
     */
     'filters' => [
 
-        Actions::LIST => [
-            [
-                'type'        => 'select',
-                'name'        => 'state',
-                'placeholder' => 'State',
-                'col'         => 3,
-                'dataKey'     => 'shared.indian-states',
-            ],
-			[
-                'type'        => 'select',
-                'name'        => 'vendor_type',
-                'placeholder' => 'Vendor Type',
-                'col'         => 3,
-                'dataKey'     => 'shared.business-types',
-            ],
-            [
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'vendor.statuses',
-            ],
-        ]
+		KeyName::make(Res::VENDORS) => [
+	        Actions::LIST => [
+    	        [
+        	        'type'        => 'select',
+            	    'name'        => 'state',
+	                'placeholder' => 'State',
+    	            'col'         => 3,
+        	        'dataKey'     => 'shared.indian-states',
+            	],
+				[
+    	            'type'        => 'select',
+        	        'name'        => 'vendor_type',
+            	    'placeholder' => 'Vendor Type',
+                	'col'         => 3,
+                	'dataKey'     => 'shared.business-types',
+	            ],
+    	        [
+        	        'type'        => 'select',
+            	    'name'        => 'status',
+                	'placeholder' => 'Status',
+	                'col'         => 3,
+    	            'dataKey'     => 'vendor.statuses',
+        	    ]
+        	]
+		]
 
     ],
 

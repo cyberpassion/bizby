@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
 use Modules\Center\Support\Res;
 use Modules\Center\Support\Actions;
@@ -62,36 +63,38 @@ return [
     */
     'single-actions' => [
 
-		Actions::LIST => [
-			[
-                'title'      => 'View Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'detail',
-            ],
+		KeyName::make(Res::CENTERS) => [
+			Actions::LIST => [
+				[
+        	        'title'      => 'View Details',
+            	    'href'       => UrlPath::makeDetail($pg, '{id}'),
+                	'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'detail',
+	            ],
 
-	        [
-                'title'      => 'Edit',
-                'href'       => UrlPath::makeUpdate($pg, '{id}'),
-                'permission' => Permission::update(Res::CENTERS),
-                'action'     => 'update',
-            ],
+		        [
+    	            'title'      => 'Edit',
+        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	    'permission' => Permission::update(Res::CENTERS),
+                	'action'     => 'update',
+	            ],
 
-            [
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::UPLOADS),
-                'action'     => 'upload',
-            ],
+	            [
+    	            'title'      => 'Upload',
+        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
+            	    'permission' => Permission::create(Res::UPLOADS),
+                	'action'     => 'upload',
+	            ],
 
-	        [
-    	        'title'      => 'Delete',
-        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
-            	'permission' => Permission::delete(Res::CENTERS),
-	            'action'     => 'delete',
-    	        'method'     => 'DELETE',
-        	    'variant'    => 'danger',
-        	]
+		        [
+    		        'title'      => 'Delete',
+        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+            		'permission' => Permission::delete(Res::CENTERS),
+	            	'action'     => 'delete',
+    	        	'method'     => 'DELETE',
+        	    	'variant'    => 'danger',
+        		]
+			]
 		]
 
     ],
@@ -103,22 +106,24 @@ return [
     */
     'filters' => [
 
-		Actions::LIST	=>	[
-			[
-                'type'        => 'select',
-                'name'        => 'state',
-                'placeholder' => 'State',
-                'col'         => 3,
-                'dataKey'     => 'shared.indian-states',
-            ],
-            [
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'center.statuses',
-            ],
-        ]
+		KeyName::make(Res::CENTERS) => [
+			Actions::LIST	=>	[
+				[
+        	        'type'        => 'select',
+            	    'name'        => 'state',
+                	'placeholder' => 'State',
+	                'col'         => 3,
+    	            'dataKey'     => 'shared.indian-states',
+        	    ],
+            	[
+                	'type'        => 'select',
+	                'name'        => 'status',
+    	            'placeholder' => 'Status',
+        	        'col'         => 3,
+            	    'dataKey'     => 'center.statuses',
+            	],
+        	]
+		]
 
     ],
 

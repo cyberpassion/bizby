@@ -89,8 +89,8 @@ return [
                         'list'				=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
                         'detail'			=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
                         'report'			=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount', 'status', 'options'],
-                        'sample_export'		=>	['sno','subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
-                        'selected_columns'	=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
+                        Actions::SAMPLE_EXPORT		=>	['sno','subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
+                        Actions::SELECTABLE	=>	['subscription_plan', 'start_date', 'end_date', 'remaining_days', 'estimated_amount'],
                         'udx-available-addons'	=>	['subscription_plan_id','plan_name','plan_type','plan_pricing','options'],
     ],
     'subscription.statuses' => [

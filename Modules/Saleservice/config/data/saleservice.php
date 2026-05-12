@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'saleservice';
 
 return [
@@ -50,8 +57,8 @@ return [
         'list'    => ['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
         'detail'  => ['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
         'report'  => ['saleservice_id','saleservice_date','buyer','amount','balance','payment_info','next_date','status'],
-        'sample_export' => ['sno','buyer','amount','balance','payment_info'],
-        'selected_columns' => ['buyer','amount','balance','payment_info']
+        Actions::SAMPLE_EXPORT => ['sno','buyer','amount','balance','payment_info'],
+        Actions::SELECTABLE => ['buyer','amount','balance','payment_info']
     ],
 
     /* =========================

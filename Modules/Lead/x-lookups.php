@@ -122,8 +122,8 @@ return [
                         'list'				=>	['lead_id', 'date', 'potential_client_name', 'potential_client_mobile_number', 'expectation', 'next_date', 'contact_response','tags', 'status'],
                         'detail'				=>	['lead_id', 'date', 'potential_client_name', 'potential_client_mobile_number', 'expectation', 'next_date', 'contact_response','tags', 'status'],
                         'report'				=>	['lead_id', 'date', 'potential_client_name', 'potential_client_mobile_number', 'expectation', 'next_date', 'contact_response','tags', 'status'],
-                        'sample_export'		=>	['sno', 'potential_client_name', 'potential_client_mobile_number', 'potential_client_email', 'contact_by', 'expectation', 'next_date', 'contact_response', 'state', 'district', 'potential_client_address'],
-                        'selected_columns'	=>	['potential_client_name', 'potential_client_mobile_number', 'potential_client_email', 'contact_by', 'expectation', 'next_date', 'contact_response', 'state', 'district', 'potential_client_address']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'potential_client_name', 'potential_client_mobile_number', 'potential_client_email', 'contact_by', 'expectation', 'next_date', 'contact_response', 'state', 'district', 'potential_client_address'],
+                        Actions::SELECTABLE	=>	['potential_client_name', 'potential_client_mobile_number', 'potential_client_email', 'contact_by', 'expectation', 'next_date', 'contact_response', 'state', 'district', 'potential_client_address']
 	],
     "lead.permission-allowed-filters-portal" => [
                         "entry"	=>	[

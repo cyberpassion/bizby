@@ -136,12 +136,12 @@ return [
             'ID','visitplanner_id','visit_company','visit_by_name',
             'month','week','created_by_name','tags','status',
         ],
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'sno','visit_company','visit_meetingwith',
             'visit_mobile_number','visit_email',
             'session','month','week',
         ],
-        'selected_columns' => [
+        Actions::SELECTABLE => [
             'visitplanner_id','visit_company','visit_by_name',
             'session','month','week','created_by_name',
         ],

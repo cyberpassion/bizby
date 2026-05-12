@@ -144,8 +144,8 @@ return [
                         'list'				=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
                         'detail'			=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
                         'report'			=>	['employee_id', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob','tags', 'status'],
-                        'sample_export'		=>	['sno', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id'],
-                        'selected_columns'	=>	['employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id'],
+                        Actions::SELECTABLE	=>	['employee_name', 'employee_type', 'designation', 'permanent_address', 'dob', 'phone_number', 'email_id']
 	],
     "employee.permission-allowed-filters-portal" => [
                         "profile"	=>	[[ "employee_id"	=>	'{$login_id}' ]],

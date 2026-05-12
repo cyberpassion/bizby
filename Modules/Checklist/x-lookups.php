@@ -122,8 +122,8 @@ return [
                         'list'				=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
                         'detail'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
                         'report'			=>	['checklist_id', 'checklist_name', 'listing_name', 'progress','tags', 'status'],
-                        'sample_export'		=>	['sno', 'checklist_name', 'checklist_info', 'remark', 'status'],
-                        'selected_columns'	=>	['checklist_name', 'checklist_info', 'remark'],
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'checklist_name', 'checklist_info', 'remark', 'status'],
+                        Actions::SELECTABLE	=>	['checklist_name', 'checklist_info', 'remark'],
                         'listing-list'		=>	['listing_id', 'listing_type', 'listing_name', 'listing_name', 'tags', 'status'],
                         'listing-point-list'=>	['point_name', 'point_assigned_to', 'point_time_limit', 'point_description', 'status']
     ],

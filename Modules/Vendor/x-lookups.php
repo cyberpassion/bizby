@@ -138,8 +138,8 @@ return [
                         'list'				=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
                         'detail'			=>	['vendor_id', 'vendor_official_name', 'vendor_code', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
                         'report'			=>	['vendor_id', 'vendor_official_name', 'vendor_person', 'vendor_person_phone', 'code_attaches', 'expected_income', 'tags', 'status'],
-                        'sample_export'		=>	['sno', 'vendor_official_name', 'vendor_official_address', 'vendor_official_email', 'vendor_official_phone', 'vendor_terms_and_condition', 'vendor_person', 'vendor_person_designation', 'vendor_person_email', 'vendor_person_phone'],
-                        'selected_columns'	=>	['vendor_official_name', 'vendor_person', 'vendor_person_phone']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'vendor_official_name', 'vendor_official_address', 'vendor_official_email', 'vendor_official_phone', 'vendor_terms_and_condition', 'vendor_person', 'vendor_person_designation', 'vendor_person_email', 'vendor_person_phone'],
+                        Actions::SELECTABLE	=>	['vendor_official_name', 'vendor_person', 'vendor_person_phone']
     ],
     'vendor.statuses' => [
                         "1"				=>	"Active",

@@ -1,4 +1,11 @@
 <?php
+
+use Modules\Shared\Support\UrlPath;
+use Modules\Shared\Support\KeyName;
+use Modules\Shared\Support\Permission;
+use Modules\Customer\Support\Res;
+use Modules\Customer\Support\Actions;
+
 $pg = 'transport';
 
 return [
@@ -74,14 +81,14 @@ return [
             'tags',
             'status',
         ],
-        'sample_export' => [
+        Actions::SAMPLE_EXPORT => [
             'sno',
             'route_name',
             'registration_number',
             'driver_name',
             'remark',
         ],
-        'selected_columns' => [
+        Actions::SELECTABLE => [
             'route_name',
             'registration_number',
             'driver_name',

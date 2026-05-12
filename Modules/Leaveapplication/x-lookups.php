@@ -120,8 +120,8 @@ return [
                         'list'				=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
                         'detail'			=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
                         'report'			=>	['leaveapplication_id', 'date','applicant_name','leave_all_dats','leave_type','tags', 'status'],
-                        'sample_export'		=>	['sno', 'applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status'],
-                        'selected_columns'	=>	['applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status']
+                        Actions::SAMPLE_EXPORT		=>	['sno', 'applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status'],
+                        Actions::SELECTABLE	=>	['applicant_name', 'applicant_type', 'leave_all_dats', 'leave_duration', 'leave_reason', 'status']
     ],
     'leaveapplication.statuses' => [
                         '1'		=>	'In-Review',

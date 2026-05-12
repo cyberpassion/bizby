@@ -186,8 +186,8 @@ return [
                         'detail'			=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
                         'report'			=>	['item_id', 'item_name', 'entity_type', 'language', 'publication_name', 'total_quantity', 'available_quantity', 'allotted_quantity','status'],
                         'allotment-list'	=>	['batch_group_id', 'allotment_id', 'allotment_date', 'recipient_name', 'scheduled_return_date', 'actual_return_date', 'delay', 'penalty','tags', 'status'],
-                        'sample_export'		=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
-                        'selected_columns'	=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
+                        Actions::SAMPLE_EXPORT		=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
+                        Actions::SELECTABLE	=>	['item_name', 'isbn', 'pages', 'language', 'accession_number', 'author_name', 'publication_name', 'publishing_year', 'subject', 'total_quantity', 'available_quantity', 'allotted_quantity'],
                         'stock-entry'		=>	['item_name', 'category', 'isbn', 'publication', 'available_quantity','allotted_quantity','total_quantity', 'status']
     ],
 

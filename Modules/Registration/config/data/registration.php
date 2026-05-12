@@ -21,7 +21,7 @@ return [
 	// Default Columns
     "columns" => [
 		KeyName::make(Res::TYPES) => [
-			'list' => [
+			Actions::LIST => [
 				'id'				  => 'ID',
 			    'date'                => 'Date',
     			'name'                => 'Name',
@@ -29,7 +29,7 @@ return [
 				'is_active'			  => 'Active',
     			'status_label'        => 'Status',
 			],
-			'detail' => [
+			Actions::DETAIL => [
 				'id'				  => 'ID',
     			'date'                => 'Date',
 	    		'name'                => 'Name',
@@ -37,7 +37,7 @@ return [
 				'is_active'			  => 'Active',
     			'status_label'        => 'Status',
 			],
-			'report' => [
+			Actions::REPORT => [
 				'id'				  => 'ID',
     			'date'                => 'Date',
 		    	'name'                => 'Name',
@@ -45,7 +45,7 @@ return [
 				'is_active'			  => 'Active',
     			'status_label'        => 'Status',
 			],
-			'sample_export' => [
+			Actions::SAMPLE_EXPORT => [
 				'id'				  => 'ID',
     			'date'                => 'Date',
 		    	'name'                => 'Name',
@@ -53,7 +53,7 @@ return [
 				'is_active'			  => 'Active',
     			'status_label'        => 'Status',
 			],
-	        'selected_columns' => [
+	        Actions::SELECTABLE => [
 				'id'				  => 'ID',
     			'date'                => 'Date',
 		    	'name'                => 'Name',
@@ -63,7 +63,7 @@ return [
 			]
 		],
 		KeyName::make(Res::CYCLES) => [
-			'list' => [
+			Actions::LIST => [
 				'id'		   => 'ID',
 			    'name'         => 'Name',
 				'start_date'   => 'Start Date',
@@ -71,7 +71,7 @@ return [
 		    	'status_label' => 'Status',
 			],
 
-			'detail' => [
+			Actions::DETAIL => [
 				'id'		   => 'ID',
     		    'name'         => 'Name',
         		'start_date'   => 'Start Date',
@@ -79,7 +79,7 @@ return [
     		    'status_label' => 'Status',
     		],
 
-		    'report' => [
+		    Actions::REPORT => [
 				'id'		   => 'ID',
         		'name'         => 'Name',
 	        	'start_date'   => 'Start Date',
@@ -87,14 +87,14 @@ return [
         		'status_label' => 'Status',
 		    ],
 
-		    'sample_export' => [
+		    Actions::SAMPLE_EXPORT => [
     		    'name',
         		'start_date',
 	        	'end_date',
     	    	'status_label'
 	    	],
 
-		    'selected_columns' => [
+		    Actions::SELECTABLE => [
     		    'name',
         		'start_date',
 	        	'end_date',
@@ -102,7 +102,7 @@ return [
 	    	],
 		],
 		KeyName::make(Res::REGISTRATIONS) => [
-		    'list' => [
+		    Actions::LIST => [
 				'id'				  => 'ID',
         		'user_name'           => 'User',
 				'user_email'		  => 'Email',
@@ -111,7 +111,7 @@ return [
         		'submitted_at'        => 'Submitted At',
 		    ],
 
-		    'detail' => [
+		    Actions::DETAIL => [
 				'id'				  => 'ID',
 		        'user_name'           => 'User',
 				'user_email'		  => 'Email',
@@ -120,7 +120,7 @@ return [
 		        'submitted_at'        => 'Submitted At',
     		],
 
-		    'report' => [
+		    Actions::REPORT => [
 				'id'				  => 'ID',
 		        'user_name'           => 'User',
 				'user_email'		  => 'Email',
@@ -129,7 +129,7 @@ return [
 		        'submitted_at'        => 'Submitted At',
     		],
 
-		    'sample_export' => [
+		    Actions::SAMPLE_EXPORT => [
 		        'user_name',
         		'cycle_name',
 		        'current_step',
@@ -137,13 +137,13 @@ return [
 		        'submitted_at'
     		],
 
-		    'selected_columns' => [
+		    Actions::SELECTABLE => [
 		        'user_name',
 		        'cycle_name',
         		'current_step',
 		        'registration_status',
         		'submitted_at'
-		    ],
+		    ]
 		],
     ],
 
