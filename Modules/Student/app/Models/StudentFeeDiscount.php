@@ -21,6 +21,8 @@ class StudentFeeDiscount extends Model
         'percentage',
 
         'applicable_periods',
+
+		'reason'
     ];
 
     protected $casts = [

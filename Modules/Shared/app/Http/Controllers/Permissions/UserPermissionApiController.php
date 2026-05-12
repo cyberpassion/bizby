@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class UserPermissionApiController extends Controller
 {
 
-	public function index($userId)
+	public function index(int $userId)
 	{
     	$permissions = DB::table('permission_user_permissions as pup')
 	        ->join('permissions as p', 'p.id', '=', 'pup.permission_id')

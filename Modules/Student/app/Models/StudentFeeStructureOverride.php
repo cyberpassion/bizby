@@ -4,35 +4,88 @@ namespace Modules\Student\Models;
 
 use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class StudentFeeStructureOverride extends TenantModel
 {
 	use HasFactory;
 
-    protected $fillable = [];
+    /*
+    |--------------------------------------------------------------------------
+    | Mass Assignment
+    |--------------------------------------------------------------------------
+    |
+    | Includes:
+    | - commonSaasFields()
+    | - fee override specific fields
+    |
+    */
+
+    protected $fillable = [
+
+        /*
+        |--------------------------------------------------------------------------
+        | commonSaasFields()
+        |--------------------------------------------------------------------------
+        */
+
+        'tenant_id',
+
+        'status',
+
+        'created_by',
+        'updated_by',
+        'deleted_by',
+
+        'entry_source',
+        'entry_source_ref_id',
+
+        'remark',
+        'system_remark',
+
+        'meta',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fee Structure Override
+        |--------------------------------------------------------------------------
+        */
+
+        'student_id',
+
+        'fee_structure_id',
+
+        'override_amount',
+
+        'selected_periods',
+
+        'reason',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Casts
+    |--------------------------------------------------------------------------
+    */
 
     protected $casts = [
+
 	    'selected_periods' => 'array',
+
+        'meta' => 'array',
 	];
 
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
 
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
-
+    // Base fee structure
 	public function feeStructure()
-{
-    return $this->belongsTo(
-        StudentFeeStructure::class,
-        'fee_structure_id'
-    );
-}
-
+	{
+    	return $this->belongsTo(
+            StudentFeeStructure::class,
+            'fee_structure_id'
+        );
+	}
 }

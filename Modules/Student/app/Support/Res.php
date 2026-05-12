@@ -22,6 +22,7 @@ class Res
     public const FEE_DUES             = 'student.fee-dues';
     public const FEE_DEFAULTERS       = 'student.fee-defaulters';
     public const FEE_DISCOUNTS        = 'student.fee-discounts';
+	public const FEE_OVERRIDES        = 'student.fee-overrides';
     public const INVOICES             = 'student.invoices';
 
     public const SETTINGS             = 'student.settings';

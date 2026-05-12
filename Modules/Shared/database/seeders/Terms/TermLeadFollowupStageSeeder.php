@@ -5,7 +5,7 @@ namespace Modules\Shared\Database\Seeders\Terms;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TermLeadStageFollowupSeeder extends Seeder
+class TermLeadFollowupStageSeeder extends Seeder
 {
     public function run(): void
     {

@@ -26,43 +26,64 @@ class StudentReportApiController extends Controller
         */
 
         $query->when(
-            $request->filled('gender'),
+            $request->filled('gender') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->where('gender', $request->gender)
         );
 
         $query->when(
-            $request->filled('religion'),
+            $request->filled('religion') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->where('religion', $request->religion)
         );
 
         $query->when(
-            $request->filled('caste'),
+            $request->filled('caste') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->where('caste', $request->caste)
         );
 
         $query->when(
-            $request->filled('category'),
+            $request->filled('category') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->where('category', $request->category)
         );
 
         $query->when(
-            $request->filled('nationality'),
+            $request->filled('nationality') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->where('nationality', $request->nationality)
         );
 
+		$query->when(
+            $request->filled('religion') &&
+    $request->gender !== 'all',
+            fn ($q) =>
+            $q->where('religion', $request->religion)
+        );
+
+		$query->when(
+            $request->filled('blood_group') &&
+    $request->gender !== 'all',
+            fn ($q) =>
+            $q->where('blood_group', $request->blood_group)
+        );
+
         $query->when(
-            $request->filled('marital_status'),
+            $request->filled('marital_status') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->where('marital_status', $request->marital_status)
         );
 
         $query->when(
-            $request->filled('status'),
+            $request->filled('status') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->where('status', $request->status)
         );
@@ -74,7 +95,8 @@ class StudentReportApiController extends Controller
         */
 
         $query->when(
-            $request->filled('year_id'),
+            $request->filled('year_id') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
                 $sub->where('year_id', $request->year_id);
@@ -82,7 +104,8 @@ class StudentReportApiController extends Controller
         );
 
         $query->when(
-            $request->filled('class_term_id'),
+            $request->filled('class_term_id') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
                 $sub->where('class_term_id', $request->class_term_id);
@@ -90,7 +113,8 @@ class StudentReportApiController extends Controller
         );
 
         $query->when(
-            $request->filled('section_term_id'),
+            $request->filled('section_term_id') &&
+    $request->gender !== 'all',
             fn ($q) =>
             $q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
                 $sub->where('section_term_id', $request->section_term_id);
@@ -104,22 +128,22 @@ class StudentReportApiController extends Controller
         */
 
         $query->when(
-            $request->filled('admission_date_from'),
+            $request->filled('date_1'),
             fn ($q) =>
             $q->whereDate(
                 'admission_date',
                 '>=',
-                $request->admission_date_from
+                $request->date_1
             )
         );
 
         $query->when(
-            $request->filled('admission_date_to'),
+            $request->filled('date_2'),
             fn ($q) =>
             $q->whereDate(
                 'admission_date',
                 '<=',
-                $request->admission_date_to
+                $request->date_2
             )
         );
 

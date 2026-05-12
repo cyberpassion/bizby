@@ -5,11 +5,12 @@ namespace Modules\Student\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+
 use Modules\Student\Models\Student;
 use Modules\Student\Models\StudentFeeSubmission;
 use Modules\Student\Models\StudentFeeSubmissionItem;
 use Modules\Student\Models\StudentFeeStructure;
-use Illuminate\Support\Facades\DB;
 
 class StudentFeeSubmissionApiController extends Controller
 {
@@ -20,224 +21,296 @@ class StudentFeeSubmissionApiController extends Controller
      */
     public function store(int $id, Request $request)
     {
-        $student = Student::with('currentAcademicHistory')->findOrFail($id);
+        /*
+        |--------------------------------------------------------------------------
+        | Student
+        |--------------------------------------------------------------------------
+        */
+
+        $student = Student::with(
+            'currentAcademicHistory'
+        )->findOrFail($id);
 
         if (!$student->currentAcademicHistory) {
+
             return response()->json([
+
                 'status' => 'error',
-                'message' => 'Student has no current academic history',
+
+                'message' =>
+                    'Student has no current academic history',
+
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $history = $student->currentAcademicHistory;
+        /*
+        |--------------------------------------------------------------------------
+        | Validate
+        |--------------------------------------------------------------------------
+        */
 
-        // Validate request
         $data = $request->validate([
+
             'year_id' => 'required|integer',
+
             'class_term_id' => 'required|integer',
+
             'section_term_id' => 'required|integer',
+
             'remarks' => 'nullable|string',
-            'allocations' => 'required|array', // [fee_structure_id => amount]
-            'periods' => 'required|array',     // [fee_structure_id => {period => amount}]
+
+            // [fee_structure_id => amount]
+            'allocations' => 'required|array',
+
+            // [fee_structure_id => {period => amount}]
+            'periods' => 'required|array',
         ]);
 
         DB::beginTransaction();
+
         try {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Preload Fee Structures
+            |--------------------------------------------------------------------------
+            */
+
+            $fees = StudentFeeStructure::whereIn(
+
+                'id',
+
+                array_keys($data['allocations'])
+
+            )->get()->keyBy('id');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Calculate Totals
+            |--------------------------------------------------------------------------
+            */
+
             $totalAmount = 0;
+
             $totalDiscount = 0;
+
             $amountReceived = 0;
 
-            // 1️⃣ Create main submission record
-            $submission = StudentFeeSubmission::create([
-                'student_id' => $student->id,
-                'year_id' => $data['year_id'],
-                'class_term_id' => $data['class_term_id'],
-                'section_term_id' => $data['section_term_id'],
-                'total_amount' => 0, // temporary, update later
-                'total_discount' => 0,
-                'amount_received' => 0,
-                'remarks' => $data['remarks'] ?? null,
-            ]);
+            foreach (
+                $data['allocations']
+                as
+                $feeId => $periodAmounts
+            ) {
 
-            // 2️⃣ Create submission items
-            foreach ($data['allocations'] as $feeId => $periodAmounts) {
+                $paidAmount =
+                    array_sum($periodAmounts);
 
-			    $paidAmount = array_sum($periodAmounts);
-			    $periodPaid = $data['periods'][$feeId] ?? [];
+                $discountApplied = 0;
 
-			    $fee = StudentFeeStructure::findOrFail($feeId);
-			    $discountApplied = 0;
+                $totalAmount +=
+                    $paidAmount + $discountApplied;
 
-			    StudentFeeSubmissionItem::create([
-			        'fee_submission_id' => $submission->id,
-        			'fee_structure_id' => $feeId,
-		    	    'payable_amount' => $paidAmount + $discountApplied,
-        			'discount_applied' => $discountApplied,
-		        	'paid_amount' => $paidAmount,
-        			'selected_periods' => $periodPaid, // JSON
-			    ]);
+                $totalDiscount +=
+                    $discountApplied;
 
-			    $totalAmount += $paidAmount + $discountApplied;
-			    $totalDiscount += $discountApplied;
-    			$amountReceived += $paidAmount;
-			}
+                $amountReceived +=
+                    $paidAmount;
+            }
 
-            // 3️⃣ Update totals in main submission
-            $submission->update([
-                'total_amount' => $totalAmount,
-                'total_discount' => $totalDiscount,
-                'amount_received' => $amountReceived,
-            ]);
+            /*
+            |--------------------------------------------------------------------------
+            | Create Main Submission
+            |--------------------------------------------------------------------------
+            */
+
+            $submission =
+                StudentFeeSubmission::create([
+
+                    'student_id' =>
+                        $student->id,
+
+                    'year_id' =>
+                        $data['year_id'],
+
+                    'class_term_id' =>
+                        $data['class_term_id'],
+
+                    'section_term_id' =>
+                        $data['section_term_id'],
+
+                    'total_amount' =>
+                        $totalAmount,
+
+                    'total_discount' =>
+                        $totalDiscount,
+
+                    'amount_received' =>
+                        $amountReceived,
+
+                    'remarks' =>
+                        $data['remarks'] ?? null,
+                ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Create Submission Items
+            |--------------------------------------------------------------------------
+            */
+
+            foreach (
+                $data['allocations']
+                as
+                $feeId => $periodAmounts
+            ) {
+
+                $paidAmount =
+                    array_sum($periodAmounts);
+
+                $periodPaid =
+                    $data['periods'][$feeId] ?? [];
+
+                $discountApplied = 0;
+
+                $fee =
+                    $fees[$feeId] ?? null;
+
+                if (!$fee) {
+
+                    throw new \Exception(
+                        'Fee structure not found.'
+                    );
+                }
+
+                StudentFeeSubmissionItem::create([
+
+                    'fee_submission_id' =>
+                        $submission->id,
+
+                    'fee_structure_id' =>
+                        $feeId,
+
+                    'payable_amount' =>
+                        $paidAmount + $discountApplied,
+
+                    'discount_applied' =>
+                        $discountApplied,
+
+                    'paid_amount' =>
+                        $paidAmount,
+
+                    'selected_periods' =>
+                        $periodPaid,
+                ]);
+            }
 
             DB::commit();
 
             return response()->json([
+
                 'status' => 'success',
-                'message' => 'Fee submission saved successfully',
-                'data' => $submission->load('items'),
+
+                'message' =>
+                    'Fee submission saved successfully',
+
+                'data' => $submission->load([
+
+                    'items:id,fee_submission_id,fee_structure_id,payable_amount,discount_applied,paid_amount,selected_periods',
+                ]),
+
             ], Response::HTTP_CREATED);
 
         } catch (\Exception $e) {
+
             DB::rollBack();
+
             return response()->json([
+
                 'status' => 'error',
-                'message' => 'Failed to save fee submission: ' . $e->getMessage(),
+
+                'message' =>
+                    'Failed to save fee submission: '
+                    .
+                    $e->getMessage(),
+
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-	public function reverse(Request $request, int $id)
-	{
-    	$validated = $request->validate([
-
-	        'reason' => [
-    	        'required',
-        	    'string',
-	        ],
-    	]);
-
-	    $submission = StudentFeeSubmission::findOrFail($id);
-
-	    /*
-    	|--------------------------------------------------------------------------
-	    | Already Reversed
-    	|--------------------------------------------------------------------------
-	    */
-
-	    if ($submission->fee_status === 'reversed') {
-
-	        return response()->json([
-
-    	        'status' => 'error',
-
-        	    'message' =>
-            	    'Fee submission already reversed.',
-
-	        ], Response::HTTP_UNPROCESSABLE_ENTITY);
-    	}
-
-	    /*
-    |--------------------------------------------------------------------------
-    | Reverse
-    |--------------------------------------------------------------------------
-    */
-
-    $submission->update([
-
-        'fee_status' => 'reversed',
-
-        'reversed_at' => now(),
-
-        'reversed_by' => auth()->id(),
-
-        'reversal_reason' =>
-            $validated['reason'],
-    ]);
-
-    return response()->json([
-
-        'status' => 'success',
-
-        'message' =>
-            'Fee submission reversed successfully.',
-
-        'data' => $submission,
-
-    ]);
-}
-
-public function reverseFeeSubmission(
-    Request $request,
-    $id
-)
-{
-    $validated = $request->validate([
-
-        'reason' => [
-            'required',
-            'string',
-        ],
-    ]);
-
-    $submission =
-        StudentFeeSubmission::findOrFail($id);
-
     /*
     |--------------------------------------------------------------------------
-    | Already Reversed
+    | Reverse Fee Submission
     |--------------------------------------------------------------------------
     */
 
-    if (
-        $submission->fee_status
-        ===
-        'reversed'
-    ) {
+    public function reverse(Request $request, int $id)
+    {
+        $validated = $request->validate([
+
+            'reason' => [
+                'required',
+                'string',
+            ],
+        ]);
+
+        $submission =
+            StudentFeeSubmission::findOrFail($id);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Already Reversed
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $submission->fee_status
+            ===
+            'reversed'
+        ) {
+
+            return response()->json([
+
+                'status' => 'error',
+
+                'message' =>
+                    'Fee submission already reversed.',
+
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reverse
+        |--------------------------------------------------------------------------
+        */
+
+        $submission->update([
+
+            'fee_status' =>
+                'reversed',
+
+            'reversed_at' =>
+                now(),
+
+            'reversed_by' =>
+                auth()->id(),
+
+            'reversal_reason' =>
+                $validated['reason'],
+        ]);
 
         return response()->json([
 
-            'status' => 'error',
+            'status' => 'success',
 
             'message' =>
-                'Fee submission already reversed.',
+                'Fee submission reversed successfully.',
 
-        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            'data' => $submission,
+
+        ], Response::HTTP_OK);
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Reverse
-    |--------------------------------------------------------------------------
-    */
-
-    $submission->update([
-
-        'fee_status' =>
-            'reversed',
-
-        'reversed_at' =>
-            now(),
-
-        'reversed_by' =>
-            auth()->id(),
-
-        'reversal_reason' =>
-            $validated['reason'],
-    ]);
-
-    return response()->json([
-
-        'status' => 'success',
-
-        'message' =>
-            'Fee submission reversed successfully.',
-
-        'data' => $submission,
-
-    ], Response::HTTP_OK);
-}
-
-/*
     |--------------------------------------------------------------------------
     | Fee Collection Detail
     |--------------------------------------------------------------------------
@@ -245,44 +318,48 @@ public function reverseFeeSubmission(
 
     public function show($id)
     {
-        $submission = StudentFeeSubmission::query()
+        $submission =
+            StudentFeeSubmission::query()
 
-            ->with([
+                ->with([
 
-                /*
-                |--------------------------------------------------------------------------
-                | Student
-                |--------------------------------------------------------------------------
-                */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Student
+                    |--------------------------------------------------------------------------
+                    */
 
-                'student:id,name,admission_number,phone',
+                    'student:id,name,admission_number,phone',
 
-                /*
-                |--------------------------------------------------------------------------
-                | Academic
-                |--------------------------------------------------------------------------
-                */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Academic
+                    |--------------------------------------------------------------------------
+                    */
 
-                'academicYear:id,name',
+                    'academicYear:id,name',
 
-                'classTerm:id,name',
+                    'classTerm:id,name',
 
-                'sectionTerm:id,name',
+                    'sectionTerm:id,name',
 
-                /*
-                |--------------------------------------------------------------------------
-                | Items
-                |--------------------------------------------------------------------------
-                */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Items
+                    |--------------------------------------------------------------------------
+                    */
 
-                'items',
-            ])
+                    'items:id,fee_submission_id,fee_structure_id,payable_amount,discount_applied,paid_amount,selected_periods',
+                ])
 
-            ->findOrFail($id);
+                ->findOrFail($id);
 
         return response()->json([
+
             'status' => 'success',
-            'data'   => $submission,
+
+            'data' => $submission,
+
         ], Response::HTTP_OK);
     }
 
@@ -294,81 +371,98 @@ public function reverseFeeSubmission(
 
     public function receipt($id)
     {
-        $submission = StudentFeeSubmission::query()
+        $submission =
+            StudentFeeSubmission::query()
 
-            ->with([
+                ->with([
 
-                'student:id,name,admission_number,phone',
+                    'student:id,name,admission_number,phone',
 
-                'academicYear:id,name',
+                    'academicYear:id,name',
 
-                'classTerm:id,name',
+                    'classTerm:id,name',
 
-                'sectionTerm:id,name',
+                    'sectionTerm:id,name',
 
-                'items',
-            ])
+                    'items:id,fee_submission_id,fee_structure_id,payable_amount,discount_applied,paid_amount,selected_periods',
+                ])
 
-            ->findOrFail($id);
+                ->findOrFail($id);
 
         /*
-|--------------------------------------------------------------------------
-| Month Summary
-|--------------------------------------------------------------------------
-*/
+        |--------------------------------------------------------------------------
+        | Month Summary
+        |--------------------------------------------------------------------------
+        */
 
-$months = collect($submission->items)
+        $months = $submission->items
 
-    ->flatMap(function ($item) {
+            ->flatMap(function ($item) {
 
-        return collect($item->selected_periods ?? [])
+                return collect(
+                    $item->selected_periods ?? []
+                )
 
-            ->map(function ($amount, $period) use ($item) {
+                    ->map(function (
+                        $amount,
+                        $period
+                    ) use ($item) {
+
+                        return [
+
+                            'month' =>
+                                strtoupper($period),
+
+                            'payable' =>
+                                (float) $item->payable_amount,
+
+                            'paid' =>
+                                (float) $item->paid_amount,
+
+                            'discount' =>
+                                (float) $item->discount_applied,
+
+                            'balance' =>
+
+                                (float) $item->payable_amount
+
+                                -
+
+                                (
+
+                                    (float) $item->paid_amount
+
+                                    +
+
+                                    (float) $item->discount_applied
+                                ),
+                        ];
+                    });
+            })
+
+            ->groupBy('month')
+
+            ->map(function ($items, $month) {
 
                 return [
 
-                    'month' => strtoupper($period),
+                    'month' => $month,
 
                     'payable' =>
-                        (float) $item->payable_amount,
+                        $items->sum('payable'),
 
                     'paid' =>
-                        (float) $item->paid_amount,
+                        $items->sum('paid'),
 
                     'discount' =>
-                        (float) $item->discount_applied,
+                        $items->sum('discount'),
 
                     'balance' =>
-                        (float) $item->payable_amount
-                        -
-                        (
-                            (float) $item->paid_amount
-                            +
-                            (float) $item->discount_applied
-                        ),
+                        $items->sum('balance'),
                 ];
-            });
-    })
+            })
 
-    ->groupBy('month')
-
-    ->map(function ($items, $month) {
-
-        return [
-
-            'month' => $month,
-
-            'payable' => $items->sum('payable'),
-
-            'paid' => $items->sum('paid'),
-
-            'discount' => $items->sum('discount'),
-
-            'balance' => $items->sum('balance'),
-        ];
-    })
-
-    ->values();
+            ->values();
 
         return response()->json([
 
@@ -382,9 +476,11 @@ $months = collect($submission->items)
                 |--------------------------------------------------------------------------
                 */
 
-                'id' => $submission->id,
+                'id' =>
+                    $submission->id,
 
-                'receipt_no' => $submission->receipt_no,
+                'receipt_no' =>
+                    $submission->receipt_no,
 
                 /*
                 |--------------------------------------------------------------------------
@@ -468,5 +564,4 @@ $months = collect($submission->items)
 
         ], Response::HTTP_OK);
     }
-
 }

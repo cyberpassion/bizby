@@ -49,7 +49,6 @@ class TenantAdminService
                         'tenant_id' => $tenant->id,
                     ],
                     [
-                        'role_id'    => 1,
                         'updated_at' => now(),
                         'created_at' => now(),
                     ]

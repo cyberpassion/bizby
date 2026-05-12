@@ -1,4 +1,8 @@
 <?php
+
+use Modules\Employee\Support\Res;
+use Modules\Shared\Support\KeyName;
+
 $pg = 'employee';
 
 return [
@@ -41,57 +45,59 @@ return [
 	// Default Columns
 	"columns" => [
 
-    'list' => [
-        'id'              => 'ID',
-        'name'            => 'Name',
-        'employee_type_label'   => 'Type',
-        'designation_label'     => 'Designation',
-        'address'         => 'Address',
-        'dob'             => 'Date of Birth',
-        'status_label'          => 'Status',
-    ],
+		KeyName::make(Res::EMPLOYEES) => [
+		    'list' => [
+    		    'id'              => 'ID',
+        		'name'            => 'Name',
+	        	'employee_type_label'   => 'Type',
+		        'designation_label'     => 'Designation',
+    		    'address'         => 'Address',
+        		'dob'             => 'Date of Birth',
+        		'status_label'          => 'Status',
+		    ],
 
-    'detail' => [
-        'id'              => 'ID',
-        'name'            => 'Name',
-        'employee_type_label'   => 'Type',
-        'designation_label'     => 'Designation',
-        'address'         => 'Address',
-        'dob'             => 'Date of Birth',
-        'status_label'          => 'Status',
-    ],
+		    'detail' => [
+    		    'id'              => 'ID',
+        		'name'            => 'Name',
+	        	'employee_type_label'   => 'Type',
+	    	    'designation_label'     => 'Designation',
+    	    	'address'         => 'Address',
+        		'dob'             => 'Date of Birth',
+        		'status_label'          => 'Status',
+		    ],
 
-    'report' => [
-        'id'              => 'ID',
-        'name'            => 'Name',
-        'employee_type_label'   => 'Type',
-        'designation_label'     => 'Designation',
-        'address'         => 'Address',
-        'dob'             => 'Date of Birth',
-        'status_label'          => 'Status',
-    ],
+		    'report' => [
+    		    'id'              => 'ID',
+        		'name'            => 'Name',
+	        	'employee_type_label'   => 'Type',
+	    	    'designation_label'     => 'Designation',
+    	    	'address'         => 'Address',
+	    	    'dob'             => 'Date of Birth',
+    	    	'status_label'          => 'Status',
+		    ],
 
-    'sample_export' => [
-        'sno',
-        'name',
-        'employee_type',
-        'designation',
-        'address',
-        'dob',
-        'phone',
-        'email',
-    ],
+		    'sample_export' => [
+    		    'sno',
+        		'name',
+	        	'employee_type',
+	    	    'designation',
+    	    	'address',
+	    	    'dob',
+    	    	'phone',
+        		'email',
+		    ],
 
-    'selected_columns' => [
-        'name',
-        'employee_type',
-        'designation',
-        'address',
-        'dob',
-        'phone',
-        'email',
-    ],
-],
+		    'selected_columns' => [
+    		    'name',
+        		'employee_type',
+	        	'designation',
+	    	    'address',
+    	    	'dob',
+        		'phone',
+        		'email',
+    		]
+		]
+	],
 
 	// Uploads
 	'uploads' => [

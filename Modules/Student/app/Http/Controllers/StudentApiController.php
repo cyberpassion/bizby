@@ -17,99 +17,99 @@ class StudentApiController extends Controller
      * List all students with current academic history
      */
     /**
- * List Students
- */
-public function index(Request $request)
-{
-    $query = Student::query()
-        ->with([
-            'currentAcademicHistory.academicYear:id,name',
-            'currentAcademicHistory.classTerm:id,name',
-            'currentAcademicHistory.sectionTerm:id,name',
-        ]);
+	 * List Students
+	 */
+	public function index(Request $request)
+	{
+	    $query = Student::query()
+    	    ->with([
+        	    'currentAcademicHistory.academicYear:id,name',
+            	'currentAcademicHistory.classTerm:id,name',
+            	'currentAcademicHistory.sectionTerm:id,name',
+	        ]);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Lightweight Academic Filters
-    |--------------------------------------------------------------------------
-    */
+    	/*
+	    |--------------------------------------------------------------------------
+    	| Lightweight Academic Filters
+    	|--------------------------------------------------------------------------
+	    */
 
-	$query->when(
-	    $request->filled('year_id') &&
-    	$request->year_id !== 'all',
+		$query->when(
+		    $request->filled('year_id') &&
+    		$request->year_id !== 'all',
 
-	    fn ($q) =>
-    	$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
-        	$sub->where('year_id', $request->year_id);
-    	})
-	);
+		    fn ($q) =>
+    		$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
+        		$sub->where('year_id', $request->year_id);
+    		})
+		);
 
-    $query->when(
-	    $request->filled('class_term_id') &&
-    	$request->class_term_id !== 'all',
+	    $query->when(
+		    $request->filled('class_term_id') &&
+    		$request->class_term_id !== 'all',
 
-	    fn ($q) =>
-    	$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
-        	$sub->where('class_term_id', $request->class_term_id);
-    	})
-	);
+		    fn ($q) =>
+    		$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
+        		$sub->where('class_term_id', $request->class_term_id);
+    		})
+		);
 
-	$query->when(
-    	$request->filled('section_term_id') &&
-	    $request->section_term_id !== 'all',
+		$query->when(
+	    	$request->filled('section_term_id') &&
+		    $request->section_term_id !== 'all',
 
-	    fn ($q) =>
-    	$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
-        	$sub->where('section_term_id', $request->section_term_id);
-    	})
-	);
+		    fn ($q) =>
+    		$q->whereHas('currentAcademicHistory', function ($sub) use ($request) {
+        		$sub->where('section_term_id', $request->section_term_id);
+    		})
+		);
 
-	$query->when(
-    	$request->filled('status') &&
-	    $request->status !== 'all',
+		$query->when(
+	    	$request->filled('status') &&
+		    $request->status !== 'all',
 
-	    fn ($q) =>
-    	$q->where('status', $request->status)
-	);
+		    fn ($q) =>
+    		$q->where('status', $request->status)
+		);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Lightweight Student Filters
-    |--------------------------------------------------------------------------
-    */
+	    /*
+    	|--------------------------------------------------------------------------
+	    | Lightweight Student Filters
+    	|--------------------------------------------------------------------------
+    	*/
 
-    $query->when(
-	    $request->filled('status') &&
-    	$request->status !== 'all',
+	    $query->when(
+		    $request->filled('status') &&
+    		$request->status !== 'all',
 
-	    fn ($q) =>
-    	$q->where('status', $request->status)
-	);
+		    fn ($q) =>
+    		$q->where('status', $request->status)
+		);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Sorting
-    |--------------------------------------------------------------------------
-    */
+	    /*
+    	|--------------------------------------------------------------------------
+	    | Sorting
+    	|--------------------------------------------------------------------------
+	    */
 
-    $query->latest();
+	    $query->latest();
 
-    /*
-    |--------------------------------------------------------------------------
-    | Result
-    |--------------------------------------------------------------------------
-    */
+	    /*
+	    |--------------------------------------------------------------------------
+    	| Result
+   		|--------------------------------------------------------------------------
+	    */
 
-    $result = $query->paginate(
-        $request->get('per_page', 20)
-    );
+	    $result = $query->paginate(
+    	    $request->get('per_page', 20)
+    	);
 
-    return response()->json([
-        'status'  => 'success',
-        'message' => 'Records fetched successfully.',
-        'data'    => $result
-    ], Response::HTTP_OK);
-}
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Records fetched successfully.',
+	        'data'    => $result
+    	], Response::HTTP_OK);
+	}
 
     /**
      * Store a new student with academic history

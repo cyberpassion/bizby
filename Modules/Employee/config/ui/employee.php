@@ -4,6 +4,7 @@ use Modules\Shared\Support\UrlPath;
 use Modules\Shared\Support\Permission;
 use Modules\Employee\Support\Res;
 use Modules\Employee\Support\Actions;
+use Modules\Shared\Support\KeyName;
 
 $pg = 'employee';
 
@@ -103,45 +104,46 @@ return [
     */
     'single-actions' => [
 
-        Actions::LIST => [
+		KeyName::make(Res::EMPLOYEES) => [
+			Actions::LIST => [
+	            [
+    	            'title'      => 'View Documents',
+        	        'href'       => UrlPath::makeDocuments($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'document',
+	            ],
 
-            [
-                'title'      => 'View Documents',
-                'href'       => UrlPath::makeDocuments($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'document',
-            ],
+				[
+    	            'title'      => 'View Profile',
+        	        'href'       => UrlPath::makeProfile($pg, '{id}'),
+            	    'permission' => Permission::view(Res::EMPLOYEES),
+                	'action'     => 'view',
+	            ],
 
-			[
-                'title'      => 'View Profile',
-                'href'       => UrlPath::makeProfile($pg, '{id}'),
-                'permission' => Permission::view(Res::EMPLOYEES),
-                'action'     => 'view',
-            ],
+	            [
+    	            'title'      => 'Edit',
+        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	    'permission' => Permission::update(Res::EMPLOYEES),
+                	'action'     => 'update',
+	            ],
 
-            [
-                'title'      => 'Edit',
-                'href'       => UrlPath::makeUpdate($pg, '{id}'),
-                'permission' => Permission::update(Res::EMPLOYEES),
-                'action'     => 'update',
-            ],
+	            [
+    	            'title'      => 'Upload',
+        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
+            	    'permission' => Permission::create(Res::UPLOADS),
+                	'action'     => 'upload',
+	            ],
 
-            [
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::UPLOADS),
-                'action'     => 'upload',
-            ],
-
-            [
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($pg, '{id}'),
-                'permission' => Permission::delete(Res::EMPLOYEES),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
-        ]
+	            [
+    	            'title'      => 'Delete',
+        	        'href'       => UrlPath::makeDelete($pg, '{id}'),
+            	    'permission' => Permission::delete(Res::EMPLOYEES),
+                	'action'     => 'delete',
+                	'method'     => 'DELETE',
+                	'variant'    => 'danger',
+            	],
+        	]
+		]
 
     ],
 
@@ -152,32 +154,33 @@ return [
     */
     'filters' => [
 
-        Actions::LIST => [
+		KeyName::make(Res::EMPLOYEES) => [
+			Actions::LIST => [
+	            [
+    	            'type'        => 'select',
+        	        'name'        => 'employee_type',
+            	    'placeholder' => 'Type',
+                	'col'         => 3,
+                	'dataKey'     => 'employee.types',
+	            ],
 
-            [
-                'type'        => 'select',
-                'name'        => 'employee_type',
-                'placeholder' => 'Type',
-                'col'         => 3,
-                'dataKey'     => 'employee.types',
-            ],
+	            [
+    	            'type'        => 'select',
+        	        'name'        => 'designation',
+            	    'placeholder' => 'Designation',
+                	'col'         => 3,
+	                'dataKey'     => 'employee.designations',
+    	        ],
 
-            [
-                'type'        => 'select',
-                'name'        => 'designation',
-                'placeholder' => 'Designation',
-                'col'         => 3,
-                'dataKey'     => 'employee.designations',
-            ],
-
-            [
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'employee.statuses',
-            ],
-        ]
+	            [
+    	            'type'        => 'select',
+        	        'name'        => 'status',
+            	    'placeholder' => 'Status',
+                	'col'         => 3,
+                	'dataKey'     => 'employee.statuses',
+            	],
+        	]
+		]
 
     ],
 

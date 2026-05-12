@@ -18,6 +18,9 @@ return new class extends Migration
             // optional but recommended
             $table->string('guard')->default('web');
 
+			$table->string('type')->nullable();
+			$table->json('meta')->nullable();
+
             $table->timestamps();
 
             $table->unique(['name', 'tenant_id']);

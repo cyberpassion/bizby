@@ -35,6 +35,11 @@ class StudentFeeDiscountApiController extends SharedApiController
     {
         return [
 
+			'student_fee_structure_id' => [
+	            'nullable',
+    	        'integer',
+        	],
+
             'name' => [
                 'required',
                 'string',
@@ -81,6 +86,26 @@ class StudentFeeDiscountApiController extends SharedApiController
 
         $validated['year_id'] =
             $request->year_id;
+
+		$exists = StudentFeeDiscount::query()
+
+		    ->where('student_id', $id)
+
+		    ->where('year_id', $request->year_id)
+
+		    ->where(
+		        'student_fee_structure_id',
+        		$request->student_fee_structure_id
+    		)
+
+		    ->exists();
+
+		if ($exists) {
+		    return response()->json([
+		        'status' => 'error',
+		        'message' => 'Discount already exists for this fee head.',
+		    ], Response::HTTP_UNPROCESSABLE_ENTITY);
+		}
 
         $discount = StudentFeeDiscount::create(
             $validated

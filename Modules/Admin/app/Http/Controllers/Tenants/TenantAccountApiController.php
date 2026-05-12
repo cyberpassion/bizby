@@ -49,11 +49,15 @@ class TenantAccountApiController extends SharedApiController
             'settings'   => 'nullable|array',
         ]);
 
+		logger('Reached before tenant account creation', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+
         // 1️⃣ Create BUSINESS tenant (central DB)
         $tenantAccount = TenantAccount::create([
             ...$data,
             'status' => 'draft',
         ]);
+
+		logger('Reached after tenant account creation', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 
         return response()->json([
             'status'  => 'success',
@@ -94,6 +98,8 @@ class TenantAccountApiController extends SharedApiController
 		    'operation'   => OperationType::PROVISION,
     		'status'      => InstallationStatus::PENDING,
 		]);
+
+		logger('Testing: Reached before dispatch', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 
 		ProvisionTenantJob::dispatch($install->id);
 	    //ProvisionTenantJob::dispatch($tenant->id);

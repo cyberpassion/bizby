@@ -30,7 +30,11 @@ class Student extends Model implements Payable, FinalizePayment
     	'section_name',
 	];
 
-    public function academicHistories()
+	protected $hidden = [
+  		'currentAcademicHistory'
+	];
+
+	public function academicHistories()
 	{
     	return $this->hasMany(StudentAcademicHistory::class);
 	}

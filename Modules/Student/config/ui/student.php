@@ -84,6 +84,16 @@ return [
                             'href'       => UrlPath::make($pg, 'fee-structure'),
                             'permission' => Permission::update(Res::FEES),
                         ],
+						[
+                            'title'      => 'Fee Discounts',
+                            'href'       => UrlPath::make($pg, 'fee-discounts'),
+                            'permission' => Permission::update(Res::FEES),
+                        ],
+						[
+                            'title'      => 'Fee Overrides',
+                            'href'       => UrlPath::make($pg, 'fee-structure-overrides'),
+                            'permission' => Permission::update(Res::FEES),
+                        ],
                     ],
                 ],
 
@@ -166,77 +176,111 @@ return [
     'single-actions' => [
 
         KeyName::make(Res::STUDENTS) => [
-            [
-                'title'      => 'View Documents',
-                'href'       => UrlPath::makeDocuments($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'document',
-            ],
+			Actions::LIST => [
+	            [
+    	            'title'      => 'View Documents',
+        	        'href'       => UrlPath::makeDocuments($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'document',
+	            ],
 
-            [
-                'title'      => 'Edit',
-                'href'       => UrlPath::makeUpdate($pg, '{id}'),
-                'permission' => Permission::update(Res::STUDENTS),
-                'action'     => 'update',
-            ],
+	            [
+    	            'title'      => 'Edit',
+        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	    'permission' => Permission::update(Res::STUDENTS),
+                	'action'     => 'update',
+	            ],
 
-			[
-				'title'      => 'Fee',
-                'href'       => '#',
-                'permission' => Permission::update(Res::STUDENTS),
-                'action'     => 'update',
-				'items'		=>	[
-					[
-		                'title'      => 'Submit Fee',
-        		        'href'       => UrlPath::make($pg, '/fee-submission/{id}'),
-                		'permission' => Permission::update(Res::STUDENTS),
-    		            'action'     => 'update',
-	        	    ],
-					[
-		                'title'      => 'Fee History',
-        		        'href'       => UrlPath::make($pg, '/fee-history/{id}'),
-                		'permission' => Permission::update(Res::STUDENTS),
-    		            'action'     => 'update',
-	        	    ],
-					[
-		                'title'      => 'Add Fee Discount',
-        		        'href'       => UrlPath::make($pg, '/fee-discount/{id}'),
-                		'permission' => Permission::update(Res::STUDENTS),
-    		            'action'     => 'update',
-	        	    ],
-					[
-		                'title'      => 'Custom Fee Structure',
-        		        'href'       => UrlPath::make($pg, '/fee-structure?student_id={id}'),
-                		'permission' => Permission::update(Res::STUDENTS),
-    		            'action'     => 'update',
-	        	    ],
-				]
-			],
+				[
+					'title'      => 'Fee',
+        	        'href'       => '#',
+            	    'permission' => Permission::update(Res::STUDENTS),
+                	'action'     => 'update',
+					'items'		=>	[
+						[
+		                	'title'      => 'Submit Fee',
+	        		        'href'       => UrlPath::make($pg, '/fee-submission/{id}'),
+    	            		'permission' => Permission::update(Res::STUDENTS),
+    			            'action'     => 'update',
+	        		    ],
+						[
+		            	    'title'      => 'Fee History',
+        		        	'href'       => UrlPath::make($pg, '/fee-history/{id}'),
+	                		'permission' => Permission::update(Res::STUDENTS),
+    			            'action'     => 'update',
+	    	    	    ],
+						[
+		        	        'title'      => 'Add Fee Discount',
+        		    	    'href'       => UrlPath::make($pg, '/fee-discount/{id}'),
+                			'permission' => Permission::update(Res::STUDENTS),
+    		            	'action'     => 'update',
+		        	    ],
+						[
+			                'title'      => 'Custom Fee Structure',
+        			        'href'       => UrlPath::make($pg, '/fee-structure?student_id={id}'),
+                			'permission' => Permission::update(Res::STUDENTS),
+    		        	    'action'     => 'update',
+	        	    	],
+					]
+				],
 
-            [
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::UPLOADS),
-                'action'     => 'upload',
-            ],
+	            [
+     	           'title'      => 'Upload',
+        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
+            	    'permission' => Permission::create(Res::UPLOADS),
+                	'action'     => 'upload',
+            	],
 
-            [
-                'title'      => 'View Profile',
-                'href'       => UrlPath::makeProfile($pg, '{id}'),
-                'permission' => Permission::view(Res::STUDENTS),
-                'action'     => 'view',
-            ],
+	            [
+    	            'title'      => 'View Profile',
+        	        'href'       => UrlPath::makeProfile($pg, '{id}'),
+            	    'permission' => Permission::view(Res::STUDENTS),
+                	'action'     => 'view',
+	            ],
 
-            [
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($pg, '{id}'),
-                'permission' => Permission::delete(Res::STUDENTS),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
-        ],
-		KeyName::make(Res::ACADEMIC_YEARS) => []
+	            [
+    	            'title'      => 'Delete',
+        	        'href'       => UrlPath::makeDelete($pg, '{id}'),
+            	    'permission' => Permission::delete(Res::STUDENTS),
+                	'action'     => 'delete',
+	                'method'     => 'DELETE',
+    	            'variant'    => 'danger',
+        	    ],
+        	]
+		],
+		KeyName::make(Res::ACADEMIC_YEARS) => [],
+		KeyName::make(Res::FEE_DISCOUNTS) => [
+			Actions::LIST => [
+	            [
+    	            'title'      => 'View',
+        	        'href'       => UrlPath::makeDocuments($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'document',
+	            ],
+				[
+    	            'title'      => 'Edit',
+        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	    'permission' => Permission::update(Res::STUDENTS),
+                	'action'     => 'update',
+	            ],
+			]
+		],
+		KeyName::make(Res::FEE_OVERRIDES) => [
+			Actions::LIST => [
+	            [
+    	            'title'      => 'View',
+        	        'href'       => UrlPath::makeDocuments($pg, '{id}'),
+            	    'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'document',
+	            ],
+				[
+    	            'title'      => 'Edit',
+        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            	    'permission' => Permission::update(Res::STUDENTS),
+                	'action'     => 'update',
+	            ],
+			]
+		]
 
     ],
 

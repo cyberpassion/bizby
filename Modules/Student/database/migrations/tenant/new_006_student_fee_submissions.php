@@ -29,6 +29,9 @@ return new class extends Migration
 			    'cancelled',
 			])->default('completed');
 
+			$table->timestamp('paid_at')
+    			->nullable();
+
 			$table->timestamp('reversed_at')
     			->nullable();
 

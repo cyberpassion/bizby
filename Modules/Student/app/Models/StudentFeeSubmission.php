@@ -4,17 +4,101 @@ namespace Modules\Student\Models;
 
 use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class StudentFeeSubmission extends TenantModel
 {
 	use HasFactory;
 
-    protected $fillable = [];
+    /*
+    |--------------------------------------------------------------------------
+    | Mass Assignment
+    |--------------------------------------------------------------------------
+    |
+    | Includes:
+    | - commonSaasFields()
+    | - fee submission specific fields
+    |
+    */
 
-    protected $casts = [];
+    protected $fillable = [
 
-	protected $appends = [
+        /*
+        |--------------------------------------------------------------------------
+        | commonSaasFields()
+        |--------------------------------------------------------------------------
+        */
+
+        'tenant_id',
+
+        'status',
+
+        'created_by',
+        'updated_by',
+        'deleted_by',
+
+        'entry_source',
+        'entry_source_ref_id',
+
+        'remark',
+        'system_remark',
+
+        'meta',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fee Submission
+        |--------------------------------------------------------------------------
+        */
+
+        'student_id',
+
+        'year_id',
+
+        'class_term_id',
+        'section_term_id',
+
+        'total_amount',
+        'total_discount',
+        'amount_received',
+
+        'remarks',
+
+        'fee_status',
+
+		'paid_at',
+
+        'reversed_at',
+        'reversed_by',
+
+        'reversal_reason',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Casts
+    |--------------------------------------------------------------------------
+    */
+
+    protected $casts = [
+
+        'meta' => 'array',
+
+        'reversed_at' => 'datetime',
+		'paid_at'=> 'datetime'
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Appended Attributes
+    |--------------------------------------------------------------------------
+    |
+    | Disabled for performance reasons.
+    | Relationship-based appends can create N+1 query issues.
+    |
+    */
+
+	/*
+    protected $appends = [
 	    'student_name',
     	'phone',
 	    'father_name',
@@ -22,29 +106,30 @@ class StudentFeeSubmission extends TenantModel
     	'class_name',
     	'section_name',
 	];
+    */
 
-	// Relationship with submission items
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
+	// Fee submission items
     public function items()
     {
-        return $this->hasMany(StudentFeeSubmissionItem::class, 'fee_submission_id');
+        return $this->hasMany(
+            StudentFeeSubmissionItem::class,
+            'fee_submission_id'
+        );
     }
 
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
-
+	// Student
 	public function student()
 	{
     	return $this->belongsTo(Student::class);
 	}
 
+	// Academic year
 	public function academicYear()
 	{
     	return $this->belongsTo(
@@ -53,6 +138,7 @@ class StudentFeeSubmission extends TenantModel
     	);
 	}
 
+	// Class term
 	public function classTerm()
 	{
     	return $this->belongsTo(
@@ -61,6 +147,7 @@ class StudentFeeSubmission extends TenantModel
 	    )->where('group', 'classes');
 	}
 
+	// Section term
 	public function sectionTerm()
 	{
     	return $this->belongsTo(
@@ -68,6 +155,12 @@ class StudentFeeSubmission extends TenantModel
     	    'section_term_id'
     	)->where('group', 'sections');
 	}
+
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------
+    */
 
 	public function getStudentNameAttribute()
 	{
@@ -98,5 +191,4 @@ class StudentFeeSubmission extends TenantModel
 	{
     	return $this->sectionTerm?->name;
 	}
-
 }

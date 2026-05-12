@@ -4,32 +4,91 @@ namespace Modules\Student\Models;
 
 use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
 
 class StudentFeeSubmissionItem extends TenantModel
 {
 	use HasFactory;
 
-    protected $fillable = [];
+    /*
+    |--------------------------------------------------------------------------
+    | Mass Assignment
+    |--------------------------------------------------------------------------
+    |
+    | Includes:
+    | - commonSaasFields()
+    | - fee submission item fields
+    |
+    */
 
-	protected $casts = [
-        'selected_periods' => 'array', // automatically decode JSON
+    protected $fillable = [
+
+        /*
+        |--------------------------------------------------------------------------
+        | commonSaasFields()
+        |--------------------------------------------------------------------------
+        */
+
+        'tenant_id',
+
+        'status',
+
+        'created_by',
+        'updated_by',
+        'deleted_by',
+
+        'entry_source',
+        'entry_source_ref_id',
+
+        'remark',
+        'system_remark',
+
+        'meta',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fee Submission Item
+        |--------------------------------------------------------------------------
+        */
+
+        'fee_submission_id',
+
+        'fee_structure_id',
+
+        'payable_amount',
+
+        'discount_applied',
+
+        'paid_amount',
+
+        'selected_periods',
     ];
 
-    // Optional: link back to submission
+    /*
+    |--------------------------------------------------------------------------
+    | Casts
+    |--------------------------------------------------------------------------
+    */
+
+	protected $casts = [
+
+        // Automatically decode JSON
+        'selected_periods' => 'array',
+
+        'meta' => 'array',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
+    // Parent fee submission
     public function submission()
     {
-        return $this->belongsTo(StudentFeeSubmission::class, 'fee_submission_id');
-    }
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
+        return $this->belongsTo(
+            StudentFeeSubmission::class,
+            'fee_submission_id'
+        );
     }
 }

@@ -4,7 +4,7 @@ return [
 
     'SendLeadFollowupReminders' => [
         'module' => 'Lead',
-        'class' => \Modules\Lead\Jobs\SendLeadFollowupReminders::class,
+        'class' => Modules\Lead\Jobs\Schedules\SendLeadFollowupReminders::class,
 
         // UI-friendly name
         'name' => 'Lead Follow-up Reminder Notifications',
@@ -22,7 +22,7 @@ return [
 
     'MarkStaleLeads' => [
         'module' => 'Lead',
-        'class' => \Modules\Lead\Jobs\MarkStaleLeads::class,
+        'class' => Modules\Lead\Jobs\Schedules\MarkStaleLeads::class,
 
         'name' => 'Mark Inactive Leads as Stale',
 
@@ -38,7 +38,7 @@ return [
 
     'AutoAssignNewLeads' => [
         'module' => 'Lead',
-        'class' => \Modules\Lead\Jobs\AutoAssignNewLeads::class,
+        'class' => Modules\Lead\Jobs\Schedules\AutoAssignNewLeads::class,
 
         'name' => 'Auto-Assign New Leads to Sales Team',
 

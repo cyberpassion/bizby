@@ -17,7 +17,7 @@ class SendLeadFollowupReminders implements ShouldQueue
 
     public function handle(): void
     {
-        /*Lead::query()
+        Lead::query()
             ->whereNull('converted_at')
             ->whereNotNull('next_followup_at')
             ->whereDate('next_followup_at', '<=', now())
@@ -36,6 +36,6 @@ class SendLeadFollowupReminders implements ShouldQueue
                         'last_reminded_at' => now(),
                     ]);
                 }
-            });*/
+            });
     }
 }

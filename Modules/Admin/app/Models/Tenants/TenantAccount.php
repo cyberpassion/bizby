@@ -19,26 +19,24 @@ class TenantAccount extends Model implements Payable, FinalizePayment
 
 	protected $connection = 'central';
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = ['status'];
+	protected $fillable = [
+	    'name',
+    	'domain',
+	    'email',
+    	'phone',
+	    'plan',
+    	'valid_till',
+	    'api_key_hash',
+    	'api_key_last_used_at',
+	    'status',
+    	'grace_till',
+    	'settings',
+	];
 
     /**
      * Default attribute values
      */
     protected $attributes = [];
-
-	protected function dynamicFillable()
-    {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
-    }
-
-    public function getFillable()
-    {
-        return $this->dynamicFillable();
-    }
 
 	public function tenantusers()
 	{

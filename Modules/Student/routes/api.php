@@ -98,6 +98,11 @@ Route::prefix('v1')
             StudentFeeStructureOverrideApiController::class
         )->names('students.feeStructureOverrides');
 
+		Route::apiResource(
+            'students/fee-structure-overrides',
+            StudentFeeStructureOverrideApiController::class
+        )->names('students.feeStructureOverrides.index');
+
 		/*
 		|--------------------------------------------------------------------------
 		| FEE DISCOUNTS
@@ -118,6 +123,11 @@ Route::prefix('v1')
 		    'students/{id}/fee-discounts',
     		StudentFeeDiscountApiController::class
 		)->names('students.feeDiscounts');
+
+		Route::apiResource(
+            'students/fee-discounts',
+            StudentFeeDiscountApiController::class
+        )->names('students.feeDiscounts.index');
 
 		/*
 |--------------------------------------------------------------------------

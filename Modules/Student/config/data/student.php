@@ -1,8 +1,6 @@
 <?php
 
-use Modules\Shared\Support\UrlPath;
 use Modules\Shared\Support\KeyName;
-use Modules\Shared\Support\Permission;
 use Modules\Student\Support\Res;
 use Modules\Student\Support\Actions;
 
@@ -29,7 +27,7 @@ return [
 
 	KeyName::make(Res::STUDENTS) => [
 
-		'list' => [
+		Actions::LIST => [
 			'id'					=> 'ID',
 			'name'					=> 'Student Name',
 			'father_name'			=> 'Father',
@@ -102,65 +100,67 @@ return [
 
 	KeyName::make(Res::FEE_COLLECTIONS) => [
 
-		'list' => [
+		Actions::LIST => [
 			'id'					=> 'ID',
-			'receipt_no'			=> 'Receipt No',
 			'student_name'			=> 'Student',
+			'academic_year_name'	=> 'Session',
 			'class_name'			=> 'Class',
+			'section_name'			=> 'Section',
 			'payment_mode_label'	=> 'Payment Mode',
 			'amount_received'		=> 'Amount',
-			'payment_date'			=> 'Payment Date',
+			'paid_at'			=> 'Payment Date',
 			'status'				=> 'Status',
 		],
 
 		'detail' => [
 			'id'					=> 'ID',
-			'receipt_no'			=> 'Receipt No',
 			'student_name'			=> 'Student',
 			'admission_no'			=> 'Admission No',
+			'academic_year_name'	=> 'Session',
 			'class_name'			=> 'Class',
 			'section_name'			=> 'Section',
 			'payment_mode_label'	=> 'Payment Mode',
 			'total_amount'			=> 'Total Amount',
 			'total_discount'		=> 'Discount',
 			'amount_received'		=> 'Amount Received',
-			'payment_date'			=> 'Payment Date',
+			'paid_at'			=> 'Payment Date',
 			'remarks'				=> 'Remarks',
 			'status'				=> 'Status',
 		],
 
 		'report' => [
-			'receipt_no'			=> 'Receipt No',
+			'id'					=> 'ID',
 			'student_name'			=> 'Student',
+			'academic_year_name'	=> 'Session',
 			'class_name'			=> 'Class',
 			'section_name'			=> 'Section',
 			'payment_mode_label'	=> 'Payment Mode',
 			'amount_received'		=> 'Amount Received',
-			'payment_date'			=> 'Payment Date',
+			'paid_at'			=> 'Payment Date',
 		],
 
 		'sample_export' => [
-			'receipt_no',
+			'id',
 			'student_name',
 			'class_name',
 			'payment_mode_label',
 			'amount_received',
-			'payment_date',
+			'paid_at',
 		],
 
 		'selected_columns' => [
-			'receipt_no',
+			'id',
 			'student_name',
 			'class_name',
 			'payment_mode_label',
 			'amount_received',
-			'payment_date',
+			'paid_at',
 		],
 	],
 
 	KeyName::make(Res::FEE_DUES) => [
 
-		'list' => [
+		Actions::LIST => [
 			'id'					=> 'ID',
 			'name'			=> 'Student',
 			'class_name'			=> 'Class',
@@ -216,7 +216,7 @@ return [
 
 	KeyName::make(Res::FEE_DEFAULTERS) => [
 
-		'list' => [
+		Actions::LIST => [
 			'id'					=> 'ID',
 			'name'			=> 'Student',
 			'class_name'			=> 'Class',
@@ -271,9 +271,10 @@ return [
 
 	KeyName::make(Res::FEE_DISCOUNTS) => [
 
-		'list' => [
+		Actions::LIST => [
 			'id'					=> 'ID',
-			'name'			=> 'Student',
+			'name'			=> 'Name',
+			'student_name'	=>	'Student',
 			'class_name'			=> 'Class',
 			'discount_type_label'	=> 'Discount Type',
 			'discount_amount'		=> 'Discount Amount',
@@ -282,7 +283,8 @@ return [
 
 		'detail' => [
 			'id'					=> 'ID',
-			'name'			=> 'Student',
+			'name'			=> 'Name',
+			'student_name'	=>	'Student',
 			'admission_no'			=> 'Admission No',
 			'class_name'			=> 'Class',
 			'section_name'			=> 'Section',
@@ -293,7 +295,8 @@ return [
 		],
 
 		'report' => [
-			'name'			=> 'Student',
+			'name'			=> 'Name',
+			'student_name'	=>	'Student',
 			'class_name'			=> 'Class',
 			'section_name'			=> 'Section',
 			'discount_type_label'	=> 'Discount Type',
@@ -317,7 +320,7 @@ return [
 
 	KeyName::make(Res::ACADEMIC_YEARS) => [
 
-	'list' => [
+	Actions::LIST => [
 		'id'				=> 'ID',
 		'name'				=> 'Academic Year',
 		'start_year'		=> 'Start Year',
@@ -372,6 +375,16 @@ return [
 		'is_locked',
 	],
 ],
+KeyName::make(Res::FEE_OVERRIDES) => [
+Actions::LIST => [
+			'id'					=> 'ID',
+			'name'			=> 'Name',
+			'student_name'	=>	'Student',
+			'class_name'			=> 'Class',
+			'section_name'		=> 'Section',
+			'created_at'			=> 'Created',
+		],
+]
 ],
 
 	// Documents

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->decimal('percentage', 5, 2)->nullable(); // percentage discount
 
             $table->json('applicable_periods')->nullable(); // override periods if discount only for specific months/semesters
+			$table->text('reason')->nullable();
 
         });
     }
