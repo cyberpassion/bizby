@@ -4,6 +4,7 @@ namespace Modules\Shared\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Modules\Shared\Models\Upload;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
@@ -161,4 +162,82 @@ class UploadApiController extends Controller
 	    return app(BulkDocumentUploadService::class)->handle($request);
 	}
 
+	public function groupByReferenceType(string $referenceType)
+	{
+    	$options = Upload::where('reference_type', $referenceType)
+        	->get();
+
+	    if ($options->isEmpty()) {
+    	    return response()->json([
+        	    'status' => 'error',
+            	'message' => 'No options found for reference type',
+	        ], 404);
+    	}
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'data'   => $options,
+	    ]);
+	}
+
+	/**
+     * Get Public Upload
+     *
+     * Example:
+     * /public/uploads?reference_type=workspace&file_key=logo
+     */
+    public function getPublicUpload(Request $request)
+    {
+		/**
+         * Validate Required Fields
+         */
+        $request->validate([
+            'reference_type' => ['required', 'string'],
+            'file_key'       => ['required', 'string'],
+        ]);
+
+        /**
+         * Build Query
+         */
+        $query = DB::table('uploads')
+            ->where('reference_type', $request->reference_type)
+            ->where('file_key', $request->file_key);
+
+        /**
+         * Optional Reference ID
+         */
+        if ($request->filled('reference_id')) {
+            $query->where(
+                'reference_id',
+                $request->reference_id
+            );
+        }
+
+        /**
+         * Latest Upload
+         */
+        $upload = $query
+            ->latest('id')
+            ->first();
+
+        /**
+         * Not Found
+         */
+        if (!$upload) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Upload not found.',
+                'data'    => null,
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        /**
+         * Success
+         */
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Upload fetched successfully.',
+            'data'    => $upload,
+        ], Response::HTTP_OK);
+    }
 }

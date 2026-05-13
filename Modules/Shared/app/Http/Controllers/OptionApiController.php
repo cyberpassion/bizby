@@ -55,7 +55,7 @@ class OptionApiController extends SharedApiController
 	    if ($options->isEmpty()) {
     	    return response()->json([
         	    'status' => 'error',
-            	'message' => 'No options found for group',
+            	'message' => 'No uploads found for group',
 	        ], 404);
     	}
 

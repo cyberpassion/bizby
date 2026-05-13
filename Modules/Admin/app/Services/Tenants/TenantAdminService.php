@@ -55,6 +55,34 @@ class TenantAdminService
                         'created_at' => now(),
                     ]
                 );
+
+			// 3️⃣ Assign OWNER role
+			$ownerRole = $this->getDefaultOwnerRole();
+			DB::connection($central)
+		    	->table('permission_user_roles')
+    			->updateOrInsert(
+        		[
+            		'user_id' => $user->id,
+	            	'role_id' => $ownerRole, // OWNER ROLE ID
+	    	    ],
+    	    	[
+        	    	'updated_at' => now(),
+	        	    'created_at' => now(),
+    	    	]
+    		);
+
         });
     }
+	protected function getDefaultOwnerRole()
+	{
+    	$role = DB::table('permission_roles')
+    	    ->where('slug', 'owner') // 🔥 define this
+        	->first();
+
+	    if (!$role) {
+    	    abort(500, 'Default portal role not configured');
+    	}
+
+	    return $role->id;
+	}
 }

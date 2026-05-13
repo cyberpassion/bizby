@@ -52,13 +52,16 @@ Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
 
 // Options
 Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
-    // Terms for dynamic values like student classes etc
-	Route::apiResource('options', OptionApiController::class)->names('option');
 	Route::get('/options/group/{key}', [OptionApiController::class, 'group']);
+	// Terms for dynamic values like student classes etc
+	Route::apiResource('options', OptionApiController::class)->names('option');
 });
 
 // Temporarily disable auth middleware
-Route::prefix('v1')->group(function () {
+Route::middleware(['tenant'])->prefix('v1')->group(function () {
+	Route::get('public/uploads', [UploadApiController::class, 'getPublicUpload'])->name('uploads.getPublicUpload');
+});
+Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
     Route::apiResource('shared', SharedApiController::class)->names('shared');
 
 	Route::get('/lookups-x/{key}', [LookupsApiController::class, 'get']);
@@ -66,9 +69,10 @@ Route::prefix('v1')->group(function () {
 	Route::get('/form/{module}/{name}', [FormApiController::class, 'show']);
 
 	// Uploads
+	Route::post('/uploads/bulk-data', [UploadApiController::class, 'bulkData'])->name('uploads.bulkData');
+	Route::post('/uploads/bulk-documents', [UploadApiController::class, 'bulkDocuments'])->name('uploads.bulkDocuments');
+	Route::get('/uploads/reference_type/{key}', [UploadApiController::class, 'groupByReferenceType'])->name('uploads.groupByReferenceType');
 	Route::apiResource('uploads', UploadApiController::class)->names('upload');
-	Route::post('uploads/bulk-data', [UploadApiController::class, 'bulkData'])->name('uploads.bulkData');
-	Route::post('uploads/bulk-documents', [UploadApiController::class, 'bulkDocuments'])->name('uploads.bulkDocuments');
 
 	// Activity Logs
 	Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
