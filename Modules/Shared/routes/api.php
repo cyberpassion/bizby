@@ -61,7 +61,8 @@ Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
 Route::middleware(['tenant'])->prefix('v1')->group(function () {
 	Route::get('public/uploads', [UploadApiController::class, 'getPublicUpload'])->name('uploads.getPublicUpload');
 });
-Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
+// 'auth:sanctum',
+Route::middleware(['tenant'])->prefix('v1')->group(function () {
     Route::apiResource('shared', SharedApiController::class)->names('shared');
 
 	Route::get('/lookups-x/{key}', [LookupsApiController::class, 'get']);
