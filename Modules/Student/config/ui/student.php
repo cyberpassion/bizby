@@ -79,6 +79,11 @@ return [
                             'href'       => UrlPath::make('shared', 'terms/student/fee-heads'),
                             'permission' => Permission::view(Res::FEES),
                         ],
+						[
+				            'title'      => 'Fee Patterns',
+				            'href'       => UrlPath::make($pg, 'fee-structure-patterns'),
+			            	'permission' => Permission::update(Res::FEES),
+        				],
                         [
                             'title'      => 'Fee Structure',
                             'href'       => UrlPath::make($pg, 'fee-structure'),
@@ -247,6 +252,16 @@ return [
     	            'variant'    => 'danger',
         	    ],
         	]
+		],
+		KeyName::make(Res::FEE_STRUCTURE_PATTERNS) => [
+		    Actions::LIST => [
+				[
+    	            'title'      => 'Edit',
+        	        'href'       => UrlPath::make($pg, 'fee-structure-pattern?id={id}'),
+            	    'permission' => Permission::update(Res::STUDENTS),
+                	'action'     => 'update',
+	            ],
+			]
 		],
 		KeyName::make(Res::ACADEMIC_YEARS) => [],
 		KeyName::make(Res::FEE_DISCOUNTS) => [

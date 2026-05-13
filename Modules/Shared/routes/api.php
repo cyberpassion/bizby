@@ -61,8 +61,8 @@ Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
 Route::middleware(['tenant'])->prefix('v1')->group(function () {
 	Route::get('public/uploads', [UploadApiController::class, 'getPublicUpload'])->name('uploads.getPublicUpload');
 });
-// 'auth:sanctum',
-Route::middleware(['tenant'])->prefix('v1')->group(function () {
+
+Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
     Route::apiResource('shared', SharedApiController::class)->names('shared');
 
 	Route::get('/lookups-x/{key}', [LookupsApiController::class, 'get']);
@@ -77,6 +77,19 @@ Route::middleware(['tenant'])->prefix('v1')->group(function () {
 
 	// Activity Logs
 	Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
+
+	Route::get('/search/{module}', [SearchApiController::class, 'search']);
+
+	// History
+	Route::get('/schedules/{schedule}/runs', [ScheduleApiController::class, 'runs']);
+
+	// Temporary
+	Route::post('/infra/databases', [DatabaseManagementApiController::class, 'store']);
+    Route::delete('/infra/databases/{name}', [DatabaseManagementApiController::class, 'destroy']);
+
+});
+
+Route::prefix('v1')->group(function () {
 
 	// ------------------------------------------------------------------
 	// Payables (Business Intent Layer)
@@ -211,16 +224,6 @@ Route::middleware(['tenant'])->prefix('v1')->group(function () {
 
 	// Payment Webhooks
 	Route::post('webhooks/razorpay', [RazorpayWebhookController::class, 'handle']);
-
-	Route::get('/search/{module}', [SearchApiController::class, 'search']);
-
-	// History
-	Route::get('/schedules/{schedule}/runs', [ScheduleApiController::class, 'runs']);
-
-	// Temporary
-	Route::post('/infra/databases', [DatabaseManagementApiController::class, 'store']);
-    Route::delete('/infra/databases/{name}', [DatabaseManagementApiController::class, 'destroy']);
-
 });
 
 // Barricades

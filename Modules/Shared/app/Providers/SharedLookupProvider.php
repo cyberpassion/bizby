@@ -202,10 +202,18 @@ class SharedLookupProvider
                 ->toArray(),
 
 			'dues-upto-periods' => [
-				'april'	=>	'April',
-				'may'	=>	'May',
-				'june'	=>	'June',
-				'july'	=>	'July'
+				'till-apr'    => 'Till April',
+				'till-may'      => 'Till May',
+				'till-jun'     => 'Till June',
+				'till-jul'     => 'Till July',
+				'till-aug'   => 'Till August',
+				'till-sep'=> 'Till September',
+				'till-oct'  => 'Till October',
+				'till-nov' => 'Till November',
+				'till-dec' => 'Till December',
+				'till-jan'  => 'Till January',
+				'till-feb' => 'Till February',
+				'till-mar'    => 'Till March',
 			],
 
 			'group-types' => Term::query()

@@ -27,6 +27,8 @@ use Modules\Student\Http\Controllers\Reports\StudentTransitionReportApiControlle
 use Modules\Student\Http\Controllers\Analytics\StudentAnalyticsApiController;
 use Modules\Student\Http\Controllers\Analytics\StudentFeeAnalyticsApiController;
 
+use Modules\Student\Http\Controllers\StudentFeeStructurePatternApiController;
+
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
@@ -48,6 +50,44 @@ Route::prefix('v1')
 
 		Route::prefix('students/{id}/transitions')->group(function () {
 		    Route::get('/', [StudentTransitionApiController::class, 'studentHistory']);
+		});
+
+		/*
+        |--------------------------------------------------------------------------
+        | FEE STRUCTURE PATTERN
+        |--------------------------------------------------------------------------
+        */
+		Route::prefix('students/fee-structure-patterns')->group(function () {
+
+		    Route::get(
+		        '/',
+        		[StudentFeeStructurePatternApiController::class, 'index']
+		    );
+
+		    Route::get(
+		        '/{id}',
+        		[StudentFeeStructurePatternApiController::class, 'show']
+		    );
+
+			Route::get(
+			    '/{id}/periods',
+			    [StudentFeeStructurePatternApiController::class, 'periods']
+			);
+
+		    Route::post(
+		        '/',
+        		[StudentFeeStructurePatternApiController::class, 'store']
+    		);
+
+		    Route::put(
+		        '/{id}',
+        		[StudentFeeStructurePatternApiController::class, 'update']
+		    );
+
+		    Route::delete(
+		        '/{id}',
+        		[StudentFeeStructurePatternApiController::class, 'destroy']
+		    );
 		});
 
 		/*
