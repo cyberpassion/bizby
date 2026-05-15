@@ -86,7 +86,7 @@ class TermAcademicQualificationSeeder extends Seeder
             DB::table('terms')->updateOrInsert(
                 [
                     'slug'  => Str::slug($qualification),
-                    'group' => 'qualifications',
+                    'group' => 'academic-qualifications',
                 ],
                 [
                     'tenant_id'  => 1,

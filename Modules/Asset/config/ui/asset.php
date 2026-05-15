@@ -64,37 +64,37 @@ return [
     'single-actions' => [
 
 		KeyName::make(Res::ASSETS) => [
-		Actions::LIST => [
-			[
-                'title'      => 'View Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'detail',
-            ],
+			Actions::LIST => [
+				[
+        	        'title'      => 'View Details',
+            	    'href'       => UrlPath::makeDetail($pg, '{id}'),
+                	'permission' => Permission::view(Res::DOCUMENTS),
+                	'action'     => 'detail',
+	            ],
 
-	        [
-    	        'title'      => 'Update',
-        	    'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            	'permission' => Permission::update(Res::ASSETS),
-            	'action'     => 'update',
-	        ],
+		        [
+    		        'title'      => 'Update',
+        		    'href'       => UrlPath::makeUpdate($pg, '{id}'),
+            		'permission' => Permission::update(Res::ASSETS),
+            		'action'     => 'update',
+		        ],
 
-            [
-                'title'      => 'Upload',
-                'href'       => UrlPath::makeUploads($pg, '{id}'),
-                'permission' => Permission::create(Res::UPLOADS),
-                'action'     => 'upload',
-            ],
+    	        [
+        	        'title'      => 'Upload',
+            	    'href'       => UrlPath::makeUploads($pg, '{id}'),
+                	'permission' => Permission::create(Res::UPLOADS),
+                	'action'     => 'upload',
+	            ],
 
-	        [
-    	        'title'      => 'Delete',
-        	    'href'       => UrlPath::makeDelete($pg, '{id}'),
-            	'permission' => Permission::delete(Res::ASSETS),
-	            'action'     => 'delete',
-    	        'method'     => 'DELETE',
-        	    'variant'    => 'danger',
-        	]
-		]
+		        [
+    		        'title'      => 'Delete',
+        		    'href'       => UrlPath::makeDelete(Res::ASSETS, '{id}'),
+            		'permission' => Permission::delete(Res::ASSETS),
+	            	'action'     => 'delete',
+    	        	'method'     => 'DELETE',
+        	    	'variant'    => 'danger',
+        		]
+			]
 		]
 
     ],

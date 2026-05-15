@@ -28,7 +28,7 @@ class TermLeadFollowupStageSeeder extends Seeder
                 'status'     => 1,
                 'name'       => $label,
                 'slug'       => $slug,
-                'group'      => 'lead-followup-outcomes',
+                'group'      => 'contact-responses',
                 'module'     => 'lead',
                 'sort_order' => $index + 1,
                 'created_at' => now(),

@@ -97,7 +97,7 @@ return [
 
 		        [
     		        'title'      => 'Delete',
-        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+        		    'href'       => UrlPath::makeDelete(Res::CONSULTATIONS, '{id}'),
             		'permission' => Permission::delete(Res::CONSULTATIONS),
 	            	'action'     => 'delete',
     	        	'method'     => 'DELETE',
@@ -130,6 +130,13 @@ return [
         	        'placeholder' => 'Modes',
             	    'col'         => 3,
                 	'dataKey'     => 'shared.communication-modes',
+	            ],
+				[
+	                'type'        => 'select',
+    	            'name'        => 'gender',
+        	        'placeholder' => 'Gender',
+            	    'col'         => 3,
+                	'dataKey'     => 'shared.genders',
 	            ],
     	        [
         	        'type'        => 'select',

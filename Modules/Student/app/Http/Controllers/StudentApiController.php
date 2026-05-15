@@ -106,6 +106,16 @@ class StudentApiController extends Controller
     	    $request->get('per_page', 20)
     	);
 
+		$lookupResponse = app(
+		    \Modules\Shared\Http\Controllers\LookupsApiController::class
+		)->get("student.statuses");
+
+		$statuses = $lookupResponse->getData(true)['data'] ?? [];
+
+		$result->getCollection()->transform(function ($student) use ($statuses) {
+    		return $this->applyStatusLabel($student, $statuses);
+		});
+
 	    return response()->json([
     	    'status'  => 'success',
         	'message' => 'Records fetched successfully.',
@@ -204,10 +214,18 @@ class StudentApiController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $student
-        ], Response::HTTP_OK);
+        $lookupResponse = app(
+		    \Modules\Shared\Http\Controllers\LookupsApiController::class
+		)->get("student.statuses");
+
+		$statuses = $lookupResponse->getData(true)['data'] ?? [];
+
+		$student = $this->applyStatusLabel($student, $statuses);
+
+		return response()->json([
+		    'status' => 'success',
+		    'data' => $student
+		], Response::HTTP_OK);
     }
 
     /**
@@ -329,4 +347,17 @@ class StudentApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+	protected function applyStatusLabel($row, $statuses)
+	{
+    	if (isset($row->status)) {
+
+	        $row->status_label =
+    	        $statuses[$row->status]
+        	    ?? $row->status;
+    	}
+
+	    return $row;
+	}
+
 }

@@ -160,7 +160,7 @@ return [
     	    */
         	[
 	            'title'      => 'Delete',
-    	        'href'       => UrlPath::makeDelete($pg, '{id}'),
+    	        'href'       => UrlPath::makeDelete(Res::NOTES, '{id}'),
         	    'permission' => Permission::delete(Res::NOTES),
             	'action'     => 'delete',
             	'method'     => 'DELETE',

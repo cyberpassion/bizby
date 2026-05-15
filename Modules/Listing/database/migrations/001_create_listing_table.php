@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('website')->nullable();
 
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('category')->nullable();
 
             /* ---------------- Location ---------------- */
             $table->text('address')->nullable();
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('linkedin')->nullable();
             $table->string('youtube')->nullable();
             $table->string('twitter')->nullable();
-            $table->text('other_links')->nullable(); // JSON/string
+            $table->json('other_links')->nullable(); // JSON/string
 
             /* ---------------- Business Content ---------------- */
             $table->text('about')->nullable();
@@ -58,7 +58,7 @@ return new class extends Migration
             /* ---------------- Indexes ---------------- */
             $table->index(['name']);
             $table->index(['phone']);
-            $table->index(['category_id']);
+            $table->index(['category']);
             $table->index(['city', 'state']);
             $table->index(['is_verified']);
             $table->index(['is_featured']);

@@ -542,6 +542,101 @@ return [
 		'263'  => 'Zimbabwe (+263)',
 	],
 
+	'currencies' => [
+	    'inr' => 'Indian Rupee',
+    	'usd' => 'US Dollar',
+	    'eur' => 'Euro',
+	    'gbp' => 'British Pound',
+	    'aed' => 'UAE Dirham',
+	    'sar' => 'Saudi Riyal',
+	    'qar' => 'Qatari Riyal',
+	    'kwd' => 'Kuwaiti Dinar',
+	    'omr' => 'Omani Rial',
+	    'bhd' => 'Bahraini Dinar',
+	    'cny' => 'Chinese Yuan',
+	    'jpy' => 'Japanese Yen',
+	    'krw' => 'South Korean Won',
+	    'sgd' => 'Singapore Dollar',
+	    'myr' => 'Malaysian Ringgit',
+	    'thb' => 'Thai Baht',
+	    'idr' => 'Indonesian Rupiah',
+	    'php' => 'Philippine Peso',
+	    'vnd' => 'Vietnamese Dong',
+	    'aud' => 'Australian Dollar',
+	    'nzd' => 'New Zealand Dollar',
+	    'cad' => 'Canadian Dollar',
+	    'chf' => 'Swiss Franc',
+	    'sek' => 'Swedish Krona',
+	    'nok' => 'Norwegian Krone',
+	    'dkk' => 'Danish Krone',
+	    'rub' => 'Russian Ruble',
+	    'zar' => 'South African Rand',
+	    'ngn' => 'Nigerian Naira',
+	    'egp' => 'Egyptian Pound',
+	    'bdt' => 'Bangladeshi Taka',
+	    'pkr' => 'Pakistani Rupee',
+	    'lkr' => 'Sri Lankan Rupee',
+	    'npr' => 'Nepalese Rupee',
+	],
+
+	'relation-types' => [
+
+	    // Parents / Guardians
+	    'father' => 'Father',
+	    'mother' => 'Mother',
+	    'step_father' => 'Step Father',
+	    'step_mother' => 'Step Mother',
+	    'guardian' => 'Guardian',
+	    'legal_guardian' => 'Legal Guardian',
+	    'adoptive_father' => 'Adoptive Father',
+	    'adoptive_mother' => 'Adoptive Mother',
+
+	    // Spouse / Partner
+	    'spouse' => 'Spouse',
+	    'husband' => 'Husband',
+	    'wife' => 'Wife',
+	    'partner' => 'Partner',
+
+	    // Siblings
+	    'brother' => 'Brother',
+	    'sister' => 'Sister',
+	    'step_brother' => 'Step Brother',
+	    'step_sister' => 'Step Sister',
+
+	    // Children
+	    'son' => 'Son',
+	    'daughter' => 'Daughter',
+	    'adopted_son' => 'Adopted Son',
+	    'adopted_daughter' => 'Adopted Daughter',
+
+	    // Extended Family
+	    'grandfather' => 'Grandfather',
+	    'grandmother' => 'Grandmother',
+	    'uncle' => 'Uncle',
+	    'aunt' => 'Aunt',
+	    'cousin' => 'Cousin',
+	    'nephew' => 'Nephew',
+	    'niece' => 'Niece',
+
+	    // In-laws
+	    'father_in_law' => 'Father-in-law',
+	    'mother_in_law' => 'Mother-in-law',
+	    'brother_in_law' => 'Brother-in-law',
+	    'sister_in_law' => 'Sister-in-law',
+	    'son_in_law' => 'Son-in-law',
+	    'daughter_in_law' => 'Daughter-in-law',
+
+	    // Emergency / Professional
+	    'emergency_contact' => 'Emergency Contact',
+	    'caregiver' => 'Caregiver',
+	    'local_guardian' => 'Local Guardian',
+
+	    // Other
+	    'friend' => 'Friend',
+	    'relative' => 'Relative',
+	    'other' => 'Other',
+	],
+
     /* =========================
      | Business Types
      ========================= */
@@ -762,6 +857,166 @@ return [
 	'report-display-uis' => [
 		'tabled' => 'Tabled',
 		'chart'  => 'Chart',
+	],
+
+	'priorities' => [
+    	'low' => 'Low',
+	    'average' => 'Average',
+    	'high' => 'High',
+	],
+
+	'payment-modes' => [
+	    'cash' => 'Cash',
+    	'cheque' => 'Cheque',
+	    'card' => 'Card',
+    	'upi' => 'UPI',
+	    'net_banking' => 'Net Banking',
+    	'wallet' => 'Wallet',
+	    'bank_transfer' => 'Bank Transfer',
+    	'demand_draft' => 'Demand Draft',
+	    'online' => 'Online',
+    	'offline' => 'Offline',
+	],
+
+	'units' => [
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Length
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'mm' => 'Millimeter',
+    	'cm' => 'Centimeter',
+    	'm' => 'Meter',
+    	'km' => 'Kilometer',
+    	'in' => 'Inch',
+    	'ft' => 'Foot',
+    	'yd' => 'Yard',
+    	'mile' => 'Mile',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Weight
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'mg' => 'Milligram',
+    	'g' => 'Gram',
+    	'kg' => 'Kilogram',
+    	'ton' => 'Tonne',
+    	'lb' => 'Pound',
+    	'oz' => 'Ounce',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Volume
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'ml' => 'Milliliter',
+    	'l' => 'Liter',
+    	'kl' => 'Kiloliter',
+    	'gal' => 'Gallon',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Area
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'sq_ft' => 'Square Foot',
+    	'sq_m' => 'Square Meter',
+    	'acre' => 'Acre',
+    	'hectare' => 'Hectare',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Time
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'sec' => 'Second',
+    	'min' => 'Minute',
+    	'hr' => 'Hour',
+    	'day' => 'Day',
+    	'week' => 'Week',
+    	'month' => 'Month',
+    	'year' => 'Year',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Quantity
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'pcs' => 'Piece',
+    	'dozen' => 'Dozen',
+    	'pair' => 'Pair',
+    	'box' => 'Box',
+    	'packet' => 'Packet',
+    	'carton' => 'Carton',
+    	'set' => 'Set',
+    	'bundle' => 'Bundle',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Temperature
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'c' => 'Celsius',
+    	'f' => 'Fahrenheit',
+    	'k' => 'Kelvin',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Speed
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'kmph' => 'Kilometers per Hour',
+    	'mph' => 'Miles per Hour',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Energy / Power
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'w' => 'Watt',
+    	'kw' => 'Kilowatt',
+    	'kwh' => 'Kilowatt Hour',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Data / Digital Storage
+    	|--------------------------------------------------------------------------
+    	*/
+
+    	'b' => 'Byte',
+    	'kb' => 'Kilobyte',
+    	'mb' => 'Megabyte',
+    	'gb' => 'Gigabyte',
+    	'tb' => 'Terabyte',
+
+    	/*
+    	|--------------------------------------------------------------------------
+    	| Percentage / Ratio
+    	|--------------------------------------------------------------------------
+    	*/
+
+	    'percent' => 'Percent',
+
+	],
+
+	'company-sizes' => [
+	    '1_10' => 'Micro (1-10)',
+    	'11_50' => 'Small (11-50)',
+	    '51_200' => 'Medium (51-200)',
+    	'201_500' => 'Mid Large (201-500)',
+    	'501_1000' => 'Large (501-1000)',
+    	'1000_plus' => 'Enterprise (1000+)',
 	],
 
 	'settings.options' => [

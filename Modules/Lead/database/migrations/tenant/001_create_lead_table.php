@@ -60,6 +60,8 @@ return new class extends Migration
 		    // Next follow-up
     		$table->date('next_followup_date')->nullable();
 
+			$table->string('response')->nullable();
+
 		    // Useful indexes
     		$table->index(['mobile', 'email']);
 		});

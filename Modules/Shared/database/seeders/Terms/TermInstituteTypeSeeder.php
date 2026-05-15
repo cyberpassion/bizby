@@ -65,7 +65,7 @@ class TermInstituteTypeSeeder extends Seeder
                 'name'       => $type,
                 'slug'       => Str::slug($type),
                 'group'      => 'institute-types',
-                'module'     => 'student',
+                'module'     => 'shared',
                 'sort_order' => $index + 1,
                 'created_at' => now(),
                 'updated_at' => now(),

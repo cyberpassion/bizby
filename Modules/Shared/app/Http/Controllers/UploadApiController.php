@@ -124,11 +124,12 @@ class UploadApiController extends Controller
         $upload = Upload::find($id);
 
         if (!$upload) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Upload not found.'
-            ], 404);
-        }
+		    return response()->json([
+		        'status'  => 'success',
+        		'message' => 'No upload found.',
+		        'data'    => null,
+		    ], Response::HTTP_OK);
+		}
 
         if ($upload->document_path) {
             Storage::disk($this->disk)->delete($upload->document_path);
@@ -224,12 +225,12 @@ class UploadApiController extends Controller
          * Not Found
          */
         if (!$upload) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Upload not found.',
-                'data'    => null,
-            ], Response::HTTP_NOT_FOUND);
-        }
+		    return response()->json([
+        		'status'  => 'success',
+		        'message' => 'No upload found.',
+        		'data'    => null,
+		    ], Response::HTTP_OK);
+		}
 
         /**
          * Success

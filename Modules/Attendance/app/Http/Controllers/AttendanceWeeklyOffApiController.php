@@ -13,14 +13,46 @@ class AttendanceWeeklyOffApiController extends Controller
     public function __construct(private AttendanceService $service) {}
 
     public function index()
-    {
-        $response = AttendanceWeeklyOff::where('tenant_id', tenant()->id)->get();
-		return response()->json([
+	{
+    	$response = AttendanceWeeklyOff::where(
+	        'tenant_id',
+    	    tenant()->id
+    	)->get();
+
+	    /*
+    	|--------------------------------------------------------------------------
+	    | WEEKDAY LOOKUP
+    	|--------------------------------------------------------------------------
+	    */
+
+	    $lookupResponse = app(
+    	    \Modules\Shared\Http\Controllers\LookupsApiController::class
+	    )->get("attendance.weekdays");
+
+	    $weekdays = $lookupResponse->getData(true)['data'] ?? [];
+
+	    /*
+    	|--------------------------------------------------------------------------
+	    | APPLY LABEL
+    	|--------------------------------------------------------------------------
+	    */
+
+	    $response = $response->map(function ($row) use ($weekdays) {
+	        $row->weekday_label =
+    	        $weekdays[$row->weekday]
+        	    ?? $row->weekday;
+
+	        return $row;
+    	});
+
+	    return response()->json([
     	    'status'  => 'success',
         	'message' => 'Fetched Successfully.',
-	        'data'    => ['data'=>$response]
-    	], Response::HTTP_OK);
-    }
+	        'data'    => [
+    	        'data' => $response
+        	]
+	    ], Response::HTTP_OK);
+	}
 
     public function store(Request $request)
     {

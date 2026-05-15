@@ -15,6 +15,8 @@ class ListingApiController extends SharedApiController
         'state'
     ];
 
+	protected $with = ['sections'];
+
     protected function model()
     {
         return Listing::class;
@@ -84,7 +86,7 @@ class ListingApiController extends SharedApiController
 
 	public function showPublic($id)
 	{
-    	$listing = Listing::findOrFail($id);
+    	$listing = Listing::with(['sections'])->findOrFail($id);
 
 	    return response()->json([
     	    'status' => 'success',

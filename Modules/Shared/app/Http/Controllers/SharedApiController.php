@@ -69,6 +69,18 @@ abstract class SharedApiController extends Controller
     		return $value !== 'all' && $value !== null && $value !== '';
 		})->toArray();
 
+		/*
+		|--------------------------------------------------------------------------
+		| DEFAULT STATUS FILTER
+		|--------------------------------------------------------------------------
+		| If status is NOT explicitly provided,
+		| show only active records.
+		*/
+
+		if (!array_key_exists('status', $whereFilters)) {
+		    $whereFilters['status'] = 1;
+		}
+
 	    // Search param if exists
     	$search = $request->get('search', null);
 

@@ -40,7 +40,7 @@ class LeadApiController extends SharedApiController
         	'website' => 'nullable|string|max:255',
         	'business_type' => 'nullable|string|max:255',
 
-	        'category_id' => 'nullable|integer',
+	        'category' => 'nullable|string|max:255',
     	    'source_id' => 'nullable',
         	'stage_id' => 'nullable|string|max:255',
 
@@ -52,7 +52,10 @@ class LeadApiController extends SharedApiController
 
 	        'is_existing_client' => 'nullable|boolean',
     	    'place' => 'nullable|string|max:255',
+			'lead_date' => 'nullable|date',
         	'next_followup_date' => 'nullable|date',
+			'remark' => 'nullable|text',
+			'response' => 'nullable|string|max:255'
     	];
 	}
 

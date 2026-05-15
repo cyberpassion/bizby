@@ -64,6 +64,17 @@ class Consultation extends TenantModel
         return array_diff($columns, $this->guarded);
     }
 
+	protected static function booted()
+	{
+    	static::creating(function ($model) {
+
+	        if (!$model->consultant_type) {
+
+	            $model->consultant_type = 'employee';
+    	    }
+    	});
+	}
+
     /**
      * Override getFillable() so Laravel uses our dynamic fillable logic.
      * Laravel internally calls this method for mass assignment checks.

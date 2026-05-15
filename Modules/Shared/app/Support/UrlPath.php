@@ -71,7 +71,7 @@ class UrlPath
 
 	public static function makeDelete(string $module, $id): string
 	{
-		return self::make($module, BaseActions::DELETE . '/' . $id);
+		return self::make($module, $id);
 	}
 
 	public static function makeView(string $module, $id): string

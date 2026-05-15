@@ -29,6 +29,9 @@ use Modules\Admin\Http\Controllers\Billings\BillingApiController;
 use Modules\Admin\Http\Controllers\Billings\BillingModuleApiController;
 use Modules\Admin\Http\Controllers\Billings\BillingAddonApiController;
 
+use Modules\Admin\Http\Controllers\Public\Addons\PublicAddonApiController;
+use Modules\Admin\Http\Controllers\Public\Modules\PublicModuleApiController;
+
 /*
 |--------------------------------------------------------------------------
 | Public / Admin-Level APIs (Auth temporarily disabled)
@@ -281,6 +284,26 @@ Route::prefix('v1/public-auth')
 
         Route::post('register', [AuthApiController::class, 'register']);
     });
+
+// Public Modules
+Route::prefix('v1/public/modules')->group(function () {
+
+    Route::get('/', [PublicModuleApiController::class, 'index'])
+        ->name('public.modules.index');
+
+    Route::get('/{id}', [PublicModuleApiController::class, 'show'])
+        ->name('public.modules.show');
+});
+
+// Public Addons
+Route::prefix('v1/public/addons')->group(function () {
+
+    Route::get('/', [PublicAddonApiController::class, 'index'])
+        ->name('public.addons.index');
+
+    Route::get('/{id}', [PublicAddonApiController::class, 'show'])
+        ->name('public.addons.show');
+});
 
 /*
 |--------------------------------------------------------------------------

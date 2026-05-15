@@ -160,7 +160,7 @@ return [
 
             [
                 'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'href'       => UrlPath::makeDelete(Res::REGISTRATIONS, '{id}'),
                 'permission' => Permission::delete(Res::REGISTRATIONS),
                 'action'     => 'delete',
                 'method'     => 'DELETE',
@@ -180,7 +180,7 @@ return [
 
             [
                 'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($pg, '{id}'),
+                'href'       => UrlPath::makeDelete(Res::CYCLES, '{id}'),
                 'permission' => Permission::delete(Res::CYCLES),
                 'action'     => 'delete',
                 'method'     => 'DELETE',

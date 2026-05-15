@@ -136,7 +136,7 @@ return [
 
 	            [
     	            'title'      => 'Delete',
-        	        'href'       => UrlPath::makeDelete($pg, '{id}'),
+        	        'href'       => UrlPath::makeDelete(Res::EMPLOYEES, '{id}'),
             	    'permission' => Permission::delete(Res::EMPLOYEES),
                 	'action'     => 'delete',
                 	'method'     => 'DELETE',

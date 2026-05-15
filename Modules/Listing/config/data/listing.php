@@ -36,16 +36,16 @@ return [
             |--------------------------------------------------------------------------
             */
             Actions::LIST => [
-                'id' => 'ID',
-                'name' => 'Business',
-                'category_label' => 'Category',
-                'city' => 'City',
-                'state' => 'State',
-                'phone' => 'Phone',
-                'is_verified' => 'Verified',
-                'is_featured' => 'Featured',
-                'valid_till' => 'Valid Till',
-                'status_label' => 'Status',
+                'id' 			=> 'ID',
+                'name' 			=> 'Business',
+                'category' 		=> 'Category',
+                'city' 			=> 'City',
+                'state' 		=> 'State',
+                'phone' 		=> 'Phone',
+                'is_verified' 	=> 'Verified',
+                'is_featured' 	=> 'Featured',
+                'valid_till' 	=> 'Valid Till',
+                'status_label' 	=> 'Status',
             ],
 
             /*
@@ -54,16 +54,16 @@ return [
             |--------------------------------------------------------------------------
             */
             Actions::DETAIL => [
-                'id' => 'ID',
-                'name' => 'Business',
-                'category_label' => 'Category',
-                'city' => 'City',
-                'state' => 'State',
-                'phone' => 'Phone',
-                'is_verified' => 'Verified',
-                'is_featured' => 'Featured',
-                'valid_till' => 'Valid Till',
-                'status_label' => 'Status',
+                'id' 			=> 'ID',
+                'name' 			=> 'Business',
+                'category' 		=> 'Category',
+                'city' 			=> 'City',
+                'state' 		=> 'State',
+                'phone' 		=> 'Phone',
+                'is_verified' 	=> 'Verified',
+                'is_featured' 	=> 'Featured',
+                'valid_till' 	=> 'Valid Till',
+                'status_label' 	=> 'Status',
             ],
 
             /*
@@ -72,16 +72,16 @@ return [
             |--------------------------------------------------------------------------
             */
             Actions::REPORT => [
-                'id' => 'ID',
-                'name' => 'Business',
-                'category_label' => 'Category',
-                'city' => 'City',
-                'state' => 'State',
-                'phone' => 'Phone',
-                'is_verified' => 'Verified',
-                'is_featured' => 'Featured',
-                'valid_till' => 'Valid Till',
-                'status_label' => 'Status',
+                'id' 			=> 'ID',
+                'name' 			=> 'Business',
+                'category' 		=> 'Category',
+                'city' 			=> 'City',
+                'state' 		=> 'State',
+                'phone' 		=> 'Phone',
+                'is_verified' 	=> 'Verified',
+                'is_featured' 	=> 'Featured',
+                'valid_till' 	=> 'Valid Till',
+                'status_label' 	=> 'Status',
             ],
 
             /*
@@ -100,6 +100,17 @@ return [
 
         ],
 
+    ],
+
+	/*
+    |--------------------------------------------------------------------------
+    | Uploads
+    |--------------------------------------------------------------------------
+    */
+    'uploads' => [
+        'image' => 'Logo',
+        'favicon' => 'Favicon',
+		'header_image' => 'Header Image'
     ],
 
     /*

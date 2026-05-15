@@ -423,115 +423,127 @@ return [
     'single-actions' => [
 
         KeyName::make(Res::WEEKLY_OFFS)	=> [
-			[
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($module, '{id}'),
-                'permission' => Permission::delete(Res::WEEKLY_OFFS),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
+			Actions::LIST => [
+				[
+	                'title'      => 'Delete',
+    	            'href'       => UrlPath::makeDelete(Res::WEEKLY_OFFS, '{id}'),
+        	        'permission' => Permission::delete(Res::WEEKLY_OFFS),
+            	    'action'     => 'delete',
+                	'method'     => 'DELETE',
+                	'variant'    => 'danger',
+            	],
+			]
 		],
 		KeyName::make(Res::HOLIDAYS)			=> [
-			[
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($module, '{id}'),
-                'permission' => Permission::delete(Res::HOLIDAYS),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
+			Actions::LIST => [
+				[
+    	            'title'      => 'Delete',
+        	        'href'       => UrlPath::makeDelete(Res::HOLIDAYS, '{id}'),
+            	    'permission' => Permission::delete(Res::HOLIDAYS),
+	                'action'     => 'delete',
+    	            'method'     => 'DELETE',
+        	        'variant'    => 'danger',
+            	],
+			]
 		],
 		KeyName::make(Res::CALENDAR_DAYS) 	=> [
-			[
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($module, '{id}'),
-                'permission' => Permission::delete(Res::CALENDAR_DAYS),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ],
+			Actions::LIST => [
+				[
+    	            'title'      => 'Delete',
+        	        'href'       => UrlPath::makeDelete(Res::CALENDAR_DAYS, '{id}'),
+            	    'permission' => Permission::delete(Res::CALENDAR_DAYS),
+                	'action'     => 'delete',
+                	'method'     => 'DELETE',
+                	'variant'    => 'danger',
+            	],
+			]
 		],
 		KeyName::make(Res::SCHEDULES) 		=> [
-			[
-                'title'      => 'Generate Sessions',
-                'href'       => '#',//UrlPath::make($module, Actions::GENERATE . '/{id}'),
-                'permission' => Permission::view(Res::SCHEDULES),
-				'action'     => 'custom',
-				'method'     => 'POST',
-				'custom'     => [
-					'apiEndpoint' => 'attendance/schedules/{id}/generate-sessions',
-					'successMessage' => 'Sessions generated successfully.',
-					'errorMessage' => 'Failed to generate sessions.',
-				],
-				'variant'    => 'success',
-            ],
+			Actions::LIST => [
+				[
+    	            'title'      => 'Generate Sessions',
+        	        'href'       => '#',//UrlPath::make($module, Actions::GENERATE . '/{id}'),
+            	    'permission' => Permission::view(Res::SCHEDULES),
+					'action'     => 'custom',
+					'method'     => 'POST',
+					'custom'     => [
+						'apiEndpoint' => 'attendance/schedules/{id}/generate-sessions',
+						'successMessage' => 'Sessions generated successfully.',
+						'errorMessage' => 'Failed to generate sessions.',
+					],
+					'variant'    => 'success',
+        	    ],
 
-			[
-                'title'      => 'Update',
-                'href'       => UrlPath::makeUpdate($module, '{id}'),
-                'permission' => Permission::update(Res::SCHEDULES),
-                'action'     => 'update',
-            ],
+				[
+    	            'title'      => 'Update',
+        	        'href'       => UrlPath::makeUpdate($module, '{id}'),
+            	    'permission' => Permission::update(Res::SCHEDULES),
+	                'action'     => 'update',
+    	        ],
 
-            [
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete($module, '{id}'),
-                'permission' => Permission::delete(Res::SCHEDULES),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
-            ]
+	            [
+    	            'title'      => 'Delete',
+        	        'href'       => UrlPath::makeDelete(Res::SCHEDULES, '{id}'),
+            	    'permission' => Permission::delete(Res::SCHEDULES),
+                	'action'     => 'delete',
+	                'method'     => 'DELETE',
+    	            'variant'    => 'danger',
+        	    ]
+			]
 		],
 		KeyName::make(Res::BATCHES) 			=> [
-			[
-                'title'      => 'Update',
-                'href'       => UrlPath::makeUpdate(Res::BATCHES, '{id}'),
-                'permission' => Permission::update(Res::BATCHES),
-                'action'     => 'update',
-            ],
+			Actions::LIST => [
+				[
+    	            'title'      => 'Update',
+        	        'href'       => UrlPath::makeUpdate(Res::BATCHES, '{id}'),
+            	    'permission' => Permission::update(Res::BATCHES),
+                	'action'     => 'update',
+	            ],
 
-			[
-                'title'      => 'Add Participants',
-                'href'       => UrlPath::make(Res::BATCHES, '{id}/participants'),
-                'permission' => Permission::update(Res::BATCHES),
-                'action'     => 'update',
-            ],
+				[
+     	           'title'      => 'Add Participants',
+        	        'href'       => UrlPath::make(Res::BATCHES, '{id}/participants'),
+            	    'permission' => Permission::update(Res::BATCHES),
+                	'action'     => 'update',
+	            ],
 
-			[
-				'title'      => 'Delete',
-				'href'       => UrlPath::makeDelete(Res::BATCHES, '{id}'),
-				'permission' => Permission::delete(Res::BATCHES),
-				'action'     => 'delete',
-				'method'     => 'DELETE',
-				'variant'    => 'danger',
+				[
+					'title'      => 'Delete',
+					'href'       => UrlPath::makeDelete(Res::BATCHES, '{id}'),
+					'permission' => Permission::delete(Res::BATCHES),
+					'action'     => 'delete',
+					'method'     => 'DELETE',
+					'variant'    => 'danger',
+				]
 			]
 		],
 		KeyName::make(Res::SESSIONS)			=> [
-			[
-				'title'      => 'Mark Attendance',
-				'href'       => UrlPath::make($module, 'mark/session/{id}'),
-				'permission' => Permission::make(Res::ATTENDANCES, Actions::MARK),
-			],
-			[
-				'title'      => 'Update',
-				'href'       => UrlPath::make($module, 'sessions/update/{id}'),
-				'permission' => Permission::update(Res::SESSIONS),
-				'action'     => 'update',
-			],
-			[
-				'title'      => 'View Details',
-				'href'       => UrlPath::make($module, 'sessions/{id}'),
-				'permission' => Permission::view(Res::SESSIONS),
-				'action'     => 'view',
-			],
-			[
-				'title'      => 'Delete',
-				'href'       => UrlPath::makeDelete($module, '{id}'),
-				'permission' => Permission::delete(Res::SESSIONS),
-				'action'     => 'delete',
-				'method'     => 'DELETE',
-				'variant'    => 'danger',
+			Actions::LIST => [
+				[
+					'title'      => 'Mark Attendance',
+					'href'       => UrlPath::make($module, 'mark/session/{id}'),
+					'permission' => Permission::make(Res::ATTENDANCES, Actions::MARK),
+				],
+				[
+					'title'      => 'Update',
+					'href'       => UrlPath::make($module, 'sessions/update/{id}'),
+					'permission' => Permission::update(Res::SESSIONS),
+					'action'     => 'update',
+				],
+				[
+					'title'      => 'View Details',
+					'href'       => UrlPath::make($module, 'sessions/{id}'),
+					'permission' => Permission::view(Res::SESSIONS),
+					'action'     => 'view',
+				],
+				[
+					'title'      => 'Delete',
+					'href'       => UrlPath::makeDelete(Res::SESSIONS, '{id}'),
+					'permission' => Permission::delete(Res::SESSIONS),
+					'action'     => 'delete',
+					'method'     => 'DELETE',
+					'variant'    => 'danger',
+				]
 			]
 		],
 		KeyName::make(Res::ATTENDANCES) => [],

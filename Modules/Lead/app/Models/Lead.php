@@ -33,6 +33,7 @@ class Lead extends TenantModel
         'category_id',
         'source_id',
         'stage_id',
+		'response',
         'is_existing_client',
         'place',
         'next_followup_date'

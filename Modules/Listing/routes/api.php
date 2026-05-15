@@ -2,11 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Listing\Http\Controllers\ListingApiController;
+use Modules\Listing\Http\Controllers\ListingPageBlockApiController;
 use Modules\Listing\Http\Controllers\ListingTrackingApiController;
 
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
+
+		/* ======================================================
+         | LISTINGS BLOCKS
+         ====================================================== */
+		Route::get('listings/page-blocks', [ListingPageBlockApiController::class, 'index']);
+	    Route::get('listings/page-blocks/{id}', [ListingPageBlockApiController::class, 'show']);
+	    Route::post('listings/page-blocks', [ListingPageBlockApiController::class, 'store']);
+	    Route::put('listings/page-blocks/{id}', [ListingPageBlockApiController::class, 'update']);
+	    Route::delete('listings/page-blocks/{id}', [ListingPageBlockApiController::class, 'destroy']);
 
         /* ======================================================
          | LISTINGS CRUD
@@ -22,7 +32,7 @@ Route::prefix('v1')
 
         Route::get('listings/graphs', [ListingApiController::class, 'graphs'])
             ->name('listings.graphs');
-
+		
         /* ======================================================
          | TRACKING EVENTS
          ====================================================== */

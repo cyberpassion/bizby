@@ -245,7 +245,7 @@ return [
 
 	            [
     	            'title'      => 'Delete',
-        	        'href'       => UrlPath::makeDelete($pg, '{id}'),
+        	        'href'       => UrlPath::makeDelete(Res::STUDENTS, '{id}'),
             	    'permission' => Permission::delete(Res::STUDENTS),
                 	'action'     => 'delete',
 	                'method'     => 'DELETE',
@@ -307,34 +307,36 @@ return [
     'filters' => [
 
         KeyName::make(Res::STUDENTS) => [
-            [
-                'type'        => 'select',
-                'name'        => 'year_id',
-                'placeholder' => 'Session',
-                'col'         => 3,
-                'dataKey'     => 'student.academic-years',
-            ],
-            [
-                'type'        => 'select',
-                'name'        => 'class_term_id',
-                'placeholder' => 'Class',
-                'col'         => 3,
-                'dataKey'     => 'student.classes',
-            ],
-            [
-                'type'        => 'select',
-                'name'        => 'section_term_id',
-                'placeholder' => 'Section',
-                'col'         => 3,
-                'dataKey'     => 'student.sections',
-            ],
-            [
-                'type'        => 'select',
-                'name'        => 'status',
-                'placeholder' => 'Status',
-                'col'         => 3,
-                'dataKey'     => 'student.statuses',
-            ],
+            Actions::LIST => [
+				[
+	                'type'        => 'select',
+    	            'name'        => 'year_id',
+        		   'placeholder' => 'Session',
+                	'col'         => 3,
+                	'dataKey'     => 'student.academic-years',
+            	],
+	            [
+    	            'type'        => 'select',
+        	        'name'        => 'class_term_id',
+            	    'placeholder' => 'Class',
+                	'col'         => 3,
+                	'dataKey'     => 'student.classes',
+	            ],
+     	       	[
+	                'type'        => 'select',
+    	            'name'        => 'section_term_id',
+        	        'placeholder' => 'Section',
+            	    'col'         => 3,
+                	'dataKey'     => 'student.sections',
+	            ],
+    	        [
+        	        'type'        => 'select',
+            	    'name'        => 'status',
+                	'placeholder' => 'Status',
+	                'col'         => 3,
+    	            'dataKey'     => 'student.statuses',
+        	    ],
+			]
         ]
 
     ],

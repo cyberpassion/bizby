@@ -55,33 +55,37 @@ return [
     // Default Columns
     'columns' => [
 	    KeyName::make(Res::WEEKLY_OFFS) => [
-    	    'list' => [
-        	    'id'        => 'ID',
-            	'weekday'   => 'Weekday',
-	            'context'   => 'Context',
+    	    Actions::LIST => [
+        	    'id'        	  => 'ID',
+            	'weekday_label'   => 'Weekday',
+	            'context'   	  => 'Context',
+				'status_label'	  => 'Status'
     	    ]
     	],
 
 	    KeyName::make(Res::HOLIDAYS) => [
-    	    'list' => [
+    	    Actions::LIST => [
         	    'id'        => 'ID',
 	            'date'      => 'Date',
     	        'name'      => 'Name',
         	    'context'   => 'Context',
+				'status_label'	  => 'Status'
         	]
 	    ],
 
 	    KeyName::make(Res::CALENDAR_DAYS) => [
-    	    'list' => [
+    	    Actions::LIST => [
         	    'id'        => 'ID',
             	'date'      => 'Date',
-            	'day_type'  => 'Day Type',
-            	'name'      => 'Name',
+            	'day_type'  => 'Type',
+            	'reason'    => 'Reason',
+				'context'   => 'Context',
+				'status_label'	  => 'Status'
         	]
     	],
 
 	    KeyName::make(Res::SCHEDULES) => [
-    	    'list' => [
+    	    Actions::LIST => [
         	    'id'                => 'ID',
             	'name'              => 'Name',
 	            'session'           => 'Session',
@@ -93,7 +97,7 @@ return [
     	],
 
 	    KeyName::make(Res::BATCHES) => [
-    	    'list' => [
+    	    Actions::LIST => [
         	    'id'                => 'ID',
             	'name'              => 'Name',
 	            'start_date'        => 'Start Date',
@@ -103,7 +107,7 @@ return [
     	],
 
 	    KeyName::make(Res::SESSIONS) => [
-    	    'list' => [
+    	    Actions::LIST => [
         	    'id'            => 'ID',
             	'session_date'  => 'Session Date',
 	            'type'          => 'Type',

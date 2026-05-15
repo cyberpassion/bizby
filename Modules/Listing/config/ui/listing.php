@@ -61,10 +61,16 @@ return [
 		KeyName::make(Res::LISTINGS) => [
 			Actions::LIST => [
 				[
+        	        'title'      => 'Section',
+            	    'href'       => UrlPath::make($pg, 'section/{id}'),
+                	'permission' => Permission::view(Res::DOCUMENTS)
+	            ],
+
+				[
         	        'title'      => 'View Portal',
             	    'href'       => UrlPath::makePortal($pg, '{id}'),
                 	'permission' => Permission::view(Res::DOCUMENTS),
-                	'action'     => 'portal-link',
+                	'action'     => 'external-link',
 	            ],
 
 		        [
@@ -83,7 +89,7 @@ return [
 
 		        [
     		        'title'      => 'Delete',
-        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+        		    'href'       => UrlPath::makeDelete(Res::LISTINGS, '{id}'),
             		'permission' => Permission::delete(Res::LISTINGS),
 	            	'action'     => 'delete',
     	        	'method'     => 'DELETE',

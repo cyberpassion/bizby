@@ -95,7 +95,7 @@ return [
 
 		        [
     		        'title'      => 'Delete',
-        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+        		    'href'       => UrlPath::makeDelete(Res::MAINTENANCES, '{id}'),
             		'permission' => Permission::delete(Res::MAINTENANCES),
 		            'action'     => 'delete',
     		        'method'     => 'DELETE',

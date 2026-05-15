@@ -125,7 +125,7 @@ return [
 
 		        [
     		        'title'      => 'Delete',
-        		    'href'       => UrlPath::makeDelete($pg, '{id}'),
+        		    'href'       => UrlPath::makeDelete(Res::INCIDENTS, '{id}'),
             		'permission' => Permission::delete(Res::INCIDENTS),
 	            	'action'     => 'delete',
 	    	        'method'     => 'DELETE',
@@ -146,6 +146,14 @@ return [
 		KeyName::make(Res::INCIDENTS) => [
 	        Actions::LIST	=>	[
     	        [
+        	        'type'        => 'select',
+            	    'name'        => 'center_id',
+	                'placeholder' => 'Center',
+    	            'col'         => 3,
+        	        'dataKey'     => 'centers.list',
+            	],
+
+				[
         	        'type'        => 'select',
             	    'name'        => 'type',
 	                'placeholder' => 'Types',

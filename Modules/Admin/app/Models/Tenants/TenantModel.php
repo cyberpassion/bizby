@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class TenantModel extends Model
 {
+
     protected static function booted()
     {
         // Only apply in tenant context
@@ -27,4 +28,16 @@ abstract class TenantModel extends Model
             $model->tenant_id ??= tenant()->id;
         });
     }
+
+	public function delete()
+	{
+    	$this->status = 2;
+
+	    $this->deleted_by = auth()->id();
+
+	    $this->deleted_at = now();
+
+	    return $this->save();
+	}
+
 }

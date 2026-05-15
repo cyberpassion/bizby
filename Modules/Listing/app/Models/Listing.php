@@ -17,7 +17,7 @@ class Listing extends Model
         'phone',
         'email',
         'website',
-        'category_id',
+        'category',
 
         'address',
         'city',
@@ -53,6 +53,7 @@ class Listing extends Model
         'is_verified' => 'boolean',
         'is_featured' => 'boolean',
         'valid_till'  => 'date:Y-m-d',
+		'other_links' => 'array'
     ];
 
     /* ================= RELATIONS ================= */
@@ -67,6 +68,11 @@ class Listing extends Model
         return $this->hasMany(ListingStat::class);
     }
 
+	public function sections()
+    {
+        return $this->hasMany(ListingPageBlock::class);
+    }
+
     /* ================= SCOPES ================= */
 
     public function scopeVerified($q)
@@ -78,4 +84,13 @@ class Listing extends Model
     {
         return $q->where('is_featured', 1);
     }
+
+	// Listing.php
+
+	public function blocks()
+	{
+    	return $this->hasMany(ListingPageBlock::class)
+        	->orderBy('sort_order');
+	}
+
 }

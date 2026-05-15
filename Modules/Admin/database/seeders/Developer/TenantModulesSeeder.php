@@ -51,6 +51,7 @@ class TenantModulesSeeder extends Seeder
             	'updated_at' => now(),
         	],
     	];
+		$modules = [];
 
 	    DB::table('tenant_modules')->insert($modules);
 	}

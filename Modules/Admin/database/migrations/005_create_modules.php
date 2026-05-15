@@ -12,33 +12,126 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('modules', function (Blueprint $table) {
+
             $table->id();
 
-            // Identity
+            /*
+            |--------------------------------------------------------------------------
+            | Identity
+            |--------------------------------------------------------------------------
+            */
+
+            // Unique system key
+            // Example: student, finance, hostel
             $table->string('key')->unique();
-            // Example: student, library, transport
 
+            // Human readable module name
+            // Example: Student Management
             $table->string('name');
-            // Human-readable name: "Student Management"
 
+            // URL-friendly slug
+            // Example: student-management
+            $table->string('slug')->unique()->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Descriptions
+            |--------------------------------------------------------------------------
+            */
+
+            // Small description for cards/listing
+            $table->string('short_description')->nullable();
+
+            // Full module description
             $table->text('description')->nullable();
-            // What this module does (shown in UI)
 
-            // Pricing (base yearly price)
+            /*
+            |--------------------------------------------------------------------------
+            | UI / Branding
+            |--------------------------------------------------------------------------
+            */
+
+            // Icon name or icon path
+            // Example: users, wallet, bus
+            $table->string('icon')->nullable();
+
+            // Thumbnail image
+            $table->string('thumbnail')->nullable();
+
+            // Banner image
+            $table->string('banner')->nullable();
+
+            // Module category
+            // Example: Academic, Finance, HR
+            $table->string('category')->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Module Data
+            |--------------------------------------------------------------------------
+            */
+
+            // Module features list
+            // Example:
+            // [
+            //   "Attendance",
+            //   "Parent Portal",
+            //   "Student Profiles"
+            // ]
+            $table->json('features')->nullable();
+
+            // Dependencies on other modules
+            // Example:
+            // ["student", "finance"]
+            $table->json('dependencies')->nullable();
+
+            // Module permissions
+            $table->json('permissions')->nullable();
+
+            // Module version
+            $table->string('version')->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Pricing
+            |--------------------------------------------------------------------------
+            */
+
+            // Base module price
             $table->decimal('price', 10, 2)->nullable();
-            // Base price used when assigning module to tenant
-            // Snapshot is stored in tenant_modules
 
-            // Billing behavior
+            // Whether module is billable
             $table->boolean('is_billable')->default(true);
-            // If false, module is free (no billing)
 
+            /*
+            |--------------------------------------------------------------------------
+            | System Flags
+            |--------------------------------------------------------------------------
+            */
+
+            // Core modules cannot be removed
             $table->boolean('is_core')->default(false);
-            // Core modules cannot be removed from tenants
 
-            // Availability
+            // Module available for assignment
             $table->boolean('is_active')->default(true);
-            // If false, module cannot be newly assigned
+
+            // Show module in marketplace/listing page
+            $table->boolean('is_visible')->default(true);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Sorting
+            |--------------------------------------------------------------------------
+            */
+
+            // Display ordering
+            $table->integer('sort_order')->default(0);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Timestamps
+            |--------------------------------------------------------------------------
+            */
 
             $table->timestamps();
         });
