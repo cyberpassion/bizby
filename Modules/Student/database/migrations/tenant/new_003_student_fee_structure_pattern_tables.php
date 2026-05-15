@@ -145,36 +145,22 @@ return new class extends Migration
                 'pattern_id',
                 'key',
             ]);
+
+			$table->date('due_date')
+		        ->nullable();
+
         });
 
-        /*
-        |--------------------------------------------------------------------------
-        | Add Pattern To Fee Structures
-        |--------------------------------------------------------------------------
-        */
-
-        Schema::table('student_fee_structures', function (Blueprint $table) {
-
-            $table->foreignId('pattern_id')
-                ->nullable()
-                ->after('year_id')
-                ->constrained('student_fee_structure_patterns');
-        });
     }
 
     public function down(): void
-    {
-        Schema::table('student_fee_structures', function (Blueprint $table) {
+	{
+    	Schema::dropIfExists(
+        	'student_fee_structure_pattern_periods'
+	    );
 
-            $table->dropConstrainedForeignId('pattern_id');
-        });
-
-        Schema::dropIfExists(
-            'student_fee_structure_pattern_periods'
-        );
-
-        Schema::dropIfExists(
-            'student_fee_structure_patterns'
-        );
-    }
+	    Schema::dropIfExists(
+    	    'student_fee_structure_patterns'
+    	);
+	}
 };

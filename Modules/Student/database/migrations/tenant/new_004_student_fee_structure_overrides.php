@@ -8,51 +8,164 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('student_fee_structure_overrides', function (Blueprint $table) {
-            // Common SaaS Fields
-            $table->commonSaasFields();
-            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
+        Schema::create(
+            'student_fee_structure_overrides',
+            function (Blueprint $table) {
 
-            // Student for whom the override applies
-            $table->foreignId('student_id')
-                ->constrained()
-                ->cascadeOnDelete();
+                /*
+                |--------------------------------------------------------------------------
+                | Common SaaS Fields
+                |--------------------------------------------------------------------------
+                */
 
-            // Base fee structure being overridden
-            $table->foreignId('fee_structure_id')
-                ->constrained('student_fee_structures')
-                ->cascadeOnDelete();
+                $table->commonSaasFields();
 
-            /**
-             * Override values
-             *
-             * Use ONE of the following:
-             * 1. override_amount  → flat replacement amount
-             * 2. selected_periods → per-period replacement
-             */
+                /*
+                |--------------------------------------------------------------------------
+                | Student
+                |--------------------------------------------------------------------------
+                |
+                | Override applies only to this student.
+                |
+                */
 
-            // Flat override (e.g., tuition becomes 500/month)
-            $table->decimal('override_amount', 10, 2)->nullable();
+                $table->foreignId('student_id')
 
-            // Per-period override (month/term → amount)
-            // Example:
-            // { "01": 500, "02": 500, "03": 400 }
-            $table->json('selected_periods')->nullable();
+                    ->constrained()
 
-            // Reason for audit / reporting
-            $table->string('reason')->nullable(); 
-            // e.g. "Scholarship", "Staff Ward", "Special Case"
+                    ->cascadeOnDelete();
 
-            // One override per student per fee head
-            $table->unique(
-                ['student_id', 'fee_structure_id'],
-                'uniq_student_fee_override'
-            );
-        });
+                /*
+                |--------------------------------------------------------------------------
+                | Optional Base Structure Reference
+                |--------------------------------------------------------------------------
+                |
+                | Useful for traceability / audits.
+                |
+                */
+
+                $table->foreignId('fee_structure_id')
+
+                    ->nullable()
+
+                    ->constrained(
+                        'student_fee_structures'
+                    )
+
+                    ->nullOnDelete();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Pattern
+                |--------------------------------------------------------------------------
+                */
+
+                $table->foreignId('pattern_id')
+
+                    ->nullable()
+
+                    ->constrained(
+                        'student_fee_structure_patterns'
+                    );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Amount Type
+                |--------------------------------------------------------------------------
+                */
+
+                $table->enum('amount_type', [
+
+                    'per_period',
+
+                    'total',
+
+                ])->default('per_period');
+
+                /*
+                |--------------------------------------------------------------------------
+                | Context
+                |--------------------------------------------------------------------------
+                */
+
+                $table->foreignId('year_id')
+
+                    ->constrained(
+                        'student_academic_years'
+                    )
+
+                    ->cascadeOnDelete();
+
+                $table->foreignId('class_term_id')
+
+                    ->constrained('terms')
+
+                    ->cascadeOnDelete();
+
+                $table->foreignId('section_term_id')
+
+                    ->nullable()
+
+                    ->constrained('terms')
+
+                    ->nullOnDelete();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Fee Head
+                |--------------------------------------------------------------------------
+                */
+
+                $table->foreignId('head_term_id')
+
+                    ->constrained('terms')
+
+                    ->cascadeOnDelete();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Amount
+                |--------------------------------------------------------------------------
+                */
+
+                $table->decimal(
+                    'amount',
+                    10,
+                    2
+                )->default(0);
+
+                /*
+                |--------------------------------------------------------------------------
+                | Extra
+                |--------------------------------------------------------------------------
+                */
+
+                $table->string('reason')
+                    ->nullable();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Prevent Duplicate Override
+                |--------------------------------------------------------------------------
+                */
+
+                $table->unique([
+
+                    'student_id',
+
+                    'year_id',
+
+                    'head_term_id',
+
+                ], 'uniq_student_fee_override');
+            }
+        );
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('student_fee_structure_overrides');
+        Schema::dropIfExists(
+            'student_fee_structure_overrides'
+        );
     }
 };

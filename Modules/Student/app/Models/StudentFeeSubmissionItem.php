@@ -22,46 +22,50 @@ class StudentFeeSubmissionItem extends TenantModel
 
     protected $fillable = [
 
-        /*
-        |--------------------------------------------------------------------------
-        | commonSaasFields()
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | commonSaasFields()
+    |--------------------------------------------------------------------------
+    */
 
-        'tenant_id',
+    'tenant_id',
 
-        'status',
+    'status',
 
-        'created_by',
-        'updated_by',
-        'deleted_by',
+    'created_by',
+    'updated_by',
+    'deleted_by',
 
-        'entry_source',
-        'entry_source_ref_id',
+    'entry_source',
+    'entry_source_ref_id',
 
-        'remark',
-        'system_remark',
+    'remark',
+    'system_remark',
 
-        'meta',
+    'meta',
 
-        /*
-        |--------------------------------------------------------------------------
-        | Fee Submission Item
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | Fee Submission Item
+    |--------------------------------------------------------------------------
+    */
 
-        'fee_submission_id',
+    'submission_id',
 
-        'fee_structure_id',
+    'due_id',
 
-        'payable_amount',
+    'gross_amount',
 
-        'discount_applied',
+    'discount_amount',
 
-        'paid_amount',
+    'fine_amount',
 
-        'selected_periods',
-    ];
+    'paid_amount',
+
+    'balance_amount',
+
+    'selected_periods',
+];
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +92,16 @@ class StudentFeeSubmissionItem extends TenantModel
     {
         return $this->belongsTo(
             StudentFeeSubmission::class,
-            'fee_submission_id'
+            'submission_id'
         );
     }
+
+	public function due()
+	{
+    	return $this->belongsTo(
+	        StudentFeeDue::class,
+    	    'due_id'
+    	);
+	}
+
 }

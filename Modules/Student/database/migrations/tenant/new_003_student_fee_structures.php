@@ -12,6 +12,15 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
+			$table->foreignId('pattern_id')
+				->nullable()
+			    ->constrained('student_fee_structure_patterns');
+
+			$table->enum('amount_type', [
+			    'per_period',
+			    'total'
+			])->default('per_period');
+
 		    // Context
 		    $table->foreignId('year_id')
         		->constrained('student_academic_years')
@@ -30,19 +39,8 @@ return new class extends Migration
         		->constrained('terms')
         		->cascadeOnDelete();
 
-		    // Frequency config
-		    $table->enum('frequency', [
-        		'monthly',
-		        'quarterly',
-        		'semester',
-        		'yearly'
-    		]);
-
 			// Amount
 		    $table->decimal('amount', 10, 2)->default(0);
-
-		    // Period selection (months / terms)
-		    $table->json('selected_periods')->nullable();
 
 		    // Business-level uniqueness
 		    $table->unique([

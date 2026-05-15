@@ -222,7 +222,7 @@ return [
 		        	    ],
 						[
 			                'title'      => 'Custom Fee Structure',
-        			        'href'       => UrlPath::make($pg, '/fee-structure?student_id={id}'),
+        			        'href'       => UrlPath::make($pg, '/fee-structure/set?student_id={id}'),
                 			'permission' => Permission::update(Res::STUDENTS),
     		        	    'action'     => 'update',
 	        	    	],

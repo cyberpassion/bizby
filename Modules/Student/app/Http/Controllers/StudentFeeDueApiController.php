@@ -5,185 +5,574 @@ namespace Modules\Student\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Response;
-use Modules\Student\Models\Student;
-use Modules\Student\Models\StudentFeeStructure;
-use Modules\Student\Models\StudentFeeSubmissionItem;
+
 use Illuminate\Support\Facades\DB;
+
+use Modules\Student\Models\Student;
+use Modules\Student\Models\StudentFeeDue;
+
+use Modules\Student\Services\GenerateStudentFeeDuesService;
 
 class StudentFeeDueApiController extends Controller
 {
-    /**
-     * -----------------------------------------
-     * Student-wise dues (single student)
-     * GET /students/{id}/fee-dues
-     * -----------------------------------------
-     */
-    public function show(int $id, Request $request)
-    {
-        $data = $request->only([
-		    'year_id',
-		    'upto_period',
-		]);
+    /*
+    |--------------------------------------------------------------------------
+    | Student Dues
+    |--------------------------------------------------------------------------
+    |
+    | GET:
+    | students/fee-dues/{studentId}
+    |
+    */
 
-        $student = Student::with('currentAcademicHistory')->findOrFail($id);
-        $history = $student->currentAcademicHistory;
+    public function studentDues(
+        int $studentId,
+        Request $request
+    ) {
 
-        $upto = $data['upto_period'] ?? null;
+        $query = StudentFeeDue::query()
 
-        // 1️⃣ Expected fee (from structures)
-        $structures = StudentFeeStructure::where('year_id', $data['year_id'])
-            ->where('class_term_id', $history->class_term_id)
-            ->where('section_term_id', $history->section_term_id)
-            ->get();
+            ->with([
 
-        $expected = 0;
+                'year:id,name',
 
-        foreach ($structures as $structure) {
-            $periods = $structure->selected_periods ?? [];
+                'headTerm:id,name',
 
-            foreach ($periods as $period => $amount) {
-                if ($upto && $period > $upto) continue;
-                $expected += $amount;
-            }
+                'patternPeriod:id,label,key',
+
+                'structure:id,head_term_id,pattern_id',
+            ])
+
+            ->where('student_id', $studentId);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Optional Year Filter
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->filled('year_id')) {
+
+            $query->where(
+                'year_id',
+                $request->year_id
+            );
         }
 
-        // 2️⃣ Paid amount
-        $paid = StudentFeeSubmissionItem::whereHas('submission', function ($q) use ($student, $data) {
-                $q->where('student_id', $student->id)
-                  ->where('year_id', $data['year_id']);
-            })
-            ->sum('paid_amount');
+        /*
+        |--------------------------------------------------------------------------
+        | Optional Status Filter
+        |--------------------------------------------------------------------------
+        */
 
-        $due = max(0, $expected - $paid);
+        if ($request->filled('dues_status')) {
+
+            $query->where(
+                'dues_status',
+                $request->dues_status
+            );
+        }
+
+        $data = $query
+            ->orderBy('due_date')
+            ->latest('id')
+            ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Summary
+        |--------------------------------------------------------------------------
+        */
+
+        $summary = [
+
+            'total_amount' =>
+                $data->sum('amount'),
+
+            'paid_amount' =>
+                $data->sum('paid_amount'),
+
+            'fine_amount' =>
+                $data->sum('fine_amount'),
+
+            'waiver_amount' =>
+                $data->sum('waiver_amount'),
+
+            'balance_amount' =>
+                $data->sum('balance_amount'),
+        ];
 
         return response()->json([
+
             'status' => 'success',
-            'data' => [
-                'student_id' => $student->id,
-                'expected_amount' => $expected,
-                'paid_amount' => $paid,
-                'due_amount' => $due,
-            ]
+
+            'summary' => $summary,
+
+            'data' => $data,
+
         ], Response::HTTP_OK);
     }
 
-    /**
-     * -----------------------------------------
-     * Class / Section dues report
-     * POST /students/fee-dues/report
-     * -----------------------------------------
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Dues Report
+    |--------------------------------------------------------------------------
+    |
+    | POST:
+    | students/fee-dues/report
+    |
+    */
+
     public function report(Request $request)
-	{
-    	$data = $request->only([
-		    'year_id',
-		    'class_term_id',
-    		'section_term_id',
-		    'upto_period',
-		]);
+    {
+        $query = StudentFeeDue::query()
 
-	    $upto = $data['upto_period'] ?? null;
+            ->with([
+                'student:id,name',
+                'year:id,name',
+                'headTerm:id,name',
+            ]);
 
-	    /* ----------------------------------------------------
-    	 | 1️⃣ Fee structures (dynamic filters)
-    	 ---------------------------------------------------- */
-	    $structureQuery = StudentFeeStructure::where('year_id', $data['year_id']);
+        /*
+        |--------------------------------------------------------------------------
+        | Filters
+        |--------------------------------------------------------------------------
+        */
 
-	    if (!empty($data['class_term_id'])) {
-    	    $structureQuery->where('class_term_id', $data['class_term_id']);
-    	}
+        if ($request->filled('year_id')) {
 
-	    if (!empty($data['section_term_id'])) {
-     		$structureQuery->where('section_term_id', $data['section_term_id']);
-    	}
+            $query->where(
+                'year_id',
+                $request->year_id
+            );
+        }
 
-	    $structures = $structureQuery->get();
+        if ($request->filled('class_term_id')) {
 
-	    $structureTotal = [];
+            $query->where(
+                'class_term_id',
+                $request->class_term_id
+            );
+        }
 
-	    foreach ($structures as $structure) {
-    	    $total = 0;
+        if ($request->filled('section_term_id')) {
 
-        	foreach ($structure->selected_periods ?? [] as $period => $amount) {
-            	if ($upto && $period > $upto) continue;
-            	$total += $amount;
-        	}
+            $query->where(
+                'section_term_id',
+                $request->section_term_id
+            );
+        }
 
-	        $structureTotal[$structure->id] = $total;
-    	}
+        if ($request->filled('dues_status')) {
 
-	    $expectedPerStudent = array_sum($structureTotal);
+            $query->where(
+                'dues_status',
+                $request->dues_status
+            );
+        }
 
-	    /* ----------------------------------------------------
-    	 | 2️⃣ Paid data (dynamic filters)
-    	 ---------------------------------------------------- */
-    	$paidQuery = StudentFeeSubmissionItem::select(
-	            'student_fee_submissions.student_id',
-    	        DB::raw('SUM(student_fee_submission_items.paid_amount) as paid')
-        	)
-	        ->join(
-    	        'student_fee_submissions',
-        	    'student_fee_submissions.id',
-            	'=',
-            	'student_fee_submission_items.fee_submission_id'
-        	)
-	        ->where('student_fee_submissions.year_id', $data['year_id']);
+        /*
+        |--------------------------------------------------------------------------
+        | Report Data
+        |--------------------------------------------------------------------------
+        */
 
-	    if (!empty($data['class_term_id'])) {
-    	    $paidQuery->where('student_fee_submissions.class_term_id', $data['class_term_id']);
-    	}
+        $data = $query
+            ->latest()
+            ->paginate(
+                $request->get('per_page', 20)
+            );
 
-	    if (!empty($data['section_term_id'])) {
-    	    $paidQuery->where('student_fee_submissions.section_term_id', $data['section_term_id']);
-    	}
+        /*
+        |--------------------------------------------------------------------------
+        | Totals
+        |--------------------------------------------------------------------------
+        */
 
-	    $paidData = $paidQuery
-    	    ->groupBy('student_fee_submissions.student_id')
-        	->get()
-        	->keyBy('student_id');
+        $totals = [
 
-	    /* ----------------------------------------------------
-    	 | 3️⃣ Students list (dynamic filters)
-    	 ---------------------------------------------------- */
-	    $studentsQuery = Student::whereHas('currentAcademicHistory', function ($q) use ($data) {
-    	    if (!empty($data['class_term_id'])) {
-        	    $q->where('class_term_id', $data['class_term_id']);
-        	}
+            'total_amount' =>
+                $query->sum('amount'),
 
-	        if (!empty($data['section_term_id'])) {
-    	        $q->where('section_term_id', $data['section_term_id']);
-        	}
-	    });
+            'paid_amount' =>
+                $query->sum('paid_amount'),
 
-    	$students = $studentsQuery->get();
+            'fine_amount' =>
+                $query->sum('fine_amount'),
 
-	    /* ----------------------------------------------------
-    	 | 4️⃣ Build report
-    	 ---------------------------------------------------- */
-	    $report = [];
+            'waiver_amount' =>
+                $query->sum('waiver_amount'),
 
-	    foreach ($students as $student) {
-    	    $paid = $paidData[$student->id]->paid ?? 0;
+            'balance_amount' =>
+                $query->sum('balance_amount'),
+        ];
 
-	        $report[] = [
-    	        'student_id' => $student->id,
-        	    'name' => $student->name,
-            	'expected_amount' => $expectedPerStudent,
-            	'paid_amount' => $paid,
-            	'due_amount' => max(0, $expectedPerStudent - $paid),
-        	];
-	    }
+        return response()->json([
+
+            'status' => 'success',
+
+            'totals' => $totals,
+
+            'data' => $data,
+
+        ], Response::HTTP_OK);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Carry Forward
+    |--------------------------------------------------------------------------
+    */
+
+    public function carryForward(
+        Request $request,
+        int $studentId
+    ) {
+
+        $validated = $request->validate([
+
+            'source_year_id' => [
+                'required',
+                'exists:student_academic_years,id',
+            ],
+
+            'target_year_id' => [
+                'required',
+                'exists:student_academic_years,id',
+            ],
+
+            'amount' => [
+                'required',
+                'numeric',
+                'min:1',
+            ],
+
+            'class_term_id' => [
+                'required',
+                'exists:terms,id',
+            ],
+
+            'section_term_id' => [
+                'nullable',
+                'exists:terms,id',
+            ],
+        ]);
+
+        $due = StudentFeeDue::create([
+
+            'student_id' => $studentId,
+
+            'year_id' =>
+                $validated['target_year_id'],
+
+            'class_term_id' =>
+                $validated['class_term_id'],
+
+            'section_term_id' =>
+                $validated['section_term_id'],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Due Info
+            |--------------------------------------------------------------------------
+            */
+
+            'due_type' => 'carry_forward',
+
+            'amount' =>
+                $validated['amount'],
+
+            'paid_amount' => 0,
+
+            'fine_amount' => 0,
+
+            'waiver_amount' => 0,
+
+            'balance_amount' =>
+                $validated['amount'],
+
+            'dues_status' => 'unpaid',
+
+            /*
+            |--------------------------------------------------------------------------
+            | Snapshots
+            |--------------------------------------------------------------------------
+            */
+
+            'head_name' =>
+                'Carry Forward',
+
+            'pattern_name' =>
+                'Carry Forward',
+
+            'period_name' =>
+                'Previous Balance',
+
+            /*
+            |--------------------------------------------------------------------------
+            | Meta
+            |--------------------------------------------------------------------------
+            */
+
+            'meta' => [
+
+                'source_year_id' =>
+                    $validated['source_year_id'],
+
+                'reason' =>
+                    'Previous year carry forward',
+            ],
+
+            'generated_at' => now(),
+        ]);
+
+        return response()->json([
+
+            'status' => 'success',
+
+            'message' =>
+                'Carry forward created successfully.',
+
+            'data' => $due,
+
+        ], Response::HTTP_CREATED);
+    }
+
+	/*
+    |--------------------------------------------------------------------------
+    | Pending Dues
+    |--------------------------------------------------------------------------
+    |
+    | GET:
+    | students/fee-dues/{studentId}/pending-dues
+    |
+    */
+
+    public function pendingDues(
+        int $studentId,
+        Request $request
+    ) {
+
+        $query = StudentFeeDue::query()
+
+            ->with([
+
+                'headTerm:id,name',
+
+                'patternPeriod:id,label,key',
+
+                'structure:id,head_term_id,pattern_id',
+            ])
+
+            ->where(
+                'student_id',
+                $studentId
+            )
+
+            /*
+            |--------------------------------------------------------------------------
+            | Only Pending
+            |--------------------------------------------------------------------------
+            */
+
+            ->whereIn(
+                'dues_status',
+                [
+                    'unpaid',
+                    'partial',
+                ]
+            )
+
+            ->where(
+                'balance_amount',
+                '>',
+                0
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Optional Year Filter
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->filled('year_id')) {
+
+            $query->where(
+                'year_id',
+                $request->year_id
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Optional Head Filter
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->filled('head_term_id')) {
+
+            $query->where(
+                'head_term_id',
+                $request->head_term_id
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Result
+        |--------------------------------------------------------------------------
+        */
+
+        $dues = $query
+
+            ->orderBy('due_date')
+
+            ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Summary
+        |--------------------------------------------------------------------------
+        */
+
+        $summary = [
+
+            'total_amount' =>
+
+                round(
+                    $dues->sum('amount'),
+                    2
+                ),
+
+            'total_paid' =>
+
+                round(
+                    $dues->sum('paid_amount'),
+                    2
+                ),
+
+            'total_fine' =>
+
+                round(
+                    $dues->sum('fine_amount'),
+                    2
+                ),
+
+            'total_waiver' =>
+
+                round(
+                    $dues->sum('waiver_amount'),
+                    2
+                ),
+
+            'total_balance' =>
+
+                round(
+                    $dues->sum('balance_amount'),
+                    2
+                ),
+        ];
+
+        /*
+        |--------------------------------------------------------------------------
+        | Group By Period
+        |--------------------------------------------------------------------------
+        */
+
+        $grouped = $dues
+
+            ->groupBy('period_name')
+
+            ->map(function ($items, $period) {
+
+                return [
+
+                    'period' => $period,
+
+                    'items' =>
+
+                        $items->map(function ($due) {
+
+                            return [
+
+                                'due_id' =>
+                                    $due->id,
+
+                                'head_name' =>
+                                    $due->head_name,
+
+                                'amount' =>
+                                    round(
+                                        $due->amount,
+                                        2
+                                    ),
+
+                                'paid_amount' =>
+                                    round(
+                                        $due->paid_amount,
+                                        2
+                                    ),
+
+                                'fine_amount' =>
+                                    round(
+                                        $due->fine_amount,
+                                        2
+                                    ),
+
+                                'waiver_amount' =>
+                                    round(
+                                        $due->waiver_amount,
+                                        2
+                                    ),
+
+                                'balance_amount' =>
+                                    round(
+                                        $due->balance_amount,
+                                        2
+                                    ),
+
+                                'due_date' =>
+                                    optional(
+                                        $due->due_date
+                                    )->toDateString(),
+
+                                'dues_status' =>
+                                    $due->dues_status,
+                            ];
+                        })->values(),
+                ];
+            })
+
+            ->values();
+
+        return response()->json([
+
+            'status' => 'success',
+
+            'summary' => $summary,
+
+            'data' => $grouped,
+
+        ], Response::HTTP_OK);
+    }
+
+	public function regenerateDues(
+	    int $id
+	) {
+
+	    $student = Student::findOrFail($id);
+
+	    app(
+    	    GenerateStudentFeeDuesService::class
+    	)->handle($student);
 
 	    return response()->json([
-    	    'status' => 'success',
-        	'filters' => [
-            	'year_id' => $data['year_id'],
-            	'class_term_id' => $data['class_term_id'] ?? 'ALL',
-	            'section_term_id' => $data['section_term_id'] ?? 'ALL',
-    	        'upto_period' => $upto ?? 'FULL YEAR',
-        	],
-	        'data' => ['data'=>$report],
-    	], Response::HTTP_OK);
+
+	        'status' => 'success',
+
+	        'message' =>
+    	        'Dues regenerated successfully.',
+    	]);
 	}
 
 }

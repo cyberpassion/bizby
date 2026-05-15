@@ -159,8 +159,12 @@ return [
 				'class_name'			=> 'Class',
 				'section_name'			=> 'Section',
 				'payment_mode_label'	=> 'Payment Mode',
-				'amount_received'		=> 'Amount',
-				'paid_at'			=> 'Payment Date',
+				'gross_amount' 			=> 'Gross Amount',
+				'discount_amount' 		=> 'Discount',
+				'fine_amount' 			=> 'Fine',
+				'paid_amount' 			=> 'Paid Amount',
+				'balance_amount' 		=> 'Balance',
+				'paid_at'				=> 'Payment Date',
 				'status'				=> 'Status',
 			],
 
@@ -172,10 +176,12 @@ return [
 				'class_name'			=> 'Class',
 				'section_name'			=> 'Section',
 				'payment_mode_label'	=> 'Payment Mode',
-				'total_amount'			=> 'Total Amount',
-				'total_discount'		=> 'Discount',
-				'amount_received'		=> 'Amount Received',
-				'paid_at'			=> 'Payment Date',
+				'gross_amount' 			=> 'Gross Amount',
+				'discount_amount' 		=> 'Discount',
+				'fine_amount' 			=> 'Fine',
+				'paid_amount' 			=> 'Paid Amount',
+				'balance_amount' 		=> 'Balance',
+				'paid_at'				=> 'Payment Date',
 				'remarks'				=> 'Remarks',
 				'status'				=> 'Status',
 			],
@@ -187,8 +193,12 @@ return [
 				'class_name'			=> 'Class',
 				'section_name'			=> 'Section',
 				'payment_mode_label'	=> 'Payment Mode',
-				'amount_received'		=> 'Amount Received',
-				'paid_at'			=> 'Payment Date',
+				'gross_amount' 			=> 'Gross Amount',
+				'discount_amount' 		=> 'Discount',
+				'fine_amount' 			=> 'Fine',
+				'paid_amount' 			=> 'Paid Amount',
+				'balance_amount' 		=> 'Balance',
+				'paid_at'				=> 'Payment Date',
 			],
 
 			Actions::SAMPLE_EXPORT => [
@@ -196,7 +206,7 @@ return [
 				'student_name',
 				'class_name',
 				'payment_mode_label',
-				'amount_received',
+				'paid_amount',
 				'paid_at',
 			],
 
@@ -205,7 +215,7 @@ return [
 				'student_name',
 				'class_name',
 				'payment_mode_label',
-				'amount_received',
+				'paid_amount',
 				'paid_at',
 			],
 		],
@@ -251,7 +261,7 @@ return [
 				'student_name',
 				'class_name',
 				'total_amount',
-				'amount_received',
+				'paid_amount',
 				'due_amount'
 			],
 
@@ -259,7 +269,7 @@ return [
 				'student_name',
 				'class_name',
 				'total_amount',
-				'amount_received',
+				'paid_amount',
 				'due_amount'
 			],
 		],
@@ -322,9 +332,9 @@ return [
 
 			Actions::LIST => [
 				'id'					=> 'ID',
-				'name'			=> 'Name',
-				'student_name'	=>	'Student',
-				'class_name'			=> 'Class',
+				'name'					=> 'Name',
+				'student_name'			=> 'Student',
+				'year_name'				=> 'Year',
 				'discount_type_label'	=> 'Discount Type',
 				'discount_amount'		=> 'Discount Amount',
 				'created_at'			=> 'Created',
@@ -332,11 +342,10 @@ return [
 
 			Actions::DETAIL => [
 				'id'					=> 'ID',
-				'name'			=> 'Name',
-				'student_name'	=>	'Student',
+				'name'					=> 'Name',
+				'student_name'			=> 'Student',
 				'admission_no'			=> 'Admission No',
-				'class_name'			=> 'Class',
-				'section_name'			=> 'Section',
+				'year_name'				=> 'Year',
 				'discount_type_label'	=> 'Discount Type',
 				'discount_amount'		=> 'Discount Amount',
 				'remarks'				=> 'Remarks',
@@ -344,10 +353,9 @@ return [
 			],
 
 			Actions::REPORT => [
-				'name'			=> 'Name',
-				'student_name'	=>	'Student',
-				'class_name'			=> 'Class',
-				'section_name'			=> 'Section',
+				'name'					=> 'Name',
+				'student_name'			=> 'Student',
+				'year_name'				=> 'Year',
 				'discount_type_label'	=> 'Discount Type',
 				'discount_amount'		=> 'Discount Amount',
 			],
@@ -427,10 +435,10 @@ return [
 		KeyName::make(Res::FEE_OVERRIDES) => [
 			Actions::LIST => [
 				'id'					=> 'ID',
-				'name'			=> 'Name',
-				'student_name'	=>	'Student',
+				'student_name'			=> 'Student',
 				'class_name'			=> 'Class',
-				'section_name'		=> 'Section',
+				'section_name'			=> 'Section',
+				'year_name'				=> 'Year',
 				'created_at'			=> 'Created',
 			],
 		]

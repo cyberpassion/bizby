@@ -53,7 +53,7 @@ class AuthApiController extends Controller
                 'name'  => $user->name,
                 'email' => $user->email,
 				'token'	=> $token,
-				'permissions' => $permissions
+				// 'permissions' => $permissions
             ],
         ]);
     }

@@ -9,7 +9,7 @@ use Modules\Student\Http\Controllers\StudentFeeStructureOverrideApiController;
 use Modules\Student\Http\Controllers\StudentFeeSummaryApiController;
 use Modules\Student\Http\Controllers\StudentFeeSubmissionApiController;
 
-use Modules\Student\Http\Controllers\StudentFeeDuesApiController;
+use Modules\Student\Http\Controllers\StudentFeeDueApiController;
 use Modules\Student\Http\Controllers\StudentFeeCollectionApiController;
 
 use Modules\Student\Http\Controllers\StudentTransitionApiController;
@@ -40,9 +40,9 @@ Route::prefix('v1')->group(function () {
 	// Fee Dues
 	Route::prefix('students')->group(function () {
 	    // Student-wise dues (single student)
-    	Route::get('{id}/fee-dues', [StudentFeeDuesApiController::class,'show']);
+    	Route::get('{id}/fee-dues', [StudentFeeDueApiController::class,'show']);
 	    // Class / section dues report
-	    Route::get('fee-dues', [StudentFeeDuesApiController::class,'report']);
+	    Route::get('fee-dues', [StudentFeeDueApiController::class,'report']);
 	});
 
 	// Fee Collections

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Modules\Student\Http\Controllers\StudentSetupStatusApiController;
 use Modules\Student\Http\Controllers\StudentApiController;
 use Modules\Student\Http\Controllers\StudentAcademicYearApiController;
 use Modules\Student\Http\Controllers\StudentFeeStructureApiController;
@@ -10,7 +11,7 @@ use Modules\Student\Http\Controllers\StudentFeeSummaryApiController;
 use Modules\Student\Http\Controllers\StudentFeeSubmissionApiController;
 use Modules\Student\Http\Controllers\StudentTransitionApiController;
 use Modules\Student\Http\Controllers\StudentFeeDiscountApiController;
-use Modules\Student\Http\Controllers\StudentFeeDueApiController1;
+use Modules\Student\Http\Controllers\StudentFeeDueApiController;
 
 // Reports
 use Modules\Student\Http\Controllers\Reports\StudentReportApiController;
@@ -32,6 +33,11 @@ use Modules\Student\Http\Controllers\StudentFeeStructurePatternApiController;
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
+
+		Route::get(
+		    "students/setup-status",
+		    [StudentSetupStatusApiController::class, "index"]
+		);
 
         /*
         |--------------------------------------------------------------------------
@@ -175,21 +181,37 @@ Route::prefix('v1')
 |--------------------------------------------------------------------------
 */
 
+/*
+|--------------------------------------------------------------------------
+| STUDENT FEE DUES
+|--------------------------------------------------------------------------
+|
+| Enterprise Flow:
+|
+| Structures
+| → Generate Dues
+| → Payments
+|
+| Dues are now system-generated.
+| No manual due creation API.
+|
+*/
+
 Route::prefix('students/fee-dues')
     ->group(function () {
 
         /*
         |--------------------------------------------------------------------------
-        | Create Due
+        | Dues Report
         |--------------------------------------------------------------------------
         */
 
         Route::post(
-            '/',
-            [StudentFeeDueApiController1::class, 'store']
+            'report',
+            [StudentFeeDueApiController::class, 'report']
         );
 
-        /*
+		/*
         |--------------------------------------------------------------------------
         | Student Dues
         |--------------------------------------------------------------------------
@@ -197,7 +219,29 @@ Route::prefix('students/fee-dues')
 
         Route::get(
             '{studentId}',
-            [StudentFeeDueApiController1::class, 'studentDues']
+            [StudentFeeDueApiController::class, 'studentDues']
+        );
+
+		/*
+        |--------------------------------------------------------------------------
+        | Student Pending Dues
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '{studentId}/pending-dues',
+            [StudentFeeDueApiController::class, 'pendingDues']
+        );
+
+		/*
+        |--------------------------------------------------------------------------
+        | Student Regenerate Dues
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '{studentId}/regenerate',
+            [StudentFeeDueApiController::class, 'regenerateDues']
         );
 
         /*
@@ -208,10 +252,9 @@ Route::prefix('students/fee-dues')
 
         Route::post(
             '{studentId}/carry-forward',
-            [StudentFeeDueApiController1::class, 'carryForward']
+            [StudentFeeDueApiController::class, 'carryForward']
         );
     });
-
         /*
 |--------------------------------------------------------------------------
 | STUDENT TRANSITIONS
@@ -469,7 +512,7 @@ Route::prefix('students/transitions')
 */
 
 Route::get(
-    'students/fee-collections/{id}',
+    'students/fee-submissions/{id}',
     [StudentFeeSubmissionApiController::class, 'show']
 );
 
@@ -486,7 +529,7 @@ Route::get(
 */
 
 Route::get(
-    'students/fee-collections/{id}/receipt',
+    'students/fee-submissions/{id}/receipt',
     [StudentFeeSubmissionApiController::class, 'receipt']
 );
 

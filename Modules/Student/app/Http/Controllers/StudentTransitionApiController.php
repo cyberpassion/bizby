@@ -14,6 +14,8 @@ use Modules\Student\Models\StudentTransition;
 use Modules\Student\Models\StudentAcademicHistory;
 use Modules\Student\Models\StudentAcademicYear;
 
+use Modules\Student\Services\GenerateStudentFeeDuesService;
+
 class StudentTransitionApiController extends Controller
 {
     /*
@@ -315,8 +317,8 @@ $hasFeePayments =
         )
 
         ->where(
-            'fee_status',
-            'completed'
+            'submission_status',
+            'success'
         )
 
         ->exists();
@@ -428,6 +430,24 @@ $alreadyExists = StudentAcademicHistory::query()
 
                 'is_current'      => true,
             ]);
+
+			/*
+			|--------------------------------------------------------------------------
+			| Reload Student
+			|--------------------------------------------------------------------------
+			*/
+
+			$student = Student::find($studentId);
+
+			/*
+			|--------------------------------------------------------------------------
+			| Generate Student Fee Dues
+			|--------------------------------------------------------------------------
+			*/
+
+			app(
+			    GenerateStudentFeeDuesService::class
+			)->handle($student);
 
             $createdTransitions[] = $transition;
         }

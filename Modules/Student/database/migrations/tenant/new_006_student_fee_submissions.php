@@ -17,9 +17,17 @@ return new class extends Migration
 		    $table->foreignId('class_term_id')->constrained('terms');
     		$table->foreignId('section_term_id')->constrained('terms');
 
-		    $table->decimal('total_amount', 10, 2)->default(0);
-		    $table->decimal('total_discount', 10, 2)->default(0);
-    		$table->decimal('amount_received', 10, 2)->default(0);
+			$table->date('receipt_date');
+
+			$table->decimal('gross_amount', 10, 2)->default(0);
+
+			$table->decimal('discount_amount', 10, 2)->default(0);
+
+			$table->decimal('fine_amount', 10, 2)->default(0);
+
+			$table->decimal('paid_amount', 10, 2)->default(0);
+
+			$table->decimal('balance_amount', 10, 2)->default(0);
 
 		    $table->text('remarks')->nullable();
 
@@ -29,8 +37,28 @@ return new class extends Migration
 			    'cancelled',
 			])->default('completed');
 
+			$table->enum('submission_status', [
+			    'success',
+			    'cancelled',
+			    'refunded',
+			    'failed'
+			])->default('success');
+
 			$table->timestamp('paid_at')
     			->nullable();
+
+			$table->foreignId('submitted_by')
+		        ->nullable();
+
+			$table->timestamp('cancelled_at')
+			    ->nullable();
+
+			$table->foreignId('cancelled_by')
+			    ->nullable()
+			    ->nullOnDelete();
+
+			$table->text('cancellation_reason')
+			    ->nullable();
 
 			$table->timestamp('reversed_at')
     			->nullable();
@@ -40,6 +68,33 @@ return new class extends Migration
 
 			$table->text('reversal_reason')
 			    ->nullable();
+
+			$table->string('receipt_no')->unique();
+
+			$table->enum('payment_mode', [
+			    'cash',
+			    'upi',
+			    'online',
+			    'bank_transfer',
+			    'cheque'
+			])->nullable();
+
+			$table->string('transaction_reference')
+				->nullable();
+
+			$table->index([
+			    'receipt_date'
+			]);
+
+			$table->index([
+			    'student_id',
+			    'year_id'
+			]);
+
+			$table->uuid('request_uuid')
+			    ->nullable()
+			    ->unique();
+
 		});
 
     }

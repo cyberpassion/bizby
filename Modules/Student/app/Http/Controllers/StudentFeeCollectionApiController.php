@@ -48,7 +48,7 @@ class StudentFeeCollectionApiController extends Controller
         $date = Carbon::parse($data['date'] ?? now());
 
         $query = $this->baseQuery($data)
-            ->whereDate('created_at', $date);
+            ->whereDate('receipt_date', $date);
 
         return $query->get();
     }
@@ -115,7 +115,10 @@ class StudentFeeCollectionApiController extends Controller
         }
 
         // Include related items for detailed dues
-        $query->with('items');
+        $query->with([
+		    'student:id,name,admission_number',
+    		'items.due',
+		]);
 
         return $query;
     }

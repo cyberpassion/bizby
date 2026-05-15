@@ -25,60 +25,52 @@ class TermApiController extends SharedApiController
 	}
 
 	public function navigation()
-{
-    $terms = Term::query()
+	{
+    	$groups = require module_path(
+	        'Shared',
+    	    'config/data/resource_groups.php'
+    	);
 
-        ->select(
-            'module',
-            'group'
-        )
+	    $modules = collect($groups)
 
-        ->distinct()
+	        ->map(function ($group) {
 
-        ->get();
+	            return [
 
-    $modules = $terms
+	                'id' => $group['key'] ?? null,
 
-        ->groupBy('module')
+    	            'name' => $group['label'] ?? null,
 
-        ->map(function ($items, $module) {
+        	        'icon' => $group['icon'] ?? null,
 
-            return [
+            	    'groups' => collect($group['items'] ?? [])
 
-                'id' => $module,
+                	    ->map(function ($item) {
 
-                'name' => ucfirst($module),
+                    	    return [
 
-                'groups' => $items
+                        	    'id' => $item['key'] ?? null,
 
-                    ->pluck('group')
+                            	'name' => $item['label'] ?? null,
 
-                    ->unique()
+	                            'permission' => $item['permission'] ?? null,
+    	                    ];
+        	            })
 
-                    ->values()
+	                    ->values(),
+    	        ];
+        	})
 
-                    ->map(function ($group) {
+	        ->values();
 
-                        return [
+	    return response()->json([
 
-                            'id' => $group,
+    	    'status' => 'success',
 
-                            'name' => ucfirst($group),
-                        ];
-                    }),
-            ];
-        })
-
-        ->values();
-
-    return response()->json([
-
-        'status' => 'success',
-
-        'data' => [
-            'modules' => $modules,
-        ],
-    ]);
-}
+        	'data' => [
+            	'modules' => $modules,
+        	],
+    	]);
+	}
 
 }

@@ -12,11 +12,11 @@ class LookupsApiController extends Controller
         $data = LookupRegistry::get($key);
 
         if ($data === null) {
-            return response()->json([
-                'status'  => false,
-                'message' => "Lookup '{$key}' not found",
-            ], 404);
-        }
+		    return response()->json([
+        		'status' => true,
+		        'data'   => [],
+    		]);
+		}
 
         /*
         |--------------------------------------------------------------------------

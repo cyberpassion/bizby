@@ -7,24 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StudentFeeStructure extends TenantModel
 {
-	use HasFactory;
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------
-    | Mass Assignment
+    | Fillable
     |--------------------------------------------------------------------------
-    |
-    | Includes:
-    | - commonSaasFields()
-    | - fee structure specific fields
-    |
     */
 
     protected $fillable = [
 
         /*
         |--------------------------------------------------------------------------
-        | commonSaasFields()
+        | Common SaaS
         |--------------------------------------------------------------------------
         */
 
@@ -50,6 +45,8 @@ class StudentFeeStructure extends TenantModel
         |--------------------------------------------------------------------------
         */
 
+        'pattern_id',
+
         'year_id',
 
         'class_term_id',
@@ -57,11 +54,9 @@ class StudentFeeStructure extends TenantModel
 
         'head_term_id',
 
-        'frequency',
-
         'amount',
 
-        'selected_periods',
+        'amount_type',
     ];
 
     /*
@@ -70,34 +65,10 @@ class StudentFeeStructure extends TenantModel
     |--------------------------------------------------------------------------
     */
 
-	protected $casts = [
-
-        'selected_periods' => 'array',
+    protected $casts = [
 
         'meta' => 'array',
-	];
-
-    /*
-    |--------------------------------------------------------------------------
-    | Helpers
-    |--------------------------------------------------------------------------
-    */
-
-    /**
-     * Get fee amount for a specific month/period
-     */
-    public function amountForMonth(int|string $month): float
-    {
-        $month = str_pad(
-            $month,
-            2,
-            '0',
-            STR_PAD_LEFT
-        );
-
-        return $this->selected_periods[$month]
-            ?? $this->amount;
-    }
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -105,12 +76,19 @@ class StudentFeeStructure extends TenantModel
     |--------------------------------------------------------------------------
     */
 
-	// Fee head term
-	public function headTerm()
-	{
-    	return $this->belongsTo(
-	        \Modules\Shared\Models\Term::class,
-    	    'head_term_id'
-    	);
-	}
+    public function headTerm()
+    {
+        return $this->belongsTo(
+            \Modules\Shared\Models\Term::class,
+            'head_term_id'
+        );
+    }
+
+    public function pattern()
+    {
+        return $this->belongsTo(
+            StudentFeeStructurePattern::class,
+            'pattern_id'
+        );
+    }
 }

@@ -12,6 +12,9 @@ use Modules\Student\Models\StudentFeeSubmission;
 use Modules\Student\Models\StudentFeeSubmissionItem;
 use Modules\Student\Models\StudentFeeStructure;
 
+use Modules\Student\Services\SubmitStudentFeeService;
+use Modules\Student\Services\CancelStudentFeeReceiptService;
+
 class StudentFeeSubmissionApiController extends Controller
 {
     /**
@@ -21,219 +24,15 @@ class StudentFeeSubmissionApiController extends Controller
      */
     public function store(int $id, Request $request)
     {
-        /*
-        |--------------------------------------------------------------------------
-        | Student
-        |--------------------------------------------------------------------------
-        */
-
-        $student = Student::with(
-            'currentAcademicHistory'
-        )->findOrFail($id);
-
-        if (!$student->currentAcademicHistory) {
-
-            return response()->json([
-
-                'status' => 'error',
-
-                'message' =>
-                    'Student has no current academic history',
-
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Validate
-        |--------------------------------------------------------------------------
-        */
-
-        $data = $request->validate([
-
-            'year_id' => 'required|integer',
-
-            'class_term_id' => 'required|integer',
-
-            'section_term_id' => 'required|integer',
-
-            'remarks' => 'nullable|string',
-
-            // [fee_structure_id => amount]
-            'allocations' => 'required|array',
-
-            // [fee_structure_id => {period => amount}]
-            'periods' => 'required|array',
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-
-            /*
-            |--------------------------------------------------------------------------
-            | Preload Fee Structures
-            |--------------------------------------------------------------------------
-            */
-
-            $fees = StudentFeeStructure::whereIn(
-
-                'id',
-
-                array_keys($data['allocations'])
-
-            )->get()->keyBy('id');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Calculate Totals
-            |--------------------------------------------------------------------------
-            */
-
-            $totalAmount = 0;
-
-            $totalDiscount = 0;
-
-            $amountReceived = 0;
-
-            foreach (
-                $data['allocations']
-                as
-                $feeId => $periodAmounts
-            ) {
-
-                $paidAmount =
-                    array_sum($periodAmounts);
-
-                $discountApplied = 0;
-
-                $totalAmount +=
-                    $paidAmount + $discountApplied;
-
-                $totalDiscount +=
-                    $discountApplied;
-
-                $amountReceived +=
-                    $paidAmount;
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Create Main Submission
-            |--------------------------------------------------------------------------
-            */
-
-            $submission =
-                StudentFeeSubmission::create([
-
-                    'student_id' =>
-                        $student->id,
-
-                    'year_id' =>
-                        $data['year_id'],
-
-                    'class_term_id' =>
-                        $data['class_term_id'],
-
-                    'section_term_id' =>
-                        $data['section_term_id'],
-
-                    'total_amount' =>
-                        $totalAmount,
-
-                    'total_discount' =>
-                        $totalDiscount,
-
-                    'amount_received' =>
-                        $amountReceived,
-
-                    'remarks' =>
-                        $data['remarks'] ?? null,
-                ]);
-
-            /*
-            |--------------------------------------------------------------------------
-            | Create Submission Items
-            |--------------------------------------------------------------------------
-            */
-
-            foreach (
-                $data['allocations']
-                as
-                $feeId => $periodAmounts
-            ) {
-
-                $paidAmount =
-                    array_sum($periodAmounts);
-
-                $periodPaid =
-                    $data['periods'][$feeId] ?? [];
-
-                $discountApplied = 0;
-
-                $fee =
-                    $fees[$feeId] ?? null;
-
-                if (!$fee) {
-
-                    throw new \Exception(
-                        'Fee structure not found.'
-                    );
-                }
-
-                StudentFeeSubmissionItem::create([
-
-                    'fee_submission_id' =>
-                        $submission->id,
-
-                    'fee_structure_id' =>
-                        $feeId,
-
-                    'payable_amount' =>
-                        $paidAmount + $discountApplied,
-
-                    'discount_applied' =>
-                        $discountApplied,
-
-                    'paid_amount' =>
-                        $paidAmount,
-
-                    'selected_periods' =>
-                        $periodPaid,
-                ]);
-            }
-
-            DB::commit();
-
-            return response()->json([
-
-                'status' => 'success',
-
-                'message' =>
-                    'Fee submission saved successfully',
-
-                'data' => $submission->load([
-
-                    'items:id,fee_submission_id,fee_structure_id,payable_amount,discount_applied,paid_amount,selected_periods',
-                ]),
-
-            ], Response::HTTP_CREATED);
-
-        } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            return response()->json([
-
-                'status' => 'error',
-
-                'message' =>
-                    'Failed to save fee submission: '
-                    .
-                    $e->getMessage(),
-
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        $submission = app(
+	        SubmitStudentFeeService::class
+    	)->handle($request, $id);
+
+	    return response()->json([
+    	    'status' => 'success',
+        	'message' => 'Fee submitted successfully.',
+        	'data' => $submission,
+    	]);
     }
 
     /*
@@ -244,70 +43,15 @@ class StudentFeeSubmissionApiController extends Controller
 
     public function reverse(Request $request, int $id)
     {
-        $validated = $request->validate([
+        $submission = app(
+        	CancelStudentFeeReceiptService::class
+	    )->handle($id);
 
-            'reason' => [
-                'required',
-                'string',
-            ],
-        ]);
-
-        $submission =
-            StudentFeeSubmission::findOrFail($id);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Already Reversed
-        |--------------------------------------------------------------------------
-        */
-
-        if (
-            $submission->fee_status
-            ===
-            'reversed'
-        ) {
-
-            return response()->json([
-
-                'status' => 'error',
-
-                'message' =>
-                    'Fee submission already reversed.',
-
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Reverse
-        |--------------------------------------------------------------------------
-        */
-
-        $submission->update([
-
-            'fee_status' =>
-                'reversed',
-
-            'reversed_at' =>
-                now(),
-
-            'reversed_by' =>
-                auth()->id(),
-
-            'reversal_reason' =>
-                $validated['reason'],
-        ]);
-
-        return response()->json([
-
-            'status' => 'success',
-
-            'message' =>
-                'Fee submission reversed successfully.',
-
-            'data' => $submission,
-
-        ], Response::HTTP_OK);
+	    return response()->json([
+    	    'success' => true,
+        	'message' => 'Receipt cancelled successfully.',
+	        'data' => $submission,
+    	]);
     }
 
     /*
@@ -349,7 +93,7 @@ class StudentFeeSubmissionApiController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    'items:id,fee_submission_id,fee_structure_id,payable_amount,discount_applied,paid_amount,selected_periods',
+                    'items.due',
                 ])
 
                 ->findOrFail($id);
@@ -384,7 +128,7 @@ class StudentFeeSubmissionApiController extends Controller
 
                     'sectionTerm:id,name',
 
-                    'items:id,fee_submission_id,fee_structure_id,payable_amount,discount_applied,paid_amount,selected_periods',
+                    'items.due',
                 ])
 
                 ->findOrFail($id);
@@ -400,7 +144,7 @@ class StudentFeeSubmissionApiController extends Controller
             ->flatMap(function ($item) {
 
                 return collect(
-                    $item->selected_periods ?? []
+                    $item->due->period_name ?? []
                 )
 
                     ->map(function (

@@ -286,7 +286,7 @@ Route::prefix('v1')
     Route::delete('/users/{user}/roles/{role}', [UserRoleApiController::class, 'revoke']);
 
     // user permission overrides
-    Route::get('/users/{user}/permissions', [UserPermissionApiController::class, 'index']);
+    Route::get('/users/{user}/permissions/{tenantId}', [UserPermissionApiController::class, 'index']);
     Route::put('/users/{user}/permissions', [UserPermissionApiController::class, 'sync']);
     Route::delete('/users/{user}/permissions/{permission}', [UserPermissionApiController::class, 'revoke']);
 });

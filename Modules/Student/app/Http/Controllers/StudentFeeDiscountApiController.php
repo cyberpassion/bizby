@@ -3,7 +3,6 @@
 namespace Modules\Student\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Http\Response;
 
 use Modules\Shared\Http\Controllers\SharedApiController;
@@ -13,6 +12,7 @@ use Modules\Student\Models\StudentFeeDiscount;
 class StudentFeeDiscountApiController extends SharedApiController
 {
     protected $searchable = [];
+	protected $with = ['student','year','headTerm','classTerm','sectionTerm','pattern'];
 
     /*
     |--------------------------------------------------------------------------
@@ -32,91 +32,142 @@ class StudentFeeDiscountApiController extends SharedApiController
     */
 
     protected function validationRules($id = null)
-    {
-        return [
+	{
+    	return [
 
-			'student_fee_structure_id' => [
-	            'nullable',
-    	        'integer',
+	        'head_term_id' => [
+    	        'nullable',
+        	    'integer',
+            	'exists:terms,id',
+	        ],
+
+	        'pattern_id' => [
+    	        'nullable',
+        	    'integer',
+            	'exists:student_fee_structure_patterns,id',
+	        ],
+
+	        'name' => [
+    	        'required',
+        	    'string',
+	        ],
+
+	        'amount' => [
+    	        'nullable',
+        	    'numeric',
+            	'min:0',
+	        ],
+
+	        'percentage' => [
+    	        'nullable',
+        	    'numeric',
+            	'min:0',
+            	'max:100',
+	        ],
+
+	        'applicable_period_keys' => [
+    	        'nullable',
+        	    'array',
+	        ],
+
+	        'reason' => [
+    	        'nullable',
+        	    'string',
         	],
-
-            'name' => [
-                'required',
-                'string',
-            ],
-
-            'amount' => [
-                'nullable',
-                'numeric',
-            ],
-
-            'percentage' => [
-                'nullable',
-                'numeric',
-            ],
-
-            'applicable_periods' => [
-                'nullable',
-                'array',
-            ],
-
-            'reason' => [
-                'nullable',
-                'string',
-            ],
-        ];
-    }
+    	];
+	}
 
     /*
     |--------------------------------------------------------------------------
-    | Create Discount
+    | Store Discount
     |--------------------------------------------------------------------------
-    |
-    | POST /students/{id}/fee-discounts
-    |
     */
 
-    public function storeCustom(Request $request, $id)
-    {
-        $validated = $request->validate(
-            $this->validationRules()
-        );
+    public function storeCustom(
+        Request $request,
+        $studentId
+    ) {
 
-        $validated['student_id'] = $id;
+        $validated =
+            $request->validate(
+                $this->validationRules()
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Academic
+        |--------------------------------------------------------------------------
+        */
+
+        $validated['student_id'] =
+            $studentId;
 
         $validated['year_id'] =
             $request->year_id;
 
-		$exists = StudentFeeDiscount::query()
+        /*
+        |--------------------------------------------------------------------------
+        | Duplicate Check
+        |--------------------------------------------------------------------------
+        */
 
-		    ->where('student_id', $id)
+        $exists =
+		    StudentFeeDiscount::query()
 
-		    ->where('year_id', $request->year_id)
+		        ->where(
+        		    'student_id',
+		            $studentId
+        		)
 
-		    ->where(
-		        'student_fee_structure_id',
-        		$request->student_fee_structure_id
-    		)
+		        ->where(
+         			'year_id',
+		            $request->year_id
+        		)
 
-		    ->exists();
+		        ->where(
+        		    'head_term_id',
+		            $request->head_term_id
+        		)
 
-		if ($exists) {
-		    return response()->json([
-		        'status' => 'error',
-		        'message' => 'Discount already exists for this fee head.',
-		    ], Response::HTTP_UNPROCESSABLE_ENTITY);
-		}
+		        ->exists();
 
-        $discount = StudentFeeDiscount::create(
-            $validated
-        );
+        if ($exists) {
+
+            return response()->json([
+
+                'status' => 'error',
+
+                'message' =>
+                    'Discount already exists for this fee head.',
+            ],
+
+            Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create Discount
+        |--------------------------------------------------------------------------
+        */
+
+        $discount =
+            StudentFeeDiscount::create(
+                $validated
+            );
+
+		app(
+		    \Modules\Student\Services\RefreshStudentFeeDuesService::class
+		)->handle(
+    		$studentId,
+    		$request->year_id
+		);
 
         return response()->json([
 
             'status' => 'success',
 
             'message' =>
-                'Discount added successfully',
+                'Discount added successfully.',
 
             'data' => $discount,
 
@@ -125,34 +176,157 @@ class StudentFeeDiscountApiController extends SharedApiController
 
     /*
     |--------------------------------------------------------------------------
-    | Get Student Discounts By Year
+    | Student Discounts
     |--------------------------------------------------------------------------
-    |
-    | GET /students/{studentId}/fee-discounts/{yearId}
-    |
     */
 
     public function showCustom(
-        $studentId,
-        $yearId
-    ) {
+    $studentId,
+    $yearId
+) {
 
-        $data = StudentFeeDiscount::query()
+    $data =
+        StudentFeeDiscount::query()
 
-            ->where('student_id', $studentId)
+            ->with([
 
-            ->where('year_id', $yearId)
+                /*
+                |--------------------------------------------------------------------------
+                | Student
+                |--------------------------------------------------------------------------
+                */
+
+                'student:id,name',
+
+                /*
+                |--------------------------------------------------------------------------
+                | Head
+                |--------------------------------------------------------------------------
+                */
+
+                'headTerm:id,name',
+
+                /*
+                |--------------------------------------------------------------------------
+                | Pattern
+                |--------------------------------------------------------------------------
+                */
+
+                'pattern:id,name',
+            ])
+
+            ->where(
+                'student_id',
+                $studentId
+            )
+
+            ->where(
+                'year_id',
+                $yearId
+            )
 
             ->latest()
 
-            ->get();
+            ->get()
 
-        return response()->json([
+            ->map(function ($item) {
 
-            'status' => 'success',
+                return [
 
-            'data' => $data,
+                    'id' =>
+                        $item->id,
 
-        ], Response::HTTP_OK);
-    }
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Student
+                    |--------------------------------------------------------------------------
+                    */
+
+                    'student_id' =>
+                        $item->student_id,
+
+                    'student_name' =>
+                        $item->student?->name,
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Academic
+                    |--------------------------------------------------------------------------
+                    */
+
+                    'year_id' =>
+                        $item->year_id,
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Fee Head
+                    |--------------------------------------------------------------------------
+                    */
+
+                    'head_term_id' =>
+                        $item->head_term_id,
+
+                    'head_name' =>
+                        $item->head?->name,
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Pattern
+                    |--------------------------------------------------------------------------
+                    */
+
+                    'pattern_id' =>
+                        $item->pattern_id,
+
+                    'pattern_name' =>
+                        $item->pattern?->name,
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Discount
+                    |--------------------------------------------------------------------------
+                    */
+
+                    'name' =>
+                        $item->name,
+
+                    'amount' =>
+                        $item->amount,
+
+                    'percentage' =>
+                        $item->percentage,
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Period Scope
+                    |--------------------------------------------------------------------------
+                    */
+
+                    'applicable_period_keys' =>
+
+                        $item->applicable_period_keys
+                        ?? [],
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Extra
+                    |--------------------------------------------------------------------------
+                    */
+
+                    'reason' =>
+                        $item->reason,
+
+                    'created_at' =>
+                        $item->created_at,
+                ];
+            });
+
+    return response()->json([
+
+        'status' => 'success',
+
+        'data' => $data,
+
+    ], Response::HTTP_OK);
+}
 }

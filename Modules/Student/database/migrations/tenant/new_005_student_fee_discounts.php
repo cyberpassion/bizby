@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -7,32 +8,122 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('student_fee_discounts', function (Blueprint $table) {
+        Schema::create(
+            'student_fee_discounts',
+            function (Blueprint $table) {
 
-			// Common SaaS Fields
-            $table->commonSaasFields();
-            // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
+                /*
+                |--------------------------------------------------------------------------
+                | Common SaaS
+                |--------------------------------------------------------------------------
+                */
 
-            // Optional: link to student if discount is individual
-            $table->foreignId('student_id')->nullable()->constrained()->cascadeOnDelete();
+                $table->commonSaasFields();
 
-            // Optional: link to fee structure (specific fee head + periods)
-            $table->foreignId('student_fee_structure_id')->nullable()->constrained('student_fee_structures')->cascadeOnDelete();
+                /*
+                |--------------------------------------------------------------------------
+                | Student
+                |--------------------------------------------------------------------------
+                */
 
-			$table->foreignId('year_id')->constrained('student_academic_years')->cascadeOnDelete();
+                $table->foreignId('student_id')
 
-            $table->string('name'); // discount label, e.g., "Sibling Discount", "Merit Scholarship"
-            $table->decimal('amount', 10, 2)->nullable(); // fixed amount
-            $table->decimal('percentage', 5, 2)->nullable(); // percentage discount
+                    ->nullable()
 
-            $table->json('applicable_periods')->nullable(); // override periods if discount only for specific months/semesters
-			$table->text('reason')->nullable();
+                    ->constrained()
 
-        });
+                    ->cascadeOnDelete();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Academic Year
+                |--------------------------------------------------------------------------
+                */
+
+                $table->foreignId('year_id')
+
+                    ->constrained(
+                        'student_academic_years'
+                    )
+
+                    ->cascadeOnDelete();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Fee Head
+                |--------------------------------------------------------------------------
+                */
+
+                $table->foreignId('head_term_id')
+
+                    ->nullable()
+
+                    ->constrained('terms')
+
+                    ->nullOnDelete();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Optional Pattern Scope
+                |--------------------------------------------------------------------------
+                */
+
+                $table->foreignId('pattern_id')
+
+                    ->nullable()
+
+                    ->constrained(
+                        'student_fee_structure_patterns'
+                    )
+
+                    ->nullOnDelete();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Discount
+                |--------------------------------------------------------------------------
+                */
+
+                $table->string('name');
+
+                $table->decimal(
+                    'amount',
+                    10,
+                    2
+                )->nullable();
+
+                $table->decimal(
+                    'percentage',
+                    5,
+                    2
+                )->nullable();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Optional Period Scope
+                |--------------------------------------------------------------------------
+                */
+
+                $table->json(
+                    'applicable_period_keys'
+                )->nullable();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Extra
+                |--------------------------------------------------------------------------
+                */
+
+                $table->text('reason')
+                    ->nullable();
+            }
+        );
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('student_fee_discounts');
+        Schema::dropIfExists(
+            'student_fee_discounts'
+        );
     }
 };

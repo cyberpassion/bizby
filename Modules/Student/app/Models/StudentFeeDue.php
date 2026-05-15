@@ -2,9 +2,9 @@
 
 namespace Modules\Student\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModel;
 
-class StudentFeeDue extends Model
+class StudentFeeDue extends TenantModel
 {
     protected $fillable = [
 
@@ -16,21 +16,61 @@ class StudentFeeDue extends Model
 
         'section_term_id',
 
-        'fee_structure_id',
+        /*
+        |--------------------------------------------------------------------------
+        | Relations
+        |--------------------------------------------------------------------------
+        */
+
+        'structure_id',
+
+        'head_term_id',
+
+        'pattern_period_id',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Due Info
+        |--------------------------------------------------------------------------
+        */
 
         'due_type',
 
-        'period',
-
-        'total_amount',
-
-        'discount_amount',
+        'amount',
 
         'paid_amount',
 
-        'due_amount',
+        'fine_amount',
+
+        'waiver_amount',
+
+        'balance_amount',
+
+        'dues_status',
+
+        'due_date',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Snapshots
+        |--------------------------------------------------------------------------
+        */
+
+        'head_name',
+
+        'pattern_name',
+
+        'period_name',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Extra
+        |--------------------------------------------------------------------------
+        */
 
         'source_year_id',
+
+        'generated_at',
 
         'meta',
     ];
@@ -38,6 +78,10 @@ class StudentFeeDue extends Model
     protected $casts = [
 
         'meta' => 'array',
+
+        'generated_at' => 'datetime',
+
+        'due_date' => 'date',
     ];
 
     /*
@@ -69,15 +113,85 @@ class StudentFeeDue extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Fee Structure
+    | Structure
     |--------------------------------------------------------------------------
     */
 
-    public function feeStructure()
+    public function structure()
     {
         return $this->belongsTo(
             StudentFeeStructure::class,
-            'fee_structure_id'
+            'structure_id'
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Head
+    |--------------------------------------------------------------------------
+    */
+
+    public function headTerm()
+    {
+        return $this->belongsTo(
+            \Modules\Shared\Models\Term::class,
+            'head_term_id'
+        );
+    }
+
+	/*
+    |--------------------------------------------------------------------------
+    | Class Term
+    |--------------------------------------------------------------------------
+    */
+
+    public function classTerm()
+    {
+        return $this->belongsTo(
+            \Modules\Shared\Models\Term::class,
+            'class_term_id'
+        );
+    }
+
+	/*
+    |--------------------------------------------------------------------------
+    | Section Term
+    |--------------------------------------------------------------------------
+    */
+
+    public function sectionTerm()
+    {
+        return $this->belongsTo(
+            \Modules\Shared\Models\Term::class,
+            'section_term_id'
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pattern Period
+    |--------------------------------------------------------------------------
+    */
+
+    public function patternPeriod()
+    {
+        return $this->belongsTo(
+            StudentFeeStructurePatternPeriod::class,
+            'pattern_period_id'
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Submission Items
+    |--------------------------------------------------------------------------
+    */
+
+    public function submissionItems()
+    {
+        return $this->hasMany(
+            StudentFeeSubmissionItem::class,
+            'due_id'
         );
     }
 }

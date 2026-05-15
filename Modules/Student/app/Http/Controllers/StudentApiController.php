@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Schema;
 use Modules\Student\Models\Student;
 use Modules\Student\Models\StudentAcademicHistory;
 
+use Modules\Student\Services\GenerateStudentFeeDuesService;
+
 class StudentApiController extends Controller
 {
     /**
@@ -119,19 +121,56 @@ class StudentApiController extends Controller
         DB::beginTransaction();
 
         try {
-            // 1. Create student safely
-            $student = Student::create(
-                $request->only(Schema::getColumnListing('students'))
-            );
+            /*
+			|--------------------------------------------------------------------------
+			| Create Student
+			|--------------------------------------------------------------------------
+			*/
 
-            // 2. Create academic history
-            StudentAcademicHistory::create([
-                'student_id'       => $student->id,
-                'year_id'          => $request->year,
-                'class_term_id'    => explode('_', $request->class)[1] ?? null,
-                'section_term_id'  => explode('_', $request->section)[1] ?? null,
-                'is_current'       => true,
-            ]);
+			$student = Student::create(
+			    $request->only(
+    			    Schema::getColumnListing('students')
+    			)
+			);
+
+			/*
+			|--------------------------------------------------------------------------
+			| Create Academic History
+			|--------------------------------------------------------------------------
+			*/
+
+			StudentAcademicHistory::create([
+
+			    'student_id'       => $student->id,
+
+			    'year_id'          => $request->year,
+
+			    'class_term_id'    =>
+			        explode('_', $request->class)[1] ?? null,
+
+			    'section_term_id'  =>
+			        explode('_', $request->section)[1] ?? null,
+
+			    'is_current'       => true,
+			]);
+
+			/*
+			|--------------------------------------------------------------------------
+			| Reload Student
+			|--------------------------------------------------------------------------
+			*/
+
+			$student->refresh();
+
+			/*
+			|--------------------------------------------------------------------------
+			| Generate Dues
+			|--------------------------------------------------------------------------
+			*/
+
+			app(
+			    GenerateStudentFeeDuesService::class
+			)->handle($student);
 
             DB::commit();
 

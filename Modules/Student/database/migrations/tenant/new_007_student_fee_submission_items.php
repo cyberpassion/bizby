@@ -12,14 +12,31 @@ return new class extends Migration
             $table->commonSaasFields();
             // id, client_id, status, created_by, updated_by, deleted_by, deleted_at, timestamps
 
-            $table->foreignId('fee_submission_id')->constrained('student_fee_submissions')->cascadeOnDelete();
-            $table->foreignId('fee_structure_id')->constrained('student_fee_structures')->cascadeOnDelete();
-            
-            $table->decimal('payable_amount', 10, 2)->default(0); // amount set to pay for this fee head
-            $table->decimal('discount_applied', 10, 2)->default(0); // discount applied for this head
-            $table->decimal('paid_amount', 10, 2)->default(0); // final paid amount
+			$table->foreignId('submission_id')
+			    ->constrained('student_fee_submissions')
+			    ->cascadeOnDelete();
 
-            $table->json('selected_periods')->nullable(); // months/quarters/semesters actually paid
+            $table->foreignId('due_id')
+        		->constrained('student_fee_dues');
+            
+			$table->decimal('gross_amount', 10, 2)->default(0);
+
+			$table->decimal('discount_amount', 10, 2)->default(0);
+
+			$table->decimal('fine_amount', 10, 2)->default(0);
+
+			$table->decimal('paid_amount', 10, 2)->default(0);
+
+			$table->decimal('balance_amount', 10, 2)->default(0);
+
+			$table->index([
+			    'submission_id'
+			]);
+
+			$table->index([
+			    'due_id'
+			]);
+
         });
     }
 

@@ -13,6 +13,7 @@ use Modules\Student\Models\StudentFeeStructureOverride;
 class StudentFeeStructureOverrideApiController extends SharedApiController
 {
     protected $searchable = [];
+	protected $with = ['student','year','headTerm','classTerm','sectionTerm','pattern'];
 
     /*
     |--------------------------------------------------------------------------
@@ -41,15 +42,33 @@ class StudentFeeStructureOverrideApiController extends SharedApiController
                 'min:1',
             ],
 
+            /*
+            |--------------------------------------------------------------------------
+            | Structure Items
+            |--------------------------------------------------------------------------
+            */
+
             'structures.*.head_term_id' => [
                 'required',
                 'integer',
                 'exists:terms,id',
             ],
 
-            'structures.*.selected_periods' => [
+            'structures.*.pattern_id' => [
                 'required',
-                'array',
+                'integer',
+                'exists:student_fee_structure_patterns,id',
+            ],
+
+            'structures.*.amount' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+
+            'structures.*.amount_type' => [
+                'required',
+                'in:per_period,total',
             ],
 
             'structures.*.reason' => [
@@ -65,49 +84,138 @@ class StudentFeeStructureOverrideApiController extends SharedApiController
     |--------------------------------------------------------------------------
     */
 
-    public function showCustom($studentId, $yearId)
-    {
-        $data = StudentFeeStructureOverride::query()
+    public function showCustom(
+        $studentId,
+        $yearId
+    ) {
 
-            ->with([
-                'feeStructure:id,head_term_id',
-                'feeStructure.headTerm:id,name',
-            ])
+        $data =
+            StudentFeeStructureOverride::query()
 
-            ->where('student_id', $studentId)
+                ->with([
 
-            ->whereHas('feeStructure', function ($q) use ($yearId) {
+					'student:id,name',
 
-                $q->where('year_id', $yearId);
-            })
+					'classTerm:id,name',
 
-            ->get()
+	                'sectionTerm:id,name',
 
-            ->map(function ($item) {
+                    'feeStructure:id,head_term_id,pattern_id',
 
-                return [
+                    'feeStructure.headTerm:id,name',
 
-                    'id' => $item->id,
+                    'feeStructure.pattern:id,name',
+                ])
 
-                    'student_id' =>
-                        $item->student_id,
+                ->where(
+                    'student_id',
+                    $studentId
+                )
 
-                    'fee_structure_id' =>
-                        $item->fee_structure_id,
+                ->where(
+                    'year_id',
+                    $yearId
+                )
 
-                    'head_term_id' =>
-                        $item->feeStructure?->head_term_id,
+                ->latest()
 
-                    'head_name' =>
-                        $item->feeStructure?->head?->name,
+                ->get()
 
-                    'selected_periods' =>
-                        $item->selected_periods,
+                ->map(function ($item) {
 
-                    'reason' =>
-                        $item->reason,
-                ];
-            });
+    return [
+
+        'id' =>
+            $item->id,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Student
+        |--------------------------------------------------------------------------
+        */
+
+        'student_id' =>
+            $item->student_id,
+
+        'student_name' =>
+            $item->student?->name,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Academic
+        |--------------------------------------------------------------------------
+        */
+
+        'year_id' =>
+            $item->year_id,
+
+        'class_term_id' =>
+            $item->class_term_id,
+
+        'class_name' =>
+            $item->classTerm?->name,
+
+        'section_term_id' =>
+            $item->section_term_id,
+
+        'section_name' =>
+            $item->sectionTerm?->name,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Structure
+        |--------------------------------------------------------------------------
+        */
+
+        'fee_structure_id' =>
+            $item->fee_structure_id,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Head
+        |--------------------------------------------------------------------------
+        */
+
+        'head_term_id' =>
+            $item->head_term_id,
+
+        'head_name' =>
+            $item->head?->name,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pattern
+        |--------------------------------------------------------------------------
+        */
+
+        'pattern_id' =>
+            $item->pattern_id,
+
+        'pattern_name' =>
+            $item->pattern?->name,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Amount
+        |--------------------------------------------------------------------------
+        */
+
+        'amount' =>
+            $item->amount,
+
+        'amount_type' =>
+            $item->amount_type,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Extra
+        |--------------------------------------------------------------------------
+        */
+
+        'reason' =>
+            $item->reason,
+    ];
+});
 
         return response()->json([
 
@@ -120,11 +228,8 @@ class StudentFeeStructureOverrideApiController extends SharedApiController
 
     /*
     |--------------------------------------------------------------------------
-    | Store Student Custom Fee Structure
+    | Store Student Custom Structures
     |--------------------------------------------------------------------------
-    |
-    | POST /students/{studentId}/fee-structure-overrides/{yearId}
-    |
     */
 
     public function storeCustom(
@@ -133,30 +238,38 @@ class StudentFeeStructureOverrideApiController extends SharedApiController
         $yearId
     ) {
 
-        $validated = $request->validate(
-            $this->validationRules()
-        );
+        $validated =
+            $request->validate(
+                $this->validationRules()
+            );
 
         $saved = [];
 
-        foreach ($validated['structures'] as $structure) {
+        foreach (
+            $validated['structures']
+            as $structure
+        ) {
 
             /*
             |--------------------------------------------------------------------------
-            | Resolve Base Fee Structure
+            | Find Matching Base Structure
             |--------------------------------------------------------------------------
             */
 
-            $feeStructure = StudentFeeStructure::query()
+            $feeStructure =
+                StudentFeeStructure::query()
 
-                ->where('year_id', $yearId)
+                    ->where(
+                        'year_id',
+                        $yearId
+                    )
 
-                ->where(
-                    'head_term_id',
-                    $structure['head_term_id']
-                )
+                    ->where(
+                        'head_term_id',
+                        $structure['head_term_id']
+                    )
 
-                ->first();
+                    ->first();
 
             /*
             |--------------------------------------------------------------------------
@@ -164,7 +277,8 @@ class StudentFeeStructureOverrideApiController extends SharedApiController
             |--------------------------------------------------------------------------
             */
 
-            if (!$feeStructure) {
+            if (! $feeStructure) {
+
                 continue;
             }
 
@@ -175,6 +289,7 @@ class StudentFeeStructureOverrideApiController extends SharedApiController
             */
 
             $override =
+
                 StudentFeeStructureOverride::updateOrCreate(
 
                     [
@@ -182,51 +297,103 @@ class StudentFeeStructureOverrideApiController extends SharedApiController
                         'student_id' =>
                             $studentId,
 
-                        'fee_structure_id' =>
-                            $feeStructure->id,
+                        'year_id' =>
+                            $yearId,
+
+                        'head_term_id' =>
+                            $feeStructure->head_term_id,
                     ],
 
                     [
 
                         /*
                         |--------------------------------------------------------------------------
-                        | Legacy Summary Amount
+                        | Base Structure Reference
                         |--------------------------------------------------------------------------
-                        |
-                        | Optional summary field.
-                        | First selected period amount.
-                        |
                         */
 
-                        'override_amount' =>
-
-                            collect(
-                                $structure['selected_periods']
-                            )->first() ?? 0,
+                        'fee_structure_id' =>
+                            $feeStructure->id,
 
                         /*
                         |--------------------------------------------------------------------------
-                        | Actual Override Data
+                        | Context
                         |--------------------------------------------------------------------------
                         */
 
-                        'selected_periods' =>
-                            $structure['selected_periods'],
+                        'year_id' =>
+                            $feeStructure->year_id,
+
+                        'class_term_id' =>
+                            $feeStructure->class_term_id,
+
+                        'section_term_id' =>
+                            $feeStructure->section_term_id,
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Head
+                        |--------------------------------------------------------------------------
+                        */
+
+                        'head_term_id' =>
+                            $feeStructure->head_term_id,
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Pattern
+                        |--------------------------------------------------------------------------
+                        */
+
+                        'pattern_id' =>
+                            $structure['pattern_id'],
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Amount
+                        |--------------------------------------------------------------------------
+                        */
+
+                        'amount' =>
+                            $structure['amount'],
+
+                        'amount_type' =>
+                            $structure['amount_type'],
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Extra
+                        |--------------------------------------------------------------------------
+                        */
 
                         'reason' =>
-                            $structure['reason'] ?? null,
+                            $structure['reason']
+                            ?? null,
                     ]
                 );
 
             $saved[] = $override;
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Refresh Student Dues
+        |--------------------------------------------------------------------------
+        */
+
+        app(
+            \Modules\Student\Services\RefreshStudentFeeDuesService::class
+        )->handle(
+            $studentId,
+            $yearId
+        );
+
         return response()->json([
 
             'status' => 'success',
 
             'message' =>
-                'Student fee structure saved successfully',
+                'Student custom fee structure saved successfully.',
 
             'data' => $saved,
 

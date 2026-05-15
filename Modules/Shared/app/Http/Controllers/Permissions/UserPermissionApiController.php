@@ -10,27 +10,70 @@ use Illuminate\Support\Facades\Cache;
 class UserPermissionApiController extends Controller
 {
 
-	public function index(int $userId)
+	public function index(int $userId, int $tenantId)
 	{
-    	$permissions = DB::table('permission_user_permissions as pup')
-	        ->join('permissions as p', 'p.id', '=', 'pup.permission_id')
-    	    ->where('pup.user_id', $userId)
-        	->where('pup.tenant_id', tenant()->id)
-        	->select(
+    	$permissions = DB::table('permission_user_roles as pur')
+
+	        // Get roles
+    	    ->join(
+        	    'permission_roles as r',
+            	'r.id',
+	            '=',
+    	        'pur.role_id'
+        	)
+
+	        // Get role permissions
+    	    ->join(
+        	    'permission_role_permissions as prp',
+            	'prp.role_id',
+	            '=',
+    	        'r.id'
+        	)
+
+	        // Get actual permissions
+    	    ->join(
+        	    'permission_permissions as p',
             	'p.id',
-	            'p.key',
-    	        'p.label',
-        	    'pup.allow'
-	        )
-    	    ->get();
+	            '=',
+    	        'prp.permission_id'
+        	)
+
+	        // Filter by subscribed tenant modules
+    	    ->join('tenant_modules as tm', function ($join) use ($tenantId) {
+
+	            $join->on('tm.module_key', '=', 'p.module')
+    	            ->where('tm.tenant_id', $tenantId)
+        	        ->where('tm.is_active', 1);
+
+	        })
+
+	        ->where('pur.user_id', $userId)
+    	    ->where('pur.tenant_id', $tenantId)
+
+	        ->select(
+    	        'p.id',
+        	    'p.module',
+            	'p.operation',
+            	'p.slug',
+            	'p.scope'
+        	)
+
+	        ->distinct()
+
+	        ->pluck('slug');
 
 	    return response()->json([
-    	    'data' => $permissions
-	    ]);
+			'status' => 'success',
+    	    'data' => [
+				'tenant_id' 	=> $tenantId,
+				'user_id'		=> $userId,
+				'permissions'	=> $permissions
+			]
+    	]);
 	}
 
     // POST /api/users/{user}/permissions
-    public function assign(Request $request, $userId)
+    public function assign(Request $request, int $userId)
     {
         $request->validate([
             'permission_ids' => 'required|array'

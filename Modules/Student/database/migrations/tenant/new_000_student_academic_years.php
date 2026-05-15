@@ -30,6 +30,9 @@ return new class extends Migration {
             // Optional description / note
             $table->string('description')->nullable();
 
+			$table->timestamp('locked_at')
+			    ->nullable();
+
             // Optional but recommended indexes
             $table->index(['start_year', 'end_year']);
             $table->index('is_active');
