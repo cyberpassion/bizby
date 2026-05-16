@@ -1,5 +1,3 @@
-// Modules/Shared/Services/ActivityLogService.php
-
 <?php
 
 namespace Modules\Shared\Services;
