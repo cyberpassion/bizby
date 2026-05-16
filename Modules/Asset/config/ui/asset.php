@@ -66,34 +66,38 @@ return [
 		KeyName::make(Res::ASSETS) => [
 			Actions::LIST => [
 				[
-        	        'title'      => 'View Details',
-            	    'href'       => UrlPath::makeDetail($pg, '{id}'),
-                	'permission' => Permission::view(Res::DOCUMENTS),
-                	'action'     => 'detail',
-	            ],
+					'title'      => 'View Details',
+					'href'       => UrlPath::makeDetail($pg, '{id}'),
+					'permission' => Permission::view(Res::DOCUMENTS),
+					'action'     => 'detail',
+					'icon'       => 'view',
+				],
 
-		        [
-    		        'title'      => 'Update',
-        		    'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            		'permission' => Permission::update(Res::ASSETS),
-            		'action'     => 'update',
-		        ],
+				[
+					'title'      => 'Update',
+					'href'       => UrlPath::makeUpdate($pg, '{id}'),
+					'permission' => Permission::update(Res::ASSETS),
+					'action'     => 'update',
+					'icon'       => 'update',
+				],
 
-    	        [
-        	        'title'      => 'Upload',
-            	    'href'       => UrlPath::makeUploads($pg, '{id}'),
-                	'permission' => Permission::create(Res::UPLOADS),
-                	'action'     => 'upload',
-	            ],
+				[
+					'title'      => 'Upload',
+					'href'       => UrlPath::makeUploads($pg, '{id}'),
+					'permission' => Permission::create(Res::UPLOADS),
+					'action'     => 'upload',
+					'icon'       => 'upload',
+				],
 
-		        [
-    		        'title'      => 'Delete',
-        		    'href'       => UrlPath::makeDelete(Res::ASSETS, '{id}'),
-            		'permission' => Permission::delete(Res::ASSETS),
-	            	'action'     => 'delete',
-    	        	'method'     => 'DELETE',
-        	    	'variant'    => 'danger',
-        		]
+				[
+					'title'      => 'Delete',
+					'href'       => UrlPath::makeDelete(Res::ASSETS, '{id}'),
+					'permission' => Permission::delete(Res::ASSETS),
+					'action'     => 'delete',
+					'method'     => 'DELETE',
+					'variant'    => 'danger',
+					'icon'       => 'delete',
+				]
 			]
 		]
 

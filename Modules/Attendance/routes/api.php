@@ -35,6 +35,8 @@ Route::prefix('v1')
 		// Holidays
 		Route::get('attendance/holidays', [AttendanceHolidayApiController::class, 'index']);
 	    Route::post('attendance/holidays', [AttendanceHolidayApiController::class, 'store']);
+		Route::get('attendance/holidays/{id}', [AttendanceHolidayApiController::class, 'show']);
+		Route::put('attendance/holidays/{id}', [AttendanceHolidayApiController::class, 'update']);
     	Route::delete('attendance/holidays/{id}', [AttendanceHolidayApiController::class, 'destroy']);
 
 		// Calendar days (for exceptions, special days)

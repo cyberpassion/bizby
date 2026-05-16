@@ -42,6 +42,38 @@ class AttendanceHolidayApiController extends Controller
 
     }
 
+	public function update(Request $request, $id)
+	{
+    	$data = $request->validate([
+	        'date'    => 'required|date',
+    	    'name'    => 'required|string',
+        	'context' => 'nullable|string',
+	    ]);
+
+	    $holiday = AttendanceHoliday::where('tenant_id', tenant()->id)
+     	   ->findOrFail($id);
+
+	    $holiday->update($data);
+
+	    return response()->json([
+     	   'status'  => 'success',
+        	'message' => 'Updated Successfully.',
+	        'data'    => $holiday
+    	], Response::HTTP_OK);
+	}
+
+	public function show($id)
+	{
+    	$response = AttendanceHoliday::where('tenant_id', tenant()->id)
+        	->findOrFail($id);
+
+	    return response()->json([
+    	    'status'  => 'success',
+        	'message' => 'Fetched Successfully.',
+        	'data'    => $response
+    	], Response::HTTP_OK);
+	}
+
     public function destroy($id)
     {
         AttendanceHoliday::where('tenant_id', tenant()->id)->findOrFail($id)->delete();

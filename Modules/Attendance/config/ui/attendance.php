@@ -425,6 +425,12 @@ return [
         KeyName::make(Res::WEEKLY_OFFS)	=> [
 			Actions::LIST => [
 				[
+    	            'title'      => 'Update',
+        	        'href'       => UrlPath::makeUpdate(Res::WEEKLY_OFFS, '{id}'),
+            	    'permission' => Permission::update(Res::WEEKLY_OFFS),
+	                'action'     => 'update',
+    	        ],
+				[
 	                'title'      => 'Delete',
     	            'href'       => UrlPath::makeDelete(Res::WEEKLY_OFFS, '{id}'),
         	        'permission' => Permission::delete(Res::WEEKLY_OFFS),
@@ -437,6 +443,12 @@ return [
 		KeyName::make(Res::HOLIDAYS)			=> [
 			Actions::LIST => [
 				[
+    	            'title'      => 'Update',
+        	        'href'       => UrlPath::makeUpdate(Res::HOLIDAYS, '{id}'),
+            	    'permission' => Permission::update(Res::HOLIDAYS),
+	                'action'     => 'update',
+    	        ],
+				[
     	            'title'      => 'Delete',
         	        'href'       => UrlPath::makeDelete(Res::HOLIDAYS, '{id}'),
             	    'permission' => Permission::delete(Res::HOLIDAYS),
@@ -448,6 +460,12 @@ return [
 		],
 		KeyName::make(Res::CALENDAR_DAYS) 	=> [
 			Actions::LIST => [
+				[
+    	            'title'      => 'Update',
+        	        'href'       => UrlPath::makeUpdate(Res::CALENDAR_DAYS, '{id}'),
+            	    'permission' => Permission::update(Res::CALENDAR_DAYS),
+	                'action'     => 'update',
+    	        ],
 				[
     	            'title'      => 'Delete',
         	        'href'       => UrlPath::makeDelete(Res::CALENDAR_DAYS, '{id}'),
