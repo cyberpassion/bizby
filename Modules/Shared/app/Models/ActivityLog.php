@@ -1,5 +1,3 @@
-// Modules/Shared/Models/ActivityLog.php
-
 <?php
 
 namespace Modules\Shared\Models;
