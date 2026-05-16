@@ -27,7 +27,7 @@ return new class extends Migration
             // cta
             // etc
 
-            $table->string('title')->nullable();
+            $table->string('menu_title');
 			$table->string('title')->nullable();
             $table->string('subtitle')->nullable();
 

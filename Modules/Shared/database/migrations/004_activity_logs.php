@@ -9,34 +9,80 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('activity_logs', function (Blueprint $table) {
-            // Common SaaS fields (id, tenant_id, status, timestamps, soft deletes, audit)
+
             $table->commonSaasFields();
 
-            $table->string('stimulus');
-            $table->string('module')->nullable();
-            $table->string('activity');
-            $table->string('operation');
-
-            // renamed from `key` (reserved word)
-            $table->string('entity_key');
-
-            // JSON payload
-            $table->json('summary')->nullable();
-
-            $table->unsignedBigInteger('user_id');
-
-            /* ================= Indexes ================= */
-            $table->index('user_id');
-            $table->index('module');
-            $table->index('activity');
-            $table->index('created_at');
-
-            /* ============ Optional Foreign Keys ============
-             Uncomment if you want referential integrity
-             (avoid if logs must survive deletions)
+            /*
+            |--------------------------------------------------------------------------
+            | WHO DID IT
+            |--------------------------------------------------------------------------
             */
-            // $table->foreign('user_id')->references('id')->on('users');
-            // $table->foreign('tenant_id')->references('id')->on('clients');
+
+            $table->nullableMorphs('causer');
+
+            /*
+            |--------------------------------------------------------------------------
+            | WHAT WAS AFFECTED
+            |--------------------------------------------------------------------------
+            */
+
+            $table->nullableMorphs('subject');
+
+            /*
+            |--------------------------------------------------------------------------
+            | EVENT
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('event');
+
+            /*
+            |--------------------------------------------------------------------------
+            | DESCRIPTION
+            |--------------------------------------------------------------------------
+            */
+
+            $table->text('description')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | CHANGE TRACKING
+            |--------------------------------------------------------------------------
+            */
+
+            $table->json('old_values')
+                ->nullable();
+
+            $table->json('new_values')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | REQUEST INFO
+            |--------------------------------------------------------------------------
+            */
+
+            $table->ipAddress('ip_address')
+                ->nullable();
+
+            $table->text('user_agent')
+                ->nullable();
+
+            $table->string('method', 10)
+                ->nullable();
+
+            $table->text('url')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | INDEXES
+            |--------------------------------------------------------------------------
+            */
+
+            $table->index(['event']);
+
         });
     }
 

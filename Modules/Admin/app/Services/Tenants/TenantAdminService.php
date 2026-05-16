@@ -24,6 +24,7 @@ class TenantAdminService
             // 1️⃣ Create / Update central user
 			//$password = Str::random(16);
 			$password = 'password';
+			logger()->info('Creating Central Admin User', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
             $userId = DB::connection($central)
                 ->table('users')
                 ->updateOrInsert(
@@ -43,6 +44,7 @@ class TenantAdminService
                 ->first();
 
             // 2️⃣ Map user to tenant with role
+			logger()->info('Creating Tenant User', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
             DB::connection($central)
                 ->table('tenant_users')
                 ->updateOrInsert(
@@ -58,6 +60,7 @@ class TenantAdminService
 
 			// 3️⃣ Assign OWNER role
 			$ownerRole = $this->getDefaultOwnerRole();
+			logger()->info('Assigning Owner Role', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
 			DB::connection($central)
 		    	->table('permission_user_roles')
     			->updateOrInsert(

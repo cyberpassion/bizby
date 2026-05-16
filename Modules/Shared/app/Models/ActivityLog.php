@@ -1,36 +1,64 @@
+// Modules/Shared/Models/ActivityLog.php
+
 <?php
 
 namespace Modules\Shared\Models;
 
-use Modules\Admin\Models\Tenants\TenantModel;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
 
-class ActivityLog extends TenantModel
+class ActivityLog extends Model
 {
-    use HasFactory;
+    protected $connection = 'central';
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $fillable = [
 
-    /**
-     * Attribute casting.
-     */
-    protected $casts = [
-        'summary' => 'array',
+        'tenant_id',
+
+        'causer_type',
+        'causer_id',
+
+        'subject_type',
+        'subject_id',
+
+        'event',
+
+        'description',
+
+        'old_values',
+        'new_values',
+
+        'ip_address',
+        'user_agent',
+
+        'method',
+        'url',
+
+        'meta',
     ];
 
-	protected function dynamicFillable()
+    protected $casts = [
+
+        'old_values' => 'array',
+
+        'new_values' => 'array',
+
+        'meta' => 'array',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public function causer()
     {
-        // Example dynamic load from DB table
-        return Schema::getColumnListing($this->getTable());
+        return $this->morphTo();
     }
 
-    public function getFillable()
+    public function subject()
     {
-        return $this->dynamicFillable();
+        return $this->morphTo();
     }
 
 }

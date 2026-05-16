@@ -31,7 +31,8 @@ class PermissionPermissionsSeeder extends Seeder
             	'Registration',
 	            'Listing',
     	        'Attendance',
-        	    'Lead'
+        	    'Lead',
+				'Student'
         	];
 
 	        if (!in_array($moduleName, $currentlyAllowed)) {

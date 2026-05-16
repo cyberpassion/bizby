@@ -20,10 +20,10 @@ class AdminDatabaseSeeder extends Seeder
     {
         $this->call([
             // Admin module seeders
-            //TenantSeeder::class,
-			//InstallationSeeder::class,
-            //TenantModulesSeeder::class,
-            //TenantUserSeeder::class,
+            // TenantSeeder::class,
+			// InstallationSeeder::class,
+            // TenantModulesSeeder::class,
+            // TenantUserSeeder::class,
 			ModuleSeeder::class,
 			AddonSeeder::class,
         ]);

@@ -16,6 +16,7 @@ class PermissionUserRoleSeeder extends Seeder
         DB::table('permission_user_roles')->updateOrInsert([
             'user_id' => 1,
             'role_id' => $role->id,
+			'tenant_id' => 1
         ]);
     }
 }

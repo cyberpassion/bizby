@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('permission_user_roles', function (Blueprint $table) {
 		    $table->id();
 
-			$table->unsignedBigInteger('tenant_id');
+			$table->unsignedBigInteger('tenant_id')->nullable();
 		    $table->unsignedBigInteger('user_id');
 		    $table->unsignedBigInteger('role_id');
 			$table->json('meta')->nullable();

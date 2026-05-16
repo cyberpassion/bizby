@@ -14,16 +14,6 @@ class OptionsSeeder extends Seeder
     {
         $options = [
             [
-                'name' => 'site_name',
-                'value' => 'My SaaS App',
-                'autoload' => 'yes',
-            ],
-            [
-                'name' => 'site_email',
-                'value' => 'support@mysaasapp.com',
-                'autoload' => 'yes',
-            ],
-            [
                 'name' => 'timezone',
                 'value' => 'Asia/Kolkata',
                 'autoload' => 'yes',

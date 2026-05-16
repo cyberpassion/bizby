@@ -10,8 +10,6 @@ return new class extends Migration
     {
         Schema::create('student_scholarships', function (Blueprint $table) {
 
-            $table->id();
-
             $table->commonSaasFields();
 
             /* =====================================================
@@ -24,7 +22,7 @@ return new class extends Migration
 
             $table->foreignId('year_id')
                 ->nullable()
-                ->constrained('academic_years')
+                ->constrained('student_academic_years')
                 ->nullOnDelete();
 
             /* =====================================================
@@ -105,13 +103,6 @@ return new class extends Migration
                 ->nullable();
 
             $table->string('certificate')
-                ->nullable();
-
-            /* =====================================================
-            | EXTRA
-            ===================================================== */
-
-            $table->json('meta')
                 ->nullable();
 
             /* =====================================================
