@@ -9,127 +9,283 @@ class PermissionRolePermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        $roles = DB::table('permission_roles')->get()->keyBy('slug');
-		$permissions = DB::table('permission_permissions')->get();
+        $roles = DB::table('permission_roles')
+            ->get()
+            ->keyBy('slug');
 
-		foreach ($permissions as $permission) {
+        $permissions = DB::table('permission_permissions')
+            ->get();
 
-		    $pid = $permission->id;
-		    $slug = $permission->slug;
-    		$moduleName = $permission->module;
+        foreach ($permissions as $permission) {
 
-			if (!isset($roles['owner'])) return;
+            $pid = $permission->id;
 
-            // 🔥 OWNER → everything
-            DB::table('permission_role_permissions')->updateOrInsert([
-                'role_id' => $roles['owner']->id,
-                'permission_id' => $pid,
-            ], [
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            $slug = $permission->slug;
 
-            // 🔥 ADMIN → everything except billing/core
-            if (!str_contains($slug, 'plans') &&
-                !str_contains($slug, 'subscriptions')) {
+            $resourceName = $permission->resource;
 
-                DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['admin']->id,
-                    'permission_id' => $pid,
-                ], [
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+            $permissionType = $permission->surface; // e.g. admin, portal, api
+
+            /**
+             * -------------------------------------------------
+             * OWNER → EVERYTHING
+             * -------------------------------------------------
+             */
+            if (
+                isset($roles['owner']) &&
+                $roles['owner']->surface === $permissionType
+            ) {
+
+                DB::table('permission_role_permissions')
+                    ->updateOrInsert(
+                        [
+                            'role_id' => $roles['owner']->id,
+                            'permission_id' => $pid,
+                        ],
+                        [
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
+                    );
             }
 
-            // 🔥 MANAGER → view + create + update
-            if (preg_match('/\.(view|create|update)$/', $slug)) {
+            /**
+             * -------------------------------------------------
+             * ADMIN → EVERYTHING EXCEPT BILLING
+             * -------------------------------------------------
+             */
+            if (
+                isset($roles['admin']) &&
+                $roles['admin']->surface === $permissionType &&
+                ! str_contains($slug, 'plans') &&
+                ! str_contains($slug, 'subscriptions')
+            ) {
 
-                DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['manager']->id,
-                    'permission_id' => $pid,
-                ], [
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                DB::table('permission_role_permissions')
+                    ->updateOrInsert(
+                        [
+                            'role_id' => $roles['admin']->id,
+                            'permission_id' => $pid,
+                        ],
+                        [
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
+                    );
             }
 
-            // 🔥 STAFF → view + create
-            if (preg_match('/\.(view|create)$/', $slug)) {
+            /**
+             * -------------------------------------------------
+             * MANAGER → VIEW + CREATE + UPDATE
+             * -------------------------------------------------
+             */
+            if (
+                isset($roles['manager']) &&
+                $roles['manager']->surface === $permissionType &&
+                preg_match(
+                    '/\.(view|create|update)$/',
+                    $slug
+                )
+            ) {
 
-                DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['staff']->id,
-                    'permission_id' => $pid,
-                ], [
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                DB::table('permission_role_permissions')
+                    ->updateOrInsert(
+                        [
+                            'role_id' => $roles['manager']->id,
+                            'permission_id' => $pid,
+                        ],
+                        [
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
+                    );
             }
 
-            // 🔥 VIEWER → only view
-            if (str_ends_with($slug, '.view')) {
+            /**
+             * -------------------------------------------------
+             * STAFF → VIEW + CREATE
+             * -------------------------------------------------
+             */
+            if (
+                isset($roles['staff']) &&
+                $roles['staff']->surface === $permissionType &&
+                preg_match(
+                    '/\.(view|create)$/',
+                    $slug
+                )
+            ) {
 
-                DB::table('permission_role_permissions')->updateOrInsert([
-                    'role_id' => $roles['viewer']->id,
-                    'permission_id' => $pid,
-                ], [
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                DB::table('permission_role_permissions')
+                    ->updateOrInsert(
+                        [
+                            'role_id' => $roles['staff']->id,
+                            'permission_id' => $pid,
+                        ],
+                        [
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
+                    );
             }
 
-		    // 🔥 MODULE USER ROLES (META-DRIVEN)
-			foreach ($roles as $role) {
+            /**
+             * -------------------------------------------------
+             * VIEWER → VIEW ONLY
+             * -------------------------------------------------
+             */
+            if (
+                isset($roles['viewer']) &&
+                $roles['viewer']->surface === $permissionType &&
+                str_ends_with($slug, '.view')
+            ) {
 
-				// ✅ FORCE: portal roles always get access.portal
-			    if ($role->type === 'portal' && $slug === 'access.portal') {
+                DB::table('permission_role_permissions')
+                    ->updateOrInsert(
+                        [
+                            'role_id' => $roles['viewer']->id,
+                            'permission_id' => $pid,
+                        ],
+                        [
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
+                    );
+            }
 
-			        DB::table('permission_role_permissions')->updateOrInsert([
-			            'role_id' => $role->id,
-        			    'permission_id' => $pid,
-		    	    ], [
-        			    'created_at' => now(),
-            			'updated_at' => now(),
-	        		]);
+            /**
+             * -------------------------------------------------
+             * META-DRIVEN ROLES
+             * -------------------------------------------------
+             */
+            foreach ($roles as $role) {
 
-		        	continue; // skip further checks for this permission
-    			}
+                /**
+                 * -------------------------------------------------
+                 * PREVENT CROSS-TYPE PERMISSIONS
+                 * -------------------------------------------------
+                 */
+                if ($role->surface !== $permissionType) {
+                    continue;
+                }
 
-			    if (!$role->meta) continue;
+                /**
+                 * -------------------------------------------------
+                 * PORTAL USERS ALWAYS GET access.portal
+                 * -------------------------------------------------
+                 */
+                if (
+                    $role->surface === 'portal' &&
+                    $slug === 'access.portal'
+                ) {
 
-			    $meta = json_decode($role->meta, true);
+                    DB::table('permission_role_permissions')
+                        ->updateOrInsert(
+                            [
+                                'role_id' => $role->id,
+                                'permission_id' => $pid,
+                            ],
+                            [
+                                'created_at' => now(),
+                                'updated_at' => now(),
+                            ]
+                        );
 
-			    if (!$meta) continue;
+                    continue;
+                }
 
-			    $modules = $meta['modules'] ?? [];
-			    $extraModules = $meta['extra_modules'] ?? [];
+                /**
+                 * -------------------------------------------------
+                 * SKIP ROLES WITHOUT META
+                 * -------------------------------------------------
+                 */
+                if (! $role->meta) {
+                    continue;
+                }
 
-			    $allowedModules = array_merge($modules, $extraModules);
+                $meta = json_decode(
+                    $role->meta,
+                    true
+                );
 
-			    // skip if no module defined
-			    if (empty($allowedModules)) continue;
+                if (! $meta) {
+                    continue;
+                }
 
-			    // check if permission belongs to allowed module
-			    if (in_array($moduleName, $allowedModules, true)) {
+                /**
+                 * -------------------------------------------------
+                 * RESOURCES
+                 * -------------------------------------------------
+                 */
+                $resources = $meta['resources'] ?? [];
 
-			        // 🔥 OPTIONAL: restrict portal users
-			        if ($role->type === 'portal') {
-					    if (!str_ends_with($slug, '.view') && $slug !== 'access.portal') {
-					        continue;
-    					}
-					}
+                $extraResources = $meta['extra_resources'] ?? [];
 
-		        	DB::table('permission_role_permissions')->updateOrInsert([
-        		    	'role_id' => $role->id,
-	            		'permission_id' => $pid,
-			        ], [
-        			    'created_at' => now(),
-            			'updated_at' => now(),
-        			]);
-    			}
-			}
+                $allowedResources = array_merge(
+                    $resources,
+                    $extraResources
+                );
 
-            // ❌ CUSTOM → no auto permissions
+                if (empty($allowedResources)) {
+                    continue;
+                }
+
+                foreach ($allowedResources as $allowed) {
+
+                    /**
+                     * -------------------------------------------------
+                     * MATCH RESOURCE
+                     * -------------------------------------------------
+                     *
+                     * vendor
+                     * vendor.documents
+                     * vendor.settings
+                     */
+                    if (
+                        $resourceName === $allowed ||
+                        str_starts_with(
+                            $resourceName,
+                            $allowed.'.'
+                        )
+                    ) {
+
+                        /**
+                         * -------------------------------------------------
+                         * RESTRICT PORTAL USERS
+                         * -------------------------------------------------
+                         */
+                        if ($role->surface === 'portal') {
+
+                            if (
+                                ! str_ends_with($slug, '.view') &&
+                                $slug !== 'access.portal'
+                            ) {
+                                continue 2;
+                            }
+                        }
+
+                        DB::table('permission_role_permissions')
+                            ->updateOrInsert(
+                                [
+                                    'role_id' => $role->id,
+                                    'permission_id' => $pid,
+                                ],
+                                [
+                                    'created_at' => now(),
+                                    'updated_at' => now(),
+                                ]
+                            );
+
+                        break;
+                    }
+                }
+            }
+
+            /**
+             * -------------------------------------------------
+             * CUSTOM ROLES
+             * NO AUTO PERMISSIONS
+             * -------------------------------------------------
+             */
         }
     }
 }

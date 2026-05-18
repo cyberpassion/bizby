@@ -112,7 +112,7 @@ class OnlinePaymentApiController extends Controller
         	'gateway_payment_id' => 'required|string',
     	]);
 
-	    $payment = OnlinePayment::findOrFail($id);
+	    $payment = OnlinePayment::findOrFail($id);;
 
 	    // Idempotent
     	if (in_array($payment->payment_status, ['processing', 'success'])) {

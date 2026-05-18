@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API v1 Routes
@@ -11,26 +10,22 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-use Modules\Admin\Http\Controllers\Auth\AuthApiController;
-use Modules\Admin\Http\Controllers\Auth\TfaApiController;
-
-use Modules\Admin\Http\Controllers\Admins\AdminApiController;
-use Modules\Admin\Http\Controllers\Tenants\TenantAccountApiController;
-use Modules\Admin\Http\Controllers\Tenants\TenantUserApiController;
-use Modules\Admin\Http\Controllers\Tenants\TenantModuleApiController;
-use Modules\Admin\Http\Controllers\InstallationController;
-use Modules\Admin\Http\Controllers\AuthTokenApiController;
-use Modules\Admin\Http\Controllers\Auth\PasswordResetApiController;
-
-use Modules\Admin\Http\Controllers\Modules\ModuleApiController;
 use Modules\Admin\Http\Controllers\Addons\AddonApiController;
-
+use Modules\Admin\Http\Controllers\Admins\AdminApiController;
+use Modules\Admin\Http\Controllers\Auth\AuthApiController;
+use Modules\Admin\Http\Controllers\Auth\PasswordResetApiController;
+use Modules\Admin\Http\Controllers\Auth\TfaApiController;
+use Modules\Admin\Http\Controllers\AuthTokenApiController;
+use Modules\Admin\Http\Controllers\Billings\BillingAddonApiController;
 use Modules\Admin\Http\Controllers\Billings\BillingApiController;
 use Modules\Admin\Http\Controllers\Billings\BillingModuleApiController;
-use Modules\Admin\Http\Controllers\Billings\BillingAddonApiController;
-
+use Modules\Admin\Http\Controllers\InstallationController;
+use Modules\Admin\Http\Controllers\Modules\ModuleApiController;
 use Modules\Admin\Http\Controllers\Public\Addons\PublicAddonApiController;
 use Modules\Admin\Http\Controllers\Public\Modules\PublicModuleApiController;
+use Modules\Admin\Http\Controllers\Tenants\TenantAccountApiController;
+use Modules\Admin\Http\Controllers\Tenants\TenantModuleApiController;
+use Modules\Admin\Http\Controllers\Tenants\TenantUserApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,16 +66,16 @@ Route::prefix('v1')->group(function () {
         // Update module metadata or pricing.
         // Does NOT affect existing tenant price snapshots.
 
-		Route::get('/{id}', [ModuleApiController::class, 'show'])
+        Route::get('/{id}', [ModuleApiController::class, 'show'])
             ->name('admin.modules.show');
         // Get single module
-	
+
         Route::patch('/{id}/toggle', [ModuleApiController::class, 'toggle'])
             ->name('admin.modules.toggle');
         // Enable or disable a module globally.
     });
 
-	/*
+    /*
     |--------------------------------------------------------------------------
     | Admin Addons – Product Catalog Layer
     |--------------------------------------------------------------------------
@@ -111,7 +106,7 @@ Route::prefix('v1')->group(function () {
         // Update addon metadata or pricing.
         // Does NOT affect existing tenant price snapshots.
 
-		Route::get('/{id}', [AddonApiController::class, 'show'])
+        Route::get('/{id}', [AddonApiController::class, 'show'])
             ->name('admin.addons.show');
         // Get single addon
 
@@ -150,7 +145,7 @@ Route::prefix('v1')->group(function () {
     | - Billing handled via PaymentPayable + OnlinePayment
     |--------------------------------------------------------------------------
     */
-	Route::prefix('tenants/{tenantId}/modules')->group(function () {
+    Route::prefix('tenants/{tenantId}/modules')->group(function () {
 
         Route::get('/', [TenantModuleApiController::class, 'index1'])
             ->name('tenantModule.index1');
@@ -172,19 +167,19 @@ Route::prefix('v1')->group(function () {
         // Does NOT trigger refunds.
     });
 
-	/*
+    /*
     |--------------------------------------------------------------------------
     | Tenant Provisioning - FOR DEVELOPER ONLY
     |--------------------------------------------------------------------------
     | DEVELOPER / LOCAL
     |--------------------------------------------------------------------------
     */
-	if (! app()->environment('production')) {
-		Route::post('/tenants/{tenant}/provision-test', [
-    		TenantAccountApiController::class,
-    		'provisionForTesting'
-		]);
-	}
+    if (! app()->environment('production')) {
+        Route::post('/tenants/{tenant}/provision-test', [
+            TenantAccountApiController::class,
+            'provisionForTesting',
+        ]);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -236,11 +231,11 @@ Route::prefix('v1/auth')->group(function () {
         Route::post('logout', [AuthApiController::class, 'logout']);
     });
 
-	Route::middleware(['auth:sanctum','identify.tenant'])->group(function () {
-		Route::get('login/flow', [AuthApiController::class, 'loginFlow']);
-		Route::post('tfa/send', [TfaApiController::class, 'sendTenantTfa']);
-	    Route::post('tfa/verify', [TfaApiController::class, 'verifyTenantTfa']);
-	});
+    Route::middleware(['auth:sanctum', 'identify.tenant'])->group(function () {
+        Route::get('login/flow', [AuthApiController::class, 'loginFlow']);
+        Route::post('tfa/send', [TfaApiController::class, 'sendTenantTfa']);
+        Route::post('tfa/verify', [TfaApiController::class, 'verifyTenantTfa']);
+    });
 
 });
 
@@ -249,11 +244,11 @@ Route::prefix('v1/auth')->group(function () {
 | Tenant-Scoped User Provisioning
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth:sanctum','identify.tenant'])
+Route::middleware(['auth:sanctum', 'identify.tenant'])
     ->prefix('v1/tenants/{tenantId}')
     ->group(function () {
 
-		Route::get('/users', [TenantUserApiController::class, 'index_custom']); // ✅ ADD
+        Route::get('/users', [TenantUserApiController::class, 'index_custom']); // ✅ ADD
         Route::get('/users/{id}', [TenantUserApiController::class, 'show_custom']); // optional
 
         Route::post('/users', [TenantUserApiController::class, 'provisionUser']);
@@ -269,7 +264,7 @@ Route::middleware(['auth:sanctum','identify.tenant'])
 */
 Route::prefix('v1/auth/password')->group(function () {
     Route::post('forgot', [PasswordResetApiController::class, 'forgot']);
-	Route::post('verify', [PasswordResetApiController::class, 'verify']);
+    Route::post('verify', [PasswordResetApiController::class, 'verify']);
     Route::post('reset', [PasswordResetApiController::class, 'reset']);
 });
 
@@ -279,7 +274,7 @@ Route::prefix('v1/auth/password')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('v1/public-auth')
-    //->middleware('identify.tenant')
+    // ->middleware('identify.tenant')
     ->group(function () {
 
         Route::post('register', [AuthApiController::class, 'register']);
@@ -314,25 +309,25 @@ Route::prefix('v1/billing')
     ->middleware(['auth:sanctum', 'identify.tenant'])
     ->group(function () {
 
-    // Subscription
-    Route::get('/subscription', [BillingApiController::class, 'subscription']);
-    Route::post('/subscription/renew', [BillingApiController::class, 'renew']);
-    Route::post('/subscription/cancel', [BillingApiController::class, 'cancel']);
+        // Subscription
+        Route::get('/subscription', [BillingApiController::class, 'subscription']);
+        Route::post('/subscription/renew', [BillingApiController::class, 'renew']);
+        Route::post('/subscription/cancel', [BillingApiController::class, 'cancel']);
 
-    // Plans
-    Route::get('/plans', [BillingApiController::class, 'plans']);
-    Route::post('/plan/change', [BillingApiController::class, 'changePlan']);
+        // Plans
+        Route::get('/plans', [BillingApiController::class, 'plans']);
+        Route::post('/plan/change', [BillingApiController::class, 'changePlan']);
 
-    // Modules
-    Route::get('/modules', [BillingModuleApiController::class, 'index']);
-    Route::post('/modules/add', [BillingModuleApiController::class, 'add']);
-    Route::post('/modules/remove', [BillingModuleApiController::class, 'remove']);
+        // Modules
+        Route::get('/modules', [BillingModuleApiController::class, 'index']);
+        Route::post('/modules/add', [BillingModuleApiController::class, 'add']);
+        Route::post('/modules/remove', [BillingModuleApiController::class, 'remove']);
 
-    // Addons
-    Route::get('/addons', [BillingAddonApiController::class, 'index']);
-    Route::post('/addons/add', [BillingAddonApiController::class, 'add']);
-    Route::post('/addons/remove', [BillingAddonApiController::class, 'remove']);
+        // Addons
+        Route::get('/addons', [BillingAddonApiController::class, 'index']);
+        Route::post('/addons/add', [BillingAddonApiController::class, 'add']);
+        Route::post('/addons/remove', [BillingAddonApiController::class, 'remove']);
 
-    // Invoices
-    Route::get('/invoices', [BillingApiController::class, 'invoices']);
-});
+        // Invoices
+        Route::get('/invoices', [BillingApiController::class, 'invoices']);
+    });

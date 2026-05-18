@@ -1,60 +1,60 @@
 <?php
 
-use Modules\Shared\Support\UrlPath;
+use Modules\Asset\Support\Actions;
+use Modules\Asset\Support\Res;
 use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
-use Modules\Asset\Support\Res;
-use Modules\Asset\Support\Actions;
+use Modules\Shared\Support\UrlPath;
 
 $pg = 'asset';
 
 return [
 
     'sidebar-menu' => [
-    [
-        'title'      => ucfirst($pg),
-        'href'       => "/{$pg}",
-        'permission' => Permission::access($pg),
+        [
+            'title' => ucfirst($pg),
+            'href' => "/{$pg}",
+            'permission' => Permission::access($pg),
 
-        'items' => [
+            'items' => [
 
-            [
-                'title'       => 'Home',
-                'description' => 'Asset Dashboard & Overview',
-                'href'        => UrlPath::makeHome($pg),
-                'permission'  => Permission::view(Res::HOME),
-            ],
+                [
+                    'title' => 'Home',
+                    'description' => 'Asset Dashboard & Overview',
+                    'href' => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
+                ],
 
-            [
-                'title'       => 'Add New',
-                'description' => 'Create a New Asset',
-                'href'        => UrlPath::makeCreate($pg),
-                'permission'  => Permission::create(Res::ASSETS),
-            ],
+                [
+                    'title' => 'Add New',
+                    'description' => 'Create a New Asset',
+                    'href' => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::ASSETS),
+                ],
 
-            [
-                'title'       => 'View List',
-                'description' => 'Browse All Assets',
-                'href'        => UrlPath::makeList($pg),
-                'permission'  => Permission::list(Res::ASSETS),
-            ],
+                [
+                    'title' => 'View List',
+                    'description' => 'Browse All Assets',
+                    'href' => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::ASSETS),
+                ],
 
-            [
-                'title'       => 'Report',
-                'description' => 'View Asset Reports',
-                'href'        => UrlPath::makeReport($pg),
-                'permission'  => Permission::view(Res::REPORTS),
-            ],
+                [
+                    'title' => 'Report',
+                    'description' => 'View Asset Reports',
+                    'href' => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
 
-            [
-                'title'       => 'Settings',
-                'description' => 'Manage Asset Settings',
-                'href'        => UrlPath::makeSettings($pg),
-                'permission'  => Permission::update(Res::SETTINGS),
+                [
+                    'title' => 'Settings',
+                    'description' => 'Manage Asset Settings',
+                    'href' => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
+                ],
             ],
         ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -63,43 +63,43 @@ return [
     */
     'single-actions' => [
 
-		KeyName::make(Res::ASSETS) => [
-			Actions::LIST => [
-				[
-					'title'      => 'View Details',
-					'href'       => UrlPath::makeDetail($pg, '{id}'),
-					'permission' => Permission::view(Res::DOCUMENTS),
-					'action'     => 'detail',
-					'icon'       => 'view',
-				],
+        KeyName::make(Res::ASSETS) => [
+            Actions::LIST => [
+                [
+                    'title' => 'View Details',
+                    'href' => UrlPath::makeDetail($pg, '{id}'),
+                    'permission' => Permission::view(Res::DOCUMENTS),
+                    'action' => 'detail',
+                    'icon' => 'view',
+                ],
 
-				[
-					'title'      => 'Update',
-					'href'       => UrlPath::makeUpdate($pg, '{id}'),
-					'permission' => Permission::update(Res::ASSETS),
-					'action'     => 'update',
-					'icon'       => 'update',
-				],
+                [
+                    'title' => 'Update',
+                    'href' => UrlPath::makeUpdate($pg, '{id}'),
+                    'permission' => Permission::update(Res::ASSETS),
+                    'action' => 'update',
+                    'icon' => 'update',
+                ],
 
-				[
-					'title'      => 'Upload',
-					'href'       => UrlPath::makeUploads($pg, '{id}'),
-					'permission' => Permission::create(Res::UPLOADS),
-					'action'     => 'upload',
-					'icon'       => 'upload',
-				],
+                [
+                    'title' => 'Upload',
+                    'href' => UrlPath::makeUploads($pg, '{id}'),
+                    'permission' => Permission::create(Res::UPLOADS),
+                    'action' => 'upload',
+                    'icon' => 'upload',
+                ],
 
-				[
-					'title'      => 'Delete',
-					'href'       => UrlPath::makeDelete(Res::ASSETS, '{id}'),
-					'permission' => Permission::delete(Res::ASSETS),
-					'action'     => 'delete',
-					'method'     => 'DELETE',
-					'variant'    => 'danger',
-					'icon'       => 'delete',
-				]
-			]
-		]
+                [
+                    'title' => 'Delete',
+                    'href' => UrlPath::makeDelete(Res::ASSETS, '{id}'),
+                    'permission' => Permission::delete(Res::ASSETS),
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'variant' => 'danger',
+                    'icon' => 'delete',
+                ],
+            ],
+        ],
 
     ],
 
@@ -110,38 +110,38 @@ return [
     */
     'filters' => [
 
-		KeyName::make(Res::ASSETS) => [
-	        Actions::LIST	=>	[
-    	        [
-        	        'type'        => 'select',
-            	    'name'        => 'center_id',
-                	'placeholder' => 'Center',
- 	                'col'         => 3,
-	                'dataKey'     => 'centers.list',
-    	        ],
-				[
-            	    'type'        => 'select',
-                	'name'        => 'assigned_to',
-	                'placeholder' => 'Assigned To',
-    	            'col'         => 3,
-        	        'dataKey'     => 'employees.list',
-            	],
-				[
-    	            'type'        => 'select',
-        	        'name'        => 'type',
-            	    'placeholder' => 'Type',
-                	'col'         => 3,
-                	'dataKey'     => 'asset.types',
-            	],
-				[
-    	            'type'        => 'select',
-        	        'name'        => 'status',
-            	    'placeholder' => 'Status',
-                	'col'         => 3,
-                	'dataKey'     => 'asset.statuses',
-            	],
-        	]
-		]
+        KeyName::make(Res::ASSETS) => [
+            Actions::LIST => [
+                [
+                    'type' => 'select',
+                    'name' => 'center_id',
+                    'placeholder' => 'Center',
+                    'col' => 3,
+                    'dataKey' => 'centers.list',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'assigned_to',
+                    'placeholder' => 'Assigned To',
+                    'col' => 3,
+                    'dataKey' => 'employees.list',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'type',
+                    'placeholder' => 'Type',
+                    'col' => 3,
+                    'dataKey' => 'asset.types',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'status',
+                    'placeholder' => 'Status',
+                    'col' => 3,
+                    'dataKey' => 'asset.statuses',
+                ],
+            ],
+        ],
 
     ],
 

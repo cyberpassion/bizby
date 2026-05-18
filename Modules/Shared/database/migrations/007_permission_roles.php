@@ -12,19 +12,21 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-			$table->string('slug');
-            $table->unsignedBigInteger('tenant_id'); // SaaS tenant scope
+            $table->string('slug');
+            $table->string('description')->nullable();
 
             // optional but recommended
             $table->string('guard')->default('web');
 
-			$table->string('type')->nullable();
-			$table->json('meta')->nullable();
+            $table->string('surface')->nullable();
+            $table->tinyInteger('priority')->default(0); // for sorting roles in UI, higher means more important
+            $table->json('meta')->nullable();
 
             $table->timestamps();
 
-            $table->unique(['name', 'tenant_id']);
-            $table->index('tenant_id');
+            $table->boolean('is_system')->default(false);
+            $table->unique('slug');
+            $table->index('surface');
         });
     }
 

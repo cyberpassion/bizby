@@ -2,16 +2,16 @@
 
 namespace Modules\Admin\Models\Tenants;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
 
 class TenantAddon extends Model
 {
-
-	use HasFactory;
+    use HasFactory;
 
     protected $table = 'tenant_addons';
+
+    protected $connection = 'central';
 
     protected $fillable = [
         'tenant_id',
@@ -26,10 +26,10 @@ class TenantAddon extends Model
     ];
 
     protected $casts = [
-        'activated_at'   => 'datetime',
+        'activated_at' => 'datetime',
         'deactivated_at' => 'datetime',
-        'valid_till'     => 'date',
-        'is_active'      => 'boolean',
+        'valid_till' => 'date',
+        'is_active' => 'boolean',
     ];
 
     /*
@@ -41,13 +41,13 @@ class TenantAddon extends Model
     // 🔹 Belongs to Tenant
     public function tenant()
     {
-        return $this->belongsTo(\Modules\Admin\Models\Tenants\TenantAccount::class, 'tenant_id');
+        return $this->belongsTo(TenantAccount::class, 'tenant_id');
     }
 
     // 🔹 Belongs to Addon master (optional)
     public function addon()
     {
-        return $this->belongsTo(\Modules\Admin\Models\Tenants\TenantAddon::class, 'addon_id');
+        return $this->belongsTo(TenantAddon::class, 'addon_id');
     }
 
     /*
@@ -62,7 +62,7 @@ class TenantAddon extends Model
         return $query->where('is_active', true)
             ->where(function ($q) {
                 $q->whereNull('valid_till')
-                  ->orWhereDate('valid_till', '>=', now());
+                    ->orWhereDate('valid_till', '>=', now());
             });
     }
 }

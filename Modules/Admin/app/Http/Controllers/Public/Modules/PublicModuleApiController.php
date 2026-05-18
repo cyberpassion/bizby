@@ -4,7 +4,6 @@ namespace Modules\Admin\Http\Controllers\Public\Modules;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
 use Modules\Admin\Models\Modules\Module;
 
 class PublicModuleApiController extends Controller
@@ -15,14 +14,14 @@ class PublicModuleApiController extends Controller
             ->where('is_active', 1);
 
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%'.$request->search.'%');
         }
 
         return response()->json([
             'success' => true,
             'data' => $query
                 ->latest()
-                ->paginate(20)
+                ->paginate(50),
         ]);
     }
 
@@ -33,7 +32,7 @@ class PublicModuleApiController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $module
+            'data' => $module,
         ]);
     }
 }

@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('terms', function (Blueprint $table) {
+            // Common SaaS fields (id, tenant_id, status, timestamps, soft deletes, audit)
+            $table->commonSaasFields();
+
+            $table->string('tid')->nullable()->unique();
+            $table->string('name');
+            $table->string('slug');
+            $table->string('group');
+            $table->string('module')->nullable();
+
+            $table->integer('sort_order')->default(0);
+
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('terms');
+    }
+};

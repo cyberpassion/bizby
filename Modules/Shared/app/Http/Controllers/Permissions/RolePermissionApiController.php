@@ -4,8 +4,8 @@ namespace Modules\Shared\Http\Controllers\Permissions;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class RolePermissionApiController extends Controller
 {
@@ -24,18 +24,18 @@ class RolePermissionApiController extends Controller
             ->where('r.tenant_id', $tenant->id)
             ->select([
                 'p.id',
-                'p.module',
+                'p.resource',
                 'p.operation',
                 'p.slug',
-                'rpp.scope'
+                'rpp.scope',
             ])
-            ->orderBy('p.module')
+            ->orderBy('p.resource')
             ->orderBy('p.operation')
             ->get();
 
         return response()->json([
-			'status' => 'success',
-            'data' => $permissions
+            'status' => 'success',
+            'data' => $permissions,
         ]);
     }
 
@@ -46,7 +46,7 @@ class RolePermissionApiController extends Controller
     public function sync(Request $request, $roleId)
     {
         $request->validate([
-            'permission_ids'   => 'required|array',
+            'permission_ids' => 'required|array',
             'permission_ids.*' => 'exists:permission_permissions,id',
         ]);
 
@@ -60,7 +60,7 @@ class RolePermissionApiController extends Controller
 
         if (! $belongsToTenant) {
             return response()->json([
-                'message' => 'Role does not belong to tenant'
+                'message' => 'Role does not belong to tenant',
             ], 403);
         }
 
@@ -71,10 +71,10 @@ class RolePermissionApiController extends Controller
                 ->delete();
 
             $rows = collect($request->permission_ids)->map(fn ($pid) => [
-                'role_id'       => $roleId,
+                'role_id' => $roleId,
                 'permission_id' => $pid,
-                'created_at'    => now(),
-                'updated_at'    => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ])->toArray();
 
             if (! empty($rows)) {
@@ -86,7 +86,7 @@ class RolePermissionApiController extends Controller
         Cache::tags(['permissions'])->flush();
 
         return response()->json([
-            'message' => 'Role permissions synced successfully'
+            'message' => 'Role permissions synced successfully',
         ]);
     }
 }

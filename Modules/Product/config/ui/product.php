@@ -1,10 +1,10 @@
 <?php
 
-use Modules\Shared\Support\UrlPath;
+use Modules\Product\Support\Actions;
+use Modules\Product\Support\Res;
 use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
-use Modules\Product\Support\Res;
-use Modules\Product\Support\Actions;
+use Modules\Shared\Support\UrlPath;
 
 $pg = 'product';
 
@@ -14,73 +14,73 @@ return [
      | Sidebar Menu
      =============================== */
     'sidebar-menu' => [
-    [
-        'title'      => ucfirst($pg),
-        'href'       => "/{$pg}",
-        'permission' => Permission::access($pg),
+        [
+            'title' => ucfirst($pg),
+            'href' => "/{$pg}",
+            'permission' => Permission::access($pg),
 
-        'items' => [
+            'items' => [
 
-            [
-                'title'       => 'Home',
-                'description' => 'Product Dashboard & Overview',
-                'href'        => UrlPath::makeHome($pg),
-                'permission'  => Permission::view(Res::HOME),
-            ],
+                [
+                    'title' => 'Home',
+                    'description' => 'Product Dashboard & Overview',
+                    'href' => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
+                ],
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Product
             |--------------------------------------------------------------------------
             */
-            [
-                'title'       => 'Add New',
-                'description' => 'Create a New Product',
-                'href'        => UrlPath::makeCreate($pg),
-                'permission'  => Permission::create(Res::PRODUCTS),
-            ],
+                [
+                    'title' => 'Add New',
+                    'description' => 'Create a New Product',
+                    'href' => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::PRODUCTS),
+                ],
 
-            [
-                'title'       => 'View List',
-                'description' => 'Browse All Products',
-                'href'        => UrlPath::makeList($pg),
-                'permission'  => Permission::list(Res::PRODUCTS),
-            ],
+                [
+                    'title' => 'View List',
+                    'description' => 'Browse All Products',
+                    'href' => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::PRODUCTS),
+                ],
 
-            [
-                'title'       => 'Report',
-                'description' => 'View Product Reports',
-                'href'        => UrlPath::makeReport($pg),
-                'permission'  => Permission::view(Res::REPORTS),
-            ],
+                [
+                    'title' => 'Report',
+                    'description' => 'View Product Reports',
+                    'href' => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Settings
             |--------------------------------------------------------------------------
             */
-            [
-                'title'       => 'Settings',
-                'description' => 'Manage Product Settings',
-                'href'        => UrlPath::makeSettings($pg),
-                'permission'  => Permission::update(Res::SETTINGS),
-            ],
+                [
+                    'title' => 'Settings',
+                    'description' => 'Manage Product Settings',
+                    'href' => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
+                ],
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Plugins
             |--------------------------------------------------------------------------
             */
-            [
-                'title'       => 'Calendar',
-                'description' => 'View Product Calendar & Schedules',
-                'href'        => "/plugin/calendar?module={$pg}",
-                'permission'  => Permission::access("{$pg}.plugin"),
-            ],
+                [
+                    'title' => 'Calendar',
+                    'description' => 'View Product Calendar & Schedules',
+                    'href' => "/plugin/calendar?module={$pg}",
+                    'permission' => Permission::access("{$pg}.plugin"),
+                ],
 
+            ],
         ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -89,34 +89,37 @@ return [
     */
     'single-actions' => [
 
-		KeyName::make(Res::PRODUCTS) => [
-	        Actions::LIST => [
+        KeyName::make(Res::PRODUCTS) => [
+            Actions::LIST => [
 
-				[
-    	            'title'      => 'View Details',
-        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
-            	    'permission' => Permission::view(Res::DOCUMENTS),
-                	'action'     => 'detail',
-	            ],
+                [
+                    'title' => 'View Details',
+                    'href' => UrlPath::makeDetail($pg, '{id}'),
+                    'permission' => Permission::view(Res::DOCUMENTS),
+                    'action' => 'detail',
+                    'icon' => 'view',
+                ],
 
-	            [
-    	            'title'      => 'Update',
-        	        'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            	    'permission' => Permission::update(Res::PRODUCTS),
-                	'action'     => 'update',
-	            ],
+                [
+                    'title' => 'Update',
+                    'href' => UrlPath::makeUpdate($pg, '{id}'),
+                    'permission' => Permission::update(Res::PRODUCTS),
+                    'action' => 'update',
+                    'icon' => 'update',
+                ],
 
-	            [
-    	            'title'      => 'Delete',
-        	        'href'       => UrlPath::makeDelete(Res::PRODUCTS, '{id}'),
-            	    'permission' => Permission::delete(Res::PRODUCTS),
-                	'action'     => 'delete',
-	                'method'     => 'DELETE',
-    	            'variant'    => 'danger',
-        	    ],
+                [
+                    'title' => 'Delete',
+                    'href' => UrlPath::makeDelete(Res::PRODUCTS, '{id}'),
+                    'permission' => Permission::delete(Res::PRODUCTS),
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'variant' => 'danger',
+                    'icon' => 'delete',
+                ],
 
-        	]
-		]
+            ],
+        ],
 
     ],
 
@@ -127,27 +130,27 @@ return [
     */
     'filters' => [
 
-		KeyName::make(Res::PRODUCTS) => [
-	        Actions::LIST => [
+        KeyName::make(Res::PRODUCTS) => [
+            Actions::LIST => [
 
-	            [
-    	            'type'        => 'select',
-        	        'name'        => 'brand',
-            	    'placeholder' => 'Brand',
-                	'col'         => 3,
-	                'dataKey'     => 'product.brand-names',
-    	        ],
+                [
+                    'type' => 'select',
+                    'name' => 'brand',
+                    'placeholder' => 'Brand',
+                    'col' => 3,
+                    'dataKey' => 'product.brand-names',
+                ],
 
-	            [
-     	           'type'        => 'select',
-        	        'name'        => 'availability',
-            	    'placeholder' => 'Availability',
-                	'col'         => 3,
-	                'dataKey'     => 'product.availability-statuses',
-    	        ],
+                [
+                    'type' => 'select',
+                    'name' => 'availability',
+                    'placeholder' => 'Availability',
+                    'col' => 3,
+                    'dataKey' => 'product.availability-statuses',
+                ],
 
-        	]
-		]
+            ],
+        ],
 
     ],
 

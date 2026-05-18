@@ -1,11 +1,10 @@
 <?php
 
-use Modules\Shared\Support\UrlPath;
+use Modules\Note\Support\Actions;
+use Modules\Note\Support\Res;
 use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
-use Modules\Note\Support\Res;
-use Modules\Note\Support\Actions;
-
+use Modules\Shared\Support\UrlPath;
 
 $pg = 'note';
 
@@ -15,50 +14,50 @@ return [
      | Sidebar Menu
      ========================= */
     'sidebar-menu' => [
-    [
-        'title'      => ucfirst($pg),
-        'href'       => "/{$pg}",
-        'permission' => Permission::access($pg),
+        [
+            'title' => ucfirst($pg),
+            'href' => "/{$pg}",
+            'permission' => Permission::access($pg),
 
-        'items' => [
+            'items' => [
 
-            [
-                'title'       => 'Home',
-                'description' => 'Notes Dashboard & Overview',
-                'href'        => UrlPath::makeHome($pg),
-                'permission'  => Permission::view(Res::HOME),
-            ],
+                [
+                    'title' => 'Home',
+                    'description' => 'Notes Dashboard & Overview',
+                    'href' => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
+                ],
 
-            [
-                'title'       => 'Add New',
-                'description' => 'Create a New Note or Conversation',
-                'href'        => UrlPath::makeCreate($pg),
-                'permission'  => Permission::create(Res::NOTES),
-            ],
+                [
+                    'title' => 'Add New',
+                    'description' => 'Create a New Note or Conversation',
+                    'href' => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::NOTES),
+                ],
 
-            [
-                'title'       => 'View List',
-                'description' => 'Browse All Notes & Threads',
-                'href'        => UrlPath::makeList($pg),
-                'permission'  => Permission::list(Res::NOTES),
-            ],
+                [
+                    'title' => 'View List',
+                    'description' => 'Browse All Notes & Threads',
+                    'href' => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::NOTES),
+                ],
 
-            [
-                'title'       => 'Report',
-                'description' => 'View Notes Activity Reports',
-                'href'        => UrlPath::makeReport($pg),
-                'permission'  => Permission::view(Res::REPORTS),
-            ],
+                [
+                    'title' => 'Report',
+                    'description' => 'View Notes Activity Reports',
+                    'href' => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
 
-            [
-                'title'       => 'Settings',
-                'description' => 'Manage Notes Settings',
-                'href'        => UrlPath::makeSettings($pg),
-                'permission'  => Permission::update(Res::SETTINGS),
+                [
+                    'title' => 'Settings',
+                    'description' => 'Manage Notes Settings',
+                    'href' => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
+                ],
             ],
         ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -67,109 +66,111 @@ return [
     */
     'single-actions' => [
 
-	KeyName::make(Res::NOTES) => [
-	    Actions::LIST => [
+        KeyName::make(Res::NOTES) => [
+            Actions::LIST => [
 
-	        /*
-    	    |--------------------------------------------------------------------------
-        	| PRIMARY ACTION (Open Chat)
-	        |--------------------------------------------------------------------------
-    	    */
-        	[
-            	'title'      => 'Open',
-	            'href'       => "{id}/conversation", // chat screen
-    	        'permission' => Permission::view(Res::NOTES),
-        	    'action'     => 'view',
-            	'variant'    => 'primary',
-	        ],
+                /*
+            |--------------------------------------------------------------------------
+            | PRIMARY ACTION (Open Chat)
+            |--------------------------------------------------------------------------
+            */
+                [
+                    'title' => 'Open',
+                    'href' => '{id}/conversation', // chat screen
+                    'permission' => Permission::view(Res::NOTES),
+                    'action' => 'view',
+                    'variant' => 'primary',
+                ],
 
-	        /*
-    	    |--------------------------------------------------------------------------
-        	| Thread Management
-	        |--------------------------------------------------------------------------
-    	    */
-        	[
-            	'title'      => 'Edit Details',
-	            'href'       => UrlPath::makeUpdate($pg, '{id}'),
-    	        'permission' => Permission::update(Res::NOTES),
-        	    'action'     => 'update',
-        	],
+                /*
+            |--------------------------------------------------------------------------
+            | Thread Management
+            |--------------------------------------------------------------------------
+            */
+                [
+                    'title' => 'Edit Details',
+                    'href' => UrlPath::makeUpdate($pg, '{id}'),
+                    'permission' => Permission::update(Res::NOTES),
+                    'action' => 'update',
+                    'icon' => 'view',
+                ],
 
-	        [
-    	        'title'      => 'Assign',
-        	    'href'       => "{$pg}/note/{id}/assign",
-            	'permission' => Permission::update(Res::NOTES),
-	            'action'     => 'assign',
-    	        'type'       => 'modal', // optional (for popup)
-        	],
+                [
+                    'title' => 'Assign',
+                    'href' => "{$pg}/note/{id}/assign",
+                    'permission' => Permission::update(Res::NOTES),
+                    'action' => 'assign',
+                    'type' => 'modal', // optional (for popup)
+                ],
 
-	        [
-    	        'title'      => 'Participants',
-        	    'href'       => "{$pg}/note/{id}/participants",
-            	'permission' => Permission::update(Res::NOTES),
-	            'action'     => 'participants',
-    	        'type'       => 'modal',
-        	],
+                [
+                    'title' => 'Participants',
+                    'href' => "{$pg}/note/{id}/participants",
+                    'permission' => Permission::update(Res::NOTES),
+                    'action' => 'participants',
+                    'type' => 'modal',
+                ],
 
-	        /*
-    	    |--------------------------------------------------------------------------
-        	| Status Actions
-	        |--------------------------------------------------------------------------
-    	    */
-        	[
-	            'title'      => 'Mark In Progress',
-    	        'href'       => "{$pg}/note/{id}/status/in_progress",
-        	    'permission' => Permission::update(Res::NOTES),
-            	'action'     => 'status',
-            	'method'     => 'PATCH',
-	        ],
+                /*
+            |--------------------------------------------------------------------------
+            | Status Actions
+            |--------------------------------------------------------------------------
+            */
+                [
+                    'title' => 'Mark In Progress',
+                    'href' => "{$pg}/note/{id}/status/in_progress",
+                    'permission' => Permission::update(Res::NOTES),
+                    'action' => 'status',
+                    'method' => 'PATCH',
+                ],
 
-	        [
-    	        'title'      => 'Mark Resolved',
-        	    'href'       => "{$pg}/note/{id}/status/resolved",
-            	'permission' => Permission::update(Res::NOTES),
-	            'action'     => 'status',
-    	        'method'     => 'PATCH',
-        	],
+                [
+                    'title' => 'Mark Resolved',
+                    'href' => "{$pg}/note/{id}/status/resolved",
+                    'permission' => Permission::update(Res::NOTES),
+                    'action' => 'status',
+                    'method' => 'PATCH',
+                ],
 
-	        [
-    	        'title'      => 'Mark Closed',
-        	    'href'       => "{$pg}/note/{id}/status/closed",
-            	'permission' => Permission::update(Res::NOTES),
-	            'action'     => 'status',
-    	        'method'     => 'PATCH',
-        	],
+                [
+                    'title' => 'Mark Closed',
+                    'href' => "{$pg}/note/{id}/status/closed",
+                    'permission' => Permission::update(Res::NOTES),
+                    'action' => 'status',
+                    'method' => 'PATCH',
+                ],
 
-	        /*
-    	    |--------------------------------------------------------------------------
-        	| Utility
-        	|--------------------------------------------------------------------------
-	        */
-    	    [
-        	    'title'      => 'Set Reminder',
-            	'href'       => "{$pg}/note/{id}/reminder",
-	            'permission' => Permission::update(Res::NOTES),
-    	        'action'     => 'reminder',
-        	    'type'       => 'modal',
-        	],
+                /*
+            |--------------------------------------------------------------------------
+            | Utility
+            |--------------------------------------------------------------------------
+            */
+                [
+                    'title' => 'Set Reminder',
+                    'href' => "{$pg}/note/{id}/reminder",
+                    'permission' => Permission::update(Res::NOTES),
+                    'action' => 'reminder',
+                    'type' => 'modal',
+                ],
 
-	        /*
-    	    |--------------------------------------------------------------------------
-        	| Dangerous
-	        |--------------------------------------------------------------------------
-    	    */
-        	[
-	            'title'      => 'Delete',
-    	        'href'       => UrlPath::makeDelete(Res::NOTES, '{id}'),
-        	    'permission' => Permission::delete(Res::NOTES),
-            	'action'     => 'delete',
-            	'method'     => 'DELETE',
-            	'variant'    => 'danger',
-        	],
-    	]
-	]
+                /*
+            |--------------------------------------------------------------------------
+            | Dangerous
+            |--------------------------------------------------------------------------
+            */
+                [
+                    'title' => 'Delete',
+                    'href' => UrlPath::makeDelete(Res::NOTES, '{id}'),
+                    'permission' => Permission::delete(Res::NOTES),
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'variant' => 'danger',
+                    'icon' => 'delete',
+                ],
+            ],
+        ],
 
-],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -178,31 +179,31 @@ return [
     */
     'filters' => [
 
-		KeyName::make(Res::NOTES) => [
-	        Actions::LIST => [
-    	        [
-        	        'type'        => 'select',
-            	    'name'        => 'type',
-                	'placeholder' => 'Type',
-	                'col'         => 3,
-    	            'dataKey'     => 'note.thread-types',
-        	    ],
-    	        [
-        	        'type'        => 'select',
-            	    'name'        => 'priority',
-                	'placeholder' => 'Priority',
-                	'col'         => 3,
-                	'dataKey'     => 'note.priorities',
-            	],
-	            [
-    	            'type'        => 'select',
-        	        'name'        => 'status',
-            	    'placeholder' => 'Status',
-                	'col'         => 3,
-                	'dataKey'     => 'note.statuses',
-            	],
-			]
-		]
+        KeyName::make(Res::NOTES) => [
+            Actions::LIST => [
+                [
+                    'type' => 'select',
+                    'name' => 'type',
+                    'placeholder' => 'Type',
+                    'col' => 3,
+                    'dataKey' => 'note.thread-types',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'priority',
+                    'placeholder' => 'Priority',
+                    'col' => 3,
+                    'dataKey' => 'note.priorities',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'status',
+                    'placeholder' => 'Status',
+                    'col' => 3,
+                    'dataKey' => 'note.statuses',
+                ],
+            ],
+        ],
 
     ],
 

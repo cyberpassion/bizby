@@ -8,6 +8,8 @@ class PermissionRolePermission extends Model
 {
     protected $table = 'permission_role_permissions';
 
+    protected $connection = 'central';
+
     protected $fillable = [
         'role_id',
         'permission_id',

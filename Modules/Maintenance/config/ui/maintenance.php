@@ -1,60 +1,60 @@
 <?php
 
-use Modules\Shared\Support\UrlPath;
+use Modules\Maintenance\Support\Actions;
+use Modules\Maintenance\Support\Res;
 use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
-use Modules\Maintenance\Support\Res;
-use Modules\Maintenance\Support\Actions;
+use Modules\Shared\Support\UrlPath;
 
 $pg = 'maintenance';
 
 return [
 
-'sidebar-menu' => [
-    [
-        'title'      => ucfirst($pg),
-        'href'       => "/{$pg}",
-        'permission' => Permission::access($pg),
+    'sidebar-menu' => [
+        [
+            'title' => ucfirst($pg),
+            'href' => "/{$pg}",
+            'permission' => Permission::access($pg),
 
-        'items' => [
+            'items' => [
 
-            [
-                'title'       => 'Home',
-                'description' => 'Maintenance Dashboard & Overview',
-                'href'        => UrlPath::makeHome($pg),
-                'permission'  => Permission::view(Res::HOME),
-            ],
+                [
+                    'title' => 'Home',
+                    'description' => 'Maintenance Dashboard & Overview',
+                    'href' => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
+                ],
 
-            [
-                'title'       => 'Add New',
-                'description' => 'Create a New Maintenance Request',
-                'href'        => UrlPath::makeCreate($pg),
-                'permission'  => Permission::create(Res::MAINTENANCES),
-            ],
+                [
+                    'title' => 'Add New',
+                    'description' => 'Create a New Maintenance Request',
+                    'href' => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::MAINTENANCES),
+                ],
 
-            [
-                'title'       => 'View List',
-                'description' => 'Browse All Maintenance Records',
-                'href'        => UrlPath::makeList($pg),
-                'permission'  => Permission::list(Res::MAINTENANCES),
-            ],
+                [
+                    'title' => 'View List',
+                    'description' => 'Browse All Maintenance Records',
+                    'href' => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::MAINTENANCES),
+                ],
 
-            [
-                'title'       => 'Report',
-                'description' => 'View Maintenance Reports',
-                'href'        => UrlPath::makeReport($pg),
-                'permission'  => Permission::view(Res::REPORTS),
-            ],
+                [
+                    'title' => 'Report',
+                    'description' => 'View Maintenance Reports',
+                    'href' => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
 
-            [
-                'title'       => 'Settings',
-                'description' => 'Manage Maintenance Settings',
-                'href'        => UrlPath::makeSettings($pg),
-                'permission'  => Permission::update(Res::SETTINGS),
+                [
+                    'title' => 'Settings',
+                    'description' => 'Manage Maintenance Settings',
+                    'href' => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
+                ],
             ],
         ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -63,46 +63,50 @@ return [
     */
     'single-actions' => [
 
-		KeyName::make(Res::MAINTENANCES) => [
-			Actions::LIST => [
-				[
-        	        'title'      => 'View Slip',
-            	    'href'       => UrlPath::makeDocuments($pg, '{id}'),
-                	'permission' => Permission::view(Res::DOCUMENTS),
-	                'action'     => 'document',
-    	        ],
+        KeyName::make(Res::MAINTENANCES) => [
+            Actions::LIST => [
+                [
+                    'title' => 'View Slip',
+                    'href' => UrlPath::makeDocuments($pg, '{id}'),
+                    'permission' => Permission::view(Res::DOCUMENTS),
+                    'action' => 'document',
+                ],
 
-				[
-    	            'title'      => 'View Details',
-        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
-            	    'permission' => Permission::view(Res::DETAILS),
-                	'action'     => 'detail',
-	            ],
+                [
+                    'title' => 'View Details',
+                    'href' => UrlPath::makeDetail($pg, '{id}'),
+                    'permission' => Permission::view(Res::DETAILS),
+                    'action' => 'detail',
+                    'icon' => 'view',
+                ],
 
-		        [
-    		        'title'      => 'Update',
-        		    'href'       => UrlPath::makeUpdate($pg, '{id}'),
-            		'permission' => Permission::update(Res::MAINTENANCES),
-            		'action'     => 'update',
-		        ],
+                [
+                    'title' => 'Update',
+                    'href' => UrlPath::makeUpdate($pg, '{id}'),
+                    'permission' => Permission::update(Res::MAINTENANCES),
+                    'action' => 'update',
+                    'icon' => 'update',
+                ],
 
-				[
-    	            'title'      => 'Upload',
-        	        'href'       => UrlPath::makeUploads($pg, '{id}'),
-            	    'permission' => Permission::create(Res::UPLOADS),
-                	'action'     => 'upload',
-	            ],
+                [
+                    'title' => 'Upload',
+                    'href' => UrlPath::makeUploads($pg, '{id}'),
+                    'permission' => Permission::create(Res::UPLOADS),
+                    'action' => 'upload',
+                    'icon' => 'upload',
+                ],
 
-		        [
-    		        'title'      => 'Delete',
-        		    'href'       => UrlPath::makeDelete(Res::MAINTENANCES, '{id}'),
-            		'permission' => Permission::delete(Res::MAINTENANCES),
-		            'action'     => 'delete',
-    		        'method'     => 'DELETE',
-        		    'variant'    => 'danger',
-        		]
-			]
-		]
+                [
+                    'title' => 'Delete',
+                    'href' => UrlPath::makeDelete(Res::MAINTENANCES, '{id}'),
+                    'permission' => Permission::delete(Res::MAINTENANCES),
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'variant' => 'danger',
+                    'icon' => 'delete',
+                ],
+            ],
+        ],
 
     ],
 
@@ -113,31 +117,31 @@ return [
     */
     'filters' => [
 
-		KeyName::make(Res::MAINTENANCES) => [
-	        Actions::LIST	=>	[
-    	        [
-        	        'type'        => 'select',
-            	    'name'        => 'asset_id',
-	                'placeholder' => 'Asset',
-    	            'col'         => 3,
-        	        'dataKey'     => 'assets.list',
-            	],
-				[
-    	            'type'        => 'select',
-        	        'name'        => 'issue_type',
-            	    'placeholder' => 'Issue Type',
-                	'col'         => 3,
-                	'dataKey'     => 'maintenance.issue-types',
-	            ],
-				[
-            	    'type'        => 'select',
-                	'name'        => 'status',
-	                'placeholder' => 'Status',
-    	            'col'         => 3,
-        	        'dataKey'     => 'maintenance.statuses',
-            	],
-        	]
-		]
+        KeyName::make(Res::MAINTENANCES) => [
+            Actions::LIST => [
+                [
+                    'type' => 'select',
+                    'name' => 'asset_id',
+                    'placeholder' => 'Asset',
+                    'col' => 3,
+                    'dataKey' => 'assets.list',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'issue_type',
+                    'placeholder' => 'Issue Type',
+                    'col' => 3,
+                    'dataKey' => 'maintenance.issue-types',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'status',
+                    'placeholder' => 'Status',
+                    'col' => 3,
+                    'dataKey' => 'maintenance.statuses',
+                ],
+            ],
+        ],
 
     ],
 

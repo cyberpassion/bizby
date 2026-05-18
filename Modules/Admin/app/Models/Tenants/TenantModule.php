@@ -2,13 +2,16 @@
 
 namespace Modules\Admin\Models\Tenants;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
+use Modules\Admin\Models\Modules\Module;
 
 class TenantModule extends Model
 {
     use HasFactory;
+
+    protected $connection = 'central';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +22,7 @@ class TenantModule extends Model
      * Attribute casting.
      */
     protected $casts = [
-		'datetime'			=> 'datetime',
+        'datetime' => 'datetime',
         'tenant_date' => 'date:Y-m-d', // Laravel will cast it to Carbon
     ];
 
@@ -28,7 +31,7 @@ class TenantModule extends Model
      */
     protected $attributes = [];
 
-	protected function dynamicFillable()
+    protected function dynamicFillable()
     {
         // Example dynamic load from DB table
         return Schema::getColumnListing($this->getTable());
@@ -39,12 +42,11 @@ class TenantModule extends Model
         return $this->dynamicFillable();
     }
 
-	public function module()
+    public function module()
     {
         return $this->belongsTo(
-            \Modules\Admin\Models\Modules\Module::class,
+            Module::class,
             'module_id'
         );
     }
-
 }

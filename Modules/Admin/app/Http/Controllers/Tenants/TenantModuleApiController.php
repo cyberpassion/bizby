@@ -2,10 +2,10 @@
 
 namespace Modules\Admin\Http\Controllers\Tenants;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Modules\Admin\Models\Tenants\TenantModule;
 use Modules\Shared\Http\Controllers\SharedApiController;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 
 class TenantModuleApiController extends SharedApiController
 {
@@ -17,126 +17,126 @@ class TenantModuleApiController extends SharedApiController
     protected function validationRules($id = null)
     {
         return [
-            'module_key'  => 'required|string',
+            'module_key' => 'required|string',
             'module_name' => 'required|string',
-            'is_paid'     => 'boolean',
-            'price'       => 'nullable|numeric',
-            'valid_till'  => 'nullable|date',
-            'config'      => 'nullable|array',
+            'is_paid' => 'boolean',
+            'price' => 'nullable|numeric',
+            'valid_till' => 'nullable|date',
+            'config' => 'nullable|array',
         ];
     }
 
     /**
      * List all modules for a tenant
      */
-    public function index1(Request $request, $tenantId)
+    public function index1(Request $request, int $tenantId)
     {
         $modules = TenantModule::where('tenant_id', $tenantId)->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Modules fetched successfully.',
-            'data'    => ['data'=>$modules]
+            'data' => ['data' => $modules],
         ]);
     }
 
     /**
      * Activate or add a module
      */
-    public function activateSingle(Request $request, $tenantId)
+    public function activateSingle(Request $request, int $tenantId)
     {
         $validated = $request->validate($this->validationRules());
 
         $module = TenantModule::updateOrCreate(
             [
-                'tenant_id'  => $tenantId,
+                'tenant_id' => $tenantId,
                 'module_key' => $validated['module_key'],
             ],
             array_merge($validated, [
-                'activated_at'   => now(),
-                'deactivated_at' => null
+                'activated_at' => now(),
+                'deactivated_at' => null,
             ])
         );
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Module activated successfully.',
-            'data'    => $module
+            'data' => $module,
         ]);
     }
 
-	public function activateMultiple(Request $request, $tenantId)
-	{
-    	$modules = $request->input('modules'); // Expecting an array
+    public function activateMultiple(Request $request, int $tenantId)
+    {
+        $modules = $request->input('modules'); // Expecting an array
 
-	    if (!is_array($modules) || empty($modules)) {
-    	    return response()->json([
-        	    'status'  => 'error',
-            	'message' => 'Modules array is required.',
-            	'data'    => null
-	        ]);
-    	}
+        if (! is_array($modules) || empty($modules)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Modules array is required.',
+                'data' => null,
+            ]);
+        }
 
-	    $activatedModules = [];
+        $activatedModules = [];
 
-	    foreach ($modules as $moduleData) {
-    	    $validator = Validator::make($moduleData, $this->validationRules());
+        foreach ($modules as $moduleData) {
+            $validator = Validator::make($moduleData, $this->validationRules());
 
-	        if ($validator->fails()) {
-    	        return response()->json([
-        	        'status'  => 'error',
-            	    'message' => 'Validation failed for one or more modules.',
-                	'errors'  => $validator->errors(),
-                	'data'    => null
-	            ]);
-    	    }
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Validation failed for one or more modules.',
+                    'errors' => $validator->errors(),
+                    'data' => null,
+                ]);
+            }
 
-        	$module = TenantModule::updateOrCreate(
-            	[
-                	'tenant_id'  => $tenantId,
-                	'module_key' => $moduleData['module_key'],
-	            ],
-    	        array_merge($moduleData, [
-        	        'activated_at'   => now(),
-            	    'deactivated_at' => null
-            	])
-        	);
+            $module = TenantModule::updateOrCreate(
+                [
+                    'tenant_id' => $tenantId,
+                    'module_key' => $moduleData['module_key'],
+                ],
+                array_merge($moduleData, [
+                    'activated_at' => now(),
+                    'deactivated_at' => null,
+                ])
+            );
 
-	        $activatedModules[] = $module;
-    	}
+            $activatedModules[] = $module;
+        }
 
-	    return response()->json([
-    	    'status'  => 'success',
-        	'message' => 'Modules activated successfully.',
-        	'data'    => $activatedModules
-    	]);
-	}
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Modules activated successfully.',
+            'data' => $activatedModules,
+        ]);
+    }
 
     /**
      * Deactivate a module
      */
-    public function deactivate($tenantId, $moduleId)
+    public function deactivate(int $tenantId, int $moduleId)
     {
         $module = TenantModule::where('tenant_id', $tenantId)
             ->where('id', $moduleId)
             ->first();
 
-        if (!$module) {
+        if (! $module) {
             return response()->json([
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => 'Module not found.',
-                'data'    => null
+                'data' => null,
             ]);
         }
 
         $module->update([
-            'deactivated_at' => now()
+            'deactivated_at' => now(),
         ]);
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Module deactivated successfully.',
-            'data'    => $module
+            'data' => $module,
         ]);
     }
 

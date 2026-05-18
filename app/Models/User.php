@@ -2,37 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Admin\Models\Tenants\TenantAccount;
+use Modules\Shared\Models\Permissions\PermissionPermission;
+use Modules\Shared\Models\Permissions\PermissionRole;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
-	use HasApiTokens, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
-	protected $connection = 'central';
+    protected $connection = 'central';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'two_factor_secret',
@@ -40,11 +33,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -54,59 +42,33 @@ class User extends Authenticatable
         ];
     }
 
-	public function tenantAccounts()
-	{
-    	return $this->hasMany(
-	        \Modules\Admin\Models\Tenants\TenantAccount::class,
-    	    'id',
-        	'id'
-    	);
-	}
+    public function tenants()
+    {
+        return $this->belongsToMany(
+            TenantAccount::class,
+            'tenant_users',
+            'user_id',
+            'tenant_id'
+        );
+    }
 
-	public function tenantUser()
-	{
-    	return $this->hasMany(
-	        \Modules\Admin\Models\Tenants\TenantUser::class,
-    	    'user_id',
-        	'id'
-    	);
-	}
+    public function roles()
+    {
+        return $this->belongsToMany(
+            PermissionRole::class,
+            'permission_user_roles',
+            'user_id',
+            'role_id'
+        );
+    }
 
-	public function roles()
-	{
-    	return $this->belongsToMany(
-	        \Modules\Shared\Models\Permissions\PermissionRole::class,
-    	    'permission_user_roles',
-        	'user_id',
-        	'role_id'
-	    );
-	}
-
-	public function directPermissions()
-	{
-    	return $this->belongsToMany(
-	        \Modules\Shared\Models\Permissions\PermissionPermission::class,
-    	    'permission_user_permissions',
-        	'user_id',
-        	'permission_id'
-	    );
-	}
-
-	public function getPermissionsAttribute()
-	{
-		//print_r( $this->roles()->pluck('slug'));die();
-    	$direct = $this->directPermissions ?? collect();
-
-	    $rolePermissions = $this->roles()
-    	    ->with('permissions')
-        	->get()
-	        ->pluck('permissions')
-    	    ->flatten();
-
-	    return $direct
-    	    ->merge($rolePermissions)
-        	->unique('id')
-        	->values();
-	}
-
+    public function directPermissions()
+    {
+        return $this->belongsToMany(
+            PermissionPermission::class,
+            'permission_user_permissions',
+            'user_id',
+            'permission_id'
+        );
+    }
 }

@@ -1,10 +1,10 @@
 <?php
 
-use Modules\Shared\Support\UrlPath;
+use Modules\Lead\Support\Actions;
+use Modules\Lead\Support\Res;
 use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
-use Modules\Lead\Support\Res;
-use Modules\Lead\Support\Actions;
+use Modules\Shared\Support\UrlPath;
 
 $pg = 'lead';
 
@@ -12,39 +12,39 @@ return [
 
     'sidebar-menu' => [
         [
-            'title'      => ucfirst($pg),
-            'href'       => "/{$pg}",
+            'title' => ucfirst($pg),
+            'href' => "/{$pg}",
             'permission' => Permission::access($pg),
 
             'items' => [
 
                 [
-                    'title'      => 'Home',
-                    'href'       => UrlPath::makeHome($pg),
+                    'title' => 'Home',
+                    'href' => UrlPath::makeHome($pg),
                     'permission' => Permission::view(Res::HOME),
                 ],
 
                 [
-                    'title'      => 'Add New',
-                    'href'       => UrlPath::makeCreate($pg),
+                    'title' => 'Add New',
+                    'href' => UrlPath::makeCreate($pg),
                     'permission' => Permission::create(Res::LEADS),
                 ],
 
                 [
-                    'title'      => 'View List',
-                    'href'       => UrlPath::makeList($pg),
+                    'title' => 'View List',
+                    'href' => UrlPath::makeList($pg),
                     'permission' => Permission::list(Res::LEADS),
                 ],
 
                 [
-                    'title'      => 'Report',
-                    'href'       => UrlPath::makeReport($pg),
+                    'title' => 'Report',
+                    'href' => UrlPath::makeReport($pg),
                     'permission' => Permission::report(Res::REPORTS),
                 ],
 
                 [
-                    'title'      => 'Settings',
-                    'href'       => UrlPath::makeSettings($pg),
+                    'title' => 'Settings',
+                    'href' => UrlPath::makeSettings($pg),
                     'permission' => Permission::update(Res::SETTINGS),
                 ],
 
@@ -52,8 +52,8 @@ return [
                     'title' => 'Plugins',
                     'items' => [
                         [
-                            'title'      => 'View Calendar',
-                            'href'       => UrlPath::make($pg, 'plugin/calendar'),
+                            'title' => 'View Calendar',
+                            'href' => UrlPath::make($pg, 'plugin/calendar'),
                             'permission' => Permission::view(Res::PLUGINS),
                         ],
                     ],
@@ -62,105 +62,108 @@ return [
         ],
     ],
 
-	/*
+    /*
     |--------------------------------------------------------------------------
     | Row Actions
     |--------------------------------------------------------------------------
     */
     'single-actions' => [
 
-		KeyName::make(Res::LEADS) => [
-		    Actions::LIST	=>	[
-				[
-	    		    'title'      => 'Add Followup',
-    	    		'href'       => UrlPath::make($pg, 'new-followup'),
-	    	    	'permission' => Permission::create(Res::FOLLOWUPS),
-	    	    	'action'     => 'sheet',
-					'params'	 => [
-						'lead_id'	 => ':id'
-					]
-		    	],
+        KeyName::make(Res::LEADS) => [
+            Actions::LIST => [
+                [
+                    'title' => 'Add Followup',
+                    'href' => UrlPath::make($pg, 'new-followup'),
+                    'permission' => Permission::create(Res::FOLLOWUPS),
+                    'action' => 'sheet',
+                    'params' => [
+                        'lead_id' => ':id',
+                    ],
+                ],
 
-				[
-    	            'title'      => 'View Details',
-        	        'href'       => UrlPath::makeDetail($pg, '{id}'),
-            	    'permission' => Permission::view(Res::DETAILS),
-                	'action'     => 'detail',
-	            ],
+                [
+                    'title' => 'View Details',
+                    'href' => UrlPath::makeDetail($pg, '{id}'),
+                    'permission' => Permission::view(Res::DETAILS),
+                    'action' => 'detail',
+                    'icon' => 'view',
+                ],
 
-			    [
-    			    'title'      => 'Edit',
-        			'href'       => UrlPath::makeUpdate($pg, '{id}'),
-	        		'permission' => Permission::update(Res::LEADS),
-    	    		'action'     => 'update',
-			    ],
+                [
+                    'title' => 'Edit',
+                    'href' => UrlPath::makeUpdate($pg, '{id}'),
+                    'permission' => Permission::update(Res::LEADS),
+                    'action' => 'update',
+                    'icon' => 'update',
+                ],
 
-			    [
-    			    'title'      => 'Delete',
-        			'href'       => UrlPath::makeDelete(Res::LEADS, '{id}'),
-	        		'permission' => Permission::delete(Res::LEADS),
-    	    		'action'     => 'delete',
-		        	'method'     => 'DELETE',
-    		    	'variant'    => 'danger',
-    			],
-			]
-		]
+                [
+                    'title' => 'Delete',
+                    'href' => UrlPath::makeDelete(Res::LEADS, '{id}'),
+                    'permission' => Permission::delete(Res::LEADS),
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'variant' => 'danger',
+                    'icon' => 'delete',
+                ],
+            ],
+        ],
 
-	],
+    ],
 
-	/*
-	|--------------------------------------------------------------------------
-	| List Filters (FULL CONFIG – used by frontend)
-	|--------------------------------------------------------------------------
-	*/
-	'filters' => [
+    /*
+    |--------------------------------------------------------------------------
+    | List Filters (FULL CONFIG – used by frontend)
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
 
-		KeyName::make(Res::LEADS) => [
-	    	Actions::LIST	=>	[
-				[
-	    		    'type'        => 'select',
-    	    		'name'        => 'business_type',
-	        		'placeholder' => 'Business Type',
-		        	'col'         => 2,
-	    		    'dataKey'     => 'shared.business-types',
-			    ],
-				[
-	    		    'type'        => 'select',
-    	    		'name'        => 'assigned_to_id',
-	    	    	'placeholder' => 'Assigned To',
-    	    		'col'         => 2,
-        			'dataKey'     => 'employees.list',
-		    	],
-				[
-		    	    'type'        => 'select',
-    		    	'name'        => 'stage_id',
-	        		'placeholder' => 'Stage',
-		        	'col'         => 2,
-    		    	'dataKey'     => 'lead.stages',
-		    	],
-	    		[
-		    	    'type'        => 'select',
-    		    	'name'        => 'category_id',
-	        		'placeholder' => 'Category',
-		        	'col'         => 2,
-    		    	'dataKey'     => 'lead.categories',
-			    ],
-				[
-		    	    'type'        => 'select',
-    		    	'name'        => 'is_existing_client',
-	    	    	'placeholder' => 'Existing Client',
-		    	    'col'         => 2,
-    		    	'dataKey'     => 'shared.boolean-options',
-			    ],
-    			[
-	    		    'type'        => 'select',
-    	    		'name'        => 'source_id',
-	        		'placeholder' => 'Source',
-			        'col'         => 2,
-    			    'dataKey'     => 'lead.sources',
-    			]
-			]
-		]
-	],
+        KeyName::make(Res::LEADS) => [
+            Actions::LIST => [
+                [
+                    'type' => 'select',
+                    'name' => 'business_type',
+                    'placeholder' => 'Business Type',
+                    'col' => 2,
+                    'dataKey' => 'shared.business-types',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'assigned_to_id',
+                    'placeholder' => 'Assigned To',
+                    'col' => 2,
+                    'dataKey' => 'employees.list',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'stage_id',
+                    'placeholder' => 'Stage',
+                    'col' => 2,
+                    'dataKey' => 'lead.stages',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'category_id',
+                    'placeholder' => 'Category',
+                    'col' => 2,
+                    'dataKey' => 'lead.categories',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'is_existing_client',
+                    'placeholder' => 'Existing Client',
+                    'col' => 2,
+                    'dataKey' => 'shared.boolean-options',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'source_id',
+                    'placeholder' => 'Source',
+                    'col' => 2,
+                    'dataKey' => 'lead.sources',
+                ],
+            ],
+        ],
+    ],
 
 ];

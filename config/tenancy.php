@@ -2,12 +2,22 @@
 
 declare(strict_types=1);
 
+use App\Models\Tenant;
+use Modules\Admin\DatabaseManagers\PleskMySQLDatabaseManager;
+use Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper;
+use Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper;
+use Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper;
+use Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper;
 use Stancl\Tenancy\Database\Models\Domain;
+use Stancl\Tenancy\TenantDatabaseManagers\PostgreSQLDatabaseManager;
+use Stancl\Tenancy\TenantDatabaseManagers\SQLiteDatabaseManager;
+use Stancl\Tenancy\UUIDGenerator;
+
 // use Stancl\Tenancy\Database\Models\Tenant;
 
 return [
-    'tenant_model' => \App\Models\Tenant::class,
-    'id_generator' => Stancl\Tenancy\UUIDGenerator::class,
+    'tenant_model' => Tenant::class,
+    'id_generator' => UUIDGenerator::class,
 
     'domain_model' => Domain::class,
 
@@ -19,9 +29,9 @@ return [
     'central_domains' => [
         '127.0.0.1',
         'localhost',
-		'bizby.test',
-		'bizby.udyogx.in',
-		'bizby.app'
+        'bizby.test',
+        'bizby.udyogx.in',
+        'bizby.app',
     ],
 
     /**
@@ -31,10 +41,10 @@ return [
      * To configure their behavior, see the config keys below.
      */
     'bootstrappers' => [
-        Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper::class,
-        Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper::class,
-        Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper::class,
-        Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper::class,
+        DatabaseTenancyBootstrapper::class,
+        CacheTenancyBootstrapper::class,
+        FilesystemTenancyBootstrapper::class,
+        QueueTenancyBootstrapper::class,
         // Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper::class, // Note: phpredis is needed
     ],
 
@@ -48,8 +58,8 @@ return [
          * Connection used as a "template" for the dynamically created tenant database connection.
          * Note: don't name your template connection tenant. That name is reserved by package.
          */
-        //'template_tenant_connection' => 'tenant',
-		'template_tenant_connection' => 'tenant_template',
+        // 'template_tenant_connection' => 'tenant',
+        'template_tenant_connection' => 'tenant_template',
 
         /**
          * Tenant database names are created like this:
@@ -62,10 +72,10 @@ return [
          * TenantDatabaseManagers are classes that handle the creation & deletion of tenant databases.
          */
         'managers' => [
-            'sqlite' => Stancl\Tenancy\TenantDatabaseManagers\SQLiteDatabaseManager::class,
-			'mysql' => Modules\Admin\DatabaseManagers\PleskMySQLDatabaseManager::class,
-            //'mysql' => Stancl\Tenancy\TenantDatabaseManagers\MySQLDatabaseManager::class,
-            'pgsql' => Stancl\Tenancy\TenantDatabaseManagers\PostgreSQLDatabaseManager::class,
+            'sqlite' => SQLiteDatabaseManager::class,
+            'mysql' => PleskMySQLDatabaseManager::class,
+            // 'mysql' => Stancl\Tenancy\TenantDatabaseManagers\MySQLDatabaseManager::class,
+            'pgsql' => PostgreSQLDatabaseManager::class,
 
         /**
          * Use this database manager for MySQL to have a DB user created for each tenant database.
@@ -191,49 +201,50 @@ return [
     'migration_parameters' => [
         '--force' => true, // This needs to be true to run migrations in production.
         '--path' => [
-			database_path('migrations/tenant'),
-			base_path('Modules/Announcement/database/migrations/tenant'),
-			base_path('Modules/Attendance/database/migrations/tenant'),
-			base_path('Modules/Booking/database/migrations/tenant'),
-			base_path('Modules/Cashflow/database/migrations/tenant'),
-			base_path('Modules/Checklist/database/migrations/tenant'),
-			base_path('Modules/Communication/database/migrations/tenant'),
-			base_path('Modules/Consultation/database/migrations/tenant'),
-			base_path('Modules/Contact/database/migrations/tenant'),
-			base_path('Modules/Customer/database/migrations/tenant'),
-			base_path('Modules/Employee/database/migrations/tenant'),
-			base_path('Modules/Eventmanager/database/migrations/tenant'),
-			base_path('Modules/Examresult/database/migrations/tenant'),
-			base_path('Modules/Lead/database/migrations/tenant'),
-			base_path('Modules/Leaveapplication/database/migrations/tenant'),
-			base_path('Modules/Library/database/migrations/tenant'),
-			base_path('Modules/Listing/database/migrations/tenant'),
-			base_path('Modules/Meetingmanager/database/migrations/tenant'),
-			base_path('Modules/Note/database/migrations/tenant'),
-			base_path('Modules/Patient/database/migrations/tenant'),
-			base_path('Modules/Product/database/migrations/tenant'),
-			base_path('Modules/Registration/database/migrations/tenant'),
-			base_path('Modules/Saleservice/database/migrations/tenant'),
-			base_path('Modules/Service/database/migrations/tenant'),
-			base_path('Modules/Signup/database/migrations/tenant'),
-			base_path('Modules/Student/database/migrations/tenant'),
-			base_path('Modules/Subscription/database/migrations/tenant'),
-			base_path('Modules/Survey/database/migrations/tenant'),
-			base_path('Modules/Test/database/migrations/tenant'),
-			base_path('Modules/Timetable/database/migrations/tenant'),
-			base_path('Modules/Transport/database/migrations/tenant'),
-			base_path('Modules/Treatment/database/migrations/tenant'),
-			base_path('Modules/Vendor/database/migrations/tenant'),
-			base_path('Modules/Visitactivity/database/migrations/tenant'),
-			base_path('Modules/Visitplanner/database/migrations/tenant'),
-			base_path('Modules/Incident/database/migrations/tenant'),
-			base_path('Modules/Maintenance/database/migrations/tenant'),
-			base_path('Modules/Center/database/migrations/tenant'),
-			base_path('Modules/ConsumptionManagement/database/migrations/tenant'),
-			base_path('Modules/Inventory/database/migrations/tenant'),
-			base_path('Modules/Asset/database/migrations/tenant'),
-			base_path('Modules/Shared/database/migrations'), // CORE MIGRATION ONLY
-		],
+            database_path('migrations/tenant'),
+            base_path('Modules/Announcement/database/migrations/tenant'),
+            base_path('Modules/Attendance/database/migrations/tenant'),
+            base_path('Modules/Booking/database/migrations/tenant'),
+            base_path('Modules/Cashflow/database/migrations/tenant'),
+            base_path('Modules/Checklist/database/migrations/tenant'),
+            base_path('Modules/Communication/database/migrations/tenant'),
+            base_path('Modules/Consultation/database/migrations/tenant'),
+            base_path('Modules/Contact/database/migrations/tenant'),
+            base_path('Modules/Customer/database/migrations/tenant'),
+            base_path('Modules/Employee/database/migrations/tenant'),
+            base_path('Modules/Eventmanager/database/migrations/tenant'),
+            base_path('Modules/Examresult/database/migrations/tenant'),
+            base_path('Modules/Lead/database/migrations/tenant'),
+            base_path('Modules/Leaveapplication/database/migrations/tenant'),
+            base_path('Modules/Library/database/migrations/tenant'),
+            base_path('Modules/Listing/database/migrations/tenant'),
+            base_path('Modules/Meetingmanager/database/migrations/tenant'),
+            base_path('Modules/Note/database/migrations/tenant'),
+            base_path('Modules/Patient/database/migrations/tenant'),
+            base_path('Modules/Product/database/migrations/tenant'),
+            base_path('Modules/Registration/database/migrations/tenant'),
+            base_path('Modules/Saleservice/database/migrations/tenant'),
+            base_path('Modules/Service/database/migrations/tenant'),
+            base_path('Modules/Signup/database/migrations/tenant'),
+            base_path('Modules/Student/database/migrations/tenant'),
+            base_path('Modules/Subscription/database/migrations/tenant'),
+            base_path('Modules/Survey/database/migrations/tenant'),
+            base_path('Modules/Test/database/migrations/tenant'),
+            base_path('Modules/Timetable/database/migrations/tenant'),
+            base_path('Modules/Transport/database/migrations/tenant'),
+            base_path('Modules/Treatment/database/migrations/tenant'),
+            base_path('Modules/Vendor/database/migrations/tenant'),
+            base_path('Modules/Visitactivity/database/migrations/tenant'),
+            base_path('Modules/Visitplanner/database/migrations/tenant'),
+            base_path('Modules/Incident/database/migrations/tenant'),
+            base_path('Modules/Maintenance/database/migrations/tenant'),
+            base_path('Modules/Center/database/migrations/tenant'),
+            base_path('Modules/ConsumptionManagement/database/migrations/tenant'),
+            base_path('Modules/Inventory/database/migrations/tenant'),
+            base_path('Modules/Asset/database/migrations/tenant'),
+            base_path('Modules/Shared/database/migrations/tenant'),
+            // base_path('Modules/Shared/database/migrations'), // CORE MIGRATION ONLY
+        ],
         '--realpath' => true,
     ],
 

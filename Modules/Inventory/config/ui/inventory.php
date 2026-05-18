@@ -1,67 +1,67 @@
 <?php
 
-use Modules\Shared\Support\UrlPath;
+use Modules\Inventory\Support\Actions;
+use Modules\Inventory\Support\Res;
 use Modules\Shared\Support\KeyName;
 use Modules\Shared\Support\Permission;
-use Modules\Inventory\Support\Res;
-use Modules\Inventory\Support\Actions;
+use Modules\Shared\Support\UrlPath;
 
 $pg = 'inventory';
 
 return [
 
     'sidebar-menu' => [
-    [
-        'title'      => ucfirst($pg),
-        'href'       => "/{$pg}",
-        'permission' => Permission::access($pg),
+        [
+            'title' => ucfirst($pg),
+            'href' => "/{$pg}",
+            'permission' => Permission::access($pg),
 
-        'items' => [
+            'items' => [
 
-            [
-                'title'       => 'Home',
-                'description' => 'Inventory Dashboard & Overview',
-                'href'        => UrlPath::makeHome($pg),
-                'permission'  => Permission::view(Res::HOME),
-            ],
+                [
+                    'title' => 'Home',
+                    'description' => 'Inventory Dashboard & Overview',
+                    'href' => UrlPath::makeHome($pg),
+                    'permission' => Permission::view(Res::HOME),
+                ],
 
-            [
-                'title'       => 'Add Item',
-                'description' => 'Create a New Inventory Item',
-                'href'        => UrlPath::makeCreate($pg),
-                'permission'  => Permission::create(Res::INVENTORIES),
-            ],
+                [
+                    'title' => 'Add Item',
+                    'description' => 'Create a New Inventory Item',
+                    'href' => UrlPath::makeCreate($pg),
+                    'permission' => Permission::create(Res::INVENTORIES),
+                ],
 
-            [
-                'title'       => 'Add Transaction',
-                'description' => 'Record Stock In/Out Transaction',
-                'href'        => UrlPath::make($pg, 'create-transactions'),
-                'permission'  => Permission::create(Res::INVENTORIES),
-            ],
+                [
+                    'title' => 'Add Transaction',
+                    'description' => 'Record Stock In/Out Transaction',
+                    'href' => UrlPath::make($pg, 'create-transactions'),
+                    'permission' => Permission::create(Res::INVENTORIES),
+                ],
 
-            [
-                'title'       => 'View List',
-                'description' => 'Browse All Inventory Items',
-                'href'        => UrlPath::makeList($pg),
-                'permission'  => Permission::list(Res::INVENTORIES),
-            ],
+                [
+                    'title' => 'View List',
+                    'description' => 'Browse All Inventory Items',
+                    'href' => UrlPath::makeList($pg),
+                    'permission' => Permission::list(Res::INVENTORIES),
+                ],
 
-            [
-                'title'       => 'Report',
-                'description' => 'View Inventory Reports',
-                'href'        => UrlPath::makeReport($pg),
-                'permission'  => Permission::view(Res::REPORTS),
-            ],
+                [
+                    'title' => 'Report',
+                    'description' => 'View Inventory Reports',
+                    'href' => UrlPath::makeReport($pg),
+                    'permission' => Permission::view(Res::REPORTS),
+                ],
 
-            [
-                'title'       => 'Settings',
-                'description' => 'Manage Inventory Settings',
-                'href'        => UrlPath::makeSettings($pg),
-                'permission'  => Permission::update(Res::SETTINGS),
+                [
+                    'title' => 'Settings',
+                    'description' => 'Manage Inventory Settings',
+                    'href' => UrlPath::makeSettings($pg),
+                    'permission' => Permission::update(Res::SETTINGS),
+                ],
             ],
         ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -70,40 +70,43 @@ return [
     */
     'single-actions' => [
 
-		KeyName::make(Res::INVENTORIES) => [
-        Actions::LIST => [
+        KeyName::make(Res::INVENTORIES) => [
+            Actions::LIST => [
 
-            [
-                'title'      => 'View Details',
-                'href'       => UrlPath::makeDetail($pg, '{id}'),
-                'permission' => Permission::view(Res::DOCUMENTS),
-                'action'     => 'detail',
-            ],
+                [
+                    'title' => 'View Details',
+                    'href' => UrlPath::makeDetail($pg, '{id}'),
+                    'permission' => Permission::view(Res::DOCUMENTS),
+                    'action' => 'detail',
+                    'icon' => 'view',
+                ],
 
-            [
-                'title'      => 'Add Stock',
-                'href'       => UrlPath::make($pg, 'create-transactions/?inventory_item_id={id}'),
-                'permission' => Permission::create(Res::INVENTORIES),
-                'variant'    => 'success'
-            ],
+                [
+                    'title' => 'Add Stock',
+                    'href' => UrlPath::make($pg, 'create-transactions/?inventory_item_id={id}'),
+                    'permission' => Permission::create(Res::INVENTORIES),
+                    'variant' => 'success',
+                ],
 
-            [
-                'title'      => 'Update',
-                'href'       => UrlPath::makeUpdate($pg, '{id}'),
-                'permission' => Permission::update(Res::INVENTORIES),
-                'action'     => 'update',
-            ],
+                [
+                    'title' => 'Update',
+                    'href' => UrlPath::makeUpdate($pg, '{id}'),
+                    'permission' => Permission::update(Res::INVENTORIES),
+                    'action' => 'update',
+                    'icon' => 'update',
+                ],
 
-            [
-                'title'      => 'Delete',
-                'href'       => UrlPath::makeDelete(Res::INVENTORIES, '{id}'),
-                'permission' => Permission::delete(Res::INVENTORIES),
-                'action'     => 'delete',
-                'method'     => 'DELETE',
-                'variant'    => 'danger',
+                [
+                    'title' => 'Delete',
+                    'href' => UrlPath::makeDelete(Res::INVENTORIES, '{id}'),
+                    'permission' => Permission::delete(Res::INVENTORIES),
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'variant' => 'danger',
+                    'icon' => 'delete',
+                ],
             ],
-        ]
-		]
+        ],
 
     ],
 
@@ -114,24 +117,24 @@ return [
     */
     'filters' => [
 
-		KeyName::make(Res::INVENTORIES) => [
-	        Actions::LIST => [
-    	        [
-        	        'type'        => 'select',
-            	    'name'        => 'product_id',
-	                'placeholder' => 'Product',
-    	            'col'         => 3,
-        	        'dataKey'     => 'products.list',
-            	],
-				[
-    	            'type'        => 'select',
-        	        'name'        => 'status',
-            	    'placeholder' => 'Status',
-                	'col'         => 3,
-                	'dataKey'     => 'inventory.statuses',
-            	],
-        	]
-		]
+        KeyName::make(Res::INVENTORIES) => [
+            Actions::LIST => [
+                [
+                    'type' => 'select',
+                    'name' => 'product_id',
+                    'placeholder' => 'Product',
+                    'col' => 3,
+                    'dataKey' => 'products.list',
+                ],
+                [
+                    'type' => 'select',
+                    'name' => 'status',
+                    'placeholder' => 'Status',
+                    'col' => 3,
+                    'dataKey' => 'inventory.statuses',
+                ],
+            ],
+        ],
 
     ],
 

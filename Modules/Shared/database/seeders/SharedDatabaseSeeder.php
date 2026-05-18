@@ -3,36 +3,34 @@
 namespace Modules\Shared\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
 // use Modules\Shared\Database\Seeders\Developer\ActivityLogsSeeder;
 
 use Modules\Shared\Database\Seeders\Options\OptionsSeeder;
-
 // Permissions
-use Modules\Shared\Database\Seeders\Permissions\PermissionPermissionsSeeder;
-use Modules\Shared\Database\Seeders\Permissions\PermissionRoleSeeder;
-use Modules\Shared\Database\Seeders\Permissions\PermissionRolePermissionsSeeder;
-use Modules\Shared\Database\Seeders\Permissions\PermissionUserRoleSeeder;
-use Modules\Shared\Database\Seeders\Permissions\PermissionUserPermissionSeeder;
+// use Modules\Shared\Database\Seeders\Permissions\PermissionPermissionsSeeder;
+// use Modules\Shared\Database\Seeders\Permissions\PermissionRolePermissionsSeeder;
+// use Modules\Shared\Database\Seeders\Permissions\PermissionRoleSeeder;
+// use Modules\Shared\Database\Seeders\Permissions\PermissionUserPermissionSeeder;
+// use Modules\Shared\Database\Seeders\Permissions\PermissionUserRoleSeeder;
 
 // Terms
-use Modules\Shared\Database\Seeders\Terms\TermSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermUniversitySeeder;
-use Modules\Shared\Database\Seeders\Terms\TermSchoolBoardSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermReligionSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermCategorySeeder;
-use Modules\Shared\Database\Seeders\Terms\TermCasteSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermDesignationSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermBankSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermAcademicQualificationSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermBankSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermCasteSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermCategorySeeder;
+use Modules\Shared\Database\Seeders\Terms\TermDepartmentSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermDesignationSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermEmployeeTypeSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermHealthCardSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermInstituteTypeSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermLanguageSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermLeadFollowupStageSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermLeadSourceSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermLeadStageSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermLeadFollowupStageSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermDepartmentSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermLanguageSeeder;
-use Modules\Shared\Database\Seeders\Terms\TermInstituteTypeSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermReligionSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermSchoolBoardSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermUniversitySeeder;
 
 // use Modules\Shared\Database\Seeders\Terms\TermPrioritySeeder;
 // use Modules\Shared\Database\Seeders\Terms\TermUnitSeeder;
@@ -55,10 +53,10 @@ class SharedDatabaseSeeder extends Seeder
     {
         $this->call([
 
-			// Just for testing purposes
-			// ActivityLogsSeeder::class,
+            // Just for testing purposes
+            // ActivityLogsSeeder::class,
 
-			// System
+            // System
             OptionsSeeder::class,
 
             // Core
@@ -66,19 +64,19 @@ class SharedDatabaseSeeder extends Seeder
 
             // Permissions
             // Create roles (Owner, Admin, Staff)
-		    PermissionRoleSeeder::class,
+            // PermissionRoleSeeder::class,
 
-		    // Create all permissions (users.*, orders.*, etc.)
-		    PermissionPermissionsSeeder::class,
+            // Create all permissions (users.*, orders.*, etc.)
+            // PermissionPermissionsSeeder::class,
 
-		    // Assign permissions to roles
-		    PermissionRolePermissionsSeeder::class,
+            // Assign permissions to roles
+            // PermissionRolePermissionsSeeder::class,
 
-		    // Assign roles to users
-		    PermissionUserRoleSeeder::class,
+            // Assign roles to users
+            // PermissionUserRoleSeeder::class,
 
-		    // Assign direct user permissions (overrides)
-		    PermissionUserPermissionSeeder::class,
+            // Assign direct user permissions (overrides)
+            // PermissionUserPermissionSeeder::class,
 
             // Academic / Institute
             TermUniversitySeeder::class,
@@ -111,8 +109,8 @@ class SharedDatabaseSeeder extends Seeder
             // CRM / Leads
             TermCategorySeeder::class,
             TermLeadSourceSeeder::class,
-			TermLeadStageSeeder::class,
-			TermLeadFollowupStageSeeder::class,
+            TermLeadStageSeeder::class,
+            TermLeadFollowupStageSeeder::class,
             // TermRelationTypeSeeder::class,
             // TermPrioritySeeder::class,
 

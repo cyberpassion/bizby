@@ -2,19 +2,19 @@
 
 namespace Modules\Admin\Jobs\Tenants;
 
-use Throwable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
+use Modules\Admin\Enums\Tenants\InstallationStatus;
+use Modules\Admin\Events\TenantActivated;
 use Modules\Admin\Models\Tenants\TenantAccount;
 use Modules\Admin\Models\Tenants\TenantInstallation;
-use Modules\Admin\Services\Tenants\TenantProvisioningService;
 use Modules\Admin\Services\Tenants\TenantDatabaseService;
-
+use Modules\Admin\Services\Tenants\TenantProvisioningService;
 use Stancl\Tenancy\Facades\Tenancy;
+use Throwable;
 
 class ProvisionTenantJob implements ShouldQueue
 {
@@ -33,11 +33,11 @@ class ProvisionTenantJob implements ShouldQueue
         // 🔒 Always force central context in queue jobs
         Tenancy::end();
 
-		logger()->info('Pre Provisioning', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+        logger()->info('Pre Provisioning', ['file' => __FILE__, 'line' => __LINE__, 'method' => __METHOD__]);
 
         // Load installation & tenant
         $install = TenantInstallation::findOrFail($this->installationId);
-        $tenant  = TenantAccount::findOrFail($install->tenant_id);
+        $tenant = TenantAccount::findOrFail($install->tenant_id);
 
         // OLD idempotency
         // if ($tenant->tenancy_id) {
@@ -45,19 +45,19 @@ class ProvisionTenantJob implements ShouldQueue
         // }
 
         // NEW idempotency (installation-aware)
-        if ($install->status === \Modules\Admin\Enums\Tenants\InstallationStatus::COMPLETED) {
+        if ($install->status === InstallationStatus::COMPLETED) {
             return;
         }
 
         // Delegate ALL logic to service
         $provisioningService->provision($tenant, $install, $dbService);
 
-		logger()->info('Fire Success Event', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+        logger()->info('Fire Success Event', ['file' => __FILE__, 'line' => __LINE__, 'method' => __METHOD__]);
 
         // Fire event AFTER successful provisioning
-        event(new \Modules\Admin\Events\TenantActivated($tenant->id));
+        event(new TenantActivated($tenant->id));
 
-		logger()->info('After Event Completion', ['file' => __FILE__,'line' => __LINE__,'method' => __METHOD__,]);
+        logger()->info('After Event Completion', ['file' => __FILE__, 'line' => __LINE__, 'method' => __METHOD__]);
     }
 
     public function failed(Throwable $e): void
@@ -70,7 +70,7 @@ class ProvisionTenantJob implements ShouldQueue
         $install = TenantInstallation::find($this->installationId);
         if ($install) {
             $install->update([
-                'status' => \Modules\Admin\Enums\Tenants\InstallationStatus::FAILED,
+                'status' => InstallationStatus::FAILED,
                 'last_error' => $e->getMessage(),
             ]);
         }

@@ -2,12 +2,15 @@
 
 namespace Modules\Admin\Models\Modules;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\Tenants\TenantModule;
 
 class Module extends Model
 {
     use HasFactory;
+
+    protected $connection = 'central';
 
     /**
      * Mass assignable attributes.
@@ -26,10 +29,10 @@ class Module extends Model
      * Attribute casting.
      */
     protected $casts = [
-        'price'       => 'decimal:2',
+        'price' => 'decimal:2',
         'is_billable' => 'boolean',
-        'is_core'     => 'boolean',
-        'is_active'   => 'boolean',
+        'is_core' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -48,12 +51,11 @@ class Module extends Model
         return $query->where('is_billable', true);
     }
 
-	public function tenantModules()
+    public function tenantModules()
     {
         return $this->hasMany(
-            \Modules\Admin\Models\Tenants\TenantModule::class,
+            TenantModule::class,
             'module_id'
         );
     }
-
 }

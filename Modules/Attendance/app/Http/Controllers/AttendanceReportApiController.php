@@ -2,13 +2,13 @@
 
 namespace Modules\Attendance\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Response;
-
+use Illuminate\Routing\Controller;
 use Modules\Attendance\Models\Attendance;
-use Modules\Attendance\Models\AttendanceSession;
 use Modules\Attendance\Models\AttendanceBatch;
+use Modules\Attendance\Models\AttendanceSession;
 
 class AttendanceReportApiController extends Controller
 {
@@ -29,29 +29,26 @@ class AttendanceReportApiController extends Controller
          * --------------------------------------*/
 
         if ($request->filled('date')) {
-            $query->whereHas('session', fn ($q) =>
-                $q->whereDate('session_date', $request->date)
+            $query->whereHas('session', fn ($q) => $q->whereDate('session_date', $request->date)
             );
         }
 
         if ($request->filled('month')) {
-            $query->whereHas('session', fn ($q) =>
-                $q->whereBetween('session_date', [
-                    $request->month . '-01',
-                    now()
-                        ->parse($request->month)
-                        ->endOfMonth()
-                        ->toDateString()
-                ])
+            $query->whereHas('session', fn ($q) => $q->whereBetween('session_date', [
+                $request->month.'-01',
+                now()
+                    ->parse($request->month)
+                    ->endOfMonth()
+                    ->toDateString(),
+            ])
             );
         }
 
         if ($request->filled('from_date')) {
-            $query->whereHas('session', fn ($q) =>
-                $q->whereBetween('session_date', [
-                    $request->from_date,
-                    $request->to_date ?? $request->from_date
-                ])
+            $query->whereHas('session', fn ($q) => $q->whereBetween('session_date', [
+                $request->from_date,
+                $request->to_date ?? $request->from_date,
+            ])
             );
         }
 
@@ -89,20 +86,18 @@ class AttendanceReportApiController extends Controller
          * --------------------------------------*/
 
         if ($request->filled('session_type')) {
-            $query->whereHas('session', fn ($q) =>
-                $q->where(
-                    'type',
-                    $request->session_type
-                )
+            $query->whereHas('session', fn ($q) => $q->where(
+                'type',
+                $request->session_type
+            )
             );
         }
 
         if ($request->filled('context')) {
-            $query->whereHas('session', fn ($q) =>
-                $q->where(
-                    'context',
-                    $request->context
-                )
+            $query->whereHas('session', fn ($q) => $q->where(
+                'context',
+                $request->context
+            )
             );
         }
 
@@ -111,9 +106,9 @@ class AttendanceReportApiController extends Controller
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Fetched successfully.',
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'data' => ['data' => $this->transformReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -129,23 +124,22 @@ class AttendanceReportApiController extends Controller
             ?? now()->toDateString();
 
         $data = Attendance::where(
-                'tenant_id',
-                tenant()->id
-            )
+            'tenant_id',
+            tenant()->id
+        )
             ->with(['session', 'entity'])
-            ->whereHas('session', fn ($q) =>
-                $q->whereDate(
-                    'session_date',
-                    $date
-                )
+            ->whereHas('session', fn ($q) => $q->whereDate(
+                'session_date',
+                $date
+            )
             )
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Daily report fetched successfully.',
-            'date'    => $date,
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'date' => $date,
+            'data' => ['data' => $this->transformDailyReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -158,22 +152,21 @@ class AttendanceReportApiController extends Controller
     public function today()
     {
         $data = Attendance::where(
-                'tenant_id',
-                tenant()->id
-            )
+            'tenant_id',
+            tenant()->id
+        )
             ->with(['session', 'entity'])
-            ->whereHas('session', fn ($q) =>
-                $q->whereDate(
-                    'session_date',
-                    now()->toDateString()
-                )
+            ->whereHas('session', fn ($q) => $q->whereDate(
+                'session_date',
+                now()->toDateString()
+            )
             )
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Today attendance fetched successfully.',
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'data' => ['data' => $this->transformTodayReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -184,59 +177,58 @@ class AttendanceReportApiController extends Controller
     */
 
     public function monthly(Request $request)
-	{
-    	$request->validate([
-        	'year'  => 'nullable|integer|min:2000|max:2100',
-	        'month' => 'nullable|string|size:2|in:01,02,03,04,05,06,07,08,09,10,11,12',
-    	]);
+    {
+        $request->validate([
+            'year' => 'nullable|integer|min:2000|max:2100',
+            'month' => 'nullable|string|size:2|in:01,02,03,04,05,06,07,08,09,10,11,12',
+        ]);
 
-	    $year = (int) (
-		    $request->year
-    		?? now()->year
-		);
+        $year = (int) (
+            $request->year
+            ?? now()->year
+        );
 
-		$month = (int) (
-		    $request->month
-		    ?? now()->format('m')
-		);
+        $month = (int) (
+            $request->month
+            ?? now()->format('m')
+        );
 
-	    $startDate = now()
-    	    ->setYear($year)
-        	->setMonth($month)
-	        ->startOfMonth()
-    	    ->toDateString();
+        $startDate = now()
+            ->setYear($year)
+            ->setMonth($month)
+            ->startOfMonth()
+            ->toDateString();
 
-	    $endDate = now()
-    	    ->setYear($year)
-        	->setMonth($month)
-	        ->endOfMonth()
-    	    ->toDateString();
+        $endDate = now()
+            ->setYear($year)
+            ->setMonth($month)
+            ->endOfMonth()
+            ->toDateString();
 
-	    $data = Attendance::where(
-    	        'tenant_id',
-        	    tenant()->id
-	        )
-    	    ->with(['session', 'entity'])
-        	->whereHas('session', fn ($q) =>
-            	$q->whereBetween(
-                	'session_date',
-                	[$startDate, $endDate]
-            	)
-        	)
-	        ->get();
+        $data = Attendance::where(
+            'tenant_id',
+            tenant()->id
+        )
+            ->with(['session', 'entity'])
+            ->whereHas('session', fn ($q) => $q->whereBetween(
+                'session_date',
+                [$startDate, $endDate]
+            )
+            )
+            ->get();
 
-	    return response()->json([
-    	    'status'  => 'success',
-	        'message' => 'Monthly report fetched successfully.',
-	        'year'    => $year,
-	        'month'   => $month,
-	        'from'    => $startDate,
-	        'to'      => $endDate,
-	        'data'    => [
-    	        'data' => $this->transformAttendance($data)
-        	]
-	    ], Response::HTTP_OK);
-	}
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Monthly report fetched successfully.',
+            'year' => $year,
+            'month' => $month,
+            'from' => $startDate,
+            'to' => $endDate,
+            'data' => [
+                'data' => $this->transformMonthlyReport($data),
+            ],
+        ], Response::HTTP_OK);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -249,9 +241,9 @@ class AttendanceReportApiController extends Controller
         int $id
     ) {
         $data = Attendance::where(
-                'tenant_id',
-                tenant()->id
-            )
+            'tenant_id',
+            tenant()->id
+        )
             ->where('entity_type', $type)
             ->where('entity_id', $id)
             ->with(['session', 'entity'])
@@ -259,9 +251,9 @@ class AttendanceReportApiController extends Controller
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Entity report fetched successfully.',
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'data' => ['data' => $this->transformEntityReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -274,11 +266,11 @@ class AttendanceReportApiController extends Controller
     public function batch(int $batchId)
     {
         $batch = AttendanceBatch::where(
-                'tenant_id',
-                tenant()->id
-            )
+            'tenant_id',
+            tenant()->id
+        )
             ->with([
-                'participants'
+                'participants',
             ])
             ->findOrFail($batchId);
 
@@ -286,9 +278,9 @@ class AttendanceReportApiController extends Controller
             ->pluck('participant_id');
 
         $data = Attendance::where(
-                'tenant_id',
-                tenant()->id
-            )
+            'tenant_id',
+            tenant()->id
+        )
             ->whereIn(
                 'entity_id',
                 $participantIds
@@ -298,10 +290,10 @@ class AttendanceReportApiController extends Controller
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Batch report fetched successfully.',
-            'batch'   => $batch,
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'batch' => $batch,
+            'data' => ['data' => $this->transformBatchReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -313,19 +305,19 @@ class AttendanceReportApiController extends Controller
 
     public function session(int $sessionId)
     {
-        $session = AttendanceSession::where(
-                'tenant_id',
-                tenant()->id
-            )
+        $data = AttendanceSession::where(
+            'tenant_id',
+            tenant()->id
+        )
             ->with([
-                'attendances.entity'
+                'attendances.entity',
             ])
             ->findOrFail($sessionId);
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Session report fetched successfully.',
-            'data'    => $session
+            'data' => ['data' => $this->transformSessionReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -338,9 +330,9 @@ class AttendanceReportApiController extends Controller
     public function absent(Request $request)
     {
         $data = Attendance::where(
-                'tenant_id',
-                tenant()->id
-            )
+            'tenant_id',
+            tenant()->id
+        )
             ->where(
                 'attendance_status',
                 'absent'
@@ -350,9 +342,9 @@ class AttendanceReportApiController extends Controller
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Absent report fetched successfully.',
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'data' => ['data' => $this->transformAbsentReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -365,9 +357,9 @@ class AttendanceReportApiController extends Controller
     public function late(Request $request)
     {
         $data = Attendance::where(
-                'tenant_id',
-                tenant()->id
-            )
+            'tenant_id',
+            tenant()->id
+        )
             ->where(
                 'attendance_status',
                 'late'
@@ -377,9 +369,9 @@ class AttendanceReportApiController extends Controller
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Late report fetched successfully.',
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'data' => ['data' => $this->transformLateReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -403,9 +395,9 @@ class AttendanceReportApiController extends Controller
             ->get();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Attendance analysis fetched successfully.',
-            'data'    => ['data' => $this->transformAttendance($data)]
+            'data' => ['data' => $this->transformReport($data)],
         ], Response::HTTP_OK);
     }
 
@@ -418,7 +410,7 @@ class AttendanceReportApiController extends Controller
     public function percentage(Request $request)
     {
         $entityType = $request->entity_type;
-        $entityId   = $request->entity_id;
+        $entityId = $request->entity_id;
 
         $query = Attendance::where(
             'tenant_id',
@@ -453,63 +445,337 @@ class AttendanceReportApiController extends Controller
             : 0;
 
         return response()->json([
-            'status'      => 'success',
-            'message'     => 'Attendance percentage fetched successfully.',
-            'total'       => $total,
-            'present'     => $present,
-            'percentage'  => $percentage
+            'status' => 'success',
+            'message' => 'Attendance percentage fetched successfully.',
+            'total' => $total,
+            'present' => $present,
+            'percentage' => $percentage,
         ], Response::HTTP_OK);
     }
 
-	private function transformAttendance($items)
-{
-    return $items->map(function ($item) {
+    private function transformReport($items)
+    {
+        return $items->map(function ($item) {
 
-        return [
-            'id' => $item->id,
+            return [
+                'id' => $item->id,
 
-            /*
-            |--------------------------------------------------------------------------
-            | Session
-            |--------------------------------------------------------------------------
-            */
+                /*
+                |--------------------------------------------------------------------------
+                | Session
+                |--------------------------------------------------------------------------
+                */
 
-            'session_date' => optional($item->session)
-                ->session_date,
+                'session_date' => optional($item->session)
+                    ->session_date,
 
-            'session_type' => optional($item->session)
-                ->type,
+                'session_type' => optional($item->session)
+                    ->type,
 
-            /*
-            |--------------------------------------------------------------------------
-            | Participant
-            |--------------------------------------------------------------------------
-            */
+                /*
+                |--------------------------------------------------------------------------
+                | Participant
+                |--------------------------------------------------------------------------
+                */
 
-            'participant_name' => optional($item->entity)
-                ->name,
+                'participant_name' => optional($item->entity)
+                    ->name,
 
-            'entity_type' => $item->entity_type,
+                'entity_type' => $item->entity_type,
 
-            'entity_id' => $item->entity_id,
+                'entity_id' => $item->entity_id,
 
-            /*
-            |--------------------------------------------------------------------------
-            | Attendance
-            |--------------------------------------------------------------------------
-            */
+                /*
+                |--------------------------------------------------------------------------
+                | Attendance
+                |--------------------------------------------------------------------------
+                */
 
-            'attendance_status' => $item->attendance_status,
+                'attendance_status' => $item->attendance_status,
 
-            'in_time' => $item->in_time,
+                'in_time' => $item->in_time,
 
-            'out_time' => $item->out_time,
+                'out_time' => $item->out_time,
 
-            'code' => $item->code,
+                'code' => $item->code,
 
-            'reason' => $item->reason,
-        ];
-    });
-}
+                'reason' => $item->reason,
+            ];
+        });
+    }
 
+    private function transformMonthlyReport($items)
+    {
+        return $items
+            ->groupBy(fn ($item) => $item->entity_type.'_'.$item->entity_id)
+            ->map(function ($group) {
+
+                $first = $group->first();
+
+                $workingDays = $group
+                    ->pluck('session.session_date')
+                    ->unique()
+                    ->count();
+
+                $presentDays = $group
+                    ->where('attendance_status', 'present')
+                    ->count();
+
+                $absentDays = $group
+                    ->where('attendance_status', 'absent')
+                    ->count();
+
+                $lateDays = $group
+                    ->where('attendance_status', 'late')
+                    ->count();
+
+                $leaveDays = $group
+                    ->where('attendance_status', 'leave')
+                    ->count();
+
+                $attendancePercentage = $workingDays > 0
+                    ? round(($presentDays / $workingDays) * 100, 2)
+                    : 0;
+
+                return [
+                    'id' => $first->entity_id,
+
+                    'participant_name' => optional($first->entity)->name,
+
+                    'entity_type' => class_basename($first->entity_type),
+
+                    'working_days' => $workingDays,
+
+                    'present_days' => $presentDays,
+
+                    'absent_days' => $absentDays,
+
+                    'late_days' => $lateDays,
+
+                    'leave_days' => $leaveDays,
+
+                    'attendance_percentage' => $attendancePercentage,
+                ];
+            })
+            ->values();
+    }
+
+    private function transformDailyReport($items)
+    {
+        return $items->map(function ($item) {
+
+            return [
+
+                'id' => $item->id,
+
+                'participant_name' => optional($item->entity)->name,
+
+                'attendance_status' => $item->attendance_status,
+
+                'in_time' => $item->in_time,
+
+                'out_time' => $item->out_time,
+
+                'duration' => (
+                    $item->in_time && $item->out_time
+                )
+                    ? Carbon::parse($item->out_time)
+                        ->diff(
+                            Carbon::parse($item->in_time)
+                        )
+                        ->format('%h h %i m')
+                    : null,
+
+                'remarks' => $item->reason,
+            ];
+        });
+    }
+
+    private function transformEntityReport($items)
+    {
+        return $items->map(function ($item) {
+
+            return [
+
+                'id' => $item->id,
+
+                'session_date' => optional($item->session)
+                    ->session_date,
+
+                'session' => optional($item->session)
+                    ->name,
+
+                'attendance_status' => $item->attendance_status,
+
+                'in_time' => $item->in_time,
+
+                'out_time' => $item->out_time,
+
+                'duration' => (
+                    $item->in_time && $item->out_time
+                )
+                    ? Carbon::parse($item->out_time)
+                        ->diff(
+                            Carbon::parse($item->in_time)
+                        )
+                        ->format('%h h %i m')
+                    : null,
+
+                'late' => $item->attendance_status === 'late',
+
+                'source' => $item->source,
+
+                'code' => $item->code,
+
+                'remark' => $item->reason,
+            ];
+        });
+    }
+
+    private function transformSessionReport($items)
+    {
+        return $items->map(function ($item) {
+
+            return [
+
+                'id' => $item->id,
+
+                'participant_name' => optional($item->entity)
+                    ->name,
+
+                'attendance_status' => $item->attendance_status,
+
+                'in_time' => $item->in_time,
+
+                'out_time' => $item->out_time,
+
+                'duration' => (
+                    $item->in_time && $item->out_time
+                )
+                    ? Carbon::parse($item->out_time)
+                        ->diff(
+                            Carbon::parse($item->in_time)
+                        )
+                        ->format('%h h %i m')
+                    : null,
+
+                'reason' => $item->reason,
+            ];
+        });
+    }
+
+    private function transformAbsentReport($items)
+    {
+        return $items->map(function ($item) {
+
+            return [
+
+                'id' => $item->id,
+
+                'session_date' => optional($item->session)
+                    ->session_date,
+
+                'participant_name' => optional($item->entity)
+                    ->name,
+
+                'entity_type' => class_basename($item->entity_type),
+
+                'attendance_status' => $item->attendance_status,
+
+                'session' => optional($item->session)
+                    ->name,
+
+                'source' => $item->source,
+
+                'code' => $item->code,
+
+                'reason' => $item->reason,
+            ];
+        });
+    }
+
+    private function transformPresentReport($items)
+    {
+        return $items->map(function ($item) {
+
+            return [
+
+                'id' => $item->id,
+
+                'session_date' => optional($item->session)
+                    ->session_date,
+
+                'participant_name' => optional($item->entity)
+                    ->name,
+
+                'entity_type' => class_basename($item->entity_type),
+
+                'attendance_status' => $item->attendance_status,
+
+                'in_time' => $item->in_time,
+
+                'out_time' => $item->out_time,
+
+                'duration' => (
+                    $item->in_time && $item->out_time
+                )
+                    ? Carbon::parse($item->out_time)
+                        ->diff(
+                            Carbon::parse($item->in_time)
+                        )
+                        ->format('%h h %i m')
+                    : null,
+
+                'source' => $item->source,
+            ];
+        });
+    }
+
+    private function transformLateReport($items)
+    {
+        return $items->map(function ($item) {
+
+            $lateBy = null;
+
+            if (
+                optional($item->session)->start_time
+                && $item->in_time
+            ) {
+
+                $lateBy = Carbon::parse($item->in_time)
+                    ->diff(
+                        Carbon::parse(
+                            $item->session->start_time
+                        )
+                    )
+                    ->format('%h h %i m');
+            }
+
+            return [
+
+                'id' => $item->id,
+
+                'session_date' => optional($item->session)
+                    ->session_date,
+
+                'participant_name' => optional($item->entity)
+                    ->name,
+
+                'entity_type' => class_basename($item->entity_type),
+
+                'session' => optional($item->session)
+                    ->name,
+
+                'in_time' => $item->in_time,
+
+                'late_by' => $lateBy,
+
+                'source' => $item->source,
+
+                'code' => $item->code,
+
+                'reason' => $item->reason,
+            ];
+        });
+    }
 }
