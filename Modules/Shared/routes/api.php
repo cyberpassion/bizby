@@ -1,233 +1,223 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Shared\Http\Controllers\SharedApiController;
-use Modules\Shared\Http\Controllers\LookupsApiController; // Options Controller
-use Modules\Shared\Http\Controllers\UploadApiController; // Upload Controller
-use Modules\Shared\Http\Controllers\TermApiController;
-
+use Modules\Shared\Http\Controllers\ActivityLogApiController;
+use Modules\Shared\Http\Controllers\AI\AIApiController; // Options Controller
+use Modules\Shared\Http\Controllers\BarricadeApiController; // Upload Controller
+use Modules\Shared\Http\Controllers\DatabaseManagementApiController;
+use Modules\Shared\Http\Controllers\ExportApiController;
+use Modules\Shared\Http\Controllers\FormApiController;
+use Modules\Shared\Http\Controllers\LookupsApiController;
+use Modules\Shared\Http\Controllers\Navigations\NavigationApiController;
 use Modules\Shared\Http\Controllers\OnlinePayments\OnlinePaymentApiController;
 use Modules\Shared\Http\Controllers\OnlinePayments\PaymentPayableApiController;
-
 use Modules\Shared\Http\Controllers\OptionApiController;
-use Modules\Shared\Http\Controllers\ActivityLogApiController;
-use Modules\Shared\Http\Controllers\FormApiController;
-use Modules\Shared\Http\Controllers\BarricadeApiController;
-use Modules\Shared\Http\Controllers\SearchApiController;
-
-use Modules\Shared\Http\Controllers\RazorpayWebhookController;
-
-use Modules\Shared\Http\Controllers\DatabaseManagementApiController;
-
-// Schedules
-use Modules\Shared\Http\Controllers\Schedules\ScheduleJobRegistryApiController;
-use Modules\Shared\Http\Controllers\Schedules\ScheduleApiController;
-use Modules\Shared\Http\Controllers\Schedules\ScheduleRunApiController;
-
-// Permissions
 use Modules\Shared\Http\Controllers\Permissions\PermissionApiController;
 use Modules\Shared\Http\Controllers\Permissions\RoleApiController;
 use Modules\Shared\Http\Controllers\Permissions\RolePermissionApiController;
-use Modules\Shared\Http\Controllers\Permissions\UserRoleApiController;
+// Schedules
 use Modules\Shared\Http\Controllers\Permissions\UserPermissionApiController;
-use Modules\Shared\Http\Controllers\Permissions\PermissionTreeApiController;
-
-// Navigation
-use Modules\Shared\Http\Controllers\Navigations\NavigationApiController;
-
-// Exports
-use Modules\Shared\Http\Controllers\ExportApiController;
-
-// Public Reports
+use Modules\Shared\Http\Controllers\Permissions\UserRoleApiController;
+use Modules\Shared\Http\Controllers\RazorpayWebhookController;
+// Permissions
 use Modules\Shared\Http\Controllers\ReportPublicApiController;
+use Modules\Shared\Http\Controllers\Schedules\ScheduleApiController;
+use Modules\Shared\Http\Controllers\Schedules\ScheduleJobRegistryApiController;
+use Modules\Shared\Http\Controllers\Schedules\ScheduleRunApiController;
+use Modules\Shared\Http\Controllers\SearchApiController;
+// Navigation
+use Modules\Shared\Http\Controllers\SharedApiController;
+// Exports
+use Modules\Shared\Http\Controllers\TermApiController;
+// Public Reports
+use Modules\Shared\Http\Controllers\UploadApiController;
 
 // Terms for dynamic values like student classes etc
-Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
-	Route::get(
-	    'terms/navigation',
-    	[TermApiController::class, 'navigation']
-	);
-	Route::apiResource('terms', TermApiController::class)->names('term');
+Route::middleware(['auth:sanctum', 'tenant'])->prefix('v1')->group(function () {
+    Route::get(
+        'terms/navigation',
+        [TermApiController::class, 'navigation']
+    );
+    Route::apiResource('terms', TermApiController::class)->names('term');
 });
 
 // Options
-Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
-	Route::get('/options/group/{key}', [OptionApiController::class, 'group']);
-	// Terms for dynamic values like student classes etc
-	Route::apiResource('options', OptionApiController::class)->names('option');
+Route::middleware(['auth:sanctum', 'tenant'])->prefix('v1')->group(function () {
+    Route::get('/options/group/{key}', [OptionApiController::class, 'group']);
+    // Terms for dynamic values like student classes etc
+    Route::apiResource('options', OptionApiController::class)->names('option');
 });
 
 // Temporarily disable auth middleware
 Route::middleware(['tenant'])->prefix('v1')->group(function () {
-	Route::get('public/uploads', [UploadApiController::class, 'getPublicUpload'])->name('uploads.getPublicUpload');
+    Route::get('public/uploads', [UploadApiController::class, 'getPublicUpload'])->name('uploads.getPublicUpload');
 });
 
-Route::middleware(['auth:sanctum','tenant'])->prefix('v1')->group(function () {
+Route::middleware(['auth:sanctum', 'tenant'])->prefix('v1')->group(function () {
     Route::apiResource('shared', SharedApiController::class)->names('shared');
 
-	Route::get('/lookups-x/{key}', [LookupsApiController::class, 'get']);
+    Route::get('/lookups-x/{key}', [LookupsApiController::class, 'get']);
 
-	Route::get('/form/{module}/{name}', [FormApiController::class, 'show']);
+    Route::get('/form/{module}/{name}', [FormApiController::class, 'show']);
 
-	// Uploads
-	Route::post('/uploads/bulk-data', [UploadApiController::class, 'bulkData'])->name('uploads.bulkData');
-	Route::post('/uploads/bulk-documents', [UploadApiController::class, 'bulkDocuments'])->name('uploads.bulkDocuments');
-	Route::get('/uploads/reference_type/{key}', [UploadApiController::class, 'groupByReferenceType'])->name('uploads.groupByReferenceType');
-	Route::apiResource('uploads', UploadApiController::class)->names('upload');
+    // Uploads
+    Route::post('/uploads/bulk-data', [UploadApiController::class, 'bulkData'])->name('uploads.bulkData');
+    Route::post('/uploads/bulk-documents', [UploadApiController::class, 'bulkDocuments'])->name('uploads.bulkDocuments');
+    Route::get('/uploads/reference_type/{key}', [UploadApiController::class, 'groupByReferenceType'])->name('uploads.groupByReferenceType');
+    Route::apiResource('uploads', UploadApiController::class)->names('upload');
 
-	// Activity Logs
-	Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
+    // Activity Logs
+    Route::apiResource('activity-logs', ActivityLogApiController::class)->names('activityLog');
 
-	Route::get('/search/{module}', [SearchApiController::class, 'search']);
+    Route::get('/search/{module}', [SearchApiController::class, 'search']);
 
-	// History
-	Route::get('/schedules/{schedule}/runs', [ScheduleApiController::class, 'runs']);
+    // History
+    Route::get('/schedules/{schedule}/runs', [ScheduleApiController::class, 'runs']);
 
-	// Temporary
-	Route::post('/infra/databases', [DatabaseManagementApiController::class, 'store']);
+    // Temporary
+    Route::post('/infra/databases', [DatabaseManagementApiController::class, 'store']);
     Route::delete('/infra/databases/{name}', [DatabaseManagementApiController::class, 'destroy']);
 
 });
 
 Route::prefix('v1')->group(function () {
 
-	// ------------------------------------------------------------------
-	// Payables (Business Intent Layer)
-	// ------------------------------------------------------------------
-	// Handles creation, preview, and lifecycle of PaymentPayable records.
-	// A PaymentPayable represents a *frozen billing intent* BEFORE payment.
-	// Examples: tenant onboarding, renewal, add-on modules, penalties.
-	//
-	// Notes:
-	// - Does NOT process money
-	// - Does NOT talk to payment gateways
-	// - Driven by domain models implementing the Payable contract
-	// ------------------------------------------------------------------
+    // ------------------------------------------------------------------
+    // Payables (Business Intent Layer)
+    // ------------------------------------------------------------------
+    // Handles creation, preview, and lifecycle of PaymentPayable records.
+    // A PaymentPayable represents a *frozen billing intent* BEFORE payment.
+    // Examples: tenant onboarding, renewal, add-on modules, penalties.
+    //
+    // Notes:
+    // - Does NOT process money
+    // - Does NOT talk to payment gateways
+    // - Driven by domain models implementing the Payable contract
+    // ------------------------------------------------------------------
 
-	Route::post(
-    	'/payment-payables/resolve',
-    	[PaymentPayableApiController::class, 'resolve']
-	);
-	// Resolve a payable entity (tenant, registration, etc.) and return
-	// a lightweight summary (amount, purpose, snapshot).
-	// Used by UI to quickly understand "what is being paid".
-	// Does NOT create any database record.
+    Route::post(
+        '/payment-payables/resolve',
+        [PaymentPayableApiController::class, 'resolve']
+    );
+    // Resolve a payable entity (tenant, registration, etc.) and return
+    // a lightweight summary (amount, purpose, snapshot).
+    // Used by UI to quickly understand "what is being paid".
+    // Does NOT create any database record.
 
-	Route::post(
-	    '/payment-payables/preview',
-    	[PaymentPayableApiController::class, 'preview']
-	);
-	// Preview a payable BEFORE checkout.
-	// Returns computed billing details such as:
-	// - payable amount
-	// - validity / renewal dates
-	// - module breakdown
-	// - charge type (onboarding, renewal, addon)
-	// Does NOT create any database record.
+    Route::post(
+        '/payment-payables/preview',
+        [PaymentPayableApiController::class, 'preview']
+    );
+    // Preview a payable BEFORE checkout.
+    // Returns computed billing details such as:
+    // - payable amount
+    // - validity / renewal dates
+    // - module breakdown
+    // - charge type (onboarding, renewal, addon)
+    // Does NOT create any database record.
 
-	Route::post(
-    	'/payment-payables/checkout',
-    	[PaymentPayableApiController::class, 'checkout']
-	);
-	// Create a PaymentPayable record (frozen billing intent).
-	// This locks the amount, purpose, and snapshot so that:
-	// - frontend cannot tamper values
-	// - pricing remains consistent during payment
-	// Called AFTER preview and BEFORE initiating payment gateway flow.
-	Route::post(
-    	'/payment-payables/{id}/cancel',
-    	[PaymentPayableApiController::class, 'cancel']
-	);
-	// Cancel a pending PaymentPayable intent.
-	// Used when user abandons checkout or wants to restart payment.
-	// Only affects unpaid, pending payables.
-	// Does NOT refund money (refunds are handled at payment level).
+    Route::post(
+        '/payment-payables/checkout',
+        [PaymentPayableApiController::class, 'checkout']
+    );
+    // Create a PaymentPayable record (frozen billing intent).
+    // This locks the amount, purpose, and snapshot so that:
+    // - frontend cannot tamper values
+    // - pricing remains consistent during payment
+    // Called AFTER preview and BEFORE initiating payment gateway flow.
+    Route::post(
+        '/payment-payables/{id}/cancel',
+        [PaymentPayableApiController::class, 'cancel']
+    );
+    // Cancel a pending PaymentPayable intent.
+    // Used when user abandons checkout or wants to restart payment.
+    // Only affects unpaid, pending payables.
+    // Does NOT refund money (refunds are handled at payment level).
 
+    // ------------------------------------------------------------------
+    // Online Payments (Money & Gateway Layer)
+    // ------------------------------------------------------------------
+    // Handles actual payment transactions with external gateways
+    // (Razorpay, Stripe, etc.).
+    //
+    // Responsibilities:
+    // - Create gateway payment/order
+    // - Record gateway references
+    // - Track payment status lifecycle
+    // - Trigger post-payment business finalization
+    //
+    // Notes:
+    // - NEVER calculates amounts
+    // - NEVER decides business logic (renewal, activation, etc.)
+    // - Operates strictly on PaymentPayable records
+    // ------------------------------------------------------------------
 
-	// ------------------------------------------------------------------
-	// Online Payments (Money & Gateway Layer)
-	// ------------------------------------------------------------------
-	// Handles actual payment transactions with external gateways
-	// (Razorpay, Stripe, etc.).
-	//
-	// Responsibilities:
-	// - Create gateway payment/order
-	// - Record gateway references
-	// - Track payment status lifecycle
-	// - Trigger post-payment business finalization
-	//
-	// Notes:
-	// - NEVER calculates amounts
-	// - NEVER decides business logic (renewal, activation, etc.)
-	// - Operates strictly on PaymentPayable records
-	// ------------------------------------------------------------------
+    Route::post(
+        '/online-payments/initiate',
+        [OnlinePaymentApiController::class, 'initiate']
+    );
+    // Initiate payment for an existing PaymentPayable.
+    // Creates a payment transaction and gateway order.
+    // Called AFTER checkout and BEFORE user completes payment.
 
-	Route::post(
-    	'/online-payments/initiate',
-    	[OnlinePaymentApiController::class, 'initiate']
-	);
-	// Initiate payment for an existing PaymentPayable.
-	// Creates a payment transaction and gateway order.
-	// Called AFTER checkout and BEFORE user completes payment.
+    Route::put(
+        '/online-payments/{id}/complete',
+        [OnlinePaymentApiController::class, 'complete']
+    );
+    // Receive gateway payment reference after user completes payment.
+    // Saves gateway payment ID and marks transaction as "processing".
+    // Does NOT execute any business logic.
 
-	Route::put(
-    	'/online-payments/{id}/complete',
-    	[OnlinePaymentApiController::class, 'complete']
-	);
-	// Receive gateway payment reference after user completes payment.
-	// Saves gateway payment ID and marks transaction as "processing".
-	// Does NOT execute any business logic.
+    Route::put(
+        '/online-payments/{id}/finalize',
+        [OnlinePaymentApiController::class, 'finalize']
+    );
+    // Finalize payment AFTER successful gateway confirmation.
+    // Executes post-payment business logic such as:
+    // - Activating tenant
+    // - Renewing subscription
+    // - Enabling modules
+    // This operation is idempotent and safe to retry.
 
-	Route::put(
-    	'/online-payments/{id}/finalize',
-    	[OnlinePaymentApiController::class, 'finalize']
-	);
-	// Finalize payment AFTER successful gateway confirmation.
-	// Executes post-payment business logic such as:
-	// - Activating tenant
-	// - Renewing subscription
-	// - Enabling modules
-	// This operation is idempotent and safe to retry.
+    Route::get(
+        '/online-payments/{payment}/payable',
+        [PaymentPayableApiController::class, 'showByPayment']
+    );
+    // Fetch frozen PaymentPayable snapshot by online_payment_id.
+    // Used AFTER payment for:
+    // - receipt page
+    // - invoice download
+    // - email receipt
+    // - audit logs
+    //
+    // IMPORTANT:
+    // - Returns immutable snapshot (what user actually paid)
+    // - Does NOT recalculate amounts
+    // - Safe to refresh (idempotent)
+    // - Works even if pricing rules change later
 
-	Route::get(
-	    '/online-payments/{payment}/payable',
-    	[PaymentPayableApiController::class, 'showByPayment']
-	);
-	// Fetch frozen PaymentPayable snapshot by online_payment_id.
-	// Used AFTER payment for:
-	// - receipt page
-	// - invoice download
-	// - email receipt
-	// - audit logs
-	//
-	// IMPORTANT:
-	// - Returns immutable snapshot (what user actually paid)
-	// - Does NOT recalculate amounts
-	// - Safe to refresh (idempotent)
-	// - Works even if pricing rules change later
+    Route::put(
+        '/online-payments/{id}/status',
+        [OnlinePaymentApiController::class, 'status']
+    );
+    // Fetch current payment status for frontend polling.
+    // Used to check whether payment is pending, processing, or finalized.
+    // Does NOT mutate any data.
 
-	Route::put(
-    	'/online-payments/{id}/status',
-    	[OnlinePaymentApiController::class, 'status']
-	);
-	// Fetch current payment status for frontend polling.
-	// Used to check whether payment is pending, processing, or finalized.
-	// Does NOT mutate any data.
+    Route::apiResource(
+        'online-payments',
+        OnlinePaymentApiController::class
+    )->names('onlinePayment');
+    // Standard RESTful endpoints for listing and viewing payments.
+    // Used for dashboards, audit logs, and admin tooling.
+    // Should NOT be used to mutate payment lifecycle directly.
 
-	Route::apiResource(
-    	'online-payments',
-    	OnlinePaymentApiController::class
-	)->names('onlinePayment');
-	// Standard RESTful endpoints for listing and viewing payments.
-	// Used for dashboards, audit logs, and admin tooling.
-	// Should NOT be used to mutate payment lifecycle directly.
-
-	// Payment Webhooks
-	Route::post('webhooks/razorpay', [RazorpayWebhookController::class, 'handle']);
+    // Payment Webhooks
+    Route::post('webhooks/razorpay', [RazorpayWebhookController::class, 'handle']);
 });
 
 // Barricades
-Route::middleware(['auth:sanctum','tenant'])
+Route::middleware(['auth:sanctum', 'tenant'])
     ->prefix('v1')
     ->group(function () {
 
@@ -264,65 +254,65 @@ Route::prefix('v1')->group(function () {
 // Permissions
 // protect these by ->middleware('permission:permissions.manage')
 Route::prefix('v1')
-    /*->middleware(['auth:sanctum', 'tenant', 'permission:permissions.manage'])*/
-	->middleware(['auth:sanctum', 'identify.tenant'])
+    /* ->middleware(['auth:sanctum', 'tenant', 'permission:permissions.manage']) */
+    ->middleware(['auth:sanctum', 'identify.tenant'])
     ->group(function () {
 
-    // permissions master
-    Route::apiResource('permissions', PermissionApiController::class)
-        ->only(['index', 'store', 'destroy']);
+        // permissions master
+        Route::apiResource('permissions', PermissionApiController::class)
+            ->only(['index', 'store', 'destroy']);
 
-    // roles
-    Route::apiResource('roles', RoleApiController::class)
-        ->only(['index', 'store', 'destroy']);
+        // roles
+        Route::apiResource('roles', RoleApiController::class)
+            ->only(['index', 'store', 'destroy']);
 
-    // role permissions
-    Route::get('/roles/{role}/permissions', [RolePermissionApiController::class, 'index']);
-    Route::put('/roles/{role}/permissions', [RolePermissionApiController::class, 'sync']);
+        // role permissions
+        Route::get('/roles/{role}/permissions', [RolePermissionApiController::class, 'index']);
+        Route::put('/roles/{role}/permissions', [RolePermissionApiController::class, 'sync']);
 
-    // user roles
-    Route::get('/users/{user}/roles', [UserRoleApiController::class, 'index']);
-    Route::post('/users/{user}/roles', [UserRoleApiController::class, 'assign']);
-    Route::delete('/users/{user}/roles/{role}', [UserRoleApiController::class, 'revoke']);
+        // user roles
+        Route::get('/users/{user}/roles', [UserRoleApiController::class, 'index']);
+        Route::post('/users/{user}/roles', [UserRoleApiController::class, 'assign']);
+        Route::delete('/users/{user}/roles/{role}', [UserRoleApiController::class, 'revoke']);
 
-    // user permission overrides
-    Route::get('/users/{user}/permissions/{tenantId}', [UserPermissionApiController::class, 'index']);
-    Route::put('/users/{user}/permissions', [UserPermissionApiController::class, 'sync']);
-    Route::delete('/users/{user}/permissions/{permission}', [UserPermissionApiController::class, 'revoke']);
-});
+        // user permission overrides
+        Route::get('/users/{user}/permissions/{tenantId}', [UserPermissionApiController::class, 'index']);
+        Route::put('/users/{user}/permissions', [UserPermissionApiController::class, 'sync']);
+        Route::delete('/users/{user}/permissions/{permission}', [UserPermissionApiController::class, 'revoke']);
+    });
 
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
-		// Lookups for common static values like gender, list of countries
-		Route::get('/lookups/{key}', [LookupsApiController::class, 'get']);
+        // Lookups for common static values like gender, list of countries
+        Route::get('/lookups/{key}', [LookupsApiController::class, 'get']);
 
         /* ============================
          | Navigation (READ ONLY)
          |============================ */
         Route::get('/navigation/sidebar', [NavigationApiController::class, 'sidebar']);
-        Route::get('/navigation/header',  [NavigationApiController::class, 'header']);
+        Route::get('/navigation/header', [NavigationApiController::class, 'header']);
         Route::get('/navigation/module/{module}', [NavigationApiController::class, 'module']);
-		Route::get('/navigation/single-actions/{module}/{action}/{id?}', [NavigationApiController::class, 'item']);
+        Route::get('/navigation/single-actions/{module}/{action}/{id?}', [NavigationApiController::class, 'item']);
 
-		// Permissions
-		Route::get('/get-permissions/{id}', [PermissionApiController::class, 'get']);
+        // Permissions
+        Route::get('/get-permissions/{id}', [PermissionApiController::class, 'get']);
 
-});
+    });
 
 // Export routes
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
-		Route::get('shared/export/csv/{module}', [ExportApiController::class, 'exportCsv'])
+        Route::get('shared/export/csv/{module}', [ExportApiController::class, 'exportCsv'])
             ->name('shared.export.csv');
 
         Route::get('shared/export/pdf/{module}', [ExportApiController::class, 'exportPdf'])
             ->name('shared.export.pdf');
 
-});
+    });
 
 // Public Reoutes
 Route::prefix('v1')->group(function () {
@@ -339,4 +329,12 @@ Route::prefix('v1')
         Route::post('/public/links/{module}', [ReportPublicApiController::class, 'generate'])
             ->name('reports.public.generate');
 
-});
+    });
+
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'tenant'])
+    ->group(function () {
+
+        Route::post('/ai/ask', [AIApiController::class, 'ask']);
+
+    });

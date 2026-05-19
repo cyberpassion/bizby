@@ -247,6 +247,22 @@ return [
                 ],
 
                 [
+                    'title' => 'Education History',
+                    'href' => UrlPath::make(Res::EDUCATION_HISTORY, '{id}'),
+                    'permission' => Permission::view(Res::EDUCATION_HISTORY),
+                    'action' => 'education-history',
+                    'icon' => 'education-history',
+                ],
+
+                [
+                    'title' => 'Scholarship',
+                    'href' => UrlPath::make(Res::SCHOLARSHIPS, '{id}'),
+                    'permission' => Permission::view(Res::SCHOLARSHIPS),
+                    'action' => 'scholarship',
+                    'icon' => 'scholarship',
+                ],
+
+                [
                     'title' => 'Delete',
                     'href' => UrlPath::makeDelete(Res::STUDENTS, '{id}'),
                     'permission' => Permission::delete(Res::STUDENTS),

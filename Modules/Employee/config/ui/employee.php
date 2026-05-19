@@ -130,6 +130,22 @@ return [
                 ],
 
                 [
+                    'title' => 'Work History',
+                    'href' => UrlPath::make(Res::EDUCATION_HISTORY, '{id}'),
+                    'permission' => Permission::view(Res::EDUCATION_HISTORY),
+                    'action' => 'education-history',
+                    'icon' => 'education-history',
+                ],
+
+                [
+                    'title' => 'Work History',
+                    'href' => UrlPath::make(Res::WORK_HISTORY, '{id}'),
+                    'permission' => Permission::view(Res::WORK_HISTORY),
+                    'action' => 'work-history',
+                    'icon' => 'work-history',
+                ],
+
+                [
                     'title' => 'Upload',
                     'href' => UrlPath::makeUploads($pg, '{id}'),
                     'permission' => Permission::create(Res::UPLOADS),

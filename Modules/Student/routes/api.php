@@ -1,43 +1,41 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use Modules\Student\Http\Controllers\StudentSetupStatusApiController;
-use Modules\Student\Http\Controllers\StudentApiController;
-use Modules\Student\Http\Controllers\StudentAcademicYearApiController;
-use Modules\Student\Http\Controllers\StudentFeeStructureApiController;
-use Modules\Student\Http\Controllers\StudentFeeStructureOverrideApiController;
-use Modules\Student\Http\Controllers\StudentFeeSummaryApiController;
-use Modules\Student\Http\Controllers\StudentFeeSubmissionApiController;
-use Modules\Student\Http\Controllers\StudentTransitionApiController;
-use Modules\Student\Http\Controllers\StudentFeeDiscountApiController;
-use Modules\Student\Http\Controllers\StudentFeeDueApiController;
-
-// Reports
-use Modules\Student\Http\Controllers\Reports\StudentReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentFeeCollectionReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentFeeDueReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentFeeDefaulterReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentFeeDiscountReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentFeeLedgerReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentStrengthReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentAdmissionReportApiController;
-use Modules\Student\Http\Controllers\Reports\StudentTransitionReportApiController;
-
-// Analytics
 use Modules\Student\Http\Controllers\Analytics\StudentAnalyticsApiController;
 use Modules\Student\Http\Controllers\Analytics\StudentFeeAnalyticsApiController;
-
+use Modules\Student\Http\Controllers\Reports\StudentAdmissionReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentFeeCollectionReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentFeeDefaulterReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentFeeDiscountReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentFeeDueReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentFeeLedgerReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentStrengthReportApiController;
+use Modules\Student\Http\Controllers\Reports\StudentTransitionReportApiController;
+use Modules\Student\Http\Controllers\StudentAcademicYearApiController;
+// Reports
+use Modules\Student\Http\Controllers\StudentApiController;
+use Modules\Student\Http\Controllers\StudentEducationHistoryApiController;
+use Modules\Student\Http\Controllers\StudentFeeDiscountApiController;
+use Modules\Student\Http\Controllers\StudentFeeDueApiController;
+use Modules\Student\Http\Controllers\StudentFeeStructureApiController;
+use Modules\Student\Http\Controllers\StudentFeeStructureOverrideApiController;
 use Modules\Student\Http\Controllers\StudentFeeStructurePatternApiController;
+use Modules\Student\Http\Controllers\StudentFeeSubmissionApiController;
+use Modules\Student\Http\Controllers\StudentFeeSummaryApiController;
+// Analytics
+use Modules\Student\Http\Controllers\StudentScholarshipApiController;
+use Modules\Student\Http\Controllers\StudentSetupStatusApiController;
+use Modules\Student\Http\Controllers\StudentTransitionApiController;
 
 Route::prefix('v1')
     ->middleware(['auth:sanctum', 'tenant'])
     ->group(function () {
 
-		Route::get(
-		    "students/setup-status",
-		    [StudentSetupStatusApiController::class, "index"]
-		);
+        Route::get(
+            'students/setup-status',
+            [StudentSetupStatusApiController::class, 'index']
+        );
 
         /*
         |--------------------------------------------------------------------------
@@ -54,65 +52,65 @@ Route::prefix('v1')
                 ->name('graphs');
         });
 
-		Route::prefix('students/{id}/transitions')->group(function () {
-		    Route::get('/', [StudentTransitionApiController::class, 'studentHistory']);
-		});
+        Route::prefix('students/{id}/transitions')->group(function () {
+            Route::get('/', [StudentTransitionApiController::class, 'studentHistory']);
+        });
 
-		/*
+        /*
         |--------------------------------------------------------------------------
         | FEE STRUCTURE PATTERN
         |--------------------------------------------------------------------------
         */
-		Route::prefix('students/fee-structure-patterns')->group(function () {
+        Route::prefix('students/fee-structure-patterns')->group(function () {
 
-		    Route::get(
-		        '/',
-        		[StudentFeeStructurePatternApiController::class, 'index']
-		    );
+            Route::get(
+                '/',
+                [StudentFeeStructurePatternApiController::class, 'index']
+            );
 
-		    Route::get(
-		        '/{id}',
-        		[StudentFeeStructurePatternApiController::class, 'show']
-		    );
+            Route::get(
+                '/{id}',
+                [StudentFeeStructurePatternApiController::class, 'show']
+            );
 
-			Route::get(
-			    '/{id}/periods',
-			    [StudentFeeStructurePatternApiController::class, 'periods']
-			);
+            Route::get(
+                '/{id}/periods',
+                [StudentFeeStructurePatternApiController::class, 'periods']
+            );
 
-		    Route::post(
-		        '/',
-        		[StudentFeeStructurePatternApiController::class, 'store']
-    		);
+            Route::post(
+                '/',
+                [StudentFeeStructurePatternApiController::class, 'store']
+            );
 
-		    Route::put(
-		        '/{id}',
-        		[StudentFeeStructurePatternApiController::class, 'update']
-		    );
+            Route::put(
+                '/{id}',
+                [StudentFeeStructurePatternApiController::class, 'update']
+            );
 
-		    Route::delete(
-		        '/{id}',
-        		[StudentFeeStructurePatternApiController::class, 'destroy']
-		    );
-		});
+            Route::delete(
+                '/{id}',
+                [StudentFeeStructurePatternApiController::class, 'destroy']
+            );
+        });
 
-		/*
+        /*
         |--------------------------------------------------------------------------
         | ACADEMIC YEARS
         |--------------------------------------------------------------------------
         */
 
-		Route::get(
-		    'students/{id}/academic-years',
-    		[StudentAcademicYearApiController::class, 'studentYears']
-		);
+        Route::get(
+            'students/{id}/academic-years',
+            [StudentAcademicYearApiController::class, 'studentYears']
+        );
 
         Route::apiResource(
             'students/academic-years',
             StudentAcademicYearApiController::class
         )->names('students.academicYears');
 
-		/*
+        /*
         |--------------------------------------------------------------------------
         | FEE STRUCTURES
         |--------------------------------------------------------------------------
@@ -129,132 +127,132 @@ Route::prefix('v1')
         |--------------------------------------------------------------------------
         */
 
-		Route::get(
-		    'students/{studentId}/fee-structure-overrides/{yearId}',
-    		[StudentFeeStructureOverrideApiController::class, 'showCustom']
-		)->name('students.feeStructureOverrides.showCustom');
+        Route::get(
+            'students/{studentId}/fee-structure-overrides/{yearId}',
+            [StudentFeeStructureOverrideApiController::class, 'showCustom']
+        )->name('students.feeStructureOverrides.showCustom');
 
-		Route::post(
-		    'students/{studentId}/fee-structure-overrides/{yearId}',
-    		[StudentFeeStructureOverrideApiController::class, 'storeCustom']
-		)->name('students.feeStructureOverrides.storeCustom');
+        Route::post(
+            'students/{studentId}/fee-structure-overrides/{yearId}',
+            [StudentFeeStructureOverrideApiController::class, 'storeCustom']
+        )->name('students.feeStructureOverrides.storeCustom');
 
         Route::apiResource(
             'students/{id}/fee-structure-overrides',
             StudentFeeStructureOverrideApiController::class
         )->names('students.feeStructureOverrides');
 
-		Route::apiResource(
+        Route::apiResource(
             'students/fee-structure-overrides',
             StudentFeeStructureOverrideApiController::class
         )->names('students.feeStructureOverrides.index');
 
-		/*
-		|--------------------------------------------------------------------------
-		| FEE DISCOUNTS
-		|--------------------------------------------------------------------------
-		*/
+        /*
+        |--------------------------------------------------------------------------
+        | FEE DISCOUNTS
+        |--------------------------------------------------------------------------
+        */
 
-		Route::get(
-		    'students/{studentId}/fee-discounts/{yearId}',
-    		[StudentFeeDiscountApiController::class, 'showCustom']
-		)->name('students.feeDiscounts.showCustom');
+        Route::get(
+            'students/{studentId}/fee-discounts/{yearId}',
+            [StudentFeeDiscountApiController::class, 'showCustom']
+        )->name('students.feeDiscounts.showCustom');
 
-		Route::post(
-		    'students/{studentId}/fee-discounts/{yearId}',
-    		[StudentFeeDiscountApiController::class, 'storeCustom']
-		)->name('students.feeDiscounts.storeCustom');
+        Route::post(
+            'students/{studentId}/fee-discounts/{yearId}',
+            [StudentFeeDiscountApiController::class, 'storeCustom']
+        )->name('students.feeDiscounts.storeCustom');
 
-		Route::apiResource(
-		    'students/{id}/fee-discounts',
-    		StudentFeeDiscountApiController::class
-		)->names('students.feeDiscounts');
+        Route::apiResource(
+            'students/{id}/fee-discounts',
+            StudentFeeDiscountApiController::class
+        )->names('students.feeDiscounts');
 
-		Route::apiResource(
+        Route::apiResource(
             'students/fee-discounts',
             StudentFeeDiscountApiController::class
         )->names('students.feeDiscounts.index');
 
-		/*
+        /*
 |--------------------------------------------------------------------------
 | STUDENT FEE DUES
 |--------------------------------------------------------------------------
 */
 
-/*
-|--------------------------------------------------------------------------
-| STUDENT FEE DUES
-|--------------------------------------------------------------------------
-|
-| Enterprise Flow:
-|
-| Structures
-| → Generate Dues
-| → Payments
-|
-| Dues are now system-generated.
-| No manual due creation API.
-|
-*/
-
-Route::prefix('students/fee-dues')
-    ->group(function () {
-
         /*
         |--------------------------------------------------------------------------
-        | Dues Report
+        | STUDENT FEE DUES
         |--------------------------------------------------------------------------
+        |
+        | Enterprise Flow:
+        |
+        | Structures
+        | → Generate Dues
+        | → Payments
+        |
+        | Dues are now system-generated.
+        | No manual due creation API.
+        |
         */
 
-        Route::post(
-            'report',
-            [StudentFeeDueApiController::class, 'report']
-        );
+        Route::prefix('students/fee-dues')
+            ->group(function () {
 
-		/*
-        |--------------------------------------------------------------------------
-        | Student Dues
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Dues Report
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{studentId}',
-            [StudentFeeDueApiController::class, 'studentDues']
-        );
+                Route::post(
+                    'report',
+                    [StudentFeeDueApiController::class, 'report']
+                );
 
-		/*
-        |--------------------------------------------------------------------------
-        | Student Pending Dues
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Student Dues
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{studentId}/pending-dues',
-            [StudentFeeDueApiController::class, 'pendingDues']
-        );
+                Route::get(
+                    '{studentId}',
+                    [StudentFeeDueApiController::class, 'studentDues']
+                );
 
-		/*
-        |--------------------------------------------------------------------------
-        | Student Regenerate Dues
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Student Pending Dues
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            '{studentId}/regenerate',
-            [StudentFeeDueApiController::class, 'regenerateDues']
-        );
+                Route::get(
+                    '{studentId}/pending-dues',
+                    [StudentFeeDueApiController::class, 'pendingDues']
+                );
 
-        /*
-        |--------------------------------------------------------------------------
-        | Carry Forward
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Student Regenerate Dues
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            '{studentId}/carry-forward',
-            [StudentFeeDueApiController::class, 'carryForward']
-        );
-    });
+                Route::post(
+                    '{studentId}/regenerate',
+                    [StudentFeeDueApiController::class, 'regenerateDues']
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Carry Forward
+                |--------------------------------------------------------------------------
+                */
+
+                Route::post(
+                    '{studentId}/carry-forward',
+                    [StudentFeeDueApiController::class, 'carryForward']
+                );
+            });
         /*
 |--------------------------------------------------------------------------
 | STUDENT TRANSITIONS
@@ -269,208 +267,208 @@ Route::prefix('students/fee-dues')
 |
 */
 
-Route::prefix('students/transitions')
-    ->name('students.transitions.')
-    ->group(function () {
+        Route::prefix('students/transitions')
+            ->name('students.transitions.')
+            ->group(function () {
 
-        /*
-        |--------------------------------------------------------------------------
-        | Listing / History
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Listing / History
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '/',
-            [StudentTransitionApiController::class, 'index']
-        )->name('index');
+                Route::get(
+                    '/',
+                    [StudentTransitionApiController::class, 'index']
+                )->name('index');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Create Transition Batch
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Create Transition Batch
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            '/',
-            [StudentTransitionApiController::class, 'store']
-        )->name('store');
+                Route::post(
+                    '/',
+                    [StudentTransitionApiController::class, 'store']
+                )->name('store');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Preview Before Processing
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Preview Before Processing
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'preview',
-            [StudentTransitionApiController::class, 'preview']
-        )->name('preview');
+                Route::post(
+                    'preview',
+                    [StudentTransitionApiController::class, 'preview']
+                )->name('preview');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Validate Transition Rules
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Validate Transition Rules
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'validate',
-            [StudentTransitionApiController::class, 'validateTransition']
-        )->name('validate');
+                Route::post(
+                    'validate',
+                    [StudentTransitionApiController::class, 'validateTransition']
+                )->name('validate');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Process Transition
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Process Transition
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            '{id}/process',
-            [StudentTransitionApiController::class, 'process']
-        )->name('process');
+                Route::post(
+                    '{id}/process',
+                    [StudentTransitionApiController::class, 'process']
+                )->name('process');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Rollback Transition
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Rollback Transition
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            '{id}/rollback',
-            [StudentTransitionApiController::class, 'rollback']
-        )->name('rollback');
+                Route::post(
+                    '{id}/rollback',
+                    [StudentTransitionApiController::class, 'rollback']
+                )->name('rollback');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Transition Detail
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Transition Detail
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{id}',
-            [StudentTransitionApiController::class, 'show']
-        )->name('show');
+                Route::get(
+                    '{id}',
+                    [StudentTransitionApiController::class, 'show']
+                )->name('show');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Transition Students
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Transition Students
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{id}/students',
-            [StudentTransitionApiController::class, 'students']
-        )->name('students');
+                Route::get(
+                    '{id}/students',
+                    [StudentTransitionApiController::class, 'students']
+                )->name('students');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Failed / Skipped Students
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Failed / Skipped Students
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{id}/failed',
-            [StudentTransitionApiController::class, 'failed']
-        )->name('failed');
+                Route::get(
+                    '{id}/failed',
+                    [StudentTransitionApiController::class, 'failed']
+                )->name('failed');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Transition Logs / Audit
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Transition Logs / Audit
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{id}/logs',
-            [StudentTransitionApiController::class, 'logs']
-        )->name('logs');
+                Route::get(
+                    '{id}/logs',
+                    [StudentTransitionApiController::class, 'logs']
+                )->name('logs');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Summary / Stats
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Summary / Stats
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{id}/summary',
-            [StudentTransitionApiController::class, 'summary']
-        )->name('summary');
+                Route::get(
+                    '{id}/summary',
+                    [StudentTransitionApiController::class, 'summary']
+                )->name('summary');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Download Report
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Download Report
+                |--------------------------------------------------------------------------
+                */
 
-        Route::get(
-            '{id}/export',
-            [StudentTransitionApiController::class, 'export']
-        )->name('export');
+                Route::get(
+                    '{id}/export',
+                    [StudentTransitionApiController::class, 'export']
+                )->name('export');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Bulk Promotion Shortcut
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Bulk Promotion Shortcut
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'bulk-promotion',
-            [StudentTransitionApiController::class, 'bulkPromotion']
-        )->name('bulkPromotion');
+                Route::post(
+                    'bulk-promotion',
+                    [StudentTransitionApiController::class, 'bulkPromotion']
+                )->name('bulkPromotion');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Selective Promotion Shortcut
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Selective Promotion Shortcut
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'selective-promotion',
-            [StudentTransitionApiController::class, 'selectivePromotion']
-        )->name('selectivePromotion');
+                Route::post(
+                    'selective-promotion',
+                    [StudentTransitionApiController::class, 'selectivePromotion']
+                )->name('selectivePromotion');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Transfer Shortcut
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Transfer Shortcut
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'transfer',
-            [StudentTransitionApiController::class, 'transfer']
-        )->name('transfer');
+                Route::post(
+                    'transfer',
+                    [StudentTransitionApiController::class, 'transfer']
+                )->name('transfer');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Demotion Shortcut
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Demotion Shortcut
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'demotion',
-            [StudentTransitionApiController::class, 'demotion']
-        )->name('demotion');
+                Route::post(
+                    'demotion',
+                    [StudentTransitionApiController::class, 'demotion']
+                )->name('demotion');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Retain / Repeat Year
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Retain / Repeat Year
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'retain',
-            [StudentTransitionApiController::class, 'retain']
-        )->name('retain');
+                Route::post(
+                    'retain',
+                    [StudentTransitionApiController::class, 'retain']
+                )->name('retain');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Graduate Students
-        |--------------------------------------------------------------------------
-        */
+                /*
+                |--------------------------------------------------------------------------
+                | Graduate Students
+                |--------------------------------------------------------------------------
+                */
 
-        Route::post(
-            'graduate',
-            [StudentTransitionApiController::class, 'graduate']
-        )->name('graduate');
-    });
+                Route::post(
+                    'graduate',
+                    [StudentTransitionApiController::class, 'graduate']
+                )->name('graduate');
+            });
 
         /*
         |--------------------------------------------------------------------------
@@ -489,17 +487,17 @@ Route::prefix('students/transitions')
         |--------------------------------------------------------------------------
         */
 
-		Route::post(
-		    'students/fee-submissions/{id}/reverse',
-    		[StudentFeeSubmissionApiController::class, 'reverse']
-		);
+        Route::post(
+            'students/fee-submissions/{id}/reverse',
+            [StudentFeeSubmissionApiController::class, 'reverse']
+        );
 
         Route::post(
             'students/{id}/fee-submissions',
             [StudentFeeSubmissionApiController::class, 'store']
         );
 
-		/*
+        /*
 |--------------------------------------------------------------------------
 | Fee Submission Detail
 |--------------------------------------------------------------------------
@@ -511,29 +509,29 @@ Route::prefix('students/transitions')
 |
 */
 
-Route::get(
-    'students/fee-submissions/{id}',
-    [StudentFeeSubmissionApiController::class, 'show']
-);
+        Route::get(
+            'students/fee-submissions/{id}',
+            [StudentFeeSubmissionApiController::class, 'show']
+        );
 
-/*
-|--------------------------------------------------------------------------
-| Fee Submission Receipt
-|--------------------------------------------------------------------------
-|
-| Used For:
-| - Printable Receipt
-| - PDF Export
-| - Thermal Print
-|
-*/
+        /*
+        |--------------------------------------------------------------------------
+        | Fee Submission Receipt
+        |--------------------------------------------------------------------------
+        |
+        | Used For:
+        | - Printable Receipt
+        | - PDF Export
+        | - Thermal Print
+        |
+        */
 
-Route::get(
-    'students/fee-submissions/{id}/receipt',
-    [StudentFeeSubmissionApiController::class, 'receipt']
-);
+        Route::get(
+            'students/fee-submissions/{id}/receipt',
+            [StudentFeeSubmissionApiController::class, 'receipt']
+        );
 
-		/*
+        /*
         |--------------------------------------------------------------------------
         | STUDENTS CRUD
         |--------------------------------------------------------------------------
@@ -550,10 +548,10 @@ Route::get(
 
         Route::prefix('students/reports')->group(function () {
 
-			Route::get(
-    		    'students',
-        		[StudentReportApiController::class, 'index']
-    		);
+            Route::get(
+                'students',
+                [StudentReportApiController::class, 'index']
+            );
 
             /*
             |--------------------------------------------------------------------------
@@ -684,5 +682,27 @@ Route::get(
                     [StudentAnalyticsApiController::class, 'classDistribution']
                 );
             });
+
+            /*
+            |--------------------------------------------------------------------------
+            | EDUCATION HISTORIES
+            |--------------------------------------------------------------------------
+            */
+
+            Route::apiResource(
+                'students/{student}/education-histories',
+                StudentEducationHistoryApiController::class
+            )->names('students.educationHistories');
+
+            /*
+            |--------------------------------------------------------------------------
+            | SCHOLARSHIPS
+            |--------------------------------------------------------------------------
+            */
+
+            Route::apiResource(
+                'students/{student}/scholarships',
+                StudentScholarshipApiController::class
+            )->names('students.scholarships');
         });
     });

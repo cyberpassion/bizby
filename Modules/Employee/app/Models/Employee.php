@@ -2,9 +2,9 @@
 
 namespace Modules\Employee\Models;
 
-use Modules\Admin\Models\Tenants\TenantModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Schema;
+use Modules\Admin\Models\Tenants\TenantModel;
 
 class Employee extends TenantModel
 {
@@ -32,9 +32,9 @@ class Employee extends TenantModel
      * Attribute casting (auto converts to Carbon).
      */
     protected $casts = [
-        'datetime'          => 'datetime',
-        'employee_date' 	=> 'date:Y-m-d',
-		'dob'				=> 'date:Y-m-d'
+        'datetime' => 'datetime',
+        'employee_date' => 'date:Y-m-d',
+        'dob' => 'date:Y-m-d',
     ];
 
     /**
@@ -48,7 +48,7 @@ class Employee extends TenantModel
      */
     protected $appends = [];
 
-	/**
+    /**
      * Dynamically determine fillable columns by:
      * 1. Fetching all columns from the database table
      * 2. Excluding all guarded columns
@@ -74,4 +74,13 @@ class Employee extends TenantModel
         return $this->dynamicFillable();
     }
 
+    public function workHistories()
+    {
+        return $this->hasMany(EmployeeWorkHistory::class);
+    }
+
+    public function educationHistories()
+    {
+        return $this->hasMany(EmployeeEducationHistory::class);
+    }
 }
