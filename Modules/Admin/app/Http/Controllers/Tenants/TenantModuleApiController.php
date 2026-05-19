@@ -17,6 +17,7 @@ class TenantModuleApiController extends SharedApiController
     protected function validationRules($id = null)
     {
         return [
+            'module_id' => 'required|numeric|exists:modules,id',
             'module_key' => 'required|string',
             'module_name' => 'required|string',
             'is_paid' => 'boolean',
@@ -50,6 +51,7 @@ class TenantModuleApiController extends SharedApiController
         $module = TenantModule::updateOrCreate(
             [
                 'tenant_id' => $tenantId,
+                'module_id' => $validated['module_id'],
                 'module_key' => $validated['module_key'],
             ],
             array_merge($validated, [
@@ -94,6 +96,7 @@ class TenantModuleApiController extends SharedApiController
             $module = TenantModule::updateOrCreate(
                 [
                     'tenant_id' => $tenantId,
+                    'module_id' => $moduleData['module_id'],
                     'module_key' => $moduleData['module_key'],
                 ],
                 array_merge($moduleData, [

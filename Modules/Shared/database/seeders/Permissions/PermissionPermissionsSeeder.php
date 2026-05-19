@@ -73,7 +73,7 @@ class PermissionPermissionsSeeder extends Seeder
             ];
 
             if (! in_array($moduleName, $currentlyAllowed)) {
-                continue;
+                // continue;
             }
 
             $configPath = $modulePath

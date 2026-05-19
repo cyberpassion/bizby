@@ -33,6 +33,7 @@ class Module extends Model
         'is_billable' => 'boolean',
         'is_core' => 'boolean',
         'is_active' => 'boolean',
+        'dependencies' => 'array',
     ];
 
     /**

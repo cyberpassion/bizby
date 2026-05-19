@@ -5,6 +5,7 @@ namespace Modules\Shared\Services\Permissions;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Modules\Admin\Models\Modules\Module;
 use Modules\Admin\Models\Tenants\TenantModule;
 
 class PermissionService
@@ -25,13 +26,101 @@ class PermissionService
             ->values();
     }
 
-    public function getTenantModules(int $tenantId): array
+    public function getResolvedTenantModules(int $tenantId): array
     {
-        return TenantModule::query()
+        $installed = TenantModule::query()
+            ->with('module:id,key,dependencies')
             ->where('tenant_id', $tenantId)
             ->where('is_active', 1)
-            ->pluck('module_key')
+            ->get();
+
+        $allModules = Module::query()
+            ->get(['id', 'key', 'dependencies'])
+            ->keyBy('key');
+
+        $resolved = [];
+
+        foreach ($installed as $tenantModule) {
+
+            if (! $tenantModule->module) {
+                continue;
+            }
+
+            $this->resolveDependencies(
+                $tenantModule->module->key,
+                $allModules,
+                $resolved
+            );
+        }
+
+        return array_values(array_unique($resolved));
+    }
+
+    protected function resolveDependencies(
+        string $moduleKey,
+        $allModules,
+        array &$resolved,
+        array &$visiting = []
+    ): void {
+
+        if (isset($visiting[$moduleKey])) {
+            return;
+        }
+
+        if (in_array($moduleKey, $resolved)) {
+            return;
+        }
+
+        $visiting[$moduleKey] = true;
+
+        $module = $allModules->get($moduleKey);
+
+        if (! $module) {
+            return;
+        }
+
+        foreach (($module->dependencies ?? []) as $dependency) {
+            $this->resolveDependencies(
+                $dependency,
+                $allModules,
+                $resolved,
+                $visiting
+            );
+        }
+
+        $resolved[] = $moduleKey;
+
+        unset($visiting[$moduleKey]);
+    }
+
+    public function getPermissionSlugs(
+        User $user,
+        int $tenantId
+    ): array {
+        return $this->getTenantPermissions(
+            $user,
+            $tenantId
+        )
+            ->pluck('slug')
+            ->unique()
+            ->values()
             ->toArray();
+
+        return Cache::remember(
+            "permissions:{$tenantId}:{$user->id}",
+            now()->addHours(12),
+            function () use ($user, $tenantId) {
+
+                return $this->getTenantPermissions(
+                    $user,
+                    $tenantId
+                )
+                    ->pluck('slug')
+                    ->unique()
+                    ->values()
+                    ->toArray();
+            }
+        );
     }
 
     public function getTenantPermissions(
@@ -39,7 +128,7 @@ class PermissionService
         int $tenantId
     ) {
         $common = ['admin'];
-        $modules = $this->getTenantModules($tenantId);
+        $modules = $this->getResolvedTenantModules($tenantId);
         $addons = []; // later
         $features = []; // later
 
@@ -74,12 +163,10 @@ class PermissionService
         string $slug
     ): bool {
 
-        return $this->getTenantPermissions(
-            $user,
-            $tenantId
-        )
-            ->pluck('slug')
-            ->contains($slug);
+        return in_array(
+            $slug,
+            $this->getPermissionSlugs($user, $tenantId)
+        );
     }
 
     public function assignDirectPermissions(
