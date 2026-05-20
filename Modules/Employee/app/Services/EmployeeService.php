@@ -30,12 +30,14 @@ class EmployeeService
     {
         $employee = $this->find($id);
         $employee->update($data);
+
         return $employee;
     }
 
     public function delete($id)
     {
         $employee = $this->find($id);
+
         return $employee->delete();
     }
 }

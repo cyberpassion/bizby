@@ -2,14 +2,13 @@
 
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\IdentifyTenantByHeader;
+use App\Http\Middleware\InitializeTenancyByHeader;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
-use \Illuminate\Http\Middleware\HandleCors;
-
-use App\Http\Middleware\InitializeTenancyByHeader;
-use App\Http\Middleware\IdentifyTenantByHeader;
+use Illuminate\Http\Middleware\HandleCors;
 use Modules\Shared\Http\Middleware\CheckPermission;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -20,12 +19,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-		$middleware->prepend(HandleCors::class);
+        $middleware->prepend(HandleCors::class);
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
-		$middleware->alias([
+        $middleware->alias([
             'tenant' => InitializeTenancyByHeader::class,
-			'identify.tenant' => IdentifyTenantByHeader::class,
-			'permission' => CheckPermission::class
+            'identify.tenant' => IdentifyTenantByHeader::class,
+            'permission' => CheckPermission::class,
         ]);
 
         $middleware->web(append: [

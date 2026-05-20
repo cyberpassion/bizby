@@ -2,25 +2,22 @@
 
 namespace Modules\Shared\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Modules\Shared\Services\ListService;
 use Modules\Shared\Services\TermResolverService;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
-
-use Illuminate\Support\Str;
-
 abstract class SharedApiController extends Controller
 {
-	protected $with = [];
+    protected $with = [];
 
-	protected $listService;
+    protected $listService;
 
     public function __construct(ListService $listService)
     {
@@ -52,214 +49,212 @@ abstract class SharedApiController extends Controller
         ], Response::HTTP_OK);
     }*/
 
-	public function index(Request $request)
-	{
-		$module = Str::of(static::class)->after('Modules\\')->before('\\')->lower()->toString();
-    	$model = $this->model();
-		$modelInstance = new $model; // ✅ ADD THIS LINE
-		$table = $modelInstance->getTable();
+    public function index(Request $request)
+    {
+        $module = Str::of(static::class)->after('Modules\\')->before('\\')->lower()->toString();
+        $model = $this->model();
+        $modelInstance = new $model; // ✅ ADD THIS LINE
+        $table = $modelInstance->getTable();
 
-	    // Convert GET params automatically into exact match filters
-    	/*$whereFilters = $request->only(
+        // Convert GET params automatically into exact match filters
+        /*$whereFilters = $request->only(
         	(new $model)->getFillable()   // apply only valid DB columns
     	);*/
-		$whereFilters = collect(
-		    $request->only((new $model)->getFillable())
-		)->filter(function ($value) {
-    		return $value !== 'all' && $value !== null && $value !== '';
-		})->toArray();
+        $whereFilters = collect(
+            $request->only((new $model)->getFillable())
+        )->filter(function ($value) {
+            return $value !== 'all' && $value !== null && $value !== '';
+        })->toArray();
 
-		/*
-		|--------------------------------------------------------------------------
-		| DEFAULT STATUS FILTER
-		|--------------------------------------------------------------------------
-		| If status is NOT explicitly provided,
-		| show only active records.
-		*/
+        /*
+        |--------------------------------------------------------------------------
+        | DEFAULT STATUS FILTER
+        |--------------------------------------------------------------------------
+        | If status is NOT explicitly provided,
+        | show only active records.
+        */
 
-		if (!array_key_exists('status', $whereFilters)) {
-		    $whereFilters['status'] = 1;
-		}
+        if (! array_key_exists('status', $whereFilters)) {
+            $whereFilters['status'] = 1;
+        }
 
-	    // Search param if exists
-    	$search = $request->get('search', null);
+        // Search param if exists
+        $search = $request->get('search', null);
 
-		$searchable = property_exists($this, 'searchable') ? $this->searchable : [];
+        $searchable = property_exists($this, 'searchable') ? $this->searchable : [];
 
-	    // Pass to ListService
-    	$result = $this->listService->get($table, [
-			'connection'     => $modelInstance->getConnectionName(),
-        	'where'          => $whereFilters,
-        	'search'         => $search,
-	        'searchColumns'  => $searchable,
-    	    'sortBy'         => $request->get('sortBy', 'id'),
-        	'sortDir'        => $request->get('sortDir', 'desc'),
-	        'start'          => $request->get('start', 0),
-    	    'limit'          => $request->get('limit', 20),
-	    ]);
+        // Pass to ListService
+        $result = $this->listService->get($table, [
+            'connection' => $modelInstance->getConnectionName(),
+            'where' => $whereFilters,
+            'search' => $search,
+            'searchColumns' => $searchable,
+            'sortBy' => $request->get('sortBy', 'id'),
+            'sortDir' => $request->get('sortDir', 'desc'),
+            'start' => $request->get('start', 0),
+            'limit' => $request->get('limit', 20),
+        ]);
 
-		/*
-	    |--------------------------------------------------------------------------
-    	| ADD STATUS LABEL FROM CONFIG
-    	|--------------------------------------------------------------------------
-	    */
-    	//$statuses = app(LookupsApiController::class)->get('inventory')['statuses'];print_r($statuses);exit;
+        /*
+        |--------------------------------------------------------------------------
+        | ADD STATUS LABEL FROM CONFIG
+        |--------------------------------------------------------------------------
+        */
+        // $statuses = app(LookupsApiController::class)->get('inventory')['statuses'];print_r($statuses);exit;
 
-	    /*if (!empty($result['data'])) {
-    	    $result['data'] = collect($result['data'])->map(function ($row) use ($statuses) {
+        /*if (!empty($result['data'])) {
+            $result['data'] = collect($result['data'])->map(function ($row) use ($statuses) {
 
-        	    $row['status_label'] = $statuses[$row['status']] ?? $row['status'];
+                $row['status_label'] = $statuses[$row['status']] ?? $row['status'];
 
-	            return $row;
-    	    })->toArray();
-    	}*/
+                return $row;
+            })->toArray();
+        }*/
 
-		$lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
-		$statuses = $lookupResponse->getData(true)['data'] ?? [];
+        $lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
+        $statuses = $lookupResponse->getData(true)['data'] ?? [];
 
-		if ($result instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+        if ($result instanceof LengthAwarePaginator) {
 
-		    $result->setCollection(
-			    $result->getCollection()->map(function ($row) use ($statuses) {
+            $result->setCollection(
+                $result->getCollection()->map(function ($row) use ($statuses) {
 
-			        foreach ($row as $key => $value) {
+                    foreach ($row as $key => $value) {
 
-			            if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
+                        if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
 
-        			        $resolved = \Modules\Shared\Services\TermResolverService::resolve($value);
+                            $resolved = TermResolverService::resolve($value);
 
-            	    		if ($resolved !== $value) {
-		        	            $row->{$key . '_label'} = $resolved;
-        		    	    }
-            			}
-        			}
+                            if ($resolved !== $value) {
+                                $row->{$key.'_label'} = $resolved;
+                            }
+                        }
+                    }
 
-			        if (isset($row->status)) {
-    	    		    $row->status_label = $statuses[$row->status] ?? $row->status;
-        			}
+                    if (isset($row->status)) {
+                        $row->status_label = $statuses[$row->status] ?? $row->status;
+                    }
 
-			        $row = $this->mergePolymorphicFields($row);
+                    $row = $this->mergePolymorphicFields($row);
 
-    		    	return $row;
-    			})
-			);
+                    return $row;
+                })
+            );
 
-			// ✅ Inject relations + accessors (LIKE show())
-			if (!empty($this->with) && $result instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+            // ✅ Inject relations + accessors (LIKE show())
+            if (! empty($this->with) && $result instanceof LengthAwarePaginator) {
 
-			    $ids = collect($result->items())->pluck('id')->filter();
+                $ids = collect($result->items())->pluck('id')->filter();
 
-			    $models = ($this->model())::with($this->with)
-			        ->whereIn('id', $ids)
-        			->get()
-			        ->keyBy('id');
+                $models = ($this->model())::with($this->with)
+                    ->whereIn('id', $ids)
+                    ->get()
+                    ->keyBy('id');
 
-			    $result->setCollection(
-			        $result->getCollection()->map(function ($row) use ($models) {
+                $result->setCollection(
+                    $result->getCollection()->map(function ($row) use ($models) {
 
-			            $full = $models[$row->id] ?? null;
+                        $full = $models[$row->id] ?? null;
 
-			            if ($full) {
-            			    // ✅ merge relations
-			                foreach ($full->getRelations() as $key => $relation) {
-            			        $row->$key = $relation;
-                			}
+                        if ($full) {
+                            // ✅ merge relations
+                            foreach ($full->getRelations() as $key => $relation) {
+                                $row->$key = $relation;
+                            }
 
-			                // ✅ merge accessors (like center_name)
-            		    	foreach ($full->getAttributes() as $key => $value) {
-                    			// skip base fields
-                			}
+                            // ✅ merge accessors (like center_name)
+                            foreach ($full->getAttributes() as $key => $value) {
+                                // skip base fields
+                            }
 
-		                	// easiest way → just use toArray diff
-	        		        $extra = collect($full->toArray())
-    	            		    ->except(array_keys((array) $row))
-        	            		->toArray();
+                            // easiest way → just use toArray diff
+                            $extra = collect($full->toArray())
+                                ->except(array_keys((array) $row))
+                                ->toArray();
 
-			                foreach ($extra as $key => $value) {
-    	    		            $row->$key = $value;
-        	        		}
-            			}
+                            foreach ($extra as $key => $value) {
+                                $row->$key = $value;
+                            }
+                        }
 
-            			return $row;
-        			})
-    			);
-			}
+                        return $row;
+                    })
+                );
+            }
 
+        }
 
-		}
-
-	    return response()->json([
-    	    'status'  => 'success',
-        	'message' => 'Records fetched successfully.',
-	        'data'    => $result
-    	], Response::HTTP_OK);
-	}
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Records fetched successfully.',
+            'data' => $result,
+        ], Response::HTTP_OK);
+    }
 
     /**
      * Show single resource
      */
+    public function show(int $id)
+    {
+        $module = Str::of(static::class)
+            ->after('Modules\\')
+            ->before('\\')
+            ->lower()
+            ->toString();
 
-	public function show(int $id)
-	{
-    	$module = Str::of(static::class)
-	        ->after('Modules\\')
-    	    ->before('\\')
-        	->lower()
-        	->toString();
+        // $model = $this->model()::find($id);
+        $modelClass = $this->model();
 
-	    //$model = $this->model()::find($id);
-		$modelClass = $this->model();
+        $query = $modelClass::query();
 
-		$query = $modelClass::query();
+        // ✅ Apply relations from child controller
+        if (! empty($this->with)) {
+            $query->with($this->with);
+        }
 
-		// ✅ Apply relations from child controller
-		if (!empty($this->with)) {
-    		$query->with($this->with);
-		}
+        $model = $query->find($id);
 
-		$model = $query->find($id);
+        if (! $model) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Resource not found.',
+                'data' => null,
+            ], Response::HTTP_NOT_FOUND);
+        }
 
-	    if (!$model) {
-    	    return response()->json([
-        	    'status' => 'error',
-            	'message' => 'Resource not found.',
-            	'data' => null
-	        ], Response::HTTP_NOT_FOUND);
-    	}
+        // 🔥 Get statuses dynamically
+        $lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
+        $statuses = $lookupResponse->getData(true)['data'] ?? [];
 
-	    // 🔥 Get statuses dynamically
-    	$lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
-    	$statuses = $lookupResponse->getData(true)['data'] ?? [];
+        // 🔥 Convert model to object (safe handling)
+        $row = (object) $model->toArray();
 
-	    // 🔥 Convert model to object (safe handling)
-    	$row = (object) $model->toArray();
+        // 🔥 Resolve term values
+        foreach ($row as $key => $value) {
 
-	    // 🔥 Resolve term values
-    	foreach ($row as $key => $value) {
+            if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
 
-	        if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
+                $resolved = TermResolverService::resolve($value);
 
-	            $resolved = TermResolverService::resolve($value);
+                if ($resolved !== $value) {
+                    $row->{$key.'_label'} = $resolved;
+                }
+            }
+        }
 
-	            if ($resolved !== $value) {
-    	            $row->{$key . '_label'} = $resolved;
-        	    }
-        	}
-    	}
+        // 🔥 Status label
+        if (isset($row->status)) {
+            $row->status_label = $statuses[$row->status] ?? $row->status;
+        }
 
-	    // 🔥 Status label
-    	if (isset($row->status)) {
-        	$row->status_label = $statuses[$row->status] ?? $row->status;
-    	}
+        $row = $this->mergePolymorphicFields($row);
 
-		$row = $this->mergePolymorphicFields($row);
-
-	    return response()->json([
-    	    'status' => 'success',
-        	'message' => 'Record fetched successfully.',
-        	'data' => $row
-	    ], Response::HTTP_OK);
-	}
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Record fetched successfully.',
+            'data' => $row,
+        ], Response::HTTP_OK);
+    }
 
     /**
      * Store resource
@@ -267,23 +262,23 @@ abstract class SharedApiController extends Controller
     public function store(Request $request)
     {
 
-		/*return response()->json([
-		    'tenant_id'          => tenant('id'),
-		    'tenant_db_config'   => tenant('tenancy_db_name'),          // canonical value
-    		'active_connection'  => DB::getDefaultConnection(),  // mysql / central
-		    'active_db_runtime'  => DB::connection()->getDatabaseName(), // runtime check
-		]);*/
+        /*return response()->json([
+            'tenant_id'          => tenant('id'),
+            'tenant_db_config'   => tenant('tenancy_db_name'),          // canonical value
+            'active_connection'  => DB::getDefaultConnection(),  // mysql / central
+            'active_db_runtime'  => DB::connection()->getDatabaseName(), // runtime check
+        ]);*/
 
-        //$validated = $request->validate($this->validationRules());
-		//$validated = $request->all();
-		$validated = $this->parsePolymorphicFields($request->all());
+        // $validated = $request->validate($this->validationRules());
+        // $validated = $request->all();
+        $validated = $this->parsePolymorphicFields($request->all());
         $model = $this->model();
         $resource = $model::create($validated);
 
         return response()->json([
             'status' => 'success',
             'message' => 'Record created successfully.',
-            'data' => $resource
+            'data' => $resource,
         ], Response::HTTP_CREATED);
     }
 
@@ -294,18 +289,18 @@ abstract class SharedApiController extends Controller
     {
         $modelInstance = $this->model()::find($id);
 
-        if (!$modelInstance) {
+        if (! $modelInstance) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Resource not found.',
-                'data' => null
+                'data' => null,
             ], Response::HTTP_NOT_FOUND);
         }
 
         // Only update fillable fields
-        //$data = $request->only($modelInstance->getFillable());
-		//$data = $request->all();
-		$data = $this->parsePolymorphicFields($request->all());
+        // $data = $request->only($modelInstance->getFillable());
+        // $data = $request->all();
+        $data = $this->parsePolymorphicFields($request->all());
 
         // Validate update rules
         $validator = Validator::make($data, $this->validationRules($id));
@@ -315,7 +310,7 @@ abstract class SharedApiController extends Controller
                 'status' => 'error',
                 'message' => 'Validation failed.'.json_encode($validator->errors()),
                 'errors' => $validator->errors(),
-                'data' => null
+                'data' => null,
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -324,7 +319,7 @@ abstract class SharedApiController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Record updated successfully.',
-            'data' => $modelInstance
+            'data' => $modelInstance,
         ], Response::HTTP_OK);
     }
 
@@ -335,11 +330,11 @@ abstract class SharedApiController extends Controller
     {
         $model = $this->model()::find($id);
 
-        if (!$model) {
+        if (! $model) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Resource not found.',
-                'data' => null
+                'data' => null,
             ], Response::HTTP_NOT_FOUND);
         }
 
@@ -348,134 +343,134 @@ abstract class SharedApiController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Resource deleted successfully.',
-            'data' => null
+            'data' => null,
         ], Response::HTTP_OK);
     }
 
-/* ======================================================
- | STATS ENDPOINT (INSTRUCTION-DRIVEN, COUNT ONLY)
- | GET /{module}/stats
- |
- | Supports:
- | - metrics=total_records
- | - aggregates=count:gender=M,count:status=completed
- | - group_by=gender,status
- | - filters=gender:M,status:completed
- | - from=YYYY-MM-DD
- | - to=YYYY-MM-DD
- |
- | Defaults apply ONLY when no instructions are provided
- ====================================================== */
-public function stats(Request $request)
-{
-    $model = $this->model();
-    $query = $model::query();
+    /* ======================================================
+     | STATS ENDPOINT (INSTRUCTION-DRIVEN, COUNT ONLY)
+     | GET /{module}/stats
+     |
+     | Supports:
+     | - metrics=total_records
+     | - aggregates=count:gender=M,count:status=completed
+     | - group_by=gender,status
+     | - filters=gender:M,status:completed
+     | - from=YYYY-MM-DD
+     | - to=YYYY-MM-DD
+     |
+     | Defaults apply ONLY when no instructions are provided
+     ====================================================== */
+    public function stats(Request $request)
+    {
+        $model = $this->model();
+        $query = $model::query();
 
-    /* ------------------------------------
-     | DATE FILTERS
-     ------------------------------------ */
-    if ($request->filled('from')) {
-        $query->whereDate('created_at', '>=', $request->from);
-    }
+        /* ------------------------------------
+         | DATE FILTERS
+         ------------------------------------ */
+        if ($request->filled('from')) {
+            $query->whereDate('created_at', '>=', $request->from);
+        }
 
-    if ($request->filled('to')) {
-        $query->whereDate('created_at', '<=', $request->to);
-    }
+        if ($request->filled('to')) {
+            $query->whereDate('created_at', '<=', $request->to);
+        }
 
-    /* ------------------------------------
-     | GENERIC FILTERS
-     | filters=gender:M,status:completed
-     ------------------------------------ */
-    if ($request->filled('filters')) {
-        foreach (explode(',', $request->filters) as $filter) {
-            [$key, $value] = array_pad(explode(':', $filter, 2), 2, null);
-            if ($key && $value !== null) {
-                $query->where($key, $value);
+        /* ------------------------------------
+         | GENERIC FILTERS
+         | filters=gender:M,status:completed
+         ------------------------------------ */
+        if ($request->filled('filters')) {
+            foreach (explode(',', $request->filters) as $filter) {
+                [$key, $value] = array_pad(explode(':', $filter, 2), 2, null);
+                if ($key && $value !== null) {
+                    $query->where($key, $value);
+                }
             }
         }
-    }
 
-    /* ------------------------------------
-     | DETECT IF CLIENT SENT INSTRUCTIONS
-     ------------------------------------ */
-    $hasInstructions =
-        $request->filled('metrics') ||
-        $request->filled('aggregates') ||
-        $request->filled('group_by');
+        /* ------------------------------------
+         | DETECT IF CLIENT SENT INSTRUCTIONS
+         ------------------------------------ */
+        $hasInstructions =
+            $request->filled('metrics') ||
+            $request->filled('aggregates') ||
+            $request->filled('group_by');
 
-    /* ------------------------------------
-     | METRICS
-     ------------------------------------ */
-    $metricKeys = $hasInstructions
-        ? array_filter(explode(',', $request->get('metrics', '')))
-        : $this->defaultMetrics();
+        /* ------------------------------------
+         | METRICS
+         ------------------------------------ */
+        $metricKeys = $hasInstructions
+            ? array_filter(explode(',', $request->get('metrics', '')))
+            : $this->defaultMetrics();
 
-    $metrics = [];
+        $metrics = [];
 
-    foreach ($metricKeys as $metric) {
-        if ($metric === 'total_records') {
-            $metrics['total_records'] = (clone $query)->count();
-        }
-    }
-
-    /* ------------------------------------
-     | AGGREGATES (Conditional counts)
-     ------------------------------------ */
-    $aggregateKeys = $hasInstructions
-        ? array_filter(explode(',', $request->get('aggregates', '')))
-        : $this->defaultAggregates();
-
-    foreach ($aggregateKeys as $aggregate) {
-        [$fn, $expr] = array_pad(explode(':', $aggregate, 2), 2, null);
-
-        if ($fn === 'count' && $expr) {
-            [$field, $value] = array_pad(explode('=', $expr, 2), 2, null);
-
-            if ($field && $value !== null) {
-                $metrics["count_{$field}_{$value}"] =
-                    (clone $query)->where($field, $value)->count();
+        foreach ($metricKeys as $metric) {
+            if ($metric === 'total_records') {
+                $metrics['total_records'] = (clone $query)->count();
             }
         }
-		if ($fn === 'sum' && $expr) {
-		    $field = $expr;
 
-		    if ($field) {
-        		$metrics["sum_{$field}"] =
-            		(clone $query)->sum($field);
-    		}
-		}
-    }
+        /* ------------------------------------
+         | AGGREGATES (Conditional counts)
+         ------------------------------------ */
+        $aggregateKeys = $hasInstructions
+            ? array_filter(explode(',', $request->get('aggregates', '')))
+            : $this->defaultAggregates();
 
-    /* ------------------------------------
-     | GROUPED STATS
-     ------------------------------------ */
-    $groupFields = $hasInstructions
-        ? array_filter(explode(',', $request->get('group_by', '')))
-        : $this->defaultGroups();
+        foreach ($aggregateKeys as $aggregate) {
+            [$fn, $expr] = array_pad(explode(':', $aggregate, 2), 2, null);
 
-    $groups = [];
+            if ($fn === 'count' && $expr) {
+                [$field, $value] = array_pad(explode('=', $expr, 2), 2, null);
 
-    foreach ($groupFields as $field) {
-        if (!$this->isAllowedChart($field)) {
-            continue;
+                if ($field && $value !== null) {
+                    $metrics["count_{$field}_{$value}"] =
+                        (clone $query)->where($field, $value)->count();
+                }
+            }
+            if ($fn === 'sum' && $expr) {
+                $field = $expr;
+
+                if ($field) {
+                    $metrics["sum_{$field}"] =
+                        (clone $query)->sum($field);
+                }
+            }
         }
 
-        $groups[$field] = (clone $query)
-            ->select($field, DB::raw('COUNT(*) as total'))
-            ->groupBy($field)
-            ->pluck('total', $field)
-            ->toArray();
-    }
+        /* ------------------------------------
+         | GROUPED STATS
+         ------------------------------------ */
+        $groupFields = $hasInstructions
+            ? array_filter(explode(',', $request->get('group_by', '')))
+            : $this->defaultGroups();
 
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Stats generated successfully.',
-        'data' => array_filter([
-            'metrics' => $metrics ?: null,
-            'groups'  => $groups  ?: null,
-        ]),
-    ], Response::HTTP_OK);
-}
+        $groups = [];
+
+        foreach ($groupFields as $field) {
+            if (! $this->isAllowedChart($field)) {
+                continue;
+            }
+
+            $groups[$field] = (clone $query)
+                ->select($field, DB::raw('COUNT(*) as total'))
+                ->groupBy($field)
+                ->pluck('total', $field)
+                ->toArray();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Stats generated successfully.',
+            'data' => array_filter([
+                'metrics' => $metrics ?: null,
+                'groups' => $groups ?: null,
+            ]),
+        ], Response::HTTP_OK);
+    }
 
     /* ======================================================
  | GRAPHS ENDPOINT (INSTRUCTION-DRIVEN)
@@ -488,48 +483,48 @@ public function stats(Request $request)
  | Defaults:
  | - charts → allowedCharts()
  ====================================================== */
-public function graphs(Request $request)
-{
-    $model = $this->model();
-    $query = $model::query();
+    public function graphs(Request $request)
+    {
+        $model = $this->model();
+        $query = $model::query();
 
-    /* ------------------------------------
-     | DATE FILTERS
-     ------------------------------------ */
-    if ($request->filled('from')) {
-        $query->whereDate('created_at', '>=', $request->from);
-    }
-
-    if ($request->filled('to')) {
-        $query->whereDate('created_at', '<=', $request->to);
-    }
-
-    /* ------------------------------------
-     | CHART FIELDS
-     | Default → allowedCharts()
-     ------------------------------------ */
-    $chartFields = $request->filled('charts')
-        ? array_filter(explode(',', $request->get('charts')))
-        : $this->allowedCharts();
-
-    $charts = [];
-
-    foreach ($chartFields as $field) {
-        if (!$this->isAllowedChart($field)) {
-            continue;
+        /* ------------------------------------
+         | DATE FILTERS
+         ------------------------------------ */
+        if ($request->filled('from')) {
+            $query->whereDate('created_at', '>=', $request->from);
         }
 
-        $charts[$field] = $this->chartData($query, $field);
-    }
+        if ($request->filled('to')) {
+            $query->whereDate('created_at', '<=', $request->to);
+        }
 
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Graph data generated successfully.',
-        'data' => [
-            'charts' => $charts,
-        ],
-    ], Response::HTTP_OK);
-}
+        /* ------------------------------------
+         | CHART FIELDS
+         | Default → allowedCharts()
+         ------------------------------------ */
+        $chartFields = $request->filled('charts')
+            ? array_filter(explode(',', $request->get('charts')))
+            : $this->allowedCharts();
+
+        $charts = [];
+
+        foreach ($chartFields as $field) {
+            if (! $this->isAllowedChart($field)) {
+                continue;
+            }
+
+            $charts[$field] = $this->chartData($query, $field);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Graph data generated successfully.',
+            'data' => [
+                'charts' => $charts,
+            ],
+        ], Response::HTTP_OK);
+    }
 
     /* ======================================================
      | HELPERS
@@ -549,7 +544,7 @@ public function graphs(Request $request)
             ->toArray();
     }
 
-	 protected function allowedCharts(): array
+    protected function allowedCharts(): array
     {
         return [];
     }
@@ -561,174 +556,173 @@ public function graphs(Request $request)
         return empty($allowed) || in_array($field, $allowed, true);
     }
 
-	protected function defaultMetrics(): array
-	{
-    	return ['total_records'];
-	}
+    protected function defaultMetrics(): array
+    {
+        return ['total_records'];
+    }
 
-	protected function defaultAggregates(): array
-	{
-    	return [];
-	}
+    protected function defaultAggregates(): array
+    {
+        return [];
+    }
 
-	protected function defaultGroups(): array
-	{
-    	return [];
-	}
+    protected function defaultGroups(): array
+    {
+        return [];
+    }
 
-	protected function parsePolymorphicFields(array $data): array
-	{
-    	$allowedTypes = array_keys(Relation::morphMap());
+    protected function parsePolymorphicFields(array $data): array
+    {
+        $allowedTypes = array_keys(Relation::morphMap());
 
-	    foreach ($data as $key => $value) {
+        foreach ($data as $key => $value) {
 
-	        /*
-    	    |--------------------------------------------------------------------------
-        	| ✅ NEW: Handle _id + _type (your current frontend)
-        	|--------------------------------------------------------------------------
-	        */
-     		if (str_ends_with($key, '_type')) {
+            /*
+            |--------------------------------------------------------------------------
+            | ✅ NEW: Handle _id + _type (your current frontend)
+            |--------------------------------------------------------------------------
+            */
+            if (str_ends_with($key, '_type')) {
 
-	            $base = str_replace('_type', '', $key);
-    	        $idKey = $base . '_id';
+                $base = str_replace('_type', '', $key);
+                $idKey = $base.'_id';
 
-	            if (isset($data[$idKey])) {
+                if (isset($data[$idKey])) {
 
-	                $type = $value;
-    	            $id   = (int) $data[$idKey];
+                    $type = $value;
+                    $id = (int) $data[$idKey];
 
-	                // validate type
-     	           if (!in_array($type, $allowedTypes, true)) {
-        	            continue;
-            	    }
+                    // validate type
+                    if (! in_array($type, $allowedTypes, true)) {
+                        continue;
+                    }
 
-	                // ensure correct casting
-    	            $data[$idKey] = $id;
+                    // ensure correct casting
+                    $data[$idKey] = $id;
 
-	                // nothing else to do (already correct format)
-     	           continue;
-        	    }
-        	}
+                    // nothing else to do (already correct format)
+                    continue;
+                }
+            }
 
-	        /*
-    	    |--------------------------------------------------------------------------
-        	| 🔁 OLD: Handle "employee:1"
-        	|--------------------------------------------------------------------------
-	        */
-    	    if (
-        	    is_string($value) &&
-            	preg_match('/^([a-zA-Z_]+):(\d+)$/', $value, $matches)
-	        ) {
-    	        $type = $matches[1];
-        	    $id   = (int) $matches[2];
+            /*
+            |--------------------------------------------------------------------------
+            | 🔁 OLD: Handle "employee:1"
+            |--------------------------------------------------------------------------
+            */
+            if (
+                is_string($value) &&
+                preg_match('/^([a-zA-Z_]+):(\d+)$/', $value, $matches)
+            ) {
+                $type = $matches[1];
+                $id = (int) $matches[2];
 
-	            if (!in_array($type, $allowedTypes, true)) {
-    	            continue;
-        	    }
+                if (! in_array($type, $allowedTypes, true)) {
+                    continue;
+                }
 
-	            if (str_ends_with($key, '_id')) {
-    	            $data[$key] = $id;
-        	    } else {
-            	    $data[$key . '_type'] = $type;
-                	$data[$key . '_id']   = $id;
+                if (str_ends_with($key, '_id')) {
+                    $data[$key] = $id;
+                } else {
+                    $data[$key.'_type'] = $type;
+                    $data[$key.'_id'] = $id;
 
-	                unset($data[$key]);
-    	        }
-        	}
-    	}
-
-	    return $data;
-	}
-
-	protected function mergePolymorphicFields($row)
-	{
-    	foreach ($row as $key => $value) {
-
-	        if (str_ends_with($key, '_type')) {
-
-	            $base = str_replace('_type', '', $key);
-    	        $idKey = $base . '_id';
-
-	            if (isset($row->$idKey)) {
-
-    	            $type = $row->$key;
-        	        $id   = $row->$idKey;
-
-	                if ($type && $id) {
-
-    	                // ✅ keep original fields (DO NOTHING)
-
-        	            // ✅ just add label
-            	        $label = $this->resolvePolymorphicLabel($type, $id);
-
-	                    if ($label) {
-    	                    $row->{$base . '_label'} = $label;
-        	            }
-            	    }
-            	}
-        	}
-    	}
-
-	    return $row;
-	}
-
-	protected function resolvePolymorphicLabel($type, $id)
-	{
-    	$map = Relation::morphMap();
-
-	    if (!isset($map[$type])) {
-    	    return null;
-    	}
-
-	    $modelClass = $map[$type];
-
-	    return $modelClass::find($id)?->name ?? null;
-	}
-
-	public function transformCollection($rows, string $module)
-{
-    $lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
-    $statuses = $lookupResponse->getData(true)['data'] ?? [];
-
-    return collect($rows)->map(function ($row) use ($statuses) {
-
-        // convert to object if array
-        $row = is_array($row) ? (object) $row : $row;
-
-        /*
-        |--------------------------------------------------------------------------
-        | TERM RESOLUTION (_label fields)
-        |--------------------------------------------------------------------------
-        */
-        foreach ($row as $key => $value) {
-            if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
-
-                $resolved = \Modules\Shared\Services\TermResolverService::resolve($value);
-
-                if ($resolved !== $value) {
-                    $row->{$key . '_label'} = $resolved;
+                    unset($data[$key]);
                 }
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | STATUS LABEL
-        |--------------------------------------------------------------------------
-        */
-        if (isset($row->status)) {
-            $row->status_label = $statuses[$row->status] ?? $row->status;
+        return $data;
+    }
+
+    protected function mergePolymorphicFields($row)
+    {
+        foreach ($row as $key => $value) {
+
+            if (str_ends_with($key, '_type')) {
+
+                $base = str_replace('_type', '', $key);
+                $idKey = $base.'_id';
+
+                if (isset($row->$idKey)) {
+
+                    $type = $row->$key;
+                    $id = $row->$idKey;
+
+                    if ($type && $id) {
+
+                        // ✅ keep original fields (DO NOTHING)
+
+                        // ✅ just add label
+                        $label = $this->resolvePolymorphicLabel($type, $id);
+
+                        if ($label) {
+                            $row->{$base.'_label'} = $label;
+                        }
+                    }
+                }
+            }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | POLYMORPHIC LABELS
-        |--------------------------------------------------------------------------
-        */
-        $row = $this->mergePolymorphicFields($row);
-
         return $row;
-    });
-}
+    }
 
+    protected function resolvePolymorphicLabel($type, $id)
+    {
+        $map = Relation::morphMap();
+
+        if (! isset($map[$type])) {
+            return null;
+        }
+
+        $modelClass = $map[$type];
+
+        return $modelClass::find($id)?->name ?? null;
+    }
+
+    public function transformCollection($rows, string $module)
+    {
+        $lookupResponse = app(LookupsApiController::class)->get("{$module}.statuses");
+        $statuses = $lookupResponse->getData(true)['data'] ?? [];
+
+        return collect($rows)->map(function ($row) use ($statuses) {
+
+            // convert to object if array
+            $row = is_array($row) ? (object) $row : $row;
+
+            /*
+            |--------------------------------------------------------------------------
+            | TERM RESOLUTION (_label fields)
+            |--------------------------------------------------------------------------
+            */
+            foreach ($row as $key => $value) {
+                if (is_string($value) && preg_match('/^(core|tenant)_\d+$/', $value)) {
+
+                    $resolved = TermResolverService::resolve($value);
+
+                    if ($resolved !== $value) {
+                        $row->{$key.'_label'} = $resolved;
+                    }
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | STATUS LABEL
+            |--------------------------------------------------------------------------
+            */
+            if (isset($row->status)) {
+                $row->status_label = $statuses[$row->status] ?? $row->status;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | POLYMORPHIC LABELS
+            |--------------------------------------------------------------------------
+            */
+            $row = $this->mergePolymorphicFields($row);
+
+            return $row;
+        });
+    }
 }
