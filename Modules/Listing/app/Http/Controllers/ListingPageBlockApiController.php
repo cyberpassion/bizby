@@ -4,7 +4,6 @@ namespace Modules\Listing\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
 use Modules\Listing\Models\ListingPageBlock;
 
 class ListingPageBlockApiController extends Controller
@@ -47,26 +46,39 @@ class ListingPageBlockApiController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
 
-            'listing_id' => 'required|exists:central.listings,id',
+            'listing_id' => 'required', // |exists:listings,id
 
             'type' => 'required|string',
 
-            'title' => 'nullable|string',
-            'subtitle' => 'nullable|string',
+            'menu_title' => 'nullable|string|max:255',
+
+            'title' => 'nullable|string|max:255',
+
+            'subtitle' => 'nullable|string|max:255',
 
             'content' => 'nullable|string',
 
             'image' => 'nullable|string',
+
             'image_2' => 'nullable|string',
 
             'gallery' => 'nullable|array',
 
             'video_url' => 'nullable|string',
 
-            'button_text' => 'nullable|string',
-            'button_link' => 'nullable|string',
+            'button_text' => 'nullable|string|max:255',
+
+            'button_link' => 'nullable|string|max:500',
+
+            'background_color' => 'nullable|string|max:50',
+
+            'text_color' => 'nullable|string|max:50',
+
+            'layout' => 'nullable|string|max:100',
+
+            'alignment' => 'nullable|string|max:100',
 
             'extra_data' => 'nullable|array',
 
@@ -74,15 +86,18 @@ class ListingPageBlockApiController extends Controller
 
             'is_active' => 'nullable|boolean',
 
-            'background_color' => 'nullable|string',
-            'text_color' => 'nullable|string',
+            'seo_title' => 'nullable|string|max:255',
+
+            'seo_description' => 'nullable|string',
         ]);
 
-        $block = ListingPageBlock::create($data);
+        $block = ListingPageBlock::create($validated);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Block created successfully',
+            'status' => 'success',
+
+            'message' => 'Block created successfully.',
+
             'data' => $block,
         ]);
     }
