@@ -9,41 +9,74 @@ use Modules\Employee\Models\EmployeeEducationHistory;
 
 class EmployeeEducationHistoryApiController extends Controller
 {
-    public function index(Employee $employee)
+    public function index($employeeId)
     {
-        return $employee->educationHistories;
+        $employee = Employee::findOrFail($employeeId);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Education histories fetched successfully',
+            'data' => $employee->educationHistories,
+        ]);
     }
 
-    public function store(Request $request, Employee $employee)
+    public function store(Request $request, $employeeId)
     {
-        return $employee
+        $employee = Employee::findOrFail($employeeId);
+
+        $educationHistory = $employee
             ->educationHistories()
             ->create($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Education history created successfully',
+            'data' => $educationHistory,
+        ], 201);
     }
 
-    public function show(Employee $employee, EmployeeEducationHistory $educationHistory)
+    public function show($employeeId, $id)
     {
-        return $educationHistory;
+        $educationHistory = EmployeeEducationHistory::where(
+            'employee_id',
+            $employeeId
+        )->findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Education history fetched successfully',
+            'data' => $educationHistory,
+        ]);
     }
 
-    public function update(
-        Request $request,
-        Employee $employee,
-        EmployeeEducationHistory $educationHistory
-    ) {
+    public function update(Request $request, $employeeId, $id)
+    {
+        $educationHistory = EmployeeEducationHistory::where(
+            'employee_id',
+            $employeeId
+        )->findOrFail($id);
+
         $educationHistory->update($request->all());
 
-        return $educationHistory;
+        return response()->json([
+            'success' => true,
+            'message' => 'Education history updated successfully',
+            'data' => $educationHistory,
+        ]);
     }
 
-    public function destroy(
-        Employee $employee,
-        EmployeeEducationHistory $educationHistory
-    ) {
+    public function destroy($employeeId, $id)
+    {
+        $educationHistory = EmployeeEducationHistory::where(
+            'employee_id',
+            $employeeId
+        )->findOrFail($id);
+
         $educationHistory->delete();
 
         return response()->json([
-            'message' => 'Deleted successfully',
+            'success' => true,
+            'message' => 'Education history deleted successfully',
         ]);
     }
 }

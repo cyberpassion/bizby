@@ -10,6 +10,8 @@ class Employee extends TenantModel
 {
     use HasFactory;
 
+    protected $table = 'employees';
+
     /**
      * NOTE:
      * We keep fillable empty because we override getFillable().
@@ -35,6 +37,7 @@ class Employee extends TenantModel
         'datetime' => 'datetime',
         'employee_date' => 'date:Y-m-d',
         'dob' => 'date:Y-m-d',
+        'skills' => 'array',
     ];
 
     /**

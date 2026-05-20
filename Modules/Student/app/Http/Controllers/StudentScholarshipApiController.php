@@ -9,43 +9,74 @@ use Modules\Student\Models\StudentScholarship;
 
 class StudentScholarshipApiController extends Controller
 {
-    public function index(Student $student)
+    public function index($studentId)
     {
-        return $student->scholarships;
+        $student = Student::findOrFail($studentId);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Scholarships fetched successfully',
+            'data' => $student->scholarships,
+        ]);
     }
 
-    public function store(Request $request, Student $student)
+    public function store(Request $request, $studentId)
     {
-        return $student
+        $student = Student::findOrFail($studentId);
+
+        $scholarship = $student
             ->scholarships()
             ->create($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Scholarship created successfully',
+            'data' => $scholarship,
+        ], 201);
     }
 
-    public function show(
-        Student $student,
-        StudentScholarship $scholarship
-    ) {
-        return $scholarship;
+    public function show($studentId, $id)
+    {
+        $scholarship = StudentScholarship::where(
+            'student_id',
+            $studentId
+        )->findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Scholarship fetched successfully',
+            'data' => $scholarship,
+        ]);
     }
 
-    public function update(
-        Request $request,
-        Student $student,
-        StudentScholarship $scholarship
-    ) {
+    public function update(Request $request, $studentId, $id)
+    {
+        $scholarship = StudentScholarship::where(
+            'student_id',
+            $studentId
+        )->findOrFail($id);
+
         $scholarship->update($request->all());
 
-        return $scholarship;
+        return response()->json([
+            'success' => true,
+            'message' => 'Scholarship updated successfully',
+            'data' => $scholarship,
+        ]);
     }
 
-    public function destroy(
-        Student $student,
-        StudentScholarship $scholarship
-    ) {
+    public function destroy($studentId, $id)
+    {
+        $scholarship = StudentScholarship::where(
+            'student_id',
+            $studentId
+        )->findOrFail($id);
+
         $scholarship->delete();
 
         return response()->json([
-            'message' => 'Deleted successfully',
+            'success' => true,
+            'message' => 'Scholarship deleted successfully',
         ]);
     }
 }

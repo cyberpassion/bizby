@@ -30,6 +30,7 @@ use Modules\Shared\Database\Seeders\Terms\TermLeadStageSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermReligionSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermSchoolBoardSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermSeeder;
+use Modules\Shared\Database\Seeders\Terms\TermSkillSeeder;
 use Modules\Shared\Database\Seeders\Terms\TermUniversitySeeder;
 
 // use Modules\Shared\Database\Seeders\Terms\TermPrioritySeeder;
@@ -91,6 +92,7 @@ class SharedDatabaseSeeder extends Seeder
             // TermMaritalStatusSeeder::class,
             // TermNationalitySeeder::class,
             TermLanguageSeeder::class,
+            TermSkillSeeder::class,
 
             // Organization / HR
             TermDesignationSeeder::class,

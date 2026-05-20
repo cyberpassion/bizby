@@ -19,6 +19,7 @@ class Student extends Model implements FinalizePayment, Payable
 
     protected $casts = [
         'admission_date' => 'date:Y-m-d',
+        'skills' => 'array',
     ];
 
     protected $appends = [

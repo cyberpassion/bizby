@@ -24,23 +24,12 @@ Route::prefix('v1')
 
         /*
         |--------------------------------------------------------------------------
-        | EMPLOYEES
-        |--------------------------------------------------------------------------
-        */
-
-        Route::apiResource(
-            'employees',
-            EmployeeApiController::class
-        )->names('employees');
-
-        /*
-        |--------------------------------------------------------------------------
         | WORK HISTORIES
         |--------------------------------------------------------------------------
         */
 
         Route::apiResource(
-            'employees/{employee}/work-histories',
+            'employees/{employeeId}/work-histories',
             EmployeeWorkHistoryApiController::class
         )->names('employees.workHistories');
 
@@ -51,8 +40,19 @@ Route::prefix('v1')
         */
 
         Route::apiResource(
-            'employees/{employee}/education-histories',
+            'employees/{employeeId}/education-histories',
             EmployeeEducationHistoryApiController::class
         )->names('employees.educationHistories');
+
+        /*
+        |--------------------------------------------------------------------------
+        | EMPLOYEES
+        |--------------------------------------------------------------------------
+        */
+
+        Route::apiResource(
+            'employees',
+            EmployeeApiController::class
+        )->names('employees');
 
     });

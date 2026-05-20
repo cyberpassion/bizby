@@ -130,7 +130,7 @@ return [
                 ],
 
                 [
-                    'title' => 'Work History',
+                    'title' => 'Education History',
                     'href' => UrlPath::make(Res::EDUCATION_HISTORY, '{id}'),
                     'permission' => Permission::view(Res::EDUCATION_HISTORY),
                     'action' => 'education-history',

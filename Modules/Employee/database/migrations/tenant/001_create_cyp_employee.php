@@ -16,14 +16,14 @@ return new class extends Migration
 
             $table->string('employee_type', 255)->nullable();
 
-			// Patient/person info using macro
+            // Patient/person info using macro
             $table->commonPersonFields();
 
             $table->string('father_name', 255)->nullable();
-			$table->string('mother_name', 255)->nullable();
-			$table->string('spouse_name', 255)->nullable();
+            $table->string('mother_name', 255)->nullable();
+            $table->string('spouse_name', 255)->nullable();
             $table->text('qualifications')->nullable()->nullable();
-			$table->string('reference', 255)->nullable();
+            $table->string('reference', 255)->nullable();
             $table->string('pan_number', 255)->nullable();
             $table->string('aadhar_number', 255)->nullable();
             $table->string('driving_license_number', 255)->nullable();
@@ -43,6 +43,7 @@ return new class extends Migration
             $table->date('date_of_relieving')->nullable();
 
             $table->text('past_work_experience')->nullable();
+            $table->json('skills')->nullable()->comment('List of skills or interests of the student');
 
             $table->string('qualification_level', 255)->nullable();
             $table->string('educational_qualification', 255)->nullable();
@@ -51,7 +52,7 @@ return new class extends Migration
             $table->text('job_location')->nullable();
 
             $table->string('first_salary', 8000)->nullable();
-			$table->string('current_salary', 8)->nullable();
+            $table->string('current_salary', 8)->nullable();
         });
     }
 

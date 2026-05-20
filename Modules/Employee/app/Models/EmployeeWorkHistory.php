@@ -2,10 +2,13 @@
 
 namespace Modules\Employee\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Admin\Models\Tenants\TenantModel;
 
-class EmployeeWorkHistory extends Model
+class EmployeeWorkHistory extends TenantModel
 {
+    use HasFactory;
+
     protected $fillable = [
         'employee_id',
         'company_name',

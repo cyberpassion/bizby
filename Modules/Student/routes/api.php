@@ -57,6 +57,28 @@ Route::prefix('v1')
         });
 
         /*
+            |--------------------------------------------------------------------------
+            | EDUCATION HISTORIES
+            |--------------------------------------------------------------------------
+            */
+
+        Route::apiResource(
+            'students/{studentId}/education-histories',
+            StudentEducationHistoryApiController::class
+        )->names('students.educationHistories');
+
+        /*
+        |--------------------------------------------------------------------------
+        | SCHOLARSHIPS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::apiResource(
+            'students/{studentId}/scholarships',
+            StudentScholarshipApiController::class
+        )->names('students.scholarships');
+
+        /*
         |--------------------------------------------------------------------------
         | FEE STRUCTURE PATTERN
         |--------------------------------------------------------------------------
@@ -683,26 +705,5 @@ Route::prefix('v1')
                 );
             });
 
-            /*
-            |--------------------------------------------------------------------------
-            | EDUCATION HISTORIES
-            |--------------------------------------------------------------------------
-            */
-
-            Route::apiResource(
-                'students/{student}/education-histories',
-                StudentEducationHistoryApiController::class
-            )->names('students.educationHistories');
-
-            /*
-            |--------------------------------------------------------------------------
-            | SCHOLARSHIPS
-            |--------------------------------------------------------------------------
-            */
-
-            Route::apiResource(
-                'students/{student}/scholarships',
-                StudentScholarshipApiController::class
-            )->names('students.scholarships');
         });
     });

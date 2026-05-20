@@ -2,10 +2,13 @@
 
 namespace Modules\Student\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Admin\Models\Tenants\TenantModel;
 
-class StudentScholarship extends Model
+class StudentScholarship extends TenantModel
 {
+    use HasFactory;
+
     protected $fillable = [
         'student_id',
         'year_id',
