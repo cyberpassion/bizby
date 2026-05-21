@@ -10,10 +10,11 @@ return new class extends Migration
     {
         Schema::create('listings', function (Blueprint $table) {
             // Common SaaS fields
-    		$table->commonSaasFields();
+            $table->commonSaasFields();
 
             /* ---------------- Basic Info ---------------- */
             $table->string('name');
+            $table->string('byline')->nullable();
             $table->string('owner_name')->nullable();
 
             $table->string('phone');
@@ -51,7 +52,7 @@ return new class extends Migration
             $table->date('valid_till')->nullable();
 
             /* ---------------- Meta / SEO ---------------- */
-            $table->string('slug')->unique()->nullable();
+            $table->string('slug')->unique();
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
 

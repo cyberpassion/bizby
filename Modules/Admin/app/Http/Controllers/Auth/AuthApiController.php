@@ -146,11 +146,68 @@ class AuthApiController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    public function portalRegister(Request $request)
     {
-        $tenantId = $request->tenant_id; // app('resolvedTenant');
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDATE REQUEST
+        |--------------------------------------------------------------------------
+        */
+        $data = $request->validate([
 
-        $tenant = TenantAccount::find($tenantId);
+            /*
+            |--------------------------------------------------------------------------
+            | TENANT
+            |--------------------------------------------------------------------------
+            */
+            'tenant_id' => [
+                'required',
+                'integer',
+                'exists:tenant_accounts,id',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | CONTEXT
+            |--------------------------------------------------------------------------
+            */
+            'context' => [
+                'required',
+                'string',
+                'in:registration,listing,hostel',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | USER
+            |--------------------------------------------------------------------------
+            */
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                'unique:users,email',
+            ],
+
+            'password' => [
+                'required',
+                'confirmed',
+                'min:6',
+            ],
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | TENANT
+        |--------------------------------------------------------------------------
+        */
+        $tenant = TenantAccount::find($data['tenant_id']);
 
         if (! $tenant) {
             return response()->json([
@@ -159,30 +216,71 @@ class AuthApiController extends Controller
             ], 422);
         }
 
-        $data = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:6',
-        ]);
-
+        /*
+        |--------------------------------------------------------------------------
+        | USER SERVICE
+        |--------------------------------------------------------------------------
+        */
         $service = app(UserProvisionService::class);
 
-        // 🔥 1. Create portal user
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE USER
+        |--------------------------------------------------------------------------
+        */
         $user = $service->registerPortalUser($data);
 
-        // 🔥 2. Get default role (IMPORTANT)
-        $roleId = $this->getDefaultPortalRole($tenant);
+        /*
+        |--------------------------------------------------------------------------
+        | BASE PORTAL ROLE
+        |--------------------------------------------------------------------------
+        */
+        /*$basePortalRoleId = DB::table('permission_roles')
+            ->where('slug', 'portal_user')
+            ->value('id');*/
 
-        // 🔥 3. Attach to tenant
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE ROLE
+        |--------------------------------------------------------------------------
+        */
+        $moduleRoleId = $this->getDefaultPortalRole(
+            $tenant,
+            $data['context']
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATTACH BASE ROLE
+        |--------------------------------------------------------------------------
+        */
+        /*$service->createTenantUser(
+            $user,
+            $tenant->id,
+            $basePortalRoleId
+        );*/
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATTACH MODULE ROLE
+        |--------------------------------------------------------------------------
+        */
         $tenantUser = $service->createTenantUser(
             $user,
             $tenant->id,
-            $roleId
+            $moduleRoleId
         );
 
+        /*
+        |--------------------------------------------------------------------------
+        | RESPONSE
+        |--------------------------------------------------------------------------
+        */
         return response()->json([
             'status' => 'success',
+
             'message' => 'Registration Done Successfully',
+
             'data' => [
                 'user' => $user,
                 'tenant_user' => $tenantUser,
@@ -190,15 +288,22 @@ class AuthApiController extends Controller
         ], 201);
     }
 
-    protected function getDefaultPortalRole($tenant)
-    {
+    protected function getDefaultPortalRole(
+        $tenant,
+        string $context
+    ) {
+        $portalRoleSlug =
+            "portal_{$context}_user";
+
         $role = DB::table('permission_roles')
-            ->where('tenant_id', $tenant->id)
-            ->where('slug', 'portal_user') // 🔥 define this
+            ->where('slug', $portalRoleSlug)
             ->first();
 
         if (! $role) {
-            abort(500, 'Default portal role not configured');
+            abort(
+                500,
+                "Default portal role not configured for context: {$context}"
+            );
         }
 
         return $role->id;

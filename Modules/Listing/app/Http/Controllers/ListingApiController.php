@@ -84,9 +84,15 @@ class ListingApiController extends SharedApiController
         ];
     }
 
-    public function showPublic($id)
+    public function showPublic($identifier)
     {
-        $listing = Listing::with(['sections'])->findOrFail($id);
+        $listing = Listing::with(['sections'])
+            ->when(
+                is_numeric($identifier),
+                fn ($query) => $query->where('id', $identifier),
+                fn ($query) => $query->where('slug', $identifier)
+            )
+            ->firstOrFail();
 
         return response()->json([
             'status' => 'success',

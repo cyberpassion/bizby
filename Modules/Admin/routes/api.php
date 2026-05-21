@@ -277,7 +277,7 @@ Route::prefix('v1/public-auth')
     // ->middleware('identify.tenant')
     ->group(function () {
 
-        Route::post('register', [AuthApiController::class, 'register']);
+        Route::post('register', [AuthApiController::class, 'portalRegister']);
     });
 
 // Public Modules
