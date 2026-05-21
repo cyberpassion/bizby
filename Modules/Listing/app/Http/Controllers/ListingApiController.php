@@ -12,10 +12,10 @@ class ListingApiController extends SharedApiController
         'phone',
         'email',
         'city',
-        'state'
+        'state',
     ];
 
-	protected $with = ['sections'];
+    protected $with = ['sections'];
 
     protected function model()
     {
@@ -39,7 +39,7 @@ class ListingApiController extends SharedApiController
 
             'valid_till' => 'nullable|date',
 
-            'slug' => 'nullable|string|unique:listings,slug,' . $id,
+            'slug' => 'nullable|string|unique:listings,slug,'.$id,
         ];
     }
 
@@ -84,14 +84,13 @@ class ListingApiController extends SharedApiController
         ];
     }
 
-	public function showPublic($id)
-	{
-    	$listing = Listing::with(['sections'])->findOrFail($id);
+    public function showPublic($id)
+    {
+        $listing = Listing::with(['sections'])->findOrFail($id);
 
-	    return response()->json([
-    	    'status' => 'success',
-        	'data' => $listing
-	    ]);
-	}
-
+        return response()->json([
+            'status' => 'success',
+            'data' => $listing,
+        ]);
+    }
 }

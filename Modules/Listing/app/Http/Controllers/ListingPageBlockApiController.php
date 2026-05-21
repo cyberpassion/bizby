@@ -12,19 +12,16 @@ class ListingPageBlockApiController extends Controller
      | INDEX
      |========================================================= */
 
-    public function index(Request $request)
+    public function index(Request $request, int $listingId)
     {
-        $query = ListingPageBlock::query();
-
-        if ($request->filled('listing_id')) {
-            $query->where('listing_id', $request->listing_id);
-        }
+        $blocks = ListingPageBlock::where('listing_id', $listingId)
+            ->orderBy('sort_order')
+            ->get();
 
         return response()->json([
             'success' => true,
-            'data' => $query
-                ->orderBy('sort_order')
-                ->get(),
+
+            'data' => $blocks,
         ]);
     }
 
@@ -32,11 +29,15 @@ class ListingPageBlockApiController extends Controller
      | SHOW
      |========================================================= */
 
-    public function show($id)
+    public function show(int $listingId, int $id)
     {
+        $block = ListingPageBlock::where('listing_id', $listingId)
+            ->findOrFail($id);
+
         return response()->json([
             'success' => true,
-            'data' => ListingPageBlock::findOrFail($id),
+
+            'data' => $block,
         ]);
     }
 
@@ -44,15 +45,15 @@ class ListingPageBlockApiController extends Controller
      | STORE
      |========================================================= */
 
-    public function store(Request $request)
+    public function store(Request $request, int $listingId)
     {
         $validated = $request->validate([
-
-            'listing_id' => 'required', // |exists:listings,id
 
             'type' => 'required|string',
 
             'menu_title' => 'nullable|string|max:255',
+
+            'slug' => 'nullable|string|max:255',
 
             'title' => 'nullable|string|max:255',
 
@@ -91,6 +92,8 @@ class ListingPageBlockApiController extends Controller
             'seo_description' => 'nullable|string',
         ]);
 
+        $validated['listing_id'] = $listingId;
+
         $block = ListingPageBlock::create($validated);
 
         return response()->json([
@@ -106,28 +109,44 @@ class ListingPageBlockApiController extends Controller
      | UPDATE
      |========================================================= */
 
-    public function update(Request $request, $id)
+    public function update(Request $request, int $listingId, int $id)
     {
-        $block = ListingPageBlock::findOrFail($id);
+        $block = ListingPageBlock::where('listing_id', $listingId)
+            ->findOrFail($id);
 
         $data = $request->validate([
 
             'type' => 'nullable|string',
 
-            'title' => 'nullable|string',
-            'subtitle' => 'nullable|string',
+            'menu_title' => 'nullable|string|max:255',
+
+            'slug' => 'nullable|string|max:255',
+
+            'title' => 'nullable|string|max:255',
+
+            'subtitle' => 'nullable|string|max:255',
 
             'content' => 'nullable|string',
 
             'image' => 'nullable|string',
+
             'image_2' => 'nullable|string',
 
             'gallery' => 'nullable|array',
 
             'video_url' => 'nullable|string',
 
-            'button_text' => 'nullable|string',
-            'button_link' => 'nullable|string',
+            'button_text' => 'nullable|string|max:255',
+
+            'button_link' => 'nullable|string|max:500',
+
+            'background_color' => 'nullable|string|max:50',
+
+            'text_color' => 'nullable|string|max:50',
+
+            'layout' => 'nullable|string|max:100',
+
+            'alignment' => 'nullable|string|max:100',
 
             'extra_data' => 'nullable|array',
 
@@ -135,15 +154,18 @@ class ListingPageBlockApiController extends Controller
 
             'is_active' => 'nullable|boolean',
 
-            'background_color' => 'nullable|string',
-            'text_color' => 'nullable|string',
+            'seo_title' => 'nullable|string|max:255',
+
+            'seo_description' => 'nullable|string',
         ]);
 
         $block->update($data);
 
         return response()->json([
             'success' => true,
+
             'message' => 'Block updated successfully',
+
             'data' => $block,
         ]);
     }
@@ -152,15 +174,45 @@ class ListingPageBlockApiController extends Controller
      | DELETE
      |========================================================= */
 
-    public function destroy($id)
+    public function destroy(int $listingId, int $id)
     {
-        $block = ListingPageBlock::findOrFail($id);
+        $block = ListingPageBlock::where('listing_id', $listingId)
+            ->findOrFail($id);
 
         $block->delete();
 
         return response()->json([
             'success' => true,
+
             'message' => 'Block deleted successfully',
+        ]);
+    }
+
+    /* =========================================================
+     | REORDER
+     |========================================================= */
+
+    public function reorder(Request $request, int $listingId)
+    {
+        $request->validate([
+            'block_ids' => 'required|array',
+
+            'block_ids.*' => 'required|integer',
+        ]);
+
+        foreach ($request->block_ids as $index => $id) {
+
+            ListingPageBlock::where('listing_id', $listingId)
+                ->where('id', $id)
+                ->update([
+                    'sort_order' => $index + 1,
+                ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+
+            'message' => 'Blocks reordered successfully.',
         ]);
     }
 }

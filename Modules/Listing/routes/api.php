@@ -13,11 +13,15 @@ Route::prefix('v1')
         /* ======================================================
          | LISTINGS BLOCKS
          ====================================================== */
-        Route::get('listings/page-blocks', [ListingPageBlockApiController::class, 'index']);
-        Route::get('listings/page-blocks/{id}', [ListingPageBlockApiController::class, 'show']);
-        Route::post('listings/page-blocks', [ListingPageBlockApiController::class, 'store']);
-        Route::put('listings/page-blocks/{id}', [ListingPageBlockApiController::class, 'update']);
-        Route::delete('listings/page-blocks/{id}', [ListingPageBlockApiController::class, 'destroy']);
+        Route::post('listings/{listingId}/page-blocks', [ListingPageBlockApiController::class, 'store']);
+        Route::put('listings/{listingId}/page-blocks/{id}', [ListingPageBlockApiController::class, 'update']);
+        Route::get('listings/{listingId}/page-blocks', [ListingPageBlockApiController::class, 'index']);
+        Route::get('listings/{listingId}/page-blocks/{id}', [ListingPageBlockApiController::class, 'show']);
+        Route::delete('listings/{listingId}/page-blocks/{id}', [ListingPageBlockApiController::class, 'destroy']);
+        Route::post(
+            'listings/{listingId}/page-blocks/reorder',
+            [ListingPageBlockApiController::class, 'reorder']
+        );
 
         /*
         |--------------------------------------------------------------------------
